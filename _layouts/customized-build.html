@@ -9,15 +9,11 @@
     <body>
         {% include header.html %}
         <div class="subheader">
-            <a href="../index.html">home</a>
+            <a href="../index.html">home</a><br>
+            <a href="../userguide/index.html">userguides</a>
         </div>
-        <div class="body-content userguide">
+        <div class="body-content customized-build">
             {{ content }}
-            <ul class="userguide-list">{% for files in site.docs %}{% assign fragments = files.url | split: '/' %}{% assign filename = fragments.last %}{% if filename == 'index.html' %}
-                <li>
-                  <a class="pure-button pure-button-bordered"  href="..{{ files.url }}">{{ files.module }}</a>
-                </li>{% endif %}{% endfor %}
-            </ul>
         </div>
         {% include footer.html %}
     </body>

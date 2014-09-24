@@ -1,8 +1,8 @@
 ---
-module: parcela
-maintainer: Daniel Barreiro
+module: itsa.build
+maintainer: Marco Asbreuk
 title: Root of the standard distribution
-intro: "The `parcela` module provides the main root `Parcela` namespace and aggregates all the modules
+intro: "The `itsa.build` module provides the main root `ITSA` namespace and aggregates all the modules
    that make for the standard distribution of Parcela"
 ---
 #The Basics#

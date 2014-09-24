@@ -28,15 +28,6 @@ h1.title {
     border-right: none;
     color: #666;
 }
-div.paragraph {
-    border-top: 1px solid #BBB;
-    border-bottom: 1px solid #BBB;
-    color: #0078e7;
-    font-size: 2em;
-    text-align: center;
-    margin: 2.5em 0 1.5em;
-    padding: 0.5em 0;
-}
 .after-intro {
     text-align: center;
     margin: 5em 0 6em;
