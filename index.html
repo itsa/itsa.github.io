@@ -1,0 +1,40 @@
+---
+layout: "root-index"
+userguide_url: "userguide/index.html"
+contribution_url: "contribution/index.html"
+---
+
+<h1 class="title"><img src="assets/logo-small.png" />{{ site.title }}</h1>
+
+<div class="highlight center"><pre><span class="ss">Isomorphic <span class="blue">modules</span> for building building fast, robust and scalable web applications</span></pre>
+</div>
+
+<div class="body-content-home">
+	<div class="after-intro">
+		<a class="pure-button pure-button-primary pure-button-bordered" href="{{ page.userguide_url }}">User guides</a>
+		<a class="pure-button pure-button-bordered" href="https://github.com/{{ site.github_username }}">View on Github</a>
+		<a class="pure-button pure-button-bordered" href="{{ page.contribution_url }}">Contribute</a>
+	</div>
+
+	<p><code class="prettyprint">ITSA modules</code> is a community-project. We develop basic <code class="prettyprint">commonjs</code>-modules which can be used on both server and client (isomorphic). We demand this feature to be able to do serverside developing and rendering. All modules are highly tested, well documented and highly performant. Among the modules are:</p>
+
+	<p>
+		<ul>
+		   <li><span class="blue">Virtual DOM</span> <code class="prettyprint">work in progress</code></li>
+		   <li><span class="blue">Routing</span> designed for single-page applications. <code class="prettyprint">work in progress</code></li>
+		   <li><a href="docs/io/index.html">Promised IO</a></li>
+		   <li><a href="docs/event/index.html">Rich Event system</a></li>
+		   <li><span class="blue">I-tags</span> (isomorphic custom elements) <code class="prettyprint">work in progress</code></li>
+		</ul>
+	</p>
+
+	<div class="paragraph">Quick Start</div>
+
+	<p>ITSA provides a <code class="prettyprint">standard distribution</code> which aggregates the various modules. Once included, you can create a root namespace <code class="prettyprint">ITSA</code> that has the members described in the <a href="userguide/index.html">modules-userguides</a>.</p>
+
+    {% include quick-start.html %}
+
+	<div class="paragraph">Customize</div>
+	<p>Instead of using the <code class="prettyprint">standard distribution</code>, you can create customized build-files. This saves you from a large rollup with all available modules. Read more about it at <a href="userguide/index.html">modules-userguides</a>.</p>
+
+</div>
