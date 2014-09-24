@@ -1,0 +1,88 @@
+{% assign fragments = page.url | split: '/' %}{% assign filename = fragments.last %}
+
+{% assign subfragments = filename | split: '-' %}{% assign lastpart = subfragments.last %}
+
+{% if lastpart == "inc.html" %}
+    {{ content }}
+{% else %}
+
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>{{ page.title }}</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/syntax.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../assets/main.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../../assets/module.css">
+  </head>
+  <body>
+    {% include moduleheader.html %}
+    <div class="module-description pure-g">
+        <div class="pure-u-3-4">
+            module: <a href="./index.html">{{ page.module }}</a><br>
+            maintanance: {{ page.maintainer }}
+        </div>
+        <div class="pure-u-1-4">
+            <a href="../../index.html">home</a><br>
+            <a href="../../userguide/index.html">all modules</a>
+        </div>
+    </div>
+    <div class="body-content pure-g module">
+        <div class="pure-u-1 left-col">
+            <h1 class="title">{{ page.title }}</h1>
+            {% if page.intro %}
+                <p class="module-intro">{{ page.intro }}</p>
+            {% endif %}
+            {% if filename == "index.html" %}
+                {% if page.firstpar %}
+                    {% capture firstparfile %}{{ page.firstpar }}.html{% endcapture %}
+                    {% include {{ firstparfile }} %}
+                {% endif %}
+            {% endif %}
+
+            {% if page.includeexample %}
+                {% assign fragments = page.url | split: '/' %}
+                {% assign shorterfilename = fragments.last | remove: ".html" %}
+                <iframe id="iframeexample" src="{{ shorterfilename }}-inc.html"></iframe>
+                <script>
+                    var apiframe = document.getElementById('iframeexample');
+                    setInterval(function() {
+                        apiframe.style.height = (apiframe.contentDocument.body.offsetHeight + 34)+'px';
+                    }, 100);
+                </script>
+
+            {% endif %}
+
+            {{ content }}
+        </div>
+        <div class="pure-u-1 right-col">
+            <a class="pure-button pure-button-primary pure-button-bordered" target="_blank" href="../../api/modules/{{ page.module }}.html">API Docs</a>
+            {% if filename == "index.html" %}
+                {% include toc.html %}
+            {% endif %}
+
+            {% for files in site.docs %}
+            {% assign fragments = files.url | split: '/' %}
+            {% assign filename = fragments.last %}
+            {% if files.module == page.module %}
+            {% unless filename == 'index.html' %}
+            {% assign withexamples = true %}
+            {% endunless %}
+            {% endif %}
+            {% endfor %}
+
+            {% if withexamples %}
+                <div class="table-container">
+                    <p class="table-header">Examples</p>
+                    <ul>{% for files in site.docs %}{% assign fragments = files.url | split: '/' %}{% assign filename = fragments.last %}{% if files.module == page.module %}{% unless filename == 'index.html' %}
+                        <li><a href="../..{{ files.url }}">{{ files.title }}</a></li>{% endunless %}{% endif %}{% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+    {% include footer.html %}
+  </body>
+</html>
+{% endif %}

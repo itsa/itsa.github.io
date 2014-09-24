@@ -1,0 +1,46 @@
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>Simple Menu</title>
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+</head>
+
+<body>
+
+	<script src="../../dist/parcela.js"></script>
+	<script>
+		var Parcela = require('parcela');
+		Parcela.ready().then(
+			function() {
+				var Menu = Parcela.Parcel.subClass({
+					className:'pure-menu pure-menu-open pure-menu-horizontal',
+					defaultConfig: {
+						items: [
+							{url: 'home', label:'Home'}
+						]
+					},
+					view: function() {
+						var v = Parcela.Parcel.vNode;
+						return v('ul',this.items.map(function(item) {
+							return v('li', [v('a', {href: '#' + item.url}, item.label)]);
+						}));
+					}
+				});
+
+				// Which can be called like this:
+
+				Parcela.rootApp(Menu, {
+					items:[
+						{url:'home', label: 'Home'},
+						{url:'users', label: 'Users'},
+						{url:'groups', label: 'Groups'}
+					]
+				});
+			}
+		);
+	</script>
+</body>
+
+</html>

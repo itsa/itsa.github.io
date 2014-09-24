@@ -1,0 +1,183 @@
+.body-content.module h4 {
+    margin: 1.6em 0 0;
+}
+.body-content.module h4 {
+    font-style: italic;
+    text-decoration: underline;
+}
+
+h1.moduleheader {
+    background-color: #1f8dd6;
+    color: #FFF;
+    border-bottom: solid 1px #888;
+    font-size: 2em;
+    padding: 0.5em 1em;
+    line-height: 1.6em;
+    margin: 0;
+    font-weight: normal;
+}
+.module-description {
+    background-color: #666;
+    color: #FFF;
+    padding: 0.75em 2em;
+}
+.module-intro {
+    background-color: #c0e5fd;
+    border: solid 1px #999;
+    padding: 0.75em;
+    color: #555;
+}
+.pure-u-1.left-col {
+    padding-right: 17em;
+    margin-right: -15em;
+}
+.pure-u-1.right-col {
+    width: 15em;
+}
+.pure-u-1.right-col a.pure-button {
+    color: #FFF;
+    width: 100%;
+    margin-bottom: 0.75em;
+    padding: 0.5em 0;
+}
+.body-content.module .pure-u-1.right-col a.pure-button {
+    text-decoration: none;
+}
+.pure-u-1.right-col .table-container {
+    width: 100%;
+    background-color: #FCFCFC;
+    border: solid 1px #BBB;
+    margin-bottom: 0.5em;
+}
+.body-content.module h1 {
+    font-size: 1.7em;
+    color: #d68d1f;
+    font-weight: normal;
+    margin: 2.5em 0 1.5em;
+}
+.body-content.module h1.title {
+    color: #1f8dd6;
+    font-size: 3em;
+    margin: 0 0 1.2em;
+}
+.body-content.module h2 {
+    font-size: 1.2em;
+    color: #1f8dd6;
+    font-weight: normal;
+    margin: 2em 0 0.4em;
+}
+.body-content.module h3 {
+    font-size: 1em;
+    color: #111;
+    font-weight: normal;
+    margin: 1.5em 0 0.4em;
+    text-decoration: underline;
+}
+.body-content.module p {
+    margin: 0.5em 0 1em;
+}
+.body-content.module p.table-header {
+    margin: 0;
+    font-weight: bold;
+    padding: 0.2em 0.8em;
+    background-color: #e5e6f1;
+    color: #30418c;
+}
+.right-col ul {
+    font-size: 0.9em;
+    list-style: none;
+    padding: 0 1em;
+}
+.right-col ul.level-h2, .right-col ul.level-h3 {
+    margin: 0;
+}
+.right-col li:before {
+    content: "\00BB"; /* &raquo; is special character, which renderes differently in pseudo-elements. see http://www.evotech.net/articles/testjsentities.html */
+    padding-right: 0.4em;
+    margin-left: -1em;
+}
+.right-col ul.level-h2 li:before {
+    padding-right: 0.5em;
+}
+.right-col ul.level-h3 li:before {
+    padding-right: 0.3em;
+}
+.right-col ul li {
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    margin-left: 0.6em;
+}
+.right-col ul.level-h2 li {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.right-col ul.level-h2 li:before {
+    content: "\2022"; /* &#8226; is special character, which renderes differently in pseudo-elements. see http://www.evotech.net/articles/testjsentities.html */
+    margin-right: 0;
+    color: #AAA;
+}
+.right-col ul.level-h3 li:before {
+    content: "+";
+    margin-right: 0;
+}
+.body-content.module a,
+.body-content.module a:hover,
+.body-content.module a:visited {
+    color: #166ba3;
+}
+
+.body-content.module ul.level-h1 a,
+.body-content.module ul.level-h1 a:hover,
+.body-content.module ul.level-h1 a:visited {
+    color: #d68d1f;
+}
+
+.body-content.module ul.level-h2 a,
+.body-content.module ul.level-h2 a:hover,
+.body-content.module ul.level-h2 a:visited {
+    color: #1f8dd6;
+}
+
+.body-content.module ul.level-h3 a,
+.body-content.module ul.level-h3 a:hover,
+.body-content.module ul.level-h3 a:visited {
+    color: #111;
+}
+
+.body-content.module a.pure-button,
+.body-content.module a.pure-button:hover,
+.body-content.module a.pure-button:visited {
+    color: #FFF;
+}
+.body-content.module a {
+    text-decoration: none;
+}
+.body-content.module a:hover {
+    text-decoration: underline;
+}
+.module-description a,
+.module-description a:hover,
+.module-description a:visited {
+    color: #FFF;
+}
+.module-description a {
+    font-weight: bold;
+    text-decoration: none;
+}
+.module-description a:hover {
+    text-decoration: underline;
+}
+.module-description .pure-u-1-4 {
+    text-align: right;
+}
+.body-content.module iframe {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+	border: solid 1px #BBB;
+	margin: 1em 0;
+	padding: 16px; /* needs in pixels for the height will be compensated and needs to be set in pixels */
+	width: 100%;
+    min-height: 60px;
+    overflow: hidden;
+}

@@ -1,0 +1,63 @@
+<div class="table-container">
+
+    <p class="table-header">Table of Contents</p>
+
+    <ul class="level-h1">
+        {% assign headers1 = content | split: '<h1 id="' %}
+        {% for header in headers1 %}
+            {% if header contains '</h1>' %}
+
+                {% assign splitH1 = header | split: '</h1>' %}
+                {% assign insideH1 = splitH1[0] %}
+                {% assign contentH1 = splitH1[1] %}
+                {% if insideH1 contains '">' %}
+                    {% assign splitH1inside = insideH1 | split: '">' %}
+                    {% assign id1 = splitH1inside[0] %}
+                    {% assign header1content = splitH1inside[1] %}
+                    <li><a href="#{{ id1 }}">{{ header1content }}</a></li>
+
+                    {% if contentH1 contains '<h2 id="' %}
+                        <ul class="level-h2">
+                        {% assign headers2 = contentH1 | split: '<h2 id="' %}
+                        {% for header2 in headers2 %}
+                            {% if header2 contains '</h2>' %}
+                                {% assign splitH2 = header2 | split: '</h2>' %}
+                                {% assign insideH2 = splitH2[0] %}
+                                {% assign contentH2 = splitH2[1] %}
+                                {% if insideH2 contains '">' %}
+                                    {% assign splitH2inside = insideH2 | split: '">' %}
+                                    {% assign id2 = splitH2inside[0] %}
+                                    {% assign header2content = splitH2inside[1] %}
+                                    <li><a href="#{{ id2 }}">{{ header2content }}</a></li>
+
+                                    {% if contentH2 contains '<h3 id="' %}
+                                        <ul class="level-h3">
+                                        {% assign headers3 = contentH2 | split: '<h3 id="' %}
+                                        {% for header3 in headers3 %}
+                                            {% if header3 contains '</h3>' %}
+                                                {% assign splitH3 = header3 | split: '</h3>' %}
+                                                {% assign insideH3 = splitH3[0] %}
+                                                {% assign contentH3 = splitH3[1] %}
+                                                {% if insideH3 contains '">' %}
+                                                    {% assign splitH3inside = insideH3 | split: '">' %}
+                                                    {% assign id3 = splitH3inside[0] %}
+                                                    {% assign header3content = splitH3inside[1] %}
+                                                    <li><a href="#{{ id3 }}">{{ header3content }}</a></li>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        </ul>
+                                    {% endif %}
+
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+    </ul>
+</div>

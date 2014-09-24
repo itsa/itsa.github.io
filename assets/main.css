@@ -1,0 +1,172 @@
+@font-face{
+    font-family: 'avenir-next';
+    src: url('fonts/avenir-next.eot?'),
+    url('fonts/avenir-next.woff') format('woff'),
+    url('fonts/avenir-next.ttf') format('truetype'),
+    url('fonts/avenir-next.svg#font') format('svg');
+}
+@font-face{
+    font-family: 'avenir-next';
+    src: url('fonts/avenir-next-obl.eot?'),
+    url('fonts/avenir-next-obl.woff') format('woff'),
+    url('fonts/avenir-next-obl.ttf') format('truetype'),
+    url('fonts/avenir-next-obl.svg#font') format('svg');
+    font-style: italic;
+}
+@font-face{
+    font-family: 'avenir-next';
+    src: url('fonts/avenir-next-bold.eot?'),
+    url('fonts/avenir-next-bold.woff') format('woff'),
+    url('fonts/avenir-next-bold.ttf') format('truetype'),
+    url('fonts/avenir-next-bold.svg#font') format('svg');
+    font-weight: bold;
+}
+@font-face{
+    font-family: 'avenir-next';
+    src: url('fonts/avenir-next-bold-obl.eot?'),
+    url('fonts/avenir-next-bold-obl.woff') format('woff'),
+    url('fonts/avenir-next-bold-obl.ttf') format('truetype'),
+    url('fonts/avenir-next-bold-obl.svg#font') format('svg');
+    font-weight: bold;
+    font-style: italic;
+}
+span.blue {
+    color: #0078e7;
+}
+
+a:not(.pure-button),
+a:hover:not(.pure-button),
+a:visited:not(.pure-button) {
+    color: #166ba3;
+}
+
+a:not(.pure-button) {
+    text-decoration: none;
+}
+
+a:hover:not(.pure-button) {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+a:not(.pure-button) {
+    color: #0078e7;
+}
+
+a:focus {
+    outline: 0;
+}
+a[target="_blank"]:focus {
+    outline: 1px solid #129fea;
+}
+code.prettyprint {
+    color: #d61fb1;
+    font-weight: bold;
+    padding: 0 0.2em;
+    font-family: "avenir-next", "sans-serif", helvetica, arial;
+}
+body {
+    color: #333;
+}
+
+body,
+.pure-g [class *= "pure-u"],
+.pure-g-r [class *= "pure-u"] {
+    /* Set your content font stack here: */
+    font-family: "avenir-next", "sans-serif", helvetica, arial;
+    line-height: 1.5em;
+}
+
+div {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.body-content {
+    margin: 3em 4em;
+}
+
+h1.header {
+    background-color: #1f8dd6;
+    color: #FFF;
+    border-bottom: solid 1px #888;
+    font-size: 2em;
+    padding: 0.5em 1em;
+    line-height: 1.6em;
+    font-weight: normal;
+    margin: 0;
+}
+
+.subheader {
+    background-color: #666;
+    color: #FFF;
+    padding: 0.35em 2em;
+    text-align: right;
+    font-weight: bold;
+}
+
+.subheader a,
+.subheader a:hover,
+.subheader a:visited {
+    color: #FFF;
+}
+.subheader a {
+    text-decoration: none;
+}
+
+.subheader a:hover {
+    text-decoration: underline;
+}
+
+.footer a,
+.footer a:hover,
+.footer a:visited {
+    color: #1f8dd6;
+}
+.footer a {
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer {
+    background-color: #FCFCFC;
+    border-top: solid 1px #BBB;
+    border-bottom: solid 1px #BBB;
+    font-size: 0.85em;
+    overflow: auto;
+    margin-top: 6em;
+    padding: 1em;
+    line-height: 1.6em;
+}
+
+.footer p {
+    margin: 0;
+}
+
+.footer div:last-child {
+    text-align: right;
+}
+
+.version-descriptor {
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    color: #FFF;
+    font-size: 0.9em;
+}
+
+.pure-button.pure-button-bordered,
+.pure-button.pure-button-bordered[disabled] {
+    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;
+}
+
+/* restore pure-button:active */
+.pure-button.pure-button-bordered.pure-button:active,
+.pure-button.pure-button-bordered.pure-button-active,
+.pure-button.pure-button-active:focus {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15) inset, 0 0 6px rgba(0, 0, 0, 0.2) inset;
+}

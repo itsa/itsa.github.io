@@ -1,0 +1,60 @@
+h1 {
+    font-weight: normal;
+    color: #990073;
+    margin: 2em 0 1em;
+}
+h1.title {
+    padding: 0.9em 0 0.2em;
+    font-size: 4em;
+    text-align: center;
+    color: #1f8dd6;
+    margin: 0 0 0.6em;
+}
+.intro {
+    text-align: center;
+    font-size: 1.8em;
+    line-height: 1.45;
+    margin: 1em;
+    min-height: 1em;
+}
+.center {
+    text-align: center;
+}
+.body-content-home {
+    margin: 3em 8em;
+}
+.highlight.center {
+    border-left: none;
+    border-right: none;
+    color: #666;
+}
+div.paragraph {
+    border-top: 1px solid #BBB;
+    border-bottom: 1px solid #BBB;
+    color: #0078e7;
+    font-size: 2em;
+    text-align: center;
+    margin: 2.5em 0 1.5em;
+    padding: 0.5em 0;
+}
+.after-intro {
+    text-align: center;
+    margin: 5em 0 6em;
+}
+.after-intro .pure-button {
+    margin: 0.5em;
+    font-size: 1.4em;
+}
+ul {
+    list-style: none;
+    padding: 1em 3em;
+}
+li:before {
+    content: "\00BB"; /* &raquo; is special character, which renderes differently in pseudo-elements. see http://www.evotech.net/articles/testjsentities.html */
+    padding-right: 0.5em;
+    margin-left: -1em;
+}
+h1.title img {
+    border: solid 2px #000;
+    margin-right: 0.25em;
+}

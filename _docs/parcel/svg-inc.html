@@ -1,0 +1,57 @@
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>SVG Example</title>
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+</head>
+
+<body>
+	<h2>The circle was generated via: </h2>
+	<div class="pure-g">
+		<div class="pure-u-1-2">
+			<h3>HTML</h3>
+		    <svg xmlns="http://www.w3.org/2000/svg" width="200px" height="150px">
+			  <circle cx="100" cy="75" r="50" fill="#ff0000"/>
+			</svg>
+		</div>
+    <div class="pure-u-1-2"><div id="example"></div></div>
+</div>
+	<script src="../../dist/parcela.js"></script>
+	<script>
+		var Parcela = require('parcela');
+		Parcela.ready().then(
+			function () {
+				var v = Parcela.Parcel.vNode,
+					SVG = Parcela.Parcel.subClass({
+						view: function () {
+							return [
+								v('h3','Parcel'),
+								v(
+									'svg',
+									{
+										width:'200px',
+										height:'150px'
+									},
+									v(
+										'circle',
+										{
+											cx:"100",
+											cy:"75",
+											r:"50",
+											fill:"#ff0000"
+										}
+									)
+								)
+							];
+						}
+					});
+
+				Parcela.rootApp(SVG, document.getElementById('example'));
+			}
+		);
+	</script>
+</body>
+
+</html>
