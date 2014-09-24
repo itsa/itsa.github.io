@@ -1,12 +1,83 @@
 ---
 layout: "root-userguide"
-title: "Parcela userguides"
+title: "ITSA userguides"
+modules_url: "../modules/index.html"
+customized_url: "../customized-build/index.html"
 ---
 
-{% include quick-start.html %}
+<div class="paragraph">Quick jump to ITSA modules documentation</div>
+<div class="after-intro">
+    <a class="pure-button pure-button-primary pure-button-bordered" href="{{ page.modules_url }}">View ITSA Modules</a>
+</div>
+
+<div class="paragraph">How to use ITSA modules</div>
+
+<p>ITSA modules are CommonJS-modules which can be used in <code class="prettyprint">nodejs</code> or on the <code class="prettyprint">browser</code>. In both cases, you reference them with <code class="prettyprint">require(</code><span class="purple"><i>'modulename'</i></span><code class="prettyprint">)</code>.
+
+<h1>With nodejs</h1>
+<p>Your project will have these three elements:
+    <ul>
+        <li>scriptfile.js (your codefile)</li>
+        <li>package.json (definition about the program and its dependencies)</li>
+        <li>node_module (directory with all the packages)</li>
+    </ul>
+    You can create your own <code class="prettyprint">package.json</code>, or start with our <a href="./dist/package.json">distribution-file</a>. It is important that every <b>require()</b> you use inside your scriptfile has its dependency defined inside package.json. Once you have set package.json up, you run <code class="prettyprint">npm install</code> which will create <b>node_modules</b> and all the required packages.
+</p>
+
+<h2>Example scripfile.js</h2>
+{% highlight js %}
+var express = require('express'),
+    bodyParser = require('body-parser'),
+    Event = require('event'),
+    NODE_WINDOW = require('node-win'),
+    IO = require('io')(NODE_WINDOW),
+    IO_TRANSFER = require("io-transfer"),
+    app = express();
+
+IO_TRANSFER.mergeInto(IO);
+
+app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+
+app.get('*', function (req, res) {
+    Event.emit('request:start');
+    IO.get('http://somedomain.com/?id='+req.param('id')).then(
+        function(getresponse) {
+            Event.emit('request:recieved');
+            res.set('Content-Type', 'text/html');
+            res.end(getresponse);
+        }
+    );
+});
+
+app.set('port', 8000);
+
+app.listen(app.get('port'), function(){
+    console.log("Express server listening on port " + app.get('port'));
+});
+{% endhighlight %}
+
+<h2>Example package.json</h2>
+{% highlight json %}
+{
+    "name": "myproject",
+    "version": "0.0.1",
+    "main": "scriptfile.js",
+    "dependencies": {
+        "event":"itsa/event",
+        "io": "itsa/io",
+        "io-transfer": "itsa/io/io-transfer.js",
+        "node-win":"itsa/node-win",
+        "body-parser": "^1.5.2",
+        "express": "^4.7.2"
+    },
+}
+{% endhighlight %}
+
+<h1>In the browser:</h1>
+Because the browser doesn't support "require()", you need to bundle the files with Browerify. This will inspect your code and create a separate bundle-file that holds all the requirements (and its dependencies) and will define the require()-method in the browser.</p>
 
 <div class="after-intro">
-    <a class="pure-button pure-button-primary pure-button-bordered" href="{{ page.userguide_url }}">User guides</a>
-    <a class="pure-button pure-button-bordered" href="https://github.com/{{ site.github_username }}">View on Github</a>
-    <a class="pure-button pure-button-bordered" href="{{ page.contribution_url }}">Contribute</a>
+    <a class="pure-button pure-button-primary pure-button-bordered" href="{{ page.customized_url }}">Customized build</a>
 </div>
+
+{% include quick-start.html %}

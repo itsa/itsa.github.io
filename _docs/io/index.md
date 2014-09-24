@@ -2,7 +2,7 @@
 module: io
 version: 0.0.1
 maintainer: Marco Asbreuk
-title: Promised-IO
+title: Promised I/O
 intro: "This module consist of several files which provide easy IO. All modules extend <b>Parcela/io</b> and provide methods by which you can use IO."
 firstpar: get-started
 ---

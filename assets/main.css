@@ -33,6 +33,9 @@
 span.blue {
     color: #0078e7;
 }
+span.purple {
+    color: #d61fb1;
+}
 
 a:not(.pure-button),
 a:hover:not(.pure-button),
@@ -93,9 +96,19 @@ h1.header {
     border-bottom: solid 1px #888;
     font-size: 2em;
     padding: 0.5em 1em;
-    line-height: 1.6em;
+    line-height: 2em;
     font-weight: normal;
     margin: 0;
+}
+
+div.paragraph {
+    border-top: 1px solid #BBB;
+    border-bottom: 1px solid #BBB;
+    color: #0078e7;
+    font-size: 2em;
+    text-align: center;
+    margin: 2.5em 0 1.5em;
+    padding: 0.5em 0;
 }
 
 .subheader {
