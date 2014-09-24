@@ -1,5 +1,7 @@
 ---
-module: extended-js
+module: extend-js
+version: 0.0.1
+size: 2.68
 maintainer: Marco Asbreuk
 title: Extra functionality for basic objects
 intro: "Adds several methods to Object, Function and Promise that are frequently used"

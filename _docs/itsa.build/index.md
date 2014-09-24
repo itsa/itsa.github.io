@@ -1,5 +1,7 @@
 ---
 module: itsa.build
+version: 0.0.1
+size: 13.58
 maintainer: Marco Asbreuk
 title: Root of the standard distribution
 intro: "The `itsa.build` module provides the main root `ITSA` namespace and aggregates all the modules

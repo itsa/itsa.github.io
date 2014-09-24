@@ -1,9 +1,10 @@
 ---
 module: io
 version: 0.0.1
+size: 4.19
 maintainer: Marco Asbreuk
 title: Promised I/O
-intro: "This module consist of several files which provide easy IO. All modules extend <b>Parcela/io</b> and provide methods by which you can use IO."
+intro: "This module consist of several submodule which provide easy IO. All submodules should be merged into IO to extend its features. The size is based upon io and io-transfer."
 firstpar: get-started
 ---
 
