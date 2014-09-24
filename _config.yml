@@ -1,0 +1,29 @@
+# Site settings
+title: ITSA modules
+email: contact@itsa.io
+description: ""
+baseurl: ""
+url: "http://itsa.github.io"
+twitter_username: ItsaModules
+github_username:  itsa
+
+# Build settings
+markdown: redcarpet
+
+redcarpet:
+  input: GFM
+  extensions: [with_toc_data, prettify, hard_wrap]
+
+collections:
+  docs:
+    output: true
+
+# Defaults per scope
+defaults:
+  -
+    scope:
+      path: ""
+      type: docs
+    values:
+      layout: module # overrides previous default layout
+      category: module

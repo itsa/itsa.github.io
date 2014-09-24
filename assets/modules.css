@@ -1,0 +1,13 @@
+ul.userguide-list {
+    list-style: none;
+    padding: 0;
+}
+
+ul.userguide-list .pure-button {
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
+    margin-top: 0.7em;
+    min-width: 12em;
+    color: #FFF;
+    background-color: #1f8dd6;
+}

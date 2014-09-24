@@ -1,0 +1,8 @@
+.after-intro {
+    text-align: center;
+    margin: 5em 0 6em;
+}
+.after-intro .pure-button {
+    margin: 0.5em;
+    font-size: 1.4em;
+}

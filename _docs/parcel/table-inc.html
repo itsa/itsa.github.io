@@ -1,0 +1,90 @@
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>Nested Parcels</title>
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+</head>
+
+<body>
+	<script src="../../dist/parcela.js"></script>
+	<script>
+		var Parcela = require('parcela');
+		Parcela.ready().then(
+			function () {
+				var v = Parcela.Parcel.vNode;
+
+
+				var DataRow = Parcela.Parcel.subClass({
+					containerType: 'tr',
+					view: function () {
+						var tds = [];
+						for (var c = 0; c < this.cols; c++) {
+							tds.push(v('td', 'r' + this.row + '-c' + c));
+						}
+						return tds;
+					}
+				});
+
+				var HeaderRow = Parcela.Parcel.subClass({
+					containerType: 'thead',
+					init: function (config) {
+						var ths = [];
+						for (var c = 0; c < this.cols; c++) {
+							ths.push(v('th', 'H' + c));
+						}
+						this.ths = ths;
+					},
+					view: function () {
+						return v('tr', this.ths);
+					}
+				});
+
+				var BodySection = Parcela.Parcel.subClass({
+					containerType: 'tbody',
+					init: function (config) {
+						this.dataRows = [];
+						for (var r = 0; r < this.rows; r++) {
+							this.dataRows[r] = new DataRow(Object.merge(config, {
+								row: r
+							}));
+						}
+					},
+					view: function () {
+						return this.dataRows;
+					}
+				});
+
+				var Table = Parcela.Parcel.subClass({
+					containerType: 'table',
+					className: 'pure-table',
+					defaultConfig: {
+						rows: 2,
+						cols: 2
+					},
+					init: function (config) {
+						this.header = new HeaderRow(config);
+						this.body = new BodySection(config);
+					},
+					view: function () {
+						return [
+						this.header,
+						this.body,
+						this.caption && v('caption', this.caption)
+					];
+					}
+				});
+
+
+				Parcela.rootApp(Table, {
+					rows: 4,
+					cols: 5,
+					caption: 'this is the caption'
+				});
+			}
+		);
+	</script>
+</body>
+
+</html>

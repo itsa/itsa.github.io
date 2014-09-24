@@ -1,0 +1,38 @@
+{
+    "name": "itsa",
+    "version": "0.0.1",
+    "description": "ITSA's global aggregator",
+    "author": [
+        {
+            "name": "Marco Asbreuk",
+            "email": "marco@itsasbreuk.nl"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/itsa/itsa.build"
+    },
+    "bugs": {
+        "url": "https://github.com/itsa/itsa.build/issues"
+    },
+    "keywords": [
+        "ITSA",
+        "module",
+        "modules"
+    ],
+    "main": "itsabuild.js",
+    "dependencies": {
+        "itsa":"itsa/itsa.build"
+    },
+    "engines": {
+        "node": "*"
+    },
+    "homepage": "http://itsa.github.io",
+    "maintainers": [
+        {
+            "name": "Marco Asbreuk",
+            "email": "marco@itsasbreuk.nl"
+        }
+    ],
+    "license": "New BSD"
+}
