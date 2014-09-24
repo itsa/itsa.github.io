@@ -1,6 +1,7 @@
 ---
 module: event-dom
 version: 0.0.1
+size: 6.15
 maintainer: Marco Asbreuk
 title: DOM Events
 intro: "The event-dom module integrates DOM-events into the event-module. Using this module, you have all the power of the event-module applied to DOM-events.<br><br><b>event-dom touches no single dom-node</b>. Listening to events always happens by listening at the capturephase of <b>document</b>. Subscribers can be set without the need of node's being part of the dom."
