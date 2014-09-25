@@ -57,9 +57,9 @@
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
-                <li><a href="../classes/Promise.Resolver.html">Promise.Resolver</a></li>
-            
                 <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
             
             </ul>
 
@@ -71,9 +71,9 @@
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
-                <li><a href="../modules/event-hammerjs.html">event-hammerjs</a></li>
-            
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
                 <li><a href="../modules/extend-function.html">extend-function</a></li>
             
@@ -85,9 +85,19 @@
             
                 <li><a href="../modules/io.html">io</a></li>
             
-                <li><a href="../modules/io-win.html">io-win</a></li>
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
             
-                <li><a href="../modules/ITSA.html">ITSA</a></li>
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
             
@@ -134,7 +144,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/dist_itsabuild.js.html#l5816"><code>dist&#x2F;itsabuild.js:5816</code></a>
+            Defined in: <a href="../files/src_utils_lib_timers.js.html#l1"><code>src&#x2F;utils&#x2F;lib&#x2F;timers.js:1</code></a>
         </div>
     
 
@@ -145,6 +155,8 @@
 
 <div class="box intro">
     <p>Collection of various utility functions.</p>
+<p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
+New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 
 </div>
 
@@ -158,8 +170,8 @@
             <ul class="module-classes">
             
                 <li class="module-class">
-                    <a href="../classes/IO.html">
-                        IO
+                    <a href="../classes/Utils.html">
+                        Utils
                     </a>
                 </li>
             
@@ -168,46 +180,6 @@
     </div>
 
     <div class="yui3-u-1-2">
-        
-            <p>This module is a rollup of the following modules:</p>
-
-            <ul class="module-submodules">
-            
-                <li class="module-submodule">
-                    <a href="../modules/io-win.html">
-                        io-win
-                    </a>
-
-                    <div class="module-submodule-description">
-                        Provides core IO-functionality.
-
-The returned xhr DOES support CORS for all modern browsers.
-To use CORS, you need to setup the responseserver right
-More info about CORS: http://remysharp.com/2011/04/21/getting-cors-working/
-
-
-
-
-TODO: make STREAMING with IE9-browsers work: the XDomainRequest() seems not to fire the onprogress-event...
-      (and XMLHttpRequest1 doesn't have this event at all)
-TODO: make CORS with IE9-browsers work: the XDomainRequest() fails currently on cors..
-
-
-
-
-Using CORS with IE9-browsers need special consideration, for it uses the XDomainRequest():
-1. Only GET and POST methods are supported. Other methods will be reset into one of these,
-   so make sure the cross-domain-server handles all requests as being send with the GET or POST method.
-2. Only text/plain is supported for the request's Content-Type header. This will lead into troubles when handling
-   POST-requests: the cross-domain-server needs to extract the parameters itself. For nodejs, there is a nice npm module:
-   <code>express-ie-cors</code> https://github.com/advanced/express-ie-cors/blob/master/lib/express-ie-cors.js
-3. No custom headers can be added to the request.
-4. No authentication or cookies will be sent with the request.
-more info: http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx
-                    </div>
-                </li>
-            
-            </ul>
         
     </div>
 </div>

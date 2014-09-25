@@ -57,9 +57,9 @@
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
-                <li><a href="../classes/Promise.Resolver.html">Promise.Resolver</a></li>
-            
                 <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
             
             </ul>
 
@@ -71,9 +71,9 @@
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
-                <li><a href="../modules/event-hammerjs.html">event-hammerjs</a></li>
-            
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
                 <li><a href="../modules/extend-function.html">extend-function</a></li>
             
@@ -85,9 +85,19 @@
             
                 <li><a href="../modules/io.html">io</a></li>
             
-                <li><a href="../modules/io-win.html">io-win</a></li>
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
             
-                <li><a href="../modules/ITSA.html">ITSA</a></li>
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
             
@@ -134,13 +144,13 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/dist_itsabuild.js.html#l6352"><code>dist&#x2F;itsabuild.js:6352</code></a>
+            Defined in: <a href="../files/src_utils_lib_timers.js.html#l1"><code>src&#x2F;utils&#x2F;lib&#x2F;timers.js:1</code></a>
         </div>
     
 
     
         
-            Module: <a href="../modules/ITSA.html">ITSA</a>
+            Module: <a href="../modules/utils.html">utils</a>
         
     
 
@@ -151,6 +161,8 @@
 
 <div class="box intro">
     <p>Collection of various utility functions.</p>
+<p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
+New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 
 </div>
 
@@ -204,15 +216,6 @@
                             <li class="index-item method">
                                 <a href="#method_later">later</a>
 
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_typeOf">typeOf</a>
-
-                                
-                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
@@ -272,8 +275,6 @@
         
             
                 
-                    <p>Provided by the <a href="../modules/utils.html">utils</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -281,7 +282,7 @@
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l6220"><code>dist&#x2F;itsabuild.js:6220</code></a>
+        <a href="../files/src_utils_lib_timers.js.html#l16"><code>src&#x2F;utils&#x2F;lib&#x2F;timers.js:16</code></a>
         
         </p>
 
@@ -374,8 +375,6 @@ this is achieved using <code>setImmediate</code> or <code>process.nextTick</code
         
             
                 
-                    <p>Provided by the <a href="../modules/utils.html">utils</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -383,7 +382,7 @@ this is achieved using <code>setImmediate</code> or <code>process.nextTick</code
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l6236"><code>dist&#x2F;itsabuild.js:6236</code></a>
+        <a href="../files/src_utils_lib_timers.js.html#l32"><code>src&#x2F;utils&#x2F;lib&#x2F;timers.js:32</code></a>
         
         </p>
 
@@ -509,8 +508,6 @@ called before the callback function, the callback function won&#39;t be called.<
         
             
                 
-                    <p>Provided by the <a href="../modules/utils.html">utils</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -518,7 +515,7 @@ called before the callback function, the callback function won&#39;t be called.<
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l6171"><code>dist&#x2F;itsabuild.js:6171</code></a>
+        <a href="../files/src_utils_lib_idgenerator.js.html#l19"><code>src&#x2F;utils&#x2F;lib&#x2F;idgenerator.js:19</code></a>
         
         </p>
 
@@ -672,8 +669,6 @@ console.log(generator(&#39;Parcel&#39;)); // --&gt;&quot;Parcel-501&quot;</code>
         
             
                 
-                    <p>Provided by the <a href="../modules/utils.html">utils</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -681,7 +676,7 @@ console.log(generator(&#39;Parcel&#39;)); // --&gt;&quot;Parcel-501&quot;</code>
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l6271"><code>dist&#x2F;itsabuild.js:6271</code></a>
+        <a href="../files/src_utils_lib_timers.js.html#l67"><code>src&#x2F;utils&#x2F;lib&#x2F;timers.js:67</code></a>
         
         </p>
 
@@ -792,129 +787,6 @@ The interval executes until canceled.</p>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
                     
                     <p>a timer object. Call the cancel() method on this object to stop the timer.</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_typeOf" class="method item">
-    <h3 class="name"><code>typeOf</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>o</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/utils.html">utils</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/dist_itsabuild.js.html#l6360"><code>dist&#x2F;itsabuild.js:6360</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Improved version of the <code>typeof</code> operator, distinguishes Arrays, Date and nulls from Object.</p>
-<p>Returns one of the following strings, representing the type of the item passed in:</p>
-<p>&quot;array&quot;
-&quot;boolean&quot;
-&quot;date&quot;
-&quot;error&quot;
-&quot;function&quot;
-&quot;null&quot;
-&quot;number&quot;
-&quot;object&quot;
-&quot;regexp&quot;
-&quot;string&quot;
-&quot;undefined&quot;</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">o</code>
-                        <span class="type">Any</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the item to test.</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>:
-                    
-                    <p>the detected type.</p>
 
                 
             </div>

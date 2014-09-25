@@ -1,18 +1,13 @@
 ---
 module: event-dom
+itsaclassname: Event
 version: 0.0.1
-size: 6.15
+modulesize: 6.15
 maintainer: Marco Asbreuk
 title: DOM Events
-intro: "The event-dom module integrates DOM-events into the event-module. Using this module, you have all the power of the event-module applied to DOM-events.<br><br><b>event-dom touches no single dom-node</b>. Listening to events always happens by listening at the capturephase of <b>document</b>. Subscribers can be set without the need of node's being part of the dom."
-firstpar: get-started-browser
+intro: "The event-dom module integrates DOM-events into the event-module. Using this module, you have all the power of the event-module applied to DOM-events.<br><br><u>event-dom touches no single dom-node</u>. Listening to events always happens by listening at the capturephase of <i>document</i>. Subscribers can be set without the need of node's being part of the dom.<br><br>The loaderfiles combine <b>event</b>, <b>event-dom</b> and <b>event-mobile</b> all into ITSA.Event."
+firstpar: get-started-onlywindow
 ---
-
-```js
-<script>
-    Parcela.Event.after('click', callbackFn, 'button');
-</script>
-```
 
 #Features#
 
@@ -27,6 +22,7 @@ This module bring DOM-events to a higher level:
 * both `before` and `after` listeners can be set
 * `mouseover`- and `mouseout`-events only occurs on the selector (not noisy)
 * all events have an `eventoutside` counterpart
+
 
 #The Basics#
 

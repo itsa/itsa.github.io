@@ -3000,7 +3000,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":17}],3:[function(require,module,exports){
+},{"_process":16}],3:[function(require,module,exports){
 "use strict";
 
 /**
@@ -3008,6 +3008,10 @@ http://yuilibrary.com/license/
  * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
  *
  * Should be called using  the provided `mergeInto`-method like this:
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  * @example
  * Event = require('event');
@@ -3018,10 +3022,6 @@ http://yuilibrary.com/license/
  * @submodule event-dom
  * @class Event
  * @since 0.0.1
- *
- * <i>Copyright (c) 2014 Parcela - https://github.com/Parcela</i>
- * New BSD License - https://github.com/ItsAsbreuk/itsa-library/blob/master/LICENSE
- *
 */
 
 var NAME = '[event-dom]: ',
@@ -3032,6 +3032,7 @@ var NAME = '[event-dom]: ',
     REGEXP_NODE_ID = /^#\S+$/,
     REGEXP_EXTRACT_NODE_ID = /#(\S+)/,
     REGEXP_UI_OUTSIDE = /^.+outside$/,
+
     /*
      * Internal hash containing all DOM-events that are listened for (at `document`).
      *
@@ -3057,16 +3058,22 @@ module.exports = function (window) {
         DOM_Events, _bubbleIE8, _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor,
         _filter, _setupDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc;
 
-    window.Parcela || (window.Parcela={});
-    window.Parcela.modules || (window.Parcela.modules={});
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, '_ITSAmodules', {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
 
-    if (window.Parcela.modules.EventDom) {
+    if (window._ITSAmodules.EventDom) {
         return Event; // Event was already extended
     }
 
     // polyfill for Element.matchesSelector
     // based upon https://gist.github.com/jonathantneal/3062955
-    window.Element && function(ElementPrototype) {
+    window.Element && (function(ElementPrototype) {
         ElementPrototype.matchesSelector = ElementPrototype.matchesSelector ||
         ElementPrototype.mozMatchesSelector ||
         ElementPrototype.msMatchesSelector ||
@@ -3079,15 +3086,15 @@ module.exports = function (window) {
             while (nodes[++i] && (nodes[i] !== node));
             return !!nodes[i];
         };
-    }(window.Element.prototype);
+    }(window.Element.prototype));
 
     // polyfill for Node.contains
-    window.Node && !window.Node.prototype.contains && function(NodePrototype) {
+    window.Node && !window.Node.prototype.contains && (function(NodePrototype) {
         NodePrototype.contains = function(child) {
             var comparison = this.compareDocumentPosition(child);
             return !!((comparison===0) || (comparison & DOCUMENT_POSITION_CONTAINED_BY));
         };
-    }(window.Node.prototype);
+    }(window.Node.prototype));
 
     /*
      * Polyfill for bubbling the `focus` and `blur` events in IE8.
@@ -3502,7 +3509,7 @@ module.exports = function (window) {
     OLD_EVENTSYSTEM && _bubbleIE8();
 
     // store module:
-    window.Parcela.modules.EventDom = Event;
+    window._ITSAmodules.EventDom = Event;
     return Event;
 };
 
@@ -3515,24 +3522,23 @@ module.exports = function (window) {
  *
  * Should be called using  the provided `init`-method like this:
  *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
  * @example
  * Event = require('event');
  * DOMEvent = require('event-dom');
  * DOMEvent.mergeInto(Event);
  *
  * @module event
- * @submodule event-hammerjs
+ * @submodule event-mobile
  * @class Event
  * @since 0.0.1
- *
- * <i>Copyright (c) 2014 Parcela - https://github.com/Parcela</i>
- * New BSD License - https://github.com/ItsAsbreuk/itsa-library/blob/master/LICENSE
- *
 */
 
 var NAME = '[event-mobile]: ',
     Hammer = require('hammerjs');
-
 
 module.exports = function (window) {
     /**
@@ -3546,6 +3552,10 @@ module.exports = function (window) {
         document = window.document,
         hammertime = Event.hammertime = new Hammer(document.body),
         singletap, doubletap, tripletap;
+
+    if (window._ITSAmodules.EventMobile) {
+        return Event; // Event was already extended
+    }
 
     // create reference to the HammerClass:
     /**
@@ -3605,6 +3615,9 @@ module.exports = function (window) {
         };
     })(Hammer.Manager.prototype.set);
 
+    // store module:
+    window._ITSAmodules.EventMobile = Event;
+
     return Event;
 };
 
@@ -3616,8 +3629,10 @@ module.exports = function (window) {
  * The `Emitter-method` returns an object that should be merged into any Class-instance or object you
  * want to extend with the emit-methods, so the appropriate methods can be invoked on the instance.
  *
- * <i>Copyright (c) 2014 Parcela - https://github.com/Parcela</i>
- * New BSD License - https://github.com/ItsAsbreuk/itsa-library/blob/master/LICENSE
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
  *
  * Should be called using  the provided `extend`-method like this:
  * @example
@@ -3735,8 +3750,10 @@ Event.Emitter = function(emitterName) {
  * The returned object should be merged into any Class-instance or object you want to
  * extend with the listener-methods, so the appropriate methods can be invoked on the instance.
  *
- * <i>Copyright (c) 2014 Parcela - https://github.com/Parcela</i>
- * New BSD License - https://github.com/ItsAsbreuk/itsa-library/blob/master/LICENSE
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
  *
  * Should be called using  the provided `extend`-method like this:
  * @example
@@ -3879,8 +3896,10 @@ Event.Listener = {
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
  *
- * <i>Copyright (c) 2014 Parcela - https://github.com/Parcela</i>
- * New BSD License - https://github.com/ItsAsbreuk/itsa-library/blob/master/LICENSE
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
  *
  * @module event
  * @class Event
@@ -3894,21 +3913,22 @@ require('extend-js');
 // (which might happen: http://nodejs.org/docs/latest/api/modules.html#modules_module_caching_caveats)
 // we make sure Event is defined only once. Therefore we bind it to `global` and return it if created before
 
+
 (function (global, factory) {
 
     "use strict";
 
-    if (!global._parcelaModules) {
-        Object.defineProperty(global, '_parcelaModules', {
+    if (!global._ITSAmodules) {
+        Object.defineProperty(global, '_ITSAmodules', {
             configurable: false,
             enumerable: false,
             writable: false,
             value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
         });
     }
-    global._parcelaModules.Event || (global._parcelaModules.Event = factory());
+    global._ITSAmodules.Event || (global._ITSAmodules.Event = factory());
 
-    module.exports = global._parcelaModules.Event;
+    module.exports = global._ITSAmodules.Event;
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this, function () {
 
@@ -4805,7 +4825,6 @@ require('extend-js');
                 eventSubscribers = instance._subs[customEvent],
                 hashtable = eventSubscribers && eventSubscribers[before ? 'b' : 'a'],
                 i, subscriber, beforeUsed, afterUsed;
-            // remove only subscribers that are not subscribed to systemevents of Parcela (emitterName=='ParcelaEvent'):
             if (hashtable) {
                 // unfortunatly we cannot search by reference, because the array has composed objects
                 // also: can't use native Array.forEach: removing items within its callback change the array
@@ -5058,12 +5077,17 @@ require('./lib/extend-promise.js');
 /**
  *
  * Pollyfils for often used functionality for Functions
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
  * @module extend-js
  * @submodule extend-function
  *
 */
 
 "use strict";
+
 
 // Define configurable, writable and non-enumerable props
 // if they don't exist.
@@ -5272,12 +5296,28 @@ defineProperty(Object.prototype, 'createClass', function (constructor, prototype
 /**
  *
  * Pollyfils for often used functionality for Objects
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
  * @module extend-js
  * @submodule extend-object
  *
 */
 
 "use strict";
+
+var TYPES = {
+       'undefined' : true,
+       'number' : true,
+       'boolean' : true,
+       'string' : true,
+       '[object Function]' : true,
+       '[object RegExp]' : true,
+       '[object Array]' : true,
+       '[object Date]' : true,
+       '[object Error]' : true
+   };
 
 // Define configurable, writable and non-enumerable props
 // if they don't exist.
@@ -5495,6 +5535,16 @@ defineProperties(Object.prototype, {
 });
 
 /**
+* Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object
+*
+* @method isObject
+* @return {Boolean} true if the object is empty
+*/
+Object.isObject = function (item) {
+   return !!(!TYPES[typeof item] && !TYPES[({}.toString).call(item)] && item);
+};
+
+/**
  * Returns a new object resulting of merging the properties of the given objects.
  * The copying is shallow, complex properties will reference the very same object.
  * Properties in later objects do **not overwrite** properties of the same name in earlier objects.
@@ -5525,6 +5575,10 @@ Object.merge = function () {
  * Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,
  * But are all Promise/A+ compatable.
  *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
  * @module extend-js
  * @submodule extend-promise
  * @class Promise
@@ -5536,6 +5590,58 @@ var NAME = '[promise-ext]: ',
     ARRAY_EXPECTED = ' expects an array of values or promises', // include leading space!
     FUNCTION_EXPECTED = ' expects an array of function-references', // include leading space!
     PROMISE_CHAIN = 'Promise.chain';
+
+(function(PromisePrototype) {
+    /**
+     * Promise which can be put at the very end of a chain, even after .catch().
+     * Will invoke the callback function regardless whether the chain resolves or rejects.
+     *
+     * The argument of the callback will be either its fulfilled or rejected argument, but
+     * it is wisely not to handle it. The results should have been handled in an earlier step
+     * of the chain: .finally() basicly means you want to execute code after the chain, regardless
+     * whether it's resolved or rejected.
+     *
+     * **Note:** .finally() <u>does not return a Promise</u>: it should be used as the very last step of a Promisechain.
+     * If you need an intermediate method, you should take .thenFulfill().
+     *
+     * @method finally
+     * @param finallyback {Function} the callbackfunctio to be invoked.
+     */
+    PromisePrototype.finally = function (finallyback) {
+        console.log(NAME, 'finally');
+        this.then(finallyback, finallyback);
+    };
+
+    /**
+     * Will always return a fulfilled Promise.
+     *
+     * Typical usage will be by making it part of a Promisechain: it makes the chain go
+     * into its fulfilled phase.
+     *
+     * @example
+     *
+     * promise1
+     * .then(promise2)
+     * .thenFulfill()
+     * .then(handleFulfilled, handleRejected) // handleFulfilled always gets invoked
+     * @method thenFulfill
+     * @param [response] {Object} parameter to pass through which overrules the original Promise-response.
+     * @return {Promise} Resolved Promise. `response` will be passed trough as parameter when set.
+     *         When not set: in case the original Promise resolved, its parameter is passed through.
+     *         in case of a rejection, no parameter will be passed through.
+     */
+    PromisePrototype.thenFulfill = function (callback) {
+        console.log(NAME, 'thenFulfill');
+        return this.then(
+            function(r) {
+                return r;
+            },
+            function(r) {
+                return r;
+            }
+        ).then(callback);
+    };
+}(Promise.prototype));
 
 /**
  * Returns a Promise that always fulfills. It is fulfilled when ALL items are resolved (either fulfilled
@@ -5694,56 +5800,6 @@ Promise.chainFns = function (funcs, finishAll) {
 };
 
 /**
- * Promise which can be put at the very end of a chain, even after .catch().
- * Will invoke the callback function regardless whether the chain resolves or rejects.
- *
- * The argument of the callback will be either its fulfilled or rejected argument, but
- * it is wisely not to handle it. The results should have been handled in an earlier step
- * of the chain: .finally() basicly means you want to execute code after the chain, regardless
- * whether it's resolved or rejected.
- *
- * **Note:** .finally() <u>does not return a Promise</u>: it should be used as the very last step of a Promisechain.
- * If you need an intermediate method, you should take .thenFulfill().
- *
- * @method finally
- * @param finallyback {Function} the callbackfunctio to be invoked.
- */
-Promise.prototype.finally = function (finallyback) {
-    console.log(NAME, 'finally');
-    this.then(finallyback, finallyback);
-};
-
-/**
- * Will always return a fulfilled Promise.
- *
- * Typical usage will be by making it part of a Promisechain: it makes the chain go
- * into its fulfilled phase.
- *
- * @example
- *
- * promise1
- * .then(promise2)
- * .thenFulfill()
- * .then(handleFulfilled, handleRejected) // handleFulfilled always gets invoked
- * @method thenFulfill
- * @param [response] {Object} parameter to pass through which overrules the original Promise-response.
- * @return {Promise} Resolved Promise. `response` will be passed trough as parameter when set.
- *         When not set: in case the original Promise resolved, its parameter is passed through.
- *         in case of a rejection, no parameter will be passed through.
- */
-Promise.prototype.thenFulfill = function (callback) {
-    console.log(NAME, 'thenFulfill');
-    return this.then(
-        function(r) {
-            return r;
-        },
-        function(r) {
-            return r;
-        }
-    ).then(callback);
-};
-
-/**
  * Returns a Promise with 3 additional methods:
  *
  * promise.fulfill
@@ -5816,36 +5872,13 @@ Promise.manage = function (callbackFn) {
 /**
  * Provides core IO-functionality.
  *
- * The returned xhr DOES support CORS for all modern browsers.
- * To use CORS, you need to setup the responseserver right
- * More info about CORS: http://remysharp.com/2011/04/21/getting-cors-working/
  *
- *
- *
- *
- * TODO: make STREAMING with IE9-browsers work: the XDomainRequest() seems not to fire the onprogress-event...
- *       (and XMLHttpRequest1 doesn't have this event at all)
- * TODO: make CORS with IE9-browsers work: the XDomainRequest() fails currently on cors..
- *
- *
- *
- *
- * Using CORS with IE9-browsers need special consideration, for it uses the XDomainRequest():
- * 1. Only GET and POST methods are supported. Other methods will be reset into one of these,
- *    so make sure the cross-domain-server handles all requests as being send with the GET or POST method.
- * 2. Only text/plain is supported for the request's Content-Type header. This will lead into troubles when handling
- *    POST-requests: the cross-domain-server needs to extract the parameters itself. For nodejs, there is a nice npm module:
- *    `express-ie-cors` https://github.com/advanced/express-ie-cors/blob/master/lib/express-ie-cors.js
- * 3. No custom headers can be added to the request.
- * 4. No authentication or cookies will be sent with the request.
- * more info: http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  * @module io
- * @submodule io-win
  * @class IO
 */
-
-/* global module:false */
 
 "use strict";
 
@@ -6149,12 +6182,10 @@ module.exports = function (window) {
 },{"extend-js":8,"ypromise":2}],13:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
-	typeOf: require('./lib/typeof.js').typeOf,
 	later: require('./lib/timers.js').later,
 	async: require('./lib/timers.js').async
 };
-
-},{"./lib/idgenerator.js":14,"./lib/timers.js":15,"./lib/typeof.js":16}],14:[function(require,module,exports){
+},{"./lib/idgenerator.js":14,"./lib/timers.js":15}],14:[function(require,module,exports){
 "use strict";
 
 var UNDEFINED_NS = '__undefined__';
@@ -6163,10 +6194,15 @@ var namespaces = {};
 /**
  * Collection of various utility functions.
  *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
  * @module utils
  * @class Utils
  * @static
 */
+
 
 /**
  * Generates an unique id with the signature: "namespace-follownr"
@@ -6208,6 +6244,10 @@ module.exports.idGenerator = function(namespace, start) {
 (function (process){
 /**
  * Collection of various utility functions.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  * @module utils
  * @class Utils
@@ -6335,55 +6375,7 @@ module.exports.later=  function (callbackFn, timeout, periodic, invokeAfterFn) {
 };
 
 }).call(this,require('_process'))
-},{"_process":17}],16:[function(require,module,exports){
-"use strict";
-var TYPES = {
-	'undefined'        : 'undefined',
-	'number'           : 'number',
-	'boolean'          : 'boolean',
-	'string'           : 'string',
-	'[object Function]': 'function',
-	'[object RegExp]'  : 'regexp',
-	'[object Array]'   : 'array',
-	'[object Date]'    : 'date',
-	'[object Error]'   : 'error'
-};
-
-/**
- * Collection of various utility functions.
- *
- * @module utils
- * @class Utils
- * @static
-*/
-
-/**
- * Improved version of the `typeof` operator, distinguishes Arrays, Date and nulls from Object.
- *
- * Returns one of the following strings, representing the type of the item passed in:
- *
- * "array"
- * "boolean"
- * "date"
- * "error"
- * "function"
- * "null"
- * "number"
- * "object"
- * "regexp"
- * "string"
- * "undefined"
- *
- * @method typeOf
- * @param o {Any} the item to test.
- * @return {string} the detected type.
- * @static
-**/
-module.exports.typeOf = function(o) {
-	return TYPES[typeof o] || TYPES[({}.toString).call(o)] || (o ? 'object' : 'null');
-};
-
-},{}],17:[function(require,module,exports){
+},{"_process":16}],16:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -6448,7 +6440,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],"itsa.build":[function(require,module,exports){
+},{}],"itsa":[function(require,module,exports){
 (function (global){
 /**
  * The ITSA module is an aggregator for all the individual modules that the library uses.
@@ -6458,9 +6450,15 @@ process.chdir = function (dir) {
  * The modules themselves work quite well independent of this module and can be used
  * separately without the need of them being integrated under one globa namespace.
  *
- * @module ITSA
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module itsa.build
+ *
 */
 (function (window) {
+
     "use strict";
 
     /**
@@ -6547,19 +6545,13 @@ process.chdir = function (dir) {
     require('extend-js');
 
     /**
-    Reference to the `idGenerator` function in [utils](../modules/utils.html)
-
-    @property idGenerator
-    @type function
-    @static
+     * Reference to the `idGenerator` function in [utils](../modules/utils.html)
+     *
+     * @property idGenerator
+     * @type function
+     * @static
     */
-    /**
-    Reference to the `typeOf` function in [utils](../modules/utils.html)
 
-    @property typeOf
-    @type function
-    @static
-    */
     ITSA.merge(require('utils'));
 
     /**

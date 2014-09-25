@@ -2,6 +2,7 @@
 title: ITSA modules
 email: contact@itsa.io
 description: ""
+version: "0.0.1"
 baseurl: ""
 url: "http://itsa.github.io"
 twitter_username: ItsaModules

@@ -27,9 +27,9 @@ Code-example:
 ```
 
 ```js
-<script src="parcela-min.js"></script>
+<script src="itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
+    var ITSA = require('itsa');
     var showMsgSingle = function(e) {
         alert('Button was single tapped');
     };
@@ -37,20 +37,20 @@ Code-example:
         alert('Button was double tapped');
     };
 
-    var singletap = Parcela.Event.Hammer.get('tap');
-    var doubletap = Parcela.Event.Hammer.get('doubletap');
-    var tripletap = Parcela.Event.Hammer.get('tripletap');
+    var singletap = ITSA.Event.hammertime.get('tap');
+    var doubletap = ITSA.Event.hammertime.get('doubletap');
+    var tripletap = ITSA.Event.hammertime.get('tripletap');
 
     singletap.requireFailure([tripletap, doubletap]);
 
-    Parcela.Event.after('tap', showMsgSingle, '#buttongo');
-    Parcela.Event.after('doubletap', showMsgDouble, '#buttongo');
+    ITSA.Event.after('tap', showMsgSingle, '#buttongo');
+    ITSA.Event.after('doubletap', showMsgDouble, '#buttongo');
 </script>
 ```
 
-<script src="../../dist/parcela-min.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
+    var ITSA = require('itsa');
     var showMsgSingle = function(e) {
         alert('Button was single tapped');
     };
@@ -58,12 +58,12 @@ Code-example:
         alert('Button was double tapped');
     };
 
-    var singletap = Parcela.Event.hammertime.get('tap');
-    var doubletap = Parcela.Event.hammertime.get('doubletap');
-    var tripletap = Parcela.Event.hammertime.get('tripletap');
+    var singletap = ITSA.Event.hammertime.get('tap');
+    var doubletap = ITSA.Event.hammertime.get('doubletap');
+    var tripletap = ITSA.Event.hammertime.get('tripletap');
 
     singletap.requireFailure([tripletap, doubletap]);
 
-    Parcela.Event.after('tap', showMsgSingle, '#buttongo');
-    Parcela.Event.after('doubletap', showMsgDouble, '#buttongo');
+    ITSA.Event.after('tap', showMsgSingle, '#buttongo');
+    ITSA.Event.after('doubletap', showMsgDouble, '#buttongo');
 </script>

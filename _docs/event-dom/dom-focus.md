@@ -92,9 +92,9 @@ Code-example:
 ```
 
 ```js
-<script src="parcela-min.js"></script>
+<script src="itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
+    var ITSA = require('itsa');
     var blurContainer, focusContainer, showMsgBlur, showMsgFocus;
 
     blurContainer = document.getElementById('msg-blur');
@@ -107,19 +107,19 @@ Code-example:
         focusContainer.innerHTML = 'The element <b>'+ e.target.id + '</b> got focussed';
     };
 
-    Parcela.Event.after('blur', showMsgBlur, '#form-container input, #form-container button');
-    Parcela.Event.after('focus', showMsgFocus, '#form-container input, #form-container button');
+    ITSA.Event.after('blur', showMsgBlur, '#form-container input, #form-container button');
+    ITSA.Event.after('focus', showMsgFocus, '#form-container input, #form-container button');
 
-    Parcela.Event.before('click', function(e) {
+    ITSA.Event.before('click', function(e) {
         e.preventDefault();
         e.target.focus();
     }, '#submit-button');
 </script>
 ```
 
-<script src="../../dist/parcela-min.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
+    var ITSA = require('itsa');
     var blurContainer, focusContainer, showMsgBlur, showMsgFocus;
 
     blurContainer = document.getElementById('msg-blur');
@@ -132,10 +132,10 @@ Code-example:
         focusContainer.innerHTML = 'The element <b>'+ e.target.id + '</b> got focussed';
     };
 
-    Parcela.Event.after('blur', showMsgBlur, '#form-container input, #form-container button');
-    Parcela.Event.after('focus', showMsgFocus, '#form-container input, #form-container button');
+    ITSA.Event.after('blur', showMsgBlur, '#form-container input, #form-container button');
+    ITSA.Event.after('focus', showMsgFocus, '#form-container input, #form-container button');
 
-    Parcela.Event.before('click', function(e) {
+    ITSA.Event.before('click', function(e) {
         e.preventDefault();
         e.target.focus();
     }, '#submit-button');

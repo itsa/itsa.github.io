@@ -1,37 +1,13 @@
 ---
 module: event
+itsaclassname: Event
 version: 0.0.1
-size: 4.70
+modulesize: 4.70
 maintainer: Marco Asbreuk
-title: Events
-intro: "The event-module provides APIs for working with events through the static Class Event. Emitting and listening to events can be done at the highest level: Event. This is place where all events emit to. Also, any object or instance can emit or listen to an event by merging the propriate methods. Both user-defined events as well as the browser's DOM event system are handled by Event."
+title: Custom Events
+intro: "The event-module provides APIs for working with events through the static Class Event. Emitting and listening to events can be done at the highest level: Event. This is place where all events emit to. Also, any object or instance can emit or listen to an event by merging the propriate methods. Both user-defined events as well as the browser's DOM event system are handled by Event.<br><br>The loaderfiles combine <b>event</b>, <b>event-dom</b> and <b>event-mobile</b> all into ITSA.Event."
 firstpar: get-started
 ---
-
-<b>Step 1:</b> create package.json
-
-```json
-{
-    "name": "my-project",
-    "version": "0.0.1",
-    "dependencies": {
-        "event": "Parcela/event"
-    }
-}
-```
-
-<b>Step 2:</b> create your webapplication like this:
-
-```js
-<script>
-    var Event = require('event'),
-        myProfile = new Profile({name: Marco});
-
-    Event.after('PersonalProfile:save', function(e) {
-        // handle the event
-    }, myProfile)
-</script>
-```
 
 #The Basics#
 
@@ -396,15 +372,6 @@ This is a sort of simulating DOM-events, but not exactly:
 * Be aware that emitting through Event.emit('UI:click') makes e.target the Event-instance.
 * Emitting this way is not true simulating. Any subscriber does get invoked, but <u>the original default-function does not get invoked</u>.
 
-####simulate DOM-events####
-```js
-var myButton = Parcela.one('#someButton');
-if (myButton) {
-    Event.emit(myButton, 'click');
-}
-```
-
-Emitting DOM-events should be avoided. You should create a webapp where userinteraction leads to UI-events.
 
 #Listening for events#
 
@@ -659,7 +626,7 @@ var myMembers = new Members(),
 profileproto.defineEvent('load')
             .defaultFn(function(e) {
                 var model = e.target;
-                return Parcela.io.getObject(uri+'?id='+model.id).then(
+                return ITSA.IO.getObject(uri+'?id='+model.id).then(
                     function(response) {
                         model.merge(response);
                         return response; // pass it through to any subscriber

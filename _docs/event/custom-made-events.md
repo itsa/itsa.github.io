@@ -18,10 +18,10 @@ Code-example:
 ```
 
 ```js
-<script src="parcela-min.js"></script>
+<script src="itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
-    var Profile = Object.createClass(null, Parcela.Event.Emitter('PersonalProfile')),
+    var ITSA = require('itsa');
+    var Profile = Object.createClass(null, ITSA.Event.Emitter('PersonalProfile')),
         myProfile = new Profile();
 
     myProfile.defineEvent('save') // defines "PersonalProfile:save"
@@ -29,17 +29,17 @@ Code-example:
                  alert('personal profile was saved');
              });
 
-    Parcela.Event.after('click', function() {
+    ITSA.Event.after('click', function() {
         myProfile.emit('save');
     }, '#save');
 </script>
 ```
 
 
-<script src="../../dist/parcela-min.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
-    var Profile = Object.createClass(null, Parcela.Event.Emitter('PersonalProfile')),
+    var ITSA = require('itsa');
+    var Profile = Object.createClass(null, ITSA.Event.Emitter('PersonalProfile')),
         myProfile = new Profile();
 
     myProfile.defineEvent('save') // defines "PersonalProfile:save"
@@ -47,7 +47,7 @@ Code-example:
                  alert('personal profile was saved');
              });
 
-    Parcela.Event.after('click', function() {
+    ITSA.Event.after('click', function() {
         myProfile.emit('save');
     }, '#save');
 </script>

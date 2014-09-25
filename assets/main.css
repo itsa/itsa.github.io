@@ -80,6 +80,10 @@ body,
     line-height: 1.5em;
 }
 
+h1 img {
+    margin-right: 0.3em;
+}
+
 div {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

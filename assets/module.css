@@ -12,9 +12,15 @@ h1.moduleheader {
     border-bottom: solid 1px #888;
     font-size: 2em;
     padding: 0.5em 1em;
-    line-height: 1.6em;
+    line-height: 2em;
     margin: 0;
     font-weight: normal;
+}
+.body-content.module p.header {
+    font-weight: normal;
+    color: #990073;
+    margin: 2em 0 1em;
+    font-size: 1.4em;
 }
 .module-description {
     background-color: #666;
@@ -26,6 +32,11 @@ h1.moduleheader {
     border: solid 1px #999;
     padding: 0.75em;
     color: #555;
+}
+
+span.moduleversion {
+    margin-left: 1em;
+    font-size: 0.7em;
 }
 .pure-u-1.left-col {
     padding-right: 17em;

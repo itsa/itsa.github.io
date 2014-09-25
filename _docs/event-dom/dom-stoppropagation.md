@@ -53,9 +53,9 @@ Code-example:
 ```
 
 ```js
-<script src="parcela-min.js"></script>
+<script src="itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
+    var ITSA = require('itsa');
     var container = document.getElementById('container'),
         addText = function(text) {
             var div = document.createElement('div');
@@ -65,37 +65,37 @@ Code-example:
 
     //====================================================
 
-    Parcela.Event.after('click', function() {
+    ITSA.Event.after('click', function() {
         addText('after click --> document');
     });
 
-    Parcela.Event.after('click', function() {
+    ITSA.Event.after('click', function() {
         addText('after click --> master-container');
     }, '#master-container');
 
-    Parcela.Event.after('click', function() {
+    ITSA.Event.after('click', function() {
         addText('after click --> child-container');
     }, '#child-container');
 
-    Parcela.Event.after('click', function() {
+    ITSA.Event.after('click', function() {
         addText('after click --> child-child-container');
     }, '#child-child-container');
 
     //====================================================
 
-    Parcela.Event.before('click', function() {
+    ITSA.Event.before('click', function() {
         addText('before click --> document before');
     });
 
-    Parcela.Event.before('click', function() {
+    ITSA.Event.before('click', function() {
         addText('before click --> master-container');
     }, '#master-container');
 
-    Parcela.Event.before('click', function(e) {
+    ITSA.Event.before('click', function(e) {
         addText('before click --> child-container first subscriber');
     }, '#child-container');
 
-    Parcela.Event.before('click', function(e) {
+    ITSA.Event.before('click', function(e) {
         if (e.sourceTarget.id==='stop') {
             e.stopPropagation();
         }
@@ -105,26 +105,26 @@ Code-example:
         addText('before click --> child-container second subscriber');
     }, '#child-container');
 
-    Parcela.Event.before('click', function(e) {
+    ITSA.Event.before('click', function(e) {
         addText('before click --> child-container third subscriber');
     }, '#child-container');
 
-    Parcela.Event.before('click', function(e) {
+    ITSA.Event.before('click', function(e) {
         addText('before click --> child-child-container');
     }, '#child-child-container');
 
     //====================================================
 
-    Parcela.Event.before('click', function(e) {
+    ITSA.Event.before('click', function(e) {
         container.innerHTML = '';
         e.halt();
     }, 'button.clear');
 </script>
 ```
 
-<script src="../../dist/parcela-min.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
+    var ITSA = require('itsa');
     var container = document.getElementById('container'),
         addText = function(text) {
             var div = document.createElement('div');
@@ -134,37 +134,37 @@ Code-example:
 
     //====================================================
 
-    Parcela.Event.after('click', function() {
+    ITSA.Event.after('click', function() {
         addText('after click --> document');
     });
 
-    Parcela.Event.after('click', function() {
+    ITSA.Event.after('click', function() {
         addText('after click --> master-container');
     }, '#master-container');
 
-    Parcela.Event.after('click', function() {
+    ITSA.Event.after('click', function() {
         addText('after click --> child-container');
     }, '#child-container');
 
-    Parcela.Event.after('click', function() {
+    ITSA.Event.after('click', function() {
         addText('after click --> child-child-container');
     }, '#child-child-container');
 
     //====================================================
 
-    Parcela.Event.before('click', function() {
+    ITSA.Event.before('click', function() {
         addText('before click --> document before');
     });
 
-    Parcela.Event.before('click', function() {
+    ITSA.Event.before('click', function() {
         addText('before click --> master-container');
     }, '#master-container');
 
-    Parcela.Event.before('click', function(e) {
+    ITSA.Event.before('click', function(e) {
         addText('before click --> child-container first subscriber');
     }, '#child-container');
 
-    Parcela.Event.before('click', function(e) {
+    ITSA.Event.before('click', function(e) {
         if (e.sourceTarget.id==='stop') {
             e.stopPropagation();
         }
@@ -174,17 +174,17 @@ Code-example:
         addText('before click --> child-container second subscriber');
     }, '#child-container');
 
-    Parcela.Event.before('click', function(e) {
+    ITSA.Event.before('click', function(e) {
         addText('before click --> child-container third subscriber');
     }, '#child-container');
 
-    Parcela.Event.before('click', function(e) {
+    ITSA.Event.before('click', function(e) {
         addText('before click --> child-child-container');
     }, '#child-child-container');
 
     //====================================================
 
-    Parcela.Event.before('click', function(e) {
+    ITSA.Event.before('click', function(e) {
         container.innerHTML = '';
         e.halt();
     }, 'button.clear');

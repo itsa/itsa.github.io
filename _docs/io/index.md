@@ -1,43 +1,13 @@
 ---
 module: io
+itsaclassname: IO
 version: 0.0.1
-size: 4.19
+modulesize: 4.19
 maintainer: Marco Asbreuk
 title: Promised I/O
 intro: "This module consist of several submodule which provide easy IO. All submodules should be merged into IO to extend its features. The size is based upon io and io-transfer."
-firstpar: get-started
+firstpar: get-started-window
 ---
-
-<b>Step 1:</b> create package.json
-
-```json
-{
-    "name": "my-project",
-    "version": "0.0.1",
-    "dependencies": {
-        "io": "Parcela/io",
-        "io-transfer": "Parcela/io-transfer"
-    }
-}
-```
-
-<b>Step 2:</b> create your webapplication like this:
-
-```js
-<script>
-    var IO = require('io'),
-        IOtransfer = require('io-transfer'); // delivers the method 'get'
-
-    IOtransfer.mergeInto(IO);
-
-    IO.get('/getInfo?q=something').then(
-        function(response) {
-            // `response` holds the remotedata
-        }
-    );
-</script>
-```
-
 
 #The Basics#
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>event-hammerjs - Itsa</title>
+    <title>src/io/io-assets.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -57,9 +57,9 @@
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
-                <li><a href="../classes/Promise.Resolver.html">Promise.Resolver</a></li>
-            
                 <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
             
             </ul>
 
@@ -71,9 +71,9 @@
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
-                <li><a href="../modules/event-hammerjs.html">event-hammerjs</a></li>
-            
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
                 <li><a href="../modules/extend-function.html">extend-function</a></li>
             
@@ -85,9 +85,19 @@
             
                 <li><a href="../modules/io.html">io</a></li>
             
-                <li><a href="../modules/io-win.html">io-win</a></li>
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
             
-                <li><a href="../modules/ITSA.html">ITSA</a></li>
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
             
@@ -126,55 +136,75 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>event-hammerjs Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: src/io/io-assets.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/dist_itsabuild.js.html#l3512"><code>dist&#x2F;itsabuild.js:3512</code></a>
-        </div>
-    
+/**
+ * Extends io by adding the method &#x60;readXML&#x60; to it.
+ * Should be called using  the provided &#x60;mergeInto&#x60;-method like this:
+ *
+ * @example
+ * var IO = require(&quot;io&quot;);
+ * var IOassets = require(&quot;io-assets&quot;);
+ * IOassets.mergeInto(IO);
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module io
+ * @submodule io-assets
+ * @class IO
+ * @since 0.0.1
+*/
 
-    
-        <p>Available since 0.0.1
+var NAME = &#x27;[io-assets]: &#x27;,
 
-&lt;i&gt;Copyright (c) 2014 Parcela - https://github.com/Parcela&lt;/i&gt;
-New BSD License - https://github.com/ItsAsbreuk/itsa-library/blob/master/LICENSE</p>
-    
-</div>
+IO_ASSETS = {
+    mergeInto: function (ioInstance) {
+        /**
+         * Creates a &#x60;&lt;style&gt;&#x60; tag to load the CSS file at the given url.
+         *
+         * @method getCSS
+         * @param url {String} URL of the style sheet  to load
+         * @param [options] {Object}
+         *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
+         *    @param [options.headers] {Object} HTTP request headers.
+         *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
+         * @return {Promise} Promise holding the request. Has an additional .abort() method to cancel the request.
+         * &lt;ul&gt;
+         *     &lt;li&gt;on success: xhr {XMLHttpRequest1|XMLHttpRequest2} xhr-response&lt;/li&gt;
+         *     &lt;li&gt;on failure: reason {Error}&lt;/li&gt;
+         * &lt;/ul&gt;
+        */
+        ioInstance.getCSS = function(url, options) {
+        };
 
+        /**
+         * Creates a &#x60;&lt;script&gt;&#x60; tag to load the script at the given url.
+         *
+         * @method getJS
+         * @param url {String} URL of the style sheet  to load
+         * @param [options] {Object}
+         *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
+         *    @param [options.headers] {Object} HTTP request headers.
+         *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
+         * @return {Promise} Promise holding the request. Has an additional .abort() method to cancel the request.
+         * &lt;ul&gt;
+         *     &lt;li&gt;on success: xhr {XMLHttpRequest1|XMLHttpRequest2} xhr-response&lt;/li&gt;
+         *     &lt;li&gt;on failure: reason {Error}&lt;/li&gt;
+         * &lt;/ul&gt;
+        */
+        ioInstance.getJS = function(url, options) {
+        };
+    }
+};
 
-
-<div class="box intro">
-    <p>Integrates DOM-events to core-event-base. more about DOM-events:
-<a href="http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/">http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/</a></p>
-<p>Should be called using  the provided <code>init</code>-method like this:</p>
-
-</div>
-
-
-    <div class="example">
-        <h4>Example:</h4>
-        <div class="example-content">
-            <p>Event = require(&#39;event&#39;);
-DOMEvent = require(&#39;event-dom&#39;);
-DOMEvent.mergeInto(Event);</p>
-
-        </div>
-    </div>
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+module.exports = IO_ASSETS;
+    </pre>
 </div>
 
                     </div>

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/event-dom/event-dom.js - Itsa</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title="Itsa"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/Event.html">Event</a></li>
+            
+                <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
+            
+                <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
+            
+                <li><a href="../classes/Function.html">Function</a></li>
+            
+                <li><a href="../classes/IO.html">IO</a></li>
+            
+                <li><a href="../classes/ITSA.html">ITSA</a></li>
+            
+                <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Promise.html">Promise</a></li>
+            
+                <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/event.html">event</a></li>
+            
+                <li><a href="../modules/event-dom.html">event-dom</a></li>
+            
+                <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-function.html">extend-function</a></li>
+            
+                <li><a href="../modules/extend-js.html">extend-js</a></li>
+            
+                <li><a href="../modules/extend-object.html">extend-object</a></li>
+            
+                <li><a href="../modules/extend-promise.html">extend-promise</a></li>
+            
+                <li><a href="../modules/io.html">io</a></li>
+            
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
+            
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
+            
+                <li><a href="../modules/utils.html">utils</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/event-dom/event-dom.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+
+/**
+ * Integrates DOM-events to core-event-base. more about DOM-events:
+ * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+ *
+ * Should be called using  the provided &#x60;mergeInto&#x60;-method like this:
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @example
+ * Event = require(&#x27;event&#x27;);
+ * DOMEvent = require(&#x27;event-dom&#x27;);
+ * DOMEvent.mergeInto(Event);
+ *
+ * @module event
+ * @submodule event-dom
+ * @class Event
+ * @since 0.0.1
+*/
+
+var NAME = &#x27;[event-dom]: &#x27;,
+    Event = require(&#x27;event&#x27;),
+    async = require(&#x27;utils&#x27;).async,
+    OUTSIDE = &#x27;outside&#x27;,
+    REGEXP_UI = /^UI:/,
+    REGEXP_NODE_ID = /^#\S+$/,
+    REGEXP_EXTRACT_NODE_ID = /#(\S+)/,
+    REGEXP_UI_OUTSIDE = /^.+outside$/,
+
+    /*
+     * Internal hash containing all DOM-events that are listened for (at &#x60;document&#x60;).
+     *
+     * DOMEvents = {
+     *     &#x27;click&#x27;: callbackFn,
+     *     &#x27;mousemove&#x27;: callbackFn,
+     *     &#x27;keypress&#x27;: callbackFn
+     * }
+     *
+     * @property DOMEvents
+     * @default {}
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
+    DOCUMENT_POSITION_CONTAINED_BY = 16,
+    DOMEvents = {};
+
+module.exports = function (window) {
+    var DOCUMENT = window.document,
+        NEW_EVENTSYSTEM = DOCUMENT.addEventListener,
+        OLD_EVENTSYSTEM = !NEW_EVENTSYSTEM &amp;&amp; DOCUMENT.attachEvent,
+        DOM_Events, _bubbleIE8, _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor,
+        _filter, _setupDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc;
+
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
+
+    if (window._ITSAmodules.EventDom) {
+        return Event; // Event was already extended
+    }
+
+    // polyfill for Element.matchesSelector
+    // based upon https://gist.github.com/jonathantneal/3062955
+    window.Element &amp;&amp; (function(ElementPrototype) {
+        ElementPrototype.matchesSelector = ElementPrototype.matchesSelector ||
+        ElementPrototype.mozMatchesSelector ||
+        ElementPrototype.msMatchesSelector ||
+        ElementPrototype.oMatchesSelector ||
+        ElementPrototype.webkitMatchesSelector ||
+        function (selector) {
+            var node = this,
+                nodes = (node.parentNode || DOCUMENT).querySelectorAll(selector),
+                i = -1;
+            while (nodes[++i] &amp;&amp; (nodes[i] !== node));
+            return !!nodes[i];
+        };
+    }(window.Element.prototype));
+
+    // polyfill for Node.contains
+    window.Node &amp;&amp; !window.Node.prototype.contains &amp;&amp; (function(NodePrototype) {
+        NodePrototype.contains = function(child) {
+            var comparison = this.compareDocumentPosition(child);
+            return !!((comparison===0) || (comparison &amp; DOCUMENT_POSITION_CONTAINED_BY));
+        };
+    }(window.Node.prototype));
+
+    /*
+     * Polyfill for bubbling the &#x60;focus&#x60; and &#x60;blur&#x60; events in IE8.
+     *
+     * IE&gt;8 we can use delegating on ALL events, because we use the capture-phase.
+     * Unfortunatly this cannot be done with IE&lt;9. But we can simulate focus and blur
+     * delegation bu monitoring the focussed node.
+     *
+     * This means the IE&lt;9 will miss the events: &#x27;error&#x27;, &#x27;load&#x27;, &#x27;resize&#x27; and &#x27;scroll&#x27;
+     * However, if you need one of these to work in IE8, then you can &#x60;activate&#x60; this event on the
+     * single node that you want to minotor. You activate it and then you use the eventsystem
+     * like like you are used to. (delegated). Only activated nodes will bubble their non-bubbling events up
+     * Activation is not done manually, but automaticly: whenever there is a subscriber on a node (or an id-selector)
+     * and IE&lt;9 is the environment, then a listener for that node is set up.
+     * Side-effect is that we cannot controll when the listener isn&#x27;t needed anymore. This might lead to memory-leak - but its IE&lt;9...
+     *
+     * @method _bubbleIE8
+     * @private
+     * @since 0.0.1
+     */
+    _bubbleIE8 = function() {
+        console.log(NAME, &#x27;_bubbleIE8&#x27;);
+        // we wil emulate focus and blur by subscribing to the keyup and mouseup events:
+        // when they happen, we&#x27;ll ask for the current focussed Node --&gt; if there is a
+        // change compared to the previous, then we fire both a blur and a focus-event
+        Event._focussedNode = DOCUMENT.activeElement;
+        Event.after([&#x27;keyup&#x27;, &#x27;mouseup&#x27;], function(e) {
+            var newFocussed = DOCUMENT.activeElement,
+                prevFocussed = Event._focussedNode;
+            if (prevFocussed !== newFocussed) {
+                Event._focussedNode = newFocussed;
+                Event.emit(prevFocussed, &#x27;UI:blur&#x27;, e);
+                Event.emit(newFocussed, &#x27;UI:focus&#x27;, e);
+            }
+        });
+    };
+
+    _selToFunc = function(customEvent, subscriber) {
+        Event._sellist.some(function(selFn) {
+            return selFn(customEvent, subscriber);
+        });
+    },
+
+    /*
+     * Creates a filterfunction out of a css-selector. To be used for catching any dom-element, without restrictions
+     * of any context (like Parcels can --&gt; Parcel.Event uses _parcelSelToDom instead)
+     * On &quot;non-outside&quot; events, subscriber.t is set to the node that first matches the selector
+     * so it can be used to set as e.target in the final subscriber
+     *
+     * @method _domSelToFunc
+     * @param customEvent {String} the customEvent that is transported to the eventsystem
+     * @param subscriber {Object} subscriber
+     * @param subscriber.o {Object} context
+     * @param subscriber.cb {Function} callbackFn
+     * @param subscriber.f {Function|String} filter
+     * @private
+     * @since 0.0.1
+     */
+    _domSelToFunc = function(customEvent, subscriber) {
+        // this stage is runned during subscription
+        var outsideEvent = REGEXP_UI_OUTSIDE.test(customEvent),
+            selector = subscriber.f,
+            nodeid, byExactId;
+
+        console.log(NAME, &#x27;_domSelToFunc type of selector = &#x27;+typeof selector);
+        // note: selector could still be a function: in case another subscriber
+        // already changed it.
+        if (!selector || (typeof selector === &#x27;function&#x27;)) {
+            subscriber.n || (subscriber.n=DOCUMENT);
+            return true;
+        }
+
+        nodeid = selector.match(REGEXP_EXTRACT_NODE_ID);
+        nodeid ? (subscriber.nId=nodeid[1]) : (subscriber.n=DOCUMENT);
+
+        byExactId = REGEXP_NODE_ID.test(selector);
+
+        subscriber.f = function(e) {
+            // this stage is runned when the event happens
+            console.log(NAME, &#x27;_domSelToFunc inside filter. selector: &#x27;+selector);
+            var node = e.target,
+                match = false;
+            // e.target is the most deeply node in the dom-tree that caught the event
+            // our listener uses &#x60;selector&#x60; which might be a node higher up the tree.
+            // we will reset e.target to this node (if there is a match)
+            // note that e.currentTarget will always be &#x60;document&#x60; --&gt; we&#x27;re not interested in that
+            // also, we don&#x27;t check for &#x60;node&#x60;, but for node.matchesSelector: the highest level &#x60;document&#x60;
+            // is not null, yet it doesn;t have .matchesSelector so it would fail
+            while (node.matchesSelector &amp;&amp; !match) {
+                console.log(NAME, &#x27;_domSelToFunc inside filter check match&#x27;);
+                match = byExactId ? (node.id===selector.substr(1)) : node.matchesSelector(selector);
+                // if there is a match, then set
+                // e.target to the target that matches the selector
+                if (match &amp;&amp; !outsideEvent) {
+                    subscriber.t = node;
+                }
+                node = node.parentNode;
+            }
+            console.log(NAME, &#x27;_domSelToFunc filter returns &#x27;+(!outsideEvent ? match : !match));
+            return !outsideEvent ? match : !match;
+        };
+        return true;
+    };
+
+    // at this point, we need to find out what are the current node-refs. whenever there is
+    // a filter that starts with &#x60;#&#x60; --&gt; in those cases we have a bubble-chain, because the selector isn&#x27;t
+    // set up with &#x60;document&#x60; at its root.
+    // we couldn&#x27;t do this at time of subscribtion, for the nodes might not be there at that time.
+    // however, we only need to do this once: we store the value if we find them
+    // no problem when the nodes leave the dom later: the previous filter wouldn&#x27;t pass
+    _findCurrentTargets = function(subscribers) {
+        console.log(NAME, &#x27;_findCurrentTargets&#x27;);
+        subscribers.forEach(
+            function(subscriber) {
+                console.log(NAME, &#x27;_findCurrentTargets for single subscriber. nId: &#x27;+subscriber.nId);
+                subscriber.nId &amp;&amp; (subscriber.n=DOCUMENT.getElementById(subscriber.nId));
+            }
+        );
+    };
+
+    /*
+     * Generates an event through our Event-system. Does the actual transportation from DOM-events
+     * into our Eventsystem. It also looks at the response of our Eventsystem: if our system
+     * halts or preventDefaults the customEvent, then the original DOM-event will be preventDefaulted.
+     *
+     * @method _evCallback
+     * @param e {Object} eventobject
+     * @private
+     * @since 0.0.1
+     */
+    _evCallback = function(e) {
+        console.log(NAME, &#x27;_evCallback&#x27;);
+        var allSubscribers = Event._subs,
+            eventName = e.type,
+            customEvent = &#x27;UI:&#x27;+eventName,
+            eventobject, subs, wildcard_named_subs, named_wildcard_subs, wildcard_wildcard_subs, subsOutside,
+            subscribers, eventobjectOutside, wildcard_named_subsOutside;
+
+        subs = allSubscribers[customEvent];
+        wildcard_named_subs = allSubscribers[&#x27;*:&#x27;+eventName];
+        named_wildcard_subs = allSubscribers[&#x27;UI:*&#x27;];
+        wildcard_wildcard_subs = allSubscribers[&#x27;*:*&#x27;];
+
+        // Emit the dom-event though our eventsystem:
+        // NOTE: emit() needs to be synchronous! otherwise we wouldn&#x27;t be able
+        // to preventDefault in time
+        //
+        // e = eventobject from the DOM-event OR gesture-event
+        // eventobject = eventobject from our Eventsystem, which get returned by calling &#x60;emit()&#x60;
+
+        subscribers = _getSubscribers(e, true, subs, wildcard_named_subs, named_wildcard_subs, wildcard_wildcard_subs);
+        eventobject = Event._emit(e.target, customEvent, e, subscribers, [], _preProcessor);
+
+        // now check outside subscribers
+        subsOutside = allSubscribers[customEvent+OUTSIDE];
+        wildcard_named_subsOutside = allSubscribers[&#x27;*:&#x27;+eventName+OUTSIDE];
+        subscribers = _getSubscribers(e, true, subsOutside, wildcard_named_subsOutside);
+        eventobjectOutside = Event._emit(e.target, customEvent+OUTSIDE, e, subscribers, [], _preProcessor);
+
+        // if eventobject was preventdefaulted or halted: take appropriate action on
+        // the original dom-event. Note: only the original event can caused this, not the outsideevent
+        // stopPropagation on the original eventobject has no impact on our eventsystem, but who know who else is watching...
+        // be carefull though: not all gesture events have e.stopPropagation
+        eventobject.status.halted &amp;&amp; e.stopPropagation &amp;&amp; e.stopPropagation();
+        // now we might need to preventDefault the original event.
+        // be carefull though: not all gesture events have e.preventDefault
+        if ((eventobject.status.halted || eventobject.status.defaultPrevented) &amp;&amp; e.preventDefault) {
+            e.preventDefault();
+        }
+
+        if (eventobject.status.ok) {
+            // last step: invoke the aftersubscribers
+            // we need to do this asynchronous: this way we pass them AFTER the DOM-event&#x27;s defaultFn
+            // also make sure to paas-in the payload of the manipulated eventobject
+            subscribers = _getSubscribers(e, false, subs, wildcard_named_subs, named_wildcard_subs, wildcard_wildcard_subs);
+            (subscribers.length&gt;0) &amp;&amp; async(Event._emit.bind(Event, e.target, customEvent, eventobject, [], subscribers, _preProcessor, true), false);
+
+            // now check outside subscribers
+            subscribers = _getSubscribers(e, false, subsOutside, wildcard_named_subsOutside);
+            (subscribers.length&gt;0) &amp;&amp; async(Event._emit.bind(Event, e.target, customEvent+OUTSIDE, eventobjectOutside, [], subscribers, _preProcessor, true), false);
+        }
+    };
+
+    /*
+     * Filters a list of subscribers to only those subscribers that match the filter.
+     *
+     * @method _filter
+     * @param subscriber {Object} subscriber
+     * @param subscriber.o {Object} context
+     * @param subscriber.cb {Function} callbackFn
+     * @param subscriber.f {Function|String} filter
+     * @param e {Object} eventobject
+     * @private
+     * @return {Array} sublist of the subscribers: only those who match the filter.
+     * @since 0.0.1
+     */
+    _filter = function(subscribers, e) {
+        console.log(NAME, &#x27;_filter&#x27;);
+        var filtered = [];
+        subscribers.forEach(
+            function(subscriber) {
+                console.log(NAME, &#x27;_filter for subscriber&#x27;);
+                if (!subscriber.f || subscriber.f.call(subscriber.o, e)) {
+                    filtered.push(subscriber);
+                }
+            }
+        );
+        return filtered;
+    };
+
+    /*
+     * Creates an array of subscribers in the right order, conform their position in the DOM.
+     * Only subscribers that match the filter are involved.
+     *
+     * @method _getSubscribers
+     * @param e {Object} eventobject
+     * @param before {Boolean} whether it is a before- or after-subscriber
+     * @param subs {Array} array with subscribers
+     * @param wildcard_named_subs {Array} array with subscribers
+     * @param named_wildcard_subs {Array} array with subscribers
+     * @param wildcard_wildcard_subs {Array} array with subscribers
+     * @private
+     * @since 0.0.1
+     */
+    _getSubscribers = function(e, before, subs, wildcard_named_subs, named_wildcard_subs, wildcard_wildcard_subs) {
+        var subscribers = [],
+            beforeOrAfter = before ? &#x27;b&#x27; : &#x27;a&#x27;,
+            saveConcat = function(extrasubs) {
+                extrasubs &amp;&amp; extrasubs[beforeOrAfter] &amp;&amp; (subscribers=subscribers.concat(extrasubs[beforeOrAfter]));
+            };
+        saveConcat(subs);
+        saveConcat(wildcard_named_subs);
+        saveConcat(named_wildcard_subs);
+        saveConcat(wildcard_wildcard_subs);
+        if (subscribers.length&gt;0) {
+            subscribers=_filter(subscribers, e);
+            if (subscribers.length&gt;0) {
+                _findCurrentTargets(subscribers);
+                // sorting, based upon the sortFn
+                subscribers.sort(SORT);
+            }
+        }
+        return subscribers;
+    };
+
+    /*
+     * Sets e.target, e.currentTarget and e.sourceTarget for the single subscriber.
+     * Needs to be done for evenry single subscriber, because with a single event, these values change for each subscriber
+     *
+     * @method _preProcessor
+     * @param subscriber {Object} subscriber
+     * @param subscriber.o {Object} context
+     * @param subscriber.cb {Function} callbackFn
+     * @param subscriber.f {Function|String} filter
+     * @param e {Object} eventobject
+     * @private
+     * @since 0.0.1
+     */
+    _preProcessor = function(subscriber, e) {
+        console.log(NAME, &#x27;_preProcessor&#x27;);
+        // inside the aftersubscribers, we may need exit right away.
+        // this would be the case whenever stopPropagation or stopImmediatePropagation was called
+        // in case the subscribernode equals the node on which stopImmediatePropagation was called: return true
+        var propagationStopped, immediatePropagationStopped,
+            targetnode = (subscriber.t || subscriber.n);
+
+        immediatePropagationStopped = e.status.immediatePropagationStopped;
+        if (immediatePropagationStopped &amp;&amp; ((immediatePropagationStopped===targetnode) || !immediatePropagationStopped.contains(targetnode))) {
+            console.log(NAME, &#x27;_preProcessor will return true because of immediatePropagationStopped&#x27;);
+            return true;
+        }
+        // in case the subscribernode does not fall within or equals the node on which stopPropagation was called: return true
+        propagationStopped = e.status.propagationStopped;
+        if (propagationStopped &amp;&amp; (propagationStopped!==targetnode) &amp;&amp; !propagationStopped.contains(targetnode)) {
+            console.log(NAME, &#x27;_preProcessor will return true because of propagationStopped&#x27;);
+            return true;
+        }
+
+        e.currentTarget = subscriber.n;
+        // now we might need to set e.target to the right node:
+        // the filterfunction might have found the true domnode that should act as e.target
+        // and set it at subscriber.t
+        // also, we need to backup the original e.target: this one should be reset when
+        // we encounter a subscriber with its own filterfunction instead of selector
+        if (subscriber.t) {
+            e.sourceTarget || (e.sourceTarget=e.target);
+            e.target = subscriber.t;
+        }
+        else {
+            e.sourceTarget &amp;&amp; (e.target=e.sourceTarget);
+        }
+        return false;
+    };
+
+    /*
+     * Transports DOM-events to the Event-system. Catches events at their most early stage:
+     * their capture-phase. When these events happen, a new customEvent is generated by our own
+     * Eventsystem, by calling _evCallback(). This way we keep DOM-events and our Eventsystem completely separated.
+     *
+     * @method _setupDomListener
+     * @param customEvent {String} the customEvent that is transported to the eventsystem
+     * @param subscriber {Object} subscriber
+     * @param subscriber.o {Object} context
+     * @param subscriber.cb {Function} callbackFn
+     * @param subscriber.f {Function|String} filter
+     * @private
+     * @since 0.0.1
+     */
+    _setupDomListener = function(customEvent, subscriber) {
+        console.log(NAME, &#x27;_setupDomListener&#x27;);
+        var eventSplitted = customEvent.split(&#x27;:&#x27;),
+            eventName = eventSplitted[1],
+            outsideEvent = REGEXP_UI_OUTSIDE.test(eventName);
+
+        // be careful: anyone could also register an &#x60;outside&#x60;-event.
+        // in those cases, the DOM-listener must be set up without &#x60;outside&#x60;
+        outsideEvent &amp;&amp; (eventName=eventName.substring(0, eventName.length-7));
+
+        // if eventName equals &#x60;mouseover&#x60; or &#x60;mouseleave&#x60; then we quit:
+        // people should use &#x60;mouseover&#x60; and &#x60;mouseout&#x60;
+        if ((eventName===&#x27;mouseenter&#x27;) || (eventName===&#x27;mouseleave&#x27;)) {
+            console.warn(NAME, &#x27;Subscription to &#x27;+eventName+&#x27; not supported, use mouseover and mouseout: this eventsystem uses these non-noisy so they act as mouseenter and mouseleave&#x27;);
+            return;
+        }
+
+        // now transform the subscriber&#x27;s filter from css-string into a filterfunction
+        _selToFunc(customEvent, subscriber);
+
+        // already registered? then return, also return if someone registered for UI:*
+        if (DOMEvents[eventName] || (eventName===&#x27;*&#x27;)) {
+            // cautious: one might have registered the event, but not yet the outsideevent.
+            // in that case: save this setting:
+            outsideEvent &amp;&amp; (DOMEvents[eventName+OUTSIDE]=true);
+            return;
+        }
+
+        if (NEW_EVENTSYSTEM) {
+            // important: set the third argument &#x60;true&#x60; so we listen to the capture-phase.
+            DOCUMENT.addEventListener(eventName, _evCallback, true);
+        }
+        else if (OLD_EVENTSYSTEM) {
+            DOCUMENT.attachEvent(&#x27;on&#x27;+eventName, _evCallback);
+        }
+        DOMEvents[eventName] = true;
+        outsideEvent &amp;&amp; (DOMEvents[eventName+OUTSIDE]=true);
+    };
+
+    /*
+     *
+     * @method _sortFunc
+     * @param customEvent {String}
+     * @private
+     * @return {Function|undefined} sortable function
+     * @since 0.0.1
+     */
+    _sortFunc = function(subscriberOne, subscriberTwo) {
+        return (subscriberTwo.t || subscriberTwo.n).contains(subscriberOne.t || subscriberOne.n) ? -1 : 1;
+    };
+
+    /*
+     *
+     * @method _sortFunc
+     * @param customEvent {String}
+     * @private
+     * @return {Function|undefined} sortable function
+     * @since 0.0.1
+     */
+    _sortFuncReversed = function(subscriberOne, subscriberTwo) {
+        return (subscriberOne.t || subscriberOne.n).contains(subscriberTwo.t || subscriberTwo.n) ? 1 : -1;
+    };
+
+    // Now a very tricky one:
+    // Some browsers do an array.sort down-top instead of top-down.
+    // In those cases we need another sortFn, for the position on an equal match should fall
+    // behind instead of before (which is the case on top-down sort)
+    [1,2].sort(function(a, b) {
+        SORT || (SORT=(a===2) ? _sortFuncReversed : _sortFunc);
+    });
+
+    // Now we do some initialization in order to make DOM-events work:
+
+    // Notify when someone subscriber to an UI:* event
+    // if so: then we might need to define a customEvent for it:
+    // alse define the specific DOM-methods that can be called on the eventobject: &#x60;stopPropagation&#x60; and &#x60;stopImmediatePropagation&#x60;
+    Event.notify(&#x27;UI:*&#x27;, _setupDomListener, Event)
+         ._setEventObjProperty(&#x27;stopPropagation&#x27;, function() {this.status.ok || (this.status.propagationStopped = this.target);})
+         ._setEventObjProperty(&#x27;stopImmediatePropagation&#x27;, function() {this.status.ok || (this.status.immediatePropagationStopped = this.target);});
+
+
+    Event._sellist = [_domSelToFunc];
+
+    // Event._domCallback is the only method that is added to Event.
+    // We need to do this, because &#x60;event-mobile&#x60; needs access to the same method.
+    // We could have done without this method and instead listen for a custom-event to handle
+    // Mobile events, however, that would lead into 2 eventcycli which isn&#x27;t performant.
+
+   /**
+    * Does the actual transportation from DOM-events into the Eventsystem. It also looks at the response of
+    * the Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will be preventDefaulted.
+    *
+    * @method _domCallback
+    * @param eventName {String} the customEvent that is transported to the eventsystem
+    * @param e {Object} eventobject
+    * @private
+    * @since 0.0.1
+    */
+    Event._domCallback = function(e) {
+        _evCallback(e);
+    };
+
+    // next: bubble-polyfill for IE8:
+    OLD_EVENTSYSTEM &amp;&amp; _bubbleIE8();
+
+    // store module:
+    window._ITSAmodules.EventDom = Event;
+    return Event;
+};
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

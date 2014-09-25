@@ -57,9 +57,9 @@
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
-                <li><a href="../classes/Promise.Resolver.html">Promise.Resolver</a></li>
-            
                 <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
             
             </ul>
 
@@ -71,9 +71,9 @@
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
-                <li><a href="../modules/event-hammerjs.html">event-hammerjs</a></li>
-            
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
                 <li><a href="../modules/extend-function.html">extend-function</a></li>
             
@@ -85,9 +85,19 @@
             
                 <li><a href="../modules/io.html">io</a></li>
             
-                <li><a href="../modules/io-win.html">io-win</a></li>
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
             
-                <li><a href="../modules/ITSA.html">ITSA</a></li>
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
             
@@ -134,14 +144,14 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/dist_itsabuild.js.html#l5524"><code>dist&#x2F;itsabuild.js:5524</code></a>
+            Defined in: <a href="../files/src_extend-js_lib_extend-promise.js.html#l3"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-promise.js:3</code></a>
         </div>
     
 
     
         
-            Module: <a href="../modules/io-win.html">io-win</a><br>
-            Parent Module: <a href="../modules/io.html">io</a>
+            Module: <a href="../modules/extend-promise.html">extend-promise</a><br>
+            Parent Module: <a href="../modules/extend-js.html">extend-js</a>
         
     
 
@@ -153,102 +163,11 @@
 <div class="box intro">
     <p>Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,
 But are all Promise/A+ compatable.</p>
+<p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
+New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 
 </div>
 
-
-    <div class="constructor">
-        <h2>Constructor</h2>
-        <div id="method_Promise" class="method item">
-    <h3 class="name"><code>Promise</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>fn</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/dist_itsabuild.js.html#l5524"><code>dist&#x2F;itsabuild.js:5524</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">fn</code>
-                        <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>A function where to insert the logic that resolves this
-        promise. Receives <code>resolve</code> and <code>reject</code> functions as parameters.
-        This function is called synchronously.</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-    </div>
 
 
 <div id="classdocs" class="tabview">
@@ -258,8 +177,6 @@ But are all Promise/A+ compatable.</p>
         
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
         
-        
-            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
         
         
         
@@ -274,33 +191,6 @@ But are all Promise/A+ compatable.</p>
                     <h3>Methods</h3>
 
                     <ul class="index-list methods">
-                        
-                            <li class="index-item method private">
-                                <a href="#method__log">_log</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method private">
-                                <a href="#method__makeCallback">_makeCallback</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_async">async</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
                         
                             <li class="index-item method">
                                 <a href="#method_chainFns">chainFns</a>
@@ -328,24 +218,10 @@ But are all Promise/A+ compatable.</p>
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_hasParent">hasParent</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
                                 <a href="#method_manage">manage</a>
 
                                 
                                     <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_then">then</a>
-
                                 
                                 
                             </li>
@@ -362,28 +238,6 @@ But are all Promise/A+ compatable.</p>
             
 
             
-                <div class="index-section properties">
-                    <h3>Properties</h3>
-
-                    <ul class="index-list properties">
-                        
-                            <li class="index-item property private">
-                                <a href="#property__resolver">_resolver</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_{string}">{string}</a>
-
-                                
-                                
-                            </li>
-                        
-                    </ul>
-                </div>
-            
 
             
 
@@ -393,347 +247,6 @@ But are all Promise/A+ compatable.</p>
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
-
-                
-                    <div id="method__log" class="method item private">
-    <h3 class="name"><code>_log</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>msg</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>type</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/dist_itsabuild.js.html#l2574"><code>dist&#x2F;itsabuild.js:2574</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Logs a message. This method is designed to be overwritten with  YUI&#39;s <code>log</code>
-function.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">msg</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Message to log</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">type</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Log level. One of &#39;error&#39;, &#39;warn&#39;, &#39;info&#39;.</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method__makeCallback" class="method item private">
-    <h3 class="name"><code>_makeCallback</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>promise</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>fn</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>
-        </span>
-    
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/dist_itsabuild.js.html#l2534"><code>dist&#x2F;itsabuild.js:2534</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Wraps the callback in another function to catch exceptions and turn them
-into rejections.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">promise</code>
-                        <span class="type"><a href="../classes/Promise.html" class="crosslink">Promise</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Promise that will be affected by this callback</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">fn</code>
-                        <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Callback to wrap</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_async" class="method item">
-    <h3 class="name"><code>async</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>callback</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/dist_itsabuild.js.html#l2706"><code>dist&#x2F;itsabuild.js:2706</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Forces a function to be run asynchronously, but as fast as possible. In Node.js
-this is achieved using <code>setImmediate</code> or <code>process.nextTick</code>. In YUI this is
-replaced with <code>Y.soon</code>.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">callback</code>
-                        <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The function to call asynchronously</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
 
                 
                     <div id="method_chainFns" class="method item">
@@ -783,8 +296,6 @@ replaced with <code>Y.soon</code>.</p>
         
             
                 
-                    <p>Provided by the <a href="../modules/extend-promise.html">extend-promise</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -792,7 +303,7 @@ replaced with <code>Y.soon</code>.</p>
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l5604"><code>dist&#x2F;itsabuild.js:5604</code></a>
+        <a href="../files/src_extend-js_lib_extend-promise.js.html#l139"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-promise.js:139</code></a>
         
         </p>
 
@@ -965,8 +476,6 @@ Promise.chainFns(a).then(
         
             
                 
-                    <p>Provided by the <a href="../modules/extend-promise.html">extend-promise</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -974,7 +483,7 @@ Promise.chainFns(a).then(
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l5696"><code>dist&#x2F;itsabuild.js:5696</code></a>
+        <a href="../files/src_extend-js_lib_extend-promise.js.html#l24"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-promise.js:24</code></a>
         
         </p>
 
@@ -1069,8 +578,6 @@ If you need an intermediate method, you should take .thenFulfill().</p>
         
             
                 
-                    <p>Provided by the <a href="../modules/extend-promise.html">extend-promise</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -1078,7 +585,7 @@ If you need an intermediate method, you should take .thenFulfill().</p>
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l5540"><code>dist&#x2F;itsabuild.js:5540</code></a>
+        <a href="../files/src_extend-js_lib_extend-promise.js.html#l75"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-promise.js:75</code></a>
         
         </p>
 
@@ -1152,133 +659,6 @@ its transformed into a resolved promise.</p>
 </div>
 
                 
-                    <div id="method_hasParent" class="method item">
-    <h3 class="name"><code>hasParent</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>node</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>parent</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/dist_itsabuild.js.html#l180"><code>dist&#x2F;itsabuild.js:180</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>find if a node is in the given parent</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">node</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/Document_Object_Model_(DOM)/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">parent</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/Document_Object_Model_(DOM)/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
-                    
-                    <p>found</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
                     <div id="method_manage" class="method item">
     <h3 class="name"><code>manage</code></h3>
 
@@ -1320,8 +700,6 @@ its transformed into a resolved promise.</p>
         
             
                 
-                    <p>Provided by the <a href="../modules/extend-promise.html">extend-promise</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -1329,7 +707,7 @@ its transformed into a resolved promise.</p>
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l5746"><code>dist&#x2F;itsabuild.js:5746</code></a>
+        <a href="../files/src_extend-js_lib_extend-promise.js.html#l231"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-promise.js:231</code></a>
         
         </p>
 
@@ -1423,145 +801,6 @@ setTimeout(function() {
 </div>
 
                 
-                    <div id="method_then" class="method item">
-    <h3 class="name"><code>then</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code class="optional">[callback]</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code class="optional">[errback]</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/Promise.html" class="crosslink">Promise</a></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/dist_itsabuild.js.html#l2480"><code>dist&#x2F;itsabuild.js:2480</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Schedule execution of a callback to either or both of &quot;fulfill&quot; and
-&quot;reject&quot; resolutions for this promise. The callbacks are wrapped in a new
-promise and that promise is returned.  This allows operation chaining ala
-<code>functionA().then(functionB).then(functionC)</code> where <code>functionA</code> returns
-a promise, and <code>functionB</code> and <code>functionC</code> <em>may</em> return promises.</p>
-<p>Asynchronicity of the callbacks is guaranteed.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[callback]</code>
-                        <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>function to execute if the promise
-            resolves successfully</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[errback]</code>
-                        <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>function to execute if the promise
-            resolves unsuccessfully</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="../classes/Promise.html" class="crosslink">Promise</a></span>:
-                    
-                    <p>A promise wrapping the resolution of either &quot;resolve&quot; or
-            &quot;reject&quot; callback</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
                     <div id="method_thenFulfill" class="method item">
     <h3 class="name"><code>thenFulfill</code></h3>
 
@@ -1601,8 +840,6 @@ a promise, and <code>functionB</code> and <code>functionC</code> <em>may</em> re
         
             
                 
-                    <p>Provided by the <a href="../modules/extend-promise.html">extend-promise</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -1610,7 +847,7 @@ a promise, and <code>functionB</code> and <code>functionC</code> <em>may</em> re
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l5716"><code>dist&#x2F;itsabuild.js:5716</code></a>
+        <a href="../files/src_extend-js_lib_extend-promise.js.html#l44"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-promise.js:44</code></a>
         
         </p>
 
@@ -1691,105 +928,6 @@ into its fulfilled phase.</p>
             </div>
         
 
-        
-            <div id="properties" class="api-class-tabpanel">
-                <h2 class="off-left">Properties</h2>
-
-                
-                    <div id="property__resolver" class="property item private">
-    <h3 class="name"><code>_resolver</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/dist_itsabuild.js.html#l2459"><code>dist&#x2F;itsabuild.js:2459</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>A reference to the resolver object that handles this promise</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_{string}" class="property item">
-    <h3 class="name"><code>{string}</code></h3>
-    <span class="type">Unknown</span>
-
-    
-
-    
-
-    
-        <span class="flag final">final</span>
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/dist_itsabuild.js.html#l1926"><code>dist&#x2F;itsabuild.js:1926</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-            </div>
         
 
         

@@ -33,10 +33,10 @@ Code-example:
 ```
 
 ```js
-<script src="parcela-min.js"></script>
+<script src="itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
-    Parcela.Event.after(
+    var ITSA = require('itsa');
+    ITSA.Event.after(
         '*:save',
         function(e) {
             alert('saved with age '+e.age+' years');
@@ -47,28 +47,28 @@ Code-example:
         }
     );
 
-    Parcela.Event.after(
+    ITSA.Event.after(
         'click',
         function() {
-            Parcela.Event.emit('object1:save');
+            ITSA.Event.emit('object1:save');
         },
         '#button1'
     );
 
-    Parcela.Event.after(
+    ITSA.Event.after(
         'click',
         function() {
-            Parcela.Event.emit('object2:save', {age: 65});
+            ITSA.Event.emit('object2:save', {age: 65});
         },
         '#button2'
     );
 </script>
 ```
 
-<script src="../../dist/parcela-min.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
-    Parcela.Event.after(
+    var ITSA = require('itsa');
+    ITSA.Event.after(
         '*:save',
         function(e) {
             alert('saved with age '+e.age+' years');
@@ -79,18 +79,18 @@ Code-example:
         }
     );
 
-    Parcela.Event.after(
+    ITSA.Event.after(
         'click',
         function() {
-            Parcela.Event.emit('object1:save');
+            ITSA.Event.emit('object1:save');
         },
         '#button1'
     );
 
-    Parcela.Event.after(
+    ITSA.Event.after(
         'click',
         function() {
-            Parcela.Event.emit('object2:save', {age: 65});
+            ITSA.Event.emit('object2:save', {age: 65});
         },
         '#button2'
     );
