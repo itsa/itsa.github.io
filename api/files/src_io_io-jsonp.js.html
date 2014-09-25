@@ -162,38 +162,39 @@
 */
 
 var NAME = &#x27;[io-jsonp]: &#x27;,
-    idgenerator = require(&#x27;utils&#x27;).idgenerator,
+    idgenerator = require(&#x27;utils&#x27;).idgenerator;
 
-IO_JSONP = {
-    mergeInto: function (ioInstance) {
-        /**
-         * Creates a &#x60;&lt;style&gt;&#x60; tag to load the CSS file at the given url.
-         *
-         * @method readObjectJSONP
-         * @param url {String} URL of the style sheet  to load
-         * @param [options] {Object}
-         *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
-         *    @param [options.headers] {Object} HTTP request headers.
-         *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
-         * @return {Promise} Promise holding the request. Has an additional .abort() method to cancel the request.
-         * &lt;ul&gt;
-         *     &lt;li&gt;on success: xhr {XMLHttpRequest1|XMLHttpRequest2} xhr-response&lt;/li&gt;
-         *     &lt;li&gt;on failure: reason {Error}&lt;/li&gt;
-         * &lt;/ul&gt;
-        */
-        ioInstance.readObjectJSONP = function(url, options) {
-            var callback = idgenerator(&#x27;JSONP&#x27;);
-            return this.getJS(url, options).then(
-                function(response) {
-                    // not &#x27;try&#x27; &#x27;catch&#x27;, because, if parsing fails, we actually WANT the promise to be rejected
-                    return JSON.parse(response);
-                }
-            );
-        };
-    }
+module.exports = function (window) {
+
+    var IO = require(&#x27;./io.js&#x27;)(window);
+
+    /**
+     * Creates a &#x60;&lt;style&gt;&#x60; tag to load the CSS file at the given url.
+     *
+     * @method readObjectJSONP
+     * @param url {String} URL of the style sheet  to load
+     * @param [options] {Object}
+     *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
+     *    @param [options.headers] {Object} HTTP request headers.
+     *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
+     * @return {Promise} Promise holding the request. Has an additional .abort() method to cancel the request.
+     * &lt;ul&gt;
+     *     &lt;li&gt;on success: xhr {XMLHttpRequest1|XMLHttpRequest2} xhr-response&lt;/li&gt;
+     *     &lt;li&gt;on failure: reason {Error}&lt;/li&gt;
+     * &lt;/ul&gt;
+    */
+    IO.readObjectJSONP = function(url, options) {
+        var callback = idgenerator(&#x27;JSONP&#x27;);
+        return this.getJS(url, options).then(
+            function(response) {
+                // not &#x27;try&#x27; &#x27;catch&#x27;, because, if parsing fails, we actually WANT the promise to be rejected
+                return JSON.parse(response);
+            }
+        );
+    };
+
+    return IO;
 };
-
-module.exports = IO_JSONP;
     </pre>
 </div>
 

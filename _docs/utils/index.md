@@ -1,52 +1,78 @@
 ---
 module: utils
+itsaclassname:
 version: 0.0.1
-modulesize:
+modulesize: 1.09
+dependencies:
 maintainer: Marco Asbreuk
-title: Root of the standard distribution
-intro: "Utils"
+title: Utility functions
+intro: "Small set of handy utility functions that is used at several ITSA modules."
 firstpar: get-started
 ---
 
 #The Basics#
 
-To provide a convenient starting point for the usage of Parcela, we have created a standard distribution that collects the main resources of Parcela into one package and makes their methods accessible under the `Parcela` global namespace.
+The utility functions are all exported and accessable by their name. In ITSA-namespace, they are available as functions of ITSA.
 
-Though many applications can benefit from using the standard distribution, Parcela is not a monolithic framework.  Its separate modules can be combined in multiple ways. All of the modules are self-contained and take care of their own dependencies and make no reference to the global `Parcela` namespaced provided by this aggregator.
+##The utility functions##
 
-The *standard distribution* is packed into a bundle using [Browserify](http://browserify.org/) so it can be loaded in a single `<script src=" /* .... */  dist/parcela.js"></script>` tag.  It also provides a `package.json` file so that it, and all of ts dependencies, can be installed via `npm install`.
+###ITSA.async###
 
-The examples contained in the documentation all make use of the *standard distribution* which is rooted in this aggregator.  But it is not the only option.  For example, the [Simple Menu](../parcel/menu.html) example starts with:
-
-```js
-var Parcela = require('parcela');
-Parcela.ready().then(
-    function() {
-        var Menu = Parcela.Parcel.subClass({
-            // ...
-```
-
-Should the developer choose to use the `parcel` module directly, it is easy to do so:
+Executes a function asynchronously, by placing it at the javascript eventstack.
 
 ```js
-var Parcel = require('parcel')(window);
-var Menu = Parcel.subClass({
-    // ....
+ITSA.async(function() {
+    // do something
+});
 ```
 
-Many of the modules export functions that expect a `window` argument to be passed.  Being designed to work both in the client and the server, modules don't expect to have a global `window` available, thus, those that do need access to some sort of `window` (real or emulated) expect to receive one.
+###ITSA.later###
 
-The *standard distribution* contains a minimal DOM emulator which automatically uses when not running in the server.  This allows the developer to use other DOM emulators besides the one provided, when running in the server.
-
-The aggregator is wrapped in this function:
+Executes a function asynchronously after a specific amount of time. It's alike `setTimeout` combined with `setInterval`, only those are buggy in some environments when you cancel the process. `ITSA.later` is proven to work stable and returns a handler with a `cancel`-method to cancel the request.
 
 ```js
-(function (window) {
-
-// .. requires for all the modules.
-
-})(global.window || require('fake-dom')());
+ITSA.later(function() {
+    // do something after 2 seconds
+}, 2000);
 ```
-The wrapper function is called with `global.window` as its argument, which is the way Browserify exposes the browser's own `window` object.   If that is not available, it will `require` our own basic DOM emulator, `fake-dom`.  None of these are mandatory, the developer is free to use other Common-JS module bundler or DOM emulator.
 
-Note that our DOM emulator is not a full featured one.  Parcela makes use of a very small number of DOM methods and `fake-dom` provides only those, which allows it to be very small and highly efficient.  The `fake-dom` module is not included in the browser bundle since it is only expected to be used on the server-side.
+```js
+ITSA.later(function() {
+    // do something periodic at 2 seconds
+}, 2000, true);
+```
+
+```js
+ITSA.later(function() {
+    // do something after 2 seconds, then periodic at 5 seconds
+}, 2000, 5000);
+```
+
+```js
+var handler = ITSA.later(function() {
+    // try to do something, but is happens to be canceled...
+}, 2000);
+
+handler.cancel();
+```
+
+###ITSA.idGenerator###
+
+Generator of unique id's. Can be prepended with a namespace. Will start with 1, but you can pass any value as start-value. Any following generator will start up from its last value.
+
+```js
+ITSA.idGenerator(); // --> 1
+ITSA.idGenerator(); // --> 2
+ITSA.idGenerator(50); // --> 50
+ITSA.idGenerator(); // --> 51
+```
+
+```js
+ITSA.idGenerator('jsonp'); // --> 'jsonp1'
+ITSA.idGenerator('itsa', 10); // --> 'itsa10'
+ITSA.idGenerator(50); // --> 50
+
+ITSA.idGenerator('jsonp'); // --> 'jsonp2'
+ITSA.idGenerator('itsa', 10); // --> 'itsa11'
+ITSA.idGenerator(50); // --> 51
+```

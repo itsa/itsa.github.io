@@ -161,49 +161,49 @@
  * @since 0.0.1
 */
 
-var NAME = &#x27;[io-assets]: &#x27;,
+var NAME = &#x27;[io-assets]: &#x27;;
 
-IO_ASSETS = {
-    mergeInto: function (ioInstance) {
-        /**
-         * Creates a &#x60;&lt;style&gt;&#x60; tag to load the CSS file at the given url.
-         *
-         * @method getCSS
-         * @param url {String} URL of the style sheet  to load
-         * @param [options] {Object}
-         *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
-         *    @param [options.headers] {Object} HTTP request headers.
-         *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
-         * @return {Promise} Promise holding the request. Has an additional .abort() method to cancel the request.
-         * &lt;ul&gt;
-         *     &lt;li&gt;on success: xhr {XMLHttpRequest1|XMLHttpRequest2} xhr-response&lt;/li&gt;
-         *     &lt;li&gt;on failure: reason {Error}&lt;/li&gt;
-         * &lt;/ul&gt;
-        */
-        ioInstance.getCSS = function(url, options) {
-        };
+module.exports = function (window) {
+    var IO = require(&#x27;./io.js&#x27;)(window);
 
-        /**
-         * Creates a &#x60;&lt;script&gt;&#x60; tag to load the script at the given url.
-         *
-         * @method getJS
-         * @param url {String} URL of the style sheet  to load
-         * @param [options] {Object}
-         *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
-         *    @param [options.headers] {Object} HTTP request headers.
-         *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
-         * @return {Promise} Promise holding the request. Has an additional .abort() method to cancel the request.
-         * &lt;ul&gt;
-         *     &lt;li&gt;on success: xhr {XMLHttpRequest1|XMLHttpRequest2} xhr-response&lt;/li&gt;
-         *     &lt;li&gt;on failure: reason {Error}&lt;/li&gt;
-         * &lt;/ul&gt;
-        */
-        ioInstance.getJS = function(url, options) {
-        };
-    }
+    /**
+     * Creates a &#x60;&lt;style&gt;&#x60; tag to load the CSS file at the given url.
+     *
+     * @method getCSS
+     * @param url {String} URL of the style sheet  to load
+     * @param [options] {Object}
+     *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
+     *    @param [options.headers] {Object} HTTP request headers.
+     *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
+     * @return {Promise} Promise holding the request. Has an additional .abort() method to cancel the request.
+     * &lt;ul&gt;
+     *     &lt;li&gt;on success: xhr {XMLHttpRequest1|XMLHttpRequest2} xhr-response&lt;/li&gt;
+     *     &lt;li&gt;on failure: reason {Error}&lt;/li&gt;
+     * &lt;/ul&gt;
+    */
+    IO.getCSS = function(url, options) {
+    };
+
+    /**
+     * Creates a &#x60;&lt;script&gt;&#x60; tag to load the script at the given url.
+     *
+     * @method getJS
+     * @param url {String} URL of the style sheet  to load
+     * @param [options] {Object}
+     *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
+     *    @param [options.headers] {Object} HTTP request headers.
+     *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
+     * @return {Promise} Promise holding the request. Has an additional .abort() method to cancel the request.
+     * &lt;ul&gt;
+     *     &lt;li&gt;on success: xhr {XMLHttpRequest1|XMLHttpRequest2} xhr-response&lt;/li&gt;
+     *     &lt;li&gt;on failure: reason {Error}&lt;/li&gt;
+     * &lt;/ul&gt;
+    */
+    IO.getJS = function(url, options) {
+    };
+
+    return IO;
 };
-
-module.exports = IO_ASSETS;
     </pre>
 </div>
 
