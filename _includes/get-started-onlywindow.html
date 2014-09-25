@@ -1,0 +1,14 @@
+<h1 id="getting-started">Getting Started</h1>
+
+<p class="header">With nodejs:</p>
+<p>The module <code class="prettyprint">{{ page.module }}</code> is a typical browser-module.</p>
+
+<p class="header">In the browser:</p>
+{% include loader.html %}
+
+{% highlight js %}
+<script>
+    var ITSA = require('itsa'),
+        {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }};
+</script>
+{% endhighlight %}

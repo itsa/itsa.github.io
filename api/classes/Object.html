@@ -57,9 +57,9 @@
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
-                <li><a href="../classes/Promise.Resolver.html">Promise.Resolver</a></li>
-            
                 <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
             
             </ul>
 
@@ -71,9 +71,9 @@
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
-                <li><a href="../modules/event-hammerjs.html">event-hammerjs</a></li>
-            
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
                 <li><a href="../modules/extend-function.html">extend-function</a></li>
             
@@ -85,9 +85,19 @@
             
                 <li><a href="../modules/io.html">io</a></li>
             
-                <li><a href="../modules/io-win.html">io-win</a></li>
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
             
-                <li><a href="../modules/ITSA.html">ITSA</a></li>
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
             
@@ -134,13 +144,13 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/dist_itsabuild.js.html#l5317"><code>dist&#x2F;itsabuild.js:5317</code></a>
+            Defined in: <a href="../files/src_extend-js_lib_extend-object.js.html#l62"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-object.js:62</code></a>
         </div>
     
 
     
         
-            Module: <a href="../modules/extend-promise.html">extend-promise</a><br>
+            Module: <a href="../modules/extend-object.html">extend-object</a><br>
             Parent Module: <a href="../modules/extend-js.html">extend-js</a>
         
     
@@ -201,6 +211,13 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_isObject">isObject</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_keys">keys</a>
 
                                 
@@ -218,14 +235,14 @@
                                 <a href="#method_merge">merge</a>
 
                                 
+                                    <span class="flag static">static</span>
+                                
                                 
                             </li>
                         
                             <li class="index-item method">
                                 <a href="#method_merge">merge</a>
 
-                                
-                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
@@ -321,7 +338,7 @@
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l5259"><code>dist&#x2F;itsabuild.js:5259</code></a>
+        <a href="../files/src_extend-js_lib_extend-function.js.html#l207"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-function.js:207</code></a>
         
         </p>
 
@@ -437,8 +454,6 @@
         
             
                 
-                    <p>Provided by the <a href="../modules/extend-object.html">extend-object</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -446,7 +461,7 @@
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l5322"><code>dist&#x2F;itsabuild.js:5322</code></a>
+        <a href="../files/src_extend-js_lib_extend-object.js.html#l67"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-object.js:67</code></a>
         
         </p>
 
@@ -528,8 +543,6 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
         
             
                 
-                    <p>Provided by the <a href="../modules/extend-object.html">extend-object</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -537,7 +550,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l5438"><code>dist&#x2F;itsabuild.js:5438</code></a>
+        <a href="../files/src_extend-js_lib_extend-object.js.html#l183"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-object.js:183</code></a>
         
         </p>
 
@@ -549,6 +562,79 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
 
     <div class="description">
         <p>Returns true if the object has no own members</p>
+
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+                    
+                    <p>true if the object is empty</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_isObject" class="method item">
+    <h3 class="name"><code>isObject</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_extend-js_lib_extend-object.js.html#l242"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-object.js:242</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object</p>
 
     </div>
 
@@ -603,8 +689,6 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
         
             
                 
-                    <p>Provided by the <a href="../modules/extend-object.html">extend-object</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -612,7 +696,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l5409"><code>dist&#x2F;itsabuild.js:5409</code></a>
+        <a href="../files/src_extend-js_lib_extend-object.js.html#l154"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-object.js:154</code></a>
         
         </p>
 
@@ -688,8 +772,6 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
         
             
                 
-                    <p>Provided by the <a href="../modules/extend-object.html">extend-object</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -697,7 +779,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l5377"><code>dist&#x2F;itsabuild.js:5377</code></a>
+        <a href="../files/src_extend-js_lib_extend-object.js.html#l122"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-object.js:122</code></a>
         
         </p>
 
@@ -781,124 +863,6 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
                     
                 </li>
             
-                <li class="arg">
-                    
-                        <code>force</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag chainable">chainable</span>
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/extend-object.html">extend-object</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/dist_itsabuild.js.html#l5472"><code>dist&#x2F;itsabuild.js:5472</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Merges into this object the properties of the given object.
-If the second argument is true, the properties on the source object will be overwritten
-by those of the second object of the same name, otherwise, they are preserved.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">obj</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Object with the properties to be added to the original object</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">force</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>If true, the properties in <code>obj</code> will override those of the same name
-       in the original object</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_merge" class="method item">
-    <h3 class="name"><code>merge</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>obj</code>
-                    
-                </li>
-            
             </ul><span class="paren">)</span>
         </div>
     
@@ -927,8 +891,6 @@ by those of the second object of the same name, otherwise, they are preserved.</
         
             
                 
-                    <p>Provided by the <a href="../modules/extend-object.html">extend-object</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -936,7 +898,7 @@ by those of the second object of the same name, otherwise, they are preserved.</
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l5497"><code>dist&#x2F;itsabuild.js:5497</code></a>
+        <a href="../files/src_extend-js_lib_extend-object.js.html#l252"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-object.js:252</code></a>
         
         </p>
 
@@ -1013,6 +975,122 @@ If any of the objects is missing, it will be skiped.</p>
 </div>
 
                 
+                    <div id="method_merge" class="method item">
+    <h3 class="name"><code>merge</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>obj</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>force</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_extend-js_lib_extend-object.js.html#l217"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-object.js:217</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Merges into this object the properties of the given object.
+If the second argument is true, the properties on the source object will be overwritten
+by those of the second object of the same name, otherwise, they are preserved.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">obj</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Object with the properties to be added to the original object</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">force</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>If true, the properties in <code>obj</code> will override those of the same name
+       in the original object</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_shallowClone" class="method item">
     <h3 class="name"><code>shallowClone</code></h3>
 
@@ -1042,8 +1120,6 @@ If any of the objects is missing, it will be skiped.</p>
         
             
                 
-                    <p>Provided by the <a href="../modules/extend-object.html">extend-object</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -1051,7 +1127,7 @@ If any of the objects is missing, it will be skiped.</p>
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l5451"><code>dist&#x2F;itsabuild.js:5451</code></a>
+        <a href="../files/src_extend-js_lib_extend-object.js.html#l196"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-object.js:196</code></a>
         
         </p>
 
@@ -1129,8 +1205,6 @@ Fast, mostly useful for plain hash maps.</p>
         
             
                 
-                    <p>Provided by the <a href="../modules/extend-object.html">extend-object</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -1138,7 +1212,7 @@ Fast, mostly useful for plain hash maps.</p>
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l5349"><code>dist&#x2F;itsabuild.js:5349</code></a>
+        <a href="../files/src_extend-js_lib_extend-object.js.html#l94"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-object.js:94</code></a>
         
         </p>
 
@@ -1235,8 +1309,6 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
         
             
                 
-                    <p>Provided by the <a href="../modules/extend-object.html">extend-object</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -1244,7 +1316,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
         
         
-        <a href="../files/dist_itsabuild.js.html#l5418"><code>dist&#x2F;itsabuild.js:5418</code></a>
+        <a href="../files/src_extend-js_lib_extend-object.js.html#l163"><code>src&#x2F;extend-js&#x2F;lib&#x2F;extend-object.js:163</code></a>
         
         </p>
 

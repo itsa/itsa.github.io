@@ -27,24 +27,24 @@ Code-example:
 ```
 
 ```js
-<script src="parcela-min.js"></script>
+<script src="itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
+    var ITSA = require('itsa');
     var showMsg = function(e) {
         alert('Button was triple tapped');
     };
 
-    Parcela.Event.after('tripletap', showMsg, '#buttongo');
+    ITSA.Event.after('tripletap', showMsg, '#buttongo');
 </script>
 ```
 
 
-<script src="../../dist/parcela-min.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
+    var ITSA = require('itsa');
     var showMsg = function(e) {
         alert('Button was triple tapped');
     };
 
-    Parcela.Event.after('tripletap', showMsg, '#buttongo');
+    ITSA.Event.after('tripletap', showMsg, '#buttongo');
 </script>

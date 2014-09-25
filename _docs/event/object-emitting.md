@@ -17,11 +17,11 @@ Code-example:
 ```
 
 ```js
-<script src="parcela-min.js"></script>
+<script src="itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
-    // first create prototype-object and merge Parcela.Event.Emitter to the prototype:
-    var profileproto = Parcela.Event.Emitter('PersonalProfile'),
+    var ITSA = require('itsa');
+    // first create prototype-object and merge ITSA.Event.Emitter to the prototype:
+    var profileproto = ITSA.Event.Emitter('PersonalProfile'),
         profiles = [],
         i, myProfile;
 
@@ -32,14 +32,14 @@ Code-example:
         profiles.push(myProfile);
     }
 
-    Parcela.Event.after(
+    ITSA.Event.after(
         'PersonalProfile:save',
         function(e) {
             alert(e.target.name+' got saved');
         }
     );
 
-    Parcela.Event.after(
+    ITSA.Event.after(
         'click',
         function() {
             // we make the 11'th element to emit the save-event:
@@ -50,11 +50,11 @@ Code-example:
 </script>
 ```
 
-<script src="../../dist/parcela-min.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
-    // first create prototype-object and merge Parcela.Event.Emitter to the prototype:
-    var profileproto = Parcela.Event.Emitter('PersonalProfile'),
+    var ITSA = require('itsa');
+    // first create prototype-object and merge ITSA.Event.Emitter to the prototype:
+    var profileproto = ITSA.Event.Emitter('PersonalProfile'),
         profiles = [],
         i, myProfile;
 
@@ -65,14 +65,14 @@ Code-example:
         profiles.push(myProfile);
     }
 
-    Parcela.Event.after(
+    ITSA.Event.after(
         'PersonalProfile:save',
         function(e) {
             alert(e.target.name+' got saved');
         }
     );
 
-    Parcela.Event.after(
+    ITSA.Event.after(
         'click',
         function() {
             // we make the 11'th element to emit the save-event:

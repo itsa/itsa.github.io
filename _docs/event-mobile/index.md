@@ -1,41 +1,13 @@
 ---
 module: event-mobile
+itsaclassname: Event
 version: 0.0.1
-size: 12.18
+modulesize: 12.18
 maintainer: Marco Asbreuk
 title: Mobile Events using HammerJS
-intro: "This module adds mobile events to the `event-dom` module. It integrates all of HammerJS into the eventsystem. You need `event-dom` to make this module operational."
-firstpar: get-started-browser
+intro: "This module adds mobile events to the `event-dom` module. It integrates all of HammerJS into the eventsystem. You need `event-dom` to make this module operational.<br><br>The loaderfiles combine <b>event</b>, <b>event-dom</b> and <b>event-mobile</b> all into ITSA.Event."
+firstpar: get-started-onlywindow
 ---
-
-<b>Step 1:</b> create package.json
-
-```json
-{
-    "name": "my-project",
-    "version": "0.0.1",
-    "dependencies": {
-        "event": "Parcela/event",
-        "event-dom": "Parcela/event-dom",
-        "event-hammerjs": "Parcela/event-hammerjs"
-    }
-}
-```
-
-<b>Step 2:</b> create your webapplication like this:
-
-```js
-<script>
-    Event = require("event"),
-    EventDom = require('event-dom'),
-    HammerJS = require('event-hammerjs');
-
-    EventDom.mergeInto(Event);
-    HammerJS.mergeInto(Event);
-
-    Event.after('doubletap', callbackFn, 'button');
-</script>
-```
 
 #The Basics#
 

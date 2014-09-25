@@ -37,9 +37,9 @@ Code-example:
 ```
 
 ```js
-<script src="parcela-min.js"></script>
+<script src="itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
+    var ITSA = require('itsa');
     var count, container, addNewButton, showButtonText;
 
     count = 0;
@@ -57,8 +57,8 @@ Code-example:
         alert(e.target.innerHTML);
     };
 
-    Parcela.Event.after('click', addNewButton, '#addbtn');
-    Parcela.Event.after('click', showButtonText, '#container button');
+    ITSA.Event.after('click', addNewButton, '#addbtn');
+    ITSA.Event.after('click', showButtonText, '#container button');
 
     setTimeout(function() {
         var button = document.createElement('button');
@@ -71,9 +71,9 @@ Code-example:
 </script>
 ```
 
-<script src="../../dist/parcela-min.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
+    var ITSA = require('itsa');
     var count, container, addNewButton, showButtonText;
 
     count = 0;
@@ -91,8 +91,8 @@ Code-example:
         alert(e.target.innerHTML);
     };
 
-    Parcela.Event.after('click', addNewButton, '#addbtn');
-    Parcela.Event.after('click', showButtonText, '#container button');
+    ITSA.Event.after('click', addNewButton, '#addbtn');
+    ITSA.Event.after('click', showButtonText, '#container button');
 
     setTimeout(function() {
         var button = document.createElement('button');

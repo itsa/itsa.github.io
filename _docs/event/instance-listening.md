@@ -11,40 +11,40 @@ Click on the buttonto save profile.
 Code-example:
 
 ```js
-<script src="parcela-min.js"></script>
+<script src="itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
-    // create Class "Members" and merge Parcela.Event.Listener to the prototype:
-    var Members = Object.createClass(null, Parcela.Event.Listener),
+    var ITSA = require('itsa');
+    // create Class "Members" and merge ITSA.Event.Listener to the prototype:
+    var Members = Object.createClass(null, ITSA.Event.Listener),
         myMembers = new Members();
     myMembers.after('PersonalProfile:save', function(e) {
         alert('personal profile is saved');
     });
 
-    Parcela.Event.after(
+    ITSA.Event.after(
         'click',
         function() {
-            Parcela.Event.emit('PersonalProfile:save');
+            ITSA.Event.emit('PersonalProfile:save');
         },
         '#buttongo'
     );
 </script>
 ```
 
-<script src="../../dist/parcela-min.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
-    // create Class "Members" and merge Parcela.Event.Listener to the prototype:
-    var Members = Object.createClass(null, Parcela.Event.Listener),
+    var ITSA = require('itsa');
+    // create Class "Members" and merge ITSA.Event.Listener to the prototype:
+    var Members = Object.createClass(null, ITSA.Event.Listener),
         myMembers = new Members();
     myMembers.after('PersonalProfile:save', function(e) {
         alert('personal profile is saved');
     });
 
-    Parcela.Event.after(
+    ITSA.Event.after(
         'click',
         function() {
-            Parcela.Event.emit('PersonalProfile:save');
+            ITSA.Event.emit('PersonalProfile:save');
         },
         '#buttongo'
     );

@@ -57,9 +57,9 @@
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
-                <li><a href="../classes/Promise.Resolver.html">Promise.Resolver</a></li>
-            
                 <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
             
             </ul>
 
@@ -71,9 +71,9 @@
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
-                <li><a href="../modules/event-hammerjs.html">event-hammerjs</a></li>
-            
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
                 <li><a href="../modules/extend-function.html">extend-function</a></li>
             
@@ -85,9 +85,19 @@
             
                 <li><a href="../modules/io.html">io</a></li>
             
-                <li><a href="../modules/io-win.html">io-win</a></li>
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
             
-                <li><a href="../modules/ITSA.html">ITSA</a></li>
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
             
@@ -134,7 +144,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/dist_itsabuild.js.html#l3733"><code>dist&#x2F;itsabuild.js:3733</code></a>
+            Defined in: <a href="../files/src_event-mobile_event-mobile.js.html#l3"><code>src&#x2F;event-mobile&#x2F;event-mobile.js:3</code></a>
         </div>
     
 
@@ -147,8 +157,8 @@
 
 <div class="box intro">
     <p>Defines the Event-Class, which should be instantiated to get its functionality</p>
-<p><i>Copyright (c) 2014 Parcela - <a href="https://github.com/Parcela">https://github.com/Parcela</a></i>
-New BSD License - <a href="https://github.com/ItsAsbreuk/itsa-library/blob/master/LICENSE">https://github.com/ItsAsbreuk/itsa-library/blob/master/LICENSE</a></p>
+<p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
+New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 
 </div>
 
@@ -162,6 +172,12 @@ New BSD License - <a href="https://github.com/ItsAsbreuk/itsa-library/blob/maste
             <ul class="module-classes">
             
                 <li class="module-class">
+                    <a href="../classes/Event.html">
+                        Event
+                    </a>
+                </li>
+            
+                <li class="module-class">
                     <a href="../classes/Event.Emitter.html">
                         Event.Emitter
                     </a>
@@ -170,12 +186,6 @@ New BSD License - <a href="https://github.com/ItsAsbreuk/itsa-library/blob/maste
                 <li class="module-class">
                     <a href="../classes/Event.Listener.html">
                         Event.Listener
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Promise.Resolver.html">
-                        Promise.Resolver
                     </a>
                 </li>
             
@@ -199,19 +209,29 @@ New BSD License - <a href="https://github.com/ItsAsbreuk/itsa-library/blob/maste
 http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
 
 Should be called using  the provided <code>mergeInto</code>-method like this:
+
+
+<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
                     </div>
                 </li>
             
                 <li class="module-submodule">
-                    <a href="../modules/event-hammerjs.html">
-                        event-hammerjs
+                    <a href="../modules/event-emitter.html">
+                        event-emitter
                     </a>
 
                     <div class="module-submodule-description">
-                        Integrates DOM-events to core-event-base. more about DOM-events:
-http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+                        Extends the Event-instance by adding the method <code>Emitter</code> to it.
+The <code>Emitter-method</code> returns an object that should be merged into any Class-instance or object you
+want to extend with the emit-methods, so the appropriate methods can be invoked on the instance.
 
-Should be called using  the provided <code>init</code>-method like this:
+
+<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+
+
+Should be called using  the provided <code>extend</code>-method like this:
                     </div>
                 </li>
             
@@ -225,10 +245,29 @@ Should be called using  the provided <code>init</code>-method like this:
 The returned object should be merged into any Class-instance or object you want to
 extend with the listener-methods, so the appropriate methods can be invoked on the instance.
 
-<i>Copyright (c) 2014 Parcela - https://github.com/Parcela</i>
-New BSD License - https://github.com/ItsAsbreuk/itsa-library/blob/master/LICENSE
+
+<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+
 
 Should be called using  the provided <code>extend</code>-method like this:
+                    </div>
+                </li>
+            
+                <li class="module-submodule">
+                    <a href="../modules/event-mobile.html">
+                        event-mobile
+                    </a>
+
+                    <div class="module-submodule-description">
+                        Integrates DOM-events to core-event-base. more about DOM-events:
+http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+
+Should be called using  the provided <code>init</code>-method like this:
+
+
+<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
                     </div>
                 </li>
             

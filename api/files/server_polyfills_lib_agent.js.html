@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>io-win - Itsa</title>
+    <title>server/polyfills/lib/agent.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -57,9 +57,9 @@
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
-                <li><a href="../classes/Promise.Resolver.html">Promise.Resolver</a></li>
-            
                 <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
             
             </ul>
 
@@ -71,9 +71,9 @@
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
-                <li><a href="../modules/event-hammerjs.html">event-hammerjs</a></li>
-            
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
                 <li><a href="../modules/extend-function.html">extend-function</a></li>
             
@@ -85,9 +85,19 @@
             
                 <li><a href="../modules/io.html">io</a></li>
             
-                <li><a href="../modules/io-win.html">io-win</a></li>
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
             
-                <li><a href="../modules/ITSA.html">ITSA</a></li>
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
             
@@ -126,73 +136,104 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>io-win Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: server/polyfills/lib/agent.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+/* jshint node:true*/
+&quot;use strict&quot;;
+/**
+ * Create mappings between the names parsed from useragent (based on
+ * https://github.com/tobie/ua-parser/blob/master/regexes.yaml) to caniuse
+ * name equivalents.
+ *
+ * Each caniuse name can match against many names.
+ *
+ * To add a new mapping add the UA name to the appropriate key.
+ */
+var useragent = require(&#x27;useragent&#x27;);
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/dist_itsabuild.js.html#l5816"><code>dist&#x2F;itsabuild.js:5816</code></a>
-        </div>
-    
+var agentmappings = {
+    &quot;bb&quot;: [
+        &quot;blackberry webkit&quot;,
+        &quot;blackberry&quot;
+    ],
+    &quot;firefox&quot;: [
+        &quot;pale moon (firefox variant)&quot;,
+        &quot;firefox mobile&quot;,
+        &quot;firefox namoroka&quot;,
+        &quot;firefox shiretoko&quot;,
+        &quot;firefox minefield&quot;,
+        &quot;firefox alpha&quot;,
+        &quot;firefox beta&quot;,
+        &quot;microb&quot;,
+        &quot;mozilladeveloperpreview&quot;
+    ],
+    &quot;opera&quot;: [
+        &quot;opera tablet&quot;
+    ],
+    &quot;op_mob&quot;: [
+        &quot;opera mobile&quot;
+    ],
+    &quot;op_mini&quot;: [
+        &quot;opera mini&quot;
+    ],
+    &quot;chrome&quot;: [
+        &quot;chrome mobile&quot;,
+        &quot;chrome frame&quot;,
+        &quot;chromium&quot;
+    ],
+    &quot;ie_mob&quot;: [
+        &quot;ie mobile&quot;
+    ],
+    &quot;ie&quot;: [
+        &quot;ie large screen&quot;
+    ],
+    &quot;ios_chr&quot;: [
+        &quot;chrome mobile ios&quot;
+    ],
+    &quot;ios_saf&quot;: [
+        &quot;mobile safari&quot;
+    ]
+};
 
-    
-</div>
+var agentlist = {};
 
 
+// Invert the mappings above mapping each user agent to the caniuse name for
+// faster lookup in agent list
+Object.keys(agentmappings).forEach(function(caniuseAgentName) {
+    agentmappings[caniuseAgentName].forEach(function(userAgentName) {
+        agentlist[userAgentName] = caniuseAgentName;
+    });
+});
 
-<div class="box intro">
-    <p>Provides core IO-functionality.</p>
-<p>The returned xhr DOES support CORS for all modern browsers.
-To use CORS, you need to setup the responseserver right
-More info about CORS: <a href="http://remysharp.com/2011/04/21/getting-cors-working/">http://remysharp.com/2011/04/21/getting-cors-working/</a></p>
-<p>TODO: make STREAMING with IE9-browsers work: the XDomainRequest() seems not to fire the onprogress-event...
-      (and XMLHttpRequest1 doesn&#39;t have this event at all)
-TODO: make CORS with IE9-browsers work: the XDomainRequest() fails currently on cors..</p>
-<p>Using CORS with IE9-browsers need special consideration, for it uses the XDomainRequest():</p>
-<ol>
-<li>Only GET and POST methods are supported. Other methods will be reset into one of these,
-so make sure the cross-domain-server handles all requests as being send with the GET or POST method.</li>
-<li>Only text/plain is supported for the request&#39;s Content-Type header. This will lead into troubles when handling
-POST-requests: the cross-domain-server needs to extract the parameters itself. For nodejs, there is a nice npm module:
-<code>express-ie-cors</code> <a href="https://github.com/advanced/express-ie-cors/blob/master/lib/express-ie-cors.js">https://github.com/advanced/express-ie-cors/blob/master/lib/express-ie-cors.js</a></li>
-<li>No custom headers can be added to the request.</li>
-<li>No authentication or cookies will be sent with the request.
-more info: <a href="http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx">http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx</a></li>
-</ol>
+/**
+ * jQuery: isNumeric
+ * https://github.com/jquery/jquery/blob/bbdfbb4ee859fe9319b348d88120ddc2c9efbd63/src/core.js#L212
+ */
+function isNumeric(obj) {
+    return !Array.isArray(obj) &amp;&amp; (((obj- parseFloat(obj)) + 1) &gt;= 0);
+}
 
-</div>
+module.exports = function(uaString) {
+    var ua = useragent.lookup(uaString);
+
+    // Browsers don&#x27;t really use semantic versioning but tend to at least
+    // have a major and minor version.  This normalises the patch version so that
+    // semantic version comparison is consistent.
+    if (!isNumeric(ua.patch)) {
+        ua.patch = &#x27;0&#x27;;
+    }
+
+    // Patch ua.family with the normalised name
+    ua.family = agentlist[ua.family.toLowerCase()] || ua.family.toLowerCase();
+
+    return ua;
+};
 
 
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
-
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="../classes/IO.html">
-                        IO
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Promise.html">
-                        Promise
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+    </pre>
 </div>
 
                     </div>

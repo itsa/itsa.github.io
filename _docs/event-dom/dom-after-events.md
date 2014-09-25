@@ -38,27 +38,27 @@ Code-example:
 ```
 
 ```js
-<script src="parcela-min.js"></script>
+<script src="itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
+    var ITSA = require('itsa');
     var container = document.getElementById('container');
 
     var showMsg = function(e) {
         container.innerHTML = e.target.value;
     };
 
-    Parcela.Event.after('keypress', showMsg, '#example');
+    ITSA.Event.after('keypress', showMsg, '#example');
 </script>
 ```
 
-<script src="../../dist/parcela-min.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
+    var ITSA = require('itsa');
     var container = document.getElementById('container');
 
     var showMsg = function(e) {
         container.innerHTML = e.target.value;
     };
 
-    Parcela.Event.after('keypress', showMsg, '#example');
+    ITSA.Event.after('keypress', showMsg, '#example');
 </script>

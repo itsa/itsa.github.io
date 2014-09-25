@@ -17,9 +17,9 @@ Code-example:
 ```
 
 ```js
-<script src="parcela-min.js"></script>
+<script src="itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
+    var ITSA = require('itsa');
 
     // instead of loading the data (as explained in the example-source)
     // we simulate this by just creating the array.
@@ -32,27 +32,27 @@ Code-example:
         profiles.push({name: 'Marco '+i});
     }
 
-    Parcela.Event.after(
+    ITSA.Event.after(
         'PersonalProfile:save',
         function(e) {
             alert(e.target.name+' got saved');
         }
     );
 
-    Parcela.Event.after(
+    ITSA.Event.after(
         'click',
         function() {
             // we make the 11'th element to emit the save-event:
-            Parcela.Event.emit(profiles[10], 'PersonalProfile:save');
+            ITSA.Event.emit(profiles[10], 'PersonalProfile:save');
         },
         '#buttongo'
     );
 </script>
 ```
 
-<script src="../../dist/parcela-min.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
+    var ITSA = require('itsa');
 
     // instead of loading the data (as explained in the example-source)
     // we simulate this by just creating the array.
@@ -65,18 +65,18 @@ Code-example:
         profiles.push({name: 'Marco '+i});
     }
 
-    Parcela.Event.after(
+    ITSA.Event.after(
         'PersonalProfile:save',
         function(e) {
             alert(e.target.name+' got saved');
         }
     );
 
-    Parcela.Event.after(
+    ITSA.Event.after(
         'click',
         function() {
             // we make the 11'th element to emit the save-event:
-            Parcela.Event.emit(profiles[10], 'PersonalProfile:save');
+            ITSA.Event.emit(profiles[10], 'PersonalProfile:save');
         },
         '#buttongo'
     );

@@ -1,5 +1,17 @@
 <h1 id="getting-started">Getting Started</h1>
+
+<p class="header">With nodejs:</p>
+<p>Create your project using this <a href="./dist/package.json">package.json</a>. After downloaded, run <code class="prettyprint">npm install</code> and start writing your application:</p>
+{% highlight js %}
+var {{ page.itsaclassname }} = require('{{ page.module }}');
+{% endhighlight %}
+
+<p class="header">In the browser:</p>
 {% include loader.html %}
-<p>
-When using on nodejs, you don't need this loader. Then require the modules and create your code:
-</p>
+
+{% highlight js %}
+<script>
+    var ITSA = require('itsa'),
+        {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }};
+</script>
+{% endhighlight %}

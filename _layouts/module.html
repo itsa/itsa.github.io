@@ -19,8 +19,11 @@
     {% include moduleheader.html %}
     <div class="module-description pure-g">
         <div class="pure-u-3-4">
-            module: <a href="./index.html">{{ page.module }}</a><br>
-            size-min gzipped: {{ page.size }} kb<br>
+            module: <a href="./index.html">{{ page.module }}</a><span class="moduleversion">{{ page.version }}</span><br>
+            {% if page.modulesize %}
+                size-min gzipped: {{ page.modulesize }} kb
+            {% endif %}
+            <br>
             maintanance: {{ page.maintainer }}
         </div>
         <div class="pure-u-1-4">

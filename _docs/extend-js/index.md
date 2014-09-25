@@ -1,11 +1,13 @@
 ---
 module: extend-js
 version: 0.0.1
-size: 2.68
+modulesize: 2.68
 maintainer: Marco Asbreuk
 title: Extra functionality for basic objects
 intro: "Adds several methods to Object, Function and Promise that are frequently used"
+firstpar: get-started
 ---
+
 #The Basics#
 
 The `forEach` method added functional programing style looping through arrays, as did several other methods such as  `map`, or `some`.  That functionality is sorely lacking in `Object` which has the added complication of having to check via `hasOwnProperty` to see if the named member belongs to the object or has been inherited.
@@ -109,6 +111,8 @@ console.log(a);
 
 ### Object.merge
 
+_(static method)_
+
 Returns a new object resulting of merging the properties of the objects passed as its arguments.   If several objects have properties with the same name, the first one will prevail.
 
 A useful example is filling up a configuration object with default values.
@@ -120,6 +124,17 @@ var init = function (config) {
 ```
 
 The `config` argument can be missing but after calling `Object.merge` it will always be an object. In either case the returned object will have the properties in `defaultConfig` filling in the missing properties in `config`.
+
+### Object.isObject
+
+_(static method)_
+
+Returns true when an object passed. Will return false for Array, Functions, RegExp, Date and Error objects.
+
+```js
+    var a = {};
+    isObj = Object.isObject(a);
+```
 
 ### createClass
 

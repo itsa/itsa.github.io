@@ -18,9 +18,9 @@ Code-example:
 ```
 
 ```js
-<script src="parcela-min.js"></script>
+<script src="itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
+    var ITSA = require('itsa');
     var afterClick = function(e) {
         // the alert will never pop-up
         alert('Button #buttongo is clicked');
@@ -29,14 +29,14 @@ Code-example:
         e.preventDefault();
     };
 
-    Parcela.Event.before('click', beforeClick, '#buttongo');
-    Parcela.Event.after('click', afterClick, '#buttongo');
+    ITSA.Event.before('click', beforeClick, '#buttongo');
+    ITSA.Event.after('click', afterClick, '#buttongo');
 </script>
 ```
 
-<script src="../../dist/parcela-min.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var Parcela = require('parcela');
+    var ITSA = require('itsa');
     var afterClick = function(e) {
         // the alert will never pop-up
         alert('Button #buttongo is clicked');
@@ -45,6 +45,6 @@ Code-example:
         e.preventDefault();
     };
 
-    Parcela.Event.before('click', beforeClick, '#buttongo');
-    Parcela.Event.after('click', afterClick, '#buttongo');
+    ITSA.Event.before('click', beforeClick, '#buttongo');
+    ITSA.Event.after('click', afterClick, '#buttongo');
 </script>

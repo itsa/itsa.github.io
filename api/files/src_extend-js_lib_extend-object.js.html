@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/extend-js/lib/extend-object.js - Itsa</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title="Itsa"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/Event.html">Event</a></li>
+            
+                <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
+            
+                <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
+            
+                <li><a href="../classes/Function.html">Function</a></li>
+            
+                <li><a href="../classes/IO.html">IO</a></li>
+            
+                <li><a href="../classes/ITSA.html">ITSA</a></li>
+            
+                <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Promise.html">Promise</a></li>
+            
+                <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/event.html">event</a></li>
+            
+                <li><a href="../modules/event-dom.html">event-dom</a></li>
+            
+                <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-function.html">extend-function</a></li>
+            
+                <li><a href="../modules/extend-js.html">extend-js</a></li>
+            
+                <li><a href="../modules/extend-object.html">extend-object</a></li>
+            
+                <li><a href="../modules/extend-promise.html">extend-promise</a></li>
+            
+                <li><a href="../modules/io.html">io</a></li>
+            
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
+            
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
+            
+                <li><a href="../modules/utils.html">utils</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/extend-js/lib/extend-object.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ *
+ * Pollyfils for often used functionality for Objects
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module extend-js
+ * @submodule extend-object
+ *
+*/
+
+&quot;use strict&quot;;
+
+var TYPES = {
+       &#x27;undefined&#x27; : true,
+       &#x27;number&#x27; : true,
+       &#x27;boolean&#x27; : true,
+       &#x27;string&#x27; : true,
+       &#x27;[object Function]&#x27; : true,
+       &#x27;[object RegExp]&#x27; : true,
+       &#x27;[object Array]&#x27; : true,
+       &#x27;[object Date]&#x27; : true,
+       &#x27;[object Error]&#x27; : true
+   };
+
+// Define configurable, writable and non-enumerable props
+// if they don&#x27;t exist.
+var defineProperty = function (object, name, method, force) {
+    if (!force &amp;&amp; (name in object)) {
+        return;
+    }
+    Object.defineProperty(object, name, {
+        configurable: true,
+        enumerable: false,
+        writable: true,
+        value: method
+    });
+};
+var defineProperties = function (object, map, force) {
+    var names = Object.keys(map),
+        l = names.length,
+        i = -1,
+        name;
+    while (++i &lt; l) {
+        name = names[i];
+        defineProperty(object, name, map[name], force);
+    }
+};
+
+var _each = function (obj, fn, context) {
+    var keys = Object.keys(obj),
+        l = keys.length,
+        i = -1,
+        key;
+    while (++i &lt; l) {
+        key = keys[i];
+        fn.call(context, obj[key], key, obj);
+    }
+    return obj;
+};
+/**
+ * Pollyfils for often used functionality for objects
+ * @class Object
+*/
+defineProperties(Object.prototype, {
+    /**
+     * Loops through all properties in the object.  Equivalent to Array.forEach.
+     * The callback is provided with the value of the property, the name of the property
+     * and a reference to the whole object itself.
+     * The context to run the callback in can be overriden, otherwise it is undefined.
+     *
+     * @method each
+     * @param fn {Function} Function to be executed on each item in the object.  It will receive
+     *                      value {any} value of the property
+     *                      key {string} name of the property
+     *                      obj {Object} the whole of the object
+     * @chainable
+     */
+
+    each: function (fn, context) {
+        if (context) return _each(this, fn, context);
+        var keys = Object.keys(this),
+            l = keys.length,
+            i = -1,
+            key;
+        while (++i &lt; l) {
+            key = keys[i];
+            fn(this[key], key, this);
+        }
+        return this;
+    },
+
+    /**
+     * Loops through the properties in an object until the callback function returns *truish*.
+     * The callback is provided with the value of the property, the name of the property
+     * and a reference to the whole object itself.
+     * The order in which the elements are visited is not predictable.
+     * The context to run the callback in can be overriden, otherwise it is undefined.
+     *
+     * @method some
+     * @param fn {Function} Function to be executed on each item in the object.  It will receive
+     *                      value {any} value of the property
+     *                      key {string} name of the property
+     *                      obj {Object} the whole of the object
+     * @return {Boolean} true if the loop was interrupted by the callback function returning *truish*.
+     */
+    some: function (fn, context) {
+        var keys = Object.keys(this),
+            l = keys.length,
+            i = -1,
+            key;
+        while (++i &lt; l) {
+            key = keys[i];
+            if (fn.call(context, this[key], key, this)) {
+                return true;
+            }
+        }
+        return false;
+    },
+
+    /**
+     * Loops through the properties in an object until the callback assembling a new object
+     * with its properties set to the values returned by the callback function.
+     * If the callback function returns &#x60;undefined&#x60; the property will not be copied to the new object.
+     * The resulting object will have the same keys as the original, except for those where the callback
+     * returned &#x60;undefined&#x60; which will have dissapeared.
+     * The callback is provided with the value of the property, the name of the property
+     * and a reference to the whole object itself.
+     * The context to run the callback in can be overriden, otherwise it is undefined.
+     *
+     * @method map
+     * @param fn {Function} Function to be executed on each item in the object.  It will receive
+     *                      value {any} value of the property
+     *                      key {string} name of the property
+     *                      obj {Object} the whole of the object
+     * @return {Object} The new object with its properties set to the values returned by the callback function.
+     */
+    map: function (fn, context) {
+        var keys = Object.keys(this),
+            l = keys.length,
+            i = -1,
+            m = {},
+            val, key;
+        while (++i &lt; l) {
+            key = keys[i];
+            val = fn.call(context, this[key], key, this);
+            if (val !== undefined) {
+                m[key] = val;
+            }
+        }
+        return m;
+    },
+    /**
+     * Returns the keys of the object.
+     *
+     * @method keys
+     * @return {Array} Keys of the object
+     */
+    keys: function () {
+        return Object.keys(this);
+    },
+    /**
+     * Loops through the object collection the values of all its properties.
+     * It is the counterpart of the [&#x60;keys&#x60;](#method_keys).
+     *
+     * @method values
+     * @return {Array} values of the object
+     */
+    values: function () {
+        var keys = Object.keys(this),
+            i = -1,
+            len = keys.length,
+            values = [];
+
+        while (++i &lt; len) {
+            values.push(this[keys[i]]);
+        }
+
+        return values;
+    },
+
+    /**
+     * Returns true if the object has no own members
+     *
+     * @method isEmpty
+     * @return {Boolean} true if the object is empty
+     */
+    isEmpty: function () {
+        for (var key in this) {
+            if (this.hasOwnProperty(key)) return false;
+        }
+        return true;
+    },
+
+    /**
+     * Returns a shallow copy of the object.
+     * It does not clone objects within the object, it does a simple, shallow clone.
+     * Fast, mostly useful for plain hash maps.
+     *
+     * @method shallowClone
+     * @return {Object} shallow copy of the original
+     */
+    shallowClone: function () {
+        var m = {},
+            keys = Object.keys(this),
+            l = keys.length,
+            i = -1,
+            key;
+        while (++i &lt; l) {
+            key = keys[i];
+            m[key] = this[key];
+        }
+        return m;
+    },
+
+    /**
+     * Merges into this object the properties of the given object.
+     * If the second argument is true, the properties on the source object will be overwritten
+     * by those of the second object of the same name, otherwise, they are preserved.
+     *
+     * @method merge
+     * @param obj {Object} Object with the properties to be added to the original object
+     * @param force {Boolean} If true, the properties in &#x60;obj&#x60; will override those of the same name
+     *        in the original object
+     * @chainable
+     */
+    merge: function (obj, force) {
+        var m = this;
+        if (obj &amp;&amp; obj.each) obj.each(function (value, key) {
+            if (force || !(key in m)) {
+                m[key] = obj[key];
+            }
+        });
+        return m;
+    }
+
+
+
+});
+
+/**
+* Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object
+*
+* @method isObject
+* @return {Boolean} true if the object is empty
+*/
+Object.isObject = function (item) {
+   return !!(!TYPES[typeof item] &amp;&amp; !TYPES[({}.toString).call(item)] &amp;&amp; item);
+};
+
+/**
+ * Returns a new object resulting of merging the properties of the given objects.
+ * The copying is shallow, complex properties will reference the very same object.
+ * Properties in later objects do **not overwrite** properties of the same name in earlier objects.
+ * If any of the objects is missing, it will be skiped.
+ *
+ * @example
+ *
+ *  var foo = function (config) {
+ *       config = Object.merge(config, defaultConfig);
+ *  }
+ *
+ * @method merge
+ * @static
+ * @param obj* {Object} Objects whose properties are to be merged
+ * @return {Object} new object with the properties merged in.
+ */
+Object.merge = function () {
+    var m = {};
+    Array.prototype.forEach.call(arguments, function (obj) {
+        if (obj) m.merge(obj);
+    });
+    return m;
+};
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

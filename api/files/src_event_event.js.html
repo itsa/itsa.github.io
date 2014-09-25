@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/event/event.js - Itsa</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title="Itsa"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/Event.html">Event</a></li>
+            
+                <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
+            
+                <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
+            
+                <li><a href="../classes/Function.html">Function</a></li>
+            
+                <li><a href="../classes/IO.html">IO</a></li>
+            
+                <li><a href="../classes/ITSA.html">ITSA</a></li>
+            
+                <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Promise.html">Promise</a></li>
+            
+                <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/event.html">event</a></li>
+            
+                <li><a href="../modules/event-dom.html">event-dom</a></li>
+            
+                <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-function.html">extend-function</a></li>
+            
+                <li><a href="../modules/extend-js.html">extend-js</a></li>
+            
+                <li><a href="../modules/extend-object.html">extend-object</a></li>
+            
+                <li><a href="../modules/extend-promise.html">extend-promise</a></li>
+            
+                <li><a href="../modules/io.html">io</a></li>
+            
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
+            
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
+            
+                <li><a href="../modules/utils.html">utils</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/event/event.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Defines the Event-Class, which should be instantiated to get its functionality
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module event
+ * @class Event
+ * @constructor
+ * @since 0.0.1
+*/
+
+require(&#x27;extend-js&#x27;);
+
+// to prevent multiple Event instances
+// (which might happen: http://nodejs.org/docs/latest/api/modules.html#modules_module_caching_caveats)
+// we make sure Event is defined only once. Therefore we bind it to &#x60;global&#x60; and return it if created before
+
+
+(function (global, factory) {
+
+    &quot;use strict&quot;;
+
+    if (!global._ITSAmodules) {
+        Object.defineProperty(global, &#x27;_ITSAmodules&#x27;, {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
+    global._ITSAmodules.Event || (global._ITSAmodules.Event = factory());
+
+    module.exports = global._ITSAmodules.Event;
+
+}(typeof global !== &#x27;undefined&#x27; ? global : /* istanbul ignore next */ this, function () {
+
+    &quot;use strict&quot;;
+
+    var NAME = &#x27;[core-event]: &#x27;,
+        REGEXP_CUSTOMEVENT = /^((?:\w|-)+):((?:\w|-)+)$/,
+        REGEXP_WILDCARD_CUSTOMEVENT = /^(?:((?:(?:\w|-)+)|\*):)?((?:(?:\w|-)+)|\*)$/,
+        /* REGEXP_WILDCARD_CUSTOMEVENT :
+         *
+         * valid:
+         * &#x27;red:save&#x27;
+         * &#x27;red:*&#x27;
+         * &#x27;*:save&#x27;
+         * &#x27;*:*&#x27;
+         * &#x27;save&#x27;
+         *
+         * invalid:
+         * &#x27;*red:save&#x27;
+         * &#x27;re*d:save&#x27;
+         * &#x27;red*:save&#x27;
+         * &#x27;red:*save&#x27;
+         * &#x27;red:sa*ve&#x27;
+         * &#x27;red:save*&#x27;
+         * &#x27;:save&#x27;
+         */
+        REGEXP_EVENTNAME_WITH_SEMICOLON = /:((?:\w|-)+)$/,
+        MSG_HALTED = &#x27;event was halted&#x27;,
+        MSG_PREVENTED = &#x27;event was defaultPrevented&#x27;,
+        DEFINE_IMMUTAL_PROPERTY = function (obj, property, value) {
+            Object.defineProperty(obj, property, {
+                configurable: false,
+                enumerable: false,
+                writable: false,
+                value: value // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} or [] its members
+            });
+        },
+        Event;
+
+    Event = {
+        /**
+         * Subscribes to a customEvent. The callback will be executed &#x60;after&#x60; the defaultFn.
+         *
+         * @static
+         * @method after
+         * @param customEvent {String|Array} the custom-event (or Array of events) to subscribe to. CustomEvents should
+         *        have the syntax: &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used for both &#x60;emitterName&#x60; as well as &#x60;eventName&#x60;.
+         *        If &#x60;emitterName&#x60; is not defined, &#x60;UI&#x60; is assumed.
+         * @param callback {Function} subscriber:will be invoked when the event occurs. An &#x60;eventobject&#x60; will be passed
+         *        as its only argument.
+         * @param [context] {Object} the instance that subscribes to the event.
+         *        any object can passed through, even those are not extended with event-listener methods.
+         *        Note: Objects who are extended with listener-methods should use instance.after() instead.
+         * @param [filter] {String|Function} to filter the event.
+         *        Use a String if you want to filter DOM-events by a &#x60;selector&#x60;
+         *        Use a function if you want to filter by any other means. If the function returns a trully value, the
+         *        subscriber gets invoked. The function gets the &#x60;eventobject&#x60; as its only argument and the context is
+         *        the subscriber.
+         * @param [prepend=false] {Boolean} whether the subscriber should be the first in the list of after-subscribers.
+         * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the subscriber
+         * @since 0.0.1
+        */
+        after: function(customEvent, callback, context, filter, prepend) {
+            console.log(NAME, &#x27;add after subscriber to: &#x27;+customEvent);
+            return this._addMultiSubs(false, customEvent, callback, context, filter, prepend);
+        },
+
+        /**
+         * Subscribes to a customEvent. The callback will be executed &#x60;before&#x60; the defaultFn.
+         *
+         * @static
+         * @method before
+         * @param customEvent {String|Array} the custom-event (or Array of events) to subscribe to. CustomEvents should
+         *        have the syntax: &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used for both &#x60;emitterName&#x60; as well as &#x60;eventName&#x60;.
+         *        If &#x60;emitterName&#x60; is not defined, &#x60;UI&#x60; is assumed.
+         * @param callback {Function} subscriber:will be invoked when the event occurs. An &#x60;eventobject&#x60; will be passed
+         *        as its only argument.
+         * @param [context] {Object} the instance that subscribes to the event.
+         *        any object can passed through, even those are not extended with event-listener methods.
+         *        Note: Objects who are extended with listener-methods should use instance.before() instead.
+         * @param [filter] {String|Function} to filter the event.
+         *        Use a String if you want to filter DOM-events by a &#x60;selector&#x60;
+         *        Use a function if you want to filter by any other means. If the function returns a trully value, the
+         *        subscriber gets invoked. The function gets the &#x60;eventobject&#x60; as its only argument and the context is
+         *        the subscriber.
+         * @param [prepend=false] {Boolean} whether the subscriber should be the first in the list of before-subscribers.
+         * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the subscriber
+         * @since 0.0.1
+        */
+        before: function(customEvent, callback, context, filter, prepend) {
+            console.log(NAME, &#x27;add before subscriber to: &#x27;+customEvent);
+            return this._addMultiSubs(true, customEvent, callback, context, filter, prepend);
+        },
+
+        /**
+         * Defines an emitterName into the instance (emitter).
+         * This will add a protected property &#x60;_emitterName&#x60; to the instance.
+         *
+         * @static
+         * @method defineEmitter
+         * @param emitter {Object} instance that should hold the emitterName
+         * @param emitterName {String} identifier that will be added when events are sent (&#x60;emitterName:eventName&#x60;)
+         * @since 0.0.1
+         */
+        defineEmitter: function (emitter, emitterName) {
+            console.log(NAME, &#x27;defineEmitter: &#x27;+emitterName);
+            // ennumerable MUST be set &#x60;true&#x60; to enable merging
+            Object.defineProperty(emitter, &#x27;_emitterName&#x27;, {
+                configurable: false,
+                enumerable: true,
+                writable: false,
+                value: emitterName
+            });
+        },
+
+        /**
+         * Defines a CustomEvent. If the eventtype already exists, it will not be overridden,
+         * unless you force to assign with &#x60;.forceAssign()&#x60;
+         *
+         * The returned object comes with 4 methods which can be invoked chainable:
+         *
+         * &lt;ul&gt;
+         *     &lt;li&gt;defaultFn() --&gt; the default-function of the event&lt;/li&gt;
+         *     &lt;li&gt;preventedFn() --&gt; the function that should be invoked when the event is defaultPrevented&lt;/li&gt;
+         *     &lt;li&gt;forceAssign() --&gt; overrides any previous definition&lt;/li&gt;
+         *     &lt;li&gt;unHaltable() --&gt; makes the customEvent cannot be halted&lt;/li&gt;
+         *     &lt;li&gt;unPreventable() --&gt; makes the customEvent&#x27;s defaultFn cannot be prevented&lt;/li&gt;
+         *     &lt;li&gt;unSilencable() --&gt; makes that emitters cannot make this event to perform silently (using e.silent)&lt;/li&gt;
+         *     &lt;li&gt;unRenderPreventable() --&gt; makes that the customEvent&#x27;s render cannot be prevented&lt;/li&gt;
+         *     &lt;li&gt;noRender() --&gt; prevents this customEvent from render the dom. Overrules unRenderPreventable()&lt;/li&gt;
+         * &lt;/ul&gt;
+         *
+         * @static
+         * @method defineEvent
+         * @param customEvent {String} name of the customEvent conform the syntax: &#x60;emitterName:eventName&#x60;
+         * @return {Object} with extra methods that can be chained:
+         * &lt;ul&gt;
+         *      &lt;li&gt;unPreventable() --&gt; makes the customEvent&#x27;s defaultFn cannot be prevented&lt;/li&gt;
+         *      &lt;li&gt;unRenderPreventable() --&gt; makes that the customEvent&#x27;s render cannot be prevented&lt;/li&gt;
+         *      &lt;li&gt;forceAssign() --&gt; overrides any previous definition&lt;/li&gt;
+         *      &lt;li&gt;defaultFn() --&gt; the default-function of the event&lt;/li&gt;
+         *      &lt;li&gt;preventedFn() --&gt; the function that should be invoked when the event is defaultPrevented&lt;/li&gt;
+         * &lt;/ul&gt;
+         * @since 0.0.1
+         */
+        defineEvent: function (customEvent) {
+            console.log(NAME, &#x27;Events.defineEvent: &#x27;+customEvent);
+            var instance = this,
+                customevents = instance._ce,
+                extract, exists, newCustomEvent;
+
+            if (typeof customEvent!==&#x27;string&#x27;) {
+                console.error(NAME, &#x27;defineEvent should have a String-type as argument&#x27;);
+                return;
+            }
+            extract = customEvent.match(REGEXP_CUSTOMEVENT);
+            if (!extract) {
+                console.error(NAME, &#x27;defined Customevent &#x27;+customEvent+&#x27; does not match pattern&#x27;);
+                return;
+            }
+            newCustomEvent = {
+                preventable: true,
+                renderPreventable: true
+            };
+            exists = customevents[customEvent];
+            // if customEvent not yet exists, we can add it
+            // else, we might need to wait for &#x60;forceAssign&#x60; to be called
+            if (!exists) {
+                // we can add it
+                customevents[customEvent] = newCustomEvent;
+            }
+            return {
+                defaultFn: function(defFn) {
+                    newCustomEvent.defaultFn = defFn;
+                    return this;
+                },
+                preventedFn: function(prevFn) {
+                    newCustomEvent.preventedFn = prevFn;
+                    return this;
+                },
+                unHaltable: function() {
+                    newCustomEvent.unHaltable = true;
+                    return this;
+                },
+                unSilencable: function() {
+                    newCustomEvent.unSilencable = true;
+                    return this;
+                },
+                unPreventable: function() {
+                    newCustomEvent.unPreventable = true;
+                    return this;
+                },
+                unRenderPreventable: function() {
+                    newCustomEvent.unRenderPreventable = true;
+                    return this;
+                },
+                noRender: function() {
+                    newCustomEvent.noRender = true;
+                    return this;
+                },
+                forceAssign: function() {
+                    // only needed when not yet added:
+                    // exists || (customevents[customEvent]=newCustomEvent);
+                    customevents[customEvent] = newCustomEvent;
+                    return this;
+                }
+            };
+        },
+
+        /**
+         * Detaches (unsubscribes) the listener from the specified customEvent.
+         *
+         * @static
+         * @method detach
+         * @param [listener] {Object} The instance that is going to detach the customEvent.
+         *        When not passed through (or undefined), all customevents of all instances are detached
+         * @param customEvent {String} conform the syntax: &#x60;emitterName:eventName&#x60;, wildcard &#x60;*&#x60; may be used for both
+         *        &#x60;emitterName&#x60; as well as only &#x60;eventName&#x60;, in which case &#x27;UI&#x27; will become the emitterName.
+         *        Can be set as the only argument.
+         * @since 0.0.1
+        */
+        detach: function(listener, customEvent) {
+            console.log(&#x27;detach instance-subscriber: &#x27;+customEvent);
+            // (typeof listener === &#x27;string&#x27;) means: only &#x60;customEvent&#x60; passed through
+            (typeof listener === &#x27;string&#x27;) ? this._removeSubscribers(undefined, listener) : this._removeSubscribers(listener, customEvent);
+        },
+
+        /**
+         * Detaches (unsubscribes) the listener from all customevents.
+         *
+         * @static
+         * @method detachAll
+         * @param listener {Object} The instance that is going to detach the customEvent
+         * @since 0.0.1
+        */
+        detachAll: function(listener) {
+            console.log(NAME, &#x27;detach &#x27;+(listener ? &#x27;all instance-&#x27; : &#x27;ALL&#x27;)+&#x27; subscribers&#x27;);
+            var instance = this;
+            if (listener) {
+                instance._removeSubscribers(listener, &#x27;*:*&#x27;);
+            }
+            else {
+                // we cannot just redefine _subs, for it is set as readonly
+                instance._subs.each(
+                    function(value, key) {
+                        delete instance._subs[key];
+                    }
+                );
+            }
+        },
+
+        /**
+         * Emits the event &#x60;eventName&#x60; on behalf of &#x60;emitter&#x60;, which becomes e.target in the eventobject.
+         * During this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.
+         * The eventobject is created with at least these properties:
+         *
+         * &lt;ul&gt;
+         *     &lt;li&gt;e.target --&gt; source that triggered the event (instance or DOM-node), specified by &#x60;emitter&#x60;&lt;/li&gt;
+         *     &lt;li&gt;e.type --&gt; eventName&lt;/li&gt;
+         *     &lt;li&gt;e.emitter --&gt; emitterName&lt;/li&gt;
+         *     &lt;li&gt;e.status --&gt; status-information:
+         *          &lt;ul&gt;
+         *               &lt;li&gt;e.status.ok --&gt; &#x60;true|false&#x60; whether the event got executed (not halted or defaultPrevented)&lt;/li&gt;
+         *               &lt;li&gt;e.status.defaultFn (optional) --&gt; &#x60;true&#x60; if any defaultFn got invoked&lt;/li&gt;
+         *               &lt;li&gt;e.status.preventedFn (optional) --&gt; &#x60;true&#x60; if any preventedFn got invoked&lt;/li&gt;
+         *               &lt;li&gt;e.status.rendered (optional) --&gt; &#x60;true&#x60; the vDOM rendered the dom&lt;/li&gt;
+         *               &lt;li&gt;e.status.halted (optional) --&gt; &#x60;reason|true&#x60; if the event got halted and optional the why&lt;/li&gt;
+         *               &lt;li&gt;e.status.defaultPrevented (optional) --&gt;  &#x60;reason|true&#x60; if the event got defaultPrevented and optional the why&lt;/li&gt;
+         *               &lt;li&gt;e.status.renderPrevented (optional) --&gt;  &#x60;reason|true&#x60; if the event got renderPrevented and optional the why&lt;/li&gt;
+         *          &lt;/ul&gt;
+         *     &lt;/li&gt;
+         * &lt;/ul&gt;
+         *
+         * The optional &#x60;payload&#x60; is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.
+         * If payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.
+         *
+         * The eventobject also has these methods:
+         *
+         * &lt;ul&gt;
+         *     &lt;li&gt;e.halt() --&gt; stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn&lt;/li&gt;
+         *     &lt;li&gt;e.preventDefault() --&gt; instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers&lt;/li&gt;
+         *     &lt;li&gt;e.preventRender() --&gt; by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()&lt;/li&gt;
+         * &lt;/ul&gt;
+         *
+         * &lt;ul&gt;
+         *     &lt;li&gt;First, before-subscribers are invoked: this is the place where you might call &#x60;e.halt()&#x60;, &#x60;a.preventDefault()&#x60; or &#x60;e.preventRender()&#x60;&lt;/li&gt;
+         *     &lt;li&gt;Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called&lt;/li&gt;
+         *     &lt;li&gt;Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)&lt;/li&gt;
+         *     &lt;li&gt;Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called&lt;/li&gt;
+         * &lt;ul&gt;
+         *
+         * @static
+         * @method emit
+         * @param [emitter] {Object} instance that emits the events
+         * @param customEvent {String} Full customEvent conform syntax &#x60;emitterName:eventName&#x60;.
+         *        &#x60;emitterName&#x60; is available as **e.emitter**, &#x60;eventName&#x60; as **e.type**.
+         * @param payload {Object} extra payload to be added to the event-object
+         * @return {Object|undefined} eventobject or undefined when the event was halted or preventDefaulted.
+         * @since 0.0.1
+         */
+        emit: function (emitter, customEvent, payload) {
+            var instance = this;
+            if (typeof emitter === &#x27;string&#x27;) {
+                // emit is called with signature emit(customEvent, payload)
+                // thus the source-emitter is the Event-instance
+                payload = customEvent;
+                customEvent = emitter;
+                emitter = instance;
+            }
+            return instance._emit(emitter, customEvent, payload);
+        },
+
+        /**
+         * Adds a subscriber to the finalization-cycle, which happens after the after-subscribers.
+         * Only get invoked when the cycle was not preventDefaulted or halted.
+         *
+         * @method finalize
+         * @param finallySubscriber {Function} callback to be invoked
+         *        Function recieves the eventobject as its only argument
+         * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the subscriber
+         * @since 0.0.1
+         */
+        finalize: function (finallySubscriber) {
+            console.log(NAME, &#x27;finalize&#x27;);
+            var finalHash = this._final;
+            finalHash.push(finallySubscriber);
+            return {
+                detach: function() {
+                    console.log(NAME, &#x27;detach finalizer&#x27;);
+                    var index = finalHash.indexOf(finallySubscriber);
+                    (index===-1) || finalHash.splice(index, 1);
+                }
+            };
+        },
+
+        /**
+         * Creates a notifier for the customEvent.
+         * You can use this to create delayed &#x60;defineEvents&#x60;. When the customEvent is called, the callback gets invoked
+         * (even before the subsrcibers). Use this callback for delayed customEvent-definitions.
+         *
+         * Use **no** wildcards for the emitterName. You might use wildcards for the eventName. Without wildcards, the
+         * notification will be unNotified (callback automaticly detached) on the first time the event occurs.
+
+         * You **must** specify the full &#x60;emitterName:eventName&#x60; syntax.
+         * The module &#x60;core-event-dom&#x60; uses &#x60;notify&#x60; to auto-define DOM-events (UI:*).
+         *
+         * @static
+         * @method notify
+         * @param customEvent {String|Array} the custom-event (or Array of events) to subscribe to. CustomEvents should
+         *        have the syntax: &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used only  for&#x60;eventName&#x60;.
+         *        If &#x60;emitterName&#x60; should be defined.
+         * @param callback {Function} subscriber: will be invoked when the customEvent is called (before any subscribers.
+         *                 Recieves 2 arguments: &#x60;customEvent&#x60; and the &#x60;subscriber-object&#x60;.
+         * @param context {Object} context of the callback
+         * @chainable
+         * @since 0.0.1
+        */
+        notify: function(customEvent, callback, context) {
+            console.log(NAME, &#x27;notify&#x27;);
+            this._notifiers[customEvent] = {
+                cb: callback,
+                o: context
+            };
+            return this;
+        },
+
+        /**
+         * Subscribes to a customEvent. The callback will be executed &#x60;after&#x60; the defaultFn.
+         * The subscriber will be automaticly removed once the callback executed the first time.
+         * No need to &#x60;detach()&#x60; (unless you want to undescribe before the first event)
+         *
+         * @static
+         * @method onceAfter
+         * @param customEvent {String|Array} the custom-event (or Array of events) to subscribe to. CustomEvents should
+         *        have the syntax: &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used for both &#x60;emitterName&#x60; as well as &#x60;eventName&#x60;.
+         *        If &#x60;emitterName&#x60; is not defined, &#x60;UI&#x60; is assumed.
+         * @param callback {Function} subscriber:will be invoked when the event occurs. An &#x60;eventobject&#x60; will be passed
+         *        as its only argument.
+         * @param [context] {Object} the instance that subscribes to the event.
+         *        any object can passed through, even those are not extended with event-listener methods.
+         *        Note: Objects who are extended with listener-methods should use instance.onceAfter() instead.
+         * @param [filter] {String|Function} to filter the event.
+         *        Use a String if you want to filter DOM-events by a &#x60;selector&#x60;
+         *        Use a function if you want to filter by any other means. If the function returns a trully value, the
+         *        subscriber gets invoked. The function gets the &#x60;eventobject&#x60; as its only argument and the context is
+         *        the subscriber.
+         * @param [prepend=false] {Boolean} whether the subscriber should be the first in the list of after-subscribers.
+         * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the subscriber
+         * @since 0.0.1
+        */
+        onceAfter: function(customEvent, callback, context, filter, prepend) {
+            var instance = this,
+                handler, wrapperFn;
+            console.log(NAME, &#x27;add onceAfter subscriber to: &#x27;+customEvent);
+            wrapperFn = function(e) {
+                // CAUTIOUS: removeing the handler right now would lead into a mismatch of the dispatcher
+                // who loops through the array of subscribers!
+                // therefore, we must remove once the eventcycle has finished --&gt; we detach by setting it
+                // at the end of the global-eventstack:
+                // yet there still is a change that the event is called multiple times BEFORE it
+                // will reach the defined &#x60;setTimeout&#x60; --&gt; to avoid multiple invocations, handler is
+                // extended with the property &#x60;_detached&#x60;
+                handler._detached  || callback.call(this, e);
+                handler._detached = true;
+                setTimeout(function() {handler.detach();}, 0);
+            };
+            handler = instance._addMultiSubs(false, customEvent, wrapperFn, context, filter, prepend);
+            return handler;
+        },
+
+        /**
+         * Subscribes to a customEvent. The callback will be executed &#x60;before&#x60; the defaultFn.
+         * The subscriber will be automaticly removed once the callback executed the first time.
+         * No need to &#x60;detach()&#x60; (unless you want to undescribe before the first event)
+         *
+         * @static
+         * @method onceBefore
+         * @param customEvent {String|Array} the custom-event (or Array of events) to subscribe to. CustomEvents should
+         *        have the syntax: &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used for both &#x60;emitterName&#x60; as well as &#x60;eventName&#x60;.
+         *        If &#x60;emitterName&#x60; is not defined, &#x60;UI&#x60; is assumed.
+         * @param callback {Function} subscriber:will be invoked when the event occurs. An &#x60;eventobject&#x60; will be passed
+         *        as its only argument.
+         * @param [context] {Object} the instance that subscribes to the event.
+         *        any object can passed through, even those are not extended with event-listener methods.
+         *        Note: Objects who are extended with listener-methods should use instance.onceBefore() instead.
+         * @param [filter] {String|Function} to filter the event.
+         *        Use a String if you want to filter DOM-events by a &#x60;selector&#x60;
+         *        Use a function if you want to filter by any other means. If the function returns a trully value, the
+         *        subscriber gets invoked. The function gets the &#x60;eventobject&#x60; as its only argument and the context is
+         *        the subscriber.
+         * @param [prepend=false] {Boolean} whether the subscriber should be the first in the list of before-subscribers.
+         * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the subscriber
+         * @since 0.0.1
+        */
+        onceBefore: function(customEvent, callback, context, filter, prepend) {
+            var instance = this,
+                handler, wrapperFn;
+            console.log(NAME, &#x27;add onceBefore subscriber to: &#x27;+customEvent);
+            wrapperFn = function(e) {
+                // CAUTIOUS: removeing the handler right now would lead into a mismatch of the dispatcher
+                // who loops through the array of subscribers!
+                // therefore, we must remove once the eventcycle has finished --&gt; we detach by setting it
+                // at the end of the global-eventstack.
+                // yet there still is a change that the event is called multiple times BEFORE it
+                // will reach the defined &#x60;setTimeout&#x60; --&gt; to avoid multiple invocations, handler is
+                // extended with the property &#x60;_detached&#x60;
+                handler._detached  || callback.call(this, e);
+                handler._detached = true;
+                setTimeout(function() {handler.detach();}, 0);
+            };
+            handler = instance._addMultiSubs(true, customEvent, wrapperFn, context, filter, prepend);
+            return handler;
+        },
+
+        /**
+         * Removes all event-definitions of an emitter, specified by its &#x60;emitterName&#x60;.
+         * When &#x60;emitterName&#x60; is not set, ALL event-definitions will be removed.
+         *
+         * @static
+         * @method undefAllEvents
+         * @param [emitterName] {String} name of the customEvent conform the syntax: &#x60;emitterName:eventName&#x60;
+         * @since 0.0.1
+         */
+        undefAllEvents: function (emitterName) {
+            console.log(NAME, &#x27;undefAllEvents&#x27;);
+            var instance = this,
+                pattern;
+            if (emitterName) {
+                pattern = new RegExp(&#x27;^&#x27;+emitterName+&#x27;:&#x27;);
+                instance._ce.each(
+                    function(value, key, object) {
+                        key.match(pattern) &amp;&amp; (delete instance._ce[key]);
+                    }
+                );
+            }
+            else {
+                instance._ce.each(
+                    function(value, key, object) {
+                        delete instance._ce[key];
+                    }
+                );
+            }
+        },
+
+        /**
+         * Removes the event-definition of the specified customEvent.
+         *
+         * @static
+         * @method undefEvent
+         * @param customEvent {String} name of the customEvent conform the syntax: &#x60;emitterName:eventName&#x60;
+         * @since 0.0.1
+         */
+        undefEvent: function (customEvent) {
+            console.log(NAME, &#x27;undefEvent &#x27;+customEvent);
+            delete this._ce[customEvent];
+        },
+
+        /**
+         * unNotifies (unsubscribes) the notifier of the specified customEvent.
+         *
+         * @static
+         * @method unNotify
+         * @param customEvent {String} conform the syntax: &#x60;emitterName:eventName&#x60;.
+         * @since 0.0.1
+        */
+        unNotify: function(customEvent) {
+            console.log(NAME, &#x27;unNotify &#x27;+customEvent);
+            delete this._notifiers[customEvent];
+        },
+
+        //====================================================================================================
+        // private methods:
+        //====================================================================================================
+
+        /**
+         * Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:
+         * &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used for both &#x60;emitterName&#x60; as well as &#x60;eventName&#x60;
+         * If &#x60;emitterName&#x60; is not defined, &#x60;UI&#x60; is assumed.
+         *
+         * Examples of valid customevents:
+         *
+         * &lt;ul&gt;
+         *     &lt;li&gt;&#x27;redmodel:save&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;UI:click&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;click&#x27; --&gt; alias for &#x27;UI:click&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;&#x60;*&#x60;:click&#x27; --&gt; careful: will listen to both UIs and non-UI- click-events&lt;/li&gt;
+         *     &lt;li&gt;&#x27;redmodel:&#x60;*&#x60;&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;&#x60;*&#x60;:&#x60;*&#x60;&#x27;&lt;/li&gt;
+         * &lt;/ul&gt;
+         *
+         * @static
+         * @method _addMultiSubs
+         * @param before {Boolean} whether the subscriber is a &#x60;before&#x60; subscriber. On falsy, an &#x60;after&#x60;-subscriber is assumed.
+         * @param customEvent {Array} Array of Strings. customEvent should conform the syntax: &#x60;emitterName:eventName&#x60;, wildcard &#x60;*&#x60;
+         *         may be used for both &#x60;emitterName&#x60; as well as only &#x60;eventName&#x60;, in which case &#x27;UI&#x27; will become the emitterName.
+         * @param callback {Function} subscriber to the event.
+         * @param listener {Object} Object that creates the subscriber (and will be listening by &#x60;listener.after(...)&#x60;)
+         * @param [filter] {String|Function} to filter the event.
+         *        Use a String if you want to filter DOM-events by a &#x60;selector&#x60;
+         *        Use a function if you want to filter by any other means. If the function returns a trully value, the
+         *        subscriber gets invoked. The function gets the &#x60;eventobject&#x60; as its only argument and the context is
+         *        the subscriber.
+         * @param [prepend=false] {Boolean} whether to make the subscriber the first in the list. By default it will pe appended.
+         * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the subscriber
+         * @private
+         * @since 0.0.1
+        */
+        _addMultiSubs: function(before, customEvent, callback, listener, filter, prepend) {
+            console.log(NAME, &#x27;_addMultiSubs&#x27;);
+            var instance = this;
+            if ((typeof listener === &#x27;string&#x27;) || (typeof listener === &#x27;function&#x27;)) {
+                prepend = filter;
+                filter = listener;
+                listener = null;
+            }
+            else if (typeof listener === &#x27;boolean&#x27;) {
+                prepend = listener;
+                filter = null;
+                listener = null;
+            }
+            if ((typeof filter===&#x27;boolean&#x27;) || (typeof filter===undefined) || (typeof filter===null)) {
+                // filter was not set, instead &#x60;prepend&#x60; is set at this position
+                prepend = filter;
+                filter = null;
+            }
+            if (!Array.isArray(customEvent)) {
+                return instance._addSubscriber(listener, before, customEvent, callback, filter, prepend);
+            }
+            customEvent.forEach(
+                function(ce) {
+                    instance._addSubscriber(listener, before, ce, callback, filter, prepend);
+                }
+            );
+            return {
+                detach: function() {
+                    customEvent.each(
+                        function(ce) {
+                            instance._removeSubscriber(listener, before, ce, callback);
+                        }
+                    );
+                }
+            };
+        },
+
+        /**
+         * Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:
+         * &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used for both &#x60;emitterName&#x60; as well as &#x60;eventName&#x60;
+         * If &#x60;emitterName&#x60; is not defined, &#x60;UI&#x60; is assumed.
+         *
+         * Examples of valid customevents:
+         *
+         * &lt;ul&gt;
+         *     &lt;li&gt;&#x27;redmodel:save&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;UI:click&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;click&#x27; --&gt; alias for &#x27;UI:click&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;&#x60;*&#x60;:click&#x27; --&gt; careful: will listen to both UIs and non-UI- click-events&lt;/li&gt;
+         *     &lt;li&gt;&#x27;redmodel:&#x60;*&#x60;&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;&#x60;*&#x60;:&#x60;*&#x60;&#x27;&lt;/li&gt;
+         * &lt;/ul&gt;
+         *
+         * @static
+         * @method _addSubscriber
+         * @param listener {Object} Object that creates the subscriber (and will be listening by &#x60;listener.after(...)&#x60;)
+         * @param before {Boolean} whether the subscriber is a &#x60;before&#x60; subscriber. On falsy, an &#x60;after&#x60;-subscriber is assumed.
+         * @param customEvent {String} conform the syntax: &#x60;emitterName:eventName&#x60;, wildcard &#x60;*&#x60; may be used for both
+         *        &#x60;emitterName&#x60; as well as only &#x60;eventName&#x60;, in which case &#x27;UI&#x27; will become the emitterName.
+         * @param callback {Function} subscriber to the event.
+         * @param [filter] {String|Function} to filter the event.
+         *        Use a String if you want to filter DOM-events by a &#x60;selector&#x60;
+         *        Use a function if you want to filter by any other means. If the function returns a trully value, the
+         *        subscriber gets invoked. The function gets the &#x60;eventobject&#x60; as its only argument and the context is
+         *        the subscriber.
+         * @param [prepend=false] {Boolean} whether to make the subscriber the first in the list. By default it will pe appended.
+         * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the subscriber
+         * @private
+         * @since 0.0.1
+        */
+        _addSubscriber: function(listener, before, customEvent, callback, filter, prepend) {
+            var instance = this,
+                allSubscribers = instance._subs,
+                extract = customEvent.match(REGEXP_WILDCARD_CUSTOMEVENT),
+                hashtable, item, notifier, customEventWildcardEventName;
+
+            if (!extract) {
+                console.error(NAME, &#x27;subscribe-error: eventname does not match pattern&#x27;);
+                return;
+            }
+            // if extract[1] is undefined, a simple customEvent is going to subscribe (without :)
+            // therefore: recomposite customEvent:
+            extract[1] || (customEvent=&#x27;UI:&#x27;+customEvent);
+
+
+            allSubscribers[customEvent] || (allSubscribers[customEvent]={});
+            if (before) {
+                allSubscribers[customEvent].b || (allSubscribers[customEvent].b=[]);
+            }
+            else {
+                allSubscribers[customEvent].a || (allSubscribers[customEvent].a=[]);
+            }
+
+            hashtable = allSubscribers[customEvent][before ? &#x27;b&#x27; : &#x27;a&#x27;];
+            // we need to be able to process an array of customevents
+            item = {
+                o: listener || instance,
+                cb: callback,
+                f: filter
+            };
+
+            // in case of a defined subscription (no wildcard), we should look for notifiers
+            if ((extract[1]!==&#x27;*&#x27;) &amp;&amp; (extract[2]!==&#x27;*&#x27;)) {
+                // before subscribing: we might need to activate notifiers --&gt; with defined eventName should also be cleaned up:
+                notifier = instance._notifiers[customEvent];
+                if (notifier) {
+                    notifier.cb.call(notifier.o, customEvent, item);
+                    delete instance._notifiers[customEvent];
+                }
+                // check the same for wildcard eventName:
+                customEventWildcardEventName = customEvent.replace(REGEXP_EVENTNAME_WITH_SEMICOLON, &#x27;:*&#x27;);
+                if ((customEventWildcardEventName !== customEvent) &amp;&amp; (notifier=instance._notifiers[customEventWildcardEventName])) {
+                    notifier.cb.call(notifier.o, customEvent, item);
+                }
+            }
+
+            console.log(NAME, &#x27;_addSubscriber to customEvent: &#x27;+customEvent);
+            prepend ? hashtable.unshift(item) : hashtable.push(item);
+
+            return {
+                detach: function() {
+                    instance._removeSubscriber(listener, before, customEvent, callback);
+                }
+            };
+        },
+
+        /**
+         * Emits the event &#x60;eventName&#x60; on behalf of &#x60;emitter&#x60;, which becomes e.target in the eventobject.
+         * During this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.
+         * The eventobject is created with at least these properties:
+         *
+         * &lt;ul&gt;
+         *     &lt;li&gt;e.target --&gt; source that triggered the event (instance or DOM-node), specified by &#x60;emitter&#x60;&lt;/li&gt;
+         *     &lt;li&gt;e.type --&gt; eventName&lt;/li&gt;
+         *     &lt;li&gt;e.emitter --&gt; emitterName&lt;/li&gt;
+         *     &lt;li&gt;e.status --&gt; status-information:
+         *          &lt;ul&gt;
+         *               &lt;li&gt;e.status.ok --&gt; &#x60;true|false&#x60; whether the event got executed (not halted or defaultPrevented)&lt;/li&gt;
+         *               &lt;li&gt;e.status.defaultFn (optional) --&gt; &#x60;true&#x60; if any defaultFn got invoked&lt;/li&gt;
+         *               &lt;li&gt;e.status.preventedFn (optional) --&gt; &#x60;true&#x60; if any preventedFn got invoked&lt;/li&gt;
+         *               &lt;li&gt;e.status.rendered (optional) --&gt; &#x60;true&#x60; the vDOM rendered the dom&lt;/li&gt;
+         *               &lt;li&gt;e.status.halted (optional) --&gt; &#x60;reason|true&#x60; if the event got halted and optional the why&lt;/li&gt;
+         *               &lt;li&gt;e.status.defaultPrevented (optional) --&gt;  &#x60;reason|true&#x60; if the event got defaultPrevented and optional the why&lt;/li&gt;
+         *               &lt;li&gt;e.status.renderPrevented (optional) --&gt;  &#x60;reason|true&#x60; if the event got renderPrevented and optional the why&lt;/li&gt;
+         *          &lt;/ul&gt;
+         *     &lt;/li&gt;
+         * &lt;/ul&gt;
+         *
+         * The optional &#x60;payload&#x60; is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.
+         * If payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.
+         *
+         * The eventobject also has these methods:
+         *
+         * &lt;ul&gt;
+         *     &lt;li&gt;e.halt() --&gt; stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn&lt;/li&gt;
+         *     &lt;li&gt;e.preventDefault() --&gt; instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers&lt;/li&gt;
+         *     &lt;li&gt;e.preventRender() --&gt; by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()&lt;/li&gt;
+         * &lt;/ul&gt;
+         *
+         * &lt;ul&gt;
+         *     &lt;li&gt;First, before-subscribers are invoked: this is the place where you might call &#x60;e.halt()&#x60;, &#x60;a.preventDefault()&#x60; or &#x60;e.preventRender()&#x60;&lt;/li&gt;
+         *     &lt;li&gt;Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called&lt;/li&gt;
+         *     &lt;li&gt;Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)&lt;/li&gt;
+         *     &lt;li&gt;Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called&lt;/li&gt;
+         * &lt;ul&gt;
+         *
+         * @static
+         * @method emit
+         * @param [emitter] {Object} instance that emits the events
+         * @param customEvent {String} Full customEvent conform syntax &#x60;emitterName:eventName&#x60;.
+         *        &#x60;emitterName&#x60; is available as **e.emitter**, &#x60;eventName&#x60; as **e.type**.
+         * @param payload {Object} extra payload to be added to the event-object
+         * @param [beforeSubscribers] {Array} array of functions to act as beforesubscribers. &lt;b&gt;should not be used&lt;/b&gt; other than
+         *                            by any submodule like &#x60;event-dom&#x60;. If used, than this list of subscribers gets invoked instead
+         *                            of the subscribers that actually subscribed to the event.
+         * @param [afterSubscribers] {Array} array of functions to act as afterSubscribers. &lt;b&gt;should not be used&lt;/b&gt; other than
+         *                            by any submodule like &#x60;event-dom&#x60;. If used, than this list of subscribers gets invoked instead
+         *                            of the subscribers that actually subscribed to the event.
+         * @param [preProcessor] {Function} if passed, this function will be invoked before every single subscriber
+         *                       It is meant to manipulate the eventobject, something that &#x60;event-dom&#x60; needs to do
+         *                       This function expects 2 arguments: &#x60;subscriber&#x60; and &#x60;eventobject&#x60;.
+         *                       &lt;b&gt;should not be used&lt;/b&gt; other than by any submodule like &#x60;event-dom&#x60;.
+         * @param [keepPayload] {Boolean} whether &#x60;payload&#x60; should be used as the ventobject instead of creating a new
+         *                      eventobject and merge payload. &lt;b&gt;should not be used&lt;/b&gt; other than by any submodule like &#x60;event-dom&#x60;.
+         * @return {Object|undefined} eventobject or undefined when the event was halted or preventDefaulted.
+         * @since 0.0.1
+         */
+        _emit: function (emitter, customEvent, payload, beforeSubscribers, afterSubscribers, preProcessor, keepPayload) {
+            // NOTE: emit() needs to be synchronous! otherwise we wouldn&#x27;t be able
+            // to preventDefault DOM-events in time.
+            var instance = this,
+                allCustomEvents = instance._ce,
+                allSubscribers = instance._subs,
+                customEventDefinition, extract, emitterName, eventName, subs, wildcard_named_subs,
+                named_wildcard_subs, wildcard_wildcard_subs, e, invokeSubs;
+
+            (customEvent.indexOf(&#x27;:&#x27;) !== -1) || (customEvent = emitter._emitterName+&#x27;:&#x27;+customEvent);
+            console.log(NAME, &#x27;customEvent.emit: &#x27;+customEvent);
+
+            extract = customEvent.match(REGEXP_CUSTOMEVENT);
+            if (!extract) {
+                console.error(NAME, &#x27;defined emit-event does not match pattern&#x27;);
+                return;
+            }
+            emitterName = extract[1];
+            eventName = extract[2];
+            customEventDefinition = allCustomEvents[customEvent];
+
+            subs = allSubscribers[customEvent];
+            wildcard_named_subs = allSubscribers[&#x27;*:&#x27;+eventName];
+            named_wildcard_subs = allSubscribers[emitterName+&#x27;:*&#x27;];
+            wildcard_wildcard_subs = allSubscribers[&#x27;*:*&#x27;];
+
+            if (keepPayload) {
+                e = payload;
+            }
+            else {
+                e = Object.create(instance._defaultEventObj);
+                e.target = emitter;
+                e.type = eventName;
+                e.emitter = emitterName;
+                e.status = {};
+                if (customEventDefinition) {
+                    e._unPreventable = customEventDefinition.unPreventable;
+                    e._unHaltable = customEventDefinition.unHaltable;
+                    e._unRenderPreventable = customEventDefinition.unRenderPreventable;
+                    customEventDefinition.unSilencable &amp;&amp; (e.status.unSilencable = true);
+                }
+                if (payload) {
+                    // e.merge(payload); is not enough --&gt; DOM-eventobject has many properties that are not &quot;own&quot;-properties
+                    for (var key in payload) {
+                        e[key] || (e[key]=payload[key]);
+                    }
+                }
+                if (e.status.unSilencable &amp;&amp; e.silent) {
+                    console.warn(NAME, &#x27; event &#x27;+e.emitter+&#x27;:&#x27;+e.type+&#x27; cannot made silent: this customEvent is defined as unSilencable&#x27;);
+                    e.silent = false;
+                }
+            }
+            if (beforeSubscribers) {
+                instance._invokeSubs(e, false, true, preProcessor, {b: beforeSubscribers});
+            }
+            else {
+                invokeSubs = instance._invokeSubs.bind(instance, e, true, true, false);
+                [subs, named_wildcard_subs, wildcard_named_subs, wildcard_wildcard_subs].forEach(invokeSubs);
+            }
+            e.status.ok = !e.status.halted &amp;&amp; !e.status.defaultPrevented;
+            // in case any subscriber changed e.target inside its filter (event-dom does this),
+            // then we reset e.target to its original:
+            e.sourceTarget &amp;&amp; (e.target=e.sourceTarget);
+            if (customEventDefinition &amp;&amp; !e.status.halted) {
+                // now invoke defFn
+                e.returnValue = e.status.defaultPrevented ?
+                                (customEventDefinition.preventedFn &amp;&amp; (e.status.preventedFn=true) &amp;&amp; customEventDefinition.preventedFn.call(e.target, e)) :
+                                (customEventDefinition.defaultFn &amp;&amp; (e.status.defaultFn=true) &amp;&amp; customEventDefinition.defaultFn.call(e.target, e));
+            }
+
+            if (e.status.ok) {
+                if (afterSubscribers) {
+                    instance._invokeSubs(e, false, false, preProcessor, {a: afterSubscribers});
+                }
+                else {
+                    invokeSubs = instance._invokeSubs.bind(instance, e, true, false, false);
+                    [subs, named_wildcard_subs, wildcard_named_subs, wildcard_wildcard_subs].forEach(invokeSubs);
+                }
+                if (!e.silent) {
+                    // in case any subscriber changed e.target inside its filter (event-dom does this),
+                    // then we reset e.target to its original:
+                    e.sourceTarget &amp;&amp; (e.target=e.sourceTarget);
+                    instance._final.some(function(finallySubscriber) {
+                        !e.silent &amp;&amp; finallySubscriber(e);
+                        if (e.status.unSilencable &amp;&amp; e.silent) {
+                            console.warn(NAME, &#x27; event &#x27;+e.emitter+&#x27;:&#x27;+e.type+&#x27; cannot made silent: this customEvent is defined as unSilencable&#x27;);
+                            e.silent = false;
+                        }
+                        return e.silent;
+                    });
+                }
+            }
+            return e;
+        },
+
+        /**
+         * Does the actual invocation of a subscriber.
+         *
+         * @method _invokeSubs
+         * @param e {Object} event-object
+         * @param [checkFilter] {Boolean}
+         * @param [before] {Boolean} whether it concerns before subscribers
+         * @param [checkFilter] {Boolean}
+         * @param subscribers {Array} contains subscribers (objects) with these members:
+         * &lt;ul&gt;
+         *     &lt;li&gt;subscriber.o {Object} context of the callback&lt;/li&gt;
+         *     &lt;li&gt;subscriber.cb {Function} callback to be invoked&lt;/li&gt;
+         *     &lt;li&gt;subscriber.f {Function} filter to be applied&lt;/li&gt;
+         *     &lt;li&gt;subscriber.t {DOM-node} target for the specific selector, which will be set as e.target
+         *         only when event-dom is active and there are filter-selectors&lt;/li&gt;
+         *     &lt;li&gt;subscriber.n {DOM-node} highest dom-node that acts as the container for delegation.
+         *         only when event-dom is active and there are filter-selectors&lt;/li&gt;
+         * &lt;/ul&gt;
+         * @private
+         * @since 0.0.1
+         */
+        _invokeSubs: function (e, checkFilter, before, preProcessor, subscribers) { // subscribers, plural
+            console.log(NAME, &#x27;_invokeSubs&#x27;);
+            var subs;
+            if (subscribers &amp;&amp; !e.status.halted &amp;&amp; !e.silent) {
+                subs = before ? subscribers.b : subscribers.a;
+                subs &amp;&amp; subs.some(function(subscriber) {
+                    console.log(NAME, &#x27;_invokeSubs checking invokation for single subscriber&#x27;);
+                    if (preProcessor &amp;&amp; preProcessor(subscriber, e)) {
+                        return true;
+                    }
+                    // check: does it pass the filter
+                    if (!checkFilter || !subscriber.f || subscriber.f.call(subscriber.o, e)) {
+                        // finally: invoke subscriber
+                        console.log(NAME, &#x27;_invokeSubs is going to invoke subscriber&#x27;);
+                        subscriber.cb.call(subscriber.o, e);
+                    }
+                    if (e.status.unSilencable &amp;&amp; e.silent) {
+                        console.warn(NAME, &#x27; event &#x27;+e.emitter+&#x27;:&#x27;+e.type+&#x27; cannot made silent: this customEvent is defined as unSilencable&#x27;);
+                        e.silent = false;
+                    }
+                    return e.silent || (before &amp;&amp; e.status.halted);  // remember to check whether it was halted for any reason
+                });
+            }
+        },
+
+        /**
+         * Removes a subscriber from the specified customEvent. The customEvent must conform the syntax:
+         * &#x60;emitterName:eventName&#x60;.
+         *
+         * @static
+         * @method _removeSubscriber
+         * @param listener {Object} Object that creates the subscriber (and will be listening by &#x60;listener.after(...)&#x60;)
+         * @param before {Boolean} whether the subscriber is a &#x60;before&#x60; subscriber. On falsy, an &#x60;after&#x60;-subscriber is assumed.
+         * @param customEvent {String} conform the syntax: &#x60;emitterName:eventName&#x60;, wildcard &#x60;*&#x60; may be used for both
+         *        &#x60;emitterName&#x60; as well as only &#x60;eventName&#x60;, in which case &#x27;UI&#x27; will become the emmiterName.
+         * @param [callback] {Function} subscriber to the event, when not set, all subscribers of the listener to this customEvent
+         *                   will be removed.
+         * @private
+         * @since 0.0.1
+        */
+        _removeSubscriber: function(listener, before, customEvent, callback) {
+            console.log(&#x27;_removeSubscriber: &#x27;+customEvent);
+            var instance = this,
+                eventSubscribers = instance._subs[customEvent],
+                hashtable = eventSubscribers &amp;&amp; eventSubscribers[before ? &#x27;b&#x27; : &#x27;a&#x27;],
+                i, subscriber, beforeUsed, afterUsed;
+            if (hashtable) {
+                // unfortunatly we cannot search by reference, because the array has composed objects
+                // also: can&#x27;t use native Array.forEach: removing items within its callback change the array
+                // during runtime, making it to skip the next item of the one that&#x27;s being removed
+               for (i=0; i&lt;hashtable.length; ++i) {
+                    console.log(NAME, &#x27;_removeSubscriber for single subscriber&#x27;);
+                    subscriber = hashtable[i];
+                    if ((subscriber.o===(listener || instance)) &amp;&amp; (!callback || (subscriber.cb===callback))) {
+                        console.log(&#x27;removing subscriber&#x27;);
+                        hashtable.splice(i--, 1);
+                    }
+                }
+            }
+            // After removal subscriber: check whether both eventSubscribers.a and eventSubscribers.b are empty
+            // if so, remove the member from Event._subs to cleanup memory
+            if (eventSubscribers) {
+                beforeUsed = eventSubscribers.b &amp;&amp; (eventSubscribers.b.length&gt;0);
+                afterUsed = eventSubscribers.a &amp;&amp; (eventSubscribers.a.length&gt;0);
+                if (!beforeUsed &amp;&amp; !afterUsed) {
+                    delete instance._subs[customEvent];
+                }
+            }
+        },
+
+        /**
+         * Removes subscribers from the multiple customevents. The customEvent must conform the syntax:
+         * &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used for both &#x60;emitterName&#x60; as well as &#x60;eventName&#x60;
+         * If &#x60;emitterName&#x60; is not defined, &#x60;UI&#x60; is assumed.
+         *
+         * Examples of valid customevents:
+         *
+         * &lt;ul&gt;
+         *     &lt;li&gt;&#x27;redmodel:save&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;UI:click&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;click&#x27; --&gt; alias for &#x27;UI:click&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;&#x60;*&#x60;:click&#x27; --&gt; careful: will listen to both UIs and non-UI- click-events&lt;/li&gt;
+         *     &lt;li&gt;&#x27;redmodel:&#x60;*&#x60;&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;&#x60;*&#x60;:&#x60;*&#x60;&#x27;&lt;/li&gt;
+         * &lt;/ul&gt;
+         *
+         * @static
+         * @method _removeSubscriber
+         * @param listener {Object} Object that creates the subscriber (and will be listening by &#x60;listener.after(...)&#x60;)
+         * @param customEvent {String} conform the syntax: &#x60;emitterName:eventName&#x60;, wildcard &#x60;*&#x60; may be used for both
+         *        &#x60;emitterName&#x60; as well as only &#x60;eventName&#x60;, in which case &#x27;UI&#x27; will become the emmiterName.
+         * @private
+         * @since 0.0.1
+        */
+        _removeSubscribers: function(listener, customEvent) {
+            console.log(&#x27;_removeSubscribers: &#x27;+customEvent);
+            var instance = this,
+                emitterName, eventName,
+                extract = customEvent.match(REGEXP_WILDCARD_CUSTOMEVENT);
+            if (!extract) {
+                console.error(NAME, &#x27;_removeSubscribers-error: customEvent &#x27;+customEvent+&#x27; does not match pattern&#x27;);
+                return;
+            }
+            emitterName = extract[1] || &#x27;UI&#x27;;
+            eventName = extract[2];
+            if ((emitterName!==&#x27;*&#x27;) &amp;&amp; (eventName!==&#x27;*&#x27;)) {
+                instance._removeSubscriber(listener, true, customEvent);
+                instance._removeSubscriber(listener, false, customEvent);
+            }
+            else {
+                // wildcard, we need to look at all the members of Event._subs
+                instance._subs.each(
+                    function(value, key) {
+                        var localExtract = key.match(REGEXP_WILDCARD_CUSTOMEVENT),
+                            emitterMatch = (emitterName===&#x27;*&#x27;) || (emitterName===localExtract[1]),
+                            eventMatch = (eventName===&#x27;*&#x27;) || (eventName===localExtract[2]);
+                        if (emitterMatch &amp;&amp; eventMatch) {
+                            instance._removeSubscriber(listener, true, key);
+                            instance._removeSubscriber(listener, false, key);
+                        }
+                    }
+                );
+            }
+        },
+
+        /**
+         * Adds a property to the default eventobject&#x27;s prototype which passes through all eventcycles.
+         * Goes through Object.defineProperty with configurable, enumerable and writable
+         * all set to false.
+         *
+         * @method _setEventObjProperty
+         * @param property {String} event-object
+         * @param value {Any}
+         * @chainable
+         * @private
+         * @since 0.0.1
+         */
+        _setEventObjProperty: function (property, value) {
+            console.log(NAME, &#x27;_setEventObjProperty&#x27;);
+            DEFINE_IMMUTAL_PROPERTY(this._defaultEventObj, property, value);
+            return this;
+        }
+
+    };
+
+    /**
+     * Objecthash containing all defined custom-events
+     * which has a structure like this:
+     *
+     * _ce = {
+     *     &#x27;UI:click&#x27;: {
+     *         preventable: true,
+     *         defaultFn: function(){...},
+     *         preventedFn: function(){...},
+     *         renderPreventable: true
+     *     },
+     *     &#x27;redmodel:save&#x27;: {
+     *         preventable: true,
+     *         defaultFn: function(){...},
+     *         preventedFn: function(){...},
+     *         renderPreventable: true
+     *     }
+     * }
+     *
+     * @property _ce
+     * @default {}
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
+    Object.defineProperty(Event, &#x27;_ce&#x27;, {
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {}&#x27;s properties itself
+    });
+
+    /**
+     * Objecthash containing all defined before and after subscribers
+     * which has a structure like this (&#x60;b&#x60; represents &#x60;before&#x60; and &#x60;a&#x60; represents &#x60;after&#x60;)
+     * Every item that gets in the array consist by itself of 3 properties:
+     *                                                          subscriberitem = {
+     *                                                              o: listener,
+     *                                                              cb: callbackFn(e),
+     *                                                              f: filter
+     *                                                          };
+     *
+     * _subs = {
+     *     &#x27;UI:click&#x27;: {
+     *         b: [
+     *             item,
+     *             item
+     *         ],
+     *         a: [
+     *             item,
+     *             item
+     *         ]
+     *     },
+     *     &#x27;*:click&#x27;: {
+     *         b: [
+     *             item,
+     *             item
+     *         ],
+     *         a: [
+     *             item,
+     *             item
+     *         ]
+     *     },
+     *     &#x27;redmodel:save&#x27;: {
+     *         b: [
+     *             item,
+     *             item
+     *         ],
+     *         a: [
+     *             item,
+     *             item
+     *         ]
+     *     }
+     * }
+     *
+     * @property _ce
+     * @default {}
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
+    DEFINE_IMMUTAL_PROPERTY(Event, &#x27;_subs&#x27;, {});
+
+    /**
+     * Internal list of finalize-subscribers which are invoked at the finalization-cycle, which happens after the after-subscribers.
+     * Is an array of function-references.
+     *
+     * @property _final
+     * @default []
+     * @type Array
+     * @private
+     * @since 0.0.1
+    */
+    DEFINE_IMMUTAL_PROPERTY(Event, &#x27;_final&#x27;, []);
+
+    /**
+     * Object that acts as the prototype of the eventobject.
+     * To add more methods, you can use &#x60;_setEventObjProperty&#x60;
+     *
+     * @property _defaultEventObj
+     * @default {
+     *    halt: function()
+     *    preventDefault: function()
+     *    preventRender: function()
+     * }
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
+    DEFINE_IMMUTAL_PROPERTY(Event, &#x27;_defaultEventObj&#x27;, {});
+
+    /**
+     * Objecthash containing all notifiers, keyed by customEvent name.
+     * This list is maintained by &#x60;notify&#x60;, &#x60;unNotify&#x60; and &#x60;unNotifyAll&#x60;
+     *
+     * _notifiers = {
+     *     &#x27;UI:click&#x27;: {
+     *         cb:function() {}
+     *         o: {} // context
+     *     },
+     *     &#x27;redmodel:*&#x27;: {
+     *         cb:function() {}
+     *         o: {} // context
+     *     },
+     *     &#x27;bluemodel:save&#x27;: {
+     *         cb:function() {}
+     *         o: {} // context
+     *     }
+     * }
+     *
+     * @property _notifiers
+     * @default {}
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
+    DEFINE_IMMUTAL_PROPERTY(Event, &#x27;_notifiers&#x27;, {});
+
+    Event._setEventObjProperty(&#x27;halt&#x27;, function(reason) {this.status.ok || this._unHaltable || (this.status.halted = (reason || true));})
+         ._setEventObjProperty(&#x27;preventDefault&#x27;, function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPrevented = (reason || true));})
+         ._setEventObjProperty(&#x27;preventRender&#x27;, function(reason) {this.status.ok || this._unRenderPreventable || (this.status.renderPrevented = (reason || true));});
+
+    return Event;
+}));
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
