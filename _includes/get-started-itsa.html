@@ -3,7 +3,7 @@
 <p class="header">With nodejs:</p>
 <p>Create your project using this <a href="./dist/package.json">package.json</a>. After downloaded, run <code class="prettyprint">npm install</code> and start writing your application:</p>
 {% highlight js %}
-var {{ page.itsaclassname }} = require('{{ page.module }}');
+var ITSA = require('itsa');
 {% endhighlight %}
 
 <p class="header">In the browser:</p>
@@ -11,7 +11,6 @@ var {{ page.itsaclassname }} = require('{{ page.module }}');
 
 {% highlight js %}
 <script>
-    var ITSA = require('itsa'){% if page.itsaclassname %},
-        {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }}{% endif %};
+    var ITSA = require('itsa');
 </script>
 {% endhighlight %}

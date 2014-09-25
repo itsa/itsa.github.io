@@ -2,23 +2,41 @@
 module: io
 itsaclassname: IO
 version: 0.0.1
-modulesize: 4.19
+modulesize: 4.16
+dependencies: "extend-js, ypromise (npm)"
 maintainer: Marco Asbreuk
 title: Promised I/O
-intro: "This module consist of several submodule which provide easy IO. All submodules should be merged into IO to extend its features. The size is based upon io and io-transfer."
+intro: "This module consist of several submodule which provide easy IO. All submodules should be merged into IO to extend its features. The submodules have different (extra) sizes."
 firstpar: get-started-window
 ---
 
 #The Basics#
 
+ITSA comes with a rollup of all io-modules, available with `ITSA.IO`. If you setup your own build-file, you can choose whatever io sub-module you like: they all return the same IO-object. If you setup yourself, you need to pass through the window-object:
+
+```js
+var IO = require(io/io-transfer.js)(window);
+```
+or
+
+```js
+var IO = require(io/io-stream.js)(window);
+```
+or
+
+```js
+var IO = require(io/io-transfer.js)(window);
+
+require(io/io-stream.js)(window); // extending IO
+require(io/io-cors-ie9.js)(window); // extending IO
+```
+
 ##Initiate request##
-Every io is based upon Promises. This makes io really easy and straight foreward:
+Every IO is based upon Promises. This makes io really easy and straight foreward:
 
 ####Simple example####
 ```js
-var io = require('io');
-
-io.get(uri).then(
+ITSA.IO.get(uri).then(
     function(response) {
         // `response` holds the serverdata
     },
@@ -32,10 +50,9 @@ io.get(uri).then(
 All io-methods have an `abort()`-method. By calling this, the io-request aborts and the promise gets rejected:
 ####Aborting io####
 ```js
-var io, request;
+var request;
 
-io = require('io');
-request = io.get(uri);
+request = ITSA.IO.get(uri);
 
 request.then(
     function(response) {
@@ -61,7 +78,12 @@ When used within a browser, io should be done within the same domain by default.
 ###On NodeJS###
 When using io inside NodeJS, the same-origin policy is not relevant: in NodeJS you can make cross-domain request directly.
 
-#io-transfer#
+#io/io-transfer.js#
+<p class="module-intro">
+size-min gzipped: 4.16 + 0.46 = 4.62 kb<br>
+dependencies: io
+</p>
+
 The `io-transfer` module comes with the following methods:
 
 * io.**get**()
@@ -77,8 +99,7 @@ The `io-transfer` module comes with the following methods:
 Use io.get() to make a simple get-request where additional arguments are passed through as a query to the uri:
 ####io.get()####
 ```js
-var io = require('io');
-io.get('/getInfo?q=something').then(
+ITSA.IO.get('/getInfo?q=something').then(
     function(response) {
         // `response` hold the serverdata
     }
@@ -94,10 +115,7 @@ io.get('/getInfo?q=something').then(
 Use io.send() to send an object. The object can have a deep structure: the data is JSON-stringified at the request:
 ####io.send()####
 ```js
-var io, data;
-
-io = require('io');
-data = {
+var data = {
     id: 10,
     personal: {
         name: 'Marco'
@@ -105,7 +123,7 @@ data = {
     }
 };
 
-io.send('/send', data).then(
+ITSA.IO.send('/send', data).then(
     function(response) {
         // `response` holds any data the server responded
     }
@@ -126,10 +144,8 @@ Use io.read() to read data into an object. The Promise will return an object-typ
 
 ####io.read()####
 ```js
-var io = require('io');
-
-// the next io.read() method will make the request: '/getData?id=25'
-io.read('/getData', {id: 25}).then(
+// the next ITSA.IO.read() method will make the request: '/getData?id=25'
+ITSA.IO.read('/getData', {id: 25}).then(
     function(data) {
         // `data` is an object
     }
@@ -146,10 +162,8 @@ Use io.delete() to delete a data-structure on the server. Use the second argumen
 
 ####io.delete()####
 ```js
-var io = require('io');
-
-// the next io.delete() method will make the request: '/removeData?id=25'
-io.delete('/removeData', {id: 25}).then(
+// the next ITSA.IO.delete() method will make the request: '/removeData?id=25'
+ITSA.IO.delete('/removeData', {id: 25}).then(
     function(response) {
         // the object is successfully removed
         // `response` holds any data the server responded
@@ -169,17 +183,14 @@ Use io.insert() to send an object to the server and inform it to insert. The Pro
 
 ####io.insert()####
 ```js
-var io, data;
-
-io = require('io');
-data = {
+var data = {
     personal: {
         name: 'Marco'
         lastname: 'Asbreuk'
     }
 };
 
-io.insert('/insertObject', data).then(
+ITSA.IO.insert('/insertObject', data).then(
     function(insertedObject) {
         /*
          *`insertedObject` holds any data the server responded
@@ -209,10 +220,7 @@ Use io.update() to send an object to the server and inform it to update. The Pro
 
 ####io.update()####
 ```js
-var io, data;
-
-io = require('io');
-data = {
+var data = {
     id: 25,
     personal: {
         name: 'Marco'
@@ -220,7 +228,7 @@ data = {
     }
 };
 
-io.update('/updateObject', data).then(
+ITSA.IO.update('/updateObject', data).then(
     function(updatedObject) {
         /*
          *`updatedObject` holds any data the server responded
@@ -256,10 +264,7 @@ It is important, because this will define whether a `POST` or `PUT` method will 
 
 ####Update an object partially####
 ```js
-var io, data;
-
-io = require('io');
-data = {
+var data = {
     id: 25,
     personal: {
         name: 'Marco'
@@ -271,7 +276,7 @@ updateData = data.merge();
 // we only want to update the Country:
 delete updateData.personal;
 
-io.update('/updateObject', updateData, {allfields: false}).then(
+ITSA.IO.update('/updateObject', updateData, {allfields: false}).then(
     function(updatedObject) {
     }
 );
@@ -287,11 +292,8 @@ By default, _JSON does not parse Dates into Date-type_. Instead, they appear as 
 
 ####Reading objects with Date-fields####
 ```js
-var io, data;
-
-io = require('io');
-// the next io.read() method will make the request: '/getData?id=25'
-io.read('/getData', {id: 25}, {parseJSONDate: true}).then(
+// the next ITSA.IO.read() method will make the request: '/getData?id=25'
+ITSA.IO.read('/getData', {id: 25}, {parseJSONDate: true}).then(
     function(data) {
         // `data` is an object
         // data.birthday is Date-type
@@ -341,15 +343,16 @@ app.listen(8080);
 
 **Note 2:** when using `io-cors` you must be aware that <u>IE<10 will not send custom HTTP-headers</u>.
 
-#io-xml#
-
+#io/io-xml.js#
+<p class="module-intro">
+size-min gzipped: 4.16 + 0.19 = 4.35 kb<br>
+dependencies: io
+</p>
 The **io-xml**-module is meant for xml-request. It adds one method to io: io.**readXML**(). When fulfilled, the callback returns a XML-object. On error, the promise gets rejected.
 
 ####io.readXML()####
 ```js
-var io = require('io');
-
-io.readXML(uri).then(
+ITSA.IO.readXML(uri).then(
     function(responseXML) {
         // responseXML holds an xml-object
     }
@@ -361,10 +364,43 @@ io.readXML(uri).then(
 * response-data: **XML-object**
 * response Content-Type: **text/xml**
 
-#io-assets#
-#io-stream#
+#io/io-assets.js#
+_work in progress_
 
-#io-cors#
+#io/io-stream.js#
+<p class="module-intro">
+size-min gzipped: 4.16 + 0.23 = 4.39 kb<br>
+dependencies: io
+</p>
+
+Streaming IO is extremely simple. You just need to define `options.streamback` and this callbackFn will recieve all streamed data. The final resolved Promise will resolve with all the data, just as if were a non-streamed request. The callbackFn recieves the data unmodified, regardless what IO-method you are using: you need to parse yourself if needed.
+
+```js
+var options, callbackFn;
+
+callbackFn = function(data) {
+    // data is the partial data, unmodified
+};
+options = {
+    url: '/stream',
+    method: 'GET',
+    streamback: callbackFn,
+    data: {id: 25}
+};
+
+IO.request(options).then(
+    function(xhr) {
+        var allData = xhr.responseText;
+    }
+);
+```
+`io/io-stream.js` does not handle xml streams. In order to handle xml-streams you need to use [io/io-xmlstream.js](#io/io-xmlstream.js).
+
+#io/io-cors.js#
+<p class="module-intro">
+size-min gzipped: 4.16 + 8.35 = 12.51 kb<br>
+dependencies: io, xmldom (npm)
+</p>
 
 CORS stand for `Cross-Origin Resource Sharing`. In other words: loading data from a different origin. An origin is only the same when protocol and subdomain from both current site as from requested data-source are equal:
 
@@ -391,13 +427,7 @@ To enable CORS, you must setup both the client and server.
 To enable CORS on the client, you only need to include `io-cors` and extend IO:
 
 ```js
-var io, iocors;
-
-io = require('io');
-iocors = require('io-cors');
-iocors.extend(io);
-
-io.get('http://differentdomain.com/getData').then(
+ITSA.IO.get('http://differentdomain.com/getData').then(
     function(response) {
         ...
     }
@@ -520,6 +550,16 @@ app.post('*', function (req, res) {
 
 Because CORS its limitation and hard setup, we suggest to setup your server as a proxy instead. Make the request to the same origin (without CORS), and let your server fetch the data from the other origin. This not only saves you from sending extra code to the client, it also guarantees the code works in all browsers, has no limitation and no hard setup for the CORS-server. See **[io-proxy-node](#io-proxy-node)**.
 
-#io-jsonp#
+#io/io-jsonp.js#
 
-#io-proxy-node#
+_work in progress_
+
+
+#io/io-xmlstream.js#
+
+_work in progress_
+
+
+#io/io-proxy-node.js#
+
+_work in progress_

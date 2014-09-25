@@ -106,8 +106,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/extend-js/lib/extend-function.js": {
-            "name": "src/extend-js/lib/extend-function.js",
+        "src/extend-js/lib/function.js": {
+            "name": "src/extend-js/lib/function.js",
             "modules": {
                 "extend-function": 1
             },
@@ -119,8 +119,8 @@
             },
             "namespaces": {}
         },
-        "src/extend-js/lib/extend-object.js": {
-            "name": "src/extend-js/lib/extend-object.js",
+        "src/extend-js/lib/object.js": {
+            "name": "src/extend-js/lib/object.js",
             "modules": {
                 "extend-object": 1
             },
@@ -130,8 +130,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/extend-js/lib/extend-promise.js": {
-            "name": "src/extend-js/lib/extend-promise.js",
+        "src/extend-js/lib/promise.js": {
+            "name": "src/extend-js/lib/promise.js",
             "modules": {
                 "extend-promise": 1
             },
@@ -365,7 +365,7 @@
                 "Object": 1
             },
             "namespaces": {},
-            "file": "src/extend-js/lib/extend-promise.js",
+            "file": "src/extend-js/lib/promise.js",
             "line": 3
         },
         "extend-function": {
@@ -381,7 +381,7 @@
             "namespaces": {},
             "module": "extend-js",
             "namespace": "",
-            "file": "src/extend-js/lib/extend-function.js",
+            "file": "src/extend-js/lib/function.js",
             "line": 41,
             "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
@@ -396,8 +396,8 @@
             "namespaces": {},
             "module": "extend-js",
             "namespace": "",
-            "file": "src/extend-js/lib/extend-object.js",
-            "line": 62,
+            "file": "src/extend-js/lib/object.js",
+            "line": 63,
             "description": "Pollyfils for often used functionality for Objects\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "extend-promise": {
@@ -411,7 +411,7 @@
             "namespaces": {},
             "module": "extend-js",
             "namespace": "",
-            "file": "src/extend-js/lib/extend-promise.js",
+            "file": "src/extend-js/lib/promise.js",
             "line": 3,
             "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
@@ -629,7 +629,7 @@
             "module": "extend-js",
             "submodule": "extend-function",
             "namespace": "",
-            "file": "src/extend-js/lib/extend-function.js",
+            "file": "src/extend-js/lib/function.js",
             "line": 41,
             "description": "Pollyfils for often used functionality for Function"
         },
@@ -644,8 +644,8 @@
             "module": "extend-js",
             "submodule": "extend-object",
             "namespace": "",
-            "file": "src/extend-js/lib/extend-object.js",
-            "line": 62,
+            "file": "src/extend-js/lib/object.js",
+            "line": 63,
             "description": "Pollyfils for often used functionality for objects"
         },
         "Promise": {
@@ -659,7 +659,7 @@
             "module": "extend-js",
             "submodule": "extend-promise",
             "namespace": "",
-            "file": "src/extend-js/lib/extend-promise.js",
+            "file": "src/extend-js/lib/promise.js",
             "line": 3,
             "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
@@ -7467,7 +7467,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 77,
+            "line": 78,
             "description": "Subscribes to a customEvent. The callback will be executed `after` the defaultFn.",
             "static": 1,
             "itemtype": "method",
@@ -7513,7 +7513,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 104,
+            "line": 105,
             "description": "Subscribes to a customEvent. The callback will be executed `before` the defaultFn.",
             "static": 1,
             "itemtype": "method",
@@ -7559,7 +7559,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 131,
+            "line": 132,
             "description": "Defines an emitterName into the instance (emitter).\nThis will add a protected property `_emitterName` to the instance.",
             "static": 1,
             "itemtype": "method",
@@ -7582,7 +7582,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 152,
+            "line": 153,
             "description": "Defines a CustomEvent. If the eventtype already exists, it will not be overridden,\nunless you force to assign with `.forceAssign()`\n\nThe returned object comes with 4 methods which can be invoked chainable:\n\n<ul>\n    <li>defaultFn() --> the default-function of the event</li>\n    <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n    <li>forceAssign() --> overrides any previous definition</li>\n    <li>unHaltable() --> makes the customEvent cannot be halted</li>\n    <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n    <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>\n    <li>unRenderPreventable() --> makes that the customEvent's render cannot be prevented</li>\n    <li>noRender() --> prevents this customEvent from render the dom. Overrules unRenderPreventable()</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -7604,7 +7604,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 246,
+            "line": 247,
             "description": "Detaches (unsubscribes) the listener from the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -7628,7 +7628,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 264,
+            "line": 265,
             "description": "Detaches (unsubscribes) the listener from all customevents.",
             "static": 1,
             "itemtype": "method",
@@ -7646,7 +7646,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 288,
+            "line": 289,
             "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.rendered (optional) --> `true` the vDOM rendered the dom</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n              <li>e.status.renderPrevented (optional) -->  `reason|true` if the event got renderPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n    <li>e.preventRender() --> by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()` or `e.preventRender()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li>\n<ul>",
             "static": 1,
             "itemtype": "method",
@@ -7679,7 +7679,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 349,
+            "line": 350,
             "description": "Adds a subscriber to the finalization-cycle, which happens after the after-subscribers.\nOnly get invoked when the cycle was not preventDefaulted or halted.",
             "itemtype": "method",
             "name": "finalize",
@@ -7700,7 +7700,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 372,
+            "line": 373,
             "description": "Creates a notifier for the customEvent.\nYou can use this to create delayed `defineEvents`. When the customEvent is called, the callback gets invoked\n(even before the subsrcibers). Use this callback for delayed customEvent-definitions.\n\nUse **no** wildcards for the emitterName. You might use wildcards for the eventName. Without wildcards, the\nnotification will be unNotified (callback automaticly detached) on the first time the event occurs.\n\nYou **must** specify the full `emitterName:eventName` syntax.\nThe module `core-event-dom` uses `notify` to auto-define DOM-events (UI:*).",
             "static": 1,
             "itemtype": "method",
@@ -7729,7 +7729,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 403,
+            "line": 404,
             "description": "Subscribes to a customEvent. The callback will be executed `after` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
             "itemtype": "method",
@@ -7775,7 +7775,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 447,
+            "line": 448,
             "description": "Subscribes to a customEvent. The callback will be executed `before` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
             "itemtype": "method",
@@ -7821,7 +7821,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 491,
+            "line": 492,
             "description": "Removes all event-definitions of an emitter, specified by its `emitterName`.\nWhen `emitterName` is not set, ALL event-definitions will be removed.",
             "static": 1,
             "itemtype": "method",
@@ -7840,7 +7840,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 521,
+            "line": 522,
             "description": "Removes the event-definition of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -7858,7 +7858,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 534,
+            "line": 535,
             "description": "unNotifies (unsubscribes) the notifier of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -7876,7 +7876,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 551,
+            "line": 552,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -7928,7 +7928,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 621,
+            "line": 622,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -7980,7 +7980,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 710,
+            "line": 711,
             "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.rendered (optional) --> `true` the vDOM rendered the dom</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n              <li>e.status.renderPrevented (optional) -->  `reason|true` if the event got renderPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n    <li>e.preventRender() --> by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()` or `e.preventRender()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li>\n<ul>",
             "static": 1,
             "itemtype": "method",
@@ -8037,7 +8037,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 866,
+            "line": 867,
             "description": "Does the actual invocation of a subscriber.",
             "itemtype": "method",
             "name": "_invokeSubs",
@@ -8079,7 +8079,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 912,
+            "line": 913,
             "description": "Removes a subscriber from the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`.",
             "static": 1,
             "itemtype": "method",
@@ -8115,7 +8115,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 957,
+            "line": 958,
             "description": "Removes subscribers from the multiple customevents. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -8140,7 +8140,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 1012,
+            "line": 1013,
             "description": "Adds a property to the default eventobject's prototype which passes through all eventcycles.\nGoes through Object.defineProperty with configurable, enumerable and writable\nall set to false.",
             "itemtype": "method",
             "name": "_setEventObjProperty",
@@ -8165,7 +8165,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 1032,
+            "line": 1033,
             "description": "Objecthash containing all defined custom-events\nwhich has a structure like this:\n\n_ce = {\n    'UI:click': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    },\n    'redmodel:save': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -8179,7 +8179,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 1064,
+            "line": 1065,
             "description": "Objecthash containing all defined before and after subscribers\nwhich has a structure like this (`b` represents `before` and `a` represents `after`)\nEvery item that gets in the array consist by itself of 3 properties:\n                                                         subscriberitem = {\n                                                             o: listener,\n                                                             cb: callbackFn(e),\n                                                             f: filter\n                                                         };\n\n_subs = {\n    'UI:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    '*:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    'redmodel:save': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -8193,7 +8193,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 1115,
+            "line": 1116,
             "description": "Internal list of finalize-subscribers which are invoked at the finalization-cycle, which happens after the after-subscribers.\nIs an array of function-references.",
             "itemtype": "property",
             "name": "_final",
@@ -8207,7 +8207,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 1127,
+            "line": 1128,
             "description": "Object that acts as the prototype of the eventobject.\nTo add more methods, you can use `_setEventObjProperty`",
             "itemtype": "property",
             "name": "_defaultEventObj",
@@ -8221,7 +8221,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 1143,
+            "line": 1144,
             "description": "Objecthash containing all notifiers, keyed by customEvent name.\nThis list is maintained by `notify`, `unNotify` and `unNotifyAll`\n\n_notifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_notifiers",
@@ -8235,7 +8235,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 491,
+            "line": 467,
             "description": "Does the actual transportation from DOM-events into the Eventsystem. It also looks at the response of\nthe Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will be preventDefaulted.",
             "itemtype": "method",
             "name": "_domCallback",
@@ -8301,7 +8301,7 @@
             "submodule": "event-mobile"
         },
         {
-            "file": "src/extend-js/lib/extend-function.js",
+            "file": "src/extend-js/lib/function.js",
             "line": 48,
             "description": "Merges the given map of properties into the `prototype` of the Class.\n**Not** to be used on instances.\n\nThe members in the hash map will become members with\ninstances of the merged class.\n\nBy default, this method will not override existing prototype members,\nunless the second argument `force` is true.",
             "itemtype": "method",
@@ -8324,7 +8324,7 @@
             "submodule": "extend-function"
         },
         {
-            "file": "src/extend-js/lib/extend-function.js",
+            "file": "src/extend-js/lib/function.js",
             "line": 79,
             "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
             "example": [
@@ -8354,7 +8354,7 @@
             "submodule": "extend-function"
         },
         {
-            "file": "src/extend-js/lib/extend-function.js",
+            "file": "src/extend-js/lib/function.js",
             "line": 137,
             "description": "Overwrites the given prototype functions with the ones given in\nthe hashmap while still providing a means of calling the original\noverridden method.\n\nThe patching function will receive a reference to the original method\nprepended to the arguments the original would have received.",
             "itemtype": "method",
@@ -8372,7 +8372,7 @@
             "submodule": "extend-function"
         },
         {
-            "file": "src/extend-js/lib/extend-function.js",
+            "file": "src/extend-js/lib/function.js",
             "line": 171,
             "description": "Sets the context of which the function will be execute. in the\nsupplied object's context, optionally adding any additional\nsupplied parameters to the end of the arguments the function\nis executed with.",
             "itemtype": "method",
@@ -8400,7 +8400,7 @@
             "submodule": "extend-function"
         },
         {
-            "file": "src/extend-js/lib/extend-function.js",
+            "file": "src/extend-js/lib/function.js",
             "line": 207,
             "description": "Returns a base class with the given constructor and prototype methods",
             "itemtype": "method",
@@ -8428,8 +8428,8 @@
             "submodule": "extend-function"
         },
         {
-            "file": "src/extend-js/lib/extend-object.js",
-            "line": 67,
+            "file": "src/extend-js/lib/object.js",
+            "line": 68,
             "description": "Loops through all properties in the object.  Equivalent to Array.forEach.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "each",
@@ -8446,8 +8446,8 @@
             "submodule": "extend-object"
         },
         {
-            "file": "src/extend-js/lib/extend-object.js",
-            "line": 94,
+            "file": "src/extend-js/lib/object.js",
+            "line": 95,
             "description": "Loops through the properties in an object until the callback function returns *truish*.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe order in which the elements are visited is not predictable.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "some",
@@ -8467,8 +8467,8 @@
             "submodule": "extend-object"
         },
         {
-            "file": "src/extend-js/lib/extend-object.js",
-            "line": 122,
+            "file": "src/extend-js/lib/object.js",
+            "line": 123,
             "description": "Loops through the properties in an object until the callback assembling a new object\nwith its properties set to the values returned by the callback function.\nIf the callback function returns `undefined` the property will not be copied to the new object.\nThe resulting object will have the same keys as the original, except for those where the callback\nreturned `undefined` which will have dissapeared.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "map",
@@ -8488,8 +8488,8 @@
             "submodule": "extend-object"
         },
         {
-            "file": "src/extend-js/lib/extend-object.js",
-            "line": 154,
+            "file": "src/extend-js/lib/object.js",
+            "line": 155,
             "description": "Returns the keys of the object.",
             "itemtype": "method",
             "name": "keys",
@@ -8502,8 +8502,8 @@
             "submodule": "extend-object"
         },
         {
-            "file": "src/extend-js/lib/extend-object.js",
-            "line": 163,
+            "file": "src/extend-js/lib/object.js",
+            "line": 164,
             "description": "Loops through the object collection the values of all its properties.\nIt is the counterpart of the [`keys`](#method_keys).",
             "itemtype": "method",
             "name": "values",
@@ -8516,8 +8516,8 @@
             "submodule": "extend-object"
         },
         {
-            "file": "src/extend-js/lib/extend-object.js",
-            "line": 183,
+            "file": "src/extend-js/lib/object.js",
+            "line": 184,
             "description": "Returns true if the object has no own members",
             "itemtype": "method",
             "name": "isEmpty",
@@ -8530,8 +8530,8 @@
             "submodule": "extend-object"
         },
         {
-            "file": "src/extend-js/lib/extend-object.js",
-            "line": 196,
+            "file": "src/extend-js/lib/object.js",
+            "line": 197,
             "description": "Returns a shallow copy of the object.\nIt does not clone objects within the object, it does a simple, shallow clone.\nFast, mostly useful for plain hash maps.",
             "itemtype": "method",
             "name": "shallowClone",
@@ -8544,8 +8544,8 @@
             "submodule": "extend-object"
         },
         {
-            "file": "src/extend-js/lib/extend-object.js",
-            "line": 217,
+            "file": "src/extend-js/lib/object.js",
+            "line": 218,
             "description": "Merges into this object the properties of the given object.\nIf the second argument is true, the properties on the source object will be overwritten\nby those of the second object of the same name, otherwise, they are preserved.",
             "itemtype": "method",
             "name": "merge",
@@ -8567,8 +8567,8 @@
             "submodule": "extend-object"
         },
         {
-            "file": "src/extend-js/lib/extend-object.js",
-            "line": 242,
+            "file": "src/extend-js/lib/object.js",
+            "line": 243,
             "description": "Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object",
             "itemtype": "method",
             "name": "isObject",
@@ -8581,8 +8581,8 @@
             "submodule": "extend-object"
         },
         {
-            "file": "src/extend-js/lib/extend-object.js",
-            "line": 252,
+            "file": "src/extend-js/lib/object.js",
+            "line": 253,
             "description": "Returns a new object resulting of merging the properties of the given objects.\nThe copying is shallow, complex properties will reference the very same object.\nProperties in later objects do **not overwrite** properties of the same name in earlier objects.\nIf any of the objects is missing, it will be skiped.",
             "example": [
                 "\n\n var foo = function (config) {\n      config = Object.merge(config, defaultConfig);\n }"
@@ -8607,7 +8607,7 @@
             "submodule": "extend-object"
         },
         {
-            "file": "src/extend-js/lib/extend-promise.js",
+            "file": "src/extend-js/lib/promise.js",
             "line": 24,
             "description": "Promise which can be put at the very end of a chain, even after .catch().\nWill invoke the callback function regardless whether the chain resolves or rejects.\n\nThe argument of the callback will be either its fulfilled or rejected argument, but\nit is wisely not to handle it. The results should have been handled in an earlier step\nof the chain: .finally() basicly means you want to execute code after the chain, regardless\nwhether it's resolved or rejected.\n\n**Note:** .finally() <u>does not return a Promise</u>: it should be used as the very last step of a Promisechain.\nIf you need an intermediate method, you should take .thenFulfill().",
             "itemtype": "method",
@@ -8624,7 +8624,7 @@
             "submodule": "extend-promise"
         },
         {
-            "file": "src/extend-js/lib/extend-promise.js",
+            "file": "src/extend-js/lib/promise.js",
             "line": 44,
             "description": "Will always return a fulfilled Promise.\n\nTypical usage will be by making it part of a Promisechain: it makes the chain go\ninto its fulfilled phase.",
             "example": [
@@ -8649,7 +8649,7 @@
             "submodule": "extend-promise"
         },
         {
-            "file": "src/extend-js/lib/extend-promise.js",
+            "file": "src/extend-js/lib/promise.js",
             "line": 75,
             "description": "Returns a Promise that always fulfills. It is fulfilled when ALL items are resolved (either fulfilled\nor rejected). This is useful for waiting for the resolution of multiple\npromises, such as reading multiple files in Node.js or making multiple XHR\nrequests in the browser. Because -on the contrary of `Promise.all`- **finishAll** waits until\nall single Promises are resolved, you can handle all promises, even if some gets rejected.",
             "itemtype": "method",
@@ -8671,7 +8671,7 @@
             "submodule": "extend-promise"
         },
         {
-            "file": "src/extend-js/lib/extend-promise.js",
+            "file": "src/extend-js/lib/promise.js",
             "line": 139,
             "description": "Returns a Promise which chains the function-calls. Like an automated Promise-chain.\nInvokes the functionreferences in a chain. You MUST supply function-references, it doesn't\nmatter wheter these functions return a Promise or not. Any returnvalues are passed through to\nthe next function.\n\n**Cautious:** you need to pass function-references, not invoke them!\nchainFns will invoke them when the time is ready. Regarding to this, there is a difference with\nusing Promise.all() where you should pass invoked Promises.\n\nIf one of the functions returns a Promise, the chain\nwill wait its execution for this function to be resolved.\n\nIf you need specific context or arguments: use Function.bind for these items.\nIf one of the items returns a rejected Promise, by default: the whole chain rejects\nand following functions in the chain will not be invoked. When `finishAll` is set `true`\nthe chain will always continue even with rejected Promises.\n\nReturning functionvalues are passed through the chain adding them as an extra argument\nto the next function in the chain (argument is added on the right)",
             "example": [
@@ -8703,7 +8703,7 @@
             "submodule": "extend-promise"
         },
         {
-            "file": "src/extend-js/lib/extend-promise.js",
+            "file": "src/extend-js/lib/promise.js",
             "line": 231,
             "description": "Returns a Promise with 3 additional methods:\n\npromise.fulfill\npromise.reject\npromise.callback\n\nWith Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.\nYou can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any.\npromise.**fulfill**() and promise.**reject**() are meant to resolve the promise from outside, just like deferred can do.",
             "example": [
@@ -8729,7 +8729,7 @@
         },
         {
             "file": "src/io/io-assets.js",
-            "line": 26,
+            "line": 27,
             "description": "Creates a `<style>` tag to load the CSS file at the given url.",
             "itemtype": "method",
             "name": "getCSS",
@@ -8778,7 +8778,7 @@
         },
         {
             "file": "src/io/io-assets.js",
-            "line": 44,
+            "line": 45,
             "description": "Creates a `<script>` tag to load the script at the given url.",
             "itemtype": "method",
             "name": "getJS",
@@ -8827,7 +8827,7 @@
         },
         {
             "file": "src/io/io-jsonp.js",
-            "line": 27,
+            "line": 29,
             "description": "Creates a `<style>` tag to load the CSS file at the given url.",
             "itemtype": "method",
             "name": "readObjectJSONP",
@@ -8876,7 +8876,7 @@
         },
         {
             "file": "src/io/io-stream.js",
-            "line": 54,
+            "line": 55,
             "description": "Adds 2 methods on the xhr-instance which are used by xhr when events occur:\n\nxhr.onload()\nxhr.onerror()  // only XMLHttpRequest2\n\nThese events are only added in case of XDR",
             "itemtype": "method",
             "name": "_readyHandleXDR",
@@ -8899,7 +8899,7 @@
         },
         {
             "file": "src/io/io-stream.js",
-            "line": 83,
+            "line": 84,
             "description": "Adds a `headers` X-Stream=true in case of a streaming request.",
             "itemtype": "method",
             "name": "_setHeaders",
@@ -8927,7 +8927,7 @@
         },
         {
             "file": "src/io/io-transfer.js",
-            "line": 33,
+            "line": 34,
             "description": "Performs an AJAX GET request.  Shortcut for a call to [`xhr`](#method_xhr) with `method` set to  `'GET'`.\nAdditional parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `params` should be a plain object with only primitive types which are transformed into key/value pairs.",
             "itemtype": "method",
             "name": "get",
@@ -8995,7 +8995,7 @@
         },
         {
             "file": "src/io/io-transfer.js",
-            "line": 78,
+            "line": 79,
             "description": "Performs an AJAX request with the GET HTTP method and expects a JSON-object.\nThe resolved Promise-callback returns an object (JSON-parsed serverresponse).\n\nAdditional request-parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: If you expect the server to response with data that consist of Date-properties, you should set `options.parseJSONDate` true.\n       Parsing takes a bit longer, but it will generate trully Date-objects.\nNote2: CORS is supported, as long as the responseserver is set up to:\n      a) has a response header which allows the clientdomain:\n         header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n      b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n         to requests with the OPTION-method\n      More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/",
             "itemtype": "method",
             "name": "read",
@@ -9064,7 +9064,7 @@
         },
         {
             "file": "src/io/io-transfer.js",
-            "line": 140,
+            "line": 141,
             "description": "Sends data (object) which will be JSON-stringified before sending.\nPerforms an AJAX request with the PUT HTTP method by default.\nWhen options.allfields is `false`, it will use the POST-method: see Note2.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: The server needs to inspect the bodyparam: 'action', which always equals 'update'.\n       'body.action' is the way to distinquish 'I.IO.updateObject' from 'I.IO.insertObject'.\n       On purpose, we didn't make this distinction through a custom CONTENT-HEADER, because\n       that would lead into a more complicated CORS-setup (see Note3)\nNote2: By default this method uses the PUT-request: which is preferable is you send the WHOLE object.\n       if you send part of the fields, set `options.allfields`=false.\n       This will lead into using the POST-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote3: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote4: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "update",
@@ -9139,7 +9139,7 @@
         },
         {
             "file": "src/io/io-transfer.js",
-            "line": 188,
+            "line": 189,
             "description": "Performs an AJAX request with the POST HTTP method by default.\nWhen options.allfields is `true`, it will use the PUT-method: see Note2.\nThe send data is an object which will be JSON-stringified before sending.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n'body.action' has the value 'insert'\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: The server needs to inspect the bodyparam: 'action', which always equals 'insert'.\n       'body.action' is the way to distinquish 'I.IO.insertObject' from 'I.IO.updateObject'.\n       On purpose, we didn't make this distinction through a custom CONTENT-HEADER, because\n       that would lead into a more complicated CORS-setup (see Note3)\nNote2: By default this method uses the POST-request: which is preferable if you don't know all the fields (like its unique id).\n       if you send ALL the fields, set `options.allfields`=true.\n       This will lead into using the PUT-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote3: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote4: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "insert",
@@ -9214,7 +9214,7 @@
         },
         {
             "file": "src/io/io-transfer.js",
-            "line": 236,
+            "line": 237,
             "description": "Performs an AJAX request with the PUT HTTP method by default.\nWhen options.allfields is `false`, it will use the POST-method: see Note2.\nThe send data is an object which will be JSON-stringified before sending.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: By default this method uses the PUT-request: which is preferable is you send the WHOLE object.\n       if you send part of the fields, set `options.allfields`=false.\n       This will lead into using the POST-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote2: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote3: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "send",
@@ -9273,7 +9273,7 @@
                 }
             ],
             "return": {
-                "description": "on success:\nresponse {Object|String} any response you want the server to return.\n                      If the server send back a JSON-stringified object, it will be parsed to return as a full object\n                      You could set `options.parseJSONDate` true, it you want ISO8601-dates to be parsed as trully Date-objects\non failure an Error object\nreason {Error}",
+                "description": "on success:\nresponse {Object|String} any response you want the server to return.\n                  If the server send back a JSON-stringified object, it will be parsed to return as a full object\n                  You could set `options.parseJSONDate` true, it you want ISO8601-dates to be parsed as trully Date-objects\non failure an Error object\nreason {Error}",
                 "type": "Promise"
             },
             "class": "IO",
@@ -9282,7 +9282,7 @@
         },
         {
             "file": "src/io/io-transfer.js",
-            "line": 322,
+            "line": 323,
             "description": "Performs an AJAX DELETE request.  Shortcut for a call to [`xhr`](#method_xhr) with `method` set to  `'DELETE'`.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `data` should be a plain object with only primitive types which are transformed into key/value pairs.",
             "itemtype": "method",
             "name": "delete",
@@ -9361,7 +9361,7 @@
         },
         {
             "file": "src/io/io-xml.js",
-            "line": 27,
+            "line": 29,
             "description": "Performs an AJAX request with the GET HTTP method and expects a JSON-object.\nThe resolved Promise-callback returns an object (JSON-parsed serverresponse).\n\nAdditional request-parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: If you expect the server to response with data that consist of Date-properties, you should set `options.parseJSONDate` true.\n       Parsing takes a bit longer, but it will generate trully Date-objects.\nNote2: CORS is supported, as long as the responseserver is set up to:\n      a) has a response header which allows the clientdomain:\n         header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n      b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n         to requests with the OPTION-method\n      More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/",
             "itemtype": "method",
             "name": "readXML",
@@ -9717,7 +9717,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 103,
+            "line": 106,
             "description": "Reference to the `idGenerator` function in [utils](../modules/utils.html)",
             "itemtype": "property",
             "name": "idGenerator",
@@ -9728,7 +9728,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 113,
+            "line": 116,
             "description": "Reference to the [IO](io.html) object",
             "itemtype": "property",
             "name": "IO",
@@ -9739,7 +9739,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 122,
+            "line": 128,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",

@@ -2,7 +2,8 @@
 module: event
 itsaclassname: Event
 version: 0.0.1
-modulesize: 4.70
+modulesize: 3.15
+dependencies: "extend-js/lib/function.js, extend-js/lib/object.js"
 maintainer: Marco Asbreuk
 title: Custom Events
 intro: "The event-module provides APIs for working with events through the static Class Event. Emitting and listening to events can be done at the highest level: Event. This is place where all events emit to. Also, any object or instance can emit or listen to an event by merging the propriate methods. Both user-defined events as well as the browser's DOM event system are handled by Event.<br><br>The loaderfiles combine <b>event</b>, <b>event-dom</b> and <b>event-mobile</b> all into ITSA.Event."

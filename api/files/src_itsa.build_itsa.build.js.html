@@ -228,7 +228,12 @@
         debug: true,
         base: &#x27;/components&#x27;
     };
-     var fakedom = window.navigator.userAgent===&#x27;fake&#x27;,
+
+    require(&#x27;polyfill&#x27;);
+    require(&#x27;ypromise&#x27;);
+    require(&#x27;extend-js&#x27;);
+
+    var fakedom = window.navigator.userAgent===&#x27;fake&#x27;,
          Event = fakedom ? require(&#x27;event&#x27;) : require(&#x27;event-mobile&#x27;)(window),
          io_config = {
              reqTimeout: 3000,
@@ -239,8 +244,6 @@
 
     require(&#x27;event/event-emitter.js&#x27;);
     require(&#x27;event/event-listener.js&#x27;);
-    require(&#x27;ypromise&#x27;);
-    require(&#x27;extend-js&#x27;);
 
     /**
      * Reference to the &#x60;idGenerator&#x60; function in [utils](../modules/utils.html)
@@ -258,8 +261,11 @@
      * @type Object
      * @static
     */
-    ITSA.IO = require(&#x27;io&#x27;)(window);
+    ITSA.IO = require(&#x27;io/io-transfer.js&#x27;)(window);
     ITSA.IO.config.merge(io_config);
+    require(&#x27;io/io-cors-ie9.js&#x27;)(window);
+    require(&#x27;io/io-stream.js&#x27;)(window);
+    require(&#x27;io/io-xml.js&#x27;)(window);
 
     /**
      * [Event](Event.html)-instance

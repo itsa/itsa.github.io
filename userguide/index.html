@@ -17,67 +17,44 @@ customized_url: "../customized-build/index.html"
 <h1>With nodejs</h1>
 <p>Your project will have these three elements:
     <ul>
-        <li>scriptfile.js (your codefile)</li>
-        <li>package.json (definition about the program and its dependencies)</li>
-        <li>node_module (directory with all the packages)</li>
+        <li><span class="blue">scriptfile.js</span> (your codefile)</li>
+        <li><span class="blue">package.json</span> (definition about the program and its dependencies)</li>
+        <li><span class="blue">node_modules</span> (directory with all the packages)</li>
     </ul>
     You can create your own <code class="prettyprint">package.json</code>, or start with our <a href="./dist/package.json">distribution-file</a>. It is important that every <b>require()</b> you use inside your scriptfile has its dependency defined inside package.json. Once you have set package.json up, you run <code class="prettyprint">npm install</code> which will create <b>node_modules</b> and all the required packages.
 </p>
 
+<p>
+From there, you can start writing your scriptfile, which probably looks something like this:
 <h2>Example scripfile.js</h2>
 {% highlight js %}
 var express = require('express'),
-    bodyParser = require('body-parser'),
-    Event = require('event'),
-    NODE_WINDOW = require('node-win'),
-    IO = require('io')(NODE_WINDOW),
-    IO_TRANSFER = require("io-transfer"),
-    app = express();
-
-IO_TRANSFER.mergeInto(IO);
-
-app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
-
-app.get('*', function (req, res) {
-    Event.emit('request:start');
-    IO.get('http://somedomain.com/?id='+req.param('id')).then(
-        function(getresponse) {
-            Event.emit('request:recieved');
-            res.set('Content-Type', 'text/html');
-            res.end(getresponse);
-        }
-    );
-});
-
-app.set('port', 8000);
-
-app.listen(app.get('port'), function(){
-    console.log("Express server listening on port " + app.get('port'));
-});
+    Event = require('event'); // this is ITSA's event-module
 {% endhighlight %}
 
-<h2>Example package.json</h2>
-{% highlight json %}
-{
-    "name": "myproject",
-    "version": "0.0.1",
-    "main": "scriptfile.js",
-    "dependencies": {
-        "event":"itsa/event",
-        "io": "itsa/io",
-        "io-transfer": "itsa/io/io-transfer.js",
-        "node-win":"itsa/node-win",
-        "body-parser": "^1.5.2",
-        "express": "^4.7.2"
-    },
-}
-{% endhighlight %}
+</p>
 
 <h1>In the browser:</h1>
-Because the browser doesn't support "require()", you need to bundle the files with Browerify. This will inspect your code and create a separate bundle-file that holds all the requirements (and its dependencies) and will define the require()-method in the browser.</p>
+<p>Because the browser doesn't support "require()", you need to bundle the files with Browerify. This will inspect your code and create a separate bundle-file that holds all the requirements (and its dependencies) and will define the require()-method in the browser.</p>
+
+<p>
+The easiest way is to use our predefined <a href="./dist/itsabuild.tar">loaderfiles</a>. You can choose either to use the minified version <code class="prettyprint">itsabuild-min.js</code> (advisable) or the full-version <code class="prettyprint">itsabuild.js</code> for debugging.
+</p>
+
+<p>
+The build-file should be included by a script tag <u>at the bottom of the document</u>, just above <code class="prettyprint">&lt;/body&gt;</code>. Followed by your code, which is within a <code class="prettyprint">&lt;script&gt;</code>-tag itself:
+</p>
+{% include loader-link.html %}
+{% highlight js %}
+<script>
+    var ITSA = require('itsa');
+        Event = ITSA.Event;
+</script>
+{% endhighlight %}
+
+Drawback of our build-files is, that they have <u>all of <code class="prettyprint">ITSA</code>'s modules</u> inside which might be more than you need. If you are more familiair with using <code class="prettyprint">ITSA</code>, you might want to customize the build-files yourself.
+</p>
 
 <div class="after-intro">
-    <a class="pure-button pure-button-primary pure-button-bordered" href="{{ page.customized_url }}">Customized build</a>
+    <a class="pure-button pure-button-primary pure-button-bordered" href="{{ page.customized_url }}">Customizing</a>
 </div>
-
-{% include quick-start.html %}

@@ -177,9 +177,12 @@ var NAME = &#x27;[io-cors-ie9]: &#x27;,
         POST: 1
     };
 
+
 module.exports = function (window) {
 
-    var isCrossDomain = function (url) {
+    var IO = require(&#x27;./io.js&#x27;)(window),
+
+    isCrossDomain = function (url) {
         var domain;
         if (window.navigator.userAgent===&#x27;fake&#x27;) {
             return false;
@@ -245,16 +248,12 @@ module.exports = function (window) {
                 promise.reject(UNKNOW_ERROR);
             });
         }
-    },
-
-    IO_CORS = {
-        mergeInto: function (io) {
-            io._xhrList.push(entendXHR);
-            io._xhrInitList.push(readyHandleXDR);
-        }
     };
 
-    return IO_CORS;
+    IO._xhrList.push(entendXHR);
+    IO._xhrInitList.push(readyHandleXDR);
+
+    return IO;
 };
 
     </pre>

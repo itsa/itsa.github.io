@@ -14,7 +14,7 @@ var window = require('node-win'),
 
 {% highlight js %}
 <script>
-    var ITSA = require('itsa'),
-        {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }};
+    var ITSA = require('itsa'){% if page.itsaclassname %},
+        {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }}{% endif %};
 </script>
 {% endhighlight %}
