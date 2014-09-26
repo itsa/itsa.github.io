@@ -3,6 +3,94 @@ layout: "contribution"
 title: Project Contributor
 ---
 
-<div class="paragraph">How to start becoming a project-contributor</div>
+<div class="paragraph">About becoming a project-contributor</div>
 
-<code class="prettyprint">Work in progress</code>
+<p>
+    Are you considering to become a projectcontributor? <code class="prettyprint">We're happy you do!</code> Being a projectcontributor means you contibute more often and to more repositories of <code class="prettyprint">ITSA-modules</code>. You are basicly involved with the <a href="https://github.com/itsa" target="_blank">whole project</a>. This could be the separate modules, <a href="https://github.com/itsa/itsa.github.io" target="_blank">this website</a> or the <a href="https://github.com/itsa/itsa.contributor" target="_blank">main projectrepository</a> that controls how to manages them all.
+</p>
+<p>
+    Anyone can become a projectcontributor, though we expect you to have a high level of programming skill, being a good teamplayer. Being a projectcontributor doesn't give you rights to make your changes go through to the project. The projectmanagers will always decide whether the code is accepted and conforms the goals of ITSA modules.
+</p>
+
+{% include licence-agreement.html %}
+
+<div class="paragraph">How to get started</div>
+
+<p>
+    In order to manage the whole project, you need to download it all to your computer. This provides you several tools, which you can run locally, that makes it easy to manage and preview your changes. However, you cannot just download it all into one directory. There is a specific structure by which the documentation and api fall in the right place automaticly.
+</p>
+<p>
+    Before you follow the required installation-steps (explained below), you need to understand this treestructure, where the 3 <code class="prettyprint">itsa.modulename</code> repositories have special meaning (more about that later):<br>
+    <table>
+        <tbody>
+            <tr><td colspan="4" class="border">"Projectroot"</td><td class="special">&lt;&mdash;itsa.contributor</td></tr>
+            <tr><td></td><td class="left-border"></td><td colspan="3"></td></tr>
+            <tr><td></td><td class="left-border">&mdash;&mdash;&mdash;</td><td colspan="2" class="border">site</td><td class="special">&lt;&mdash;itsa.github.io</td></tr>
+            <tr><td></td><td class="left-border"></td><td colspan="3"></td></tr>
+            <tr><td></td><td class="left-border">&mdash;&mdash;&mdash;</td><td colspan="2" class="border">src</td><td></td></tr>
+            <tr><td colspan="3"></td><td colspan="2" class="left-border"></td></tr>
+            <tr><td></td><td></td><td></td><td class="left-border">&mdash;&mdash;&mdash;</td><td class="border special">itsa.build</td></tr>
+            <tr><td colspan="3"></td><td colspan="2" class="left-border"></td></tr>
+            <tr><td></td><td></td><td></td><td class="left-border">&mdash;&mdash;&mdash;</td><td class="border module">event</td></tr>
+            <tr><td colspan="3"></td><td colspan="2" class="left-border"></td></tr>
+            <tr><td></td><td></td><td></td><td class="left-border">&mdash;&mdash;&mdash;</td><td class="border module">io</td></tr>
+            <tr><td colspan="3"></td><td colspan="2" class="left-border"></td></tr>
+            <tr><td></td><td></td><td></td><td class="left-border">&mdash;&mdash;&mdash;</td><td class="border module">utils</td></tr>
+        </tbody>
+    </table>
+</p>
+
+<h1>Installation-steps</h1>
+<p>
+    We created installationsteps based on a linux or Mac system. Sorry if you have a Windows computer: in the future we will change all routines to run using Gulp.
+</p>
+<h2>Step 1:</h2>
+<p>
+    Fork and clone <code class="prettyprint">itsa.contributor</code> to <code class="prettyprint">"Projectroot"</code>, which may be any directory-name of your choice. We advice you to call the directory <code class="prettyprint">itsa.contributor</code>. This repository is special: it is the startpoint to manage the project.
+</p>
+
+<h2>Step 2:</h2>
+<p>
+    From within this directory, run <code class="prettyprint">npm install</code>. This will get all the packages required to do your local development.
+</p>
+
+<h2>Step 3:</h2>
+<p>
+    Goto the directory <code class="prettyprint">./sh</code> and run: <code class="prettyprint">sh initialsetup.sh</code> which will create some symlinks you need to have for local testing. It also creates the directory <code class="prettyprint">"Projectroot"/src</code> which is the place to clone all ITSA's module-repositories (see next step).
+</p>
+
+<h2>Step 4:</h2>
+<p>
+    Fork and clone all ITSA's repositories except <code class="prettyprint">itsa.contributor</code> and <code class="prettyprint">itsa.github.io</code>. You must clone the repositories to <code class="prettyprint">"Projectroot"/src/modulename</code> where the directoryname equals the repository/modulename.
+</p>
+
+<h2>Step 5:</h2>
+<p>
+    Because you also need the website (either for contribution, or to be able to preview documentation), you need to fork and clone <code class="prettyprint">itsa.github.io</code> to <code class="prettyprint">"Projectroot"/site</code>. You <u>must use</u> the directoryname <code class="prettyprint">site</code>, otherwise local rendering will fail.
+</p>
+
+<h2>Step 6:</h2>
+<p>
+    If you want to preview the site locally (with modified API or documentation), you need to install <a href="http://jekyllrb.com/docs/home/" target="blank">Jekyll</a>. Jekyll is a static website generator, that is used by <a href="https://github.com" target="_blank">GitHub</a>. We use it to generate our documentation using <a href="http://en.wikipedia.org/wiki/Markdown" target="_blank">markdown</a>.
+</p>
+<p>
+    From here, you need to follow these three steps:
+    <ul>
+        <li>You need <a href="https://www.ruby-lang.org/en/" target="blank">Ruby</a> - Jekyll requires the <code class="prettyprint">Ruby language</code>. If you have a Mac, you've most likely already got Ruby. If you open up the Terminal application, and run the command <code class="prettyprint">ruby --version</code> you can confirm this. Your Ruby version should begin with <b>1.9.3</b> or <b>2.0.0</b>. If you've got that, you're all set. Otherwise, follow <a href="https://www.ruby-lang.org/en/downloads/" target ="blank">these instructions</a> to install Ruby.</li>
+        <li>You need <a href="http://bundler.io" target="_blank">Bundler</a> - Bundler is a package manager that makes versioning Ruby software like Jekyll a heck of a lot easier if you're going to be building GitHub Pages sites locally. If you don't already have Bundler installed, you can install it by running the command <code class="prettyprint">gem install bundler</code>.</li>
+        <li>Now you have both Ruby and Bundler, you can install Jekyll very easy: from inside <code class="prettyprint">"Projectroot"</code> you run: <code class="prettyprint">bundle install</code></li>
+    </ul>
+</p>
+<p>
+    If you still experience troubles installing, then <a href="https://help.github.com/articles/using-jekyll-with-pages" target="_blank">look here for help</a>.
+</p>
+<h2>Finished!</h2>
+<p>
+    That was a bit of work, but it is worth it! You only need to do it once, hopefully it all went smoothless. Once installed, you can start working on the project (see below).
+</p>
+
+<div class="paragraph">How to work with the project</div>
+
+<p>
+    <code class="prettyprint">work in progress</code>
+</p>
