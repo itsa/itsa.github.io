@@ -6,7 +6,7 @@ modulesize: 11.05
 dependencies: "extend-js/lib/function.js, extend-js/lib/object.js, utils, event, event-dom, hammerjs (npm)"
 maintainer: Marco Asbreuk
 title: Mobile Events using HammerJS
-intro: "This module adds mobile events to the `event-dom` module. It integrates all of HammerJS into the eventsystem. You need `event-dom` to make this module operational.<br><br>The loaderfiles combine <b>event</b>, <b>event-dom</b> and <b>event-mobile</b> all into ITSA.Event."
+intro: "This module adds mobile events to the `event-dom` module. It integrates all of HammerJS into the eventsystem.<br><br>The loaderfiles combine <b>event</b>, <b>event-dom</b> and <b>event-mobile</b> all into ITSA.Event."
 firstpar: get-started-onlywindow
 ---
 
