@@ -12,23 +12,23 @@ firstpar: get-started-window
 
 #The Basics#
 
-ITSA comes with a rollup of all io-modules, available with `ITSA.IO`. If you setup your own build-file, you can choose whatever io sub-module you like: they all return the same IO-object. If you setup yourself, you need to pass through the window-object:
+ITSA comes with a rollup of all io-modules, available with `ITSA.IO` which is ready to use. If you setup your own build-file, you can choose whatever io sub-module you like: they all return the same IO-object. If you setup yourself, you need to pass through the window-object:
 
 ```js
-var IO = require('io');
+var IO = require('io')(window);
 ```
 or
 
 ```js
-var IO = require('io/io-stream.js');
+var IO = require('io/io-stream.js')(window);
 ```
 or
 
 ```js
-var IO = require('io/io-transfer.js');
+var IO = require('io/io-transfer.js')(window);
 
-require('io/io-stream.js'); // extending IO
-require('io/io-cors-ie9.js'); // extending IO
+require('io/io-stream.js')(window); // extending IO
+require('io/io-cors-ie9.js')(window); // extending IO
 ```
 
 ##Initiate request##
