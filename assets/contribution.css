@@ -18,3 +18,24 @@
     padding: 1.5em;
     text-align: center;
 }
+td.border {
+    border: solid 1px #000;
+    text-align: center;
+    background-color: #DDD;
+}
+td.left-border {
+    border-left: solid 1px #000;
+}
+td.special {
+    color: #d61fb1;
+}
+td.module {
+    color: #0078e7;
+}
+.body-content.contribution table {
+    empty-cells: show;
+}
+.body-content.contribution td {
+    height: 1em;
+    padding: 0.3em;
+}
