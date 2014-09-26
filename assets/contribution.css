@@ -26,6 +26,10 @@ td.border {
 td.left-border {
     border-left: solid 1px #000;
 }
+td.noborder {
+    border-bottom: none;
+    border-top: none;
+}
 td.special {
     color: #d61fb1;
 }
