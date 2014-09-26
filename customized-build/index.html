@@ -50,7 +50,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     Event = require('event'),
     window = require('node-win'),
-    IO = require('io')(window),
+    IO = require('io')(window), // needs invokation with window-object
     app = express();
 
 require("io-transfer");
@@ -138,15 +138,15 @@ ITSA._config = {
     base: '/components'
 };
 
-ITSA.Event = require('event-mobile');
+ITSA.Event = require('event-mobile')(window); // needs invokation with window-object
 require('event/event-emitter.js');
 require('event/event-listener.js');
 
 // "utils" has several methods: we merge them all at once:
 ITSA.merge(require('utils'));
 
-ITSA.IO = require('io/io-transfer.js');
-require('io/io-xml.js');
+ITSA.IO = require('io/io-transfer.js')(window); // needs invokation with window-object
+require('io/io-xml.js')(window); // needs invokation with window-object
 
 module.exports = ITSA;
 {% endhighlight %}
