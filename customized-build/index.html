@@ -5,39 +5,55 @@ modules_url: "../modules/index.html"
 userguides_url: "../userguide/index.html"
 ---
 
+<div class="paragraph">Customizing usage on nodejs</div>
 
-<div class="paragraph">Quick jump to ITSA modules documentation</div>
-<div class="after-intro">
-    <a class="pure-button pure-button-primary pure-button-bordered" href="{{ page.modules_url }}">View ITSA Modules</a>
-</div>
-
-<div class="paragraph">Work in progress</div>
-
-<div style="display:none;">
-
-<p>ITSA modules are CommonJS-modules which can be used in <code class="prettyprint">nodejs</code> or on the <code class="prettyprint">browser</code>. In both cases, you reference them with <code class="prettyprint">require(</code><span class="purple"><i>'modulename'</i></span><code class="prettyprint">)</code>.
-
-<h1>With nodejs</h1>
-<p>Your project will have these three elements:
-    <ul>
-        <li>scriptfile.js (your codefile)</li>
-        <li>package.json (definition about the program and its dependencies)</li>
-        <li>node_module (directory with all the packages)</li>
-    </ul>
-    You can create your own <code class="prettyprint">package.json</code>, or start with our <a href="./dist/package.json">distribution-file</a>. It is important that every <b>require()</b> you use inside your scriptfile has its dependency defined inside package.json. Once you have set package.json up, you run <code class="prettyprint">npm install</code> which will create <b>node_modules</b> and all the required packages.
+<p>If you want to specify which modules to use, you need to setup <code class="prettyprint">package.json</code> first. Modules inside package.json can be with or without a slash in their name. Without <code class="prettyprint">slash</code>, they will be loaded from <a href="https://npmjs.org" target="_blank">npm</a>, without, they will be loaded straight ahead from <a href="https://github.com" target="_blank">GitHub</a>.
 </p>
 
-<h2>Example scripfile.js</h2>
+<p>
+We decided not to push our modules on npm, because the itsa namespace on GitHub quarantees the right identity of our modules. All ITSA modules can be refered to with <code class="prettyprint">"itsa/modulename"</code>.
+</p>
+
+<h2>Example package.json:</h2>
+{% highlight json %}
+{
+    "name": "myproject",
+    "version": "0.0.1",
+    "main": "scriptfile.js",
+    "dependencies": {
+        "event":"itsa/event",
+        "io-transfer": "itsa/io/io-transfer.js",
+        "node-win":"itsa/node-win",
+        "body-parser": "^1.5.2",
+        "express": "^4.7.2"
+    },
+}
+{% endhighlight %}
+
+<p>After settting up the right package.json, you need to run <code class="prettyprint">npm install</code>, which will install all the modules and their dependencies inside the folder <code class="prettyprint">node_modules</code>.
+</p>
+
+<p>
+Now you can write your application. Be aware that some modules needs to be required as a <code class="prettyprint">function</code> with the <code class="prettyprint">window</code>-object passed through, something <code class="prettyprint">"itsa"</code> does under the hood. When requiring io yourself, you need to use <code class="prettyprint">"itsa/node-win"</code> like this:
+{% highlight js %}
+var window = require('node-win'),
+{% endhighlight %}
+</p>
+
+<p>
+Once everything is setup right, you can start build your scriptfile.
+</p>
+
+<h2>Example scripfile.js:</h2>
 {% highlight js %}
 var express = require('express'),
     bodyParser = require('body-parser'),
     Event = require('event'),
-    NODE_WINDOW = require('node-win'),
-    IO = require('io')(NODE_WINDOW),
-    IO_TRANSFER = require("io-transfer"),
+    window = require('node-win'),
+    IO = require('io')(window),
     app = express();
 
-IO_TRANSFER.mergeInto(IO);
+require("io-transfer");
 
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
@@ -46,8 +62,7 @@ app.get('*', function (req, res) {
     IO.get('http://somedomain.com/?id='+req.param('id')).then(
         function(getresponse) {
             Event.emit('request:recieved');
-            res.set('Content-Type', 'text/html');
-            res.end(getresponse);
+            res.set('Content-Type', 'text/html').end(getresponse);
         }
     );
 });
@@ -59,30 +74,118 @@ app.listen(app.get('port'), function(){
 });
 {% endhighlight %}
 
-<h2>Example package.json</h2>
+
+<div class="paragraph">Customizing usage on the browser</div>
+<p>Because the browser doesn't support "<code class="prettyprint">require()</code>", you need to bundled loader-file (bundled with <a href="http://browserify.org" target="_blank">Browerify</a>). Browserify inspects your code and creates a single bundle-file that holds all the requirements (and its dependencies) and will define the require()-method in the browser.</p>
+
+<p>
+Creating your own loader-file takes 4-steps:
+    <ul>
+       <li><span class="blue">1. Create package.json</span></li>
+       <li><span class="blue">2. run "npm install"</span></li>
+       <li><span class="blue">3. Create builder-file</span></li>
+       <li><span class="blue">4. Bundle builder-file into a loaderfile</span></li>
+    </ul>
+</p>
+
+<h1>1. Creating package.json</h1>
+<p>
+    The package.json file is just alike the nodejs example above. You can require any <code class="prettyprint">"itsa/modulename"</code>-module you want, any subfile, other CommonJS <a href="https://github.com" target="_blank">GitHub-modules</a> or <a href="https://npmjs.org" target="_blank">npm-modules</a>. You probably be only interested in modules that are build for usage on browser.
+</p>
+
+<h2>Example package.json:</h2>
 {% highlight json %}
 {
     "name": "myproject",
     "version": "0.0.1",
-    "main": "scriptfile.js",
     "dependencies": {
-        "event":"itsa/event",
-        "io": "itsa/io",
+        "polyfill": "itsa/polyfill",
+        "event-mobile":"itsa/event-mobile",
+        "extend-js": "itsa/extend-js",
+        "utils": "itsa/utils",
         "io-transfer": "itsa/io/io-transfer.js",
-        "node-win":"itsa/node-win",
-        "body-parser": "^1.5.2",
-        "express": "^4.7.2"
+        "io-xml": "itsa/io/io-xml.js",
+        "mathjs": "^1.0.1"
     },
 }
 {% endhighlight %}
 
-<h1>In the browser:</h1>
-Because the browser doesn't support "require()", you need to bundle the files with Browerify. This will inspect your code and create a separate bundle-file that holds all the requirements (and its dependencies) and will define the require()-method in the browser.</p>
+<p>The main-property doesn't need to be specified.</p>
 
-<div class="after-intro">
-    <a class="pure-button pure-button-primary pure-button-bordered" href="{{ page.customized_url }}">Customized build</a>
-</div>
+<h1>2. Run "npm install"</h1>
+<p>
+    This will install all packages and their requirements into the folder <code class="prettyprint">node_modules</code>.
+</p>
 
-{% include quick-start.html %}
+<h1>3. Creating builder-file</h1>
+<p>
+    The builder-file can have any name, as from now, we suppose its name as being <b>index.js</b>. Inside the builder-file, you can use "<code class="prettyprint">require()</code>" just the same as within nodejs. You should define <u>only one global namespace</u> (f.e. <code class="prettyprint">ITSA</code>) and bind any methods and variables to that one namespace. This namespace should be exported with <code class="prettyprint">module.exports</code>.
+</p>
 
-</div>
+<h2>Example index.js:</h2>
+{% highlight js %}
+require('polyfill');
+require('extend-js');
+
+var ITSA = function (config) {
+    // notice that "merge()" is delivered by "extend-js"
+    ITSA._config.merge(config, true);
+    return ITSA;
+};
+
+ITSA._config = {
+    debug: true,
+    base: '/components'
+};
+
+ITSA.Event = require('event-mobile');
+require('event/event-emitter.js');
+require('event/event-listener.js');
+
+// "utils" has several methods: we merge them all at once:
+ITSA.merge(require('utils'));
+
+ITSA.IO = require('io/io-transfer.js');
+require('io/io-xml.js');
+
+module.exports = ITSA;
+{% endhighlight %}
+<p>
+Notice that the exported <code class="prettyprint">ITSA</code> can be required both as <code class="prettyprint">reference</code> as well as a <code class="prettyprint">function</code> were you pass through any config-parameters.
+</p>
+
+<h1>4. Bundle builder-file into a loaderfile</h1>
+<p>
+    The last step is to create the loaderfile using <a href="http://browserify.org" target="_blank">Browerify</a>. Because you need a minified file, you need to minify as well. We use uglifyjs to minify, but you are free to use any minifier you want.
+</p>
+
+<h2>Install browserify and uglify-js:</h2>
+<p>If you don't have them yet, install browserify and uglifyjs on your system globally:
+
+{% highlight js %}
+npm install -g browserify
+npm install -g uglify-js
+{% endhighlight %}
+
+By installing it globally, you have the command-line commands available.
+</p>
+
+<h2>Create loaderfile:</h2>
+<p>
+Final step is to create two build files. One just browserified with all comments and not minified, the second will be minified. You can choose any name you want for these files.
+{% highlight js %}
+browserify index.js > build.js
+uglifyjs build.js > build-min.js
+{% endhighlight %}
+</p>
+
+<h1>Get it to the browser</h1>
+Now you have your custom build-files, you can create your webapp just as easy as:
+
+<div class="highlight"><pre>&lt;<span class="ss">script</span> src=<span class="blue">"/build-min.js"</span>&gt;&lt;<span class="ss">/script</span>&gt;</pre></div>
+
+{% highlight js %}
+<script>
+    var ITSA = require('itsa');
+</script>
+{% endhighlight %}

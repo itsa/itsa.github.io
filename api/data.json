@@ -9705,7 +9705,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 75,
+            "line": 72,
             "description": "Global configuration properties for the ITSA object.\nIt can only be set on initialization via the [`ITSA`](#docs-main) function.\n\nThe config is set at a default-configutation",
             "itemtype": "property",
             "name": "_config",
@@ -9717,7 +9717,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 106,
+            "line": 103,
             "description": "Reference to the `idGenerator` function in [utils](../modules/utils.html)",
             "itemtype": "property",
             "name": "idGenerator",
@@ -9728,7 +9728,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 116,
+            "line": 113,
             "description": "Reference to the [IO](io.html) object",
             "itemtype": "property",
             "name": "IO",
@@ -9739,7 +9739,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 128,
+            "line": 125,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",

@@ -17,10 +17,14 @@ h1.moduleheader {
     font-weight: normal;
 }
 .body-content.module p.header {
-    font-weight: normal;
     color: #990073;
     margin: 2em 0 1em;
     font-size: 1.4em;
+}
+.body-content.module p.header2 {
+    text-decoration: underline;
+    margin: 2em 0 0;
+    font-size: 1.2em;
 }
 .module-description {
     background-color: #666;

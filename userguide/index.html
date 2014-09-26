@@ -14,6 +14,7 @@ customized_url: "../customized-build/index.html"
 
 <p>ITSA modules are CommonJS-modules which can be used in <code class="prettyprint">nodejs</code> or on the <code class="prettyprint">browser</code>. In both cases, you reference them with <code class="prettyprint">require(</code><span class="purple"><i>'modulename'</i></span><code class="prettyprint">)</code>.
 
+
 <h1>With nodejs</h1>
 <p>Your project will have these three elements:
     <ul>
@@ -21,7 +22,7 @@ customized_url: "../customized-build/index.html"
         <li><span class="blue">package.json</span> (definition about the program and its dependencies)</li>
         <li><span class="blue">node_modules</span> (directory with all the packages)</li>
     </ul>
-    You can create your own <code class="prettyprint">package.json</code>, or start with our <a href="./dist/package.json">distribution-file</a>. It is important that every <b>require()</b> you use inside your scriptfile has its dependency defined inside package.json. Once you have set package.json up, you run <code class="prettyprint">npm install</code> which will create <b>node_modules</b> and all the required packages.
+    You can create your own <code class="prettyprint">package.json</code>, or start with our <a href="./dist/package.json">distribution package.json</a>. It is important that every <b>require()</b> you use inside your scriptfile has its dependency defined inside package.json. Once you have set package.json up, you run <code class="prettyprint">npm install</code> which will create <b>node_modules</b> and all the required packages.
 </p>
 
 <p>
@@ -29,13 +30,17 @@ From there, you can start writing your scriptfile, which probably looks somethin
 <h2>Example scripfile.js</h2>
 {% highlight js %}
 var express = require('express'),
-    Event = require('event'); // this is ITSA's event-module
+    ITSA = require('itsa'); // this is ITSA's rollup file
 {% endhighlight %}
-
+<code class="prettyprint">ITSA</code> is a namespace to 'itsa', which we created inside our package.json distribution. It has all ITSA's modules in the namespace. They are available like: <code class="prettyprint">ITSA.Event</code> and <code class="prettyprint">ITSA.IO</code>, see the <a href="{{ page.modules_url }}">moduledocumentation</a> how to use these modules.
+<br>
+<br>
+If you are more familiair with creating <code class="prettyprint">package.json</code>-files, you might want to customize and choose only those modules you need. Read more about it at <a href="{{ page.customized_url }}">ITSA customized build</a>.
 </p>
 
+
 <h1>In the browser:</h1>
-<p>Because the browser doesn't support "require()", you need to bundle the files with Browerify. This will inspect your code and create a separate bundle-file that holds all the requirements (and its dependencies) and will define the require()-method in the browser.</p>
+<p>Because the browser doesn't support "<code class="prettyprint">require()</code>", you need to bundled loader-file (bundled with <a href="http://browserify.org" target="_blank">Browerify</a>). Browserify inspects your code and creates a single bundle-file that holds all the requirements (and its dependencies) and will define the require()-method in the browser.</p>
 
 <p>
 The easiest way is to use our predefined <a href="./dist/itsabuild.tar">loaderfiles</a>. You can choose either to use the minified version <code class="prettyprint">itsabuild-min.js</code> (advisable) or the full-version <code class="prettyprint">itsabuild.js</code> for debugging.
@@ -52,7 +57,10 @@ The build-file should be included by a script tag <u>at the bottom of the docume
 </script>
 {% endhighlight %}
 
-Drawback of our build-files is, that they have <u>all of <code class="prettyprint">ITSA</code>'s modules</u> inside which might be more than you need. If you are more familiair with using <code class="prettyprint">ITSA</code>, you might want to customize the build-files yourself.
+<code class="prettyprint">ITSA</code> is a namespace to 'itsa', which we created inside our package.json distribution. It has all ITSA's modules in the namespace. They are available like: <code class="prettyprint">ITSA.Event</code> and <code class="prettyprint">ITSA.IO</code>, see the <a href="{{ page.modules_url }}">moduledocumentation</a> how to use these modules.
+<br>
+<br>
+Drawback of our build-files is, that they have <u>all of ITSA's modules</u> inside which might be more than you need. If you are more familiair with using <code class="prettyprint">ITSA</code>, you might want to customize the build-files yourself.
 </p>
 
 <div class="after-intro">
