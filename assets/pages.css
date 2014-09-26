@@ -1,9 +1,29 @@
 .after-intro {
     margin: 4em 0;
+    text-align: center;
+}
+.after-intro .pure-button {
+    margin: 0.5em;
+    font-size: 1.4em;
+}
+ul {
+    list-style: none;
+    padding: 1em 3em;
+}
+li:before {
+    content: "\00BB"; /* &raquo; is special character, which renderes differently in pseudo-elements. see http://www.evotech.net/articles/testjsentities.html */
+    padding-right: 0.5em;
+    margin-left: -1em;
+}
+h1 {
+    font-weight: normal;
+    color: #990073;
+    margin: 1.5em 0 0;
+    font-size: 1.5em;
 }
 h2 {
     margin: 2em 0 1em;
     font-weight: normal;
-    font-size: 1.4em;
+    font-size: 1.2em;
     color: #333;
 }

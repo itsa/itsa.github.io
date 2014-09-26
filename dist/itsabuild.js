@@ -9212,10 +9212,7 @@ process.chdir = function (dir) {
      * @return self {Object}
     */
     var ITSA = function (config) {
-        var key;
-        for (key in config) {
-            ITSA._config[key] = config[key];
-        }
+        ITSA._config.merge(config, true);
         return ITSA;
     };
     /**

@@ -1,14 +1,21 @@
 <h1 id="getting-started">Getting Started</h1>
 
 <p class="header">With nodejs:</p>
-<p>Create your project using this <a href="./dist/package.json">package.json</a>. After downloaded, run <code class="prettyprint">npm install</code> and start writing your application:</p>
+<p>Create your project with our distribution <a href="./dist/package.json">package.json</a>. After downloaded, run <code class="prettyprint">npm install</code> and start writing your application:</p>
+{% highlight js %}
+var ITSA = require('itsa'){% if page.itsaclassname %},
+    {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }}{% endif %};
+{% endhighlight %}
+
+<p class="header2">Important note about <a href="../../customized-build/index.html">customized package.json:</a></p>
+<p>
+This module needs to be required as a <code class="prettyprint">function</code> with the <code class="prettyprint">window</code>-object passed through, something <code class="prettyprint">"itsa"</code> does under the hood. When requiring this module yourself, you need to use this approach:
 {% highlight js %}
 var window = require('node-win'),
     {{ page.itsaclassname }} = require('{{ page.module }}')(window);
 {% endhighlight %}
-<p>
-    Because <code class="prettyprint">{{ page.module }}</code> is an isomorphic module that needs the <code class="prettyprint">window</code>-object, you need to pass through the module <code class="prettyprint">node-win</code>.
 </p>
+
 <p class="header">In the browser:</p>
 {% include loader.html %}
 
@@ -18,3 +25,6 @@ var window = require('node-win'),
         {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }}{% endif %};
 </script>
 {% endhighlight %}
+<p>
+When using your own <a href="../../customized-build/index.html">customized build-file</a>, this module can be required by reference.
+</p>
