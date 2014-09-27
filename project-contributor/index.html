@@ -6,7 +6,7 @@ title: Project Contributor
 <div class="paragraph">About becoming a project-contributor</div>
 
 <p>
-    Are you considering to become a projectcontributor? <code class="prettyprint">We're happy you do!</code> Being a projectcontributor means you contibute more often and to more repositories of <code class="prettyprint">ITSA-modules</code>. You are basicly involved with the <a href="https://github.com/itsa" target="_blank">whole project</a>. This could be the separate modules, <a href="https://github.com/itsa/itsa.github.io" target="_blank">this website</a> or the <a href="https://github.com/itsa/itsa.contributor" target="_blank">main projectrepository</a> that controls how to manages them all.
+    Are you considering to become a project-contributor? <code class="prettyprint">We're happy you do!</code> Being a project-contributor means you contibute more often and to more repositories of <code class="prettyprint">ITSA-modules</code>. You are basicly involved with the <a href="https://github.com/itsa" target="_blank">whole project</a>. This could be the separate modules, <a href="https://github.com/itsa/itsa.github.io" target="_blank">this website</a> or the <a href="https://github.com/itsa/itsa.contributor" target="_blank">main projectrepository</a> that controls how to manages them all.
 </p>
 <p>
     Anyone can become a projectcontributor, though we expect you to have a high level of programming skill, being a good teamplayer. Being a projectcontributor doesn't give you rights to make your changes go through to the project. The projectmanagers will always decide whether the code is accepted and conforms the goals of ITSA modules.
@@ -69,7 +69,7 @@ title: Project Contributor
     Because you also need the website (either for contribution, or to be able to preview documentation), you need to fork and clone <code class="prettyprint">itsa.github.io</code> to <code class="prettyprint">"Projectroot"/site</code>. You <u>must use</u> the directoryname <code class="prettyprint">site</code>, otherwise local rendering will fail.
 </p>
 
-<h2>Step 6:</h2>
+<h2 id="step6">Step 6:</h2>
 <p>
     If you want to preview the site locally (with modified API or documentation), you need to install <a href="http://jekyllrb.com/docs/home/" target="blank">Jekyll</a>. Jekyll is a static website generator, that is used by <a href="https://github.com" target="_blank">GitHub</a>. We use it to generate our documentation using <a href="http://en.wikipedia.org/wiki/Markdown" target="_blank">markdown</a>.
 </p>
@@ -91,6 +91,87 @@ title: Project Contributor
 
 <div class="paragraph">How to work with the project</div>
 
+<h2>Changes to a repository</h2>
 <p>
-    <code class="prettyprint">work in progress</code>
+    <ul>
+        <li>Make the changes, update the module-version inside <code class="prettyprint">package.json</code></li>
+        <li>Make sure the API is updated (when needed)</li>
+        <li>Check if you include any code that might not match our targetted browsers (IE8+ and all modern browsers). If you do, then check if <code class="prettyprint">ITSA</code>'s <a href="https://github.com/ItsAsbreuk/polyfill" target="_blank">polyfill</a> has a polyfill for it. If not, then you should also add a polyfill. We think the <a href="https://github.com/Financial-Times/polyfill-service/tree/master/polyfills" target="_blank">Financial Times</a> has nice polyfills (which we use directly, not as a service)</li>
+        <li>Add tests inside the folder <code class="prettyprint">tests</code>. We use <a href="http://visionmedia.github.io/mocha/" target="_blank">Mocha</a> with <a href="http://chaijs.com/api/bdd/" target="_blank">expect</a>, <a href="https://github.com/visionmedia/should.js" target="_blank">should.js</a> and <a href="http://chaijs.com/plugins/chai-as-promised" target="_blank">chai assertion as Promises</a>. Take a look at existsing test how to do this. <b>Note:</b> you <u>must prevent</u> <code class="prettyprint">param.should.be.eql(number)</code> for this fails in IE<10. Use <code class="prettyprint">expect(param).to.be.eql(number)</code> instead.</li>
+        <li>Test your tests in nodejs and any browser you have available:
+            <ul>
+                <li>To test inside <b>nodejs</b>, you go to the directory <code class="prettyprint">"Projectroot"/src</code>. from within here, you run: <code class="prettyprint">npm test modulename</code> where "modulename" is the name of the module/repository you want to test.</li>
+                <li>To test on the <b>browsers</b>, you need to setup a testserver, which is included in <code class="prettyprint">"Projectroot"/server</code>. Goto this directory and run: <code class="prettyprint">node server.js</code> --> this will launch a server at <code class="prettyprint">localhost:8000</code>. Now from within any local browser you visit: <code class="prettyprint">localhost:8000/test</code>, which should present the testpage.</li>
+            </ul>
+        <li>If all tests pass, you <code class="prettyprint">commit</code> the code and make a <code class="prettyprint">pull request</code>.
+        <li>You also need to rebuild the distribution files</li>
+    </ul>
+</p>
+
+<h2>Always update the repository <code class="prettyprint">itsa.build</code></h2>
+
+<p>
+    <ul>
+        <li>Update the module-version inside <code class="prettyprint">package.json</code> of <code class="prettyprint">itsa.build</code></li>
+        <li>Rebuild the <a href="https://github.com/itsa/itsa.github.io/tree/master/dist" target="_blank">loader-files</a>: goto <code class="prettyprint">"Projectroot"/sh</code> and run: <code class="prettyprint">sh production.sh</code></li>
+        <li><code class="prettyprint">Commit</code> and make a <code class="prettyprint">pull request</code> for <code class="prettyprint">itsa.build</code>.
+    </ul>
+</p>
+
+<h2>Always changes to website-documentation</h2>
+<p>
+    After making changes, the website also needs to be changed. You always need to do this, because at the least, the version and file size of the module have changed.
+</p>
+<p>
+    After making changes, the website also needs to be changed. To make changes to the website, you need to understand a bit about <a href="https://pages.github.com" target="_blank">github pages</a>. Our website has the repository <code class="prettyprint">itsa.github.io</code>, this makes it directly visible at <a href="http://itsa.github.io" target="_blank">http://itsa.github.io</a>, though we bound the CNAME <span class="blue">itsa.io</span> to it (which everyone visits).
+</p>
+<p>
+    The website from the repository <code class="prettyprint">itsa.github.io</code> is not a final website you can just see in the browser. It needs to be rendered first. GitHub does this using Jekyll (as <a href-"#step6">explained above</a>). If we want to view the website locally, we need to make this rendereing process ourselves. If you managed <a href-"#step6">Step 6 above</a> successfully, you can do this now: got to <code class="prettyprint">"Projectroot"</code> and run: <code class="prettyprint">jekyll build</code> --> this will create or update the folder <code class="prettyprint">"Projectroot"/site-preview</code> which is the website how it would be on GitHub-pages. You can inspect <code class="prettyprint">"Projectroot"/site-preview/index.html</code> in the browser now.
+</p>
+<p>
+    During modification, you will find out you want to re-render the website multiple times. Instead of doing this manually, you can run <code class="prettyprint">jekyll build --watch</code>, which will automaticly re-render on any changes.
+</p>
+
+<h3>Documentation of the repository:</h3>
+<p>
+    All repositories have their own directory: <code class="prettyprint">"Projectroot"/site/_docs/modulename</code> where "modulename" is the name of the module/repository. Note the underscore: jekyll will transform this into a directoryname without underscore.
+</p>
+<p>
+    Every modulefolder has a markdown-file: <code class="prettyprint">index.md</code>. Whenever this file is present, it will appear in the <a href="http://itsa.io/modules/index.html" target="_blank">list of available modules</a>. This markdown-file should contain <a href="/" target="_blank">Front Matter</a>, with the following definitions:
+    <ul class="noicon">
+        <li><span class="blue">module:</span> xxxxx</li>
+        <li><span class="blue">itsaclassname:</span> xxxxx</li>
+        <li><span class="blue">version:</span> xxxxx</li>
+        <li><span class="blue">modulesize:</span> xxxxx</li>
+        <li><span class="blue">dependencies:</span> xxxxx</li>
+        <li><span class="blue">maintainer:</span> xxxxx</li>
+        <li><span class="blue">title:</span> xxxxx</li>
+        <li><span class="blue">intro:</span> xxxxx</li>
+        <li><span class="blue">firstpar:</span> xxxxx</li>
+    </ul>
+</p>
+<p>
+    Some of these are optional.
+    To check the right filesize (minified an gzipped) we made a small bash-file: goto <code class="prettyprint">"Projectroot"/sh</code> and run: <code class="prettyprint">sh checksize.sh modulename</code> where "modulename" is the name of the module (or a specific filename inside its repository). This creates a temporarely minfied and gzipped file and output its size.
+</p>
+<p>
+    To get more familiair with creating documentation-files, inspect available documentation files: see how they are set up.
+</p>
+
+<h3>Examples inside the repository:</h3>
+<p>
+    Any file <u>other than</u> <code class="prettyprint">index.md</code> is considered to be an example and should have the extention <code class="prettyprint">.md</code>. Whenever these files are present, they will automaticly appear below the <code class="prettyprint">TOC</code> as examples. The markdown-file should contain <a href="/" target="_blank">Front Matter</a>, with the following definitions:
+    <ul class="noicon">
+        <li><span class="blue">module:</span> xxxxx</li>
+        <li><span class="blue">maintainer:</span> xxxxx</li>
+        <li><span class="blue">title:</span> xxxxx</li>
+        <li><span class="blue">intro:</span> xxxxx</li>
+        <li><span class="blue">includeexample:</span> xxxxx</li>
+    </ul>
+    <code class="prettyprint">includeexample</code> has a special meaning: it means there is a second file present but instead of <code class="prettyprint">filename.md</code> its name is: <code class="prettyprint">filename-inc.html</code>. This is handy if you find out that your inline examples don't look right because of <code class="prettyprint">css-bleedthrough</code>: you can create a working-example that is included by an iframe. Most of the time you won't need to use this technique.
+</p>
+
+<h3>Up to date build-files for the examples inside "Projectroot"/site-preview:</h3>
+<p>
+    You may run into the situation where <code class="prettyprint">"Projectroot"/site-preview</code> uses the loaderfiles of the current site and hasn't updated with the changes you made at some repository. This is caused because life loaderfiles reside inside <code class="prettyprint">"Projectroot"/site</code>, which are transported to <code class="prettyprint">"Projectroot"/site=preview</code> with every <span class="blue">jekyll build</span> run. However, you can create loaderfiles of your local project: goto <code class="prettyprint">"Projectroot"/sh</code> and run: <code class="prettyprint">sh preview.sh</code>. Note that you need to do this every time after jekyll builds the website.
 </p>

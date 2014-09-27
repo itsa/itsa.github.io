@@ -10,11 +10,33 @@ ul {
     list-style: none;
     padding: 1em 3em;
 }
+li {
+    margin: 0.6em 0;
+}
 li:before {
     content: "\00BB"; /* &raquo; is special character, which renderes differently in pseudo-elements. see http://www.evotech.net/articles/testjsentities.html */
     padding-right: 0.5em;
     margin-left: -1em;
 }
+
+ul.noicon li:before {
+    content: none;
+}
+
+ul ul {
+    list-style: none;
+    padding: 0 3em;
+}
+ul ul li {
+    margin: 0.6em 0;
+    font-size: 0.9em;
+}
+ul ul li:before {
+    content: "\25CF"; /* &raquo; is special character, which renderes differently in pseudo-elements. see http://www.evotech.net/articles/testjsentities.html */
+    padding-right: 0.5em;
+    margin-left: -1em;
+}
+
 h1 {
     font-weight: normal;
     color: #990073;
@@ -25,5 +47,12 @@ h2 {
     margin: 2em 0 1em;
     font-weight: normal;
     font-size: 1.2em;
+    color: #333;
+    text-decoration: underline;
+}
+h3 {
+    margin: 2em 0 1em;
+    font-weight: bold;
+    font-size: 1em;
     color: #333;
 }
