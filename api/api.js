@@ -19,7 +19,6 @@ YUI.add("yuidoc-meta", function(Y) {
         "event-listener",
         "event-mobile",
         "extend-function",
-        "extend-js",
         "extend-object",
         "extend-promise",
         "io",
@@ -29,6 +28,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "io-transfer",
         "io-xml",
         "itsa.build",
+        "js-ext",
         "node-win",
         "utils"
     ],
@@ -62,10 +62,6 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "extend-function",
             "name": "extend-function",
             "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        {
-            "displayName": "extend-js",
-            "name": "extend-js"
         },
         {
             "displayName": "extend-object",
@@ -111,6 +107,10 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "itsa.build",
             "name": "itsa.build",
             "description": "The ITSA module is an aggregator for all the individual modules that the library uses.\nThe developer is free to use it as it is or tailor it to contain whatever modules\nhe/she might need in the global namespace.\n\nThe modules themselves work quite well independent of this module and can be used\nseparately without the need of them being integrated under one globa namespace.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "js-ext",
+            "name": "js-ext"
         },
         {
             "displayName": "node-win",

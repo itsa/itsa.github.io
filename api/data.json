@@ -106,41 +106,6 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/extend-js/lib/function.js": {
-            "name": "src/extend-js/lib/function.js",
-            "modules": {
-                "extend-function": 1
-            },
-            "classes": {
-                "Function": 1
-            },
-            "fors": {
-                "Object": 1
-            },
-            "namespaces": {}
-        },
-        "src/extend-js/lib/object.js": {
-            "name": "src/extend-js/lib/object.js",
-            "modules": {
-                "extend-object": 1
-            },
-            "classes": {
-                "Object": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "src/extend-js/lib/promise.js": {
-            "name": "src/extend-js/lib/promise.js",
-            "modules": {
-                "extend-promise": 1
-            },
-            "classes": {
-                "Promise": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
         "src/io/io-assets.js": {
             "name": "src/io/io-assets.js",
             "modules": {
@@ -211,6 +176,41 @@
             },
             "classes": {
                 "ITSA": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/js-ext/lib/function.js": {
+            "name": "src/js-ext/lib/function.js",
+            "modules": {
+                "extend-function": 1
+            },
+            "classes": {
+                "Function": 1
+            },
+            "fors": {
+                "Object": 1
+            },
+            "namespaces": {}
+        },
+        "src/js-ext/lib/object.js": {
+            "name": "src/js-ext/lib/object.js",
+            "modules": {
+                "extend-object": 1
+            },
+            "classes": {
+                "Object": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/js-ext/lib/promise.js": {
+            "name": "src/js-ext/lib/promise.js",
+            "modules": {
+                "extend-promise": 1
+            },
+            "classes": {
+                "Promise": 1
             },
             "fors": {},
             "namespaces": {}
@@ -349,72 +349,6 @@
             ],
             "since": "0.0.1"
         },
-        "extend-js": {
-            "name": "extend-js",
-            "submodules": {
-                "extend-function": 1,
-                "extend-object": 1,
-                "extend-promise": 1
-            },
-            "classes": {
-                "Function": 1,
-                "Object": 1,
-                "Promise": 1
-            },
-            "fors": {
-                "Object": 1
-            },
-            "namespaces": {},
-            "file": "src/extend-js/lib/promise.js",
-            "line": 3
-        },
-        "extend-function": {
-            "name": "extend-function",
-            "submodules": {},
-            "classes": {
-                "Function": 1
-            },
-            "fors": {
-                "Object": 1
-            },
-            "is_submodule": 1,
-            "namespaces": {},
-            "module": "extend-js",
-            "namespace": "",
-            "file": "src/extend-js/lib/function.js",
-            "line": 41,
-            "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        "extend-object": {
-            "name": "extend-object",
-            "submodules": {},
-            "classes": {
-                "Object": 1
-            },
-            "fors": {},
-            "is_submodule": 1,
-            "namespaces": {},
-            "module": "extend-js",
-            "namespace": "",
-            "file": "src/extend-js/lib/object.js",
-            "line": 63,
-            "description": "Pollyfils for often used functionality for Objects\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        "extend-promise": {
-            "name": "extend-promise",
-            "submodules": {},
-            "classes": {
-                "Promise": 1
-            },
-            "fors": {},
-            "is_submodule": 1,
-            "namespaces": {},
-            "module": "extend-js",
-            "namespace": "",
-            "file": "src/extend-js/lib/promise.js",
-            "line": 3,
-            "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
         "io": {
             "name": "io",
             "submodules": {
@@ -534,6 +468,72 @@
             "line": 20,
             "description": "The ITSA module is an aggregator for all the individual modules that the library uses.\nThe developer is free to use it as it is or tailor it to contain whatever modules\nhe/she might need in the global namespace.\n\nThe modules themselves work quite well independent of this module and can be used\nseparately without the need of them being integrated under one globa namespace.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
+        "js-ext": {
+            "name": "js-ext",
+            "submodules": {
+                "extend-function": 1,
+                "extend-object": 1,
+                "extend-promise": 1
+            },
+            "classes": {
+                "Function": 1,
+                "Object": 1,
+                "Promise": 1
+            },
+            "fors": {
+                "Object": 1
+            },
+            "namespaces": {},
+            "file": "src/js-ext/lib/promise.js",
+            "line": 3
+        },
+        "extend-function": {
+            "name": "extend-function",
+            "submodules": {},
+            "classes": {
+                "Function": 1
+            },
+            "fors": {
+                "Object": 1
+            },
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "js-ext",
+            "namespace": "",
+            "file": "src/js-ext/lib/function.js",
+            "line": 42,
+            "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        "extend-object": {
+            "name": "extend-object",
+            "submodules": {},
+            "classes": {
+                "Object": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "js-ext",
+            "namespace": "",
+            "file": "src/js-ext/lib/object.js",
+            "line": 65,
+            "description": "Pollyfils for often used functionality for Objects\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        "extend-promise": {
+            "name": "extend-promise",
+            "submodules": {},
+            "classes": {
+                "Promise": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "js-ext",
+            "namespace": "",
+            "file": "src/js-ext/lib/promise.js",
+            "line": 3,
+            "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
         "node-win": {
             "name": "node-win",
             "submodules": {},
@@ -618,51 +618,6 @@
             ],
             "submodule": "event-mobile"
         },
-        "Function": {
-            "name": "Function",
-            "shortname": "Function",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "extend-js",
-            "submodule": "extend-function",
-            "namespace": "",
-            "file": "src/extend-js/lib/function.js",
-            "line": 41,
-            "description": "Pollyfils for often used functionality for Function"
-        },
-        "Object": {
-            "name": "Object",
-            "shortname": "Object",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "extend-js",
-            "submodule": "extend-object",
-            "namespace": "",
-            "file": "src/extend-js/lib/object.js",
-            "line": 63,
-            "description": "Pollyfils for often used functionality for objects"
-        },
-        "Promise": {
-            "name": "Promise",
-            "shortname": "Promise",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "extend-js",
-            "submodule": "extend-promise",
-            "namespace": "",
-            "file": "src/extend-js/lib/promise.js",
-            "line": 3,
-            "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
         "IO": {
             "name": "IO",
             "shortname": "IO",
@@ -706,6 +661,51 @@
                 "description": "self",
                 "type": "Object"
             }
+        },
+        "Function": {
+            "name": "Function",
+            "shortname": "Function",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "js-ext",
+            "submodule": "extend-function",
+            "namespace": "",
+            "file": "src/js-ext/lib/function.js",
+            "line": 42,
+            "description": "Pollyfils for often used functionality for Function"
+        },
+        "Object": {
+            "name": "Object",
+            "shortname": "Object",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "js-ext",
+            "submodule": "extend-object",
+            "namespace": "",
+            "file": "src/js-ext/lib/object.js",
+            "line": 65,
+            "description": "Pollyfils for often used functionality for objects"
+        },
+        "Promise": {
+            "name": "Promise",
+            "shortname": "Promise",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "js-ext",
+            "submodule": "extend-promise",
+            "namespace": "",
+            "file": "src/js-ext/lib/promise.js",
+            "line": 3,
+            "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "window": {
             "name": "window",
@@ -7467,7 +7467,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 78,
+            "line": 79,
             "description": "Subscribes to a customEvent. The callback will be executed `after` the defaultFn.",
             "static": 1,
             "itemtype": "method",
@@ -7513,7 +7513,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 105,
+            "line": 106,
             "description": "Subscribes to a customEvent. The callback will be executed `before` the defaultFn.",
             "static": 1,
             "itemtype": "method",
@@ -7559,7 +7559,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 132,
+            "line": 133,
             "description": "Defines an emitterName into the instance (emitter).\nThis will add a protected property `_emitterName` to the instance.",
             "static": 1,
             "itemtype": "method",
@@ -7582,7 +7582,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 153,
+            "line": 154,
             "description": "Defines a CustomEvent. If the eventtype already exists, it will not be overridden,\nunless you force to assign with `.forceAssign()`\n\nThe returned object comes with 4 methods which can be invoked chainable:\n\n<ul>\n    <li>defaultFn() --> the default-function of the event</li>\n    <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n    <li>forceAssign() --> overrides any previous definition</li>\n    <li>unHaltable() --> makes the customEvent cannot be halted</li>\n    <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n    <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>\n    <li>unRenderPreventable() --> makes that the customEvent's render cannot be prevented</li>\n    <li>noRender() --> prevents this customEvent from render the dom. Overrules unRenderPreventable()</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -7604,7 +7604,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 247,
+            "line": 248,
             "description": "Detaches (unsubscribes) the listener from the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -7628,7 +7628,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 265,
+            "line": 266,
             "description": "Detaches (unsubscribes) the listener from all customevents.",
             "static": 1,
             "itemtype": "method",
@@ -7646,7 +7646,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 289,
+            "line": 290,
             "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.rendered (optional) --> `true` the vDOM rendered the dom</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n              <li>e.status.renderPrevented (optional) -->  `reason|true` if the event got renderPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n    <li>e.preventRender() --> by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()` or `e.preventRender()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li>\n<ul>",
             "static": 1,
             "itemtype": "method",
@@ -7679,7 +7679,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 350,
+            "line": 351,
             "description": "Adds a subscriber to the finalization-cycle, which happens after the after-subscribers.\nOnly get invoked when the cycle was not preventDefaulted or halted.",
             "itemtype": "method",
             "name": "finalize",
@@ -7700,7 +7700,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 373,
+            "line": 374,
             "description": "Creates a notifier for the customEvent.\nYou can use this to create delayed `defineEvents`. When the customEvent is called, the callback gets invoked\n(even before the subsrcibers). Use this callback for delayed customEvent-definitions.\n\nUse **no** wildcards for the emitterName. You might use wildcards for the eventName. Without wildcards, the\nnotification will be unNotified (callback automaticly detached) on the first time the event occurs.\n\nYou **must** specify the full `emitterName:eventName` syntax.\nThe module `core-event-dom` uses `notify` to auto-define DOM-events (UI:*).",
             "static": 1,
             "itemtype": "method",
@@ -7729,7 +7729,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 404,
+            "line": 405,
             "description": "Subscribes to a customEvent. The callback will be executed `after` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
             "itemtype": "method",
@@ -7775,7 +7775,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 448,
+            "line": 449,
             "description": "Subscribes to a customEvent. The callback will be executed `before` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
             "itemtype": "method",
@@ -7821,7 +7821,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 492,
+            "line": 493,
             "description": "Removes all event-definitions of an emitter, specified by its `emitterName`.\nWhen `emitterName` is not set, ALL event-definitions will be removed.",
             "static": 1,
             "itemtype": "method",
@@ -7840,7 +7840,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 522,
+            "line": 523,
             "description": "Removes the event-definition of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -7858,7 +7858,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 535,
+            "line": 536,
             "description": "unNotifies (unsubscribes) the notifier of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -7876,7 +7876,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 552,
+            "line": 553,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -7928,7 +7928,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 622,
+            "line": 623,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -7980,7 +7980,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 711,
+            "line": 712,
             "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.rendered (optional) --> `true` the vDOM rendered the dom</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n              <li>e.status.renderPrevented (optional) -->  `reason|true` if the event got renderPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n    <li>e.preventRender() --> by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()` or `e.preventRender()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li>\n<ul>",
             "static": 1,
             "itemtype": "method",
@@ -8037,7 +8037,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 867,
+            "line": 868,
             "description": "Does the actual invocation of a subscriber.",
             "itemtype": "method",
             "name": "_invokeSubs",
@@ -8079,7 +8079,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 913,
+            "line": 914,
             "description": "Removes a subscriber from the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`.",
             "static": 1,
             "itemtype": "method",
@@ -8115,7 +8115,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 958,
+            "line": 959,
             "description": "Removes subscribers from the multiple customevents. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -8140,7 +8140,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 1013,
+            "line": 1014,
             "description": "Adds a property to the default eventobject's prototype which passes through all eventcycles.\nGoes through Object.defineProperty with configurable, enumerable and writable\nall set to false.",
             "itemtype": "method",
             "name": "_setEventObjProperty",
@@ -8165,7 +8165,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 1033,
+            "line": 1034,
             "description": "Objecthash containing all defined custom-events\nwhich has a structure like this:\n\n_ce = {\n    'UI:click': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    },\n    'redmodel:save': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -8179,7 +8179,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 1065,
+            "line": 1066,
             "description": "Objecthash containing all defined before and after subscribers\nwhich has a structure like this (`b` represents `before` and `a` represents `after`)\nEvery item that gets in the array consist by itself of 3 properties:\n                                                         subscriberitem = {\n                                                             o: listener,\n                                                             cb: callbackFn(e),\n                                                             f: filter\n                                                         };\n\n_subs = {\n    'UI:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    '*:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    'redmodel:save': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -8193,7 +8193,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 1116,
+            "line": 1117,
             "description": "Internal list of finalize-subscribers which are invoked at the finalization-cycle, which happens after the after-subscribers.\nIs an array of function-references.",
             "itemtype": "property",
             "name": "_final",
@@ -8207,7 +8207,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 1128,
+            "line": 1129,
             "description": "Object that acts as the prototype of the eventobject.\nTo add more methods, you can use `_setEventObjProperty`",
             "itemtype": "property",
             "name": "_defaultEventObj",
@@ -8221,7 +8221,7 @@
         },
         {
             "file": "src/event/event.js",
-            "line": 1144,
+            "line": 1145,
             "description": "Objecthash containing all notifiers, keyed by customEvent name.\nThis list is maintained by `notify`, `unNotify` and `unNotifyAll`\n\n_notifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_notifiers",
@@ -8235,7 +8235,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 467,
+            "line": 469,
             "description": "Does the actual transportation from DOM-events into the Eventsystem. It also looks at the response of\nthe Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will be preventDefaulted.",
             "itemtype": "method",
             "name": "_domCallback",
@@ -8260,7 +8260,7 @@
         },
         {
             "file": "src/event-mobile/event-mobile.js",
-            "line": 28,
+            "line": 30,
             "description": "The (only) Hammer-instance that `Event` uses. It is bound to the `body`-element.",
             "itemtype": "property",
             "name": "hammertime",
@@ -8272,7 +8272,7 @@
         },
         {
             "file": "src/event-mobile/event-mobile.js",
-            "line": 45,
+            "line": 47,
             "description": "Adds the `Hammer`-class to Event, so it can be used from within Event.",
             "itemtype": "property",
             "name": "Hammer",
@@ -8284,7 +8284,7 @@
         },
         {
             "file": "src/event-mobile/event-mobile.js",
-            "line": 83,
+            "line": 85,
             "description": "Is emitted whenever hammerjs detects a gestureevent.\nBy emitting its original event through ParcelaEvent:eventmobile, `event-dom`\nwill catch it and process it through the dom-event cycle.",
             "itemtype": "event",
             "name": "ParcelaEvent:eventmobile",
@@ -8299,433 +8299,6 @@
             "class": "Event",
             "module": "event",
             "submodule": "event-mobile"
-        },
-        {
-            "file": "src/extend-js/lib/function.js",
-            "line": 48,
-            "description": "Merges the given map of properties into the `prototype` of the Class.\n**Not** to be used on instances.\n\nThe members in the hash map will become members with\ninstances of the merged class.\n\nBy default, this method will not override existing prototype members,\nunless the second argument `force` is true.",
-            "itemtype": "method",
-            "name": "mergePrototypes",
-            "params": [
-                {
-                    "name": "map",
-                    "description": "Hash map of properties to add to the prototype of this object",
-                    "type": "Object"
-                },
-                {
-                    "name": "force",
-                    "description": "If true, existing members will be overwritten",
-                    "type": "Boolean"
-                }
-            ],
-            "chainable": 1,
-            "class": "Function",
-            "module": "extend-js",
-            "submodule": "extend-function"
-        },
-        {
-            "file": "src/extend-js/lib/function.js",
-            "line": 79,
-            "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
-            "example": [
-                "\n\n\tvar Circle = Shape.subClass(\n\t\tfunction (x, y, r) {\n\t\t\tthis.r = r;\n\t\t\tCircle.$super.constructor.call(this, x, y);\n\t\t},\n\t\t{\n\t\t\tarea: function () {\n\t\t\t\treturn this.r * this.r * Math.PI;\n\t\t\t}\n\t\t}\n\t);"
-            ],
-            "itemtype": "method",
-            "name": "subClass",
-            "params": [
-                {
-                    "name": "constructor",
-                    "description": "The function that will serve as constructor for the new class.\n       If `undefined` defaults to `Object.constructor`",
-                    "type": "Function",
-                    "optional": true
-                },
-                {
-                    "name": "prototypes",
-                    "description": "Hash map of properties to be added to the prototype of the new class.",
-                    "type": "Object",
-                    "optional": true
-                }
-            ],
-            "return": {
-                "description": "the new class."
-            },
-            "class": "Function",
-            "module": "extend-js",
-            "submodule": "extend-function"
-        },
-        {
-            "file": "src/extend-js/lib/function.js",
-            "line": 137,
-            "description": "Overwrites the given prototype functions with the ones given in\nthe hashmap while still providing a means of calling the original\noverridden method.\n\nThe patching function will receive a reference to the original method\nprepended to the arguments the original would have received.",
-            "itemtype": "method",
-            "name": "patch",
-            "params": [
-                {
-                    "name": "map",
-                    "description": "Hash map of method names to their new implementation.",
-                    "type": "Object"
-                }
-            ],
-            "chainable": 1,
-            "class": "Function",
-            "module": "extend-js",
-            "submodule": "extend-function"
-        },
-        {
-            "file": "src/extend-js/lib/function.js",
-            "line": 171,
-            "description": "Sets the context of which the function will be execute. in the\nsupplied object's context, optionally adding any additional\nsupplied parameters to the end of the arguments the function\nis executed with.",
-            "itemtype": "method",
-            "name": "rbind",
-            "params": [
-                {
-                    "name": "context",
-                    "description": "the execution context.\n       The value is ignored if the bound function is constructed using the new operator.",
-                    "type": "Object",
-                    "optional": true
-                },
-                {
-                    "name": "args*",
-                    "description": "args* 0..n arguments to append to the end of\n       arguments collection supplied to the function.",
-                    "type": "Any",
-                    "optional": true
-                }
-            ],
-            "return": {
-                "description": "the wrapped function.",
-                "type": "Function"
-            },
-            "class": "Function",
-            "module": "extend-js",
-            "submodule": "extend-function"
-        },
-        {
-            "file": "src/extend-js/lib/function.js",
-            "line": 207,
-            "description": "Returns a base class with the given constructor and prototype methods",
-            "itemtype": "method",
-            "name": "createClass",
-            "params": [
-                {
-                    "name": "constructor",
-                    "description": "constructor for the class",
-                    "type": "Function",
-                    "optional": true
-                },
-                {
-                    "name": "prototype",
-                    "description": "Hash map of prototype members of the new class",
-                    "type": "Object",
-                    "optional": true
-                }
-            ],
-            "return": {
-                "description": "the new class",
-                "type": "Function"
-            },
-            "class": "Object",
-            "module": "extend-js",
-            "submodule": "extend-function"
-        },
-        {
-            "file": "src/extend-js/lib/object.js",
-            "line": 68,
-            "description": "Loops through all properties in the object.  Equivalent to Array.forEach.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
-            "itemtype": "method",
-            "name": "each",
-            "params": [
-                {
-                    "name": "fn",
-                    "description": "Function to be executed on each item in the object.  It will receive\n                     value {any} value of the property\n                     key {string} name of the property\n                     obj {Object} the whole of the object",
-                    "type": "Function"
-                }
-            ],
-            "chainable": 1,
-            "class": "Object",
-            "module": "extend-js",
-            "submodule": "extend-object"
-        },
-        {
-            "file": "src/extend-js/lib/object.js",
-            "line": 95,
-            "description": "Loops through the properties in an object until the callback function returns *truish*.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe order in which the elements are visited is not predictable.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
-            "itemtype": "method",
-            "name": "some",
-            "params": [
-                {
-                    "name": "fn",
-                    "description": "Function to be executed on each item in the object.  It will receive\n                     value {any} value of the property\n                     key {string} name of the property\n                     obj {Object} the whole of the object",
-                    "type": "Function"
-                }
-            ],
-            "return": {
-                "description": "true if the loop was interrupted by the callback function returning *truish*.",
-                "type": "Boolean"
-            },
-            "class": "Object",
-            "module": "extend-js",
-            "submodule": "extend-object"
-        },
-        {
-            "file": "src/extend-js/lib/object.js",
-            "line": 123,
-            "description": "Loops through the properties in an object until the callback assembling a new object\nwith its properties set to the values returned by the callback function.\nIf the callback function returns `undefined` the property will not be copied to the new object.\nThe resulting object will have the same keys as the original, except for those where the callback\nreturned `undefined` which will have dissapeared.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
-            "itemtype": "method",
-            "name": "map",
-            "params": [
-                {
-                    "name": "fn",
-                    "description": "Function to be executed on each item in the object.  It will receive\n                     value {any} value of the property\n                     key {string} name of the property\n                     obj {Object} the whole of the object",
-                    "type": "Function"
-                }
-            ],
-            "return": {
-                "description": "The new object with its properties set to the values returned by the callback function.",
-                "type": "Object"
-            },
-            "class": "Object",
-            "module": "extend-js",
-            "submodule": "extend-object"
-        },
-        {
-            "file": "src/extend-js/lib/object.js",
-            "line": 155,
-            "description": "Returns the keys of the object.",
-            "itemtype": "method",
-            "name": "keys",
-            "return": {
-                "description": "Keys of the object",
-                "type": "Array"
-            },
-            "class": "Object",
-            "module": "extend-js",
-            "submodule": "extend-object"
-        },
-        {
-            "file": "src/extend-js/lib/object.js",
-            "line": 164,
-            "description": "Loops through the object collection the values of all its properties.\nIt is the counterpart of the [`keys`](#method_keys).",
-            "itemtype": "method",
-            "name": "values",
-            "return": {
-                "description": "values of the object",
-                "type": "Array"
-            },
-            "class": "Object",
-            "module": "extend-js",
-            "submodule": "extend-object"
-        },
-        {
-            "file": "src/extend-js/lib/object.js",
-            "line": 184,
-            "description": "Returns true if the object has no own members",
-            "itemtype": "method",
-            "name": "isEmpty",
-            "return": {
-                "description": "true if the object is empty",
-                "type": "Boolean"
-            },
-            "class": "Object",
-            "module": "extend-js",
-            "submodule": "extend-object"
-        },
-        {
-            "file": "src/extend-js/lib/object.js",
-            "line": 197,
-            "description": "Returns a shallow copy of the object.\nIt does not clone objects within the object, it does a simple, shallow clone.\nFast, mostly useful for plain hash maps.",
-            "itemtype": "method",
-            "name": "shallowClone",
-            "return": {
-                "description": "shallow copy of the original",
-                "type": "Object"
-            },
-            "class": "Object",
-            "module": "extend-js",
-            "submodule": "extend-object"
-        },
-        {
-            "file": "src/extend-js/lib/object.js",
-            "line": 218,
-            "description": "Merges into this object the properties of the given object.\nIf the second argument is true, the properties on the source object will be overwritten\nby those of the second object of the same name, otherwise, they are preserved.",
-            "itemtype": "method",
-            "name": "merge",
-            "params": [
-                {
-                    "name": "obj",
-                    "description": "Object with the properties to be added to the original object",
-                    "type": "Object"
-                },
-                {
-                    "name": "force",
-                    "description": "If true, the properties in `obj` will override those of the same name\n       in the original object",
-                    "type": "Boolean"
-                }
-            ],
-            "chainable": 1,
-            "class": "Object",
-            "module": "extend-js",
-            "submodule": "extend-object"
-        },
-        {
-            "file": "src/extend-js/lib/object.js",
-            "line": 243,
-            "description": "Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object",
-            "itemtype": "method",
-            "name": "isObject",
-            "return": {
-                "description": "true if the object is empty",
-                "type": "Boolean"
-            },
-            "class": "Object",
-            "module": "extend-js",
-            "submodule": "extend-object"
-        },
-        {
-            "file": "src/extend-js/lib/object.js",
-            "line": 253,
-            "description": "Returns a new object resulting of merging the properties of the given objects.\nThe copying is shallow, complex properties will reference the very same object.\nProperties in later objects do **not overwrite** properties of the same name in earlier objects.\nIf any of the objects is missing, it will be skiped.",
-            "example": [
-                "\n\n var foo = function (config) {\n      config = Object.merge(config, defaultConfig);\n }"
-            ],
-            "itemtype": "method",
-            "name": "merge",
-            "static": 1,
-            "params": [
-                {
-                    "name": "obj",
-                    "description": "Objects whose properties are to be merged",
-                    "type": "Object",
-                    "multiple": true
-                }
-            ],
-            "return": {
-                "description": "new object with the properties merged in.",
-                "type": "Object"
-            },
-            "class": "Object",
-            "module": "extend-js",
-            "submodule": "extend-object"
-        },
-        {
-            "file": "src/extend-js/lib/promise.js",
-            "line": 24,
-            "description": "Promise which can be put at the very end of a chain, even after .catch().\nWill invoke the callback function regardless whether the chain resolves or rejects.\n\nThe argument of the callback will be either its fulfilled or rejected argument, but\nit is wisely not to handle it. The results should have been handled in an earlier step\nof the chain: .finally() basicly means you want to execute code after the chain, regardless\nwhether it's resolved or rejected.\n\n**Note:** .finally() <u>does not return a Promise</u>: it should be used as the very last step of a Promisechain.\nIf you need an intermediate method, you should take .thenFulfill().",
-            "itemtype": "method",
-            "name": "finally",
-            "params": [
-                {
-                    "name": "finallyback",
-                    "description": "the callbackfunctio to be invoked.",
-                    "type": "Function"
-                }
-            ],
-            "class": "Promise",
-            "module": "extend-js",
-            "submodule": "extend-promise"
-        },
-        {
-            "file": "src/extend-js/lib/promise.js",
-            "line": 44,
-            "description": "Will always return a fulfilled Promise.\n\nTypical usage will be by making it part of a Promisechain: it makes the chain go\ninto its fulfilled phase.",
-            "example": [
-                "\n\npromise1\n.then(promise2)\n.thenFulfill()\n.then(handleFulfilled, handleRejected) // handleFulfilled always gets invoked"
-            ],
-            "itemtype": "method",
-            "name": "thenFulfill",
-            "params": [
-                {
-                    "name": "response",
-                    "description": "parameter to pass through which overrules the original Promise-response.",
-                    "type": "Object",
-                    "optional": true
-                }
-            ],
-            "return": {
-                "description": "Resolved Promise. `response` will be passed trough as parameter when set.\n        When not set: in case the original Promise resolved, its parameter is passed through.\n        in case of a rejection, no parameter will be passed through.",
-                "type": "Promise"
-            },
-            "class": "Promise",
-            "module": "extend-js",
-            "submodule": "extend-promise"
-        },
-        {
-            "file": "src/extend-js/lib/promise.js",
-            "line": 75,
-            "description": "Returns a Promise that always fulfills. It is fulfilled when ALL items are resolved (either fulfilled\nor rejected). This is useful for waiting for the resolution of multiple\npromises, such as reading multiple files in Node.js or making multiple XHR\nrequests in the browser. Because -on the contrary of `Promise.all`- **finishAll** waits until\nall single Promises are resolved, you can handle all promises, even if some gets rejected.",
-            "itemtype": "method",
-            "name": "finishAll",
-            "params": [
-                {
-                    "name": "items",
-                    "description": "an array of any kind of items, promises or not. If a value is not a promise,\nits transformed into a resolved promise.",
-                    "type": "Any[]"
-                }
-            ],
-            "return": {
-                "description": "A promise for an array of all the fulfillment items:\n<ul>\n    <li>Fulfilled: o {Object}\n        <ul>\n            <li>fulfilled {Array} all fulfilled responses, any item that was rejected will have a value of `undefined`</li>\n            <li>rejected {Array} all rejected responses, any item that was fulfilled will have a value of `undefined`</li>\n        </ul>\n    </li>\n    <li>Rejected: this promise **never** rejects</li>\n</ul>",
-                "type": "Promise"
-            },
-            "static": 1,
-            "class": "Promise",
-            "module": "extend-js",
-            "submodule": "extend-promise"
-        },
-        {
-            "file": "src/extend-js/lib/promise.js",
-            "line": 139,
-            "description": "Returns a Promise which chains the function-calls. Like an automated Promise-chain.\nInvokes the functionreferences in a chain. You MUST supply function-references, it doesn't\nmatter wheter these functions return a Promise or not. Any returnvalues are passed through to\nthe next function.\n\n**Cautious:** you need to pass function-references, not invoke them!\nchainFns will invoke them when the time is ready. Regarding to this, there is a difference with\nusing Promise.all() where you should pass invoked Promises.\n\nIf one of the functions returns a Promise, the chain\nwill wait its execution for this function to be resolved.\n\nIf you need specific context or arguments: use Function.bind for these items.\nIf one of the items returns a rejected Promise, by default: the whole chain rejects\nand following functions in the chain will not be invoked. When `finishAll` is set `true`\nthe chain will always continue even with rejected Promises.\n\nReturning functionvalues are passed through the chain adding them as an extra argument\nto the next function in the chain (argument is added on the right)",
-            "example": [
-                "\n    var a = [], p1, p2, p3;\n    p1 = function(a) {\n        return new Promise(function(resolve, reject) {\n            I.later(function() {\n                console.log('resolving promise p1: '+a);\n                resolve(a);\n            }, 1000);\n        });\n    };\n    p2 = function(b, r) {\n        var value = b+r;\n        console.log('returning p2: '+value);\n        return value;\n    };\n    p3 = function(c, r) {\n        return new Promise(function(resolve, reject) {\n            I.later(function() {\n                var value = b+r;\n                console.log('resolving promise p3: '+value);\n                resolve(value);\n            }, 1000);\n        });\n    };\n    a.push(p1.bind(undefined, 100));\n    a.push(p2.bind(undefined, 200));\n    a.push(p3.bind(undefined, 300));\n    Promise.chainFns(a).then(\n        function(r) {\n            console.log('chain resolved with '+r);\n        },\n        function(err) {\n            console.log('chain-error '+err);\n        }\n    );"
-            ],
-            "itemtype": "method",
-            "name": "chainFns",
-            "params": [
-                {
-                    "name": "funcs",
-                    "description": "an array of function-references",
-                    "type": "Function[]"
-                },
-                {
-                    "name": "finishAll",
-                    "description": "to force the chain to continue, even if one of the functions\n       returns a rejected Promise",
-                    "type": "Boolean",
-                    "optional": true,
-                    "optdefault": "false"
-                }
-            ],
-            "return": {
-                "description": "on success:\no {Object} returnvalue of the laste item in the Promisechain\non failure an Error object\nreason {Error}",
-                "type": "Promise"
-            },
-            "static": 1,
-            "class": "Promise",
-            "module": "extend-js",
-            "submodule": "extend-promise"
-        },
-        {
-            "file": "src/extend-js/lib/promise.js",
-            "line": 231,
-            "description": "Returns a Promise with 3 additional methods:\n\npromise.fulfill\npromise.reject\npromise.callback\n\nWith Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.\nYou can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any.\npromise.**fulfill**() and promise.**reject**() are meant to resolve the promise from outside, just like deferred can do.",
-            "example": [
-                "\n    var promise = Promise.manage(\n        function(msg) {\n            alert(msg);\n        }\n    );\n\n    promise.then(\n        function() {\n            // promise is fulfilled, no further actions can be taken\n        }\n    );\n\n    setTimeout(function() {\n        promise.callback('hey, I\\'m still busy');\n    }, 1000);\n\n    setTimeout(function() {\n        promise.fulfill();\n    }, 2000);"
-            ],
-            "itemtype": "method",
-            "name": "manage",
-            "params": [
-                {
-                    "name": "callbackFn",
-                    "description": "invoked everytime promiseinstance.callback() is called.",
-                    "type": "Function"
-                }
-            ],
-            "return": {
-                "description": "with three handles: fulfill, reject and callback.",
-                "type": "Promise"
-            },
-            "static": 1,
-            "class": "Promise",
-            "module": "extend-js",
-            "submodule": "extend-promise"
         },
         {
             "file": "src/io/io-assets.js",
@@ -9455,7 +9028,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 66,
+            "line": 67,
             "description": "Initializes the xhr-instance, based on the config-params.\nThis method is the standard way of doing xhr-requests without processing streams.",
             "itemtype": "method",
             "name": "_initXHR",
@@ -9547,7 +9120,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 147,
+            "line": 148,
             "description": "Adds the `headers`-object to `xhr`-headers.",
             "itemtype": "method",
             "name": "_setHeaders",
@@ -9575,7 +9148,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 177,
+            "line": 178,
             "description": "Adds 2 methods on the xhr-instance which are used by xhr when events occur:\n\nxhr.onreadystatechange()\nxhr.ontimeout()  // only XMLHttpRequest2\n\nThese events are responsible for making the Promise resolve.",
             "itemtype": "method",
             "name": "_setReadyHandle",
@@ -9603,7 +9176,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 215,
+            "line": 216,
             "description": "Stringifies an object into one string with every pair separated by `&`",
             "itemtype": "method",
             "name": "_toQueryString",
@@ -9625,7 +9198,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 236,
+            "line": 237,
             "description": "Sends a HTTP request to the server and returns a Promise with an additional .abort() method to cancel the request.\nThis method is the standard way of doing xhr-requests without processing streams.",
             "itemtype": "method",
             "name": "request",
@@ -9749,6 +9322,433 @@
             "module": "itsa.build"
         },
         {
+            "file": "src/js-ext/lib/function.js",
+            "line": 49,
+            "description": "Merges the given map of properties into the `prototype` of the Class.\n**Not** to be used on instances.\n\nThe members in the hash map will become members with\ninstances of the merged class.\n\nBy default, this method will not override existing prototype members,\nunless the second argument `force` is true.",
+            "itemtype": "method",
+            "name": "mergePrototypes",
+            "params": [
+                {
+                    "name": "map",
+                    "description": "Hash map of properties to add to the prototype of this object",
+                    "type": "Object"
+                },
+                {
+                    "name": "force",
+                    "description": "If true, existing members will be overwritten",
+                    "type": "Boolean"
+                }
+            ],
+            "chainable": 1,
+            "class": "Function",
+            "module": "js-ext",
+            "submodule": "extend-function"
+        },
+        {
+            "file": "src/js-ext/lib/function.js",
+            "line": 80,
+            "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
+            "example": [
+                "\n\n\tvar Circle = Shape.subClass(\n\t\tfunction (x, y, r) {\n\t\t\tthis.r = r;\n\t\t\tCircle.$super.constructor.call(this, x, y);\n\t\t},\n\t\t{\n\t\t\tarea: function () {\n\t\t\t\treturn this.r * this.r * Math.PI;\n\t\t\t}\n\t\t}\n\t);"
+            ],
+            "itemtype": "method",
+            "name": "subClass",
+            "params": [
+                {
+                    "name": "constructor",
+                    "description": "The function that will serve as constructor for the new class.\n       If `undefined` defaults to `Object.constructor`",
+                    "type": "Function",
+                    "optional": true
+                },
+                {
+                    "name": "prototypes",
+                    "description": "Hash map of properties to be added to the prototype of the new class.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "the new class."
+            },
+            "class": "Function",
+            "module": "js-ext",
+            "submodule": "extend-function"
+        },
+        {
+            "file": "src/js-ext/lib/function.js",
+            "line": 138,
+            "description": "Overwrites the given prototype functions with the ones given in\nthe hashmap while still providing a means of calling the original\noverridden method.\n\nThe patching function will receive a reference to the original method\nprepended to the arguments the original would have received.",
+            "itemtype": "method",
+            "name": "patch",
+            "params": [
+                {
+                    "name": "map",
+                    "description": "Hash map of method names to their new implementation.",
+                    "type": "Object"
+                }
+            ],
+            "chainable": 1,
+            "class": "Function",
+            "module": "js-ext",
+            "submodule": "extend-function"
+        },
+        {
+            "file": "src/js-ext/lib/function.js",
+            "line": 172,
+            "description": "Sets the context of which the function will be execute. in the\nsupplied object's context, optionally adding any additional\nsupplied parameters to the end of the arguments the function\nis executed with.",
+            "itemtype": "method",
+            "name": "rbind",
+            "params": [
+                {
+                    "name": "context",
+                    "description": "the execution context.\n       The value is ignored if the bound function is constructed using the new operator.",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "args*",
+                    "description": "args* 0..n arguments to append to the end of\n       arguments collection supplied to the function.",
+                    "type": "Any",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "the wrapped function.",
+                "type": "Function"
+            },
+            "class": "Function",
+            "module": "js-ext",
+            "submodule": "extend-function"
+        },
+        {
+            "file": "src/js-ext/lib/function.js",
+            "line": 208,
+            "description": "Returns a base class with the given constructor and prototype methods",
+            "itemtype": "method",
+            "name": "createClass",
+            "params": [
+                {
+                    "name": "constructor",
+                    "description": "constructor for the class",
+                    "type": "Function",
+                    "optional": true
+                },
+                {
+                    "name": "prototype",
+                    "description": "Hash map of prototype members of the new class",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "the new class",
+                "type": "Function"
+            },
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "extend-function"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 70,
+            "description": "Loops through all properties in the object.  Equivalent to Array.forEach.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
+            "itemtype": "method",
+            "name": "each",
+            "params": [
+                {
+                    "name": "fn",
+                    "description": "Function to be executed on each item in the object.  It will receive\n                     value {any} value of the property\n                     key {string} name of the property\n                     obj {Object} the whole of the object",
+                    "type": "Function"
+                }
+            ],
+            "chainable": 1,
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "extend-object"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 97,
+            "description": "Loops through the properties in an object until the callback function returns *truish*.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe order in which the elements are visited is not predictable.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
+            "itemtype": "method",
+            "name": "some",
+            "params": [
+                {
+                    "name": "fn",
+                    "description": "Function to be executed on each item in the object.  It will receive\n                     value {any} value of the property\n                     key {string} name of the property\n                     obj {Object} the whole of the object",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "true if the loop was interrupted by the callback function returning *truish*.",
+                "type": "Boolean"
+            },
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "extend-object"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 125,
+            "description": "Loops through the properties in an object until the callback assembling a new object\nwith its properties set to the values returned by the callback function.\nIf the callback function returns `undefined` the property will not be copied to the new object.\nThe resulting object will have the same keys as the original, except for those where the callback\nreturned `undefined` which will have dissapeared.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
+            "itemtype": "method",
+            "name": "map",
+            "params": [
+                {
+                    "name": "fn",
+                    "description": "Function to be executed on each item in the object.  It will receive\n                     value {any} value of the property\n                     key {string} name of the property\n                     obj {Object} the whole of the object",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "The new object with its properties set to the values returned by the callback function.",
+                "type": "Object"
+            },
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "extend-object"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 157,
+            "description": "Returns the keys of the object.",
+            "itemtype": "method",
+            "name": "keys",
+            "return": {
+                "description": "Keys of the object",
+                "type": "Array"
+            },
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "extend-object"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 166,
+            "description": "Loops through the object collection the values of all its properties.\nIt is the counterpart of the [`keys`](#method_keys).",
+            "itemtype": "method",
+            "name": "values",
+            "return": {
+                "description": "values of the object",
+                "type": "Array"
+            },
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "extend-object"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 186,
+            "description": "Returns true if the object has no own members",
+            "itemtype": "method",
+            "name": "isEmpty",
+            "return": {
+                "description": "true if the object is empty",
+                "type": "Boolean"
+            },
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "extend-object"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 199,
+            "description": "Returns a shallow copy of the object.\nIt does not clone objects within the object, it does a simple, shallow clone.\nFast, mostly useful for plain hash maps.",
+            "itemtype": "method",
+            "name": "shallowClone",
+            "return": {
+                "description": "shallow copy of the original",
+                "type": "Object"
+            },
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "extend-object"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 220,
+            "description": "Merges into this object the properties of the given object.\nIf the second argument is true, the properties on the source object will be overwritten\nby those of the second object of the same name, otherwise, they are preserved.",
+            "itemtype": "method",
+            "name": "merge",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "Object with the properties to be added to the original object",
+                    "type": "Object"
+                },
+                {
+                    "name": "force",
+                    "description": "If true, the properties in `obj` will override those of the same name\n       in the original object",
+                    "type": "Boolean"
+                }
+            ],
+            "chainable": 1,
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "extend-object"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 245,
+            "description": "Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object",
+            "itemtype": "method",
+            "name": "isObject",
+            "return": {
+                "description": "true if the object is empty",
+                "type": "Boolean"
+            },
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "extend-object"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 255,
+            "description": "Returns a new object resulting of merging the properties of the given objects.\nThe copying is shallow, complex properties will reference the very same object.\nProperties in later objects do **not overwrite** properties of the same name in earlier objects.\nIf any of the objects is missing, it will be skiped.",
+            "example": [
+                "\n\n var foo = function (config) {\n      config = Object.merge(config, defaultConfig);\n }"
+            ],
+            "itemtype": "method",
+            "name": "merge",
+            "static": 1,
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "Objects whose properties are to be merged",
+                    "type": "Object",
+                    "multiple": true
+                }
+            ],
+            "return": {
+                "description": "new object with the properties merged in.",
+                "type": "Object"
+            },
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "extend-object"
+        },
+        {
+            "file": "src/js-ext/lib/promise.js",
+            "line": 25,
+            "description": "Promise which can be put at the very end of a chain, even after .catch().\nWill invoke the callback function regardless whether the chain resolves or rejects.\n\nThe argument of the callback will be either its fulfilled or rejected argument, but\nit is wisely not to handle it. The results should have been handled in an earlier step\nof the chain: .finally() basicly means you want to execute code after the chain, regardless\nwhether it's resolved or rejected.\n\n**Note:** .finally() <u>does not return a Promise</u>: it should be used as the very last step of a Promisechain.\nIf you need an intermediate method, you should take .thenFulfill().",
+            "itemtype": "method",
+            "name": "finally",
+            "params": [
+                {
+                    "name": "finallyback",
+                    "description": "the callbackfunctio to be invoked.",
+                    "type": "Function"
+                }
+            ],
+            "class": "Promise",
+            "module": "js-ext",
+            "submodule": "extend-promise"
+        },
+        {
+            "file": "src/js-ext/lib/promise.js",
+            "line": 45,
+            "description": "Will always return a fulfilled Promise.\n\nTypical usage will be by making it part of a Promisechain: it makes the chain go\ninto its fulfilled phase.",
+            "example": [
+                "\n\npromise1\n.then(promise2)\n.thenFulfill()\n.then(handleFulfilled, handleRejected) // handleFulfilled always gets invoked"
+            ],
+            "itemtype": "method",
+            "name": "thenFulfill",
+            "params": [
+                {
+                    "name": "response",
+                    "description": "parameter to pass through which overrules the original Promise-response.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Resolved Promise. `response` will be passed trough as parameter when set.\n        When not set: in case the original Promise resolved, its parameter is passed through.\n        in case of a rejection, no parameter will be passed through.",
+                "type": "Promise"
+            },
+            "class": "Promise",
+            "module": "js-ext",
+            "submodule": "extend-promise"
+        },
+        {
+            "file": "src/js-ext/lib/promise.js",
+            "line": 76,
+            "description": "Returns a Promise that always fulfills. It is fulfilled when ALL items are resolved (either fulfilled\nor rejected). This is useful for waiting for the resolution of multiple\npromises, such as reading multiple files in Node.js or making multiple XHR\nrequests in the browser. Because -on the contrary of `Promise.all`- **finishAll** waits until\nall single Promises are resolved, you can handle all promises, even if some gets rejected.",
+            "itemtype": "method",
+            "name": "finishAll",
+            "params": [
+                {
+                    "name": "items",
+                    "description": "an array of any kind of items, promises or not. If a value is not a promise,\nits transformed into a resolved promise.",
+                    "type": "Any[]"
+                }
+            ],
+            "return": {
+                "description": "A promise for an array of all the fulfillment items:\n<ul>\n    <li>Fulfilled: o {Object}\n        <ul>\n            <li>fulfilled {Array} all fulfilled responses, any item that was rejected will have a value of `undefined`</li>\n            <li>rejected {Array} all rejected responses, any item that was fulfilled will have a value of `undefined`</li>\n        </ul>\n    </li>\n    <li>Rejected: this promise **never** rejects</li>\n</ul>",
+                "type": "Promise"
+            },
+            "static": 1,
+            "class": "Promise",
+            "module": "js-ext",
+            "submodule": "extend-promise"
+        },
+        {
+            "file": "src/js-ext/lib/promise.js",
+            "line": 140,
+            "description": "Returns a Promise which chains the function-calls. Like an automated Promise-chain.\nInvokes the functionreferences in a chain. You MUST supply function-references, it doesn't\nmatter wheter these functions return a Promise or not. Any returnvalues are passed through to\nthe next function.\n\n**Cautious:** you need to pass function-references, not invoke them!\nchainFns will invoke them when the time is ready. Regarding to this, there is a difference with\nusing Promise.all() where you should pass invoked Promises.\n\nIf one of the functions returns a Promise, the chain\nwill wait its execution for this function to be resolved.\n\nIf you need specific context or arguments: use Function.bind for these items.\nIf one of the items returns a rejected Promise, by default: the whole chain rejects\nand following functions in the chain will not be invoked. When `finishAll` is set `true`\nthe chain will always continue even with rejected Promises.\n\nReturning functionvalues are passed through the chain adding them as an extra argument\nto the next function in the chain (argument is added on the right)",
+            "example": [
+                "\n    var a = [], p1, p2, p3;\n    p1 = function(a) {\n        return new Promise(function(resolve, reject) {\n            I.later(function() {\n                console.log('resolving promise p1: '+a);\n                resolve(a);\n            }, 1000);\n        });\n    };\n    p2 = function(b, r) {\n        var value = b+r;\n        console.log('returning p2: '+value);\n        return value;\n    };\n    p3 = function(c, r) {\n        return new Promise(function(resolve, reject) {\n            I.later(function() {\n                var value = b+r;\n                console.log('resolving promise p3: '+value);\n                resolve(value);\n            }, 1000);\n        });\n    };\n    a.push(p1.bind(undefined, 100));\n    a.push(p2.bind(undefined, 200));\n    a.push(p3.bind(undefined, 300));\n    Promise.chainFns(a).then(\n        function(r) {\n            console.log('chain resolved with '+r);\n        },\n        function(err) {\n            console.log('chain-error '+err);\n        }\n    );"
+            ],
+            "itemtype": "method",
+            "name": "chainFns",
+            "params": [
+                {
+                    "name": "funcs",
+                    "description": "an array of function-references",
+                    "type": "Function[]"
+                },
+                {
+                    "name": "finishAll",
+                    "description": "to force the chain to continue, even if one of the functions\n       returns a rejected Promise",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "on success:\no {Object} returnvalue of the laste item in the Promisechain\non failure an Error object\nreason {Error}",
+                "type": "Promise"
+            },
+            "static": 1,
+            "class": "Promise",
+            "module": "js-ext",
+            "submodule": "extend-promise"
+        },
+        {
+            "file": "src/js-ext/lib/promise.js",
+            "line": 232,
+            "description": "Returns a Promise with 3 additional methods:\n\npromise.fulfill\npromise.reject\npromise.callback\n\nWith Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.\nYou can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any.\npromise.**fulfill**() and promise.**reject**() are meant to resolve the promise from outside, just like deferred can do.",
+            "example": [
+                "\n    var promise = Promise.manage(\n        function(msg) {\n            alert(msg);\n        }\n    );\n\n    promise.then(\n        function() {\n            // promise is fulfilled, no further actions can be taken\n        }\n    );\n\n    setTimeout(function() {\n        promise.callback('hey, I\\'m still busy');\n    }, 1000);\n\n    setTimeout(function() {\n        promise.fulfill();\n    }, 2000);"
+            ],
+            "itemtype": "method",
+            "name": "manage",
+            "params": [
+                {
+                    "name": "callbackFn",
+                    "description": "invoked everytime promiseinstance.callback() is called.",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "with three handles: fulfill, reject and callback.",
+                "type": "Promise"
+            },
+            "static": 1,
+            "class": "Promise",
+            "module": "js-ext",
+            "submodule": "extend-promise"
+        },
+        {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 1,
             "description": "Wrapper for built-in http.js to emulate the browser XMLHttpRequest object.\n\nThis can be used with JS designed for browsers to improve reuse of code and\nallow the use of existing libraries.\n\nUsage: include(\"XMLHttpRequest.js\") and use XMLHttpRequest per W3C specs.",
@@ -9756,35 +9756,35 @@
             "contributor": "David Ellis <d.f.ellis@ieee.org>",
             "license": "MIT",
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 20,
             "description": "Private variables",
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 87,
             "description": "Constants",
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 97,
             "description": "Public vars",
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 113,
             "description": "Private methods",
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -9800,7 +9800,7 @@
                 "description": "boolean False if not allowed, otherwise true"
             },
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -9816,14 +9816,14 @@
                 "description": "boolean False if not allowed, otherwise true"
             },
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 141,
             "description": "Public methods",
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -9852,7 +9852,7 @@
                 }
             ],
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -9865,7 +9865,7 @@
                 }
             ],
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -9882,7 +9882,7 @@
                 }
             ],
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -9898,7 +9898,7 @@
                 "description": "string Text of the header or null if it doesn't exist."
             },
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -9908,7 +9908,7 @@
                 "description": "string A string with all response headers separated by CR+LF"
             },
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -9924,7 +9924,7 @@
                 "description": "string Returns the request header or empty string if not set"
             },
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -9937,42 +9937,42 @@
                 }
             ],
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 516,
             "description": "Called when an error is encountered to deal with it.",
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 527,
             "description": "Aborts a request.",
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 551,
             "description": "Adds an event listener. Preferred method of binding to events.",
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 562,
             "description": "Remove an event callback that has already been bound.\nOnly works on the matching funciton, cannot be a copy.",
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 575,
             "description": "Dispatch any events, including both \"on\" methods and events attached using addEventListener.",
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -9985,11 +9985,11 @@
                 }
             ],
             "class": "window",
-            "module": "itsa.build"
+            "module": "js-ext"
         },
         {
             "file": "src/utils/lib/idgenerator.js",
-            "line": 19,
+            "line": 21,
             "description": "Generates an unique id with the signature: \"namespace-follownr\"",
             "example": [
                 "\n\n    var generator = require('core-utils-idgenerator');\n\n    console.log(generator()); // --> 1\n    console.log(generator()); // --> 2\n    console.log(generator(1000)); // --> 1000\n    console.log(generator()); // --> 1001\n    console.log(generator('Parcel, 500')); // -->\"Parcel-500\"\n    console.log(generator('Parcel')); // -->\"Parcel-501\""
@@ -10019,7 +10019,7 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 16,
+            "line": 18,
             "description": "Forces a function to be run asynchronously, but as fast as possible. In Node.js\nthis is achieved using `setImmediate` or `process.nextTick`.",
             "itemtype": "method",
             "name": "_asynchronizer",
@@ -10038,7 +10038,7 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 32,
+            "line": 34,
             "description": "Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function\nrequires a specific execution context or arguments, wrap it with Function.bind.\n\nI.async returns an object with a cancel method.  If the cancel method is\ncalled before the callback function, the callback function won't be called.",
             "itemtype": "method",
             "name": "async",
@@ -10065,7 +10065,7 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 67,
+            "line": 69,
             "description": "Invokes the callbackFn after a timeout (asynchronous). If the function\nrequires a specific execution context or arguments, wrap it with Function.bind.\n\nTo invoke the callback function periodic, set 'periodic' either 'true', or specify a second timeout.\nIf number, then periodic is considered 'true' but with a perdiod defined by 'periodic',\nwhich means: the first timer executes after 'timeout' and next timers after 'period'.\n\nI.later returns an object with a cancel method.  If the cancel() method is\ncalled before the callback function, the callback function won't be called.",
             "itemtype": "method",
             "name": "later",

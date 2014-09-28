@@ -1,7 +1,7 @@
 ---
 module: itsa.build
 version: 0.0.1
-modulesize: 23.20
+modulesize: 23.21
 dependencies: "all ITSA-modules, hammerjs (npm), ypromise (npm), xmldom (npm), querystring (npm)"
 maintainer: Marco Asbreuk
 title: Root of the standard distribution

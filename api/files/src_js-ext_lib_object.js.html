@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/extend-js/lib/object.js - Itsa</title>
+    <title>src/js-ext/lib/object.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -77,8 +77,6 @@
             
                 <li><a href="../modules/extend-function.html">extend-function</a></li>
             
-                <li><a href="../modules/extend-js.html">extend-js</a></li>
-            
                 <li><a href="../modules/extend-object.html">extend-object</a></li>
             
                 <li><a href="../modules/extend-promise.html">extend-promise</a></li>
@@ -96,6 +94,8 @@
                 <li><a href="../modules/io-xml.html">io-xml</a></li>
             
                 <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/js-ext.html">js-ext</a></li>
             
                 <li><a href="../modules/node-win.html">node-win</a></li>
             
@@ -136,7 +136,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/extend-js/lib/object.js</h1>
+                        <h1 class="file-heading">File: src/js-ext/lib/object.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -147,12 +147,14 @@
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
- * @module extend-js
+ * @module js-ext
  * @submodule extend-object
  *
 */
 
 &quot;use strict&quot;;
+
+require(&#x27;polyfill&#x27;);
 
 var TYPES = {
        &#x27;undefined&#x27; : true,

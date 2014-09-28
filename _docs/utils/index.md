@@ -2,7 +2,8 @@
 module: utils
 itsaclassname:
 version: 0.0.1
-modulesize: 1.09
+modulesize: 1.34
+dependencies: "polyfill"
 dependencies:
 maintainer: Marco Asbreuk
 title: Utility functions

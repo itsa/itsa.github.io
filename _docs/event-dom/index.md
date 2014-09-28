@@ -2,8 +2,8 @@
 module: event-dom
 itsaclassname: Event
 version: 0.0.1
-modulesize: 5.00
-dependencies: "extend-js/lib/function.js, extend-js/lib/object.js, utils, event"
+modulesize: 5.20
+dependencies: "polyfill, js-ext/lib/function.js, js-ext/lib/object.js, utils, event"
 maintainer: Marco Asbreuk
 title: DOM Events
 intro: "The event-dom module integrates DOM-events into the event-module. Using this module, you have all the power of the event-module applied to DOM-events.<br><br><u>event-dom touches no single dom-node</u>. Listening to events always happens by listening at the capturephase of <i>document</i>. Subscribers can be set without the need of node's being part of the dom.<br><br>The loaderfiles combine <b>event</b>, <b>event-dom</b> and <b>event-mobile</b> all into ITSA.Event."
