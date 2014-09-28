@@ -2,7 +2,7 @@
 module: event
 itsaclassname: Event
 version: 0.0.1
-modulesize: 3.35
+modulesize: 3.58
 dependencies: "polyfill, js-ext/lib/function.js, js-ext/lib/object.js"
 maintainer: Marco Asbreuk
 title: Custom Events
