@@ -1,9 +1,9 @@
 ---
-module: extend-js
+module: js-ext
 itsaclassname:
 version: 0.0.1
-modulesize: 3.11
-dependencies: "ypromise (npm)"
+modulesize: 3.29
+dependencies: "polyfill, ypromise (npm)"
 maintainer: Marco Asbreuk
 title: Extra functionality for basic objects
 intro: "Adds several methods to Object, Function and Promise that are frequently used"

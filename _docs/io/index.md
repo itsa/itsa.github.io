@@ -2,8 +2,8 @@
 module: io
 itsaclassname: IO
 version: 0.0.1
-modulesize: 4.16
-dependencies: "extend-js, ypromise (npm)"
+modulesize: 4.34
+dependencies: "polyfill, js-ext, ypromise (npm)"
 maintainer: Marco Asbreuk
 title: Promised I/O
 intro: "This module consist of several submodule which provide easy IO. All submodules should be merged into IO to extend its features. The submodules have different (extra) sizes."
@@ -78,9 +78,10 @@ When used within a browser, io should be done within the same domain by default.
 ###On NodeJS###
 When using io inside NodeJS, the same-origin policy is not relevant: in NodeJS you can make cross-domain request directly.
 
-#io/io-transfer.js#
+#io-transfer#
 <p class="module-intro">
-size-min gzipped: 4.16 + 0.46 = 4.62 kb<br>
+custom require: IO = require('io/io-transfer.js')(window);
+size-min gzipped: 4.34 + 0.46 = 4.80 kb<br>
 dependencies: io
 </p>
 
@@ -343,9 +344,10 @@ app.listen(8080);
 
 **Note 2:** when using `io-cors` you must be aware that <u>IE<10 will not send custom HTTP-headers</u>.
 
-#io/io-xml.js#
+#io-xml#
 <p class="module-intro">
-size-min gzipped: 4.16 + 0.19 = 4.35 kb<br>
+custom require: IO = require('io/io-xml.js')(window);
+size-min gzipped: 4.34 + 0.19 = 4.53 kb<br>
 dependencies: io
 </p>
 The **io-xml**-module is meant for xml-request. It adds one method to io: io.**readXML**(). When fulfilled, the callback returns a XML-object. On error, the promise gets rejected.
@@ -367,9 +369,10 @@ ITSA.IO.readXML(uri).then(
 #io/io-assets.js#
 _work in progress_
 
-#io/io-stream.js#
+#io-stream#
 <p class="module-intro">
-size-min gzipped: 4.16 + 0.23 = 4.39 kb<br>
+custom require: IO = require('io/io-stream.js')(window);
+size-min gzipped: 4.34 + 0.23 = 4.57 kb<br>
 dependencies: io
 </p>
 
@@ -396,9 +399,10 @@ IO.request(options).then(
 ```
 `io/io-stream.js` does not handle xml streams. In order to handle xml-streams you need to use [io/io-xmlstream.js](#io/io-xmlstream.js).
 
-#io/io-cors.js#
+#io-cors-ie9#
 <p class="module-intro">
-size-min gzipped: 4.16 + 8.35 = 12.51 kb<br>
+custom require: IO = require('io/io-cors-ie9.js')(window);
+size-min gzipped: 4.34 + 8.35 = 12.66 kb<br>
 dependencies: io, xmldom (npm)
 </p>
 
@@ -553,12 +557,6 @@ Because CORS its limitation and hard setup, we suggest to setup your server as a
 #io/io-jsonp.js#
 
 _work in progress_
-
-
-#io/io-xmlstream.js#
-
-_work in progress_
-
 
 #io/io-proxy-node.js#
 

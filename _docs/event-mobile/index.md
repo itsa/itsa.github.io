@@ -2,8 +2,8 @@
 module: event-mobile
 itsaclassname: Event
 version: 0.0.1
-modulesize: 11.05
-dependencies: "extend-js/lib/function.js, extend-js/lib/object.js, utils, event, event-dom, hammerjs (npm)"
+modulesize: 11.27
+dependencies: "polyfill, js-ext/lib/function.js, js-ext/lib/object.js, utils, event, event-dom, hammerjs (npm)"
 maintainer: Marco Asbreuk
 title: Mobile Events using HammerJS
 intro: "This module adds mobile events to the `event-dom` module. It integrates all of HammerJS into the eventsystem.<br><br>The loaderfiles combine <b>event</b>, <b>event-dom</b> and <b>event-mobile</b> all into ITSA.Event."
