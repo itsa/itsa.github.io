@@ -37,6 +37,11 @@ span.purple {
     color: #d61fb1;
 }
 
+.body-content .highlight .err {
+    background-color: transparent;
+    color: #000;
+}
+
 a:not(.pure-button),
 a:hover:not(.pure-button),
 a:visited:not(.pure-button) {
