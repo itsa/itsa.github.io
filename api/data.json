@@ -55,6 +55,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/event/event-base.js": {
+            "name": "src/event/event-base.js",
+            "modules": {
+                "event": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "src/event/event-emitter.js": {
             "name": "src/event/event-emitter.js",
             "modules": {
@@ -74,15 +83,6 @@
             "classes": {
                 "Event.Listener": 1
             },
-            "fors": {},
-            "namespaces": {}
-        },
-        "src/event/event.js": {
-            "name": "src/event/event.js",
-            "modules": {
-                "event": 1
-            },
-            "classes": {},
             "fors": {},
             "namespaces": {}
         },
@@ -262,14 +262,14 @@
                 "event-mobile": 1
             },
             "classes": {
+                "Event": 1,
                 "Event.Emitter": 1,
-                "Event.Listener": 1,
-                "Event": 1
+                "Event.Listener": 1
             },
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "src/event-mobile/event-mobile.js",
+            "file": "src/event/event-listener.js",
             "line": 3,
             "description": "Defines the Event-Class, which should be instantiated to get its functionality\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "is_constructor": 1,
@@ -290,7 +290,7 @@
             "line": 3,
             "description": "Extends the Event-instance by adding the method `Emitter` to it.\nThe `Emitter-method` returns an object that should be merged into any Class-instance or object you\nwant to extend with the emit-methods, so the appropriate methods can be invoked on the instance.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/\n\n\nShould be called using  the provided `extend`-method like this:",
             "example": [
-                "\n    var Event = require('event');<br>\n    var EventEmitter = require('event-emitter');<br>\n    EventEmitter.mergeInto(Event);"
+                "\n    var Event = require('event');<br>"
             ],
             "since": "0.0.1"
         },
@@ -309,7 +309,7 @@
             "line": 3,
             "description": "Extends the Event-instance by adding the object `Listener` to it.\nThe returned object should be merged into any Class-instance or object you want to\nextend with the listener-methods, so the appropriate methods can be invoked on the instance.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/\n\n\nShould be called using  the provided `extend`-method like this:",
             "example": [
-                "\n    var Event = require('event');<br>\n    var EventListener = require('event-listener');<br>\n    EventListener.mergeInto(Event);"
+                "\n    var Event = require('event');<br>"
             ],
             "since": "0.0.1"
         },
@@ -564,42 +564,6 @@
         }
     },
     "classes": {
-        "Event.Emitter": {
-            "name": "Event.Emitter",
-            "shortname": "Event.Emitter",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "event",
-            "submodule": "event-emitter",
-            "namespace": "",
-            "file": "src/event/event-emitter.js",
-            "line": 3,
-            "description": "Extends the Event-instance by adding the method `Emitter` to it.\nThe `Emitter-method` returns an object that should be merged into any Class-instance or object you\nwant to extend with the emit-methods, so the appropriate methods can be invoked on the instance.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/\n\n\nShould be called using  the provided `extend`-method like this:",
-            "example": [
-                "\n    var Event = require('event');<br>\n    var EventEmitter = require('event-emitter');<br>\n    EventEmitter.mergeInto(Event);"
-            ]
-        },
-        "Event.Listener": {
-            "name": "Event.Listener",
-            "shortname": "Event.Listener",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "event",
-            "submodule": "event-listener",
-            "namespace": "",
-            "file": "src/event/event-listener.js",
-            "line": 3,
-            "description": "Extends the Event-instance by adding the object `Listener` to it.\nThe returned object should be merged into any Class-instance or object you want to\nextend with the listener-methods, so the appropriate methods can be invoked on the instance.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/\n\n\nShould be called using  the provided `extend`-method like this:",
-            "example": [
-                "\n    var Event = require('event');<br>\n    var EventListener = require('event-listener');<br>\n    EventListener.mergeInto(Event);"
-            ]
-        },
         "Event": {
             "name": "Event",
             "shortname": "Event",
@@ -617,6 +581,42 @@
                 "\nEvent = require('event');\nDOMEvent = require('event-dom');\nDOMEvent.mergeInto(Event);"
             ],
             "submodule": "event-mobile"
+        },
+        "Event.Emitter": {
+            "name": "Event.Emitter",
+            "shortname": "Event.Emitter",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "event",
+            "submodule": "event-emitter",
+            "namespace": "",
+            "file": "src/event/event-emitter.js",
+            "line": 3,
+            "description": "Extends the Event-instance by adding the method `Emitter` to it.\nThe `Emitter-method` returns an object that should be merged into any Class-instance or object you\nwant to extend with the emit-methods, so the appropriate methods can be invoked on the instance.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/\n\n\nShould be called using  the provided `extend`-method like this:",
+            "example": [
+                "\n    var Event = require('event');<br>"
+            ]
+        },
+        "Event.Listener": {
+            "name": "Event.Listener",
+            "shortname": "Event.Listener",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "event",
+            "submodule": "event-listener",
+            "namespace": "",
+            "file": "src/event/event-listener.js",
+            "line": 3,
+            "description": "Extends the Event-instance by adding the object `Listener` to it.\nThe returned object should be merged into any Class-instance or object you want to\nextend with the listener-methods, so the appropriate methods can be invoked on the instance.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/\n\n\nShould be called using  the provided `extend`-method like this:",
+            "example": [
+                "\n    var Event = require('event');<br>"
+            ]
         },
         "IO": {
             "name": "IO",
@@ -753,19 +753,19 @@
                 "type": "Object"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
             "line": 43,
             "description": "Registered modules.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
             "line": 49,
             "description": "Registered aliases.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -783,7 +783,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -806,7 +806,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -825,7 +825,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -844,7 +844,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -862,31 +862,31 @@
                 "type": "Function"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
             "line": 153,
             "description": "lastIndexOf helper.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
             "line": 165,
             "description": "The relative require() itself.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
             "line": 174,
             "description": "Resolve relative to the parent.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
             "line": 193,
             "description": "Check if module is defined at `path`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -909,7 +909,7 @@
                     "type": "Callee"
                 }
             ],
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -926,7 +926,7 @@
                 "description": "object that can be `JSON.stringify`",
                 "type": "Object"
             },
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -944,13 +944,13 @@
                 "type": "String"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
             "line": 364,
             "description": "### Library\n\nCreate a repository for custom type detection.\n\n```js\nvar lib = new type.Library;\n```",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -967,7 +967,7 @@
                 "description": "type",
                 "type": "String"
             },
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -986,7 +986,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1009,7 +1009,7 @@
                 "type": "Boolean"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1036,7 +1036,7 @@
                 "description": "equal match",
                 "type": "Boolean"
             },
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1054,7 +1054,7 @@
                 "type": "This"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1068,7 +1068,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1082,7 +1082,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1096,7 +1096,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1104,7 +1104,7 @@
             "description": "### Language Chains\n\nThe following are provided as chainable getters to\nimprove the readability of your assertions. They\ndo not provide testing capabilities unless they\nhave been overwritten by a plugin.\n\n**Chains**\n\n- to\n- be\n- been\n- is\n- that\n- and\n- has\n- have\n- with\n- at\n- of\n- same",
             "name": "language chains",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1112,7 +1112,7 @@
             "description": "### .not\n\nNegates any of assertions following in the chain.\n\n    expect(foo).to.not.equal('bar');\n    expect(goodFn).to.not.throw(Error);\n    expect({ foo: 'baz' }).to.have.property('foo')\n      .and.not.equal('bar');",
             "name": "not",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1120,7 +1120,7 @@
             "description": "### .deep\n\nSets the `deep` flag, later used by the `equal` and\n`property` assertions.\n\n    expect(foo).to.deep.equal({ bar: 'baz' });\n    expect({ foo: { bar: { baz: 'quux' } } })\n      .to.have.deep.property('foo.bar.baz', 'quux');",
             "name": "deep",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1141,7 +1141,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1162,7 +1162,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1170,7 +1170,7 @@
             "description": "### .ok\n\nAsserts that the target is truthy.\n\n    expect('everthing').to.be.ok;\n    expect(1).to.be.ok;\n    expect(false).to.not.be.ok;\n    expect(undefined).to.not.be.ok;\n    expect(null).to.not.be.ok;",
             "name": "ok",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1178,7 +1178,7 @@
             "description": "### .true\n\nAsserts that the target is `true`.\n\n    expect(true).to.be.true;\n    expect(1).to.not.be.true;",
             "name": "true",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1186,7 +1186,7 @@
             "description": "### .false\n\nAsserts that the target is `false`.\n\n    expect(false).to.be.false;\n    expect(0).to.not.be.false;",
             "name": "false",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1194,7 +1194,7 @@
             "description": "### .null\n\nAsserts that the target is `null`.\n\n    expect(null).to.be.null;\n    expect(undefined).not.to.be.null;",
             "name": "null",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1202,7 +1202,7 @@
             "description": "### .undefined\n\nAsserts that the target is `undefined`.\n\n    expect(undefined).to.be.undefined;\n    expect(null).to.not.be.undefined;",
             "name": "undefined",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1210,7 +1210,7 @@
             "description": "### .exist\n\nAsserts that the target is neither `null` nor `undefined`.\n\n    var foo = 'hi'\n      , bar = null\n      , baz;\n\n    expect(foo).to.exist;\n    expect(bar).to.not.exist;\n    expect(baz).to.not.exist;",
             "name": "exist",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1218,7 +1218,7 @@
             "description": "### .empty\n\nAsserts that the target's length is `0`. For arrays, it checks\nthe `length` property. For objects, it gets the count of\nenumerable keys.\n\n    expect([]).to.be.empty;\n    expect('').to.be.empty;\n    expect({}).to.be.empty;",
             "name": "empty",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1227,7 +1227,7 @@
             "name": "arguments",
             "alias": "Arguments",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1248,7 +1248,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1269,7 +1269,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1290,7 +1290,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1311,7 +1311,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1332,7 +1332,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1353,7 +1353,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1378,7 +1378,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1399,7 +1399,7 @@
             ],
             "alias": "instanceOf",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1428,7 +1428,7 @@
                 "description": "value of property for chaining"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1449,7 +1449,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1470,7 +1470,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1490,7 +1490,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1510,7 +1510,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1526,7 +1526,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1558,7 +1558,7 @@
                 "description": "error for chaining (null if no error)"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1578,7 +1578,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1586,7 +1586,7 @@
             "description": "### .itself\n\nSets the `itself` flag, later used by the `respondTo` assertion.\n\n    function Foo() {}\n    Foo.bar = function() {}\n    Foo.prototype.baz = function() {}\n\n    expect(Foo).itself.to.respondTo('bar');\n    expect(Foo).itself.not.to.respondTo('baz');",
             "name": "itself",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1606,7 +1606,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1631,7 +1631,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1651,7 +1651,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1671,7 +1671,7 @@
             ],
             "name": "assert",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1701,7 +1701,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1721,7 +1721,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1741,7 +1741,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1766,7 +1766,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1791,7 +1791,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1816,7 +1816,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1841,7 +1841,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1866,7 +1866,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1891,7 +1891,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1911,7 +1911,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1931,7 +1931,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1951,7 +1951,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1971,7 +1971,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1991,7 +1991,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2011,7 +2011,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2031,7 +2031,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2051,7 +2051,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2071,7 +2071,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2091,7 +2091,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2111,7 +2111,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2131,7 +2131,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2151,7 +2151,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2171,7 +2171,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2191,7 +2191,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2211,7 +2211,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2231,7 +2231,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2251,7 +2251,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2276,7 +2276,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2301,7 +2301,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2326,7 +2326,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2351,7 +2351,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2376,7 +2376,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2401,7 +2401,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2426,7 +2426,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2451,7 +2451,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2476,7 +2476,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2501,7 +2501,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2526,7 +2526,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2551,7 +2551,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2581,7 +2581,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2611,7 +2611,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2641,7 +2641,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2671,7 +2671,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2696,7 +2696,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2730,7 +2730,7 @@
                 "https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types"
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2763,7 +2763,7 @@
                 "https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types"
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2793,7 +2793,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2823,7 +2823,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2848,7 +2848,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2873,7 +2873,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2903,7 +2903,7 @@
             ],
             "name": "addChainableMethod",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2928,7 +2928,7 @@
             ],
             "name": "addMethod",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2953,7 +2953,7 @@
             ],
             "name": "addProperty",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2978,7 +2978,7 @@
             ],
             "name": "flag",
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2996,7 +2996,7 @@
                     "type": "Arguments"
                 }
             ],
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3015,7 +3015,7 @@
             },
             "name": "getEnumerableProperties",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3035,7 +3035,7 @@
             ],
             "name": "getMessage",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3048,7 +3048,7 @@
                     "type": "Function"
                 }
             ],
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3072,7 +3072,7 @@
             },
             "name": "getPathValue",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3091,7 +3091,7 @@
             },
             "name": "getProperties",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3119,7 +3119,7 @@
                     "type": "Boolean"
                 }
             ],
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3134,7 +3134,7 @@
             ],
             "name": "objDisplay",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3159,7 +3159,7 @@
             ],
             "name": "overwriteMethod",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3184,7 +3184,7 @@
             ],
             "name": "overwriteProperty",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3214,7 +3214,7 @@
             ],
             "name": "overwriteChainableMethod",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3232,7 +3232,7 @@
                     "type": "Arguments"
                 }
             ],
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3257,7 +3257,7 @@
             ],
             "name": "getAllFlags",
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3272,80 +3272,80 @@
             ],
             "name": "type",
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 419,
             "description": "Module exports.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 425,
             "description": "Check if `obj` is an array.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 433,
             "description": "Event emitter constructor.",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 441,
             "description": "Adds a listener.",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 465,
             "description": "Adds a volatile listener.",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 485,
             "description": "Removes a listener.",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 522,
             "description": "Removes all listeners for an event.",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 541,
             "description": "Gets all listeners for a certain event.",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 563,
             "description": "Emits an event.",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 607,
             "description": "Expose `Progress`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 613,
             "description": "Initialize a new `Progress` indicator.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3363,7 +3363,7 @@
                 "type": "Progress"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3381,7 +3381,7 @@
                 "type": "Progress"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3399,7 +3399,7 @@
                 "type": "Progress"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3416,7 +3416,7 @@
                 "description": "for chaining",
                 "type": "Progress"
             },
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3433,7 +3433,7 @@
                 "description": "for chaining",
                 "type": "Progress"
             },
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3450,20 +3450,20 @@
                 "description": "for chaining",
                 "type": "Progress"
             },
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 754,
             "description": "Expose `Context`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 760,
             "description": "Initialize a new `Context`.",
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3481,7 +3481,7 @@
                 "type": "Context"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3499,7 +3499,7 @@
                 "type": "Context"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3517,7 +3517,7 @@
                 "type": "Context"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3535,7 +3535,7 @@
                 "type": "Context"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3546,19 +3546,19 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 842,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 848,
             "description": "Expose `Hook`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3577,13 +3577,13 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 867,
             "description": "Inherit from `Runnable.prototype`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3601,253 +3601,253 @@
                 "type": "Error"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 899,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 907,
             "description": "BDD-style interface:\n\n     describe('Array', function(){\n       describe('#indexOf()', function(){\n         it('should return -1 when not present', function(){\n\n         });\n\n         it('should return the index when present', function(){\n\n         });\n       });\n     });",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 929,
             "description": "Execute before running tests.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 937,
             "description": "Execute after running tests.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 945,
             "description": "Execute before each test case.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 953,
             "description": "Execute after each test case.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 961,
             "description": "Describe a \"suite\" with the given `title`\nand callback `fn` containing nested suites\nand/or tests.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 976,
             "description": "Pending describe.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 990,
             "description": "Exclusive suite.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1000,
             "description": "Describe a specification or test-case\nwith the given `title` and callback `fn`\nacting as a thunk.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1015,
             "description": "Exclusive test-case.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1026,
             "description": "Pending test case.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1042,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1049,
             "description": "TDD-style interface:\n\n    exports.Array = {\n      '#indexOf()': {\n        'should return -1 when the value is not present': function(){\n\n        },\n\n        'should return the correct index when the value is present': function(){\n\n        }\n      }\n    };",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1117,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1125,
             "description": "QUnit-style interface:\n\n    suite('Array');\n\n    test('#length', function(){\n      var arr = [1,2,3];\n      ok(arr.length == 3);\n    });\n\n    test('#indexOf()', function(){\n      var arr = [1,2,3];\n      ok(arr.indexOf(1) == 0);\n      ok(arr.indexOf(2) == 1);\n      ok(arr.indexOf(3) == 2);\n    });\n\n    suite('String');\n\n    test('#length', function(){\n      ok('foo'.length == 3);\n    });",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1155,
             "description": "Execute before running tests.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1163,
             "description": "Execute after running tests.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1171,
             "description": "Execute before each test case.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1179,
             "description": "Execute after each test case.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1187,
             "description": "Describe a \"suite\" with the given `title`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1199,
             "description": "Exclusive test-case.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1208,
             "description": "Describe a specification or test-case\nwith the given `title` and callback `fn`\nacting as a thunk.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1221,
             "description": "Exclusive test-case.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1231,
             "description": "Pending test case.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1245,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1253,
             "description": "TDD-style interface:\n\n     suite('Array', function(){\n       suite('#indexOf()', function(){\n         suiteSetup(function(){\n\n         });\n\n         test('should return -1 when not present', function(){\n\n         });\n\n         test('should return the index when present', function(){\n\n         });\n\n         suiteTeardown(function(){\n\n         });\n       });\n     });",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1283,
             "description": "Execute before each test case.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1291,
             "description": "Execute after each test case.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1299,
             "description": "Execute before the suite.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1307,
             "description": "Execute after the suite.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1315,
             "description": "Describe a \"suite\" with the given `title`\nand callback `fn` containing nested suites\nand/or tests.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1330,
             "description": "Pending suite.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1341,
             "description": "Exclusive test-case.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1350,
             "description": "Describe a specification or test-case\nwith the given `title` and callback `fn`\nacting as a thunk.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1365,
             "description": "Exclusive test-case.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1375,
             "description": "Pending test case.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1394,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1401,
             "description": "Expose `Mocha`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1407,
             "description": "To require local UIs and reporters when running in node.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1417,
             "description": "Expose internals.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3865,7 +3865,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3879,7 +3879,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3894,7 +3894,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3908,7 +3908,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3922,7 +3922,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3936,21 +3936,21 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1557,
             "description": "Load registered files.",
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1576,
             "description": "Enable growl support.",
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3968,7 +3968,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3979,7 +3979,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -3997,7 +3997,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4008,7 +4008,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4019,7 +4019,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4037,7 +4037,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4055,7 +4055,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4073,7 +4073,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4091,7 +4091,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4109,7 +4109,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4127,7 +4127,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4138,7 +4138,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4156,13 +4156,13 @@
                 "type": "Runner"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1788,
             "description": "Helpers.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4185,7 +4185,7 @@
                 "type": "String|Number"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4203,7 +4203,7 @@
                 "type": "Number"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4221,7 +4221,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4239,61 +4239,61 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1888,
             "description": "Pluralization helper.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1902,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1911,
             "description": "Save timer references to avoid Sinon interfering (see GH-237).",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1921,
             "description": "Check if both stdio streams are associated with a tty.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1927,
             "description": "Expose `Base`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1933,
             "description": "Enable coloring by default.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1939,
             "description": "Inline diffs instead of +/-",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1945,
             "description": "Default color map.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1971,
             "description": "Default symbol map.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4316,19 +4316,19 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2005,
             "description": "Expose term window size, with some\ndefaults for when stderr is not a tty.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2018,
             "description": "Expose some basic cursor interactions\nthat are common among reporters.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4342,7 +4342,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4356,14 +4356,14 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2174,
             "description": "Output common epilogue used by many of\nthe bundled reporters.",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4386,7 +4386,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4404,7 +4404,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4422,7 +4422,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4440,7 +4440,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4458,7 +4458,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4481,7 +4481,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4504,19 +4504,19 @@
                 "type": "Boolean"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2365,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2372,
             "description": "Expose `Doc`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4530,19 +4530,19 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2432,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2439,
             "description": "Expose `Dot`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4556,25 +4556,25 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2489,
             "description": "Inherit from `Base.prototype`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2503,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2510,
             "description": "Expose `HTMLCov`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4588,7 +4588,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4599,31 +4599,31 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2557,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2566,
             "description": "Save timer references to avoid Sinon interfering (see GH-237).",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2576,
             "description": "Expose `HTML`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2582,
             "description": "Stats template.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4637,7 +4637,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4651,7 +4651,7 @@
                     "optional": true
                 }
             ],
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4665,55 +4665,55 @@
                     "optional": true
                 }
             ],
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2755,
             "description": "Display error `msg`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2763,
             "description": "Return a DOM fragment from `html`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2782,
             "description": "Check for suites that do not have elements\nwith `classname`, and hide them.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2795,
             "description": "Unhide .hidden suites.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2806,
             "description": "Set `el` text to `str`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2818,
             "description": "Listen on `event` with callback `fn`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2856,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2862,
             "description": "Expose `JSONCov`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4732,7 +4732,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4750,7 +4750,7 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4773,7 +4773,7 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4791,19 +4791,19 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3013,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3020,
             "description": "Expose `List`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4817,7 +4817,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4835,19 +4835,19 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3077,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3085,
             "description": "Expose `JSON`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4861,7 +4861,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4879,7 +4879,7 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4896,37 +4896,37 @@
                 "description": "",
                 "type": "Object"
             },
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3168,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3176,
             "description": "Expose `Landing`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3182,
             "description": "Airplane color.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3188,
             "description": "Airplane crash color.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3194,
             "description": "Runway color.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4940,25 +4940,25 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3259,
             "description": "Inherit from `Base.prototype`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3272,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3280,
             "description": "Expose `List`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4972,25 +4972,25 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3330,
             "description": "Inherit from `Base.prototype`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3343,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3350,
             "description": "Expose `Markdown`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5004,19 +5004,19 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3438,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3444,
             "description": "Expose `Min`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5030,25 +5030,25 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3470,
             "description": "Inherit from `Base.prototype`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3483,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3490,
             "description": "Expose `Dot`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5062,42 +5062,42 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3542,
             "description": "Draw the nyan cat",
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3556,
             "description": "Draw the \"scoreboard\" showing the number\nof passes, failures and pending tests.",
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3581,
             "description": "Append the rainbow.",
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3598,
             "description": "Draw the rainbow.",
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3616,
             "description": "Draw the nyan cat",
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5108,7 +5108,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5122,7 +5122,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5136,7 +5136,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5147,7 +5147,7 @@
                 "type": "Array"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5165,37 +5165,37 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3730,
             "description": "Stdout helper.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3738,
             "description": "Inherit from `Base.prototype`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3751,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3759,
             "description": "Expose `Progress`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3765,
             "description": "General progress bar color.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5214,25 +5214,25 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3838,
             "description": "Inherit from `Base.prototype`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3852,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3860,
             "description": "Expose `Spec`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5246,25 +5246,25 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3929,
             "description": "Inherit from `Base.prototype`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3943,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3951,
             "description": "Expose `TAP`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5278,7 +5278,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5296,25 +5296,25 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4020,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4028,
             "description": "Save timer references to avoid Sinon interfering (see GH-237).",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4038,
             "description": "Expose `XUnit`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5328,55 +5328,55 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4085,
             "description": "Inherit from `Base.prototype`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4095,
             "description": "Output tag for the given `test.`",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4116,
             "description": "HTML tag helper.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4134,
             "description": "Return cdata escaped CDATA `str`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4146,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4154,
             "description": "Save timer references to avoid Sinon interfering (see GH-237).",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4164,
             "description": "Object#toString().",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4170,
             "description": "Expose `Runnable`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5395,13 +5395,13 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4195,
             "description": "Inherit from `EventEmitter.prototype`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5419,7 +5419,7 @@
                 "type": "Runnable|Number"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5437,7 +5437,7 @@
                 "type": "Runnable|Number"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5455,7 +5455,7 @@
                 "type": "Runnable|Boolean"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5466,14 +5466,14 @@
                 "type": "String"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4266,
             "description": "Clear the timeout.",
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5484,21 +5484,21 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4292,
             "description": "Reset the timeout.",
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4310,
             "description": "Whitelist these globals for this test run",
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5512,32 +5512,32 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4416,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4427,
             "description": "Non-enumerable globals.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4440,
             "description": "Expose `Runner`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4446,
             "description": "Initialize a `Runner` for the given `suite`.\n\nEvents:\n\n  - `start`  execution started\n  - `end`  execution complete\n  - `suite`  (suite) test suite execution started\n  - `suite end`  (suite) all tests (and sub-suites) have finished\n  - `test`  (test) test execution started\n  - `test end`  (test) test completed\n  - `hook`  (hook) hook execution started\n  - `hook end`  (hook) hook complete\n  - `pass`  (test) test passed\n  - `fail`  (test, err) test failed\n  - `pending`  (test) test pending",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5551,13 +5551,13 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4488,
             "description": "Inherit from `EventEmitter.prototype`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5580,7 +5580,7 @@
                 "type": "Runner"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5598,7 +5598,7 @@
                 "type": "Number"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5609,7 +5609,7 @@
                 "type": "Array"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5627,14 +5627,14 @@
                 "type": "Runner"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4572,
             "description": "Check for global variable leaks.",
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5653,7 +5653,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5672,7 +5672,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5691,7 +5691,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5715,7 +5715,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5734,7 +5734,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5753,7 +5753,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5764,7 +5764,7 @@
                 "type": "Array"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5778,7 +5778,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5797,7 +5797,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5816,7 +5816,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5830,7 +5830,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5848,7 +5848,7 @@
                 "type": "Runner"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5859,7 +5859,7 @@
                 "type": "Runner"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5882,7 +5882,7 @@
                 "type": "Array"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5893,19 +5893,19 @@
                 "type": "Array"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5091,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5101,
             "description": "Expose `Suite`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5928,7 +5928,7 @@
                 "type": "Suite"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5947,13 +5947,13 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5157,
             "description": "Inherit from `EventEmitter.prototype`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5964,7 +5964,7 @@
                 "type": "Suite"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5982,7 +5982,7 @@
                 "type": "Suite|Number"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6000,7 +6000,7 @@
                 "type": "Suite|Boolean"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6018,7 +6018,7 @@
                 "type": "Suite|Number"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6036,7 +6036,7 @@
                 "type": "Suite|Number"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6054,7 +6054,7 @@
                 "type": "Suite"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6072,7 +6072,7 @@
                 "type": "Suite"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6090,7 +6090,7 @@
                 "type": "Suite"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6108,7 +6108,7 @@
                 "type": "Suite"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6126,7 +6126,7 @@
                 "type": "Suite"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6144,7 +6144,7 @@
                 "type": "Suite"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6155,7 +6155,7 @@
                 "type": "String"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6166,7 +6166,7 @@
                 "type": "Number"
             },
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6184,19 +6184,19 @@
                 "type": "Suite"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5445,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5451,
             "description": "Expose `Test`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6215,25 +6215,25 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5471,
             "description": "Inherit from `Runnable.prototype`.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5484,
             "description": "Module dependencies.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5493,
             "description": "Ignored directories.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6251,7 +6251,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6275,7 +6275,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6299,7 +6299,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6323,7 +6323,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6347,7 +6347,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6366,7 +6366,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6384,7 +6384,7 @@
                 "type": "Array"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6403,13 +6403,13 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5640,
             "description": "Ignored files.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6420,7 +6420,7 @@
                 "type": "Array"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6438,13 +6438,13 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5690,
             "description": "Strip the function definition from `str`,\nand re-indent for pre whitespace.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6462,7 +6462,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6480,7 +6480,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6498,7 +6498,7 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6516,7 +6516,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6530,7 +6530,7 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6548,7 +6548,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6566,73 +6566,73 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5839,
             "description": "Save timer references to avoid Sinon interfering (see GH-237).",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5849,
             "description": "Node shims.\n\nThese are meant only to allow\nmocha.js to run untouched, not\nto allow running node code in\nthe browser.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5866,
             "description": "Remove uncaughtException listener.\nRevert to original onerror handler if previously defined.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5883,
             "description": "Implements uncaughtException listener.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5897,
             "description": "Expose mocha.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5924,
             "description": "High-performance override of Runner.immediately.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5935,
             "description": "Function to allow assertion libraries to throw errors directly into mocha.\nThis is useful when running tests in a browser because window.onerror will\nonly receive the 'message' attribute of the Error.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5947,
             "description": "Override ui to ensure that the ui functions are initialized.\nNormally this would happen in Mocha.prototype.loadFiles.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5958,
             "description": "Setup mocha with the given setting options.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5968,
             "description": "Run mocha, returning the Runner.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5989,
             "description": "Expose the process shim.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/should.js",
@@ -6642,13 +6642,13 @@
             "author": "TJ Holowaychuk <tj@vision-media.ca> and contributors",
             "link": "https://github.com/shouldjs/should.js",
             "license": "MIT",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/should.js",
             "line": 126,
             "description": "Expose assert to should\n\nThis allows you to do things like below\nwithout require()ing the assert module.\n\n   should.equal(foo.bar, undefined);",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/should.js",
@@ -6668,7 +6668,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/should.js",
@@ -6688,7 +6688,7 @@
                 }
             ],
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/should.js",
@@ -6706,7 +6706,7 @@
                     "type": "Object"
                 }
             ],
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/should.js",
@@ -6722,7 +6722,7 @@
                 "description": "",
                 "type": "Assertion"
             },
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/should.js",
@@ -6736,40 +6736,40 @@
                 }
             ],
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/should.js",
             "line": 1381,
             "description": "Way to extend Assertion function. It uses some logic\nto define only positive assertions and itself rule with negative assertion.\n\nAll actions happen in subcontext and this method take care about negation.\nPotentially we can add some more modifiers that does not depends from state of assertion.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/should.js",
             "line": 1446,
             "description": "Expose should to external world.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/should.js",
             "line": 1452,
             "description": "Expose api via `Object#should`.",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/should.js",
             "line": 1507,
             "description": "Negation modifier.",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/should.js",
             "line": 1518,
             "description": "Any modifier - it affect on execution of sequenced assertion to do not check all, but any of",
             "api": "public",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/should.js",
@@ -6787,7 +6787,7 @@
                 "type": "Boolean"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/should.js",
@@ -6810,7 +6810,7 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/should.js",
@@ -6828,7 +6828,7 @@
                     "type": "Object"
                 }
             ],
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/mocha/should.js",
@@ -6846,19 +6846,19 @@
                     "type": "Function"
                 }
             ],
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/lib/agent.js",
             "line": 3,
             "description": "Create mappings between the names parsed from useragent (based on\nhttps://github.com/tobie/ua-parser/blob/master/regexes.yaml) to caniuse\nname equivalents.\n\nEach caniuse name can match against many names.\n\nTo add a new mapping add the UA name to the appropriate key.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/lib/agent.js",
             "line": 69,
             "description": "jQuery: isNumeric\nhttps://github.com/jquery/jquery/blob/bbdfbb4ee859fe9319b348d88120ddc2c9efbd63/src/core.js#L212",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/lib/aliases.js",
@@ -6867,19 +6867,19 @@
             "example": [
                 " The difference between map and flatMap\n> [0, 1, 2].map(function(val) {return [val + 1, val + 2]; });\n[ [ 1, 2 ], [ 2, 3 ], [ 3, 4 ] ]\n\n> flatMap([0, 1, 2], function(val) { return [val + 1, val + 2]; });\n[ 1, 2, 2, 3, 3, 4 ]"
             ],
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/lib/aliases.js",
             "line": 17,
             "description": "The AliasResolver provides the logic used for expanding and resolving\npolyfill identifiers using more than one mechanism (if required).\n\nA polyfill identifier is an object with at least a 'name' and 'flags'\nproperty, where the 'name' is the string identifying a polyfill and\n'flags' is an array containing any flags that should be applied with\nthe polyfill (and subsequently to any aliased polyfills).\n\n e.g: { name: \"modernizr:es5\", flags: [\"always\"] }",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/lib/aliases.js",
             "line": 30,
             "description": "potentially alternate string identifiers (e.g. expanded names the alias refers to)\n\nThe key point is that each is invoked in sequence with the result of\nthe previous function as an argument.",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/lib/aliases.js",
@@ -6901,7 +6901,7 @@
                 "description": "An expanded list of polyfill identifiers",
                 "type": "Array"
             },
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/lib/aliases.js",
@@ -6918,7 +6918,7 @@
                 "description": "An resolved list of resolved polyfill identifiers.",
                 "type": "Array"
             },
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/lib/aliases.js",
@@ -6931,58 +6931,58 @@
                     "type": "Function"
                 }
             ],
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 1,
             "preserve": "HTML5 Shiv 3.7.2 | @afarkas @jdalton @jon_neal @rem | MIT/GPL2 Licensed",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 6,
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 9,
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 12,
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 15,
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 18,
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 21,
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 24,
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 27,
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 30,
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -7006,7 +7006,7 @@
                 "description": "The style element.",
                 "type": "StyleSheet"
             },
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -7018,7 +7018,7 @@
                 "description": "An array of shived element node names.",
                 "type": "Array"
             },
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -7037,7 +7037,7 @@
                     "type": "Document"
                 }
             ],
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -7056,7 +7056,7 @@
                 "description": "An object of data.",
                 "type": "Object"
             },
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -7079,7 +7079,7 @@
                 "description": "The shived element.",
                 "type": "Object"
             },
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -7097,7 +7097,7 @@
                 "description": "The shived DocumentFragment.",
                 "type": "Object"
             },
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -7117,7 +7117,7 @@
                     "type": "Object"
                 }
             ],
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -7135,7 +7135,7 @@
                 "description": "The shived document.",
                 "type": "Document"
             },
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -7145,7 +7145,7 @@
             "example": [
                 "\n\n// options can be changed before the script is included\nhtml5 = { 'elements': 'mark section', 'shivCSS': false, 'shivMethods': false };"
             ],
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -7153,13 +7153,13 @@
             "description": "An array or space separated string of node names of the elements to shiv.",
             "memberof": "html5",
             "type": "Array|String",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 267,
             "description": "current version of html5shiv",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -7167,7 +7167,7 @@
             "description": "A flag to indicate that the HTML5 style sheet should be inserted.",
             "memberof": "html5",
             "type": "Boolean",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -7175,7 +7175,7 @@
             "description": "Is equal to true if a browser supports creating unknown/HTML5 elements",
             "memberof": "html5",
             "type": "boolean",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -7183,7 +7183,7 @@
             "description": "A flag to indicate that the document's `createElement` and `createDocumentFragment`\nmethods should be overwritten.",
             "memberof": "html5",
             "type": "Boolean",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -7191,282 +7191,15 @@
             "description": "A string to describe the type of `html5` object (\"default\" or \"default print\").",
             "memberof": "html5",
             "type": "String",
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
             "file": "server/polyfills/helpers.js",
             "line": 1,
-            "class": "Event.Emitter"
+            "class": "Event"
         },
         {
-            "file": "src/event/event-emitter.js",
-            "line": 39,
-            "description": "Defines a CustomEvent. If the eventtype already exists, it will not be overridden,\nunless you force to assign with `.forceAssign()`\n\nThe returned object comes with 4 methods which can be invoked chainable:\n\n<ul>\n    <li>defaultFn() --> the default-function of the event</li>\n    <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n    <li>forceAssign() --> overrides any previous definition</li>\n    <li>unHaltable() --> makes the customEvent cannot be halted</li>\n    <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n    <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>\n    <li>unRenderPreventable() --> makes that the customEvent's render cannot be prevented</li>\n    <li>noRender() --> prevents this customEvent from render the dom. Overrules unRenderPreventable()</li>\n</ul>",
-            "itemtype": "method",
-            "name": "defineEvent",
-            "params": [
-                {
-                    "name": "eventName",
-                    "description": "name of the customEvent, without `emitterName`.\n       The final event that will be created has the syntax: `emitterName:eventName`,\n       where `emitterName:` is automaticly prepended.",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "with extra methods that can be chained:\n<ul>\n     <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n     <li>unRenderPreventable() --> makes that the customEvent's render cannot be prevented</li>\n     <li>forceAssign() --> overrides any previous definition</li>\n     <li>defaultFn() --> the default-function of the event</li>\n     <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n</ul>",
-                "type": "Object"
-            },
-            "since": "0.0.1",
-            "class": "Event.Emitter",
-            "module": "event",
-            "submodule": "event-emitter"
-        },
-        {
-            "file": "src/event/event-emitter.js",
-            "line": 74,
-            "description": "Emits the event `eventName` on behalf of the instance holding this method.",
-            "itemtype": "method",
-            "name": "emit",
-            "params": [
-                {
-                    "name": "eventName",
-                    "description": "name of the event to be sent (available as e.type)\n       you could pass a customEvent here 'emitterName:eventName', which would\n       overrule the `instance-emitterName`",
-                    "type": "String"
-                },
-                {
-                    "name": "payload",
-                    "description": "extra payload to be added to the event-object",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "<ul>\n    <li>on success: returnValue {Any} of the defaultFn</li>\n    <li>on error: reason {Any} Either: description 'event was halted', 'event was defaultPrevented' or the returnvalue of the preventedFn</li>\n</ul>",
-                "type": "Promise"
-            },
-            "since": "0.0.1",
-            "class": "Event.Emitter",
-            "module": "event",
-            "submodule": "event-emitter"
-        },
-        {
-            "file": "src/event/event-emitter.js",
-            "line": 93,
-            "description": "Removes all event-definitions of the instance holding this method.",
-            "itemtype": "method",
-            "name": "undefAllEvents",
-            "since": "0.0.1",
-            "class": "Event.Emitter",
-            "module": "event",
-            "submodule": "event-emitter"
-        },
-        {
-            "file": "src/event/event-emitter.js",
-            "line": 103,
-            "description": "Removes the event-definition of the specified customEvent.",
-            "itemtype": "method",
-            "name": "undefEvent",
-            "params": [
-                {
-                    "name": "eventName",
-                    "description": "name of the customEvent, without `emitterName`.\n       The calculated customEvent which will be undefined, will have the syntax: `emitterName:eventName`.\n       where `emitterName:` is automaticly prepended.",
-                    "type": "String"
-                }
-            ],
-            "since": "0.0.1",
-            "class": "Event.Emitter",
-            "module": "event",
-            "submodule": "event-emitter"
-        },
-        {
-            "file": "src/event/event-listener.js",
-            "line": 29,
-            "description": "Subscribes to a customEvent on behalf of the object who calls this method.\nThe callback will be executed `after` the defaultFn.",
-            "itemtype": "method",
-            "name": "after",
-            "params": [
-                {
-                    "name": "customEvent",
-                    "description": "the custom-event (or Array of events) to subscribe to. CustomEvents should\n       have the syntax: `emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`.\n       If `emitterName` is not defined, `UI` is assumed.",
-                    "type": "String|Array"
-                },
-                {
-                    "name": "callback",
-                    "description": "subscriber:will be invoked when the event occurs. An `eventobject` will be passed\n       as its only argument.",
-                    "type": "Function"
-                },
-                {
-                    "name": "filter",
-                    "description": "to filter the event.\n       Use a String if you want to filter DOM-events by a `selector`\n       Use a function if you want to filter by any other means. If the function returns a trully value, the\n       subscriber gets invoked. The function gets the `eventobject` as its only argument and the context is\n       the subscriber.",
-                    "type": "String|Function",
-                    "optional": true
-                },
-                {
-                    "name": "prepend",
-                    "description": "whether the subscriber should be the first in the list of after-subscribers.",
-                    "type": "Boolean",
-                    "optional": true,
-                    "optdefault": "false"
-                }
-            ],
-            "return": {
-                "description": "handler with a `detach()`-method which can be used to detach the subscriber",
-                "type": "Object"
-            },
-            "since": "0.0.1",
-            "class": "Event.Listener",
-            "module": "event",
-            "submodule": "event-listener"
-        },
-        {
-            "file": "src/event/event-listener.js",
-            "line": 52,
-            "description": "Subscribes to a customEvent on behalf of the object who calls this method.\nThe callback will be executed `before` the defaultFn.",
-            "itemtype": "method",
-            "name": "before",
-            "params": [
-                {
-                    "name": "customEvent",
-                    "description": "the custom-event (or Array of events) to subscribe to. CustomEvents should\n       have the syntax: `emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`.\n       If `emitterName` is not defined, `UI` is assumed.",
-                    "type": "String|Array"
-                },
-                {
-                    "name": "callback",
-                    "description": "subscriber:will be invoked when the event occurs. An `eventobject` will be passed\n       as its only argument.",
-                    "type": "Function"
-                },
-                {
-                    "name": "filter",
-                    "description": "to filter the event.\n       Use a String if you want to filter DOM-events by a `selector`\n       Use a function if you want to filter by any other means. If the function returns a trully value, the\n       subscriber gets invoked. The function gets the `eventobject` as its only argument and the context is\n       the subscriber.",
-                    "type": "String|Function",
-                    "optional": true
-                },
-                {
-                    "name": "prepend",
-                    "description": "whether the subscriber should be the first in the list of before-subscribers.",
-                    "type": "Boolean",
-                    "optional": true,
-                    "optdefault": "false"
-                }
-            ],
-            "return": {
-                "description": "handler with a `detach()`-method which can be used to detach the subscriber",
-                "type": "Object"
-            },
-            "since": "0.0.1",
-            "class": "Event.Listener",
-            "module": "event",
-            "submodule": "event-listener"
-        },
-        {
-            "file": "src/event/event-listener.js",
-            "line": 75,
-            "description": "Detaches (unsubscribes) the listener from the specified customEvent,\non behalf of the object who calls this method.",
-            "itemtype": "method",
-            "name": "detach",
-            "params": [
-                {
-                    "name": "customEvent",
-                    "description": "conform the syntax: `emitterName:eventName`, wildcard `*` may be used for both\n       `emitterName` as well as only `eventName`, in which case 'UI' will become the emitterName.",
-                    "type": "String"
-                }
-            ],
-            "since": "0.0.1",
-            "class": "Event.Listener",
-            "module": "event",
-            "submodule": "event-listener"
-        },
-        {
-            "file": "src/event/event-listener.js",
-            "line": 88,
-            "description": "Detaches (unsubscribes) the listener from all customevents,\non behalf of the object who calls this method.",
-            "itemtype": "method",
-            "name": "detachAll",
-            "since": "0.0.1",
-            "class": "Event.Listener",
-            "module": "event",
-            "submodule": "event-listener"
-        },
-        {
-            "file": "src/event/event-listener.js",
-            "line": 99,
-            "description": "Subscribes to a customEvent on behalf of the object who calls this method.\nThe callback will be executed `after` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
-            "itemtype": "method",
-            "name": "onceAfter",
-            "params": [
-                {
-                    "name": "customEvent",
-                    "description": "the custom-event (or Array of events) to subscribe to. CustomEvents should\n       have the syntax: `emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`.\n       If `emitterName` is not defined, `UI` is assumed.",
-                    "type": "String|Array"
-                },
-                {
-                    "name": "callback",
-                    "description": "subscriber:will be invoked when the event occurs. An `eventobject` will be passed\n       as its only argument.",
-                    "type": "Function"
-                },
-                {
-                    "name": "filter",
-                    "description": "to filter the event.\n       Use a String if you want to filter DOM-events by a `selector`\n       Use a function if you want to filter by any other means. If the function returns a trully value, the\n       subscriber gets invoked. The function gets the `eventobject` as its only argument and the context is\n       the subscriber.",
-                    "type": "String|Function",
-                    "optional": true
-                },
-                {
-                    "name": "prepend",
-                    "description": "whether the subscriber should be the first in the list of after-subscribers.",
-                    "type": "Boolean",
-                    "optional": true,
-                    "optdefault": "false"
-                }
-            ],
-            "return": {
-                "description": "handler with a `detach()`-method which can be used to detach the subscriber",
-                "type": "Object"
-            },
-            "since": "0.0.1",
-            "class": "Event.Listener",
-            "module": "event",
-            "submodule": "event-listener"
-        },
-        {
-            "file": "src/event/event-listener.js",
-            "line": 124,
-            "description": "Subscribes to a customEvent on behalf of the object who calls this method.\nThe callback will be executed `before` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
-            "itemtype": "method",
-            "name": "onceBefore",
-            "params": [
-                {
-                    "name": "customEvent",
-                    "description": "the custom-event (or Array of events) to subscribe to. CustomEvents should\n       have the syntax: `emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`.\n       If `emitterName` is not defined, `UI` is assumed.",
-                    "type": "String|Array"
-                },
-                {
-                    "name": "callback",
-                    "description": "subscriber:will be invoked when the event occurs. An `eventobject` will be passed\n       as its only argument.",
-                    "type": "Function"
-                },
-                {
-                    "name": "filter",
-                    "description": "to filter the event.\n       Use a String if you want to filter DOM-events by a `selector`\n       Use a function if you want to filter by any other means. If the function returns a trully value, the\n       subscriber gets invoked. The function gets the `eventobject` as its only argument and the context is\n       the subscriber.",
-                    "type": "String|Function",
-                    "optional": true
-                },
-                {
-                    "name": "prepend",
-                    "description": "whether the subscriber should be the first in the list of before-subscribers.",
-                    "type": "Boolean",
-                    "optional": true,
-                    "optdefault": "false"
-                }
-            ],
-            "return": {
-                "description": "handler with a `detach()`-method which can be used to detach the subscriber",
-                "type": "Object"
-            },
-            "since": "0.0.1",
-            "class": "Event.Listener",
-            "module": "event",
-            "submodule": "event-listener"
-        },
-        {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 79,
             "description": "Subscribes to a customEvent. The callback will be executed `after` the defaultFn.",
             "static": 1,
@@ -7512,7 +7245,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 106,
             "description": "Subscribes to a customEvent. The callback will be executed `before` the defaultFn.",
             "static": 1,
@@ -7558,7 +7291,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 133,
             "description": "Defines an emitterName into the instance (emitter).\nThis will add a protected property `_emitterName` to the instance.",
             "static": 1,
@@ -7581,7 +7314,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 154,
             "description": "Defines a CustomEvent. If the eventtype already exists, it will not be overridden,\nunless you force to assign with `.forceAssign()`\n\nThe returned object comes with 4 methods which can be invoked chainable:\n\n<ul>\n    <li>defaultFn() --> the default-function of the event</li>\n    <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n    <li>forceAssign() --> overrides any previous definition</li>\n    <li>unHaltable() --> makes the customEvent cannot be halted</li>\n    <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n    <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>\n    <li>unRenderPreventable() --> makes that the customEvent's render cannot be prevented</li>\n    <li>noRender() --> prevents this customEvent from render the dom. Overrules unRenderPreventable()</li>\n</ul>",
             "static": 1,
@@ -7603,7 +7336,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 248,
             "description": "Detaches (unsubscribes) the listener from the specified customEvent.",
             "static": 1,
@@ -7627,7 +7360,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 266,
             "description": "Detaches (unsubscribes) the listener from all customevents.",
             "static": 1,
@@ -7645,7 +7378,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 290,
             "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.rendered (optional) --> `true` the vDOM rendered the dom</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n              <li>e.status.renderPrevented (optional) -->  `reason|true` if the event got renderPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n    <li>e.preventRender() --> by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()` or `e.preventRender()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li>\n<ul>",
             "static": 1,
@@ -7678,7 +7411,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 351,
             "description": "Adds a subscriber to the finalization-cycle, which happens after the after-subscribers.\nOnly get invoked when the cycle was not preventDefaulted or halted.",
             "itemtype": "method",
@@ -7699,7 +7432,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 374,
             "description": "Creates a notifier for the customEvent.\nYou can use this to create delayed `defineEvents`. When the customEvent is called, the callback gets invoked\n(even before the subsrcibers). Use this callback for delayed customEvent-definitions.\n\nUse **no** wildcards for the emitterName. You might use wildcards for the eventName. Without wildcards, the\nnotification will be unNotified (callback automaticly detached) on the first time the event occurs.\n\nYou **must** specify the full `emitterName:eventName` syntax.\nThe module `core-event-dom` uses `notify` to auto-define DOM-events (UI:*).",
             "static": 1,
@@ -7728,7 +7461,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 405,
             "description": "Subscribes to a customEvent. The callback will be executed `after` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
@@ -7774,7 +7507,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 449,
             "description": "Subscribes to a customEvent. The callback will be executed `before` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
@@ -7820,7 +7553,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 493,
             "description": "Removes all event-definitions of an emitter, specified by its `emitterName`.\nWhen `emitterName` is not set, ALL event-definitions will be removed.",
             "static": 1,
@@ -7839,7 +7572,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 523,
             "description": "Removes the event-definition of the specified customEvent.",
             "static": 1,
@@ -7857,7 +7590,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 536,
             "description": "unNotifies (unsubscribes) the notifier of the specified customEvent.",
             "static": 1,
@@ -7875,7 +7608,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 553,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
@@ -7927,7 +7660,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 623,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
@@ -7979,7 +7712,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 712,
             "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.rendered (optional) --> `true` the vDOM rendered the dom</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n              <li>e.status.renderPrevented (optional) -->  `reason|true` if the event got renderPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n    <li>e.preventRender() --> by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()` or `e.preventRender()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li>\n<ul>",
             "static": 1,
@@ -8036,7 +7769,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 868,
             "description": "Does the actual invocation of a subscriber.",
             "itemtype": "method",
@@ -8078,7 +7811,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 914,
             "description": "Removes a subscriber from the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`.",
             "static": 1,
@@ -8114,7 +7847,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 959,
             "description": "Removes subscribers from the multiple customevents. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
@@ -8139,7 +7872,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 1014,
             "description": "Adds a property to the default eventobject's prototype which passes through all eventcycles.\nGoes through Object.defineProperty with configurable, enumerable and writable\nall set to false.",
             "itemtype": "method",
@@ -8164,7 +7897,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 1034,
             "description": "Objecthash containing all defined custom-events\nwhich has a structure like this:\n\n_ce = {\n    'UI:click': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    },\n    'redmodel:save': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    }\n}",
             "itemtype": "property",
@@ -8178,7 +7911,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 1066,
             "description": "Objecthash containing all defined before and after subscribers\nwhich has a structure like this (`b` represents `before` and `a` represents `after`)\nEvery item that gets in the array consist by itself of 3 properties:\n                                                         subscriberitem = {\n                                                             o: listener,\n                                                             cb: callbackFn(e),\n                                                             f: filter\n                                                         };\n\n_subs = {\n    'UI:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    '*:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    'redmodel:save': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    }\n}",
             "itemtype": "property",
@@ -8192,7 +7925,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 1117,
             "description": "Internal list of finalize-subscribers which are invoked at the finalization-cycle, which happens after the after-subscribers.\nIs an array of function-references.",
             "itemtype": "property",
@@ -8206,7 +7939,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 1129,
             "description": "Object that acts as the prototype of the eventobject.\nTo add more methods, you can use `_setEventObjProperty`",
             "itemtype": "property",
@@ -8220,7 +7953,7 @@
             "module": "event"
         },
         {
-            "file": "src/event/event.js",
+            "file": "src/event/event-base.js",
             "line": 1145,
             "description": "Objecthash containing all notifiers, keyed by customEvent name.\nThis list is maintained by `notify`, `unNotify` and `unNotifyAll`\n\n_notifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
@@ -8234,8 +7967,275 @@
             "module": "event"
         },
         {
+            "file": "src/event/event-emitter.js",
+            "line": 37,
+            "description": "Defines a CustomEvent. If the eventtype already exists, it will not be overridden,\nunless you force to assign with `.forceAssign()`\n\nThe returned object comes with 4 methods which can be invoked chainable:\n\n<ul>\n    <li>defaultFn() --> the default-function of the event</li>\n    <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n    <li>forceAssign() --> overrides any previous definition</li>\n    <li>unHaltable() --> makes the customEvent cannot be halted</li>\n    <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n    <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>\n    <li>unRenderPreventable() --> makes that the customEvent's render cannot be prevented</li>\n    <li>noRender() --> prevents this customEvent from render the dom. Overrules unRenderPreventable()</li>\n</ul>",
+            "itemtype": "method",
+            "name": "defineEvent",
+            "params": [
+                {
+                    "name": "eventName",
+                    "description": "name of the customEvent, without `emitterName`.\n       The final event that will be created has the syntax: `emitterName:eventName`,\n       where `emitterName:` is automaticly prepended.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "with extra methods that can be chained:\n<ul>\n     <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n     <li>unRenderPreventable() --> makes that the customEvent's render cannot be prevented</li>\n     <li>forceAssign() --> overrides any previous definition</li>\n     <li>defaultFn() --> the default-function of the event</li>\n     <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n</ul>",
+                "type": "Object"
+            },
+            "since": "0.0.1",
+            "class": "Event.Emitter",
+            "module": "event",
+            "submodule": "event-emitter"
+        },
+        {
+            "file": "src/event/event-emitter.js",
+            "line": 72,
+            "description": "Emits the event `eventName` on behalf of the instance holding this method.",
+            "itemtype": "method",
+            "name": "emit",
+            "params": [
+                {
+                    "name": "eventName",
+                    "description": "name of the event to be sent (available as e.type)\n       you could pass a customEvent here 'emitterName:eventName', which would\n       overrule the `instance-emitterName`",
+                    "type": "String"
+                },
+                {
+                    "name": "payload",
+                    "description": "extra payload to be added to the event-object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "<ul>\n    <li>on success: returnValue {Any} of the defaultFn</li>\n    <li>on error: reason {Any} Either: description 'event was halted', 'event was defaultPrevented' or the returnvalue of the preventedFn</li>\n</ul>",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "Event.Emitter",
+            "module": "event",
+            "submodule": "event-emitter"
+        },
+        {
+            "file": "src/event/event-emitter.js",
+            "line": 91,
+            "description": "Removes all event-definitions of the instance holding this method.",
+            "itemtype": "method",
+            "name": "undefAllEvents",
+            "since": "0.0.1",
+            "class": "Event.Emitter",
+            "module": "event",
+            "submodule": "event-emitter"
+        },
+        {
+            "file": "src/event/event-emitter.js",
+            "line": 101,
+            "description": "Removes the event-definition of the specified customEvent.",
+            "itemtype": "method",
+            "name": "undefEvent",
+            "params": [
+                {
+                    "name": "eventName",
+                    "description": "name of the customEvent, without `emitterName`.\n       The calculated customEvent which will be undefined, will have the syntax: `emitterName:eventName`.\n       where `emitterName:` is automaticly prepended.",
+                    "type": "String"
+                }
+            ],
+            "since": "0.0.1",
+            "class": "Event.Emitter",
+            "module": "event",
+            "submodule": "event-emitter"
+        },
+        {
+            "file": "src/event/event-listener.js",
+            "line": 27,
+            "description": "Subscribes to a customEvent on behalf of the object who calls this method.\nThe callback will be executed `after` the defaultFn.",
+            "itemtype": "method",
+            "name": "after",
+            "params": [
+                {
+                    "name": "customEvent",
+                    "description": "the custom-event (or Array of events) to subscribe to. CustomEvents should\n       have the syntax: `emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`.\n       If `emitterName` is not defined, `UI` is assumed.",
+                    "type": "String|Array"
+                },
+                {
+                    "name": "callback",
+                    "description": "subscriber:will be invoked when the event occurs. An `eventobject` will be passed\n       as its only argument.",
+                    "type": "Function"
+                },
+                {
+                    "name": "filter",
+                    "description": "to filter the event.\n       Use a String if you want to filter DOM-events by a `selector`\n       Use a function if you want to filter by any other means. If the function returns a trully value, the\n       subscriber gets invoked. The function gets the `eventobject` as its only argument and the context is\n       the subscriber.",
+                    "type": "String|Function",
+                    "optional": true
+                },
+                {
+                    "name": "prepend",
+                    "description": "whether the subscriber should be the first in the list of after-subscribers.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "handler with a `detach()`-method which can be used to detach the subscriber",
+                "type": "Object"
+            },
+            "since": "0.0.1",
+            "class": "Event.Listener",
+            "module": "event",
+            "submodule": "event-listener"
+        },
+        {
+            "file": "src/event/event-listener.js",
+            "line": 50,
+            "description": "Subscribes to a customEvent on behalf of the object who calls this method.\nThe callback will be executed `before` the defaultFn.",
+            "itemtype": "method",
+            "name": "before",
+            "params": [
+                {
+                    "name": "customEvent",
+                    "description": "the custom-event (or Array of events) to subscribe to. CustomEvents should\n       have the syntax: `emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`.\n       If `emitterName` is not defined, `UI` is assumed.",
+                    "type": "String|Array"
+                },
+                {
+                    "name": "callback",
+                    "description": "subscriber:will be invoked when the event occurs. An `eventobject` will be passed\n       as its only argument.",
+                    "type": "Function"
+                },
+                {
+                    "name": "filter",
+                    "description": "to filter the event.\n       Use a String if you want to filter DOM-events by a `selector`\n       Use a function if you want to filter by any other means. If the function returns a trully value, the\n       subscriber gets invoked. The function gets the `eventobject` as its only argument and the context is\n       the subscriber.",
+                    "type": "String|Function",
+                    "optional": true
+                },
+                {
+                    "name": "prepend",
+                    "description": "whether the subscriber should be the first in the list of before-subscribers.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "handler with a `detach()`-method which can be used to detach the subscriber",
+                "type": "Object"
+            },
+            "since": "0.0.1",
+            "class": "Event.Listener",
+            "module": "event",
+            "submodule": "event-listener"
+        },
+        {
+            "file": "src/event/event-listener.js",
+            "line": 73,
+            "description": "Detaches (unsubscribes) the listener from the specified customEvent,\non behalf of the object who calls this method.",
+            "itemtype": "method",
+            "name": "detach",
+            "params": [
+                {
+                    "name": "customEvent",
+                    "description": "conform the syntax: `emitterName:eventName`, wildcard `*` may be used for both\n       `emitterName` as well as only `eventName`, in which case 'UI' will become the emitterName.",
+                    "type": "String"
+                }
+            ],
+            "since": "0.0.1",
+            "class": "Event.Listener",
+            "module": "event",
+            "submodule": "event-listener"
+        },
+        {
+            "file": "src/event/event-listener.js",
+            "line": 86,
+            "description": "Detaches (unsubscribes) the listener from all customevents,\non behalf of the object who calls this method.",
+            "itemtype": "method",
+            "name": "detachAll",
+            "since": "0.0.1",
+            "class": "Event.Listener",
+            "module": "event",
+            "submodule": "event-listener"
+        },
+        {
+            "file": "src/event/event-listener.js",
+            "line": 97,
+            "description": "Subscribes to a customEvent on behalf of the object who calls this method.\nThe callback will be executed `after` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
+            "itemtype": "method",
+            "name": "onceAfter",
+            "params": [
+                {
+                    "name": "customEvent",
+                    "description": "the custom-event (or Array of events) to subscribe to. CustomEvents should\n       have the syntax: `emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`.\n       If `emitterName` is not defined, `UI` is assumed.",
+                    "type": "String|Array"
+                },
+                {
+                    "name": "callback",
+                    "description": "subscriber:will be invoked when the event occurs. An `eventobject` will be passed\n       as its only argument.",
+                    "type": "Function"
+                },
+                {
+                    "name": "filter",
+                    "description": "to filter the event.\n       Use a String if you want to filter DOM-events by a `selector`\n       Use a function if you want to filter by any other means. If the function returns a trully value, the\n       subscriber gets invoked. The function gets the `eventobject` as its only argument and the context is\n       the subscriber.",
+                    "type": "String|Function",
+                    "optional": true
+                },
+                {
+                    "name": "prepend",
+                    "description": "whether the subscriber should be the first in the list of after-subscribers.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "handler with a `detach()`-method which can be used to detach the subscriber",
+                "type": "Object"
+            },
+            "since": "0.0.1",
+            "class": "Event.Listener",
+            "module": "event",
+            "submodule": "event-listener"
+        },
+        {
+            "file": "src/event/event-listener.js",
+            "line": 122,
+            "description": "Subscribes to a customEvent on behalf of the object who calls this method.\nThe callback will be executed `before` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
+            "itemtype": "method",
+            "name": "onceBefore",
+            "params": [
+                {
+                    "name": "customEvent",
+                    "description": "the custom-event (or Array of events) to subscribe to. CustomEvents should\n       have the syntax: `emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`.\n       If `emitterName` is not defined, `UI` is assumed.",
+                    "type": "String|Array"
+                },
+                {
+                    "name": "callback",
+                    "description": "subscriber:will be invoked when the event occurs. An `eventobject` will be passed\n       as its only argument.",
+                    "type": "Function"
+                },
+                {
+                    "name": "filter",
+                    "description": "to filter the event.\n       Use a String if you want to filter DOM-events by a `selector`\n       Use a function if you want to filter by any other means. If the function returns a trully value, the\n       subscriber gets invoked. The function gets the `eventobject` as its only argument and the context is\n       the subscriber.",
+                    "type": "String|Function",
+                    "optional": true
+                },
+                {
+                    "name": "prepend",
+                    "description": "whether the subscriber should be the first in the list of before-subscribers.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "handler with a `detach()`-method which can be used to detach the subscriber",
+                "type": "Object"
+            },
+            "since": "0.0.1",
+            "class": "Event.Listener",
+            "module": "event",
+            "submodule": "event-listener"
+        },
+        {
             "file": "src/event-dom/event-dom.js",
-            "line": 469,
+            "line": 470,
             "description": "Does the actual transportation from DOM-events into the Eventsystem. It also looks at the response of\nthe Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will be preventDefaulted.",
             "itemtype": "method",
             "name": "_domCallback",
@@ -8260,7 +8260,7 @@
         },
         {
             "file": "src/event-mobile/event-mobile.js",
-            "line": 30,
+            "line": 31,
             "description": "The (only) Hammer-instance that `Event` uses. It is bound to the `body`-element.",
             "itemtype": "property",
             "name": "hammertime",
@@ -8272,7 +8272,7 @@
         },
         {
             "file": "src/event-mobile/event-mobile.js",
-            "line": 47,
+            "line": 48,
             "description": "Adds the `Hammer`-class to Event, so it can be used from within Event.",
             "itemtype": "property",
             "name": "Hammer",
@@ -8284,7 +8284,7 @@
         },
         {
             "file": "src/event-mobile/event-mobile.js",
-            "line": 85,
+            "line": 86,
             "description": "Is emitted whenever hammerjs detects a gestureevent.\nBy emitting its original event through ParcelaEvent:eventmobile, `event-dom`\nwill catch it and process it through the dom-event cycle.",
             "itemtype": "event",
             "name": "ParcelaEvent:eventmobile",
