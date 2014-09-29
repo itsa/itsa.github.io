@@ -2,7 +2,7 @@
 module: utils
 itsaclassname:
 version: 0.0.1
-modulesize: 1.34
+modulesize: 1.35
 dependencies: "polyfill"
 dependencies:
 maintainer: Marco Asbreuk
