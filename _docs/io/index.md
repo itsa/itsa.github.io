@@ -80,9 +80,9 @@ When using io inside NodeJS, the same-origin policy is not relevant: in NodeJS y
 
 #io-transfer#
 <p class="module-intro">
-custom require: IO = require('io/io-transfer.js')(window);<br>
-size-min gzipped: 4.34 + 0.46 = 4.80 kb<br>
-dependencies: io
+custom require: <b>var IO = require('io/io-transfer.js')(window);</b><br>
+size-min gzipped: 4.34 + 0.46 = <b>4.80 kb</b><br>
+dependencies: <b>io</b>
 </p>
 
 The `io-transfer` module comes with the following methods:
@@ -346,9 +346,9 @@ app.listen(8080);
 
 #io-xml#
 <p class="module-intro">
-custom require: IO = require('io/io-xml.js')(window);<br>
-size-min gzipped: 4.34 + 0.19 = 4.53 kb<br>
-dependencies: io
+custom require: <b>var IO = require('io/io-xml.js')(window);</b><br>
+size-min gzipped: 4.34 + 0.19 = <b>4.53 kb</b><br>
+dependencies: <b>io</b>
 </p>
 The **io-xml**-module is meant for xml-request. It adds one method to io: io.**readXML**(). When fulfilled, the callback returns a XML-object. On error, the promise gets rejected.
 
@@ -371,9 +371,9 @@ _work in progress_
 
 #io-stream#
 <p class="module-intro">
-custom require: IO = require('io/io-stream.js')(window);<br>
-size-min gzipped: 4.34 + 0.23 = 4.57 kb<br>
-dependencies: io
+custom require: <b>var IO = require('io/io-stream.js')(window);</b><br>
+size-min gzipped: 4.34 + 0.23 = <b>4.57 kb</b><br>
+dependencies: <b>io</b>
 </p>
 
 Streaming IO is extremely simple. You just need to define `options.streamback` and this callbackFn will recieve all streamed data. The final resolved Promise will resolve with all the data, just as if were a non-streamed request. The callbackFn recieves the data unmodified, regardless what IO-method you are using: you need to parse yourself if needed.
@@ -397,13 +397,13 @@ IO.request(options).then(
     }
 );
 ```
-`io/io-stream.js` does not handle xml streams. In order to handle xml-streams you need to use [io/io-xmlstream.js](#io/io-xmlstream.js).
+**TODO:** parse the data inside the streamback-function..
 
 #io-cors-ie9#
 <p class="module-intro">
-custom require: IO = require('io/io-cors-ie9.js')(window);<br>
-size-min gzipped: 4.34 + 8.35 = 12.66 kb<br>
-dependencies: io, xmldom (npm)
+custom require: <b>var IO = require('io/io-cors-ie9.js')(window);</b><br>
+size-min gzipped: 4.34 + 8.35 = <b>12.66 kb</b><br>
+dependencies: <b>io, xmldom (npm)</b>
 </p>
 
 CORS stand for `Cross-Origin Resource Sharing`. In other words: loading data from a different origin. An origin is only the same when protocol and subdomain from both current site as from requested data-source are equal:
