@@ -229,7 +229,7 @@ module.exports.async = function (callbackFn, invokeAfterFn) {
  * @param [invokeAfterFn=true] {boolean} set to false to prevent the _afterSyncFn to be invoked
  * @return {object} a timer object. Call the cancel() method on this object to stop the timer.
 */
-module.exports.later=  function (callbackFn, timeout, periodic, invokeAfterFn) {
+module.exports.later = function (callbackFn, timeout, periodic, invokeAfterFn) {
     console.log(NAME, &#x27;later --&gt; timeout: &#x27;+timeout+&#x27;ms | periodic: &#x27;+periodic);
     var host = this,
         canceled = false;
@@ -249,6 +249,8 @@ module.exports.later=  function (callbackFn, timeout, periodic, invokeAfterFn) {
                 secondtimeout &amp;&amp; (secondairId=setInterval(wrapperInterval, interval));
                 // in case host._afterAsyncFn is defined: invoke it, to identify that later has been executed
                 invokeAfterFn &amp;&amp; host._afterAsyncFn &amp;&amp; host._afterAsyncFn();
+                // break closure inside returned object:
+                id = null;
             }
         },
         wrapperInterval = function() {
@@ -268,8 +270,11 @@ module.exports.later=  function (callbackFn, timeout, periodic, invokeAfterFn) {
     return {
         cancel: function() {
             canceled = true;
-            interval ? clearInterval(id) : clearTimeout(id);
+            (interval &amp;&amp; !secondtimeout) ? clearInterval(id) : clearTimeout(id);
             secondairId &amp;&amp; clearInterval(secondairId);
+            // break closure:
+            id = null;
+            secondairId = null;
         }
     };
 };
