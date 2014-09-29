@@ -65,11 +65,22 @@ title: Project Contributor
 </p>
 
 <h2>Step 5:</h2>
+
+<p>If you don't have them yet, install browserify and uglifyjs on your system globally:
+
+{% highlight js %}
+npm install -g browserify
+npm install -g uglify-js
+{% endhighlight %}
+
+By installing it globally, their the command-line commands are available, which will be needed later on when creating the loaderfiles.
+
+<h2>Step 6:</h2>
 <p>
     Because you also need the website (either for contribution, or to be able to preview documentation), you need to fork and clone <code class="prettyprint">itsa.github.io</code> to <code class="prettyprint">"Projectroot"/site</code>. You <u>must use</u> the directoryname <code class="prettyprint">site</code>, otherwise local rendering will fail.
 </p>
 
-<h2 id="step6">Step 6:</h2>
+<h2 id="step7">Step 7:</h2>
 <p>
     If you want to preview the site locally (with modified API or documentation), you need to install <a href="http://jekyllrb.com/docs/home/" target="blank">Jekyll</a>. Jekyll is a static website generator, that is used by <a href="https://github.com" target="_blank">GitHub</a>. We use it to generate our documentation using <a href="http://en.wikipedia.org/wiki/Markdown" target="_blank">markdown</a>.
 </p>
@@ -126,7 +137,7 @@ title: Project Contributor
     After making changes, the website also needs to be changed. To make changes to the website, you need to understand a bit about <a href="https://pages.github.com" target="_blank">github pages</a>. Our website has the repository <code class="prettyprint">itsa.github.io</code>, this makes it directly visible at <a href="http://itsa.github.io" target="_blank">http://itsa.github.io</a>, though we bound the CNAME <span class="blue">itsa.io</span> to it (which everyone visits).
 </p>
 <p>
-    The website from the repository <code class="prettyprint">itsa.github.io</code> is not a final website you can just see in the browser. It needs to be rendered first. GitHub does this using Jekyll (as <a href-"#step6">explained above</a>). If we want to view the website locally, we need to make this rendereing process ourselves. If you managed <a href-"#step6">Step 6 above</a> successfully, you can do this now: got to <code class="prettyprint">"Projectroot"</code> and run: <code class="prettyprint">jekyll build</code> --> this will create or update the folder <code class="prettyprint">"Projectroot"/site-preview</code> which is the website how it would be on GitHub-pages. You can inspect <code class="prettyprint">"Projectroot"/site-preview/index.html</code> in the browser now.
+    The website from the repository <code class="prettyprint">itsa.github.io</code> is not a final website you can just see in the browser. It needs to be rendered first. GitHub does this using Jekyll (as <a href-"#step7">explained above</a>). If we want to view the website locally, we need to make this rendereing process ourselves. If you managed <a href-"#step7">Step 7 above</a> successfully, you can do this now: got to <code class="prettyprint">"Projectroot"</code> and run: <code class="prettyprint">jekyll build</code> --> this will create or update the folder <code class="prettyprint">"Projectroot"/site-preview</code> which is the website how it would be on GitHub-pages. You can inspect <code class="prettyprint">"Projectroot"/site-preview/index.html</code> in the browser now.
 </p>
 <p>
     During modification, you will find out you want to re-render the website multiple times. Instead of doing this manually, you can run <code class="prettyprint">jekyll build --watch</code>, which will automaticly re-render on any changes.
