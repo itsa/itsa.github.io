@@ -80,7 +80,7 @@ When using io inside NodeJS, the same-origin policy is not relevant: in NodeJS y
 
 #io-transfer#
 <p class="module-intro">
-custom require: IO = require('io/io-transfer.js')(window);
+custom require: IO = require('io/io-transfer.js')(window);<br>
 size-min gzipped: 4.34 + 0.46 = 4.80 kb<br>
 dependencies: io
 </p>
@@ -346,7 +346,7 @@ app.listen(8080);
 
 #io-xml#
 <p class="module-intro">
-custom require: IO = require('io/io-xml.js')(window);
+custom require: IO = require('io/io-xml.js')(window);<br>
 size-min gzipped: 4.34 + 0.19 = 4.53 kb<br>
 dependencies: io
 </p>
@@ -371,7 +371,7 @@ _work in progress_
 
 #io-stream#
 <p class="module-intro">
-custom require: IO = require('io/io-stream.js')(window);
+custom require: IO = require('io/io-stream.js')(window);<br>
 size-min gzipped: 4.34 + 0.23 = 4.57 kb<br>
 dependencies: io
 </p>
@@ -401,7 +401,7 @@ IO.request(options).then(
 
 #io-cors-ie9#
 <p class="module-intro">
-custom require: IO = require('io/io-cors-ie9.js')(window);
+custom require: IO = require('io/io-cors-ie9.js')(window);<br>
 size-min gzipped: 4.34 + 8.35 = 12.66 kb<br>
 dependencies: io, xmldom (npm)
 </p>
