@@ -106,6 +106,7 @@ By installing it globally, their the command-line commands are available, which 
 <p>
     <ul>
         <li>Make the changes, update the module-version inside <code class="prettyprint">package.json</code></li>
+        <li>Update the historyfile: <b>site/_docs/modulename/</b><code class="prettyprint">history.md</code></li>
         <li>Make sure the API is updated (when needed)</li>
         <li>Check if you include any code that might not match our targetted browsers (IE8+ and all modern browsers). If you do, then check if <code class="prettyprint">ITSA</code>'s <a href="https://github.com/ItsAsbreuk/polyfill" target="_blank">polyfill</a> has a polyfill for it. If not, then you should also add a polyfill. We think the <a href="https://github.com/Financial-Times/polyfill-service/tree/master/polyfills" target="_blank">Financial Times</a> has nice polyfills (which we use directly, not as a service)</li>
         <li>Add tests inside the folder <code class="prettyprint">tests</code>. We use <a href="http://visionmedia.github.io/mocha/" target="_blank">Mocha</a> with <a href="http://chaijs.com/api/bdd/" target="_blank">expect</a>, <a href="https://github.com/visionmedia/should.js" target="_blank">should.js</a> and <a href="http://chaijs.com/plugins/chai-as-promised" target="_blank">chai assertion as Promises</a>. Take a look at existsing test how to do this. <b>Note:</b> you <u>must prevent</u> <code class="prettyprint">param.should.be.eql(number)</code> for this fails in IE<10. Use <code class="prettyprint">expect(param).to.be.eql(number)</code> instead.</li>
@@ -124,6 +125,8 @@ By installing it globally, their the command-line commands are available, which 
 <p>
     <ul>
         <li>Update the module-version inside <code class="prettyprint">package.json</code> of <code class="prettyprint">itsa.build</code></li>
+        <li>Update the documentation: set a new version and filesize</li>
+        <li>Update the historyfile: <b>site/_includes/</b><code class="prettyprint">history.html</code></li>
         <li>Rebuild the <a href="https://github.com/itsa/itsa.github.io/tree/master/dist" target="_blank">loader-files</a>: goto <code class="prettyprint">"Projectroot"/sh</code> and run: <code class="prettyprint">sh production.sh</code></li>
         <li><code class="prettyprint">Commit</code> and make a <code class="prettyprint">pull request</code> for <code class="prettyprint">itsa.build</code>.
     </ul>

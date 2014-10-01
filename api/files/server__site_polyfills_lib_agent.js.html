@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/io/io-stream.js - Itsa</title>
+    <title>server/_site/polyfills/lib/agent.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -136,121 +136,103 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/io/io-stream.js</h1>
+                        <h1 class="file-heading">File: server/_site/polyfills/lib/agent.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
+/* jshint node:true*/
 &quot;use strict&quot;;
+/**
+ * Create mappings between the names parsed from useragent (based on
+ * https://github.com/tobie/ua-parser/blob/master/regexes.yaml) to caniuse
+ * name equivalents.
+ *
+ * Each caniuse name can match against many names.
+ *
+ * To add a new mapping add the UA name to the appropriate key.
+ */
+var useragent = require(&#x27;useragent&#x27;);
 
-var NAME = &#x27;[io-stream]: &#x27;,
-    UNKNOW_ERROR = &#x27;Unknown XDR-error&#x27;, // XDR doesn&#x27;t specify the error
-    INVALID_DATA = &#x27;invalid data&#x27;,
-    REQUEST_TIMEOUT = &#x27;Request-timeout&#x27;;
-
-module.exports = function (window) {
-
-    var IO = require(&#x27;./io.js&#x27;)(window),
-
-    /*
-     * Adds properties to the xhr-object: in case of streaming,
-     * xhr._isStream is set and xhr._isXDR might be set in case of IE&lt;10
-     *
-     * @method _progressHandle
-     * @param xhr {Object} containing the xhr-instance
-     * @param props {Object} the propertie-object that is added too xhr and can be expanded
-     * @param options {Object} options of the request
-     * @private
-    */
-    _entendXHR = function(xhr, props, options /*, promise */) {
-        if (typeof options.streamback === &#x27;function&#x27;) {
-            if (!props._isXHR2 &amp;&amp; !props._isXDR) {
-                if (typeof window.XDomainRequest !== &#x27;undefined&#x27;) {
-                    xhr = new window.XDomainRequest();
-                    props._isXDR = true;
-                }
-            }
-            props._isStream = props._isXHR2 || props._isXDR;
-        }
-        return xhr;
-    },
-
-    /*
-     * Adds extra initialisation of the xhr-object: in case of streaming,
-     * an &#x60;onprogress&#x60;-handler is set up
-     *
-     * @method _progressHandle
-     * @param xhr {Object} containing the xhr-instance
-     * @param promise {Promise} reference to the Promise created by xhr
-     * @private
-    */
-    _progressHandle = function(xhr, promise /*, headers, method */) {
-        if (xhr._isStream) {
-            console.log(NAME, &#x27;progressHandle&#x27;);
-            xhr._progressPos = 0;
-            xhr.onprogress = function() {
-                console.log(NAME, &#x27;xhr.onprogress received data #&#x27;+xhr.responseText+&#x27;#&#x27;);
-                var data = xhr.responseText.substr(xhr._progressPos);
-
-                xhr._parseStream &amp;&amp; (data=xhr._parseStream(data));
-
-                promise.callback(data);
-                xhr._progressPos = xhr.responseText.length;
-            };
-        }
-    },
-
-    /**
-     * Adds 2 methods on the xhr-instance which are used by xhr when events occur:
-     *
-     * xhr.onload()
-     * xhr.onerror()  // only XMLHttpRequest2
-     *
-     * These events are only added in case of XDR
-     *
-     * @method _readyHandleXDR
-     * @param xhr {Object} containing the xhr-instance
-     * @param promise {Promise} reference to the Promise created by xhr
-     * @private
-    */
-    _readyHandleXDR = function(xhr, promise /*, headers, method */) {
-        if (xhr._isXDR) {
-            console.log(NAME, &#x27;readyHandleXDR&#x27;);
-            // for XDomainRequest, we need &#x27;onload&#x27; instead of &#x27;onreadystatechange&#x27;
-            xhr.onload = function() {
-                clearTimeout(xhr._timer);
-                console.log(NAME, &#x27;xhr.onload invokes with responseText=&#x27;+xhr.responseText);
-                promise.fulfill(xhr);
-            };
-            xhr.onerror = function() {
-                clearTimeout(xhr._timer);
-                promise.reject(UNKNOW_ERROR);
-            };
-        }
-    },
-
-    /**
-     * Adds a &#x60;headers&#x60; X-Stream=true in case of a streaming request.
-     *
-     * @method _setHeaders
-     * @param xhr {Object} containing the xhr-instance
-     * @param headers {Object} containing all headers
-     * @param method {String} the request-method used
-     * @private
-    */
-    _setStreamHeader = function(xhr, promise, headers, method) {
-        if (xhr._isStream &amp;&amp; !xhr._isXDR) {
-            console.log(NAME, &#x27;_setStreamHeader&#x27;);
-            xhr.setRequestHeader(&#x27;X-Stream&#x27;, &#x27;true&#x27;);
-        }
-    };
-
-    IO._xhrList.push(_entendXHR);
-    IO._xhrInitList.push(_readyHandleXDR);
-    IO._xhrInitList.push(_progressHandle);
-    IO._xhrInitList.push(_setStreamHeader);
-
-    return IO;
+var agentmappings = {
+    &quot;bb&quot;: [
+        &quot;blackberry webkit&quot;,
+        &quot;blackberry&quot;
+    ],
+    &quot;firefox&quot;: [
+        &quot;pale moon (firefox variant)&quot;,
+        &quot;firefox mobile&quot;,
+        &quot;firefox namoroka&quot;,
+        &quot;firefox shiretoko&quot;,
+        &quot;firefox minefield&quot;,
+        &quot;firefox alpha&quot;,
+        &quot;firefox beta&quot;,
+        &quot;microb&quot;,
+        &quot;mozilladeveloperpreview&quot;
+    ],
+    &quot;opera&quot;: [
+        &quot;opera tablet&quot;
+    ],
+    &quot;op_mob&quot;: [
+        &quot;opera mobile&quot;
+    ],
+    &quot;op_mini&quot;: [
+        &quot;opera mini&quot;
+    ],
+    &quot;chrome&quot;: [
+        &quot;chrome mobile&quot;,
+        &quot;chrome frame&quot;,
+        &quot;chromium&quot;
+    ],
+    &quot;ie_mob&quot;: [
+        &quot;ie mobile&quot;
+    ],
+    &quot;ie&quot;: [
+        &quot;ie large screen&quot;
+    ],
+    &quot;ios_chr&quot;: [
+        &quot;chrome mobile ios&quot;
+    ],
+    &quot;ios_saf&quot;: [
+        &quot;mobile safari&quot;
+    ]
 };
+
+var agentlist = {};
+
+
+// Invert the mappings above mapping each user agent to the caniuse name for
+// faster lookup in agent list
+Object.keys(agentmappings).forEach(function(caniuseAgentName) {
+    agentmappings[caniuseAgentName].forEach(function(userAgentName) {
+        agentlist[userAgentName] = caniuseAgentName;
+    });
+});
+
+/**
+ * jQuery: isNumeric
+ * https://github.com/jquery/jquery/blob/bbdfbb4ee859fe9319b348d88120ddc2c9efbd63/src/core.js#L212
+ */
+function isNumeric(obj) {
+    return !Array.isArray(obj) &amp;&amp; (((obj- parseFloat(obj)) + 1) &gt;= 0);
+}
+
+module.exports = function(uaString) {
+    var ua = useragent.lookup(uaString);
+
+    // Browsers don&#x27;t really use semantic versioning but tend to at least
+    // have a major and minor version.  This normalises the patch version so that
+    // semantic version comparison is consistent.
+    if (!isNumeric(ua.patch)) {
+        ua.patch = &#x27;0&#x27;;
+    }
+
+    // Patch ua.family with the normalised name
+    ua.family = agentlist[ua.family.toLowerCase()] || ua.family.toLowerCase();
+
+    return ua;
+};
+
+
     </pre>
 </div>
 

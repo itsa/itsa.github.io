@@ -156,6 +156,7 @@
 
 
 var xmlhttprequest = require(&#x27;./lib/XMLHttpRequest.js&#x27;).XMLHttpRequest,
+    xmlDOMParser = require(&#x27;xmldom&#x27;).DOMParser,
     Url = require(&#x27;url&#x27;);
 
 var used = {};
@@ -404,6 +405,8 @@ doc.getElementById = function (id) {
     find(doc);
     return found;
 };
+
+
 doc.contains = function (node) {
     count(&#x27;contains&#x27;);
     while (node &amp;&amp; node !== this) node = node.parentNode;
@@ -430,6 +433,7 @@ window.requestAnimationFrame.$resolve = function() {
 };
 window.location = {};
 window.XMLHttpRequest = xmlhttprequest;
+window.DOMParser = xmlDOMParser;
 
 var getHTML = function (node) {
     var prop, val,

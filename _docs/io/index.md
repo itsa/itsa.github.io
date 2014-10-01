@@ -1,9 +1,9 @@
 ---
 module: io
 itsaclassname: IO
-version: 0.0.1
-modulesize: 4.34
-dependencies: "polyfill, js-ext, ypromise (npm)"
+version: 0.0.2
+modulesize: 4.63
+dependencies: "polyfill/polyfill-base.js, js-ext, ypromise (npm)"
 maintainer: Marco Asbreuk
 title: Promised I/O
 intro: "This module consist of several submodule which provide easy IO. All submodules should be merged into IO to extend its features. The submodules have different (extra) sizes."
@@ -81,8 +81,8 @@ When using io inside NodeJS, the same-origin policy is not relevant: in NodeJS y
 #io-transfer#
 <p class="module-intro">
 custom require: <b>var IO = require('io/io-transfer.js')(window);</b><br>
-size-min gzipped: 4.34 + 0.46 = <b>4.80 kb</b><br>
-dependencies: <b>io</b>
+size-min gzipped: 4.63 + 0.45 = <b>5.08 kb</b><br>
+dependencies: <b>io, polyfill</b>
 </p>
 
 The `io-transfer` module comes with the following methods:
@@ -347,14 +347,14 @@ app.listen(8080);
 #io-xml#
 <p class="module-intro">
 custom require: <b>var IO = require('io/io-xml.js')(window);</b><br>
-size-min gzipped: 4.34 + 0.19 = <b>4.53 kb</b><br>
+size-min gzipped: 4.63 + 0.19 = <b>4.82 kb</b><br>
 dependencies: <b>io</b>
 </p>
 The **io-xml**-module is meant for xml-request. It adds one method to io: io.**readXML**(). When fulfilled, the callback returns a XML-object. On error, the promise gets rejected.
 
 ####io.readXML()####
 ```js
-ITSA.IO.readXML(uri).then(
+ITSA.IO.readXML(uri, {id: 25}).then(
     function(responseXML) {
         // responseXML holds an xml-object
     }
@@ -372,7 +372,7 @@ _work in progress_
 #io-stream#
 <p class="module-intro">
 custom require: <b>var IO = require('io/io-stream.js')(window);</b><br>
-size-min gzipped: 4.34 + 0.23 = <b>4.57 kb</b><br>
+size-min gzipped: 4.63 + 0.23 = <b>4.86 kb</b><br>
 dependencies: <b>io</b>
 </p>
 
@@ -402,7 +402,7 @@ IO.request(options).then(
 #io-cors-ie9#
 <p class="module-intro">
 custom require: <b>var IO = require('io/io-cors-ie9.js')(window);</b><br>
-size-min gzipped: 4.34 + 8.35 = <b>12.66 kb</b><br>
+size-min gzipped: 4.63 + 8.32 = <b>12.95 kb</b><br>
 dependencies: <b>io, xmldom (npm)</b>
 </p>
 

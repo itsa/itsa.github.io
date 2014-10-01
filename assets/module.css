@@ -179,6 +179,12 @@ span.moduleversion {
     font-weight: bold;
     text-decoration: none;
 }
+
+.module-description span.moduleversion a {
+    font-weight: normal;
+    text-decoration: underline;
+}
+
 .module-description a:hover {
     text-decoration: underline;
 }

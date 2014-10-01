@@ -153,7 +153,7 @@
 
 &quot;use strict&quot;;
 
-require(&#x27;polyfill&#x27;);
+require(&#x27;polyfill/polyfill-base.js&#x27;);
 require(&#x27;ypromise&#x27;);
 require(&#x27;js-ext&#x27;);
 
@@ -404,6 +404,7 @@ module.exports = function (window) {
                 props = {},
                 xhr, promise;
             options || (options={});
+            promise = Promise.manage(options.streamback);
 
             xhr = new window.XMLHttpRequest();
             props._isXHR2 = (&#x27;withCredentials&#x27; in xhr) || (window.navigator.userAgent===&#x27;fake&#x27;);
@@ -411,7 +412,7 @@ module.exports = function (window) {
             // xhr might be changed, also private properties might be extended
             instance._xhrList.each(
                 function(fn) {
-                    xhr = fn(xhr, props, options);
+                    xhr = fn(xhr, props, options, promise);
                 }
             );
             if (!xhr) {
@@ -420,8 +421,6 @@ module.exports = function (window) {
             xhr.merge(props);
             console.log(NAME, &#x27;request creating xhr of type: &#x27;+ (props._isXHR2 ? &#x27;XMLHttpRequest2&#x27; : (props._isXDR ? &#x27;XDomainRequest&#x27; : &#x27;XMLHttpRequest1&#x27;)));
             console.log(NAME, &#x27;CORS-IE: &#x27;+ props._CORS_IE + &#x27;, canStream: &#x27;+props._canStream);
-
-            promise = Promise.manage(options.streamback);
 
             // Don&#x27;t use xhr.timeout --&gt; IE&lt;10 throws an error when set xhr.timeout
             // We use a timer that aborts the request
@@ -433,7 +432,7 @@ module.exports = function (window) {
                            promise.reject(new Error(REQUEST_TIMEOUT));
                            xhr._aborted = true; // must be set: IE9 won&#x27;t allow to read anything on xhr after being aborted
                            xhr.abort();
-                       }, options.timeout || instance.config.reqTimeout || DEF_REQ_TIMEOUT)
+                       }, options.timeout || instance.config.timeout || DEF_REQ_TIMEOUT)
             });
 
             instance._initXHR(xhr, options, promise);

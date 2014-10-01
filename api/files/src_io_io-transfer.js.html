@@ -167,11 +167,63 @@ var NAME = &#x27;[io-transfer]: &#x27;,
     },
     MIME_JSON = &#x27;application/json&#x27;,
     CONTENT_TYPE = &#x27;Content-Type&#x27;,
-    DELETE = &#x27;delete&#x27;;
+    DELETE = &#x27;delete&#x27;,
+    REGEXP_ARRAY = /^( )*\[/,
+    REGEXP_OBJECT = /^( )*{/,
+    REGEXP_REMOVE_LAST_COMMA = /^(.*),( )*$/,
+    entendXHR;
+
+require(&#x27;polyfill/lib/json.js&#x27;);
 
 module.exports = function (window) {
 
-    var IO = require(&#x27;./io.js&#x27;)(window);
+    var IO = require(&#x27;./io.js&#x27;)(window),
+
+    /*
+     * Adds properties to the xhr-object: in case of streaming,
+     * xhr._parseStream=function is created to parse streamed data.
+     *
+     * @method _progressHandle
+     * @param xhr {Object} containing the xhr-instance
+     * @param props {Object} the propertie-object that is added too xhr and can be expanded
+     * @param options {Object} options of the request
+     * @private
+    */
+    _entendXHR = function(xhr, props, options /*, promise */) {
+        var isarray, isobject, isstring, parialdata, regexpcomma, followingstream;
+        if ((typeof options.streamback === &#x27;function&#x27;) &amp;&amp; options.headers &amp;&amp; (options.headers.Accept===&#x27;application/json&#x27;)) {
+            console.log(NAME, &#x27;entendXHR&#x27;);
+            xhr._parseStream = function(streamData) {
+                console.log(NAME, &#x27;entendXHR --&gt; _parseStream&#x27;);
+                // first step is to determine if the final response would be an array or an object
+                // partial responses should be expanded to the same type
+                if (!followingstream) {
+                    isarray = REGEXP_ARRAY.test(streamData);
+                    isarray || (isobject = REGEXP_OBJECT.test(streamData));
+                }
+                try {
+                    if (isarray || isobject) {
+                        regexpcomma = streamData.match(REGEXP_REMOVE_LAST_COMMA);
+                        parialdata = regexpcomma ? streamData.match(REGEXP_REMOVE_LAST_COMMA)[1] : streamData;
+                    }
+                    else {
+                        parialdata = streamData;
+                    }
+                    parialdata = (followingstream &amp;&amp; isarray ? &#x27;[&#x27; : &#x27;&#x27;) + (followingstream &amp;&amp; isobject ? &#x27;{&#x27; : &#x27;&#x27;) + parialdata + (regexpcomma &amp;&amp; isarray ? &#x27;]&#x27; : &#x27;&#x27;) + (regexpcomma &amp;&amp; isobject ? &#x27;}&#x27; : &#x27;&#x27;);
+                    // note: parsing will fail for the last streamed part, because there will be a double ] or }
+                    streamData = JSON.parse(parialdata, (options.parseJSONDate) ? REVIVER : null);
+                }
+                catch(err) {
+                    console.warn(NAME, err);
+                }
+                followingstream = true;
+                return streamData;
+            };
+        }
+        return xhr;
+    };
+
+    IO._xhrList.push(_entendXHR);
 
     /**
      * Performs an AJAX GET request.  Shortcut for a call to [&#x60;xhr&#x60;](#method_xhr) with &#x60;method&#x60; set to  &#x60;&#x27;GET&#x27;&#x60;.
@@ -198,7 +250,6 @@ module.exports = function (window) {
      * on failure an Error object
         * reason {Error}
     */
-
     IO.get = function (url, options) {
         console.log(NAME, &#x27;get --&gt; &#x27;+url);
         var ioPromise, returnPromise;

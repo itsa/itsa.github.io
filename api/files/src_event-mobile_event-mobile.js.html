@@ -163,11 +163,7 @@
  * @since 0.0.1
 */
 
-
-require(&#x27;polyfill&#x27;);
-
-var NAME = &#x27;[event-mobile]: &#x27;,
-    Hammer = require(&#x27;hammerjs&#x27;);
+var NAME = &#x27;[event-mobile]: &#x27;;
 
 module.exports = function (window) {
     /**
@@ -179,6 +175,7 @@ module.exports = function (window) {
      */
     var Event = require(&#x27;event-dom&#x27;)(window),
         document = window.document,
+        Hammer = require(&#x27;hammerjs&#x27;),
         hammertime = Event.hammertime = new Hammer(document.body),
         singletap, doubletap, tripletap;
 

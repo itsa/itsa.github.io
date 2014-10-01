@@ -181,6 +181,12 @@ div.paragraph {
     font-size: 0.9em;
 }
 
+.version-descriptor a,
+.version-descriptor a:hover,
+.version-descriptor a:visited {
+    color: #FFF;
+}
+
 .pure-button.pure-button-bordered,
 .pure-button.pure-button-bordered[disabled] {
     box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;
