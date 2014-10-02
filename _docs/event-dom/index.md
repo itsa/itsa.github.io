@@ -2,7 +2,7 @@
 module: event-dom
 itsaclassname: Event
 version: 0.0.1
-modulesize: 5.72
+modulesize: 5.73
 dependencies: "polyfill/polyfill-base.js, js-ext/lib/function.js, js-ext/lib/object.js, utils, event"
 maintainer: Marco Asbreuk
 title: DOM Events

@@ -2,7 +2,7 @@
 module: event-mobile
 itsaclassname: Event
 version: 0.0.1
-modulesize: 11.78
+modulesize: 11.77
 dependencies: "polyfill, js-ext/lib/function.js, js-ext/lib/object.js, utils, event, event-dom, hammerjs (npm)"
 maintainer: Marco Asbreuk
 title: Mobile Events using HammerJS

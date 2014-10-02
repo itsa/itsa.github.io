@@ -2,7 +2,7 @@
 module: js-ext
 itsaclassname:
 version: 0.0.1
-modulesize: 3.58
+modulesize: 3.59
 dependencies: "polyfill-base, ypromise (npm)"
 maintainer: Marco Asbreuk
 title: Extra functionality for basic objects

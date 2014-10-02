@@ -191,6 +191,9 @@ module.exports = function (window) {
                 console.log(NAME, &#x27;xhr.onprogress received data #&#x27;+xhr.responseText+&#x27;#&#x27;);
                 var data = xhr.responseText.substr(xhr._progressPos);
 
+                // backup the fact that streaming occured
+                xhr._gotstreamed = true;
+
                 xhr._parseStream &amp;&amp; (data=xhr._parseStream(data));
 
                 promise.callback(data);
@@ -219,6 +222,9 @@ module.exports = function (window) {
             xhr.onload = function() {
                 clearTimeout(xhr._timer);
                 console.log(NAME, &#x27;xhr.onload invokes with responseText=&#x27;+xhr.responseText);
+                if (xhr._isStream &amp;&amp; !xhr._gotstreamed) {
+                    xhr.onprogress(xhr.responseText);
+                }
                 promise.fulfill(xhr);
             };
             xhr.onerror = function() {

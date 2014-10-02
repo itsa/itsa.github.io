@@ -2,7 +2,7 @@
 module: io
 itsaclassname: IO
 version: 0.0.2
-modulesize: 4.63
+modulesize: 4.67
 dependencies: "polyfill/polyfill-base.js, js-ext, ypromise (npm)"
 maintainer: Marco Asbreuk
 title: Promised I/O
@@ -81,7 +81,7 @@ When using io inside NodeJS, the same-origin policy is not relevant: in NodeJS y
 #io-transfer#
 <p class="module-intro">
 custom require: <b>var IO = require('io/io-transfer.js')(window);</b><br>
-size-min gzipped: 4.63 + 0.45 = <b>5.08 kb</b><br>
+size-min gzipped: 4.67 + 2.16 = <b>6.83 kb</b><br>
 dependencies: <b>io, polyfill</b>
 </p>
 
@@ -347,7 +347,7 @@ app.listen(8080);
 #io-xml#
 <p class="module-intro">
 custom require: <b>var IO = require('io/io-xml.js')(window);</b><br>
-size-min gzipped: 4.63 + 0.19 = <b>4.82 kb</b><br>
+size-min gzipped: 4.67 + 0.44 = <b>5.11 kb</b><br>
 dependencies: <b>io</b>
 </p>
 The **io-xml**-module is meant for xml-request. It adds one method to io: io.**readXML**(). When fulfilled, the callback returns a XML-object. On error, the promise gets rejected.
@@ -372,12 +372,17 @@ _work in progress_
 #io-stream#
 <p class="module-intro">
 custom require: <b>var IO = require('io/io-stream.js')(window);</b><br>
-size-min gzipped: 4.63 + 0.23 = <b>4.86 kb</b><br>
+size-min gzipped: 4.67 + 0.23 = <b>4.90 kb</b><br>
 dependencies: <b>io</b>
 </p>
 
-Streaming IO is extremely simple. You just need to define `options.streamback` and this callbackFn will recieve all streamed data. The final resolved Promise will resolve with all the data, just as if were a non-streamed request. The callbackFn recieves the data unmodified, regardless what IO-method you are using: you need to parse yourself if needed.
+Streaming IO is extremely simple. You just need to define `options.streamback` and this callbackFn will recieve all streamed data. The final resolved Promise will resolve with all the data, just as if were a non-streamed request. The callbackFn recieves the data unmodified, or in case of `IO.read()` or `IO.readXML()` it will be parsed into an **object** or **XML-object**.
 
+Streaming works for all browsers, also `IE9` and below (by using `XDomainRequest`).
+
+##Handling streamed data##
+
+###plain data###
 ```js
 var options, callbackFn;
 
@@ -397,12 +402,81 @@ IO.request(options).then(
     }
 );
 ```
-**TODO:** parse the data inside the streamback-function..
+
+###using IO.read()###
+```js
+var url, data, options, callbackFn;
+
+callbackFn = function(data) {
+    // data is the partial data --> object or array
+};
+
+url: '/stream';
+data: {id: 25};
+options= {streamback: callbackFn};
+
+IO.read(url, data, options).then(
+    function(allData) {
+        // allData is an object or array
+    }
+);
+```
+
+In order to make `IO.read()` process the data in its streamback, the server must send its response in defined parts, separated with an ending comma.
+
+####Example server-response in case of a large object:####
+```js
+    '{a:1, b:2, c:3,' // <-- first response
+    'd:1, e:2, f:3,' // <-- intermediate response
+    'g:1, h:2, i:3,' // <-- intermediate response
+    'j:1, k:2, l:3}' // <-- last response
+```
+Streamed-back data will be objects like: **{d:1, e:2, f: 3}**.
+
+####Example server-response in case of a large array:####
+```js
+    '[{a:1}, {b:2}, {c:3},' // <-- first response
+    '{d:1}, {e:2}, {f:3},' // <-- intermediate response
+    '{g:1}, {h:2}, {i:3},' // <-- intermediate response
+    '{j:1}, {k:2}, {l:3}]' // <-- last response
+```
+Streamed-back data will be arrays like: **[{d:1}, {e:2}, {f: 3}]**.
+
+
+###using IO.readXML()###
+```js
+var url, data, options, callbackFn;
+
+callbackFn = function(xml) {
+    // xml is partial xml-data with the same documentElement as the final xml-object
+};
+
+url: '/stream';
+data: {id: 25};
+options= {streamback: callbackFn};
+
+IO.readXML(url, data, options).then(
+    function(allXML) {
+        // allXML is an xml-object
+    }
+);
+```
+
+In order to make `IO.readXML()` process the data in its streamback, the server must send its response in defined XML-parts, separated with an ending comma.
+
+####Example server-response in case of a large XML-object####
+```js
+res.write(new Buffer((j===1 ? xmlHeader+block2k+'<root>' : '')+'<div>item '+j+'</div><div>item '+(++j)+'</div><div>item '+(++j)+'</div>'));
+```
+
+**Note1:** When a streambackFn is defined, it will always be invoked, even if the server doesn;t stream. In that case, it will be invoked once with the final value.
+**Note2:** `XDomainRequest` only fires the `onprogress`-event when the block of code exceeds 2kb [see here](http://blogs.msdn.com/b/ieinternals/archive/2010/04/06/comet-streaming-in-internet-explorer-with-xmlhttprequest-and-xdomainrequest.aspx). So, IE might not be as responsive as other browsers. The streamroutine is made in a way that `onprogress` always gets involved, even if the total amount of sata is below 2kb (see Note 1).
+
 
 #io-cors-ie9#
 <p class="module-intro">
 custom require: <b>var IO = require('io/io-cors-ie9.js')(window);</b><br>
-size-min gzipped: 4.63 + 8.32 = <b>12.95 kb</b><br>
+size-min gzipped: 4.67 + 8.32 = <b>12.99 kb</b><br>
 dependencies: <b>io, xmldom (npm)</b>
 </p>
 
@@ -526,7 +600,7 @@ var app = express();
 // in case of IE<10 browsers, the useragent is determined and contentype of 'application/json' is assumed on POST-requests
 // in case you need another contentype, you could use something like this instead:
 // app.use(bodyParserIEcors({contentType: 'application/x-www-form-urlencoded'}));
-app.use(bodyParserIEcors());
+app.use(bodyParserIEcors('application/json;charset=utf-8'));
 
 app.get('*', function (req, res) {
     res.set('access-control-allow-origin', '*');

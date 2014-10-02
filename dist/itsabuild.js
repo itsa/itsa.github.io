@@ -7113,11 +7113,12 @@ module.exports = function (window) {
             // for XDomainRequest, we need 'onload' instead of 'onreadystatechange'
             xhr.onload || (xhr.onload=function() {
                 var responseText = xhr.responseText,
-                    xmlRequest = headers && (headers.Accept==='text/xml');
+                    xmlRequest = headers && (headers.Accept==='text/xml'),
+                    responseobject;
                 clearTimeout(xhr._timer);
                 console.log(NAME, 'xhr.onload invokes with responseText='+responseText);
                 // to remain consisten with XHR, we define an object with the same structure
-                var responseobject = {
+                responseobject = {
                     _contenttype: xhr.contentType,
                     responseText: responseText,
                     responseXML: xmlRequest ? new XmlDOMParser().parseFromString(responseText) : null,
@@ -7200,6 +7201,9 @@ module.exports = function (window) {
                 console.log(NAME, 'xhr.onprogress received data #'+xhr.responseText+'#');
                 var data = xhr.responseText.substr(xhr._progressPos);
 
+                // backup the fact that streaming occured
+                xhr._gotstreamed = true;
+
                 xhr._parseStream && (data=xhr._parseStream(data));
 
                 promise.callback(data);
@@ -7228,6 +7232,9 @@ module.exports = function (window) {
             xhr.onload = function() {
                 clearTimeout(xhr._timer);
                 console.log(NAME, 'xhr.onload invokes with responseText='+xhr.responseText);
+                if (xhr._isStream && !xhr._gotstreamed) {
+                    xhr.onprogress(xhr.responseText);
+                }
                 promise.fulfill(xhr);
             };
             xhr.onerror = function() {
@@ -7729,7 +7736,6 @@ module.exports = function (window) {
      * @private
     */
     _entendXHR = function(xhr, props, options, promise) {
-console.warn(JSON.stringify(options));
         var parser, followingstream, regegexp_endcont, regexpxml, xmlstart, container, endcontainer;
         if ((typeof options.streamback === 'function') && options.headers && (options.headers.Accept==='text/xml')) {
             console.log(NAME, 'entendXHR');
@@ -7818,7 +7824,8 @@ console.warn(JSON.stringify(options));
                 // Also: XDR DOES NOT support getResponseHeader() --> so we must just assume the data is text/xml
                 var contenttype = !xhrResponse._isXDR && (xhrResponse.getResponseHeader('Content-Type') || xhrResponse.getResponseHeader('content-type'));
                 if (xhrResponse._isXDR || /^text\/xml/.test(contenttype)) {
-                    return xhrResponse.responseXML;
+                    // cautious: when streaming, xhrResponse.responseXML will be undefined in case of using XDR
+                    return xhrResponse.responseXML || (new window.DOMParser()).parseFromString(xhrResponse.responseText, 'text/xml');
                 }
                 // when code comes here: no valid xml response:
                 throw new Error('recieved Content-Type is no XML');
@@ -8034,6 +8041,12 @@ module.exports = function (window) {
                     clearTimeout(xhr._timer);
                     if ((xhr.status>=200) && (xhr.status<300)) {
                         console.log(NAME, 'xhr.onreadystatechange will fulfill xhr-instance: '+xhr.responseText);
+                        // In case streamback function is set, but when no intermediate stream-data was send
+                        // (or in case of XDR: below 2kb it doesn't call onprogress)
+                        // --> we might need to call onprogress ourselve.
+                        if (xhr._isStream && !xhr._gotstreamed) {
+                            xhr.onprogress(xhr.responseText);
+                        }
                         promise.fulfill(xhr);
                     }
                     else {

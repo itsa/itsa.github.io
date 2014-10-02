@@ -20,6 +20,9 @@ intro: "Get streamed XML-object from the server using ITSA.IO.readXML() using st
         min-height: 3.6em;
         background-color: #ddd;
     }
+    #target-container div {
+        display: block;
+    }
 </style>
 
 Click on the button to initiate the request.
@@ -60,11 +63,10 @@ Code-example:
     streamFn = function(xml) {
         // xml should be an xml-object
         var response = '';
-        var xmlitems = xml.documentElement.getElementsByTagName('item');
-        Array.prototype.forEach.call(xmlitems, function(xmlelement) {
-            response += 'item '+xmlelement.firstChild.nodeValue + '<br>';
+        var rootitem = xml.documentElement;
+        Array.prototype.forEach.call(rootitem.children, function(node) {
+            container.appendChild(node.cloneNode(true));
         });
-        container.innerHTML = container.innerHTML + response;
     };
 
     ITSA.Event.after(
@@ -97,11 +99,10 @@ Code-example:
     streamFn = function(xml) {
         // xml should be an xml-object
         var response = '';
-        var xmlitems = xml.documentElement.getElementsByTagName('item');
-        Array.prototype.forEach.call(xmlitems, function(xmlelement) {
-            response += 'item '+xmlelement.firstChild.nodeValue + '<br>';
+        var rootitem = xml.documentElement;
+        Array.prototype.forEach.call(rootitem.children, function(node) {
+            container.appendChild(node.cloneNode(true));
         });
-        container.innerHTML = container.innerHTML + response;
     };
 
     ITSA.Event.after(
