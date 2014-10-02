@@ -805,10 +805,28 @@ require(&#x27;js-ext/lib/object.js&#x27;);
                 console.error(NAME, &#x27;subscribe-error: eventname does not match pattern&#x27;);
                 return;
             }
+
+            item = {
+                o: listener || instance,
+                cb: callback,
+                f: filter
+            };
+
             // if extract[1] is undefined, a simple customEvent is going to subscribe (without :)
             // therefore: recomposite customEvent:
             extract[1] || (customEvent=&#x27;UI:&#x27;+customEvent);
 
+            // if extract[1] === &#x27;this&#x27;, then a listener to its own emitterName is supposed
+            if (extract[1]===&#x27;this&#x27;) {
+                if (listener._emitterName) {
+                    customEvent = listener._emitterName+&#x27;:&#x27;+extract[2];
+                    item.s = true; // s --&gt; self
+                }
+                else {
+                    console.error(NAME, &#x27;subscribe-error: &quot;this&quot; cannot be detemined because the object is no emitter&#x27;);
+                    return;
+                }
+            }
 
             allSubscribers[customEvent] || (allSubscribers[customEvent]={});
             if (before) {
@@ -820,11 +838,6 @@ require(&#x27;js-ext/lib/object.js&#x27;);
 
             hashtable = allSubscribers[customEvent][before ? &#x27;b&#x27; : &#x27;a&#x27;];
             // we need to be able to process an array of customevents
-            item = {
-                o: listener || instance,
-                cb: callback,
-                f: filter
-            };
 
             // in case of a defined subscription (no wildcard), we should look for notifiers
             if ((extract[1]!==&#x27;*&#x27;) &amp;&amp; (extract[2]!==&#x27;*&#x27;)) {
@@ -1024,13 +1037,14 @@ require(&#x27;js-ext/lib/object.js&#x27;);
          *         only when event-dom is active and there are filter-selectors&lt;/li&gt;
          *     &lt;li&gt;subscriber.n {DOM-node} highest dom-node that acts as the container for delegation.
          *         only when event-dom is active and there are filter-selectors&lt;/li&gt;
+         *     &lt;li&gt;subscriber.s {Boolean} true when the subscription was set to itself by using &quot;this:eventName&quot;&lt;/li&gt;
          * &lt;/ul&gt;
          * @private
          * @since 0.0.1
          */
         _invokeSubs: function (e, checkFilter, before, preProcessor, subscribers) { // subscribers, plural
             console.log(NAME, &#x27;_invokeSubs&#x27;);
-            var subs;
+            var subs, passesThis, passesFilter;
             if (subscribers &amp;&amp; !e.status.halted &amp;&amp; !e.silent) {
                 subs = before ? subscribers.b : subscribers.a;
                 subs &amp;&amp; subs.some(function(subscriber) {
@@ -1038,8 +1052,11 @@ require(&#x27;js-ext/lib/object.js&#x27;);
                     if (preProcessor &amp;&amp; preProcessor(subscriber, e)) {
                         return true;
                     }
+                    // check: does it need to be itself because of subscribing through &#x27;this&#x27;
+                    passesThis = (!subscriber.s || (subscriber.o===e.target));
                     // check: does it pass the filter
-                    if (!checkFilter || !subscriber.f || subscriber.f.call(subscriber.o, e)) {
+                    passesFilter = (!checkFilter || !subscriber.f || subscriber.f.call(subscriber.o, e));
+                    if (passesThis &amp;&amp; passesFilter) {
                         // finally: invoke subscriber
                         console.log(NAME, &#x27;_invokeSubs is going to invoke subscriber&#x27;);
                         subscriber.cb.call(subscriber.o, e);
