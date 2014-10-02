@@ -1,8 +1,8 @@
 ---
 module: event
 itsaclassname: Event
-version: 0.0.1
-modulesize: 3.85
+version: 0.0.2
+modulesize: 3.90
 dependencies: "polyfill/polyfill-base.js, js-ext/lib/function.js, js-ext/lib/object.js"
 maintainer: Marco Asbreuk
 title: Custom Events
@@ -48,7 +48,10 @@ Once the event has been executed, the `after`-event listeners will be called. Th
 
 ##emitterName:eventName##
 
-Events are identified by their `customEvent-name`, which has the syntax: **emitterName:eventName**. One emitterName is reserved: **"UI"** which identifies DOM events. Except for `UI` as emitterName, any name can be choosen for emitterName as well as eventName, as long as it consist of ASCII word characters (regular expression: `\w+`).
+Events are identified by their `customEvent-name`, which has the syntax: **emitterName:eventName**. Two emitterNames are reserved:
+
+* **"this"** is used so that an emitter can listen to itself [see below](#listening-with-emittername-"this").
+* **"UI"** which identifies DOM events. Except for `UI` as emitterName, any name can be choosen for emitterName as well as eventName, as long as it consist of ASCII word characters (regular expression: `\w+`).
 
 ###emitterName###
 The `emitterName` is usually the _entity_ that emits the event. You can setup an instance that can emit events, and that instance is labeled by its emittername. For example: an instance with the emittername: _PersonalProfile_, might emit events like _PersonalProfile:read_, _PersonalProfile:create_ and _PersonalProfile:update_. The emitterName is eventobject's property: e.**emitter**.
@@ -300,7 +303,7 @@ By emitting (or triggering or fireing) an event through the Class-instance or ob
 ####emitting event through a Class-instance####
 ```js
 Profile.mergePrototypes(Event.Emitter('PersonalProfile'));
-var myProfile = new Profile({name: Marco});
+var myProfile = new Profile({name: 'Marco'});
 myProfile.emit('save');
 ```
 
@@ -431,7 +434,7 @@ Listening for events could be done through the `Event` as well. Using the **befo
 
 ####listening for events using Event.after()####
 ```js
-var myProfile = new Profile({name: Marco});
+var myProfile = new Profile({name: 'Marco'});
 Event.after('PersonalProfile:save', function(e) {
     // handle the event
 }, myProfile);
@@ -490,6 +493,35 @@ var MyClass = Object.createClass(
         }
     }
 ).mergeProperties(Event.Listener);
+```
+
+##Listening with emitterName "this"##
+
+Emitters can also listen to only themselves. If you would listen using the `emitterName:eventName` syntax, the subscriber would get invoked on any event, also of other objects with the same emitterName. By subscribing using `this:eventName`, you basicly subscribe to its own emitterName, but also filter on its own instance.
+
+####listening to an event that never occurs####
+```js
+var cb, member1, member2, member3, Member, count = 0;
+
+Member = Object.createClass(
+    function (name) {
+        this.name = name;
+        this.after('this:send', this.afterSend);
+    },
+    {
+        afterSend: function(e) {
+            // 'PersonalProfile:send' -event was emitted
+            // this.name === 'itsa' in this example
+        }
+    }
+);
+Member.mergePrototypes(Event.Listener).mergePrototypes(Event.Emitter('PersonalProfile'));
+
+member1 = new Member('a');
+member2 = new Member('itsa');
+member3 = new Member('b');
+
+member2.emit('send');
 ```
 
 ##Careful when listening without the emitterName##
@@ -567,7 +599,7 @@ Event.emit(myProfile, 'PersonalProfile:save'); // emits "PersonalProfile:save"
 ####define a customEvent through an instance####
 ```js
 Profile.mergePrototypes(Event.Emitter('PersonalProfile'));
-var myProfile = new Profile({name: Marco});
+var myProfile = new Profile({name: 'Marco'});
 
 myProfile.defineEvent('save') // defines "PersonalProfile:save"
          .defaultFn(function(e) {
@@ -593,7 +625,7 @@ Modules may want to delay customEvent-definitions until it is actually needed. T
 
 ####delayed eventDefine()####
 ```js
-var myProfile = new Profile({name: Marco});
+var myProfile = new Profile({name: 'Marco'});
 
 Event.notify('PersonalProfile', function(eventinstance, customEvent) {
     // customEvent === "PersonalProfile:"+eventName
@@ -659,7 +691,7 @@ Most of the time, the emitter is the object that is labeled by its emitterName. 
 RedProfile.mergePrototypes(Event.Emitter('RedProfile'));
 ProfileContainer.mergePrototypes(Event.Emitter('ProfileContainer'));
 
-var myProfile = new RedProfile({name: Marco});
+var myProfile = new RedProfile({name: 'Marco'});
 var myProfileContainer = new ProfileContainer();
 
 Event.after('RedProfile:save', function(e) {
