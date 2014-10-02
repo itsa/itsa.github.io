@@ -2,8 +2,8 @@
 module: js-ext
 itsaclassname:
 version: 0.0.1
-modulesize: 3.29
-dependencies: "polyfill, ypromise (npm)"
+modulesize: 3.59
+dependencies: "polyfill-base, ypromise (npm)"
 maintainer: Marco Asbreuk
 title: Extra functionality for basic objects
 intro: "Adds several methods to Object, Function and Promise that are frequently used"
@@ -251,7 +251,7 @@ console.log(a.method('1'));
 
 _(static method)_
 
-Promise.**chainFns** could be seen as the _chained-version_ of Promise.all(). There is a big difference though: <u>you need to pass an array of function- or Promise-**references**</u>, _not invoked Promised_. These should be references, because Promise.chainFns() will invoke them when the time is ready.
+Promise.**chainFns** could be seen as the _chained-version_ of Promise.all(). There is a big difference though: <u>you need to pass an array of function- or Promise-**references**</u>, _not invoked Promises_. These should be references, because Promise.chainFns() will invoke them when the time is ready.
 
 The returnvalue of the functions is irrelevant. But if one of the functions returns a Promise, the chain will wait its execution for this function to be resolved. If one of the items returns a rejected Promise, the whole chain rejects by default, unless the second argument (finishAll) is set true. Preceding functions won't be invoked.
 
@@ -390,7 +390,7 @@ IO.send('/sendSMS', smsData)
 ###thenFulfill###
 Every Promise-instance gets a .**thenFulfill**()-method at its prototype. It is an alternative to .then in a way that it is fulfilled promise. Should the original promise be rejected, then .thenFulfill is fulfilled (with the rejected reason as argument).
 
-This method is useful if you are in a Promise-chain where you want to get into the fulfilled channel, even if the chain got rejected before. It is comparable with .finally() only now you get a Promise in return which can use inside the chain.
+This method is useful if you are in a Promise-chain where you want to get into the fulfilled chain, even if the chain got rejected before. It is comparable with .finally() only now you get a Promise in return which can use inside the chain.
 
 ####p.thenFulfill()####
 ```js

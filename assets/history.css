@@ -1,0 +1,22 @@
+.body-content.module.history h1 {
+    margin-bottom: 0;
+}
+
+.body-content.module.history h1:not(.title),
+.body-content.module.history h2 {
+    margin-top: 1.5em;
+}
+
+.body-content.module.history h1.title {
+    margin-bottom: 1.2em;
+}
+
+.body-content.module.history ul {
+    padding-left: 14px;
+}
+
+.body-content.module.history span.version {
+    font-size: 0.8em;
+    margin-left: 0.6em;
+    font-style: italic;
+}

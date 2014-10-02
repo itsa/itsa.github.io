@@ -8235,7 +8235,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 470,
+            "line": 468,
             "description": "Does the actual transportation from DOM-events into the Eventsystem. It also looks at the response of\nthe Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will be preventDefaulted.",
             "itemtype": "method",
             "name": "_domCallback",
@@ -8260,7 +8260,7 @@
         },
         {
             "file": "src/event-mobile/event-mobile.js",
-            "line": 31,
+            "line": 27,
             "description": "The (only) Hammer-instance that `Event` uses. It is bound to the `body`-element.",
             "itemtype": "property",
             "name": "hammertime",
@@ -8272,7 +8272,7 @@
         },
         {
             "file": "src/event-mobile/event-mobile.js",
-            "line": 48,
+            "line": 45,
             "description": "Adds the `Hammer`-class to Event, so it can be used from within Event.",
             "itemtype": "property",
             "name": "Hammer",
@@ -8284,7 +8284,7 @@
         },
         {
             "file": "src/event-mobile/event-mobile.js",
-            "line": 86,
+            "line": 83,
             "description": "Is emitted whenever hammerjs detects a gestureevent.\nBy emitting its original event through ParcelaEvent:eventmobile, `event-dom`\nwill catch it and process it through the dom-event cycle.",
             "itemtype": "event",
             "name": "ParcelaEvent:eventmobile",
@@ -8449,7 +8449,7 @@
         },
         {
             "file": "src/io/io-stream.js",
-            "line": 55,
+            "line": 63,
             "description": "Adds 2 methods on the xhr-instance which are used by xhr when events occur:\n\nxhr.onload()\nxhr.onerror()  // only XMLHttpRequest2\n\nThese events are only added in case of XDR",
             "itemtype": "method",
             "name": "_readyHandleXDR",
@@ -8472,7 +8472,7 @@
         },
         {
             "file": "src/io/io-stream.js",
-            "line": 84,
+            "line": 95,
             "description": "Adds a `headers` X-Stream=true in case of a streaming request.",
             "itemtype": "method",
             "name": "_setHeaders",
@@ -8500,7 +8500,7 @@
         },
         {
             "file": "src/io/io-transfer.js",
-            "line": 34,
+            "line": 86,
             "description": "Performs an AJAX GET request.  Shortcut for a call to [`xhr`](#method_xhr) with `method` set to  `'GET'`.\nAdditional parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `params` should be a plain object with only primitive types which are transformed into key/value pairs.",
             "itemtype": "method",
             "name": "get",
@@ -8568,7 +8568,7 @@
         },
         {
             "file": "src/io/io-transfer.js",
-            "line": 79,
+            "line": 130,
             "description": "Performs an AJAX request with the GET HTTP method and expects a JSON-object.\nThe resolved Promise-callback returns an object (JSON-parsed serverresponse).\n\nAdditional request-parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: If you expect the server to response with data that consist of Date-properties, you should set `options.parseJSONDate` true.\n       Parsing takes a bit longer, but it will generate trully Date-objects.\nNote2: CORS is supported, as long as the responseserver is set up to:\n      a) has a response header which allows the clientdomain:\n         header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n      b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n         to requests with the OPTION-method\n      More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/",
             "itemtype": "method",
             "name": "read",
@@ -8637,7 +8637,7 @@
         },
         {
             "file": "src/io/io-transfer.js",
-            "line": 141,
+            "line": 192,
             "description": "Sends data (object) which will be JSON-stringified before sending.\nPerforms an AJAX request with the PUT HTTP method by default.\nWhen options.allfields is `false`, it will use the POST-method: see Note2.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: The server needs to inspect the bodyparam: 'action', which always equals 'update'.\n       'body.action' is the way to distinquish 'I.IO.updateObject' from 'I.IO.insertObject'.\n       On purpose, we didn't make this distinction through a custom CONTENT-HEADER, because\n       that would lead into a more complicated CORS-setup (see Note3)\nNote2: By default this method uses the PUT-request: which is preferable is you send the WHOLE object.\n       if you send part of the fields, set `options.allfields`=false.\n       This will lead into using the POST-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote3: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote4: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "update",
@@ -8712,7 +8712,7 @@
         },
         {
             "file": "src/io/io-transfer.js",
-            "line": 189,
+            "line": 240,
             "description": "Performs an AJAX request with the POST HTTP method by default.\nWhen options.allfields is `true`, it will use the PUT-method: see Note2.\nThe send data is an object which will be JSON-stringified before sending.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n'body.action' has the value 'insert'\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: The server needs to inspect the bodyparam: 'action', which always equals 'insert'.\n       'body.action' is the way to distinquish 'I.IO.insertObject' from 'I.IO.updateObject'.\n       On purpose, we didn't make this distinction through a custom CONTENT-HEADER, because\n       that would lead into a more complicated CORS-setup (see Note3)\nNote2: By default this method uses the POST-request: which is preferable if you don't know all the fields (like its unique id).\n       if you send ALL the fields, set `options.allfields`=true.\n       This will lead into using the PUT-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote3: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote4: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "insert",
@@ -8787,7 +8787,7 @@
         },
         {
             "file": "src/io/io-transfer.js",
-            "line": 237,
+            "line": 288,
             "description": "Performs an AJAX request with the PUT HTTP method by default.\nWhen options.allfields is `false`, it will use the POST-method: see Note2.\nThe send data is an object which will be JSON-stringified before sending.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: By default this method uses the PUT-request: which is preferable is you send the WHOLE object.\n       if you send part of the fields, set `options.allfields`=false.\n       This will lead into using the POST-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote2: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote3: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "send",
@@ -8855,7 +8855,7 @@
         },
         {
             "file": "src/io/io-transfer.js",
-            "line": 323,
+            "line": 374,
             "description": "Performs an AJAX DELETE request.  Shortcut for a call to [`xhr`](#method_xhr) with `method` set to  `'DELETE'`.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `data` should be a plain object with only primitive types which are transformed into key/value pairs.",
             "itemtype": "method",
             "name": "delete",
@@ -8934,7 +8934,7 @@
         },
         {
             "file": "src/io/io-xml.js",
-            "line": 29,
+            "line": 74,
             "description": "Performs an AJAX request with the GET HTTP method and expects a JSON-object.\nThe resolved Promise-callback returns an object (JSON-parsed serverresponse).\n\nAdditional request-parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: If you expect the server to response with data that consist of Date-properties, you should set `options.parseJSONDate` true.\n       Parsing takes a bit longer, but it will generate trully Date-objects.\nNote2: CORS is supported, as long as the responseserver is set up to:\n      a) has a response header which allows the clientdomain:\n         header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n      b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n         to requests with the OPTION-method\n      More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/",
             "itemtype": "method",
             "name": "readXML",
@@ -9176,7 +9176,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 216,
+            "line": 222,
             "description": "Stringifies an object into one string with every pair separated by `&`",
             "itemtype": "method",
             "name": "_toQueryString",
@@ -9198,7 +9198,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 237,
+            "line": 243,
             "description": "Sends a HTTP request to the server and returns a Promise with an additional .abort() method to cancel the request.\nThis method is the standard way of doing xhr-requests without processing streams.",
             "itemtype": "method",
             "name": "request",
@@ -9290,7 +9290,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 103,
+            "line": 100,
             "description": "Reference to the `idGenerator` function in [utils](../modules/utils.html)",
             "itemtype": "property",
             "name": "idGenerator",
@@ -9301,7 +9301,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 113,
+            "line": 110,
             "description": "Reference to the [IO](io.html) object",
             "itemtype": "property",
             "name": "IO",
@@ -9312,7 +9312,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 125,
+            "line": 122,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",

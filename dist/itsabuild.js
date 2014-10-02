@@ -4983,7 +4983,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":27}],6:[function(require,module,exports){
+},{"_process":34}],6:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5006,8 +5006,6 @@ http://yuilibrary.com/license/
  * @class Event
  * @since 0.0.1
 */
-
-require('polyfill');
 
 
 var NAME = '[event-dom]: ',
@@ -5475,7 +5473,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":11,"polyfill":23,"utils":24}],7:[function(require,module,exports){
+},{"event":11,"utils":31}],7:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5499,11 +5497,7 @@ module.exports = function (window) {
  * @since 0.0.1
 */
 
-
-require('polyfill');
-
-var NAME = '[event-mobile]: ',
-    Hammer = require('hammerjs');
+var NAME = '[event-mobile]: ';
 
 module.exports = function (window) {
     /**
@@ -5515,6 +5509,7 @@ module.exports = function (window) {
      */
     var Event = require('event-dom')(window),
         document = window.document,
+        Hammer = require('hammerjs'),
         hammertime = Event.hammertime = new Hammer(document.body),
         singletap, doubletap, tripletap;
 
@@ -5586,7 +5581,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event-dom":6,"hammerjs":1,"polyfill":23}],8:[function(require,module,exports){
+},{"event-dom":6,"hammerjs":1}],8:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -5602,7 +5597,7 @@ module.exports = function (window) {
  * @since 0.0.1
 */
 
-require('polyfill');
+require('polyfill/polyfill-base.js');
 require('js-ext/lib/function.js');
 require('js-ext/lib/object.js');
 
@@ -6766,7 +6761,7 @@ require('js-ext/lib/object.js');
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/lib/function.js":18,"js-ext/lib/object.js":19,"polyfill":23}],9:[function(require,module,exports){
+},{"js-ext/lib/function.js":18,"js-ext/lib/object.js":19,"polyfill/polyfill-base.js":29}],9:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7093,7 +7088,7 @@ module.exports = function (window) {
         return domain && (currentDomain !== domain);
     },
 
-    entendXHR = function(xhr, props, options) {
+    entendXHR = function(xhr, props, options /*, promise */) {
         var crossDomain;
         if (!props._isXHR2) {
             crossDomain = isCrossDomain(options.url);
@@ -7118,11 +7113,12 @@ module.exports = function (window) {
             // for XDomainRequest, we need 'onload' instead of 'onreadystatechange'
             xhr.onload || (xhr.onload=function() {
                 var responseText = xhr.responseText,
-                    xmlRequest = headers && (headers.Accept==='text/xml');
+                    xmlRequest = headers && (headers.Accept==='text/xml'),
+                    responseobject;
                 clearTimeout(xhr._timer);
                 console.log(NAME, 'xhr.onload invokes with responseText='+responseText);
                 // to remain consisten with XHR, we define an object with the same structure
-                var responseobject = {
+                responseobject = {
                     _contenttype: xhr.contentType,
                     responseText: responseText,
                     responseXML: xmlRequest ? new XmlDOMParser().parseFromString(responseText) : null,
@@ -7158,6 +7154,7 @@ module.exports = function (window) {
 
 var NAME = '[io-stream]: ',
     UNKNOW_ERROR = 'Unknown XDR-error', // XDR doesn't specify the error
+    INVALID_DATA = 'invalid data',
     REQUEST_TIMEOUT = 'Request-timeout';
 
 module.exports = function (window) {
@@ -7174,7 +7171,7 @@ module.exports = function (window) {
      * @param options {Object} options of the request
      * @private
     */
-    _entendXHR = function(xhr, props, options) {
+    _entendXHR = function(xhr, props, options /*, promise */) {
         if (typeof options.streamback === 'function') {
             if (!props._isXHR2 && !props._isXDR) {
                 if (typeof window.XDomainRequest !== 'undefined') {
@@ -7202,7 +7199,14 @@ module.exports = function (window) {
             xhr._progressPos = 0;
             xhr.onprogress = function() {
                 console.log(NAME, 'xhr.onprogress received data #'+xhr.responseText+'#');
-                promise.callback(xhr.responseText.substr(xhr._progressPos));
+                var data = xhr.responseText.substr(xhr._progressPos);
+
+                // backup the fact that streaming occured
+                xhr._gotstreamed = true;
+
+                xhr._parseStream && (data=xhr._parseStream(data));
+
+                promise.callback(data);
                 xhr._progressPos = xhr.responseText.length;
             };
         }
@@ -7228,6 +7232,9 @@ module.exports = function (window) {
             xhr.onload = function() {
                 clearTimeout(xhr._timer);
                 console.log(NAME, 'xhr.onload invokes with responseText='+xhr.responseText);
+                if (xhr._isStream && !xhr._gotstreamed) {
+                    xhr.onprogress(xhr.responseText);
+                }
                 promise.fulfill(xhr);
             };
             xhr.onerror = function() {
@@ -7288,11 +7295,63 @@ var NAME = '[io-transfer]: ',
     },
     MIME_JSON = 'application/json',
     CONTENT_TYPE = 'Content-Type',
-    DELETE = 'delete';
+    DELETE = 'delete',
+    REGEXP_ARRAY = /^( )*\[/,
+    REGEXP_OBJECT = /^( )*{/,
+    REGEXP_REMOVE_LAST_COMMA = /^(.*),( )*$/,
+    entendXHR;
+
+require('polyfill/lib/json.js');
 
 module.exports = function (window) {
 
-    var IO = require('./io.js')(window);
+    var IO = require('./io.js')(window),
+
+    /*
+     * Adds properties to the xhr-object: in case of streaming,
+     * xhr._parseStream=function is created to parse streamed data.
+     *
+     * @method _progressHandle
+     * @param xhr {Object} containing the xhr-instance
+     * @param props {Object} the propertie-object that is added too xhr and can be expanded
+     * @param options {Object} options of the request
+     * @private
+    */
+    _entendXHR = function(xhr, props, options /*, promise */) {
+        var isarray, isobject, isstring, parialdata, regexpcomma, followingstream;
+        if ((typeof options.streamback === 'function') && options.headers && (options.headers.Accept==='application/json')) {
+            console.log(NAME, 'entendXHR');
+            xhr._parseStream = function(streamData) {
+                console.log(NAME, 'entendXHR --> _parseStream');
+                // first step is to determine if the final response would be an array or an object
+                // partial responses should be expanded to the same type
+                if (!followingstream) {
+                    isarray = REGEXP_ARRAY.test(streamData);
+                    isarray || (isobject = REGEXP_OBJECT.test(streamData));
+                }
+                try {
+                    if (isarray || isobject) {
+                        regexpcomma = streamData.match(REGEXP_REMOVE_LAST_COMMA);
+                        parialdata = regexpcomma ? streamData.match(REGEXP_REMOVE_LAST_COMMA)[1] : streamData;
+                    }
+                    else {
+                        parialdata = streamData;
+                    }
+                    parialdata = (followingstream && isarray ? '[' : '') + (followingstream && isobject ? '{' : '') + parialdata + (regexpcomma && isarray ? ']' : '') + (regexpcomma && isobject ? '}' : '');
+                    // note: parsing will fail for the last streamed part, because there will be a double ] or }
+                    streamData = JSON.parse(parialdata, (options.parseJSONDate) ? REVIVER : null);
+                }
+                catch(err) {
+                    console.warn(NAME, err);
+                }
+                followingstream = true;
+                return streamData;
+            };
+        }
+        return xhr;
+    };
+
+    IO._xhrList.push(_entendXHR);
 
     /**
      * Performs an AJAX GET request.  Shortcut for a call to [`xhr`](#method_xhr) with `method` set to  `'GET'`.
@@ -7319,7 +7378,6 @@ module.exports = function (window) {
      * on failure an Error object
         * reason {Error}
     */
-
     IO.get = function (url, options) {
         console.log(NAME, 'get --> '+url);
         var ioPromise, returnPromise;
@@ -7637,7 +7695,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"./io.js":16}],15:[function(require,module,exports){
+},{"./io.js":16,"polyfill/lib/json.js":26}],15:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7660,11 +7718,56 @@ module.exports = function (window) {
 
 require('js-ext');
 
-var NAME = '[io-xml]: ';
+var NAME = '[io-xml]: ',
+    REGEXP_XML = /(?: )*(<\?xml (?:.)*\?>)(?: )*(<(?:\w)+>)/;
 
 module.exports = function (window) {
 
-    var IO = require('./io.js')(window);
+    var IO = require('./io.js')(window),
+
+    /*
+     * Adds properties to the xhr-object: in case of streaming,
+     * xhr._parseStream=function is created to parse streamed data.
+     *
+     * @method _progressHandle
+     * @param xhr {Object} containing the xhr-instance
+     * @param props {Object} the propertie-object that is added too xhr and can be expanded
+     * @param options {Object} options of the request
+     * @private
+    */
+    _entendXHR = function(xhr, props, options, promise) {
+        var parser, followingstream, regegexp_endcont, regexpxml, xmlstart, container, endcontainer;
+        if ((typeof options.streamback === 'function') && options.headers && (options.headers.Accept==='text/xml')) {
+            console.log(NAME, 'entendXHR');
+            parser = new window.DOMParser();
+            xhr._parseStream = function(streamData) {
+                var fragment, parialdata;
+                console.log(NAME, 'entendXHR --> _parseStream');
+                try {
+                    if (!followingstream) {
+                        regexpxml = streamData.match(REGEXP_XML);
+                        if (regexpxml) {
+                            xmlstart = regexpxml[1];
+                            container = regexpxml[2];
+                            endcontainer = '</'+container.substr(1);
+                            regegexp_endcont = new RegExp('(.*)'+endcontainer+'( )*$');
+                        }
+                    }
+                    parialdata = (followingstream ? xmlstart+container : '') + streamData;
+                    regegexp_endcont.test(streamData) || (parialdata+=endcontainer);
+                    fragment = parser.parseFromString(parialdata, 'text/xml');
+                    followingstream = true;
+                    return fragment;
+                }
+                catch(err) {
+                    promise.reject(err);
+                }
+            };
+        }
+        return xhr;
+    };
+
+    IO._xhrList.push(_entendXHR);
 
     /**
      * Performs an AJAX request with the GET HTTP method and expects a JSON-object.
@@ -7718,9 +7821,11 @@ module.exports = function (window) {
             function(xhrResponse) {
                 // if the responsetype is no "text/xml", then throw an error, else return xhrResponse.responseXML;
                 // note that nodejs has "Content-Type" in lowercase!
-                var contenttype = xhrResponse.getResponseHeader('Content-Type') || xhrResponse.getResponseHeader('content-type');
-                if (/^text\/xml/.test(contenttype)) {
-                    return xhrResponse.responseXML;
+                // Also: XDR DOES NOT support getResponseHeader() --> so we must just assume the data is text/xml
+                var contenttype = !xhrResponse._isXDR && (xhrResponse.getResponseHeader('Content-Type') || xhrResponse.getResponseHeader('content-type'));
+                if (xhrResponse._isXDR || /^text\/xml/.test(contenttype)) {
+                    // cautious: when streaming, xhrResponse.responseXML will be undefined in case of using XDR
+                    return xhrResponse.responseXML || (new window.DOMParser()).parseFromString(xhrResponse.responseText, 'text/xml');
                 }
                 // when code comes here: no valid xml response:
                 throw new Error('recieved Content-Type is no XML');
@@ -7748,7 +7853,7 @@ module.exports = function (window) {
 
 "use strict";
 
-require('polyfill');
+require('polyfill/polyfill-base.js');
 require('ypromise');
 require('js-ext');
 
@@ -7936,6 +8041,12 @@ module.exports = function (window) {
                     clearTimeout(xhr._timer);
                     if ((xhr.status>=200) && (xhr.status<300)) {
                         console.log(NAME, 'xhr.onreadystatechange will fulfill xhr-instance: '+xhr.responseText);
+                        // In case streamback function is set, but when no intermediate stream-data was send
+                        // (or in case of XDR: below 2kb it doesn't call onprogress)
+                        // --> we might need to call onprogress ourselve.
+                        if (xhr._isStream && !xhr._gotstreamed) {
+                            xhr.onprogress(xhr.responseText);
+                        }
                         promise.fulfill(xhr);
                     }
                     else {
@@ -7999,6 +8110,7 @@ module.exports = function (window) {
                 props = {},
                 xhr, promise;
             options || (options={});
+            promise = Promise.manage(options.streamback);
 
             xhr = new window.XMLHttpRequest();
             props._isXHR2 = ('withCredentials' in xhr) || (window.navigator.userAgent==='fake');
@@ -8006,7 +8118,7 @@ module.exports = function (window) {
             // xhr might be changed, also private properties might be extended
             instance._xhrList.each(
                 function(fn) {
-                    xhr = fn(xhr, props, options);
+                    xhr = fn(xhr, props, options, promise);
                 }
             );
             if (!xhr) {
@@ -8015,8 +8127,6 @@ module.exports = function (window) {
             xhr.merge(props);
             console.log(NAME, 'request creating xhr of type: '+ (props._isXHR2 ? 'XMLHttpRequest2' : (props._isXDR ? 'XDomainRequest' : 'XMLHttpRequest1')));
             console.log(NAME, 'CORS-IE: '+ props._CORS_IE + ', canStream: '+props._canStream);
-
-            promise = Promise.manage(options.streamback);
 
             // Don't use xhr.timeout --> IE<10 throws an error when set xhr.timeout
             // We use a timer that aborts the request
@@ -8028,7 +8138,7 @@ module.exports = function (window) {
                            promise.reject(new Error(REQUEST_TIMEOUT));
                            xhr._aborted = true; // must be set: IE9 won't allow to read anything on xhr after being aborted
                            xhr.abort();
-                       }, options.timeout || instance.config.reqTimeout || DEF_REQ_TIMEOUT)
+                       }, options.timeout || instance.config.timeout || DEF_REQ_TIMEOUT)
             });
 
             instance._initXHR(xhr, options, promise);
@@ -8046,7 +8156,7 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":17,"polyfill":23,"ypromise":5}],17:[function(require,module,exports){
+},{"js-ext":17,"polyfill/polyfill-base.js":29,"ypromise":5}],17:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/promise.js');
@@ -8065,7 +8175,7 @@ require('./lib/promise.js');
 
 "use strict";
 
-require('polyfill');
+require('polyfill/polyfill-base.js');
 
 // Define configurable, writable and non-enumerable props
 // if they don't exist.
@@ -8270,7 +8380,7 @@ defineProperties(Function.prototype, {
 defineProperty(Object.prototype, 'createClass', function (constructor, prototype) {
 	return Function.prototype.subClass.apply(this, arguments);
 });
-},{"polyfill":23}],19:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":29}],19:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -8285,7 +8395,7 @@ defineProperty(Object.prototype, 'createClass', function (constructor, prototype
 
 "use strict";
 
-require('polyfill');
+require('polyfill/polyfill-base.js');
 
 var TYPES = {
        'undefined' : true,
@@ -8549,7 +8659,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"polyfill":23}],20:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":29}],20:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8565,7 +8675,7 @@ Object.merge = function () {
  * @class Promise
 */
 
-require('polyfill');
+require('polyfill/polyfill-base.js');
 require('ypromise');
 
 var NAME = '[promise-ext]: ',
@@ -8849,14 +8959,456 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill":23,"ypromise":5}],21:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":29,"ypromise":5}],21:[function(require,module,exports){
+(function (global){
+if (!Array.filter) {
+    (function (global) {
+        "use strict";
+        Array.prototype.filter = function filter(callback, scope) {
+            var array = this,
+                arrayB = [],
+                length = array.length,
+                element, index;
+
+            for (index = 0; index<length; ++index) {
+                element = array[index];
+                if (callback.call(scope || global, element, index, array)) {
+                    arrayB.push(element);
+                }
+            }
+
+            return arrayB;
+        };
+    }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
+}
+
+
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],22:[function(require,module,exports){
+(function (global){
+if (!Array.forEach) {
+    (function (global) {
+        "use strict";
+        Array.prototype.forEach = function forEach(callback, scope) {
+            var array = this,
+                length = array.length,
+                index = 0;
+            for (index = 0; index<length; ++index) {
+                callback.call(scope || global, array[index], index, array);
+            }
+        };
+    }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
+}
+
+
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],23:[function(require,module,exports){
+"use strict";
+
+Array.prototype.indexOf || (Array.prototype.indexOf=function indexOf(searchElement) {
+    var array = this,
+        length = array.length,
+        index = 0;
+    for (index = 0; index < length; ++index) {
+        if (array[index] === searchElement) {
+            return index;
+        }
+    }
+    return -1;
+});
+},{}],24:[function(require,module,exports){
 "use strict";
 
 Array.isArray || (Array.isArray = function isArray(array) {
     return array && Object.prototype.toString.call(array) === '[object Array]';
 });
 
-},{}],22:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
+(function (global){
+if (!Array.some) {
+    (function (global) {
+        "use strict";
+        Array.prototype.some = function some(callback, scope) {
+            var array = this,
+                length = array.length,
+                index = 0;
+            for (index = 0; index<length; ++index) {
+                if (callback.call(scope || global, array[index], index, array)) {
+                    break;
+                }
+            }
+            return (index === length);
+        };
+    }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
+}
+
+
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],26:[function(require,module,exports){
+(function (global){
+(function (global) {
+    "use strict";
+
+    if (!global.JSON) {
+        (function() {
+            var toString = Object.prototype.toString,
+                hasOwnProperty = Object.prototype.hasOwnProperty,
+                LEFT_CURLY = '{',
+                RIGHT_CURLY = '}',
+                COLON = ':',
+                LEFT_BRACE = '[',
+                RIGHT_BRACE = ']',
+                COMMA = ',',
+                tokenType = {
+                    PUNCTUATOR: 1,
+                    STRING: 2,
+                    NUMBER: 3,
+                    BOOLEAN: 4,
+                    NULL: 5
+                },
+                tokenMap = {
+                    '{': 1, '}': 1, '[': 1, ']': 1, ',': 1, ':': 1,
+                    '"': 2,
+                    't': 4, 'f': 4,
+                    'n': 5
+                },
+                escChars = {
+                    'b': '\b',
+                    'f': '\f',
+                    'n': '\n',
+                    'r': '\r',
+                    't': '\t',
+                    '"': '"',
+                    '\\': '\\',
+                    '/': '/'
+                },
+                tokenizer = /^(?:[{}:,\[\]]|true|false|null|"(?:[^"\\\u0000-\u001F]|\\["\\\/bfnrt]|\\u[0-9A-F]{4})*"|-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?)/,
+                whiteSpace = /^[\t ]+/,
+                lineTerminator = /^\r?\n/;
+
+            function JSONLexer(JSONStr) {
+                this.line = 1;
+                this.col = 1;
+                this._tokLen = 0;
+                this._str = JSONStr;
+            }
+
+            JSONLexer.prototype = {
+                getNextToken: function () {
+                    var
+                    str = this._str,
+                    token, type;
+
+                    this.col += this._tokLen;
+
+                    if (!str.length) {
+                        return 'END';
+                    }
+
+                    token = tokenizer.exec(str);
+
+                    if (token) {
+                        type = tokenMap[token[0].charAt(0)] || tokenType.NUMBER;
+                    } else if ((token = whiteSpace.exec(str))) {
+                        this._tokLen = token[0].length;
+                        this._str = str.slice(this._tokLen);
+                        return this.getNextToken();
+                    } else if ((token = lineTerminator.exec(str))) {
+                        this._tokLen = 0;
+                        this._str = str.slice(token[0].length);
+                        this.line++;
+                        this.col = 1;
+                        return this.getNextToken();
+                    } else {
+                        this.error('Invalid token');
+                    }
+
+                    this._tokLen = token[0].length;
+                    this._str = str.slice(this._tokLen);
+
+                    return {
+                        type: type,
+                        value: token[0]
+                    };
+                },
+
+                error: function (message, line, col) {
+                    var err = new SyntaxError(message);
+
+                    err.line = line || this.line;
+                    err.col = col || this.col;
+
+                    throw err;
+                }
+            };
+
+            function JSONParser(lexer) {
+                this.lex = lexer;
+            }
+
+            JSONParser.prototype = {
+                parse: function () {
+                    var lex = this.lex, jsValue = this.getValue();
+
+                    if (lex.getNextToken() !== 'END') {
+                        lex.error('Illegal token');
+                    }
+
+                    return jsValue;
+                },
+                getObject: function () {
+                    var
+                    jsObj = {},
+                    lex = this.lex,
+                    token, tval, prop,
+                    line, col,
+                    pairs = false;
+
+                    while (true) {
+                        token = lex.getNextToken();
+                        tval = token.value;
+
+                        if (tval === RIGHT_CURLY) {
+                            return jsObj;
+                        }
+
+                        if (pairs) {
+                            if (tval === COMMA) {
+                                line = lex.line;
+                                col = lex.col - 1;
+                                token = lex.getNextToken();
+                                tval = token.value;
+                                if (tval === RIGHT_CURLY) {
+                                    lex.error('Invalid trailing comma', line, col);
+                                }
+                            }
+                            else {
+                                lex.error('Illegal token where expect comma or right curly bracket');
+                            }
+                        }
+                        else if (tval === COMMA) {
+                            lex.error('Invalid leading comma');
+                        }
+
+                        if (token.type != tokenType.STRING) {
+                            lex.error('Illegal token where expect string property name');
+                        }
+
+                        prop = this.getString(tval);
+
+                        token = lex.getNextToken();
+                        tval = token.value;
+
+                        if (tval != COLON) {
+                            lex.error('Illegal token where expect colon');
+                        }
+
+                        jsObj[prop] = this.getValue();
+                        pairs = true;
+                    }
+                },
+                getArray: function () {
+                    var
+                    jsArr = [],
+                    lex = this.lex,
+                    token, tval,
+                    line, col,
+                    values = false;
+
+                    while (true) {
+                        token = lex.getNextToken();
+                        tval = token.value;
+
+                        if (tval === RIGHT_BRACE) {
+                            return jsArr;
+                        }
+
+                        if (values) {
+                            if (tval === COMMA) {
+                                line = lex.line;
+                                col = lex.col - 1;
+                                token = lex.getNextToken();
+                                tval = token.value;
+
+                                if (tval === RIGHT_BRACE) {
+                                    lex.error('Invalid trailing comma', line, col);
+                                }
+                            } else {
+                                lex.error('Illegal token where expect comma or right square bracket');
+                            }
+                        } else if (tval === COMMA) {
+                            lex.error('Invalid leading comma');
+                        }
+
+                        jsArr.push(this.getValue(token));
+                        values = true;
+                    }
+                },
+                getString: function (strVal) {
+                    return strVal.slice(1, -1).replace(/\\u?([0-9A-F]{4}|["\\\/bfnrt])/g, function (match, escVal) {
+                        return escChars[escVal] || String.fromCharCode(parseInt(escVal, 16));
+                    });
+                },
+                getValue: function(fromToken) {
+                    var lex = this.lex,
+                        token = fromToken || lex.getNextToken(),
+                        tval = token.value;
+                    switch (token.type) {
+                        case tokenType.PUNCTUATOR:
+                            if (tval === LEFT_CURLY) {
+                                return this.getObject();
+                            } else if (tval === LEFT_BRACE) {
+                                return this.getArray();
+                            }
+
+                            lex.error('Illegal punctoator');
+
+                            break;
+                        case tokenType.STRING:
+                            return this.getString(tval);
+                        case tokenType.NUMBER:
+                            return Number(tval);
+                        case tokenType.BOOLEAN:
+                            return tval === 'true';
+                        case tokenType.NULL:
+                            return null;
+                        default:
+                            lex.error('Invalid value');
+                    }
+                }
+            };
+
+            function filter(base, prop, value) {
+                if (typeof value === 'undefined') {
+                    delete base[prop];
+                    return;
+                }
+                base[prop] = value;
+            }
+
+            function walk(holder, name, rev) {
+                var val = holder[name], i, len;
+
+                if (toString.call(val).slice(8, -1) === 'Array') {
+                    for (i = 0, len = val.length; i < len; i++) {
+                        filter(val, i, walk(val, i, rev));
+                    }
+                } else if (typeof val === 'object') {
+                    for (i in val) {
+                        if (hasOwnProperty.call(val, i)) {
+                            filter(val, i, walk(val, i, rev));
+                        }
+                    }
+                }
+
+                return rev.call(holder, name, val);
+            }
+
+            function pad(value, length) {
+                value = String(value);
+
+                return value.length >= length ? value : new Array(length - value.length + 1).join('0') + value;
+            }
+
+            global.prototype.JSON = {
+                parse: function (JSONStr, reviver) {
+                    var jsVal = new JSONParser(new JSONLexer(JSONStr)).parse();
+
+                    if (typeof reviver === 'function') {
+                        return walk({
+                            '': jsVal
+                        }, '', reviver);
+                    }
+
+                    return jsVal;
+                },
+                stringify: function () {
+                    var
+                    value = arguments[0],
+                    replacer = typeof arguments[1] === 'function' ? arguments[1] : null,
+                    space = arguments[2] || '',
+                    spaceSpace = space ? ' ' : '',
+                    spaceReturn = space ? '\n' : '',
+                    className = toString.call(value).slice(8, -1),
+                    array, key, hasKey, index, length, eachValue;
+
+                    if (value === null || className === 'Boolean' || className === 'Number') {
+                        return value;
+                    }
+
+                    if (className === 'Array') {
+                        array = [];
+
+                        for (length = value.length, index = 0, eachValue; index < length; ++index) {
+                            eachValue = replacer ? replacer(index, value[index]) : value[index];
+                            eachValue = this.stringify(eachValue, replacer, space);
+
+                            if (eachValue === undefined || eachValue === null) {
+                                eachValue = 'null';
+                            }
+
+                            array.push(eachValue);
+                        }
+
+                        return '[' + spaceReturn + array.join(',' + spaceReturn).replace(/^/mg, space) + spaceReturn + ']';
+                    }
+
+                    if (className === 'Date') {
+                        return '"' + value.getUTCFullYear() + '-' +
+                        pad(value.getUTCMonth() + 1, 2)     + '-' +
+                        pad(value.getUTCDate(), 2)          + 'T' +
+                        pad(value.getUTCHours(), 2)         + ':' +
+                        pad(value.getUTCMinutes(), 2)       + ':' +
+                        pad(value.getUTCSeconds(), 2)       + '.' +
+                        pad(value.getUTCMilliseconds(), 3)  + 'Z' + '"';
+                    }
+
+                    if (className === 'String') {
+                        return '"' + value.replace(/"/g, '\\"') + '"';
+                    }
+
+                    if (typeof value === 'object') {
+                        array = [];
+                        hasKey = false;
+
+                        for (key in value) {
+                            if (hasOwnProperty.call(value, key)) {
+                                eachValue = replacer ? replacer(key, value[key]) : value[key];
+                                eachValue = this.stringify(eachValue, replacer, space);
+
+                                if (eachValue !== undefined) {
+                                    hasKey = true;
+
+                                    array.push('"' + key + '":' + spaceSpace + eachValue);
+                                }
+                            }
+                        }
+
+                        if (!hasKey) {
+                            return '{}';
+                        } else {
+                            return '{' + spaceReturn + array.join(',' + spaceReturn).replace(/^/mg, space) + spaceReturn + '}';
+                        }
+                    }
+                }
+            };
+        }());
+    }
+})(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this);
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],27:[function(require,module,exports){
+"use strict";
+
+Object.create || (Object.create = function (o) {
+    function F() {}
+    F.prototype = o;
+    return new F();
+});
+},{}],28:[function(require,module,exports){
 "use strict";
 
 // In Internet Explorer 8 Object.defineProperty only accepts DOM objects
@@ -8890,19 +9442,27 @@ Object.defineProperties || (Object.defineProperties=function defineProperties(ob
     }
     return object;
 });
-},{}],23:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
+require('./lib/array.filter.js');
+require('./lib/array.foreach.js');
+require('./lib/array.indexof.js');
 require('./lib/array.isarray.js');
+require('./lib/array.some.js');
+require('./lib/object.create.js');
 require('./lib/object.defineproperty.js');
-},{"./lib/array.isarray.js":21,"./lib/object.defineproperty.js":22}],24:[function(require,module,exports){
+},{"./lib/array.filter.js":21,"./lib/array.foreach.js":22,"./lib/array.indexof.js":23,"./lib/array.isarray.js":24,"./lib/array.some.js":25,"./lib/object.create.js":27,"./lib/object.defineproperty.js":28}],30:[function(require,module,exports){
+require('./polyfill-base.js');
+require('./lib/json.js');
+},{"./lib/json.js":26,"./polyfill-base.js":29}],31:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
 	later: require('./lib/timers.js').later,
 	async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":25,"./lib/timers.js":26}],25:[function(require,module,exports){
+},{"./lib/idgenerator.js":32,"./lib/timers.js":33}],32:[function(require,module,exports){
 "use strict";
 
-require('polyfill');
+require('polyfill/polyfill-base.js');
 
 var UNDEFINED_NS = '__undefined__';
 var namespaces = {};
@@ -8956,7 +9516,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"polyfill":23}],26:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":29}],33:[function(require,module,exports){
 (function (process){
 /**
  * Collection of various utility functions.
@@ -8972,7 +9532,7 @@ module.exports.idGenerator = function(namespace, start) {
 
 "use strict";
 
-require('polyfill');
+require('polyfill/polyfill-base.js');
 
 var NAME = '[utils-timers]: ';
 /**
@@ -9098,7 +9658,7 @@ module.exports.later = function (callbackFn, timeout, periodic, invokeAfterFn) {
 };
 
 }).call(this,require('_process'))
-},{"_process":27,"polyfill":23}],27:[function(require,module,exports){
+},{"_process":34,"polyfill/polyfill-base.js":29}],34:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -9258,14 +9818,11 @@ process.chdir = function (dir) {
     var fakedom = window.navigator.userAgent==='fake',
          Event = fakedom ? require('event') : require('event-mobile')(window),
          io_config = {
-             reqTimeout: 3000,
+             // timeout: 3000,
              debug: true,
              base: '/build'
          },
          EVENT_NAME_TIMERS_EXECUTION = 'timers:asyncfunc';
-
-    require('event/event-emitter.js');
-    require('event/event-listener.js');
 
     /**
      * Reference to the `idGenerator` function in [utils](../modules/utils.html)
@@ -9318,4 +9875,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"event":11,"event-mobile":7,"event/event-emitter.js":9,"event/event-listener.js":10,"io/io-cors-ie9.js":12,"io/io-stream.js":13,"io/io-transfer.js":14,"io/io-xml.js":15,"js-ext":17,"node-win":undefined,"polyfill":23,"utils":24,"ypromise":5}]},{},[]);
+},{"event":11,"event-mobile":7,"io/io-cors-ie9.js":12,"io/io-stream.js":13,"io/io-transfer.js":14,"io/io-xml.js":15,"js-ext":17,"node-win":undefined,"polyfill":30,"utils":31,"ypromise":5}]},{},[]);

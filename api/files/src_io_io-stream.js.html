@@ -144,6 +144,7 @@
 
 var NAME = &#x27;[io-stream]: &#x27;,
     UNKNOW_ERROR = &#x27;Unknown XDR-error&#x27;, // XDR doesn&#x27;t specify the error
+    INVALID_DATA = &#x27;invalid data&#x27;,
     REQUEST_TIMEOUT = &#x27;Request-timeout&#x27;;
 
 module.exports = function (window) {
@@ -160,7 +161,7 @@ module.exports = function (window) {
      * @param options {Object} options of the request
      * @private
     */
-    _entendXHR = function(xhr, props, options) {
+    _entendXHR = function(xhr, props, options /*, promise */) {
         if (typeof options.streamback === &#x27;function&#x27;) {
             if (!props._isXHR2 &amp;&amp; !props._isXDR) {
                 if (typeof window.XDomainRequest !== &#x27;undefined&#x27;) {
@@ -188,7 +189,14 @@ module.exports = function (window) {
             xhr._progressPos = 0;
             xhr.onprogress = function() {
                 console.log(NAME, &#x27;xhr.onprogress received data #&#x27;+xhr.responseText+&#x27;#&#x27;);
-                promise.callback(xhr.responseText.substr(xhr._progressPos));
+                var data = xhr.responseText.substr(xhr._progressPos);
+
+                // backup the fact that streaming occured
+                xhr._gotstreamed = true;
+
+                xhr._parseStream &amp;&amp; (data=xhr._parseStream(data));
+
+                promise.callback(data);
                 xhr._progressPos = xhr.responseText.length;
             };
         }
@@ -214,6 +222,9 @@ module.exports = function (window) {
             xhr.onload = function() {
                 clearTimeout(xhr._timer);
                 console.log(NAME, &#x27;xhr.onload invokes with responseText=&#x27;+xhr.responseText);
+                if (xhr._isStream &amp;&amp; !xhr._gotstreamed) {
+                    xhr.onprogress(xhr.responseText);
+                }
                 promise.fulfill(xhr);
             };
             xhr.onerror = function() {

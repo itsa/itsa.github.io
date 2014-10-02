@@ -2,9 +2,8 @@
 module: utils
 itsaclassname:
 version: 0.0.1
-modulesize: 1.35
+modulesize: 1.69
 dependencies: "polyfill"
-dependencies:
 maintainer: Marco Asbreuk
 title: Utility functions
 intro: "Small set of handy utility functions that is used at several ITSA modules."

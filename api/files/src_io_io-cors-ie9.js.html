@@ -196,7 +196,7 @@ module.exports = function (window) {
         return domain &amp;&amp; (currentDomain !== domain);
     },
 
-    entendXHR = function(xhr, props, options) {
+    entendXHR = function(xhr, props, options /*, promise */) {
         var crossDomain;
         if (!props._isXHR2) {
             crossDomain = isCrossDomain(options.url);
@@ -221,11 +221,12 @@ module.exports = function (window) {
             // for XDomainRequest, we need &#x27;onload&#x27; instead of &#x27;onreadystatechange&#x27;
             xhr.onload || (xhr.onload=function() {
                 var responseText = xhr.responseText,
-                    xmlRequest = headers &amp;&amp; (headers.Accept===&#x27;text/xml&#x27;);
+                    xmlRequest = headers &amp;&amp; (headers.Accept===&#x27;text/xml&#x27;),
+                    responseobject;
                 clearTimeout(xhr._timer);
                 console.log(NAME, &#x27;xhr.onload invokes with responseText=&#x27;+responseText);
                 // to remain consisten with XHR, we define an object with the same structure
-                var responseobject = {
+                responseobject = {
                     _contenttype: xhr.contentType,
                     responseText: responseText,
                     responseXML: xmlRequest ? new XmlDOMParser().parseFromString(responseText) : null,
