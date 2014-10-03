@@ -117,8 +117,8 @@ Code-example:
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
-<script type="text/javascript">
+<script src="../../dist/itsabuild-min.js"></script>
+<script>
     var ITSA = require('itsa');
     var blurContainer, focusContainer, showMsgBlur, showMsgFocus;
 
