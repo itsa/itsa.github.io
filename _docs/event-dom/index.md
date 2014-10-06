@@ -187,40 +187,38 @@ Event.after('clickoutside', showMsg, '#somediv');
 This module comes with some handy additional events non-native DOM-events that might be handy to use:
 
 ###hover###
-`mouseover` and `mouseout` subscriptions are very common used to create an effect that only lasts as long as the mouse is over an element. To make that easier, there is the `hover`-event. The subscriber gets invoked on <u>mouseover</u> and receives the eventobject which has the property e.hoverFinished which is a Promise. You can use this promise to get notification of when there was a <u>mouseout</u>.
+`mouseover` and `mouseout` subscriptions are very common used to create an effect that only lasts as long as the mouse is over an element. To make that easier, there is the `hover`-event. The subscriber gets invoked on <u>mouseover</u> and receives the eventobject which has the property `e.hover` which is a `Promise`. You can use this Promise to get notification of when <u>mouseout</u> happened. The Promise e.hover gets resolved with `relatedTarget` as argument: the node where the mouse went into when leaving a.target.
 
-You best subscribe to the after hover-event. Dont get misleaded: its subscriber gets invoked once hover started.
+You best subscribe to the after hover-event: its subscriber gets invoked once hover started.
 
 ####Example: listening to DOM-events####
 ```js
-var hoverStart = function(e) {
-    console.log('hover started on node '+e.target.id);
-    e.hoverFinished.then(
-        function() {
-            console.log('hover of node '+e.target.id+ ' was finished');
-        }
-    );
+var showMsg = function(e) {
+    var node = e.target;
+    node.innerHTML = 'Mouse entered';
+    e.hover.then(function(relatedTarget) {
+        node.innerHTML = relatedTarget.id ? 'Went to '+relatedTarget.id : '';
+    });
 };
 
-Event.after('hover', hoverStart, '#somediv');
+ITSA.Event.after('hover', showMsg, '#container');
 ```
 
-###mousewheel###
-Event for monitoring users scrolling the with the mousewheel. The eventobject has the e.wheelDelta property corresponding to the amount of scrolling. When no selector-filter is given, this event can be used for examine wheelscrolling on the whole page.
-
 ###valuechange###
-`valuechange` emits when the value property of an `<input>`, `<textarea>`, `<select>`, or `[contenteditable="true"]` element changes as the result of a keystroke, mouse operation, or input method editor (IME) input event.
+`valuechange` emits when the value property of an `<input>`, `<textarea>`, `<select>`, or `[contenteditable="true"]` element changes as the result of a keystroke, or mouse operation.
+
+Programmaticly changes should be done through HtmlElement.setValue() which is provided by `dom-ext`. This method ensures the `valuechange` event will be fired (as long as the module `event-dom/extra/valuechange.js` is loaded).
 
 This adresses changes inside these elements like:
 
 * typing a simple character
 * typing a multi-stroke character
-* using an Input Method Editor
+* setting values programmaticly by using `setValue()`
 * cutting from or pasting into the value with Ctrl+X or Cmd+V
 * cutting or pasting with a keyboard-summoned context menu
 * cutting or pasting from the right-click context menu.
 
-The valuechange-event provides more reliable input notifications than native events like oninput and textInput, particularly with changes that result from multiple-keystroke IME input.
+The valuechange-event provides more reliable input notifications and should be used when you want to be notified about changes to these tpe of HtmlElements.
 
 
 #Properties of eventobject#

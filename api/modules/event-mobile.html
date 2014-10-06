@@ -71,6 +71,8 @@
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
+                <li><a href="../modules/event-hover.html">event-hover</a></li>
+            
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
@@ -156,9 +158,8 @@
 
 
 <div class="box intro">
-    <p>Integrates DOM-events to core-event-base. more about DOM-events:
+    <p>Integrates mobile-events to event-dom. more about DOM-events:
 <a href="http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/">http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/</a></p>
-<p>Should be called using  the provided <code>init</code>-method like this:</p>
 <p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
 New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 
@@ -168,9 +169,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
     <div class="example">
         <h4>Example:</h4>
         <div class="example-content">
-            <p>Event = require(&#39;event&#39;);
-DOMEvent = require(&#39;event-dom&#39;);
-DOMEvent.mergeInto(Event);</p>
+            <p>Event = require(&#39;event-mobile&#39;)(window);</p>
 
         </div>
     </div>

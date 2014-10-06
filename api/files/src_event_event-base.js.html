@@ -71,6 +71,8 @@
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
+                <li><a href="../modules/event-hover.html">event-hover</a></li>
+            
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
@@ -530,16 +532,50 @@ require(&#x27;js-ext/lib/object.js&#x27;);
          *        have the syntax: &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used only  for&#x60;eventName&#x60;.
          *        If &#x60;emitterName&#x60; should be defined.
          * @param callback {Function} subscriber: will be invoked when the customEvent is called (before any subscribers.
-         *                 Recieves 2 arguments: &#x60;customEvent&#x60; and the &#x60;subscriber-object&#x60;.
+         *                 Recieves 3 arguments: the &#x60;subscriber-object&#x60;, &#x60;customEvent&#x60; and the complete subscriptionobject.
          * @param context {Object} context of the callback
+         * @param [once] {Boolean} whether the subscriptions should be removed after the first invokation
          * @chainable
          * @since 0.0.1
         */
-        notify: function(customEvent, callback, context) {
+        notify: function(customEvent, callback, context, once) {
             console.log(NAME, &#x27;notify&#x27;);
             this._notifiers[customEvent] = {
                 cb: callback,
-                o: context
+                o: context,
+                r: once // r = remove automaticly
+            };
+            return this;
+        },
+
+        /**
+         * Creates a detach-notifier for the customEvent.
+         * You can use this to get informed whenever a subscriber detaches.
+         *
+         * Use **no** wildcards for the emitterName. You might use wildcards for the eventName. Without wildcards, the
+         * notification will be unNotified (callback automaticly detached) on the first time the event occurs.
+
+         * You **must** specify the full &#x60;emitterName:eventName&#x60; syntax.
+         * The module &#x60;core-event-dom&#x60; uses &#x60;notify&#x60; to auto-define DOM-events (UI:*).
+         *
+         * @static
+         * @method notifyDetach
+         * @param customEvent {String|Array} the custom-event (or Array of events) to subscribe to. CustomEvents should
+         *        have the syntax: &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used only  for&#x60;eventName&#x60;.
+         *        If &#x60;emitterName&#x60; should be defined.
+         * @param callback {Function} subscriber: will be invoked when the customEvent is called (before any subscribers.
+         *                 Recieves 2 arguments: the &#x60;subscriber-object&#x60; and &#x60;customEvent&#x60;.
+         * @param context {Object} context of the callback
+         * @param [once] {Boolean} whether the subscriptions should be removed after the first invokation
+         * @chainable
+         * @since 0.0.1
+        */
+        notifyDetach: function(customEvent, callback, context, once) {
+            console.log(NAME, &#x27;notifyDetach&#x27;);
+            this._detachNotifiers[customEvent] = {
+                cb: callback,
+                o: context,
+                r: once // r = remove automaticly
             };
             return this;
         },
@@ -686,6 +722,19 @@ require(&#x27;js-ext/lib/object.js&#x27;);
         unNotify: function(customEvent) {
             console.log(NAME, &#x27;unNotify &#x27;+customEvent);
             delete this._notifiers[customEvent];
+        },
+
+        /**
+         * unNotifies (unsubscribes) the detach-notifier of the specified customEvent.
+         *
+         * @static
+         * @method unNotifyDetach
+         * @param customEvent {String} conform the syntax: &#x60;emitterName:eventName&#x60;.
+         * @since 0.0.1
+        */
+        unNotifyDetach: function(customEvent) {
+            console.log(NAME, &#x27;unNotifyDetach &#x27;+customEvent);
+            delete this._detachNotifiers[customEvent];
         },
 
         //====================================================================================================
@@ -845,12 +894,17 @@ require(&#x27;js-ext/lib/object.js&#x27;);
                 notifier = instance._notifiers[customEvent];
                 if (notifier) {
                     notifier.cb.call(notifier.o, customEvent, item);
-                    delete instance._notifiers[customEvent];
+                    if (notifier.r) {
+                        delete instance._notifiers[customEvent];
+                    }
                 }
                 // check the same for wildcard eventName:
                 customEventWildcardEventName = customEvent.replace(REGEXP_EVENTNAME_WITH_SEMICOLON, &#x27;:*&#x27;);
                 if ((customEventWildcardEventName !== customEvent) &amp;&amp; (notifier=instance._notifiers[customEventWildcardEventName])) {
                     notifier.cb.call(notifier.o, customEvent, item);
+                    if (notifier.r) {
+                        delete instance._notifiers[customEvent];
+                    }
                 }
             }
 
@@ -956,7 +1010,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
             }
             else {
                 e = Object.create(instance._defaultEventObj);
-                e.target = emitter;
+                e.target = (payload &amp;&amp; payload.target) || emitter; // make it possible to force a specific e.target
                 e.type = eventName;
                 e.emitter = emitterName;
                 e.status = {};
@@ -1090,7 +1144,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
             var instance = this,
                 eventSubscribers = instance._subs[customEvent],
                 hashtable = eventSubscribers &amp;&amp; eventSubscribers[before ? &#x27;b&#x27; : &#x27;a&#x27;],
-                i, subscriber, beforeUsed, afterUsed;
+                i, subscriber, beforeUsed, afterUsed, extract, detachNotifier, customEventWildcardEventName;
             if (hashtable) {
                 // unfortunatly we cannot search by reference, because the array has composed objects
                 // also: can&#x27;t use native Array.forEach: removing items within its callback change the array
@@ -1111,6 +1165,26 @@ require(&#x27;js-ext/lib/object.js&#x27;);
                 afterUsed = eventSubscribers.a &amp;&amp; (eventSubscribers.a.length&gt;0);
                 if (!beforeUsed &amp;&amp; !afterUsed) {
                     delete instance._subs[customEvent];
+                }
+            }
+            extract = customEvent.match(REGEXP_CUSTOMEVENT);
+            // in case of a defined subscription (no wildcard),
+            // we need to inform any detachNotifier of the unsubscription:
+            if (extract &amp;&amp; ((extract[1]!==&#x27;*&#x27;) &amp;&amp; (extract[2]!==&#x27;*&#x27;))) {
+                detachNotifier = instance._detachNotifiers[customEvent];
+                if (detachNotifier) {
+                    detachNotifier.cb.call(detachNotifier.o, customEvent);
+                    if (detachNotifier.r) {
+                        delete instance._detachNotifiers[customEvent];
+                    }
+                }
+                // check the same for wildcard eventName:
+                customEventWildcardEventName = customEvent.replace(REGEXP_EVENTNAME_WITH_SEMICOLON, &#x27;:*&#x27;);
+                if ((customEventWildcardEventName !== customEvent) &amp;&amp; (detachNotifier=instance._detachNotifiers[customEventWildcardEventName])) {
+                    detachNotifier.cb.call(detachNotifier.o, customEvent);
+                    if (detachNotifier.r) {
+                        delete instance._detachNotifiers[customEvent];
+                    }
                 }
             }
         },
@@ -1302,8 +1376,35 @@ require(&#x27;js-ext/lib/object.js&#x27;);
     DEFINE_IMMUTAL_PROPERTY(Event, &#x27;_defaultEventObj&#x27;, {});
 
     /**
+     * Objecthash containing all detach-notifiers, keyed by customEvent name.
+     * This list is maintained by &#x60;notifyDetach&#x60; and &#x60;unNotifyDetach&#x60;
+     *
+     * _detachNotifiers = {
+     *     &#x27;UI:click&#x27;: {
+     *         cb:function() {}
+     *         o: {} // context
+     *     },
+     *     &#x27;redmodel:*&#x27;: {
+     *         cb:function() {}
+     *         o: {} // context
+     *     },
+     *     &#x27;bluemodel:save&#x27;: {
+     *         cb:function() {}
+     *         o: {} // context
+     *     }
+     * }
+     *
+     * @property _detachNotifiers
+     * @default {}
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
+    DEFINE_IMMUTAL_PROPERTY(Event, &#x27;_detachNotifiers&#x27;, {});
+
+    /**
      * Objecthash containing all notifiers, keyed by customEvent name.
-     * This list is maintained by &#x60;notify&#x60;, &#x60;unNotify&#x60; and &#x60;unNotifyAll&#x60;
+     * This list is maintained by &#x60;notify&#x60; and &#x60;unNotify&#x60;
      *
      * _notifiers = {
      *     &#x27;UI:click&#x27;: {

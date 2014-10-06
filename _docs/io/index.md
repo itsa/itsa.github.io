@@ -426,19 +426,19 @@ In order to make `IO.read()` process the data in its streamback, the server must
 
 ####Example server-response in case of a large object:####
 ```js
-    '{a:1, b:2, c:3,' // <-- first response
-    'd:1, e:2, f:3,' // <-- intermediate response
-    'g:1, h:2, i:3,' // <-- intermediate response
-    'j:1, k:2, l:3}' // <-- last response
+'{a:1, b:2, c:3,' // <-- first response
+'d:1, e:2, f:3,' // <-- intermediate response
+'g:1, h:2, i:3,' // <-- intermediate response
+'j:1, k:2, l:3}' // <-- last response
 ```
 Streamed-back data will be objects like: **{d:1, e:2, f: 3}**.
 
 ####Example server-response in case of a large array:####
 ```js
-    '[{a:1}, {b:2}, {c:3},' // <-- first response
-    '{d:1}, {e:2}, {f:3},' // <-- intermediate response
-    '{g:1}, {h:2}, {i:3},' // <-- intermediate response
-    '{j:1}, {k:2}, {l:3}]' // <-- last response
+'[{a:1}, {b:2}, {c:3},' // <-- first response
+'{d:1}, {e:2}, {f:3},' // <-- intermediate response
+'{g:1}, {h:2}, {i:3},' // <-- intermediate response
+'{j:1}, {k:2}, {l:3}]' // <-- last response
 ```
 Streamed-back data will be arrays like: **[{d:1}, {e:2}, {f: 3}]**.
 
@@ -466,7 +466,10 @@ In order to make `IO.readXML()` process the data in its streamback, the server m
 
 ####Example server-response in case of a large XML-object####
 ```js
-res.write(new Buffer((j===1 ? xmlHeader+block2k+'<root>' : '')+'<div>item '+j+'</div><div>item '+(++j)+'</div><div>item '+(++j)+'</div>'));
+<?xml version="1.0" encoding="UTF-8" ?><root><div>item 1</div><div>item 2</div><div>item 3</div> // <-- first response
+<div>item 1</div><div>item 2</div><div>item 3</div> // <-- intermediate response
+<div>item 4</div><div>item 5</div><div>item 6</div> // <-- intermediate response
+<div>item 7</div><div>item 8</div><div>item 9</div></root> // <-- last response
 ```
 
 **Note1:** When a streambackFn is defined, it will always be invoked, even if the server doesn;t stream. In that case, it will be invoked once with the final value.

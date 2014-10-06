@@ -71,6 +71,8 @@
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
+                <li><a href="../modules/event-hover.html">event-hover</a></li>
+            
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
@@ -143,19 +145,15 @@
 &quot;use strict&quot;;
 
 /**
- * Integrates DOM-events to core-event-base. more about DOM-events:
+ * Integrates mobile-events to event-dom. more about DOM-events:
  * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
- *
- * Should be called using  the provided &#x60;init&#x60;-method like this:
  *
  *
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  * @example
- * Event = require(&#x27;event&#x27;);
- * DOMEvent = require(&#x27;event-dom&#x27;);
- * DOMEvent.mergeInto(Event);
+ * Event = require(&#x27;event-mobile&#x27;)(window);
  *
  * @module event
  * @submodule event-mobile
