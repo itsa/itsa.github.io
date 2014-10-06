@@ -78,7 +78,9 @@
             {% assign filename = fragments.last %}
             {% if files.module == page.module %}
             {% unless filename == 'index.html' %}
-            {% assign withexamples = true %}
+                {% unless filename == 'history.html' %}
+                    {% assign withexamples = true %}
+                {% endunless %}
             {% endunless %}
             {% endif %}
             {% endfor %}

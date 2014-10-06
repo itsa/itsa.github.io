@@ -50,22 +50,20 @@ Code-example:
 
     readyResponse = function(data) {
         // `data` has all the data, but we don't use it here.
-        container.innerHTML = container.innerHTML + '<br>READY';
+        container.append('<br>READY');
     };
 
     errorResponse = function(e) {
-        container.innerHTML = e.message;
+        container.setText(e.message);
     };
 
     streamFn = function(data) {
         // data should be an array
-        var response = '';
         if (Array.isArray(data)) {
             data.forEach(function(item) {
-                response += JSON.stringify(item)+'<br>';
+                container.append(JSON.stringify(item)+'<br>');
             });
         }
-        container.innerHTML = container.innerHTML + response;
     };
 
     ITSA.Event.after(
@@ -88,22 +86,20 @@ Code-example:
 
     readyResponse = function(data) {
         // `data` has all the data, but we don't use it here.
-        container.innerHTML = container.innerHTML + '<br>READY';
+        container.append('<br>READY');
     };
 
     errorResponse = function(e) {
-        container.innerHTML = e.message;
+        container.setText(e.message);
     };
 
     streamFn = function(data) {
         // data should be an array
-        var response = '';
         if (Array.isArray(data)) {
             data.forEach(function(item) {
-                response += JSON.stringify(item)+'<br>';
+                container.append(JSON.stringify(item)+'<br>');
             });
         }
-        container.innerHTML = container.innerHTML + response;
     };
 
     ITSA.Event.after(

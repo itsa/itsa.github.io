@@ -53,20 +53,16 @@ Code-example:
 
     readyResponse = function(xml) {
         // `xml` has all the complete xml-object, but we don't use it here.
-        container.innerHTML = container.innerHTML + '<br>READY';
+        container.append('<br>READY');
     };
 
     errorResponse = function(e) {
-        container.innerHTML = e.message;
+        container.setText(e.message);
     };
 
     streamFn = function(xml) {
         // xml should be an xml-object
-        var response = '';
-        var rootitem = xml.documentElement;
-        Array.prototype.forEach.call(rootitem.children, function(node) {
-            container.appendChild(node.cloneNode(true));
-        });
+        container.append(xml.documentElement.children);
     };
 
     ITSA.Event.after(
@@ -89,20 +85,16 @@ Code-example:
 
     readyResponse = function(xml) {
         // `xml` has all the complete xml-object, but we don't use it here.
-        container.innerHTML = container.innerHTML + '<br>READY';
+        container.append('<br>READY');
     };
 
     errorResponse = function(e) {
-        container.innerHTML = e.message;
+        container.setText(e.message);
     };
 
     streamFn = function(xml) {
         // xml should be an xml-object
-        var response = '';
-        var rootitem = xml.documentElement;
-        Array.prototype.forEach.call(rootitem.children, function(node) {
-            container.appendChild(node.cloneNode(true));
-        });
+        container.append(xml.documentElement.children);
     };
 
     ITSA.Event.after(

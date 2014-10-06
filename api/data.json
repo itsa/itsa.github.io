@@ -55,6 +55,27 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/dom-ext/lib/document.js": {
+            "name": "src/dom-ext/lib/document.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/dom-ext/lib/element.js": {
+            "name": "src/dom-ext/lib/element.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/dom-ext/lib/nodelist.js": {
+            "name": "src/dom-ext/lib/nodelist.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "src/event/event-base.js": {
             "name": "src/event/event-base.js",
             "modules": {
@@ -86,11 +107,41 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/event-dom/extra/event-drag.js": {
+            "name": "src/event-dom/extra/event-drag.js",
+            "modules": {
+                "event-hover": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/event-dom/extra/event-hover.js": {
+            "name": "src/event-dom/extra/event-hover.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/event-dom/extra/event-valuechange.js": {
+            "name": "src/event-dom/extra/event-valuechange.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "src/event-dom/event-dom.js": {
             "name": "src/event-dom/event-dom.js",
             "modules": {
                 "event-dom": 1
             },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/event-dom/event-drag.js": {
+            "name": "src/event-dom/event-drag.js",
+            "modules": {},
             "classes": {},
             "fors": {},
             "namespaces": {}
@@ -250,6 +301,13 @@
             },
             "fors": {},
             "namespaces": {}
+        },
+        "src/window-ext/lib/sizes.js": {
+            "name": "src/window-ext/lib/sizes.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
         }
     },
     "modules": {
@@ -258,6 +316,7 @@
             "submodules": {
                 "event-emitter": 1,
                 "event-listener": 1,
+                "event-hover": 1,
                 "event-dom": 1,
                 "event-mobile": 1
             },
@@ -313,6 +372,24 @@
             ],
             "since": "0.0.1"
         },
+        "event-hover": {
+            "name": "event-hover",
+            "submodules": {},
+            "classes": {},
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "event",
+            "namespace": "",
+            "file": "src/event-dom/extra/event-drag.js",
+            "line": 3,
+            "description": "Adds the `hover` event as a DOM-event to event-dom. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\nShould be called using  the provided `mergeInto`-method like this:\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "example": [
+                "\nEvent = require('event-dom/hover.js')(window);\n\nor",
+                "\nEvent = require('event-dom')(window);\nrequire('event-dom/event-hover.js')(window);"
+            ],
+            "since": "0.0.2"
+        },
         "event-dom": {
             "name": "event-dom",
             "submodules": {},
@@ -324,9 +401,9 @@
             "namespace": "",
             "file": "src/event-dom/event-dom.js",
             "line": 3,
-            "description": "Integrates DOM-events to core-event-base. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\nShould be called using  the provided `mergeInto`-method like this:\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "example": [
-                "\nEvent = require('event');\nDOMEvent = require('event-dom');\nDOMEvent.mergeInto(Event);"
+                "\nEvent = require('event-dom')(window);"
             ],
             "since": "0.0.1"
         },
@@ -343,9 +420,9 @@
             "namespace": "",
             "file": "src/event-mobile/event-mobile.js",
             "line": 3,
-            "description": "Integrates DOM-events to core-event-base. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\nShould be called using  the provided `init`-method like this:\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "description": "Integrates mobile-events to event-dom. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "example": [
-                "\nEvent = require('event');\nDOMEvent = require('event-dom');\nDOMEvent.mergeInto(Event);"
+                "\nEvent = require('event-mobile')(window);"
             ],
             "since": "0.0.1"
         },
@@ -576,9 +653,9 @@
             "namespace": "",
             "file": "src/event-mobile/event-mobile.js",
             "line": 3,
-            "description": "Integrates DOM-events to core-event-base. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\nShould be called using  the provided `init`-method like this:\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "description": "Integrates mobile-events to event-dom. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "example": [
-                "\nEvent = require('event');\nDOMEvent = require('event-dom');\nDOMEvent.mergeInto(Event);"
+                "\nEvent = require('event-mobile')(window);"
             ],
             "submodule": "event-mobile"
         },
@@ -7199,6 +7276,1599 @@
             "class": "Event"
         },
         {
+            "file": "src/dom-ext/lib/document.js",
+            "line": 21,
+            "itemtype": "method",
+            "name": "html",
+            "params": [
+                {
+                    "name": "string",
+                    "description": "String to escape.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Escaped string.",
+                "type": "String"
+            },
+            "static": 1,
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/document.js",
+            "line": 59,
+            "description": "Inserts a HtmlElement or text at the specified position.",
+            "itemtype": "method",
+            "name": "_insert",
+            "params": [
+                {
+                    "name": "htmlElement",
+                    "description": "the HtmlElement where the action should be applied to",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "method",
+                    "description": "method to be used (either `insertBefore` or `appendChild`)",
+                    "type": "String"
+                },
+                {
+                    "name": "content",
+                    "description": "content to append",
+                    "type": "HtmlElement|HtmlElementList|String"
+                },
+                {
+                    "name": "refElement",
+                    "description": "reference-element in case of `insertBefore`",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "escape",
+                    "description": "whether to insert `escaped` content, leading it into only text inserted",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "the original HtmlElement so it can be chained",
+                "type": "HtmlElement"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/document.js",
+            "line": 103,
+            "description": "Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.",
+            "itemtype": "method",
+            "name": "first",
+            "params": [
+                {
+                    "name": "cssSelector",
+                    "description": "css-selector to be used as a filter",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "HtmlElement|null"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/document.js",
+            "line": 124,
+            "description": "Gets a NodeList of HtmlElements, specified by the css-selector.",
+            "itemtype": "method",
+            "name": "getAll",
+            "params": [
+                {
+                    "name": "cssSelector",
+                    "description": "css-selector to match",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "NodeList of HtmlElements that match the css-selector",
+                "type": "NodeList"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/document.js",
+            "line": 141,
+            "description": "Gets one HtmlElement, specified by the css-selector. To retrieve a single element by id,\nyou need to prepend the id-name with a `#`. When multiple HtmlElement's match, the first is returned.",
+            "itemtype": "method",
+            "name": "getElement",
+            "params": [
+                {
+                    "name": "cssSelector",
+                    "description": "css-selector to match",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "the HtmlElement that was search for",
+                "type": "HtmlElement|null"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/document.js",
+            "line": 154,
+            "description": "Gets the HtmlElement that currently has the focus.\nalias for `activeElement`",
+            "itemtype": "method",
+            "name": "getFocussed",
+            "return": {
+                "description": "the HtmlElement that has focus",
+                "type": "HtmlElement|null"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/document.js",
+            "line": 166,
+            "description": "Inserts a HtmlElement or text inside HtmlElement's innerHTML after `refElement`.",
+            "itemtype": "method",
+            "name": "insertAfter",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "content to insert",
+                    "type": "HtmlElement|HtmlElementList|String"
+                },
+                {
+                    "name": "refElement",
+                    "description": "the HtmlElement where the content should be placed after",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "escape",
+                    "description": "whether to insert `escaped` content, leading it into only text inserted",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/document.js",
+            "line": 186,
+            "description": "Inserts a HtmlElement or text inside HtmlElement's innerHTML before `refElement`.",
+            "itemtype": "method",
+            "name": "insertBefore",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "content to insert",
+                    "type": "HtmlElement|HtmlElementList|String"
+                },
+                {
+                    "name": "refElement",
+                    "description": "the HtmlElement where the content should be placed before",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "escape",
+                    "description": "whether to insert `escaped` content, leading it into only text inserted",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/document.js",
+            "line": 205,
+            "description": "Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.",
+            "itemtype": "method",
+            "name": "last",
+            "params": [
+                {
+                    "name": "cssSelector",
+                    "description": "css-selector to be used as a filter",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "HtmlElement|null"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/document.js",
+            "line": 225,
+            "description": "Replaces the HtmlElement with a new HtmlElement.",
+            "itemtype": "method",
+            "name": "replace",
+            "params": [
+                {
+                    "name": "newHtmlElement",
+                    "description": "the new HtmlElement",
+                    "type": "HtmlElement|String"
+                },
+                {
+                    "name": "escape",
+                    "description": "whether to insert `escaped` content, leading it into only text inserted",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/document.js",
+            "line": 242,
+            "description": "Tests if the HtmlElement would be selected by the specified cssSelector.\nAlias for `matchesSelector()`",
+            "itemtype": "method",
+            "name": "test",
+            "params": [
+                {
+                    "name": "cssSelector",
+                    "description": "the css-selector to test against",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "whether or not the node matches the selector",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 23,
+            "description": "Adds a class to the HtmlElement. If the class already exists it won't be duplicated.",
+            "itemtype": "method",
+            "name": "addClass",
+            "params": [
+                {
+                    "name": "className",
+                    "description": "className to be added",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 37,
+            "description": "Appends a HtmlElement or text at the end of HtmlElement's innerHTML.",
+            "itemtype": "method",
+            "name": "append",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "content to append",
+                    "type": "HtmlElement|HtmlElementList|String"
+                },
+                {
+                    "name": "escape",
+                    "description": "whether to insert `escaped` content, leading it into only text inserted",
+                    "type": "Boolean"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 50,
+            "description": "Sets the inline-style of the HtmlElement exactly to the specified `value`, overruling previous values.\nMaking the HtmlElement's inline-style look like: style=\"value\".\n\nThis is meant for a quick one-time setup. For individually inline style-properties to be set, you can use `setInlineStyle()`.",
+            "itemtype": "method",
+            "name": "defineInlineStyle",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "the style string to be set",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 66,
+            "description": "Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.",
+            "itemtype": "method",
+            "name": "first",
+            "params": [
+                {
+                    "name": "cssSelector",
+                    "description": "css-selector to be used as a filter",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "HtmlElement|null"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 78,
+            "description": "Gets a NodeList of HtmlElements, specified by the css-selector.",
+            "itemtype": "method",
+            "name": "getAll",
+            "params": [
+                {
+                    "name": "cssSelector",
+                    "description": "css-selector to match",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "NodeList of HtmlElements that match the css-selector",
+                "type": "NodeList"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 90,
+            "description": "Gets an attribute of the HtmlElement.\nCautious: do not use `value` to retrieve the value. Use `getValue()` instead.\n\nAlias for getAttribute().",
+            "itemtype": "method",
+            "name": "getAttr",
+            "params": [
+                {
+                    "name": "attributeName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "value of the attribute",
+                "type": "String|null"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 105,
+            "description": "Gets the HtmlElement's class as a whole String.\n\nAlias for this.className",
+            "itemtype": "method",
+            "name": "getClass",
+            "return": {
+                "description": "The complete class of the HtmlElement as a String",
+                "type": "String"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 118,
+            "description": "Returns data set specified by `key`. If not set, `undefined` will be returned.",
+            "itemtype": "method",
+            "name": "getData",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "name of the key",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "data set specified by `key`",
+                "type": "Any|undefined"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 130,
+            "description": "Gets one HtmlElement, specified by the css-selector. To retrieve a single element by id,\nyou need to prepend the id-name with a `#`. When multiple HtmlElement's match, the first is returned.",
+            "itemtype": "method",
+            "name": "getElement",
+            "params": [
+                {
+                    "name": "cssSelector",
+                    "description": "css-selector to match",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "the HtmlElement that was search for",
+                "type": "HtmlElement|null"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 143,
+            "description": "Gets the height of the element in pixels. Included are padding and border, not any margins.",
+            "itemtype": "method",
+            "name": "getHeight",
+            "params": [
+                {
+                    "name": "overflow",
+                    "description": "in case of elements that overflow: return total height, included the invisible overflow",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "width in pixels",
+                "type": "Number"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 155,
+            "description": "Returns the innerContent of the HtmlElement as a string with HTML entities.\n\nAlias for innerHTML",
+            "itemtype": "method",
+            "name": "getHtml",
+            "return": {
+                "description": "content as a string with HTML entities",
+                "type": "String"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 168,
+            "description": "Gets the HtmlElement's id.\n\nAlias for this.id",
+            "itemtype": "method",
+            "name": "getId",
+            "return": {
+                "description": "The id of the HtmlElement (=== '') when undefined",
+                "type": "String"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 181,
+            "description": "Returns inline style of the specified property. `Inline` means: what is set directly on the HtmlElement,\nthis doesn't mean necesairy how it is looked like: when no css is set inline, the HtmlElement might still have\nan appearance because of other CSS-rules.\n\nIn most cases, you would be interesting in using `getStyle()` instead.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
+            "itemtype": "method",
+            "name": "getInlineStyle",
+            "return": {
+                "description": "content as a string with HTML entities",
+                "type": "String"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 198,
+            "description": "Gets the left-scroll offset of the content of the HtmlElement.\nOnly apropriate when the HtmlElement has overflow.",
+            "itemtype": "method",
+            "name": "getScrollLeft",
+            "return": {
+                "description": "left-offset in pixels",
+                "type": "Number"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 210,
+            "description": "Gets the top-scroll offset of the content of the HtmlElement.\nOnly apropriate when the HtmlElement has overflow.",
+            "itemtype": "method",
+            "name": "getScrollTop",
+            "return": {
+                "description": "top-offset in pixels",
+                "type": "Number"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 222,
+            "description": "Returns cascaded style of the specified property. `Cascaded` means: the actual present style,\nthe way it is visible (calculated through the DOM-tree).\n\nNote1: values are absolute: percentages and points are converted to absolute values, sizes are in pixels, colors in rgb/rgba-format.\nNote2: you cannot query shotcut-properties: use `margin-left` instead of `margin`.\nNote3: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine.",
+            "itemtype": "method",
+            "name": "getCascadeStyle",
+            "params": [
+                {
+                    "name": "cssProperty",
+                    "description": "property that is queried",
+                    "type": "String"
+                },
+                {
+                    "name": "pseudo",
+                    "description": "to query pseudo-element, fe: `:before` or `:first-line`",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "value for the css-property",
+                "type": "String"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 240,
+            "description": "Gets the HtmlElement's tagname. Always uppercased.\n\nAlias for this.nodeName",
+            "itemtype": "method",
+            "name": "getTag",
+            "return": {
+                "description": "The tag-name of the HtmlElement in uppercase",
+                "type": "String"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 253,
+            "description": "Gets the text content of the HtmlElement and its descendants.\nIf you need full HTML, you should use getHTML().\n\nAlias for textContent",
+            "itemtype": "method",
+            "name": "getText",
+            "return": {
+                "description": "content of the HtmlElement as text",
+                "type": "String"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 275,
+            "description": "Gets the width of the element in pixels. Included are padding and border, not any margins.",
+            "itemtype": "method",
+            "name": "getWidth",
+            "params": [
+                {
+                    "name": "overflow",
+                    "description": "in case of elements that overflow: return total width, included the invisible overflow",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "width in pixels",
+                "type": "Number"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 287,
+            "description": "Gets the value of the following HtmlElements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>",
+            "itemtype": "method",
+            "name": "getValue",
+            "return": {
+                "description": "value of the attribute",
+                "type": "String|null"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 308,
+            "description": "Gets the x-position (in the window.document) of the element in pixels.\nwindow.document-related: regardless of the window's scroll-position.",
+            "itemtype": "method",
+            "name": "getX",
+            "return": {
+                "description": "x-position in pixels",
+                "type": "Number"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 320,
+            "description": "Gets the y-position (in the window.document) of the element in pixels.\nwindow.document-related: regardless of the window's scroll-position.",
+            "itemtype": "method",
+            "name": "getY",
+            "return": {
+                "description": "y-position in pixels",
+                "type": "Number"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 332,
+            "description": "Whether the HtmlElement has the attribute set.\n\nAlias for hasAttribute().",
+            "itemtype": "method",
+            "name": "hasAttr",
+            "params": [
+                {
+                    "name": "attributeName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Whether the HtmlElement has the attribute set.",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 346,
+            "description": "Checks whether the className is present on the Element.",
+            "itemtype": "method",
+            "name": "hasClass",
+            "params": [
+                {
+                    "name": "newHtmlElement",
+                    "description": "the new HtmlElement",
+                    "type": "HtmlElement"
+                }
+            ],
+            "return": {
+                "description": "whether the className is present on the Element",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 359,
+            "description": "If the Element has data set specified by `key`.",
+            "itemtype": "method",
+            "name": "hasData",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "name of the key",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 371,
+            "description": "Checks whether HtmlElement currently has the focus.",
+            "itemtype": "method",
+            "name": "hasFocus",
+            "params": [
+                {
+                    "name": "newHtmlElement",
+                    "description": "the new HtmlElement",
+                    "type": "HtmlElement"
+                }
+            ],
+            "return": {
+                "description": "whether the className is present on the Element",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 383,
+            "description": "Inserts a HtmlElement or text inside HtmlElement's innerHTML after `refElement`.",
+            "itemtype": "method",
+            "name": "insertAfter",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "content to insert",
+                    "type": "HtmlElement|HtmlElementList|String"
+                },
+                {
+                    "name": "refElement",
+                    "description": "the HtmlElement where the content should be placed after",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "escape",
+                    "description": "whether to insert `escaped` content, leading it into only text inserted",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 397,
+            "description": "Inserts a HtmlElement or text inside HtmlElement's innerHTML before `refElement`.",
+            "itemtype": "method",
+            "name": "insertBefore",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "content to insert",
+                    "type": "HtmlElement|HtmlElementList|String"
+                },
+                {
+                    "name": "refElement",
+                    "description": "the HtmlElement where the content should be placed before",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "escape",
+                    "description": "whether to insert `escaped` content, leading it into only text inserted",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 411,
+            "description": "Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.",
+            "itemtype": "method",
+            "name": "last",
+            "params": [
+                {
+                    "name": "cssSelector",
+                    "description": "css-selector to be used as a filter",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "HtmlElement|null"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 423,
+            "description": "Returns the next of the HtmlElement's siblings, or the next that matches `cssSelector`.",
+            "itemtype": "method",
+            "name": "next",
+            "params": [
+                {
+                    "name": "cssSelector",
+                    "description": "css-selector to be used as a filter",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "HtmlElement|null"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 442,
+            "description": "Prepends a HtmlElement or text at the start of HtmlElement's innerHTML.",
+            "itemtype": "method",
+            "name": "prepend",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "content to prepend",
+                    "type": "HtmlElement|HtmlElementList|String"
+                },
+                {
+                    "name": "escape",
+                    "description": "whether to insert `escaped` content, leading it into only text inserted",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 460,
+            "description": "Returns the previous of the HtmlElement's siblings, or the previous that matches `cssSelector`.",
+            "itemtype": "method",
+            "name": "prev",
+            "params": [
+                {
+                    "name": "cssSelector",
+                    "description": "css-selector to be used as a filter",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "HtmlElement|null"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 479,
+            "description": "Removes the HtmlElement from the DOM.",
+            "itemtype": "method",
+            "name": "remove",
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 489,
+            "description": "Removes the attribute from the HtmlElement.\n\nAlias for removeAttribute().",
+            "itemtype": "method",
+            "name": "removeAttr",
+            "params": [
+                {
+                    "name": "attributeName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Whether the HtmlElement has the attribute set.",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 503,
+            "description": "Removes a className from the HtmlElement.",
+            "itemtype": "method",
+            "name": "removeClass",
+            "params": [
+                {
+                    "name": "className",
+                    "description": "the className that should be removed.",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 518,
+            "description": "Removes data specified by `key`. When no arguments are passed, all node-data (key-value pairs) will be removed.",
+            "itemtype": "method",
+            "name": "removeData",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "name of the key",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 544,
+            "description": "Removes a css-property (inline) out of the HtmlElement. Use camelCase.",
+            "itemtype": "method",
+            "name": "removeInlineStyle",
+            "params": [
+                {
+                    "name": "cssAttribute",
+                    "description": "the css-property to be removed",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 557,
+            "description": "Replaces the HtmlElement with a new HtmlElement.",
+            "itemtype": "method",
+            "name": "replace",
+            "params": [
+                {
+                    "name": "newHtmlElement",
+                    "description": "the new HtmlElement",
+                    "type": "HtmlElement|String"
+                },
+                {
+                    "name": "escape",
+                    "description": "whether to insert `escaped` content, leading it into only text inserted",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 569,
+            "description": "Replaces the className of the HtmlElement with a new className.\nIf the previous className is not available, the new className is set nevertheless.",
+            "itemtype": "method",
+            "name": "replaceClass",
+            "params": [
+                {
+                    "name": "prevClassName",
+                    "description": "the className to be replaced",
+                    "type": "String"
+                },
+                {
+                    "name": "newClassName",
+                    "description": "the className to be set",
+                    "type": "String"
+                },
+                {
+                    "name": "[force",
+                    "description": "]  whether the new className should be set, even is the previous className isn't there",
+                    "type": "Boolean"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 588,
+            "description": "Scrolls the content of the HtmlElement into the specified scrollposition.\nOnly available when the HtmlElement has overflow.",
+            "itemtype": "method",
+            "name": "scrollTo",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "left-offset in pixels",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "top-offset in pixels",
+                    "type": "Number"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 605,
+            "description": "Sets the attribute on the HtmlElement with the specified value.\n\nAlias for setAttribute().",
+            "itemtype": "method",
+            "name": "setAttr",
+            "params": [
+                {
+                    "name": "attributeName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "the value that belongs to `key`",
+                    "type": "Any"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 621,
+            "description": "Sets the HtmlElement's class as a whole String. Cleaning up any previous classes.\n\nAlias for this.className = value",
+            "itemtype": "method",
+            "name": "setClass",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "the value that belongs to `key`",
+                    "type": "Any"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 636,
+            "description": "Stores arbitary `data` at the HtmlElement. This has nothing to do with node-attributes whatsoever,\nit is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.",
+            "itemtype": "method",
+            "name": "setData",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "name of the key",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "the value that belongs to `key`",
+                    "type": "Any"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 658,
+            "description": "Sets the content of the HtmlElement (innerHTML). Careful: only set content like this if you controll the data and\nare sure what is going inside. Otherwise XSS might occur. If you let the user insert, or insert right from a db,\nyou might be better of using setContent().",
+            "itemtype": "method",
+            "name": "setHTML",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "content to append",
+                    "type": "HtmlElement|HtmlElementList|String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 673,
+            "description": "Gets the serialized HTML fragment describing the element including its descendants.\n\nalias for outerHTML()",
+            "itemtype": "method",
+            "name": "serialize",
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 686,
+            "description": "Sets a css-property (inline) out of the HtmlElement. Use camelCase.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
+            "itemtype": "method",
+            "name": "setStyle",
+            "params": [
+                {
+                    "name": "cssAttribute",
+                    "description": "the css-property to be set",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "the css-value",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 705,
+            "description": "Sets the content of the HtmlElement. This is a safe way to set the content, because HTML is not parsed.\nIf you do need to set HTML inside the node, use setHTML().",
+            "itemtype": "method",
+            "name": "setText",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "content to append. In case of HTML, it will be escaped.",
+                    "type": "HtmlElement|HtmlElementList|String"
+                },
+                {
+                    "name": "escape",
+                    "description": "whether to insert `escaped` content, leading it into only text inserted",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 727,
+            "description": "Sets the value of the following HtmlElements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>\n\nWill fire an `valuechange` event, in case both the `itsa/event` as well as\n`itsa/event-dom/extra/event-valuechange.js` are used.\n\nTherefore it is highly suggested to use `setValue()` instead of setting the value manually.",
+            "itemtype": "method",
+            "name": "setValue",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "the value to be set",
+                    "type": "Any"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 763,
+            "description": "Set the position of an html element in page coordinates.\nThe element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
+            "itemtype": "method",
+            "name": "setXY",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "The target element"
+                },
+                {
+                    "name": "xy",
+                    "description": "Contains X & Y values for new position (coordinates are page-based)",
+                    "type": "Array"
+                },
+                {
+                    "name": "noRetry",
+                    "description": "By default we try and set the position a second time if the first fails",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 784,
+            "description": "Set the X position of an html element in page coordinates, regardless of how the element is positioned.\nThe element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
+            "itemtype": "method",
+            "name": "setX",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "The target element"
+                },
+                {
+                    "name": "x",
+                    "description": "The X values for new position (coordinates are page-based)",
+                    "type": "Number"
+                }
+            ],
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 795,
+            "description": "Set the Y position of an html element in page coordinates, regardless of how the element is positioned.\nThe element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
+            "itemtype": "method",
+            "name": "setY",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "The target element"
+                },
+                {
+                    "name": "y",
+                    "description": "The Y values for new position (coordinates are page-based)",
+                    "type": "Number"
+                }
+            ],
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 806,
+            "description": "Tests if the HtmlElement would be selected by the specified cssSelector.\nAlias for `matchesSelector()`",
+            "itemtype": "method",
+            "name": "test",
+            "params": [
+                {
+                    "name": "cssSelector",
+                    "description": "the css-selector to test against",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "whether or not the node matches the selector",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 819,
+            "description": "Toggles the className of the Element.",
+            "itemtype": "method",
+            "name": "toggleClass",
+            "params": [
+                {
+                    "name": "className",
+                    "description": "the className that should be toggled",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 27,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nAdds a class to the HtmlElement. If the class already exists it won't be duplicated.",
+            "itemtype": "method",
+            "name": "addClass",
+            "params": [
+                {
+                    "name": "className",
+                    "description": "className to be added",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 40,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nAppends a HtmlElement or text at the end of HtmlElement's innerHTML.",
+            "itemtype": "method",
+            "name": "append",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "content to append",
+                    "type": "HtmlElement|HtmlElementList|String"
+                },
+                {
+                    "name": "escape",
+                    "description": "whether to insert `escaped` content, leading it into only text inserted",
+                    "type": "Boolean"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 54,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nSets the inline-style of the HtmlElement exactly to the specified `value`, overruling previous values.\nMaking the HtmlElement's inline-style look like: style=\"value\".\n\nThis is meant for a quick one-time setup. For individually inline style-properties to be set, you can use `setInlineStyle()`.",
+            "itemtype": "method",
+            "name": "defineInlineStyle",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "the style string to be set",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 70,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nPrepends a HtmlElement or text at the start of HtmlElement's innerHTML.",
+            "itemtype": "method",
+            "name": "prepend",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "content to prepend",
+                    "type": "HtmlElement|HtmlElementList|String"
+                },
+                {
+                    "name": "escape",
+                    "description": "whether to insert `escaped` content, leading it into only text inserted",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 84,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nRemoves the HtmlElement from the DOM.",
+            "itemtype": "method",
+            "name": "remove",
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 95,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nRemoves the attribute from the HtmlElement.\n\nAlias for removeAttribute().",
+            "itemtype": "method",
+            "name": "removeAttr",
+            "params": [
+                {
+                    "name": "attributeName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Whether the HtmlElement has the attribute set.",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 110,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nRemoves a className from the HtmlElement.",
+            "itemtype": "method",
+            "name": "removeClass",
+            "params": [
+                {
+                    "name": "className",
+                    "description": "the className that should be removed.",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 123,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nRemoves data specified by `key`. When no arguments are passed, all node-data (key-value pairs) will be removed.",
+            "itemtype": "method",
+            "name": "removeData",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "name of the key",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 136,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nRemoves a css-property (inline) out of the HtmlElement. Use camelCase.",
+            "itemtype": "method",
+            "name": "removeInlineStyle",
+            "params": [
+                {
+                    "name": "cssAttribute",
+                    "description": "the css-property to be removed",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 149,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nReplaces the HtmlElement with a new HtmlElement.",
+            "itemtype": "method",
+            "name": "replace",
+            "params": [
+                {
+                    "name": "newHtmlElement",
+                    "description": "the new HtmlElement",
+                    "type": "HtmlElement|String"
+                },
+                {
+                    "name": "escape",
+                    "description": "whether to insert `escaped` content, leading it into only text inserted",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 162,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nReplaces the className of the HtmlElement with a new className.\nIf the previous className is not available, the new className is set nevertheless.",
+            "itemtype": "method",
+            "name": "replaceClass",
+            "params": [
+                {
+                    "name": "prevClassName",
+                    "description": "the className to be replaced",
+                    "type": "String"
+                },
+                {
+                    "name": "newClassName",
+                    "description": "the className to be set",
+                    "type": "String"
+                },
+                {
+                    "name": "[force",
+                    "description": "]  whether the new className should be set, even is the previous className isn't there",
+                    "type": "Boolean"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 178,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nSets the attribute on the HtmlElement with the specified value.\n\nAlias for setAttribute().",
+            "itemtype": "method",
+            "name": "setAttr",
+            "params": [
+                {
+                    "name": "attributeName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "the value that belongs to `key`",
+                    "type": "Any"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 194,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nSets the class to the HtmlElement. Cleaning up any previous classes.",
+            "itemtype": "method",
+            "name": "setClass",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "the value that belongs to `key`",
+                    "type": "Any"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 207,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nStores arbitary `data` at the HtmlElement. This has nothing to do with node-attributes whatsoever,\nit is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.",
+            "itemtype": "method",
+            "name": "setData",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "name of the key",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "the value that belongs to `key`",
+                    "type": "Any"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 222,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nSets the content of the HtmlElement (innerHTML). Careful: only set content like this if you controll the data and\nare sure what is going inside. Otherwise XSS might occur. If you let the user insert, or insert right from a db,\nyou might be better of using setContent().",
+            "itemtype": "method",
+            "name": "setHTML",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "content to append",
+                    "type": "HtmlElement|HtmlElementList|String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 237,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nSets a css-property (inline) out of the HtmlElement. Use camelCase.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
+            "itemtype": "method",
+            "name": "setStyle",
+            "params": [
+                {
+                    "name": "cssAttribute",
+                    "description": "the css-property to be set",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "the css-value",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 253,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nSets the content of the HtmlElement. This is a safe way to set the content, because HTML is not parsed.\nIf you do need to set HTML inside the node, use setHTML().",
+            "itemtype": "method",
+            "name": "setText",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "content to append. In case of HTML, it will be escaped.",
+                    "type": "HtmlElement|HtmlElementList|String"
+                },
+                {
+                    "name": "escape",
+                    "description": "whether to insert `escaped` content, leading it into only text inserted",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
+            "line": 268,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nToggles the className of the Element.",
+            "itemtype": "method",
+            "name": "toggleClass",
+            "params": [
+                {
+                    "name": "className",
+                    "description": "the className that should be toggled",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event"
+        },
+        {
             "file": "src/event/event-base.js",
             "line": 79,
             "description": "Subscribes to a customEvent. The callback will be executed `after` the defaultFn.",
@@ -7446,13 +9116,19 @@
                 },
                 {
                     "name": "callback",
-                    "description": "subscriber: will be invoked when the customEvent is called (before any subscribers.\n                Recieves 2 arguments: `customEvent` and the `subscriber-object`.",
+                    "description": "subscriber: will be invoked when the customEvent is called (before any subscribers.\n                Recieves 3 arguments: the `subscriber-object`, `customEvent` and the complete subscriptionobject.",
                     "type": "Function"
                 },
                 {
                     "name": "context",
                     "description": "context of the callback",
                     "type": "Object"
+                },
+                {
+                    "name": "once",
+                    "description": "whether the subscriptions should be removed after the first invokation",
+                    "type": "Boolean",
+                    "optional": true
                 }
             ],
             "chainable": 1,
@@ -7462,7 +9138,42 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 405,
+            "line": 407,
+            "description": "Creates a detach-notifier for the customEvent.\nYou can use this to get informed whenever a subscriber detaches.\n\nUse **no** wildcards for the emitterName. You might use wildcards for the eventName. Without wildcards, the\nnotification will be unNotified (callback automaticly detached) on the first time the event occurs.\n\nYou **must** specify the full `emitterName:eventName` syntax.\nThe module `core-event-dom` uses `notify` to auto-define DOM-events (UI:*).",
+            "static": 1,
+            "itemtype": "method",
+            "name": "notifyDetach",
+            "params": [
+                {
+                    "name": "customEvent",
+                    "description": "the custom-event (or Array of events) to subscribe to. CustomEvents should\n       have the syntax: `emitterName:eventName`. Wildcard `*` may be used only  for`eventName`.\n       If `emitterName` should be defined.",
+                    "type": "String|Array"
+                },
+                {
+                    "name": "callback",
+                    "description": "subscriber: will be invoked when the customEvent is called (before any subscribers.\n                Recieves 2 arguments: the `subscriber-object` and `customEvent`.",
+                    "type": "Function"
+                },
+                {
+                    "name": "context",
+                    "description": "context of the callback",
+                    "type": "Object"
+                },
+                {
+                    "name": "once",
+                    "description": "whether the subscriptions should be removed after the first invokation",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event"
+        },
+        {
+            "file": "src/event/event-base.js",
+            "line": 439,
             "description": "Subscribes to a customEvent. The callback will be executed `after` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
             "itemtype": "method",
@@ -7508,7 +9219,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 449,
+            "line": 483,
             "description": "Subscribes to a customEvent. The callback will be executed `before` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
             "itemtype": "method",
@@ -7554,7 +9265,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 493,
+            "line": 527,
             "description": "Removes all event-definitions of an emitter, specified by its `emitterName`.\nWhen `emitterName` is not set, ALL event-definitions will be removed.",
             "static": 1,
             "itemtype": "method",
@@ -7573,7 +9284,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 523,
+            "line": 557,
             "description": "Removes the event-definition of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -7591,7 +9302,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 536,
+            "line": 570,
             "description": "unNotifies (unsubscribes) the notifier of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -7609,7 +9320,25 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 553,
+            "line": 583,
+            "description": "unNotifies (unsubscribes) the detach-notifier of the specified customEvent.",
+            "static": 1,
+            "itemtype": "method",
+            "name": "unNotifyDetach",
+            "params": [
+                {
+                    "name": "customEvent",
+                    "description": "conform the syntax: `emitterName:eventName`.",
+                    "type": "String"
+                }
+            ],
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event"
+        },
+        {
+            "file": "src/event/event-base.js",
+            "line": 600,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -7661,7 +9390,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 623,
+            "line": 670,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -7713,7 +9442,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 725,
+            "line": 777,
             "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.rendered (optional) --> `true` the vDOM rendered the dom</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n              <li>e.status.renderPrevented (optional) -->  `reason|true` if the event got renderPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n    <li>e.preventRender() --> by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()` or `e.preventRender()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li>\n<ul>",
             "static": 1,
             "itemtype": "method",
@@ -7770,7 +9499,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 881,
+            "line": 933,
             "description": "Does the actual invocation of a subscriber.",
             "itemtype": "method",
             "name": "_invokeSubs",
@@ -7812,7 +9541,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 931,
+            "line": 983,
             "description": "Removes a subscriber from the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`.",
             "static": 1,
             "itemtype": "method",
@@ -7848,7 +9577,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 976,
+            "line": 1048,
             "description": "Removes subscribers from the multiple customevents. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -7873,7 +9602,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1031,
+            "line": 1103,
             "description": "Adds a property to the default eventobject's prototype which passes through all eventcycles.\nGoes through Object.defineProperty with configurable, enumerable and writable\nall set to false.",
             "itemtype": "method",
             "name": "_setEventObjProperty",
@@ -7898,7 +9627,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1051,
+            "line": 1123,
             "description": "Objecthash containing all defined custom-events\nwhich has a structure like this:\n\n_ce = {\n    'UI:click': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    },\n    'redmodel:save': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -7912,7 +9641,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1083,
+            "line": 1155,
             "description": "Objecthash containing all defined before and after subscribers\nwhich has a structure like this (`b` represents `before` and `a` represents `after`)\nEvery item that gets in the array consist by itself of 3 properties:\n                                                         subscriberitem = {\n                                                             o: listener,\n                                                             cb: callbackFn(e),\n                                                             f: filter\n                                                         };\n\n_subs = {\n    'UI:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    '*:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    'redmodel:save': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -7926,7 +9655,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1134,
+            "line": 1206,
             "description": "Internal list of finalize-subscribers which are invoked at the finalization-cycle, which happens after the after-subscribers.\nIs an array of function-references.",
             "itemtype": "property",
             "name": "_final",
@@ -7940,7 +9669,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1146,
+            "line": 1218,
             "description": "Object that acts as the prototype of the eventobject.\nTo add more methods, you can use `_setEventObjProperty`",
             "itemtype": "property",
             "name": "_defaultEventObj",
@@ -7954,8 +9683,22 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1162,
-            "description": "Objecthash containing all notifiers, keyed by customEvent name.\nThis list is maintained by `notify`, `unNotify` and `unNotifyAll`\n\n_notifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
+            "line": 1234,
+            "description": "Objecthash containing all detach-notifiers, keyed by customEvent name.\nThis list is maintained by `notifyDetach` and `unNotifyDetach`\n\n_detachNotifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
+            "itemtype": "property",
+            "name": "_detachNotifiers",
+            "default": "{}",
+            "type": "Object",
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event"
+        },
+        {
+            "file": "src/event/event-base.js",
+            "line": 1261,
+            "description": "Objecthash containing all notifiers, keyed by customEvent name.\nThis list is maintained by `notify` and `unNotify`\n\n_notifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_notifiers",
             "default": "{}",
@@ -8234,8 +9977,41 @@
             "submodule": "event-listener"
         },
         {
+            "file": "src/event-dom/extra/event-drag.js",
+            "line": 34,
+            "description": "Check to see if a node has editable content or not.\n\nTODO: Add additional checks to get it to work for child nodes\nthat inherit \"contenteditable\" from parent nodes. This may be\ntoo computationally intensive to be placed inside of the `_poll`\nloop, however.",
+            "itemtype": "method",
+            "name": "_isEditable",
+            "params": [
+                {
+                    "name": "node",
+                    "description": "",
+                    "type": "Node"
+                }
+            ],
+            "access": "protected",
+            "tagname": "",
+            "static": 1,
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-hover"
+        },
+        {
+            "file": "src/event-dom/extra/event-valuechange.js",
+            "line": 34,
+            "description": "Interval (in milliseconds) at which to poll for changes to the value of an\nelement with one or more `valuechange` subscribers when the user is likely\nto be interacting with it.",
+            "itemtype": "property",
+            "name": "POLL_INTERVAL",
+            "type": "Number",
+            "default": "50",
+            "static": 1,
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-hover"
+        },
+        {
             "file": "src/event-dom/event-dom.js",
-            "line": 480,
+            "line": 465,
             "description": "Does the actual transportation from DOM-events into the Eventsystem. It also looks at the response of\nthe Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will be preventDefaulted.",
             "itemtype": "method",
             "name": "_domCallback",
@@ -8259,8 +10035,28 @@
             "submodule": "event-dom"
         },
         {
+            "file": "src/event-dom/event-drag.js",
+            "line": 34,
+            "description": "Check to see if a node has editable content or not.\n\nTODO: Add additional checks to get it to work for child nodes\nthat inherit \"contenteditable\" from parent nodes. This may be\ntoo computationally intensive to be placed inside of the `_poll`\nloop, however.",
+            "itemtype": "method",
+            "name": "_isEditable",
+            "params": [
+                {
+                    "name": "node",
+                    "description": "",
+                    "type": "Node"
+                }
+            ],
+            "access": "protected",
+            "tagname": "",
+            "static": 1,
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-hover"
+        },
+        {
             "file": "src/event-mobile/event-mobile.js",
-            "line": 27,
+            "line": 23,
             "description": "The (only) Hammer-instance that `Event` uses. It is bound to the `body`-element.",
             "itemtype": "property",
             "name": "hammertime",
@@ -8272,7 +10068,7 @@
         },
         {
             "file": "src/event-mobile/event-mobile.js",
-            "line": 45,
+            "line": 41,
             "description": "Adds the `Hammer`-class to Event, so it can be used from within Event.",
             "itemtype": "property",
             "name": "Hammer",
@@ -8284,7 +10080,7 @@
         },
         {
             "file": "src/event-mobile/event-mobile.js",
-            "line": 83,
+            "line": 79,
             "description": "Is emitted whenever hammerjs detects a gestureevent.\nBy emitting its original event through ParcelaEvent:eventmobile, `event-dom`\nwill catch it and process it through the dom-event cycle.",
             "itemtype": "event",
             "name": "ParcelaEvent:eventmobile",
@@ -9290,7 +11086,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 100,
+            "line": 107,
             "description": "Reference to the `idGenerator` function in [utils](../modules/utils.html)",
             "itemtype": "property",
             "name": "idGenerator",
@@ -9301,7 +11097,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 110,
+            "line": 118,
             "description": "Reference to the [IO](io.html) object",
             "itemtype": "property",
             "name": "IO",
@@ -9312,7 +11108,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 122,
+            "line": 130,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",
@@ -9750,7 +11546,7 @@
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 1,
+            "line": 3,
             "description": "Wrapper for built-in http.js to emulate the browser XMLHttpRequest object.\n\nThis can be used with JS designed for browsers to improve reuse of code and\nallow the use of existing libraries.\n\nUsage: include(\"XMLHttpRequest.js\") and use XMLHttpRequest per W3C specs.",
             "author": "Dan DeFelippi <dan@driverdan.com>",
             "contributor": "David Ellis <d.f.ellis@ieee.org>",
@@ -9760,35 +11556,35 @@
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 20,
+            "line": 22,
             "description": "Private variables",
             "class": "window",
             "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 87,
+            "line": 89,
             "description": "Constants",
             "class": "window",
             "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 97,
+            "line": 99,
             "description": "Public vars",
             "class": "window",
             "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 113,
+            "line": 115,
             "description": "Private methods",
             "class": "window",
             "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 121,
+            "line": 123,
             "description": "Check if the specified header is allowed.",
             "params": [
                 {
@@ -9804,7 +11600,7 @@
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 131,
+            "line": 133,
             "description": "Check if the specified method is allowed.",
             "params": [
                 {
@@ -9820,14 +11616,14 @@
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 141,
+            "line": 143,
             "description": "Public methods",
             "class": "window",
             "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 145,
+            "line": 147,
             "description": "Open the connection. Currently supports local server requests.",
             "params": [
                 {
@@ -9856,7 +11652,7 @@
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 174,
+            "line": 176,
             "description": "Disables or enables isAllowedHttpHeader() check the request. Enabled by default.\nThis does not conform to the W3C spec.",
             "params": [
                 {
@@ -9869,7 +11665,7 @@
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 184,
+            "line": 186,
             "description": "Sets a header for the request.",
             "params": [
                 {
@@ -9886,7 +11682,7 @@
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 204,
+            "line": 206,
             "description": "Gets a header from the server response.",
             "params": [
                 {
@@ -9902,7 +11698,7 @@
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 222,
+            "line": 220,
             "description": "Gets all the response headers.",
             "return": {
                 "description": "string A string with all response headers separated by CR+LF"
@@ -9912,7 +11708,7 @@
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 242,
+            "line": 240,
             "description": "Gets a request header",
             "params": [
                 {
@@ -9928,7 +11724,7 @@
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 257,
+            "line": 255,
             "description": "Sends the request to the server.",
             "params": [
                 {
@@ -9941,42 +11737,42 @@
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 516,
+            "line": 517,
             "description": "Called when an error is encountered to deal with it.",
             "class": "window",
             "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 527,
+            "line": 528,
             "description": "Aborts a request.",
             "class": "window",
             "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 551,
+            "line": 550,
             "description": "Adds an event listener. Preferred method of binding to events.",
             "class": "window",
             "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 562,
+            "line": 561,
             "description": "Remove an event callback that has already been bound.\nOnly works on the matching funciton, cannot be a copy.",
             "class": "window",
             "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 575,
+            "line": 574,
             "description": "Dispatch any events, including both \"on\" methods and events attached using addEventListener.",
             "class": "window",
             "module": "js-ext"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
-            "line": 589,
+            "line": 588,
             "description": "Changes readyState and calls onreadystatechange.",
             "params": [
                 {
@@ -10100,6 +11896,62 @@
                 "type": "Object"
             },
             "class": "Utils",
+            "module": "utils"
+        },
+        {
+            "file": "src/window-ext/lib/sizes.js",
+            "line": 50,
+            "description": "Gets the left-scroll offset of the window.",
+            "itemtype": "method",
+            "name": "getScrollLeft",
+            "return": {
+                "description": "left-offset in pixels",
+                "type": "Number"
+            },
+            "since": "0.0.1",
+            "class": "",
+            "module": "utils"
+        },
+        {
+            "file": "src/window-ext/lib/sizes.js",
+            "line": 60,
+            "description": "Gets the top-scroll offset of the window.",
+            "itemtype": "method",
+            "name": "getScrollTop",
+            "return": {
+                "description": "top-offset in pixels",
+                "type": "Number"
+            },
+            "since": "0.0.1",
+            "class": "",
+            "module": "utils"
+        },
+        {
+            "file": "src/window-ext/lib/sizes.js",
+            "line": 70,
+            "description": "Gets the width of the window.",
+            "itemtype": "method",
+            "name": "getWidth",
+            "return": {
+                "description": "width in pixels",
+                "type": "Number"
+            },
+            "since": "0.0.1",
+            "class": "",
+            "module": "utils"
+        },
+        {
+            "file": "src/window-ext/lib/sizes.js",
+            "line": 80,
+            "description": "Gets the height of the window.",
+            "itemtype": "method",
+            "name": "getHeight",
+            "return": {
+                "description": "width in pixels",
+                "type": "Number"
+            },
+            "since": "0.0.1",
+            "class": "",
             "module": "utils"
         }
     ],
@@ -11810,7 +13662,7 @@
         },
         {
             "message": "unknown tag: license",
-            "line": " src/node-win/lib/XMLHttpRequest.js:1"
+            "line": " src/node-win/lib/XMLHttpRequest.js:3"
         },
         {
             "message": "Missing item type\nRequire the given path.",
@@ -13746,87 +15598,87 @@
         },
         {
             "message": "Missing item type\nWrapper for built-in http.js to emulate the browser XMLHttpRequest object.\n\nThis can be used with JS designed for browsers to improve reuse of code and\nallow the use of existing libraries.\n\nUsage: include(\"XMLHttpRequest.js\") and use XMLHttpRequest per W3C specs.",
-            "line": " src/node-win/lib/XMLHttpRequest.js:1"
+            "line": " src/node-win/lib/XMLHttpRequest.js:3"
         },
         {
             "message": "Missing item type\nPrivate variables",
-            "line": " src/node-win/lib/XMLHttpRequest.js:20"
+            "line": " src/node-win/lib/XMLHttpRequest.js:22"
         },
         {
             "message": "Missing item type\nConstants",
-            "line": " src/node-win/lib/XMLHttpRequest.js:87"
+            "line": " src/node-win/lib/XMLHttpRequest.js:89"
         },
         {
             "message": "Missing item type\nPublic vars",
-            "line": " src/node-win/lib/XMLHttpRequest.js:97"
+            "line": " src/node-win/lib/XMLHttpRequest.js:99"
         },
         {
             "message": "Missing item type\nPrivate methods",
-            "line": " src/node-win/lib/XMLHttpRequest.js:113"
+            "line": " src/node-win/lib/XMLHttpRequest.js:115"
         },
         {
             "message": "Missing item type\nCheck if the specified header is allowed.",
-            "line": " src/node-win/lib/XMLHttpRequest.js:121"
+            "line": " src/node-win/lib/XMLHttpRequest.js:123"
         },
         {
             "message": "Missing item type\nCheck if the specified method is allowed.",
-            "line": " src/node-win/lib/XMLHttpRequest.js:131"
+            "line": " src/node-win/lib/XMLHttpRequest.js:133"
         },
         {
             "message": "Missing item type\nPublic methods",
-            "line": " src/node-win/lib/XMLHttpRequest.js:141"
+            "line": " src/node-win/lib/XMLHttpRequest.js:143"
         },
         {
             "message": "Missing item type\nOpen the connection. Currently supports local server requests.",
-            "line": " src/node-win/lib/XMLHttpRequest.js:145"
+            "line": " src/node-win/lib/XMLHttpRequest.js:147"
         },
         {
             "message": "Missing item type\nDisables or enables isAllowedHttpHeader() check the request. Enabled by default.\nThis does not conform to the W3C spec.",
-            "line": " src/node-win/lib/XMLHttpRequest.js:174"
+            "line": " src/node-win/lib/XMLHttpRequest.js:176"
         },
         {
             "message": "Missing item type\nSets a header for the request.",
-            "line": " src/node-win/lib/XMLHttpRequest.js:184"
+            "line": " src/node-win/lib/XMLHttpRequest.js:186"
         },
         {
             "message": "Missing item type\nGets a header from the server response.",
-            "line": " src/node-win/lib/XMLHttpRequest.js:204"
+            "line": " src/node-win/lib/XMLHttpRequest.js:206"
         },
         {
             "message": "Missing item type\nGets all the response headers.",
-            "line": " src/node-win/lib/XMLHttpRequest.js:222"
+            "line": " src/node-win/lib/XMLHttpRequest.js:220"
         },
         {
             "message": "Missing item type\nGets a request header",
-            "line": " src/node-win/lib/XMLHttpRequest.js:242"
+            "line": " src/node-win/lib/XMLHttpRequest.js:240"
         },
         {
             "message": "Missing item type\nSends the request to the server.",
-            "line": " src/node-win/lib/XMLHttpRequest.js:257"
+            "line": " src/node-win/lib/XMLHttpRequest.js:255"
         },
         {
             "message": "Missing item type\nCalled when an error is encountered to deal with it.",
-            "line": " src/node-win/lib/XMLHttpRequest.js:516"
+            "line": " src/node-win/lib/XMLHttpRequest.js:517"
         },
         {
             "message": "Missing item type\nAborts a request.",
-            "line": " src/node-win/lib/XMLHttpRequest.js:527"
+            "line": " src/node-win/lib/XMLHttpRequest.js:528"
         },
         {
             "message": "Missing item type\nAdds an event listener. Preferred method of binding to events.",
-            "line": " src/node-win/lib/XMLHttpRequest.js:551"
+            "line": " src/node-win/lib/XMLHttpRequest.js:550"
         },
         {
             "message": "Missing item type\nRemove an event callback that has already been bound.\nOnly works on the matching funciton, cannot be a copy.",
-            "line": " src/node-win/lib/XMLHttpRequest.js:562"
+            "line": " src/node-win/lib/XMLHttpRequest.js:561"
         },
         {
             "message": "Missing item type\nDispatch any events, including both \"on\" methods and events attached using addEventListener.",
-            "line": " src/node-win/lib/XMLHttpRequest.js:575"
+            "line": " src/node-win/lib/XMLHttpRequest.js:574"
         },
         {
             "message": "Missing item type\nChanges readyState and calls onreadystatechange.",
-            "line": " src/node-win/lib/XMLHttpRequest.js:589"
+            "line": " src/node-win/lib/XMLHttpRequest.js:588"
         }
     ]
 }

@@ -18,7 +18,7 @@ This module adds some easy to use methods to Object and a few to Function that a
 
 All this functionality is present in several libraries as functions that operate on the affected objects.  We think it makes no longer sense to do it this way.  The new methods are being added as non-enumerable methods so that they should not show when looping through an object.  Besides, when looping through an object, you should always have had to check for `hasOwnProperties` which would not list these.
 
-## Object extensions
+##Object extensions##
 
 Object has the following new methods.  They all check for `hasOwnProperty` or equivalent functionality.
 
@@ -244,6 +244,55 @@ var a = new ClassA();
 console.log(a.method('1'));
 // prints "1ab"
 ```
+
+##String extensions##
+
+String gets extended with the following new methods:
+
+###endsWith###
+Checks if the string ends with the value specified by `test`.
+
+###startsWith###
+Checks if the string starts with the value specified by `test`.
+
+###substitute###
+Performs `{placeholder}` substitution on a string.
+
+###toDate###
+Returns a ISO-8601 Date-object build by the String's value.
+
+###trim###
+Generated the string without any white-spaces at the start or end.
+
+###trimLeft###
+Generated the string without any white-spaces at the beginning.
+
+###trimRight###
+Generated the string without any white-spaces at the end.
+
+###validateEmail###
+Validates if the String's value represents a valid emailaddress.
+
+###validateFloat###
+Validates if the String's value represents a valid floated number.
+
+###validateHexaColor###
+Validates if the String's value represents a hexadecimal color.
+
+###validateNumber###
+Validates if the String's value represents a valid integer number.
+
+###validateURL###
+Validates if the String's value represents a valid URL.
+
+
+##Array extensions##
+
+Array gets extended with the following new methods:
+
+###shuffle###
+Shuffles the items in the Array randomly.
+
 
 ##Promise extentions##
 

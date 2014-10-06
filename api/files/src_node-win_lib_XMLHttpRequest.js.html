@@ -71,6 +71,8 @@
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
+                <li><a href="../modules/event-hover.html">event-hover</a></li>
+            
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
@@ -140,6 +142,8 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+
 /**
  * Wrapper for built-in http.js to emulate the browser XMLHttpRequest object.
  *
@@ -350,11 +354,7 @@ exports.XMLHttpRequest = function() {
    * @return string Text of the header or null if it doesn&#x27;t exist.
    */
   this.getResponseHeader = function(header) {
-    if (typeof header === &quot;string&quot;
-      &amp;&amp; this.readyState &gt; this.OPENED
-      &amp;&amp; response.headers[header.toLowerCase()]
-      &amp;&amp; !errorFlag
-    ) {
+    if (typeof header === &quot;string&quot; &amp;&amp; this.readyState &gt; this.OPENED &amp;&amp; response.headers[header.toLowerCase()] &amp;&amp; !errorFlag) {
       return response.headers[header.toLowerCase()];
     }
 
@@ -412,12 +412,14 @@ exports.XMLHttpRequest = function() {
 
     var ssl = false, local = false;
     var url = Url.parse(settings.url);
-    var host;
+    var host, responseHandler, errorHandler;
     // Determine the server
     switch (url.protocol) {
       case &#x27;https:&#x27;:
         ssl = true;
-        // SSL &amp; non-SSL both need host, no break here.
+        host = url.hostname;
+        break;
+
       case &#x27;http:&#x27;:
         host = url.hostname;
         break;
@@ -473,9 +475,9 @@ exports.XMLHttpRequest = function() {
     var uri = url.pathname + (url.search ? url.search : &#x27;&#x27;);
 
     // Set the Host header or the server may reject the request
-    headers[&quot;Host&quot;] = host;
+    headers.Host = host;
     if (!((ssl &amp;&amp; port === 443) || port === 80)) {
-      headers[&quot;Host&quot;] += &#x27;:&#x27; + url.port;
+      headers.Host += &#x27;:&#x27; + url.port;
     }
 
     // Set Basic Auth if necessary
@@ -484,7 +486,7 @@ exports.XMLHttpRequest = function() {
         settings.password = &quot;&quot;;
       }
       var authBuf = new Buffer(settings.user + &quot;:&quot; + settings.password);
-      headers[&quot;Authorization&quot;] = &quot;Basic &quot; + authBuf.toString(&quot;base64&quot;);
+      headers.Authorization = &quot;Basic &quot; + authBuf.toString(&quot;base64&quot;);
     }
 
     // Set content length header
@@ -526,7 +528,7 @@ exports.XMLHttpRequest = function() {
       self.dispatchEvent(&quot;readystatechange&quot;);
 
       // Handler for the response
-      function responseHandler(resp) {
+      responseHandler = function(resp) {
         // Set response var to the response we got back
         // This is so it remains accessable outside this scope
         response = resp;
@@ -583,12 +585,12 @@ exports.XMLHttpRequest = function() {
         response.on(&#x27;error&#x27;, function(error) {
           self.handleError(error);
         });
-      }
+      };
 
       // Error handler for the request
-      function errorHandler(error) {
+      errorHandler = function(error) {
         self.handleError(error);
-      }
+      };
 
       // Create the request
       request = doRequest(options, responseHandler).on(&#x27;error&#x27;, errorHandler);
@@ -607,35 +609,36 @@ exports.XMLHttpRequest = function() {
       var syncFile = &quot;.node-xmlhttprequest-sync-&quot; + process.pid;
       fs.writeFileSync(syncFile, &quot;&quot;, &quot;utf8&quot;);
       // The async request the other Node process executes
-      var execString = &quot;var http = require(&#x27;http&#x27;), https = require(&#x27;https&#x27;), fs = require(&#x27;fs&#x27;);&quot;
-        + &quot;var doRequest = http&quot; + (ssl ? &quot;s&quot; : &quot;&quot;) + &quot;.request;&quot;
-        + &quot;var options = &quot; + JSON.stringify(options) + &quot;;&quot;
-        + &quot;var responseText = &#x27;&#x27;;&quot;
-        + &quot;var req = doRequest(options, function(response) {&quot;
-        + &quot;response.setEncoding(&#x27;utf8&#x27;);&quot;
-        + &quot;response.on(&#x27;data&#x27;, function(chunk) {&quot;
-        + &quot;  responseText += chunk;&quot;
-        + &quot;});&quot;
-        + &quot;response.on(&#x27;end&#x27;, function() {&quot;
-        + &quot;fs.writeFileSync(&#x27;&quot; + contentFile + &quot;&#x27;, &#x27;NODE-XMLHTTPREQUEST-STATUS:&#x27; + response.statusCode + &#x27;,&#x27; + responseText, &#x27;utf8&#x27;);&quot;
-        + &quot;fs.unlinkSync(&#x27;&quot; + syncFile + &quot;&#x27;);&quot;
-        + &quot;});&quot;
-        + &quot;response.on(&#x27;error&#x27;, function(error) {&quot;
-        + &quot;fs.writeFileSync(&#x27;&quot; + contentFile + &quot;&#x27;, &#x27;NODE-XMLHTTPREQUEST-ERROR:&#x27; + JSON.stringify(error), &#x27;utf8&#x27;);&quot;
-        + &quot;fs.unlinkSync(&#x27;&quot; + syncFile + &quot;&#x27;);&quot;
-        + &quot;});&quot;
-        + &quot;}).on(&#x27;error&#x27;, function(error) {&quot;
-        + &quot;fs.writeFileSync(&#x27;&quot; + contentFile + &quot;&#x27;, &#x27;NODE-XMLHTTPREQUEST-ERROR:&#x27; + JSON.stringify(error), &#x27;utf8&#x27;);&quot;
-        + &quot;fs.unlinkSync(&#x27;&quot; + syncFile + &quot;&#x27;);&quot;
-        + &quot;});&quot;
-        + (data ? &quot;req.write(&#x27;&quot; + data.replace(/&#x27;/g, &quot;\\&#x27;&quot;) + &quot;&#x27;);&quot;:&quot;&quot;)
-        + &quot;req.end();&quot;;
+      var execString = &quot;var http = require(&#x27;http&#x27;), https = require(&#x27;https&#x27;), fs = require(&#x27;fs&#x27;);&quot; +
+        &quot;var doRequest = http&quot; + (ssl ? &quot;s&quot; : &quot;&quot;) + &quot;.request;&quot; +
+        &quot;var options = &quot; + JSON.stringify(options) + &quot;;&quot; +
+        &quot;var responseText = &#x27;&#x27;;&quot; +
+        &quot;var req = doRequest(options, function(response) {&quot; +
+        &quot;response.setEncoding(&#x27;utf8&#x27;);&quot; +
+        &quot;response.on(&#x27;data&#x27;, function(chunk) {&quot; +
+        &quot;  responseText += chunk;&quot; +
+        &quot;});&quot; +
+        &quot;response.on(&#x27;end&#x27;, function() {&quot; +
+        &quot;fs.writeFileSync(&#x27;&quot; + contentFile + &quot;&#x27;, &#x27;NODE-XMLHTTPREQUEST-STATUS:&#x27; + response.statusCode + &#x27;,&#x27; + responseText, &#x27;utf8&#x27;);&quot; +
+        &quot;fs.unlinkSync(&#x27;&quot; + syncFile + &quot;&#x27;);&quot; +
+        &quot;});&quot; +
+        &quot;response.on(&#x27;error&#x27;, function(error) {&quot; +
+        &quot;fs.writeFileSync(&#x27;&quot; + contentFile + &quot;&#x27;, &#x27;NODE-XMLHTTPREQUEST-ERROR:&#x27; + JSON.stringify(error), &#x27;utf8&#x27;);&quot; +
+        &quot;fs.unlinkSync(&#x27;&quot; + syncFile + &quot;&#x27;);&quot; +
+        &quot;});&quot; +
+        &quot;}).on(&#x27;error&#x27;, function(error) {&quot; +
+        &quot;fs.writeFileSync(&#x27;&quot; + contentFile + &quot;&#x27;, &#x27;NODE-XMLHTTPREQUEST-ERROR:&#x27; + JSON.stringify(error), &#x27;utf8&#x27;);&quot; +
+        &quot;fs.unlinkSync(&#x27;&quot; + syncFile + &quot;&#x27;);&quot; +
+        &quot;});&quot; +
+        (data ? &quot;req.write(&#x27;&quot; + data.replace(/&#x27;/g, &quot;\\&#x27;&quot;) + &quot;&#x27;);&quot;:&quot;&quot;) +
+        &quot;req.end();&quot;;
       // Start the other Node Process, executing this string
       var syncProc = spawn(process.argv[0], [&quot;-e&quot;, execString]);
       var statusText;
-      while(fs.existsSync(syncFile)) {
-        // Wait while the sync file is empty
-      }
+/*jshint noempty:true */
+      // Wait while the sync file is empty
+      while (fs.existsSync(syncFile)) {}
+/*jshint noempty:false */
       self.responseText = fs.readFileSync(contentFile, &#x27;utf8&#x27;);
       self.responseXML = isXMLRequest() ? new XmlDOMParser().parseFromString(self.responseText) : null;
       // Kill the child process once the file has data
@@ -681,9 +684,7 @@ exports.XMLHttpRequest = function() {
 
     errorFlag = true;
 
-    if (this.readyState !== this.UNSENT
-        &amp;&amp; (this.readyState !== this.OPENED || sendFlag)
-        &amp;&amp; this.readyState !== this.DONE) {
+    if (this.readyState !== this.UNSENT &amp;&amp; (this.readyState !== this.OPENED || sendFlag) &amp;&amp; this.readyState !== this.DONE) {
       sendFlag = false;
       setState(this.DONE);
     }

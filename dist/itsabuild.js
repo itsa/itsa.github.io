@@ -4983,23 +4983,1401 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":34}],6:[function(require,module,exports){
+},{"_process":48}],6:[function(require,module,exports){
+"use strict";
+
+module.exports = function (window) {
+    require('./lib/nodelist.js')(window);
+    require('./lib/document.js')(window);
+    require('./lib/element.js')(window);
+};
+},{"./lib/document.js":7,"./lib/element.js":8,"./lib/nodelist.js":9}],7:[function(require,module,exports){
+"use strict";
+
+module.exports = function (window) {
+    require('polyfill/lib/array.some.js');
+    require('polyfill/lib/array.isarray.js');
+    require('./nodelist.js')(window);
+    require('polyfill/lib/element.matchesselector.js')(window);
+
+    var HTML_CHARS = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#x27;',
+        '/': '&#x2F;',
+        '`': '&#x60;'
+    },
+    DOCUMENT = window.document,
+    SINGLE_NODE_ID_REGEXP = /^#\S+$/,
+
+    /**
+    @method html
+    @param {String} string String to escape.
+    @return {String} Escaped string.
+    @static
+    **/
+    escapeHTML = function (content) {
+        (content.serialize) && (content=content.serialize());
+        return content.replace(/[&<>"'\/`]/g, function (match) {return HTML_CHARS[match];});
+    },
+
+    toCamelCase = function(input) {
+        return input.toLowerCase().replace(/-(.)/g, function(match, group) {
+            return group.toUpperCase();
+        });
+    },
+
+   /*
+    * Creates a fragment out of a String, so that it can be inserted as a NodeList.
+    *
+    * @method _createFragment
+    * @param content {String} content to be fragmented
+    * @return {DocumentFragment}
+    * @since 0.0.1
+    */
+    _createFragment = function(content) {
+        var fragment = DOCUMENT.createDocumentFragment(),
+            cont = DOCUMENT.createElement('div'),
+            first;
+        cont.innerHTML = content;
+/*jshint boss:true */
+        while (first=cont.firstChild) {
+            fragment.appendChild(first);
+        }
+/*jshint boss:false */
+        return fragment;
+    };
+
+   /**
+    * Inserts a HtmlElement or text at the specified position.
+    *
+    * @method _insert
+    * @param htmlElement {HtmlElement} the HtmlElement where the action should be applied to
+    * @param method {String} method to be used (either `insertBefore` or `appendChild`)
+    * @param content {HtmlElement|HtmlElementList|String} content to append
+    * @param refElement {HtmlElement} reference-element in case of `insertBefore`
+    * @param escape {Boolean} whether to insert `escaped` content, leading it into only text inserted
+    * @return {HtmlElement} the original HtmlElement so it can be chained
+    * @since 0.0.1
+    */
+    DOCUMENT._insert = function(htmlElement, method, content, refElement, escape) {
+        var first;
+        // cannot check if isArray: NodeList and HTMLCollection are extended with `forEach()` but they are no arrays
+        if (content.forEach) {
+            // carefull: in case of NodeList or HTMLCollection we cannot use "forEach" because the Elements will be
+            // removes from the previous hash, making `forEach` to creates gaps
+            if (escape || Array.isArray(content)) {
+                content.forEach(
+                    function(element) {
+                        escape && (element=escapeHTML(element));
+                        (typeof element === 'string') && (element=_createFragment(element));
+                        htmlElement[method](element, refElement);
+                    }
+                );
+            }
+            else {
+/*jshint boss:true */
+                while (first=content[0]) {
+                    htmlElement[method](escape ? escapeHTML(first) : first, refElement);
+                }
+/*jshint boss:false */
+            }
+        }
+        else {
+            escape && (content=escapeHTML(content));
+            (typeof content === 'string') && (content=_createFragment(content));
+            htmlElement[method](content, refElement);
+
+        }
+        return htmlElement;
+    };
+
+   /**
+    * Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.
+    *
+    * @method first
+    * @param [cssSelector] {String} css-selector to be used as a filter
+    * @return {HtmlElement|null}
+    * @since 0.0.1
+    */
+    DOCUMENT.first = function(cssSelector) {
+        var parent = this.parentHtmlElement || window.document, // not `this` because the context might change
+            found;
+        if (!cssSelector) {
+            return parent.firstElementChild;
+        }
+        Array.prototype.some.call(parent.children, function(element) {
+            element.matchesSelector(cssSelector) && (found=element);
+            return found;
+        });
+        return found;
+    };
+
+   /**
+    * Gets a NodeList of HtmlElements, specified by the css-selector.
+    *
+    * @method getAll
+    * @param cssSelector {String} css-selector to match
+    * @return {NodeList} NodeList of HtmlElements that match the css-selector
+    * @since 0.0.1
+    */
+    DOCUMENT.getAll = function(cssSelector) {
+        try {
+            return this.querySelectorAll(cssSelector); // throws an error or falsy selector
+        }
+        catch (err) {
+            return [];
+        }
+    };
+
+   /**
+    * Gets one HtmlElement, specified by the css-selector. To retrieve a single element by id,
+    * you need to prepend the id-name with a `#`. When multiple HtmlElement's match, the first is returned.
+    *
+    * @method getElement
+    * @param cssSelector {String} css-selector to match
+    * @return {HtmlElement|null} the HtmlElement that was search for
+    * @since 0.0.1
+    */
+    DOCUMENT.getElement = function(cssSelector) {
+        return SINGLE_NODE_ID_REGEXP.test(cssSelector) ? this.getElementById(cssSelector.substr(1)) : this.getAll(cssSelector)[0];
+    };
+
+   /**
+    * Gets the HtmlElement that currently has the focus.
+    * alias for `activeElement`
+    *
+    * @method getFocussed
+    * @return {HtmlElement|null} the HtmlElement that has focus
+    * @since 0.0.1
+    */
+    DOCUMENT.getFocussed = function() {
+        return this.activeElement;
+    };
+
+   /**
+    * Inserts a HtmlElement or text inside HtmlElement's innerHTML after `refElement`.
+    *
+    * @method insertAfter
+    * @param content {HtmlElement|HtmlElementList|String} content to insert
+    * @param refElement {HtmlElement} the HtmlElement where the content should be placed after
+    * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+    * @chainable
+    * @since 0.0.1
+    */
+    DOCUMENT.insertAfter = function(content, refElement, escape) {
+        var instance = this,
+            children = instance.children,
+            index = children.indexOf(refElement);
+        if ((index==-1) || (index===children.length-1)) {
+            return instance.DOCUMENT._insert(instance, 'appendChild', content, null, escape);
+        }
+        return instance.DOCUMENT._insert(instance, 'insertBefore', content, children[index+1], escape);
+    };
+
+   /**
+    * Inserts a HtmlElement or text inside HtmlElement's innerHTML before `refElement`.
+    *
+    * @method insertBefore
+    * @param content {HtmlElement|HtmlElementList|String} content to insert
+    * @param refElement {HtmlElement} the HtmlElement where the content should be placed before
+    * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+    * @chainable
+    * @since 0.0.1
+    */
+    DOCUMENT.insertBefore = function(content, refElement, escape) {
+        var instance = this,
+            index = instance.children.indexOf(refElement);
+        if (index==-1) {
+            return instance.DOCUMENT._insert(instance, 'appendChild', content, null, escape);
+        }
+        return instance.DOCUMENT._insert(instance, 'insertBefore', content, refElement, escape);
+    };
+
+   /**
+    * Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.
+    *
+    * @method last
+    * @param [cssSelector] {String} css-selector to be used as a filter
+    * @return {HtmlElement|null}
+    * @since 0.0.1
+    */
+    DOCUMENT.last = function(cssSelector) {
+        var parent = this.parentHtmlElement || window.document, // not `this` because the context might change
+            found, i;
+        if (!cssSelector) {
+            return parent.lastElementChild;
+        }
+        for (i=parent.children-1; !found && (i>0); i--) {
+            parent.children[i].matchesSelector(cssSelector) && (found=parent.children[i]);
+        }
+        return found;
+    };
+
+   /**
+    * Replaces the HtmlElement with a new HtmlElement.
+    *
+    * @method replace
+    * @param newHtmlElement {HtmlElement|String} the new HtmlElement
+    * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+    * @chainable
+    * @since 0.0.1
+    */
+    DOCUMENT.replace = function(oldHtmlElement, newHtmlElement, escape) {
+        var instance = this,
+            parentNode = instance.parentNode;
+        (typeof newHtmlElement === 'string') && (newHtmlElement=_createFragment(newHtmlElement));
+        parentNode.replaceChild(escape ? escapeHTML(newHtmlElement) : newHtmlElement, instance);
+        return escape ? parentNode : newHtmlElement;
+    };
+
+   /**
+    * Tests if the HtmlElement would be selected by the specified cssSelector.
+    * Alias for `matchesSelector()`
+    *
+    * @method test
+    * @param cssSelector {String} the css-selector to test against
+    * @return {Boolean} whether or not the node matches the selector
+    * @since 0.0.1
+    */
+    DOCUMENT.test = function(cssSelector) {
+        return this.matchesSelector(cssSelector);
+    };
+
+};
+},{"./nodelist.js":9,"polyfill/lib/array.isarray.js":34,"polyfill/lib/array.some.js":35,"polyfill/lib/element.matchesselector.js":36}],8:[function(require,module,exports){
+"use strict";
+
+module.exports = function (window) {
+
+    var POSITION = 'position',
+    RESERVED_WORDS = require('js-ext/extra/reserved-words.js'),
+
+    toCamelCase = function(input) {
+        return input.toLowerCase().replace(/-(.)/g, function(match, group) {
+            return group.toUpperCase();
+        });
+    };
+
+    window.Element && (function(ElementPrototype) {
+
+        require('js-ext/lib/string.js');
+        require('./document.js')(window);
+        require('polyfill/lib/element.matchesselector.js')(window);
+        require('window-ext')(window);
+
+        var documentElement = window.document.documentElement;
+
+       /**
+        * Adds a class to the HtmlElement. If the class already exists it won't be duplicated.
+        *
+        * @method addClass
+        * @param className {String} className to be added
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.addClass = function(className) {
+            var instance = this;
+            instance.hasClass(className) || (instance.className += ((instance.className.length>0) ? ' ' : '') + className);
+            return instance;
+        };
+
+       /**
+        * Appends a HtmlElement or text at the end of HtmlElement's innerHTML.
+        *
+        * @method append
+        * @param content {HtmlElement|HtmlElementList|String} content to append
+        * @param escape {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.append = function(content, escape) {
+            return window.document._insert(this, 'appendChild', content, null, escape);
+        };
+
+       /**
+        * Sets the inline-style of the HtmlElement exactly to the specified `value`, overruling previous values.
+        * Making the HtmlElement's inline-style look like: style="value".
+        *
+        * This is meant for a quick one-time setup. For individually inline style-properties to be set, you can use `setInlineStyle()`.
+        *
+        * @method defineInlineStyle
+        * @param value {String} the style string to be set
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.defineInlineStyle = function(value) {
+            this.style.cssText = value;
+            return this;
+        };
+
+       /**
+        * Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.
+        *
+        * @method first
+        * @param [cssSelector] {String} css-selector to be used as a filter
+        * @return {HtmlElement|null}
+        * @since 0.0.1
+        */
+        ElementPrototype.first = function(cssSelector) {
+            return window.document.first.apply(this, arguments);
+        };
+
+       /**
+        * Gets a NodeList of HtmlElements, specified by the css-selector.
+        *
+        * @method getAll
+        * @param cssSelector {String} css-selector to match
+        * @return {NodeList} NodeList of HtmlElements that match the css-selector
+        * @since 0.0.1
+        */
+        ElementPrototype.getAll = function(cssSelector) {
+            return window.document.getAll.apply(this, arguments);
+        };
+
+       /**
+        * Gets an attribute of the HtmlElement.
+        * Cautious: do not use `value` to retrieve the value. Use `getValue()` instead.
+        *
+        * Alias for getAttribute().
+        *
+        * @method getAttr
+        * @param attributeName {String}
+        * @return {String|null} value of the attribute
+        * @since 0.0.1
+        */
+        ElementPrototype.getAttr = function(attributeName) {
+            return this.getAttribute.apply(this, arguments);
+        };
+
+       /**
+        * Gets the HtmlElement's class as a whole String.
+        *
+        * Alias for this.className
+        *
+        * @method getClass
+        * @return {String} The complete class of the HtmlElement as a String
+        * @since 0.0.1
+        */
+        ElementPrototype.getClass = function() {
+            return this.className;
+        };
+
+       /**
+        * Returns data set specified by `key`. If not set, `undefined` will be returned.
+        *
+        * @method getData
+        * @param key {string} name of the key
+        * @return {Any|undefined} data set specified by `key`
+        * @since 0.0.1
+        */
+        ElementPrototype.getData = function(key) {
+            return this._data && this._data[key];
+        };
+
+       /**
+        * Gets one HtmlElement, specified by the css-selector. To retrieve a single element by id,
+        * you need to prepend the id-name with a `#`. When multiple HtmlElement's match, the first is returned.
+        *
+        * @method getElement
+        * @param cssSelector {String} css-selector to match
+        * @return {HtmlElement|null} the HtmlElement that was search for
+        * @since 0.0.1
+        */
+        ElementPrototype.getElement = function(cssSelector) {
+            return window.document.getElement.apply(this, arguments);
+        };
+
+       /**
+        * Gets the height of the element in pixels. Included are padding and border, not any margins.
+        *
+        * @method getHeight
+        * @param [overflow=false] {Boolean} in case of elements that overflow: return total height, included the invisible overflow
+        * @return {Number} width in pixels
+        * @since 0.0.1
+        */
+        ElementPrototype.getHeight = function(overflow) {
+            return overflow ? this.scrollHeight : this.offsetHeight;
+        };
+
+       /**
+        * Returns the innerContent of the HtmlElement as a string with HTML entities.
+        *
+        * Alias for innerHTML
+        *
+        * @method getHtml
+        * @return {String} content as a string with HTML entities
+        * @since 0.0.1
+        */
+        ElementPrototype.getHtml = function() {
+            return this.innerHTML;
+        };
+
+       /**
+        * Gets the HtmlElement's id.
+        *
+        * Alias for this.id
+        *
+        * @method getId
+        * @return {String} The id of the HtmlElement (=== '') when undefined
+        * @since 0.0.1
+        */
+        ElementPrototype.getId = function() {
+            return this.id;
+        };
+
+       /**
+        * Returns inline style of the specified property. `Inline` means: what is set directly on the HtmlElement,
+        * this doesn't mean necesairy how it is looked like: when no css is set inline, the HtmlElement might still have
+        * an appearance because of other CSS-rules.
+        *
+        * In most cases, you would be interesting in using `getStyle()` instead.
+        *
+        * Note: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine
+        *
+        * @method getInlineStyle
+        * @return {String} content as a string with HTML entities
+        * @since 0.0.1
+        */
+        ElementPrototype.getInlineStyle = function(cssProperty) {
+            return this.style[toCamelCase(cssProperty)];
+        };
+
+        /**
+         * Gets the left-scroll offset of the content of the HtmlElement.
+         * Only apropriate when the HtmlElement has overflow.
+         *
+         * @method getScrollLeft
+         * @return {Number} left-offset in pixels
+         * @since 0.0.1
+        */
+        ElementPrototype.getScrollLeft = function() {
+            return this.scrollLeft;
+        };
+
+        /**
+         * Gets the top-scroll offset of the content of the HtmlElement.
+         * Only apropriate when the HtmlElement has overflow.
+         *
+         * @method getScrollTop
+         * @return {Number} top-offset in pixels
+         * @since 0.0.1
+        */
+        ElementPrototype.getScrollTop = function() {
+            return this.scrollTop;
+        };
+
+       /**
+        * Returns cascaded style of the specified property. `Cascaded` means: the actual present style,
+        * the way it is visible (calculated through the DOM-tree).
+        *
+        * Note1: values are absolute: percentages and points are converted to absolute values, sizes are in pixels, colors in rgb/rgba-format.
+        * Note2: you cannot query shotcut-properties: use `margin-left` instead of `margin`.
+        * Note3: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine.
+        *
+        * @method getCascadeStyle
+        * @param cssProperty {String} property that is queried
+        * @param [pseudo] {String} to query pseudo-element, fe: `:before` or `:first-line`
+        * @return {String} value for the css-property
+        * @since 0.0.1
+        */
+        ElementPrototype.getStyle = function(cssProperty, pseudo) {
+            return window.getComputedStyle(this, pseudo)[toCamelCase(cssProperty)];
+        };
+
+       /**
+        * Gets the HtmlElement's tagname. Always uppercased.
+        *
+        * Alias for this.nodeName
+        *
+        * @method getTag
+        * @return {String} The tag-name of the HtmlElement in uppercase
+        * @since 0.0.1
+        */
+        ElementPrototype.getTag = function() {
+            return this.nodeName;
+        };
+
+       /**
+        * Gets the text content of the HtmlElement and its descendants.
+        * If you need full HTML, you should use getHTML().
+        *
+        * Alias for textContent
+        *
+        * @method getText
+        * @return {String} content of the HtmlElement as text
+        * @since 0.0.1
+        */
+        ElementPrototype.getText = function() {
+            var instance = this;
+            if (window.documentElement.textContent) {
+                return instance.textContent;
+            }
+            // now we are in IE8-, but it might not return the same as textContent
+            // (see https://developer.mozilla.org/en-US/docs/Web/API/Node.textContent)
+            // We accept this for it will be an edgecase we might never run into
+            // and we prefer to keep the code lightweight
+            return instance.innerText;
+        };
+
+       /**
+        * Gets the width of the element in pixels. Included are padding and border, not any margins.
+        *
+        * @method getWidth
+        * @param [overflow=false] {Boolean} in case of elements that overflow: return total width, included the invisible overflow
+        * @return {Number} width in pixels
+        * @since 0.0.1
+        */
+        ElementPrototype.getWidth = function(overflow) {
+            return overflow ? this.scrollWidth : this.offsetWidth;
+        };
+
+       /**
+        * Gets the value of the following HtmlElements:
+        *
+        * <ul>
+        *     <li>input</li>
+        *     <li>textarea</li>
+        *     <li>select</li>
+        *     <li>any container that is `contenteditable`</li>
+        *
+        * @method getValue
+        * @return {String|null} value of the attribute
+        * @since 0.0.1
+        */
+        ElementPrototype.getValue = function() {
+            // cautious: input and textarea must be accessed by their propertyname:
+            // input.getAttribute('value') would return the defualt-value instead of actusl
+            // and textarea.getAttribute('value') doesn't exist
+            var editable = ((editable=this.getAttr('contenteditable')) && (editable!=='false'));
+            return editable ? this.innerHTML : this.value;
+        };
+
+       /**
+        * Gets the x-position (in the window.document) of the element in pixels.
+        * window.document-related: regardless of the window's scroll-position.
+        *
+        * @method getX
+        * @return {Number} x-position in pixels
+        * @since 0.0.1
+        */
+        ElementPrototype.getX = function() {
+            return this.getBoundingClientRect().left + window.getScrollLeft();
+        };
+
+       /**
+        * Gets the y-position (in the window.document) of the element in pixels.
+        * window.document-related: regardless of the window's scroll-position.
+        *
+        * @method getY
+        * @return {Number} y-position in pixels
+        * @since 0.0.1
+        */
+        ElementPrototype.getY = function() {
+            return this.getBoundingClientRect().top + window.getScrollTop();
+        };
+
+       /**
+        * Whether the HtmlElement has the attribute set.
+        *
+        * Alias for hasAttribute().
+        *
+        * @method hasAttr
+        * @param attributeName {String}
+        * @return {Boolean} Whether the HtmlElement has the attribute set.
+        * @since 0.0.1
+        */
+        ElementPrototype.hasAttr = function(attributeName) {
+            return this.hasAttribute.apply(this, arguments);
+        };
+
+       /**
+        * Checks whether the className is present on the Element.
+        *
+        * @method hasClass
+        * @param newHtmlElement {HtmlElement} the new HtmlElement
+        * @return {Boolean} whether the className is present on the Element
+        * @since 0.0.1
+        */
+        ElementPrototype.hasClass = function(className) {
+            var regexp = new RegExp('\\b' + className + '\\b');
+            return regexp.test(this.className);
+        };
+
+       /**
+        * If the Element has data set specified by `key`.
+        *
+        * @method hasData
+        * @param key {string} name of the key
+        * @return {Boolean}
+        * @since 0.0.1
+        */
+        ElementPrototype.hasData = function(key) {
+            return !!this._data && !!this._data[key];
+        };
+
+       /**
+        * Checks whether HtmlElement currently has the focus.
+        *
+        * @method hasFocus
+        * @param newHtmlElement {HtmlElement} the new HtmlElement
+        * @return {Boolean} whether the className is present on the Element
+        * @since 0.0.1
+        */
+        ElementPrototype.hasFocus = function() {
+            return (window.document.activeElement===this);
+        };
+
+       /**
+        * Inserts a HtmlElement or text inside HtmlElement's innerHTML after `refElement`.
+        *
+        * @method insertAfter
+        * @param content {HtmlElement|HtmlElementList|String} content to insert
+        * @param refElement {HtmlElement} the HtmlElement where the content should be placed after
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.insertAfter = function(content, refElement, escape) {
+            return window.document.insertAfter.apply(this, arguments);
+        };
+
+       /**
+        * Inserts a HtmlElement or text inside HtmlElement's innerHTML before `refElement`.
+        *
+        * @method insertBefore
+        * @param content {HtmlElement|HtmlElementList|String} content to insert
+        * @param refElement {HtmlElement} the HtmlElement where the content should be placed before
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.insertBefore = function(content, refElement, escape) {
+            return window.document.insertBefore.apply(this, arguments);
+        };
+
+       /**
+        * Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.
+        *
+        * @method last
+        * @param [cssSelector] {String} css-selector to be used as a filter
+        * @return {HtmlElement|null}
+        * @since 0.0.1
+        */
+        ElementPrototype.last = function(cssSelector) {
+            return window.document.last.apply(this, arguments);
+        };
+
+       /**
+        * Returns the next of the HtmlElement's siblings, or the next that matches `cssSelector`.
+        *
+        * @method next
+        * @param [cssSelector] {String} css-selector to be used as a filter
+        * @return {HtmlElement|null}
+        * @since 0.0.1
+        */
+        ElementPrototype.next = function(cssSelector) {
+            var found, nextElement;
+            if (!cssSelector) {
+                return this.nextElementSibling;
+            }
+/*jshint noempty:true */
+            while ((nextElement=this.nextElementSibling) && (found=nextElement.matchesSelector(cssSelector))) {}
+/*jshint noempty:false */
+            return found && nextElement;
+        };
+
+       /**
+        * Prepends a HtmlElement or text at the start of HtmlElement's innerHTML.
+        *
+        * @method prepend
+        * @param content {HtmlElement|HtmlElementList|String} content to prepend
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.prepend = function(content, escape) {
+            var instance = this,
+                children = instance.children;
+            if (children.length===0) {
+                return instance.window.document._insert(instance, 'appendChild', content, null, escape);
+            }
+            return instance.window.document._insert(instance, 'insertBefore', content, children[0], escape);
+        };
+
+       /**
+        * Returns the previous of the HtmlElement's siblings, or the previous that matches `cssSelector`.
+        *
+        * @method prev
+        * @param [cssSelector] {String} css-selector to be used as a filter
+        * @return {HtmlElement|null}
+        * @since 0.0.1
+        */
+        ElementPrototype.prev = function(cssSelector) {
+            var found, previousElement;
+            if (!cssSelector) {
+                return this.previousElementSibling;
+            }
+/*jshint noempty:true */
+            while ((previousElement=this.previousElementSibling) && (found=previousElement.matchesSelector(cssSelector))) {}
+/*jshint noempty:false */
+            return found && previousElement;
+        };
+
+       /**
+        * Removes the HtmlElement from the DOM.
+        *
+        * @method remove
+        * @since 0.0.1
+        */
+        ElementPrototype.remove = function() {
+            this.parentNode.removeChild(this);
+        };
+
+       /**
+        * Removes the attribute from the HtmlElement.
+        *
+        * Alias for removeAttribute().
+        *
+        * @method removeAttr
+        * @param attributeName {String}
+        * @return {Boolean} Whether the HtmlElement has the attribute set.
+        * @since 0.0.1
+        */
+        ElementPrototype.removeAttr = function(attributeName) {
+            return this.hasAttribute.apply(this, arguments);
+        };
+
+       /**
+        * Removes a className from the HtmlElement.
+        *
+        * @method removeClass
+        * @param className {String} the className that should be removed.
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.removeClass = function(className) {
+            var instance = this,
+                regexp = new RegExp('(?:^|\\s+)' + className + '(?:\\s+|$)', 'g');
+            instance.className = instance.className.replace(regexp, ' ').trim();
+            return instance;
+        };
+
+       /**
+        * Removes data specified by `key`. When no arguments are passed, all node-data (key-value pairs) will be removed.
+        *
+        * @method removeData
+        * @param key {string} name of the key
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.removeData = function(key) {
+            var instance = this;
+            if (instance._data) {
+                if (key) {
+                    delete instance._data[key];
+                }
+                else {
+                    // we cannot just redefine _data, for it is set as readonly
+                    instance._data.each(
+                        function(value, key) {
+                            delete instance._data[key];
+                        }
+                    );
+                }
+            }
+            return instance;
+        };
+
+       /**
+        * Removes a css-property (inline) out of the HtmlElement. Use camelCase.
+        *
+        * @method removeInlineStyle
+        * @param cssAttribute {String} the css-property to be removed
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.removeInlineStyle = function(cssAttribute) {
+            this.setInlineStyle(cssAttribute, '');
+            return this;
+        };
+
+       /**
+        * Replaces the HtmlElement with a new HtmlElement.
+        *
+        * @method replace
+        * @param newHtmlElement {HtmlElement|String} the new HtmlElement
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @since 0.0.1
+        */
+        ElementPrototype.replace = function(newHtmlElement, escape) {
+            window.document.replace(this, newHtmlElement, escape);
+        };
+
+       /**
+        * Replaces the className of the HtmlElement with a new className.
+        * If the previous className is not available, the new className is set nevertheless.
+        *
+        * @method replaceClass
+        * @param prevClassName {String} the className to be replaced
+        * @param newClassName {String} the className to be set
+        * @param [force ] {Boolean} whether the new className should be set, even is the previous className isn't there
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.replaceClass = function(prevClassName, newClassName, force) {
+            var instance = this;
+            if (force || instance.hasClass(prevClassName)) {
+                instance.removeClass(prevClassName).addClass(newClassName);
+            }
+            return instance;
+        };
+
+        /**
+         * Scrolls the content of the HtmlElement into the specified scrollposition.
+         * Only available when the HtmlElement has overflow.
+         *
+         * @method scrollTo
+         * @param x {Number} left-offset in pixels
+         * @param y {Number} top-offset in pixels
+         * @chainable
+         * @since 0.0.1
+        */
+        ElementPrototype.scrollTo = function(x, y) {
+            var instance = this;
+            instance.scrollLeft = x;
+            instance.scrollTop = y;
+            return instance;
+        };
+
+       /**
+         * Sets the attribute on the HtmlElement with the specified value.
+         *
+         * Alias for setAttribute().
+         *
+         * @method setAttr
+         * @param attributeName {String}
+         * @param value {Any} the value that belongs to `key`
+         * @chainable
+         * @since 0.0.1
+        */
+        ElementPrototype.setAttr = function(attributeName, value) {
+            this.setAttribute.apply(this, arguments);
+            return this;
+        };
+
+       /**
+        * Sets the HtmlElement's class as a whole String. Cleaning up any previous classes.
+        *
+        * Alias for this.className = value
+        *
+        * @method setClass
+        * @param value {Any} the value that belongs to `key`
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.setClass = function(value) {
+            this.className = value;
+            return this;
+        };
+
+        /**
+         * Stores arbitary `data` at the HtmlElement. This has nothing to do with node-attributes whatsoever,
+         * it is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.
+         *
+         * @method setData
+         * @param key {string} name of the key
+         * @param value {Any} the value that belongs to `key`
+         * @chainable
+         * @since 0.0.1
+        */
+        ElementPrototype.setData = function(key, value) {
+            var instance = this;
+            instance._data ||  Object.defineProperty(instance, '_data', {
+                configurable: false,
+                enumerable: false,
+                writable: false,
+                value: {} // `writable` is false means we cannot chance the value-reference, but we can change {}'s properties itself
+            });
+            instance._data[key] = value;
+            return instance;
+        };
+
+       /**
+        * Sets the content of the HtmlElement (innerHTML). Careful: only set content like this if you controll the data and
+        * are sure what is going inside. Otherwise XSS might occur. If you let the user insert, or insert right from a db,
+        * you might be better of using setContent().
+        *
+        * @method setHTML
+        * @param content {HtmlElement|HtmlElementList|String} content to append
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.setHTML = function(content) {
+            this.innerHTML = content;
+            return this;
+        };
+
+       /**
+        * Gets the serialized HTML fragment describing the element including its descendants.
+        *
+        * alias for outerHTML()
+        *
+        * @method serialize
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.serialize = function() {
+            return this.outerHTML;
+        };
+
+       /**
+        * Sets a css-property (inline) out of the HtmlElement. Use camelCase.
+        *
+        * Note: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine
+        *
+        * @method setStyle
+        * @param cssAttribute {String} the css-property to be set
+        * @param value {String} the css-value
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.setInlineStyle = function(cssAttribute, value) {
+            // cautious: in case of preserved words (fe `float`), we need to modify the attributename
+            // in order to get it processed. It should be translated into `cssFloat` or alike.
+            RESERVED_WORDS[cssAttribute] && (cssAttribute='css-'+cssAttribute); // will be camelCased in the next step
+            this.style[toCamelCase(cssAttribute)] = String(value).replace(/;$/, '');
+            return this;
+        };
+
+       /**
+        * Sets the content of the HtmlElement. This is a safe way to set the content, because HTML is not parsed.
+        * If you do need to set HTML inside the node, use setHTML().
+        *
+        * @method setText
+        * @param content {HtmlElement|HtmlElementList|String} content to append. In case of HTML, it will be escaped.
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.setText = function(content) {
+            var instance = this;
+            // IE8- do not have `textContent`, but they do have `innerText`
+            if (documentElement.textContent) {
+                instance.textContent = content;
+            }
+            else {
+                instance.innerText = content;
+            }
+            return instance;
+        };
+
+       /**
+        * Sets the value of the following HtmlElements:
+        *
+        * <ul>
+        *     <li>input</li>
+        *     <li>textarea</li>
+        *     <li>select</li>
+        *     <li>any container that is `contenteditable`</li>
+        *
+        * Will fire an `valuechange` event, in case both the `itsa/event` as well as
+        * `itsa/event-dom/extra/event-valuechange.js` are used.
+        *
+        * Therefore it is highly suggested to use `setValue()` instead of setting the value manually.
+        *
+        * @method setValue
+        * @param value {Any} the value to be set
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.setValue = function(value) {
+            var instance = this;
+            // cautious: input and textarea must be accessed by their propertyname:
+            // input.getAttribute('value') would return the defualt-value instead of actusl
+            // and textarea.getAttribute('value') doesn't exist
+            var editable = ((editable=instance.getAttr('contenteditable')) && (editable!=='false'));
+            if (editable) {
+                instance.innerHTML = value;
+            }
+            else {
+                instance.value = value;
+            }
+            // if `document._emitVC` is available, then invoke it to emit the `valuechange`-event
+            window.document._emitVC && window.document._emitVC(instance, value);
+            return instance;
+        };
+
+       /**
+         * Set the position of an html element in page coordinates.
+         * The element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
+         * @method setXY
+         * @param element The target element
+         * @param {Array} xy Contains X & Y values for new position (coordinates are page-based)
+         * @param {Boolean} noRetry By default we try and set the position a second time if the first fails
+         */
+        ElementPrototype.setXY = function(x, y) {
+            var instance = this,
+                position = instance.getStyle(POSITION),
+                currentX, currentY;
+
+            // default position to relative
+            (position==='static') && instance.setInlineStyle(POSITION, 'relative');
+            currentX = instance.getX();
+            currentY = instance.getY();
+            x && instance.setInlineStyle('left', (x - currentX) + 'px');
+            y && instance.setInlineStyle('top', (y - currentY) + 'px');
+        };
+
+        /**
+         * Set the X position of an html element in page coordinates, regardless of how the element is positioned.
+         * The element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
+         * @method setX
+         * @param element The target element
+         * @param {Number} x The X values for new position (coordinates are page-based)
+         */
+        ElementPrototype.setX = function(node, x) {
+            return this.setXY(x);
+        };
+
+        /**
+         * Set the Y position of an html element in page coordinates, regardless of how the element is positioned.
+         * The element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
+         * @method setY
+         * @param element The target element
+         * @param {Number} y The Y values for new position (coordinates are page-based)
+         */
+        ElementPrototype.setY = function(node, y) {
+            return this.setXY(null, y);
+        };
+
+       /**
+        * Tests if the HtmlElement would be selected by the specified cssSelector.
+        * Alias for `matchesSelector()`
+        *
+        * @method test
+        * @param cssSelector {String} the css-selector to test against
+        * @return {Boolean} whether or not the node matches the selector
+        * @since 0.0.1
+        */
+        ElementPrototype.test = function(cssSelector) {
+            return window.document.test.apply(this, arguments);
+        };
+
+       /**
+        * Toggles the className of the Element.
+        *
+        * @method toggleClass
+        * @param className {String} the className that should be toggled
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.toggleClass = function(className) {
+            var instance = this;
+            instance.hasClass(className) ? instance.removeClass(className) : instance.addClass(className);
+            return instance;
+        };
+
+    }(window.Element.prototype));
+};
+},{"./document.js":7,"js-ext/extra/reserved-words.js":24,"js-ext/lib/string.js":30,"polyfill/lib/element.matchesselector.js":36,"window-ext":46}],9:[function(require,module,exports){
+"use strict";
+
+require('polyfill/polyfill-base.js');
+
+module.exports = function (window) {
+    (function(NodeListPrototype, HTMLCollectionPrototype) {
+        var arrayMethods = Object.getOwnPropertyNames(Array.prototype),
+            forEach = function(instance, method, args) {
+                instance.forEach(function(element) {
+                    element[method].apply(element, args);
+                });
+                return instance;
+            };
+
+        // adding Array.prototype methods to NodeList.prototype
+        // Note: this might be buggy in IE8 and below: https://developer.mozilla.org/en-US/docs/Web/API/NodeList#Workarounds
+        arrayMethods.forEach(function(methodName) {
+            try {
+                NodeListPrototype && (NodeListPrototype[methodName] || (NodeListPrototype[methodName]=Array.prototype[methodName]));
+                HTMLCollectionPrototype && (HTMLCollectionPrototype[methodName] || (HTMLCollectionPrototype[methodName]=Array.prototype[methodName]));
+            }
+            catch(err) {
+                // some properties have only getters and cannot (and don't need) to be set
+            }
+        });
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Adds a class to the HtmlElement. If the class already exists it won't be duplicated.
+        *
+        * @method addClass
+        * @param className {String} className to be added
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.addClass = HTMLCollectionPrototype.addClass = function(className) {
+            return forEach(this, 'addClass', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Appends a HtmlElement or text at the end of HtmlElement's innerHTML.
+        *
+        * @method append
+        * @param content {HtmlElement|HtmlElementList|String} content to append
+        * @param escape {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.append = HTMLCollectionPrototype.append = function(content, escape) {
+            return forEach(this, 'append', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Sets the inline-style of the HtmlElement exactly to the specified `value`, overruling previous values.
+        * Making the HtmlElement's inline-style look like: style="value".
+        *
+        * This is meant for a quick one-time setup. For individually inline style-properties to be set, you can use `setInlineStyle()`.
+        *
+        * @method defineInlineStyle
+        * @param value {String} the style string to be set
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.defineInlineStyle = HTMLCollectionPrototype.defineInlineStyle = function(value) {
+            return forEach(this, 'defineInlineStyle', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Prepends a HtmlElement or text at the start of HtmlElement's innerHTML.
+        *
+        * @method prepend
+        * @param content {HtmlElement|HtmlElementList|String} content to prepend
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.prepend = HTMLCollectionPrototype.prepend = function(content, escape) {
+            return forEach(this, 'prepend', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Removes the HtmlElement from the DOM.
+        *
+        * @method remove
+        * @since 0.0.1
+        */
+        NodeListPrototype.remove = HTMLCollectionPrototype.remove = function(HtmlElement) {
+            return forEach(this, 'remove', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Removes the attribute from the HtmlElement.
+        *
+        * Alias for removeAttribute().
+        *
+        * @method removeAttr
+        * @param attributeName {String}
+        * @return {Boolean} Whether the HtmlElement has the attribute set.
+        * @since 0.0.1
+        */
+        NodeListPrototype.removeAttr = HTMLCollectionPrototype.removeAttr = function(attributeName) {
+            return forEach(this, 'removeAttr', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Removes a className from the HtmlElement.
+        *
+        * @method removeClass
+        * @param className {String} the className that should be removed.
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.removeClass = HTMLCollectionPrototype.removeClass = function(className) {
+            return forEach(this, 'removeClass', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Removes data specified by `key`. When no arguments are passed, all node-data (key-value pairs) will be removed.
+        *
+        * @method removeData
+        * @param key {string} name of the key
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.removeData = HTMLCollectionPrototype.removeData = function(key) {
+            return forEach(this, 'removeData', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Removes a css-property (inline) out of the HtmlElement. Use camelCase.
+        *
+        * @method removeInlineStyle
+        * @param cssAttribute {String} the css-property to be removed
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.removeInlineStyle = HTMLCollectionPrototype.removeInlineStyle = function(cssAttribute) {
+            return forEach(this, 'removeInlineStyle', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Replaces the HtmlElement with a new HtmlElement.
+        *
+        * @method replace
+        * @param newHtmlElement {HtmlElement|String} the new HtmlElement
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @since 0.0.1
+        */
+        NodeListPrototype.replace = HTMLCollectionPrototype.replace = function(newHtmlElement, escape) {
+            return forEach(this, 'replace', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Replaces the className of the HtmlElement with a new className.
+        * If the previous className is not available, the new className is set nevertheless.
+        *
+        * @method replaceClass
+        * @param prevClassName {String} the className to be replaced
+        * @param newClassName {String} the className to be set
+        * @param [force ] {Boolean} whether the new className should be set, even is the previous className isn't there
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.replaceClass = HTMLCollectionPrototype.replaceClass = function(prevClassName, newClassName, force) {
+            return forEach(this, 'replaceClass', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Sets the attribute on the HtmlElement with the specified value.
+        *
+        * Alias for setAttribute().
+        *
+        * @method setAttr
+        * @param attributeName {String}
+        * @param value {Any} the value that belongs to `key`
+        * @chainable
+        * @since 0.0.1
+       */
+        NodeListPrototype.setAttr = HTMLCollectionPrototype.setAttr = function(attributeName, value) {
+            return forEach(this, 'setAttr', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Sets the class to the HtmlElement. Cleaning up any previous classes.
+        *
+        * @method setClass
+        * @param value {Any} the value that belongs to `key`
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.setClass = HTMLCollectionPrototype.addClass = function(className) {
+            return forEach(this, 'setClass', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Stores arbitary `data` at the HtmlElement. This has nothing to do with node-attributes whatsoever,
+        * it is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.
+        *
+        * @method setData
+        * @param key {string} name of the key
+        * @param value {Any} the value that belongs to `key`
+        * @chainable
+        * @since 0.0.1
+       */
+        NodeListPrototype.setData = HTMLCollectionPrototype.setData = function(key, value) {
+            return forEach(this, 'setData', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Sets the content of the HtmlElement (innerHTML). Careful: only set content like this if you controll the data and
+        * are sure what is going inside. Otherwise XSS might occur. If you let the user insert, or insert right from a db,
+        * you might be better of using setContent().
+        *
+        * @method setHTML
+        * @param content {HtmlElement|HtmlElementList|String} content to append
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.setHTML = HTMLCollectionPrototype.setHTML = function(content) {
+            return forEach(this, 'setHTML', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Sets a css-property (inline) out of the HtmlElement. Use camelCase.
+        *
+        * Note: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine
+        *
+        * @method setStyle
+        * @param cssAttribute {String} the css-property to be set
+        * @param value {String} the css-value
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.setInlineStyle = HTMLCollectionPrototype.setInlineStyle = function(cssAttribute, value) {
+            return forEach(this, 'setInlineStyle', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Sets the content of the HtmlElement. This is a safe way to set the content, because HTML is not parsed.
+        * If you do need to set HTML inside the node, use setHTML().
+        *
+        * @method setText
+        * @param content {HtmlElement|HtmlElementList|String} content to append. In case of HTML, it will be escaped.
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.setText = HTMLCollectionPrototype.setText = function(content) {
+            return forEach(this, 'setText', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Toggles the className of the Element.
+        *
+        * @method toggleClass
+        * @param className {String} the className that should be toggled
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.toggleClass = HTMLCollectionPrototype.toggleClass = function(className) {
+            return forEach(this, 'toggleClass', arguments);
+        };
+
+    }(window.NodeList && window.NodeList.prototype, window.HTMLCollection && window.HTMLCollection.prototype));
+};
+},{"polyfill/polyfill-base.js":41}],10:[function(require,module,exports){
 "use strict";
 
 /**
- * Integrates DOM-events to core-event-base. more about DOM-events:
+ * Integrates DOM-events to event. more about DOM-events:
  * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
- *
- * Should be called using  the provided `mergeInto`-method like this:
  *
  *
  * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  * @example
- * Event = require('event');
- * DOMEvent = require('event-dom');
- * DOMEvent.mergeInto(Event);
+ * Event = require('event-dom')(window);
  *
  * @module event
  * @submodule event-dom
@@ -5032,7 +6410,6 @@ var NAME = '[event-dom]: ',
      * @private
      * @since 0.0.1
     */
-    DOCUMENT_POSITION_CONTAINED_BY = 16,
     DOMEvents = {};
 
 module.exports = function (window) {
@@ -5041,6 +6418,9 @@ module.exports = function (window) {
         OLD_EVENTSYSTEM = !NEW_EVENTSYSTEM && DOCUMENT.attachEvent,
         DOM_Events, _bubbleIE8, _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor,
         _setupDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc;
+
+    require('polyfill/lib/element.matchesselector.js')(window);
+    require('polyfill/lib/node.contains.js')(window);
 
     if (!window._ITSAmodules) {
         Object.defineProperty(window, '_ITSAmodules', {
@@ -5054,31 +6434,6 @@ module.exports = function (window) {
     if (window._ITSAmodules.EventDom) {
         return Event; // Event was already extended
     }
-
-    // polyfill for Element.matchesSelector
-    // based upon https://gist.github.com/jonathantneal/3062955
-    window.Element && (function(ElementPrototype) {
-        ElementPrototype.matchesSelector = ElementPrototype.matchesSelector ||
-        ElementPrototype.mozMatchesSelector ||
-        ElementPrototype.msMatchesSelector ||
-        ElementPrototype.oMatchesSelector ||
-        ElementPrototype.webkitMatchesSelector ||
-        function (selector) {
-            var node = this,
-                nodes = (node.parentNode || DOCUMENT).querySelectorAll(selector),
-                i = -1;
-            while (nodes[++i] && (nodes[i] !== node));
-            return !!nodes[i];
-        };
-    }(window.Element.prototype));
-
-    // polyfill for Node.contains
-    window.Node && !window.Node.prototype.contains && (function(NodePrototype) {
-        NodePrototype.contains = function(child) {
-            var comparison = this.compareDocumentPosition(child);
-            return !!((comparison===0) || (comparison & DOCUMENT_POSITION_CONTAINED_BY));
-        };
-    }(window.Node.prototype));
 
     /*
      * Polyfill for bubbling the `focus` and `blur` events in IE8.
@@ -5404,11 +6759,23 @@ module.exports = function (window) {
         }
 
         if (NEW_EVENTSYSTEM) {
-            // important: set the third argument `true` so we listen to the capture-phase.
-            DOCUMENT.addEventListener(eventName, _evCallback, true);
+            // one exeption: windowresize sould be transformed into `resize` in the window-object
+            if (eventName==='resize') {
+                window.addEventListener(eventName, _evCallback);
+            }
+            else {
+                // important: set the third argument `true` so we listen to the capture-phase.
+                DOCUMENT.addEventListener(eventName, _evCallback, true);
+            }
         }
         else if (OLD_EVENTSYSTEM) {
-            DOCUMENT.attachEvent('on'+eventName, _evCallback);
+            // one exeption: windowresize sould be transformed into `resize` in the window-object
+            if (eventName==='windowresize') {
+                window.addEventListener('resize', _evCallback);
+            }
+            else {
+                DOCUMENT.attachEvent('on'+eventName, _evCallback);
+            }
         }
         DOMEvents[eventName] = true;
         outsideEvent && (DOMEvents[eventName+OUTSIDE]=true);
@@ -5485,23 +6852,400 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":11,"utils":31}],7:[function(require,module,exports){
+},{"event":18,"polyfill/lib/element.matchesselector.js":36,"polyfill/lib/node.contains.js":38,"utils":43}],11:[function(require,module,exports){
 "use strict";
 
 /**
- * Integrates DOM-events to core-event-base. more about DOM-events:
+ * Adds the `hover` event as a DOM-event to event-dom. more about DOM-events:
  * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
  *
- * Should be called using  the provided `init`-method like this:
+ * Should be called using  the provided `mergeInto`-method like this:
  *
  *
  * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  * @example
- * Event = require('event');
- * DOMEvent = require('event-dom');
- * DOMEvent.mergeInto(Event);
+ * Event = require('event-dom/hover.js')(window);
+ *
+ * or
+ *
+ * @example
+ * Event = require('event-dom')(window);
+ * require('event-dom/event-hover.js')(window);
+ *
+ * @module event
+ * @submodule event-hover
+ * @class Event
+ * @since 0.0.2
+*/
+
+
+var NAME = '[event-drag]: ';
+
+module.exports = function (window) {
+    var Event = require('../event-dom.js')(window),
+
+    /**
+    Check to see if a node has editable content or not.
+
+    TODO: Add additional checks to get it to work for child nodes
+    that inherit "contenteditable" from parent nodes. This may be
+    too computationally intensive to be placed inside of the `_poll`
+    loop, however.
+
+    @method _isEditable
+    @param {Node} node
+    @protected
+    @static
+    **/
+    _isEditable = function (node) {
+        // Performance cheat because this is used inside `_poll`
+        var domNode = node._node;
+        return domNode.contentEditable === 'true' ||
+               domNode.contentEditable === '';
+    },
+
+
+    /*
+     * Creates the `hover` event. The eventobject has the property `e.hover` which is a `Promise`.
+     * You can use this Promise to get notification of the end of hover. The Promise e.hover gets resolved with
+     * `relatedTarget` as argument: the node where the mouse went into when leaving a.target.
+     *
+     * @method _setupValueChange
+     * @private
+     * @since 0.0.2
+     */
+    _setupValueChange = function() {
+        // create only after subscribing to the `hover`-event
+        Event.after('mouseover', function(e) {
+            console.info(NAME, 'setting up mouseover event');
+            var node = e.target;
+            e.hover = new Promise(function(fulfill, reject) {
+                Event.after(
+                    'mouseout',
+                    function(e) {
+                        fulfill(e.relatedTarget);
+                    },
+                    function(ev) {
+                        return (ev.target===node);
+                    }
+                );
+            });
+            Event.emit(node, 'UI:hover', e);
+        });
+    };
+
+    // Event.notify('UI:valuechange', _setupValueChange, Event);
+
+    return Event;
+};
+
+},{"../event-dom.js":10}],12:[function(require,module,exports){
+"use strict";
+
+/**
+ * Adds the `hover` event as a DOM-event to event-dom. more about DOM-events:
+ * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+ *
+ * Should be called using  the provided `mergeInto`-method like this:
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @example
+ * Event = require('event-dom/hover.js')(window);
+ *
+ * or
+ *
+ * @example
+ * Event = require('event-dom')(window);
+ * require('event-dom/event-hover.js')(window);
+ *
+ * @module event
+ * @submodule event-hover
+ * @class Event
+ * @since 0.0.2
+*/
+
+
+var NAME = '[event-hover]: ';
+
+module.exports = function (window) {
+    var Event = require('../event-dom.js')(window),
+
+    subscriber,
+
+    /*
+     * Creates the `hover` event. The eventobject has the property `e.hover` which is a `Promise`.
+     * You can use this Promise to get notification of the end of hover. The Promise e.hover gets resolved with
+     * `relatedTarget` as argument: the node where the mouse went into when leaving a.target.
+     *
+     * @method setupHover
+     * @private
+     * @since 0.0.2
+     */
+    setupHover = function() {
+        // create only after subscribing to the `hover`-event
+        subscriber = Event.after('mouseover', function(e) {
+            console.log(NAME, 'setupHover: setting up mouseover event');
+            var node = e.target;
+            e.hover = new Promise(function(fulfill, reject) {
+                Event.after(
+                    'mouseout',
+                    function(e) {
+                        fulfill(e.relatedTarget);
+                    },
+                    function(ev) {
+                        return (ev.target===node);
+                    }
+                );
+            });
+            Event.emit(node, 'UI:hover', e);
+        });
+    },
+
+    /*
+     * Removes the `hover` event. Because there are no subscribers anymore.
+     *
+     * @method teardownHover
+     * @private
+     * @since 0.0.2
+     */
+    teardownHover = function() {
+        // check if there aren't any subscribers anymore.
+        // in that case, we detach the `mouseover` lister because we don't want to
+        // loose performance.
+        if (!Event._subs['UI:hover']) {
+            console.log(NAME, 'teardownHover: stop setting up mouseover event');
+            subscriber.detach();
+            // reinit notifier, because it is a one-time notifier:
+            Event.notify('UI:hover', setupHover, Event, true);
+        }
+    };
+
+    Event.notify('UI:hover', setupHover, Event, true);
+    Event.notifyDetach('UI:hover', teardownHover, Event);
+
+    return Event;
+};
+
+},{"../event-dom.js":10}],13:[function(require,module,exports){
+"use strict";
+
+/**
+ * Adds the `hover` event as a DOM-event to event-dom. more about DOM-events:
+ * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+ *
+ * Should be called using  the provided `mergeInto`-method like this:
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @example
+ * Event = require('event-dom/hover.js')(window);
+ *
+ * or
+ *
+ * @example
+ * Event = require('event-dom')(window);
+ * require('event-dom/event-hover.js')(window);
+ *
+ * @module event
+ * @submodule event-hover
+ * @class Event
+ * @since 0.0.2
+*/
+require('dom-ext');
+
+var NAME = '[event-valuechange]: ',
+    VALUE = 'value',
+    DATA_KEY = 'valueChange',
+    UTILS = require('utils'),
+
+    /**
+    Interval (in milliseconds) at which to poll for changes to the value of an
+    element with one or more `valuechange` subscribers when the user is likely
+    to be interacting with it.
+
+    @property POLL_INTERVAL
+    @type Number
+    @default 50
+    @static
+    **/
+    POLL_INTERVAL = 50;
+
+console.info(NAME, 'valuechange fase A');
+
+module.exports = function (window) {
+console.info(NAME, 'valuechange fase B');
+    var Event = require('../event-dom.js')(window),
+
+    subscriberBlur,
+    subscriberFocus,
+    subscriberKeypress,
+
+    subscriberClick,
+
+
+
+
+    editableNode = function(node) {
+        var editable;
+        if (node===window.document) {
+            return false;
+        }
+        console.log(NAME, 'editableNodes '+node.test('input, textarea, select') || ((editable=node.getAttr('contenteditable')) && (editable!=='false')));
+        return node.test('input, textarea, select') || ((editable=node.getAttr('contenteditable')) && (editable!=='false'));
+    },
+
+    startFocus = function(e) {
+        console.log(NAME, 'startFocus');
+        var node = e.target,
+            editable, valueChangeData, previousValue;
+
+        if (!editableNode(node)) {
+            return;
+        }
+
+        // first backup the current value:
+        editable = ((editable=node.getAttr('contenteditable')) && (editable!=='false'));
+        valueChangeData = node.getData(DATA_KEY);
+
+        if (!valueChangeData) {
+            valueChangeData = {
+                editable : editable
+            };
+            node.setData(DATA_KEY, valueChangeData);
+        }
+        valueChangeData.prevVal = editable ? node.innerHTML : node[VALUE];
+
+        // now activate keylistener: this must be an after-listener, because the key is then part of the value
+        subscriberKeypress = Event.after('keypress', checkChanged);
+
+        // now activate a mouselistener, in case of when someone right-clicks and pasts data.
+        // should be after mousepress: the node has to be focussed first to start capturing
+        // check all buttons: the user may have swapped functionality
+        // Also, check `press` event, which is generated by HammerJS: this to support mobile:
+        subscriberClick = Event.after(['click', 'press'], startPolling);
+
+    },
+
+    endFocus = function(e) {
+        console.log(NAME, 'endFocus');
+        subscriberKeypress && subscriberKeypress.detach();
+        subscriberClick && subscriberClick.detach();
+        stopPolling(e.target);
+    },
+
+    /*
+     * Creates the `hover` event. The eventobject has the property `e.hover` which is a `Promise`.
+     * You can use this Promise to get notification of the end of hover. The Promise e.hover gets resolved with
+     * `relatedTarget` as argument: the node where the mouse went into when leaving a.target.
+     *
+     * @method setupValueChange
+     * @private
+     * @since 0.0.2
+     */
+    setupValueChange = function() {
+        console.log(NAME, 'setupValueChange');
+        // create only after subscribing to the `hover`-event
+        subscriberBlur = Event.after('blur', endFocus);
+        subscriberFocus = Event.after('focus', startFocus);
+        startFocus({target: window.document.activeElement});
+    },
+
+    startPolling = function(e) {
+        var node = e.target,
+            valueChangeData;
+
+        if (!editableNode(node)) {
+            return;
+        }
+        console.log(NAME, 'startPolling');
+
+        valueChangeData = node.getData(DATA_KEY);
+        // cancel previous timer: we don't want multiple timers:
+        valueChangeData.timer && valueChangeData.timer.cancel();
+        // setup a new timer:
+        valueChangeData.timer = UTILS.later(checkChanged.bind(null, e), POLL_INTERVAL, true);
+    },
+
+    stopPolling = function(node) {
+        console.log(NAME, 'stopPolling');
+        var valueChangeData = node.getData(DATA_KEY);
+        valueChangeData && valueChangeData.timer && valueChangeData.timer.cancel();
+    },
+
+    checkChanged = function(e) {
+        console.log(NAME, 'checkChanged');
+        var node = e.target,
+            prevData = node.getData(DATA_KEY),
+            editable = ((editable=node.getAttr('contenteditable')) && (editable!=='false')),
+            currentData = editable ? node.innerHTML : node[VALUE];
+        if (currentData!==prevData.prevVal) {
+            console.log(NAME, 'checkChanged --> value has been changed');
+            window.document._emitVC(node, currentData);
+            prevData.prevVal = currentData;
+            stopPolling(node);
+        }
+    },
+
+    /*
+     * Removes the `hover` event. Because there are no subscribers anymore.
+     *
+     * @method teardownValueChange
+     * @private
+     * @since 0.0.2
+     */
+    teardownValueChange = function() {
+        // check if there aren't any subscribers anymore.
+        // in that case, we detach the `mouseover` lister because we don't want to
+        // loose performance.
+        if (!Event._subs['UI:valuechange']) {
+            console.log(NAME, 'teardownValueChange: stop setting up blur and focus-event');
+            subscriberBlur.detach();
+            subscriberFocus.detach();
+            // also stop any possible action/listeners to a current element:
+            endFocus({target: window.document.activeElement});
+            // reinit notifier, because it is a one-time notifier:
+            Event.notify('UI:valuechange', setupValueChange, Event, true);
+        }
+    };
+
+    Event.notify('UI:valuechange', setupValueChange, Event, true);
+    Event.notifyDetach('UI:valuechange', teardownValueChange, Event);
+
+    // Set up document._emitVC, so that Element.setValue() will emit the `valuechange`-event:
+    window.document._emitVC = function(node, value) {
+        console.log(NAME, 'document._emitVC');
+        var e = {
+            value: value,
+            target: node,
+            currentTarget: window.document,
+            sourceTarget: node
+        };
+        Event.emit(node, 'UI:valuechange', e);
+    };
+
+    return Event;
+};
+
+},{"../event-dom.js":10,"dom-ext":6,"utils":43}],14:[function(require,module,exports){
+"use strict";
+
+/**
+ * Integrates mobile-events to event-dom. more about DOM-events:
+ * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @example
+ * Event = require('event-mobile')(window);
  *
  * @module event
  * @submodule event-mobile
@@ -5593,7 +7337,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event-dom":6,"hammerjs":1}],8:[function(require,module,exports){
+},{"event-dom":10,"hammerjs":1}],15:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -5985,16 +7729,50 @@ require('js-ext/lib/object.js');
          *        have the syntax: `emitterName:eventName`. Wildcard `*` may be used only  for`eventName`.
          *        If `emitterName` should be defined.
          * @param callback {Function} subscriber: will be invoked when the customEvent is called (before any subscribers.
-         *                 Recieves 2 arguments: `customEvent` and the `subscriber-object`.
+         *                 Recieves 3 arguments: the `subscriber-object`, `customEvent` and the complete subscriptionobject.
          * @param context {Object} context of the callback
+         * @param [once] {Boolean} whether the subscriptions should be removed after the first invokation
          * @chainable
          * @since 0.0.1
         */
-        notify: function(customEvent, callback, context) {
+        notify: function(customEvent, callback, context, once) {
             console.log(NAME, 'notify');
             this._notifiers[customEvent] = {
                 cb: callback,
-                o: context
+                o: context,
+                r: once // r = remove automaticly
+            };
+            return this;
+        },
+
+        /**
+         * Creates a detach-notifier for the customEvent.
+         * You can use this to get informed whenever a subscriber detaches.
+         *
+         * Use **no** wildcards for the emitterName. You might use wildcards for the eventName. Without wildcards, the
+         * notification will be unNotified (callback automaticly detached) on the first time the event occurs.
+
+         * You **must** specify the full `emitterName:eventName` syntax.
+         * The module `core-event-dom` uses `notify` to auto-define DOM-events (UI:*).
+         *
+         * @static
+         * @method notifyDetach
+         * @param customEvent {String|Array} the custom-event (or Array of events) to subscribe to. CustomEvents should
+         *        have the syntax: `emitterName:eventName`. Wildcard `*` may be used only  for`eventName`.
+         *        If `emitterName` should be defined.
+         * @param callback {Function} subscriber: will be invoked when the customEvent is called (before any subscribers.
+         *                 Recieves 2 arguments: the `subscriber-object` and `customEvent`.
+         * @param context {Object} context of the callback
+         * @param [once] {Boolean} whether the subscriptions should be removed after the first invokation
+         * @chainable
+         * @since 0.0.1
+        */
+        notifyDetach: function(customEvent, callback, context, once) {
+            console.log(NAME, 'notifyDetach');
+            this._detachNotifiers[customEvent] = {
+                cb: callback,
+                o: context,
+                r: once // r = remove automaticly
             };
             return this;
         },
@@ -6141,6 +7919,19 @@ require('js-ext/lib/object.js');
         unNotify: function(customEvent) {
             console.log(NAME, 'unNotify '+customEvent);
             delete this._notifiers[customEvent];
+        },
+
+        /**
+         * unNotifies (unsubscribes) the detach-notifier of the specified customEvent.
+         *
+         * @static
+         * @method unNotifyDetach
+         * @param customEvent {String} conform the syntax: `emitterName:eventName`.
+         * @since 0.0.1
+        */
+        unNotifyDetach: function(customEvent) {
+            console.log(NAME, 'unNotifyDetach '+customEvent);
+            delete this._detachNotifiers[customEvent];
         },
 
         //====================================================================================================
@@ -6300,12 +8091,17 @@ require('js-ext/lib/object.js');
                 notifier = instance._notifiers[customEvent];
                 if (notifier) {
                     notifier.cb.call(notifier.o, customEvent, item);
-                    delete instance._notifiers[customEvent];
+                    if (notifier.r) {
+                        delete instance._notifiers[customEvent];
+                    }
                 }
                 // check the same for wildcard eventName:
                 customEventWildcardEventName = customEvent.replace(REGEXP_EVENTNAME_WITH_SEMICOLON, ':*');
                 if ((customEventWildcardEventName !== customEvent) && (notifier=instance._notifiers[customEventWildcardEventName])) {
                     notifier.cb.call(notifier.o, customEvent, item);
+                    if (notifier.r) {
+                        delete instance._notifiers[customEvent];
+                    }
                 }
             }
 
@@ -6411,7 +8207,7 @@ require('js-ext/lib/object.js');
             }
             else {
                 e = Object.create(instance._defaultEventObj);
-                e.target = emitter;
+                e.target = (payload && payload.target) || emitter; // make it possible to force a specific e.target
                 e.type = eventName;
                 e.emitter = emitterName;
                 e.status = {};
@@ -6545,7 +8341,7 @@ require('js-ext/lib/object.js');
             var instance = this,
                 eventSubscribers = instance._subs[customEvent],
                 hashtable = eventSubscribers && eventSubscribers[before ? 'b' : 'a'],
-                i, subscriber, beforeUsed, afterUsed;
+                i, subscriber, beforeUsed, afterUsed, extract, detachNotifier, customEventWildcardEventName;
             if (hashtable) {
                 // unfortunatly we cannot search by reference, because the array has composed objects
                 // also: can't use native Array.forEach: removing items within its callback change the array
@@ -6566,6 +8362,26 @@ require('js-ext/lib/object.js');
                 afterUsed = eventSubscribers.a && (eventSubscribers.a.length>0);
                 if (!beforeUsed && !afterUsed) {
                     delete instance._subs[customEvent];
+                }
+            }
+            extract = customEvent.match(REGEXP_CUSTOMEVENT);
+            // in case of a defined subscription (no wildcard),
+            // we need to inform any detachNotifier of the unsubscription:
+            if (extract && ((extract[1]!=='*') && (extract[2]!=='*'))) {
+                detachNotifier = instance._detachNotifiers[customEvent];
+                if (detachNotifier) {
+                    detachNotifier.cb.call(detachNotifier.o, customEvent);
+                    if (detachNotifier.r) {
+                        delete instance._detachNotifiers[customEvent];
+                    }
+                }
+                // check the same for wildcard eventName:
+                customEventWildcardEventName = customEvent.replace(REGEXP_EVENTNAME_WITH_SEMICOLON, ':*');
+                if ((customEventWildcardEventName !== customEvent) && (detachNotifier=instance._detachNotifiers[customEventWildcardEventName])) {
+                    detachNotifier.cb.call(detachNotifier.o, customEvent);
+                    if (detachNotifier.r) {
+                        delete instance._detachNotifiers[customEvent];
+                    }
                 }
             }
         },
@@ -6757,8 +8573,35 @@ require('js-ext/lib/object.js');
     DEFINE_IMMUTAL_PROPERTY(Event, '_defaultEventObj', {});
 
     /**
+     * Objecthash containing all detach-notifiers, keyed by customEvent name.
+     * This list is maintained by `notifyDetach` and `unNotifyDetach`
+     *
+     * _detachNotifiers = {
+     *     'UI:click': {
+     *         cb:function() {}
+     *         o: {} // context
+     *     },
+     *     'redmodel:*': {
+     *         cb:function() {}
+     *         o: {} // context
+     *     },
+     *     'bluemodel:save': {
+     *         cb:function() {}
+     *         o: {} // context
+     *     }
+     * }
+     *
+     * @property _detachNotifiers
+     * @default {}
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
+    DEFINE_IMMUTAL_PROPERTY(Event, '_detachNotifiers', {});
+
+    /**
      * Objecthash containing all notifiers, keyed by customEvent name.
-     * This list is maintained by `notify`, `unNotify` and `unNotifyAll`
+     * This list is maintained by `notify` and `unNotify`
      *
      * _notifiers = {
      *     'UI:click': {
@@ -6790,7 +8633,7 @@ require('js-ext/lib/object.js');
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/lib/function.js":18,"js-ext/lib/object.js":19,"polyfill/polyfill-base.js":29}],9:[function(require,module,exports){
+},{"js-ext/lib/function.js":27,"js-ext/lib/object.js":28,"polyfill/polyfill-base.js":41}],16:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6909,7 +8752,7 @@ Event.Emitter = function(emitterName) {
     Event.defineEmitter(newEmitter, emitterName);
     return newEmitter;
 };
-},{"./index.js":11}],10:[function(require,module,exports){
+},{"./index.js":18}],17:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7056,11 +8899,11 @@ Event.Listener = {
         return Event.onceBefore(customEvent, callback, this, filter, prepend);
     }
 };
-},{"./index.js":11}],11:[function(require,module,exports){
+},{"./index.js":18}],18:[function(require,module,exports){
 module.exports = require('./event-base.js');
 require('./event-emitter.js');
 require('./event-listener.js');
-},{"./event-base.js":8,"./event-emitter.js":9,"./event-listener.js":10}],12:[function(require,module,exports){
+},{"./event-base.js":15,"./event-emitter.js":16,"./event-listener.js":17}],19:[function(require,module,exports){
 
 "use strict";
 
@@ -7178,7 +9021,7 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"./io.js":16,"xmldom":2}],13:[function(require,module,exports){
+},{"./io.js":23,"xmldom":2}],20:[function(require,module,exports){
 "use strict";
 
 var NAME = '[io-stream]: ',
@@ -7296,7 +9139,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"./io.js":16}],14:[function(require,module,exports){
+},{"./io.js":23}],21:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7724,7 +9567,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"./io.js":16,"polyfill/lib/json.js":26}],15:[function(require,module,exports){
+},{"./io.js":23,"polyfill/lib/json.js":37}],22:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7867,7 +9710,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"./io.js":16,"js-ext":17}],16:[function(require,module,exports){
+},{"./io.js":23,"js-ext":25}],23:[function(require,module,exports){
 (function (global){
 /**
  * Provides core IO-functionality.
@@ -8185,11 +10028,106 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":17,"polyfill/polyfill-base.js":29,"ypromise":5}],17:[function(require,module,exports){
+},{"js-ext":25,"polyfill/polyfill-base.js":41,"ypromise":5}],24:[function(require,module,exports){
+module.exports = {
+    'abstract': true,
+    'arguments': true,
+    'assert': true,
+    'await': true,
+    'boolean': true,
+    'break': true,
+    'byte': true,
+    'case': true,
+    'catch': true,
+    'char': true,
+    'class': true,
+    'const': true,
+    'continue': true,
+    'debugger': true,
+    'default': true,
+    'delete': true,
+    'do': true,
+    'double': true,
+    'else': true,
+    'enum': true,
+    'eval': true,
+    'export': true,
+    'extends': true,
+    'false': true,
+    'final': true,
+    'finally': true,
+    'float': true,
+    'for': true,
+    'function': true,
+    'goto': true,
+    'if': true,
+    'import': true,
+    'implements': true,
+    'in': true,
+    'instanceof': true,
+    'int': true,
+    'interface': true,
+    'let': true,
+    'long': true,
+    'native': true,
+    'new': true,
+    'null': true,
+    'package': true,
+    'private': true,
+    'protected': true,
+    'public': true,
+    'return': true,
+    'short': true,
+    'static': true,
+    'strictfp': true,
+    'super': true,
+    'switch': true,
+    'synchronized': true,
+    'this': true,
+    'throw': true,
+    'throws': true,
+    'transient': true,
+    'true': true,
+    'try': true,
+    'typeof': true,
+    'var': true,
+    'void': true,
+    'volatile': true,
+    'while': true,
+    'with': true,
+    'yield': true
+};
+},{}],25:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
+require('./lib/string.js');
+require('./lib/array.js');
 require('./lib/promise.js');
-},{"./lib/function.js":18,"./lib/object.js":19,"./lib/promise.js":20}],18:[function(require,module,exports){
+},{"./lib/array.js":26,"./lib/function.js":27,"./lib/object.js":28,"./lib/promise.js":29,"./lib/string.js":30}],26:[function(require,module,exports){
+"use strict";
+
+(function(ArrayPrototype) {
+    // extending prototypes
+    Array.shuffle || (ArrayPrototype.shuffle=function () {
+        var instance = this,
+            counter = instance.length,
+            temp, index;
+        // While there are elements in the instance
+        while (counter > 0) {
+            // Pick a random index
+            index = Math.floor(Math.random() * counter);
+
+            // Decrease counter by 1
+            counter--;
+
+            // And swap the last element with it
+            temp = instance[counter];
+            instance[counter] = instance[index];
+            instance[index] = temp;
+        }
+    });
+}(Array.prototype));
+},{}],27:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -8409,7 +10347,7 @@ defineProperties(Function.prototype, {
 defineProperty(Object.prototype, 'createClass', function (constructor, prototype) {
 	return Function.prototype.subClass.apply(this, arguments);
 });
-},{"polyfill/polyfill-base.js":29}],19:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":41}],28:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -8688,7 +10626,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"polyfill/polyfill-base.js":29}],20:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":41}],29:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8988,7 +10926,77 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill/polyfill-base.js":29,"ypromise":5}],21:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":41,"ypromise":5}],30:[function(require,module,exports){
+"use strict";
+
+(function(StringPrototype) {
+    var SUBREGEX  = /\{\s*([^|}]+?)\s*(?:\|([^}]*))?\s*\}/g,
+        DATEPATTERN = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/,
+        WHITESPACE_CLASS = "[\\s\uFEFF\xA0]+",
+        TRIM_LEFT_REGEX  = new RegExp('^' + WHITESPACE_CLASS),
+        TRIM_RIGHT_REGEX = new RegExp(WHITESPACE_CLASS + '$'),
+        TRIMREGEX        = new RegExp(TRIM_LEFT_REGEX.source + '|' + TRIM_RIGHT_REGEX.source, 'g'),
+        PATTERN_EMAIL = '^[\\w!#$%&\'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&\'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$',
+        PATTERN_URLEND = '[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)+(/[\\w-]+)*',
+        PATTERN_URLHTTP =  '^(http://)?'+PATTERN_URLEND,
+        PATTERN_URLHTTPS =  '^https://'+PATTERN_URLEND,
+        PATTERN_URL = '^(https?://)?'+PATTERN_URLEND,
+        PATTERN_INTEGER = '^(([-]?[1-9][0-9]*)|0)$',
+        PATTERN_FLOAT_START = '^[-]?(([1-9][0-9]*)|0)(\\',
+        PATTERN_FLOAT_END = '[0-9]+)?$',
+        PATTERN_FLOAT_COMMA = PATTERN_FLOAT_START + ',' + PATTERN_FLOAT_END,
+        PATTERN_FLOAT_PERIOD = PATTERN_FLOAT_START + '.' + PATTERN_FLOAT_END;
+
+    String.substitute || (StringPrototype.substitute=function(obj) {
+        return this.replace(SUBREGEX, function (match, key) {
+            return (obj[key]===undefined) ? match : obj[key];
+        });
+    });
+
+    String.startsWith || (StringPrototype.startsWith=function(test, caseInsensitive) {
+        return this.test('^'+test, caseInsensitive ? 'i': '');
+    });
+
+    String.endsWith || (StringPrototype.endsWith=function(test, caseInsensitive) {
+        return this.test(test+'$', caseInsensitive ? 'i': '');
+    });
+
+    String.trimLeft || (StringPrototype.trimLeft=function() {
+        return this.replace(TRIM_LEFT_REGEX, '');
+    });
+
+    String.trimRight || (StringPrototype.trimRight=function() {
+        return this.replace(TRIM_RIGHT_REGEX, '');
+    });
+
+    String.trim || (StringPrototype.trim=function() {
+        return this.replace(TRIMREGEX, '');
+    });
+
+    String.toDate || (StringPrototype.toDate=function() {
+        return DATEPATTERN.test(this) ? new Date(this) : null;
+    });
+
+    StringPrototype.validateFloat = function(comma) {
+        return comma ? PATTERN_FLOAT_COMMA.test(this) : PATTERN_FLOAT_PERIOD.test(this);
+    };
+
+    StringPrototype.validateNumber = function() {
+        return PATTERN_INTEGER.test(this);
+    };
+
+    StringPrototype.validateEmail = function() {
+        return PATTERN_EMAIL.test(this);
+    };
+
+    StringPrototype.validateURL = function(options) {
+        var instance = this;
+        options || (options={});
+        return options.http ? PATTERN_URLHTTP.test(instance) : (options.https ? PATTERN_URLHTTPS.test(instance) : PATTERN_URL.test(instance));
+    };
+
+}(String.prototype));
+},{}],31:[function(require,module,exports){
 (function (global){
 if (!Array.filter) {
     (function (global) {
@@ -9014,7 +11022,7 @@ if (!Array.filter) {
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],22:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 (function (global){
 if (!Array.forEach) {
     (function (global) {
@@ -9033,7 +11041,7 @@ if (!Array.forEach) {
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],23:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 "use strict";
 
 Array.prototype.indexOf || (Array.prototype.indexOf=function indexOf(searchElement) {
@@ -9047,14 +11055,14 @@ Array.prototype.indexOf || (Array.prototype.indexOf=function indexOf(searchEleme
     }
     return -1;
 });
-},{}],24:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 "use strict";
 
 Array.isArray || (Array.isArray = function isArray(array) {
     return array && Object.prototype.toString.call(array) === '[object Array]';
 });
 
-},{}],25:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 (function (global){
 if (!Array.some) {
     (function (global) {
@@ -9076,7 +11084,27 @@ if (!Array.some) {
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],26:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
+"use strict";
+
+// based upon https://gist.github.com/jonathantneal/3062955
+module.exports = function (window) {
+    window.Element && (function(ElementPrototype) {
+        ElementPrototype.matchesSelector = ElementPrototype.matchesSelector ||
+        ElementPrototype.mozMatchesSelector ||
+        ElementPrototype.msMatchesSelector ||
+        ElementPrototype.oMatchesSelector ||
+        ElementPrototype.webkitMatchesSelector ||
+        function (selector) {
+            var node = this,
+                nodes = (node.parentNode || window.document).querySelectorAll(selector),
+                i = -1;
+            while (nodes[++i] && (nodes[i] !== node));
+            return !!nodes[i];
+        };
+    }(window.Element.prototype));
+};
+},{}],37:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -9429,7 +11457,18 @@ if (!Array.some) {
 })(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],27:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
+"use strict";
+var DOCUMENT_POSITION_CONTAINED_BY = 16;
+module.exports = function (window) {
+    window.Node && !window.Node.prototype.contains && (function(NodePrototype) {
+        NodePrototype.contains = function(child) {
+            var comparison = this.compareDocumentPosition(child);
+            return !!((comparison===0) || (comparison & DOCUMENT_POSITION_CONTAINED_BY));
+        };
+    }(window.Node.prototype));
+};
+},{}],39:[function(require,module,exports){
 "use strict";
 
 Object.create || (Object.create = function (o) {
@@ -9437,7 +11476,7 @@ Object.create || (Object.create = function (o) {
     F.prototype = o;
     return new F();
 });
-},{}],28:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 "use strict";
 
 // In Internet Explorer 8 Object.defineProperty only accepts DOM objects
@@ -9471,7 +11510,7 @@ Object.defineProperties || (Object.defineProperties=function defineProperties(ob
     }
     return object;
 });
-},{}],29:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 require('./lib/array.filter.js');
 require('./lib/array.foreach.js');
 require('./lib/array.indexof.js');
@@ -9479,16 +11518,16 @@ require('./lib/array.isarray.js');
 require('./lib/array.some.js');
 require('./lib/object.create.js');
 require('./lib/object.defineproperty.js');
-},{"./lib/array.filter.js":21,"./lib/array.foreach.js":22,"./lib/array.indexof.js":23,"./lib/array.isarray.js":24,"./lib/array.some.js":25,"./lib/object.create.js":27,"./lib/object.defineproperty.js":28}],30:[function(require,module,exports){
+},{"./lib/array.filter.js":31,"./lib/array.foreach.js":32,"./lib/array.indexof.js":33,"./lib/array.isarray.js":34,"./lib/array.some.js":35,"./lib/object.create.js":39,"./lib/object.defineproperty.js":40}],42:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/json.js');
-},{"./lib/json.js":26,"./polyfill-base.js":29}],31:[function(require,module,exports){
+},{"./lib/json.js":37,"./polyfill-base.js":41}],43:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
 	later: require('./lib/timers.js').later,
 	async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":32,"./lib/timers.js":33}],32:[function(require,module,exports){
+},{"./lib/idgenerator.js":44,"./lib/timers.js":45}],44:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -9545,7 +11584,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"polyfill/polyfill-base.js":29}],33:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":41}],45:[function(require,module,exports){
 (function (process){
 /**
  * Collection of various utility functions.
@@ -9687,7 +11726,105 @@ module.exports.later = function (callbackFn, timeout, periodic, invokeAfterFn) {
 };
 
 }).call(this,require('_process'))
-},{"_process":34,"polyfill/polyfill-base.js":29}],34:[function(require,module,exports){
+},{"_process":48,"polyfill/polyfill-base.js":41}],46:[function(require,module,exports){
+"use strict";
+
+module.exports = function (window) {
+    require('./lib/sizes.js')(window);
+};
+},{"./lib/sizes.js":47}],47:[function(require,module,exports){
+"use strict";
+
+module.exports = function (window) {
+    var getScrollOffsets = function() {
+        var doc = window.document;
+        // this works for all browsers in non quircks-mode and only for IE9+:
+        if (window.pageXOffset) {
+            return {
+                x: window.pageXOffset,
+                y: window.pageYOffset
+            };
+        }
+        // for IE (or any other browser) in standards mode
+        if (doc.compatMode === 'CSS1Compat') {
+            return {
+                x: doc.documentElement.scrollLeft,
+                y: doc.documentElement.scrollTop
+            };
+        }
+        // for browsers in quircks mode:
+        return {
+            x: doc.body.scrollLeft,
+            y: doc.body.scrollTop
+        };
+    },
+
+    getViewportSize = function() {
+        var doc = window.document;
+        // this works for all browsers in non quircks-mode and only for IE9+:
+        if (window.innerWidth) {
+            return {
+                w: window.innerWidth,
+                h: window.innerHeight
+            };
+        }
+        // for IE (or any other browser) in standards mode
+        if (doc.compatMode === 'CSS1Compat') {
+            return {
+                w: doc.documentElement.clientWidth,
+                h: doc.documentElement.clientHeight
+            };
+        }
+        // for browsers in quircks mode:
+        return {
+            w: doc.body.clientWidth,
+            h: doc.body.clientHeight
+        };
+    };
+
+    /**
+     * Gets the left-scroll offset of the window.
+     *
+     * @method getScrollLeft
+     * @return {Number} left-offset in pixels
+     * @since 0.0.1
+    */
+    window.getScrollLeft = function() {
+        return getScrollOffsets().x;
+    };
+    /**
+     * Gets the top-scroll offset of the window.
+     *
+     * @method getScrollTop
+     * @return {Number} top-offset in pixels
+     * @since 0.0.1
+    */
+    window.getScrollTop = function() {
+        return getScrollOffsets().y;
+    };
+   /**
+    * Gets the width of the window.
+    *
+    * @method getWidth
+    * @return {Number} width in pixels
+    * @since 0.0.1
+    */
+    window.getWidth = function() {
+        return getViewportSize().w;
+    };
+   /**
+    * Gets the height of the window.
+    *
+    * @method getHeight
+    * @return {Number} width in pixels
+    * @since 0.0.1
+    */
+    window.getHeight = function() {
+        return getViewportSize().h;
+    };
+
+};
+},{}],48:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -9842,17 +11979,24 @@ process.chdir = function (dir) {
 
     require('polyfill');
     require('ypromise');
+    require('window-ext')(window);
+    require('dom-ext')(window);
     require('js-ext');
 
     var fakedom = window.navigator.userAgent==='fake',
-         Event = fakedom ? require('event') : require('event-mobile')(window),
-         io_config = {
-             // timeout: 3000,
-             debug: true,
-             base: '/build'
-         },
-         EVENT_NAME_TIMERS_EXECUTION = 'timers:asyncfunc';
+        Event = fakedom ? require('event') : require('event-mobile')(window),
+        io_config = {
+            // timeout: 3000,
+            debug: true,
+            base: '/build'
+        },
+        EVENT_NAME_TIMERS_EXECUTION = 'timers:asyncfunc';
 
+    if (!fakedom) {
+        require('event-dom/extra/event-hover.js')(window);
+        require('event-dom/extra/event-valuechange.js')(window);
+        require('event-dom/extra/event-drag.js')(window);
+    }
     /**
      * Reference to the `idGenerator` function in [utils](../modules/utils.html)
      *
@@ -9862,6 +12006,7 @@ process.chdir = function (dir) {
     */
 
     ITSA.merge(require('utils'));
+    ITSA.RESERVED_WORDS = require('js-ext/extra/reserved-words.js');
 
     /**
      * Reference to the [IO](io.html) object
@@ -9904,4 +12049,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"event":11,"event-mobile":7,"io/io-cors-ie9.js":12,"io/io-stream.js":13,"io/io-transfer.js":14,"io/io-xml.js":15,"js-ext":17,"node-win":undefined,"polyfill":30,"utils":31,"ypromise":5}]},{},[]);
+},{"dom-ext":6,"event":18,"event-dom/extra/event-drag.js":11,"event-dom/extra/event-hover.js":12,"event-dom/extra/event-valuechange.js":13,"event-mobile":14,"io/io-cors-ie9.js":19,"io/io-stream.js":20,"io/io-transfer.js":21,"io/io-xml.js":22,"js-ext":25,"js-ext/extra/reserved-words.js":24,"node-win":undefined,"polyfill":42,"utils":43,"window-ext":46,"ypromise":5}]},{},[]);
