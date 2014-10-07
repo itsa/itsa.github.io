@@ -81,6 +81,8 @@
             
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
+                <li><a href="../modules/event-dragdrop.html">event-dragdrop</a></li>
+            
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
@@ -798,7 +800,8 @@ require(&#x27;js-ext/lib/object.js&#x27;);
         */
         _addMultiSubs: function(before, customEvent, callback, listener, filter, prepend) {
             console.log(NAME, &#x27;_addMultiSubs&#x27;);
-            var instance = this;
+            var instance = this,
+                subscribers;
             if ((typeof listener === &#x27;string&#x27;) || (typeof listener === &#x27;function&#x27;)) {
                 prepend = filter;
                 filter = listener;
@@ -817,16 +820,17 @@ require(&#x27;js-ext/lib/object.js&#x27;);
             if (!Array.isArray(customEvent)) {
                 return instance._addSubscriber(listener, before, customEvent, callback, filter, prepend);
             }
+            subscribers = [];
             customEvent.forEach(
                 function(ce) {
-                    instance._addSubscriber(listener, before, ce, callback, filter, prepend);
+                    subscribers.push(instance._addSubscriber(listener, before, ce, callback, filter, prepend));
                 }
             );
             return {
                 detach: function() {
-                    customEvent.each(
-                        function(ce) {
-                            instance._removeSubscriber(listener, before, ce, callback);
+                    subscribers.each(
+                        function(subscriber) {
+                            subscriber.detach();
                         }
                     );
                 }

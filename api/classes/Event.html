@@ -81,6 +81,8 @@
             
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
+                <li><a href="../modules/event-dragdrop.html">event-dragdrop</a></li>
+            
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
@@ -252,15 +254,6 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                                 
                             </li>
                         
-                            <li class="index-item method protected">
-                                <a href="#method__isEditable">_isEditable</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
                             <li class="index-item method private">
                                 <a href="#method__removeSubscriber">_removeSubscriber</a>
 
@@ -397,6 +390,20 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
 
                                 
                                     <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_removeDraggable">removeDraggable</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_setDraggable">setDraggable</a>
+
                                 
                                 
                             </li>
@@ -865,7 +872,7 @@ If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l670"><code>src&#x2F;event&#x2F;event-base.js:670</code></a>
+        <a href="../files/src_event_event-base.js.html#l672"><code>src&#x2F;event&#x2F;event-base.js:672</code></a>
         
         </p>
 
@@ -1213,7 +1220,7 @@ the Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will 
             
         
         
-        <a href="../files/src_event_event-base.js.html#l933"><code>src&#x2F;event&#x2F;event-base.js:933</code></a>
+        <a href="../files/src_event_event-base.js.html#l935"><code>src&#x2F;event&#x2F;event-base.js:935</code></a>
         
         </p>
 
@@ -1336,104 +1343,6 @@ the Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will 
 </div>
 
                 
-                    <div id="method__isEditable" class="method item protected">
-    <h3 class="name"><code>_isEditable</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>node</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-        <span class="flag protected">protected</span>
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/event-hover.html">event-hover</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_event-dom_extra_drag.js.html#l34"><code>src&#x2F;event-dom&#x2F;extra&#x2F;drag.js:34</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Check to see if a node has editable content or not.</p>
-<p>TODO: Add additional checks to get it to work for child nodes
-that inherit &quot;contenteditable&quot; from parent nodes. This may be
-too computationally intensive to be placed inside of the <code>_poll</code>
-loop, however.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">node</code>
-                        <span class="type">Node</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
                     <div id="method__removeSubscriber" class="method item private">
     <h3 class="name"><code>_removeSubscriber</code></h3>
 
@@ -1488,7 +1397,7 @@ loop, however.</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1048"><code>src&#x2F;event&#x2F;event-base.js:1048</code></a>
+        <a href="../files/src_event_event-base.js.html#l1050"><code>src&#x2F;event&#x2F;event-base.js:1050</code></a>
         
         </p>
 
@@ -1630,7 +1539,7 @@ If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l983"><code>src&#x2F;event&#x2F;event-base.js:983</code></a>
+        <a href="../files/src_event_event-base.js.html#l985"><code>src&#x2F;event&#x2F;event-base.js:985</code></a>
         
         </p>
 
@@ -1785,7 +1694,7 @@ If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1103"><code>src&#x2F;event&#x2F;event-base.js:1103</code></a>
+        <a href="../files/src_event_event-base.js.html#l1105"><code>src&#x2F;event&#x2F;event-base.js:1105</code></a>
         
         </p>
 
@@ -3019,7 +2928,7 @@ If payload.silent is set true, the subscribers are not getting invoked: only the
             
         
         
-        <a href="../files/src_event_event-base.js.html#l777"><code>src&#x2F;event&#x2F;event-base.js:777</code></a>
+        <a href="../files/src_event_event-base.js.html#l779"><code>src&#x2F;event&#x2F;event-base.js:779</code></a>
         
         </p>
 
@@ -4113,6 +4022,163 @@ No need to <code>detach()</code> (unless you want to undescribe before the first
 </div>
 
                 
+                    <div id="method_removeDraggable" class="method item">
+    <h3 class="name"><code>removeDraggable</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/event-dragdrop.html">event-dragdrop</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_event-dom_extra_dragdrop.js.html#l206"><code>src&#x2F;event-dom&#x2F;extra&#x2F;dragdrop.js:206</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Removes draggability of the HtmlElement</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_setDraggable" class="method item">
+    <h3 class="name"><code>setDraggable</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[proxy]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/event-dragdrop.html">event-dragdrop</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_event-dom_extra_dragdrop.js.html#l194"><code>src&#x2F;event-dom&#x2F;extra&#x2F;dragdrop.js:194</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Makes the HtmlElement draggable</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[proxy]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>whether the HtmlElement is a proxy-node during drag</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_undefAllEvents" class="method item">
     <h3 class="name"><code>undefAllEvents</code></h3>
 
@@ -4530,7 +4596,7 @@ When <code>emitterName</code> is not set, ALL event-definitions will be removed.
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1123"><code>src&#x2F;event&#x2F;event-base.js:1123</code></a>
+        <a href="../files/src_event_event-base.js.html#l1125"><code>src&#x2F;event&#x2F;event-base.js:1125</code></a>
         
         </p>
 
@@ -4598,7 +4664,7 @@ which has a structure like this:</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1155"><code>src&#x2F;event&#x2F;event-base.js:1155</code></a>
+        <a href="../files/src_event_event-base.js.html#l1157"><code>src&#x2F;event&#x2F;event-base.js:1157</code></a>
         
         </p>
 
@@ -4690,7 +4756,7 @@ Every item that gets in the array consist by itself of 3 properties:
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1218"><code>src&#x2F;event&#x2F;event-base.js:1218</code></a>
+        <a href="../files/src_event_event-base.js.html#l1220"><code>src&#x2F;event&#x2F;event-base.js:1220</code></a>
         
         </p>
 
@@ -4748,7 +4814,7 @@ To add more methods, you can use <code>_setEventObjProperty</code></p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1234"><code>src&#x2F;event&#x2F;event-base.js:1234</code></a>
+        <a href="../files/src_event_event-base.js.html#l1236"><code>src&#x2F;event&#x2F;event-base.js:1236</code></a>
         
         </p>
 
@@ -4816,7 +4882,7 @@ This list is maintained by <code>notifyDetach</code> and <code>unNotifyDetach</c
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1206"><code>src&#x2F;event&#x2F;event-base.js:1206</code></a>
+        <a href="../files/src_event_event-base.js.html#l1208"><code>src&#x2F;event&#x2F;event-base.js:1208</code></a>
         
         </p>
 
@@ -4870,7 +4936,7 @@ Is an array of function-references.</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1261"><code>src&#x2F;event&#x2F;event-base.js:1261</code></a>
+        <a href="../files/src_event_event-base.js.html#l1263"><code>src&#x2F;event&#x2F;event-base.js:1263</code></a>
         
         </p>
 

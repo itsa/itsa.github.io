@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/event-dom/extra/hover.js - Itsa</title>
+    <title>src/event-dom/extra/dragdrop.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -162,7 +162,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/event-dom/extra/hover.js</h1>
+                        <h1 class="file-heading">File: src/event-dom/extra/dragdrop.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -172,34 +172,67 @@
  * Adds the &#x60;hover&#x60; event as a DOM-event to event-dom. more about DOM-events:
  * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
  *
- * Should be called using  the provided &#x60;mergeInto&#x60;-method like this:
+ * More about drag and drop: https://dev.opera.com/articles/drag-and-drop/
  *
  *
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  * @example
- * Event = require(&#x27;event-dom/hover.js&#x27;)(window);
+ * Event = require(&#x27;event-dom/dragdrop.js&#x27;)(window);
  *
  * or
  *
  * @example
  * Event = require(&#x27;event-dom&#x27;)(window);
- * require(&#x27;event-dom/event-hover.js&#x27;)(window);
+ * require(&#x27;event-dom/event-dragdrop.js&#x27;)(window);
  *
  * @module event
- * @submodule event-hover
+ * @submodule event-dragdrop
  * @class Event
  * @since 0.0.2
 */
 
 
-var NAME = &#x27;[event-hover]: &#x27;;
+var NAME = &#x27;[event-dragdrop]: &#x27;,
+    ZINDEX_DURING_DRAG = 999,
+    Z_INDEX = &#x27;z-index&#x27;,
+    DRAG_OPACITY = &#x27;0.6&#x27;,
+    PREV_Z = &#x27;_prevZ&#x27;,
+    DRAGGABLE = &#x27;draggable&#x27;,
+    PROXY = &#x27;proxy&#x27;,
+    MOUSE = &#x27;mouse&#x27;,
+    DATA_KEY = &#x27;dragDrop&#x27;,
+    DD_TRANSITION_CLASS = &#x27;dd-transition&#x27;,
+    LATER = require(&#x27;utils&#x27;).later;
+
+require(&#x27;polyfill/polyfill-base.js&#x27;);
+require(&#x27;js-ext&#x27;);
+require(&#x27;window-ext&#x27;);
+require(&#x27;../css/dragdrop.css&#x27;);
 
 module.exports = function (window) {
     var Event = require(&#x27;../event-dom.js&#x27;)(window),
+        UA = window.navigator.userAgent,
+        iOS = !!UA.match(&#x27;iPhone OS&#x27;) || !!UA.match(&#x27;iPad&#x27;),
+        featureDetect_DD, supportsDD, setupDD, teardownDD, handleMove, handleDrop, handleDragStart;
 
-    subscriber,
+    featureDetect_DD = function() {
+        var div = window.document.createElement(&#x27;div&#x27;);
+        return (DRAGGABLE in div) || (&#x27;ondragstart&#x27; in div &amp;&amp; &#x27;ondrop&#x27; in div);
+    };
+
+    supportsDD = featureDetect_DD();
+
+    // if supportsDD &amp;&amp; !iOS, then we can use native HTML5 drag and drop
+    // no polyfill needed
+
+    // iOS claims that draggable is in the element but doesn&#x27;t allow drag and drop:
+    // https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariWebContent/HandlingEvents/HandlingEvents.html
+
+    if (iOS || !supportsDD) {
+        // we need a custom drag and drop solution
+    }
 
     /*
      * Creates the &#x60;hover&#x60; event. The eventobject has the property &#x60;e.hover&#x60; which is a &#x60;Promise&#x60;.
@@ -210,51 +243,149 @@ module.exports = function (window) {
      * @private
      * @since 0.0.2
      */
-    setupHover = function() {
+    setupDD = function() {
         // create only after subscribing to the &#x60;hover&#x60;-event
-        subscriber = Event.after(&#x27;mouseover&#x27;, function(e) {
+        Event.after([MOUSE+&#x27;down&#x27;, &#x27;panstart&#x27;], function(e) {
             console.log(NAME, &#x27;setupHover: setting up mouseover event&#x27;);
-            var node = e.target;
-            e.hover = new Promise(function(fulfill, reject) {
-                Event.onceAfter(
-                    &#x27;mouseout&#x27;,
-                    function(e) {
-                        fulfill(e.relatedTarget);
-                    },
-                    function(ev) {
-                        return (ev.target===node);
-                    }
-                );
-            });
-            Event.emit(node, &#x27;UI:hover&#x27;, e);
-        });
-    },
+            var node = e.target,
+                moveEv, evtType, x, y;
 
-    /*
-     * Removes the &#x60;hover&#x60; event. Because there are no subscribers anymore.
-     *
-     * @method teardownHover
-     * @private
-     * @since 0.0.2
-     */
-    teardownHover = function() {
-        // check if there aren&#x27;t any subscribers anymore.
-        // in that case, we detach the &#x60;mouseover&#x60; lister because we don&#x27;t want to
-        // loose performance.
-        if (!Event._subs[&#x27;UI:hover&#x27;]) {
-            console.log(NAME, &#x27;teardownHover: stop setting up mouseover event&#x27;);
-            subscriber.detach();
-            // reinit notifier, because it is a one-time notifier:
-            Event.notify(&#x27;UI:hover&#x27;, setupHover, Event, true);
+            // because we listen to 2 eventypes, but we don&#x27;t want to setup twice, we need to store
+            // data on the node that tells whether dragging already started
+
+            if (node.getData(DATA_KEY)) {
+                return;
+            }
+
+            // we set data to the node: key=&#x27;dragDrop&#x27; value=xy-position, which we may need
+            // to return a proxy on drop-fail
+            x = node.getX();
+            y = node.getY();
+            node.setXY(x, y);
+            // now we can read their current inline values
+            node.setData(DATA_KEY, {
+                x: x,
+                y: y,
+                xStart: node.getInlineStyle(&#x27;left&#x27;),
+                yStart: node.getInlineStyle(&#x27;top&#x27;),
+                mousex: e.clientX+window.getScrollLeft(),
+                mousey: e.clientY+window.getScrollTop()
+            });
+console.warn(&#x27;STORE &#x27;+x+&#x27; | &#x27;+y);
+
+            evtType = (e.type===MOUSE+&#x27;down&#x27;) ? MOUSE : &#x27;pan&#x27;;
+
+            e.drag = Promise.manage();
+
+            e.setOnDrag = function(callbackFn) {
+                e.drag.setCallback(callbackFn);
+            };
+
+            moveEv = Event.after(evtType+&#x27;move&#x27;, function(ev) {
+                // move the object
+                handleMove(e, ev);
+                e.drag.callback(e);
+            });
+
+            Event.onceAfter((evtType===MOUSE) ? MOUSE+&#x27;up&#x27; : &#x27;panend&#x27;, function(ev) {
+                moveEv.detach();
+                // handle drop
+                handleDrop(e, ev);
+                node.removeData(DATA_KEY);
+                e.drag.fulfill(e);
+            });
+
+            handleDragStart(e, node, x, y);
+
+            Event.emit(node, &#x27;UI:dragdrop&#x27;, e);
+        }, &#x27;[draggable=&quot;true&quot;], [draggable=&quot;proxy&quot;]&#x27;);
+    };
+
+    handleDragStart = function(e, node, x, y) {
+console.info(&#x27;handleDragStart &#x27;+node.id);
+        var proxy = (node.getAttr(DRAGGABLE)===PROXY),
+            movableNode = e.movableNode = proxy ? node.clone(true) : node;
+
+        movableNode.setXY(x, y);
+        movableNode.setData(PREV_Z, movableNode.getInlineStyle(Z_INDEX));
+        movableNode.setInlineStyle(Z_INDEX, ZINDEX_DURING_DRAG);
+
+        if (proxy) {
+            movableNode.setInlineStyle(&#x27;opacity&#x27;, DRAG_OPACITY);
+            node.parentNode.insertAfter(movableNode, node);
         }
     };
 
-    Event.notify(&#x27;UI:hover&#x27;, setupHover, Event, true);
-    Event.notifyDetach(&#x27;UI:hover&#x27;, teardownHover, Event);
+    handleMove = function(e, ev) {
+console.info(&#x27;DragMove &#x27;+e.movableNode.id);
+        var node = e.movableNode,
+            data = node.getData(DATA_KEY);
+        node.setXY(data.x+ev.clientX+window.getScrollLeft()-data.mousex, data.y+ev.clientY+window.getScrollTop()-data.mousey);
+    };
+
+    handleDrop = function(e, ev) {
+console.info(&#x27;DragDrop &#x27;+e.movableNode.id);
+        var node = e.movableNode,
+            prevZ = node.getData(PREV_Z),
+            proxy = (node.getAttr(DRAGGABLE)===PROXY),
+            data = node.getData(DATA_KEY),
+            removeClass;
+        removeClass = function() {
+            node.removeClass(DD_TRANSITION_CLASS);
+            node.removeEventListener &amp;&amp; node.removeEventListener(&#x27;transitionend&#x27;, removeClass, true);
+        };
+        prevZ ? node.setInlineStyle(Z_INDEX, prevZ) : node.removeInlineStyle(Z_INDEX);
+
+        if (proxy) {
+            node.remove();
+        }
+        else {
+console.warn(&#x27;SETTING TO &#x27;+data.x+&#x27; | &#x27;+data.y);
+            node.addClass(DD_TRANSITION_CLASS);
+            // transitions only work with IE10+, and that browser has addEventListener
+            // when it doesn&#x27;t have, it doesn;t harm to leave the transitionclass on: it would work anyway
+            // nevertheless we will remove it with a timeout
+            if (node.addEventListener) {
+                node.addEventListener(&#x27;transitionend&#x27;, removeClass, true);
+            }
+            else {
+                LATER(removeClass, 1000);
+            }
+            node.setXY(data.xStart, data.yStart, true);
+        }
+    };
+
+    setupDD();
+
+    // also extend window.Element:
+    window.Element &amp;&amp; (function(ElementPrototype) {
+       /**
+        * Makes the HtmlElement draggable
+        *
+        * @method setDraggable
+        * @param [proxy] {Boolean} whether the HtmlElement is a proxy-node during drag
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.setDraggable = function(proxy) {
+            this.setAttr(DRAGGABLE, proxy ? PROXY : &quot;true&quot;);
+            return this;
+        };
+       /**
+        * Removes draggability of the HtmlElement
+        *
+        * @method removeDraggable
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.removeDraggable = function() {
+            this.removeAttr(DRAGGABLE);
+            return this;
+        };
+    }(window.Element.prototype));
 
     return Event;
 };
-
     </pre>
 </div>
 

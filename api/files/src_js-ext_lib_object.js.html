@@ -81,6 +81,8 @@
             
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
+                <li><a href="../modules/event-dragdrop.html">event-dragdrop</a></li>
+            
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
@@ -330,6 +332,15 @@ defineProperties(Object.prototype, {
         return Object.keys(this);
     },
     /**
+     * Returns the number of keys of the object
+     *
+     * @method size
+     * @return {Number} Number of items
+     */
+    size: function () {
+        return Object.keys(this).length;
+    },
+    /**
      * Loops through the object collection the values of all its properties.
      * It is the counterpart of the [&#x60;keys&#x60;](#method_keys).
      *
@@ -403,8 +414,6 @@ defineProperties(Object.prototype, {
         });
         return m;
     }
-
-
 
 });
 

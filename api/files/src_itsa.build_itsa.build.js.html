@@ -81,6 +81,8 @@
             
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
+                <li><a href="../modules/event-dragdrop.html">event-dragdrop</a></li>
+            
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
@@ -251,10 +253,9 @@
     };
 
     require(&#x27;polyfill&#x27;);
-    require(&#x27;ypromise&#x27;);
+    require(&#x27;js-ext&#x27;);
     require(&#x27;window-ext&#x27;)(window);
     require(&#x27;dom-ext&#x27;)(window);
-    require(&#x27;js-ext&#x27;);
 
     var fakedom = window.navigator.userAgent===&#x27;fake&#x27;,
         Event = fakedom ? require(&#x27;event&#x27;) : require(&#x27;event-mobile&#x27;)(window),
@@ -268,7 +269,7 @@
     if (!fakedom) {
         require(&#x27;event-dom/extra/hover.js&#x27;)(window);
         require(&#x27;event-dom/extra/valuechange.js&#x27;)(window);
-        require(&#x27;event-dom/extra/drag.js&#x27;)(window);
+        require(&#x27;event-dom/extra/dragdrop.js&#x27;)(window);
     }
     /**
      * Reference to the &#x60;idGenerator&#x60; function in [utils](../modules/utils.html)

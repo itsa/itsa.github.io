@@ -81,6 +81,8 @@
             
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
+                <li><a href="../modules/event-dragdrop.html">event-dragdrop</a></li>
+            
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
@@ -312,9 +314,9 @@ module.exports = function (window) {
 
         valueChangeData = node.getData(DATA_KEY);
         // cancel previous timer: we don&#x27;t want multiple timers:
-        valueChangeData.timer &amp;&amp; valueChangeData.timer.cancel();
+        valueChangeData._pollTimer &amp;&amp; valueChangeData._pollTimer.cancel();
         // setup a new timer:
-        valueChangeData.timer = UTILS.later(checkChanged.bind(null, e), POLL_INTERVAL, true);
+        valueChangeData._pollTimer = UTILS.later(checkChanged.bind(null, e), POLL_INTERVAL, true);
     },
 
 
@@ -328,8 +330,11 @@ module.exports = function (window) {
      */
     stopPolling = function(node) {
         console.log(NAME, &#x27;stopPolling&#x27;);
-        var valueChangeData = node.getData(DATA_KEY);
-        valueChangeData &amp;&amp; valueChangeData.timer &amp;&amp; valueChangeData.timer.cancel();
+        var valueChangeData;
+        if (node &amp;&amp; node.getData) {
+            valueChangeData = node.getData(DATA_KEY);
+            valueChangeData &amp;&amp; valueChangeData._pollTimer &amp;&amp; valueChangeData._pollTimer.cancel();
+        }
     },
 
 

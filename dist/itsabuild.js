@@ -1,4 +1,43 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+module.exports = function (css, customDocument) {
+  var doc = customDocument || document;
+  if (doc.createStyleSheet) {
+    var sheet = doc.createStyleSheet()
+    sheet.cssText = css;
+    return sheet.ownerNode;
+  } else {
+    var head = doc.getElementsByTagName('head')[0],
+        style = doc.createElement('style');
+
+    style.type = 'text/css';
+
+    if (style.styleSheet) {
+      style.styleSheet.cssText = css;
+    } else {
+      style.appendChild(doc.createTextNode(css));
+    }
+
+    head.appendChild(style);
+    return style;
+  }
+};
+
+module.exports.byUrl = function(url) {
+  if (document.createStyleSheet) {
+    return document.createStyleSheet(url).ownerNode;
+  } else {
+    var head = document.getElementsByTagName('head')[0],
+        link = document.createElement('link');
+
+    link.rel = 'stylesheet';
+    link.href = url;
+
+    head.appendChild(link);
+    return link;
+  }
+};
+
+},{}],2:[function(require,module,exports){
 (function(window, document, exportName, undefined) {
   'use strict';
 
@@ -2384,7 +2423,7 @@ if (typeof define == TYPE_FUNCTION && define.amd) {
 
 })(window, document, 'Hammer');
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 function DOMParser(options){
 	this.options = options ||{locator:{}};
 	
@@ -2641,7 +2680,7 @@ if(typeof require == 'function'){
 	exports.DOMParser = DOMParser;
 }
 
-},{"./dom":3,"./sax":4}],3:[function(require,module,exports){
+},{"./dom":4,"./sax":5}],4:[function(require,module,exports){
 /*
  * DOM Level 2
  * Object DOMException
@@ -3781,7 +3820,7 @@ if(typeof require == 'function'){
 	exports.XMLSerializer = XMLSerializer;
 }
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 //[4]   	NameStartChar	   ::=   	":" | [A-Z] | "_" | [a-z] | [#xC0-#xD6] | [#xD8-#xF6] | [#xF8-#x2FF] | [#x370-#x37D] | [#x37F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] | [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]
 //[4a]   	NameChar	   ::=   	NameStartChar | "-" | "." | [0-9] | #xB7 | [#x0300-#x036F] | [#x203F-#x2040]
 //[5]   	Name	   ::=   	NameStartChar (NameChar)*
@@ -4367,7 +4406,7 @@ if(typeof require == 'function'){
 }
 
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 (function (process,global){
 /*
 Copyright 2013 Yahoo! Inc. All rights reserved.
@@ -4983,7 +5022,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":48}],6:[function(require,module,exports){
+},{"_process":53}],7:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
@@ -4991,7 +5030,7 @@ module.exports = function (window) {
     require('./lib/document.js')(window);
     require('./lib/element.js')(window);
 };
-},{"./lib/document.js":7,"./lib/element.js":8,"./lib/nodelist.js":9}],7:[function(require,module,exports){
+},{"./lib/document.js":8,"./lib/element.js":9,"./lib/nodelist.js":10}],8:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5065,7 +5104,7 @@ module.exports = function (window) {
         }
 /*jshint boss:false */
         return fragment;
-    };
+    },
 
    /**
     * Inserts a HtmlElement or text at the specified position.
@@ -5079,7 +5118,7 @@ module.exports = function (window) {
     * @return {HtmlElement} the original HtmlElement so it can be chained
     * @since 0.0.1
     */
-    DOCUMENT._insert = function(htmlElement, method, content, refElement, escape) {
+    _insert = function(htmlElement, method, content, refElement, escape) {
         var first;
         // cannot check if isArray: NodeList and HTMLCollection are extended with `forEach()` but they are no arrays
         if (content.forEach) {
@@ -5189,9 +5228,9 @@ module.exports = function (window) {
             children = instance.children,
             index = children.indexOf(refElement);
         if ((index==-1) || (index===children.length-1)) {
-            return instance.DOCUMENT._insert(instance, 'appendChild', content, null, escape);
+            return _insert(instance, 'appendChild', content, null, escape);
         }
-        return instance.DOCUMENT._insert(instance, 'insertBefore', content, children[index+1], escape);
+        return _insert(instance, (instance._insertBefore ? '_' : '') + 'insertBefore', content, children[index+1], escape);
     };
 
    /**
@@ -5208,9 +5247,9 @@ module.exports = function (window) {
         var instance = this,
             index = instance.children.indexOf(refElement);
         if (index==-1) {
-            return instance.DOCUMENT._insert(instance, 'appendChild', content, null, escape);
+            return _insert(instance, 'appendChild', content, null, escape);
         }
-        return instance.DOCUMENT._insert(instance, 'insertBefore', content, refElement, escape);
+        return _insert(instance, (instance._insertBefore ? '_' : '') + 'insertBefore', content, refElement, escape);
     };
 
    /**
@@ -5264,7 +5303,7 @@ module.exports = function (window) {
     };
 
 };
-},{"./nodelist.js":9,"polyfill/lib/array.isarray.js":34,"polyfill/lib/array.some.js":35,"polyfill/lib/element.matchesselector.js":36}],8:[function(require,module,exports){
+},{"./nodelist.js":10,"polyfill/lib/array.isarray.js":36,"polyfill/lib/array.some.js":37,"polyfill/lib/element.matchesselector.js":39}],9:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5298,6 +5337,7 @@ module.exports = function (window) {
     window.Element && (function(ElementPrototype) {
 
         require('js-ext/lib/string.js');
+        require('js-ext/lib/object.js');
         require('./document.js')(window);
         require('polyfill/lib/element.matchesselector.js')(window);
         require('window-ext')(window);
@@ -5329,6 +5369,31 @@ module.exports = function (window) {
         */
         ElementPrototype.append = function(content, escape) {
             return window.document._insert(this, 'appendChild', content, null, escape);
+        };
+
+       /**
+        * Returns a duplicate of the node. Use cloneNode(true) for a `deep` clone.
+        * Almost the same as native cloneNode(), but you should use clone(), because it also clones any data set with setData().
+        *
+        * @method clone
+        * @param content {HtmlElement|HtmlElementList|String} content to append. In case of HTML, it will be escaped.
+        * @param [deep] {Boolean} whether to perform a `deep` clone: with all descendants
+        * @return {HtmlElement} a clone of this HtmlElement
+        * @since 0.0.1
+        */
+        ElementPrototype.clone = function(deep) {
+            var instance = this,
+                cloned = instance.cloneNode(deep);
+            if (instance._data.size()>0) {
+                Object.defineProperty(cloned, '_data', {
+                    configurable: false,
+                    enumerable: false,
+                    writable: false,
+                    value: {} // `writable` is false means we cannot chance the value-reference, but we can change {}'s properties itself
+                });
+                cloned._data.merge(instance._data);
+            }
+            return cloned;
         };
 
        /**
@@ -5688,7 +5753,10 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
+        // to prevent recursion, we backup document.insertBefore:
+        ElementPrototype._insertBefore = ElementPrototype.insertBefore;
         ElementPrototype.insertBefore = function(content, refElement, escape) {
+            // to prevent recursion, we cannot call document.insertBefore
             return window.document.insertBefore.apply(this, arguments);
         };
 
@@ -6048,21 +6116,32 @@ module.exports = function (window) {
          * Set the position of an html element in page coordinates.
          * The element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
          * @method setXY
-         * @param element The target element
-         * @param {Array} xy Contains X & Y values for new position (coordinates are page-based)
-         * @param {Boolean} noRetry By default we try and set the position a second time if the first fails
+         * @param x {Number} x-value for new position (coordinates are page-based)
+         * @param y {Number} y-value for new position (coordinates are page-based)
          */
-        ElementPrototype.setXY = function(x, y) {
+        ElementPrototype.setXY = function(x, y, v) {
             var instance = this,
                 position = instance.getStyle(POSITION),
-                currentX, currentY;
+                dif;
 
             // default position to relative
-            (position==='static') && instance.setInlineStyle(POSITION, 'relative');
-            currentX = instance.getX();
-            currentY = instance.getY();
-            x && instance.setInlineStyle('left', (x - currentX) + 'px');
-            y && instance.setInlineStyle('top', (y - currentY) + 'px');
+            if (position==='static') {
+                instance.setInlineStyle(POSITION, 'relative');
+            }
+            if (x) {
+                instance.setInlineStyle('left', x + 'px');
+                if (!v) {
+                dif = (instance.getX()-x);
+                (dif!==0) && (instance.setInlineStyle('left', (x - dif) + 'px'));
+                }
+            }
+            if (y) {
+                instance.setInlineStyle('top', y + 'px');
+                if (!v) {
+                dif = (instance.getY()-y);
+                (dif!==0) && (instance.setInlineStyle('top', (y - dif) + 'px'));
+                }
+            }
         };
 
         /**
@@ -6116,7 +6195,7 @@ module.exports = function (window) {
 
     }(window.Element.prototype));
 };
-},{"./document.js":7,"js-ext/extra/reserved-words.js":24,"js-ext/lib/string.js":30,"polyfill/lib/element.matchesselector.js":36,"window-ext":46}],9:[function(require,module,exports){
+},{"./document.js":8,"js-ext/extra/reserved-words.js":26,"js-ext/lib/object.js":30,"js-ext/lib/string.js":32,"polyfill/lib/element.matchesselector.js":39,"window-ext":51}],10:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6416,7 +6495,9 @@ module.exports = function (window) {
 
     }(window.NodeList && window.NodeList.prototype, window.HTMLCollection && window.HTMLCollection.prototype));
 };
-},{"polyfill/polyfill-base.js":41}],10:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":46}],11:[function(require,module,exports){
+var css = "[draggable] {\n    -moz-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    /* Required to make elements draggable in old WebKit */\n    -khtml-user-drag: element;\n    -webkit-user-drag: element;\n}\n.dd-transition[draggable] {\n    -webkit-transition: top 1s ease-out, left 1s ease-out;\n    -moz-transition: top 1s ease-out, left 1s ease-out;\n    -ms-transition: top 1s ease-out, left 1s ease-out;\n    -o-transition: top 1s ease-out, left 1s ease-out;\n    transition: top 1s ease-out, left 1s ease-out;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],12:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6903,96 +6984,228 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":18,"polyfill/lib/element.matchesselector.js":36,"polyfill/lib/node.contains.js":38,"utils":43}],11:[function(require,module,exports){
+},{"event":20,"polyfill/lib/element.matchesselector.js":39,"polyfill/lib/node.contains.js":41,"utils":48}],13:[function(require,module,exports){
 "use strict";
 
 /**
  * Adds the `hover` event as a DOM-event to event-dom. more about DOM-events:
  * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
  *
- * Should be called using  the provided `mergeInto`-method like this:
+ * More about drag and drop: https://dev.opera.com/articles/drag-and-drop/
  *
  *
  * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  * @example
- * Event = require('event-dom/hover.js')(window);
+ * Event = require('event-dom/dragdrop.js')(window);
  *
  * or
  *
  * @example
  * Event = require('event-dom')(window);
- * require('event-dom/event-hover.js')(window);
+ * require('event-dom/event-dragdrop.js')(window);
  *
  * @module event
- * @submodule event-hover
+ * @submodule event-dragdrop
  * @class Event
  * @since 0.0.2
 */
 
 
-var NAME = '[event-drag]: ';
+var NAME = '[event-dragdrop]: ',
+    ZINDEX_DURING_DRAG = 999,
+    Z_INDEX = 'z-index',
+    DRAG_OPACITY = '0.6',
+    PREV_Z = '_prevZ',
+    DRAGGABLE = 'draggable',
+    PROXY = 'proxy',
+    MOUSE = 'mouse',
+    DATA_KEY = 'dragDrop',
+    DD_TRANSITION_CLASS = 'dd-transition',
+    LATER = require('utils').later;
+
+require('polyfill/polyfill-base.js');
+require('js-ext');
+require('window-ext');
+require('../css/dragdrop.css');
 
 module.exports = function (window) {
     var Event = require('../event-dom.js')(window),
+        UA = window.navigator.userAgent,
+        iOS = !!UA.match('iPhone OS') || !!UA.match('iPad'),
+        featureDetect_DD, supportsDD, setupDD, teardownDD, handleMove, handleDrop, handleDragStart;
 
-    /**
-    Check to see if a node has editable content or not.
+    featureDetect_DD = function() {
+        var div = window.document.createElement('div');
+        return (DRAGGABLE in div) || ('ondragstart' in div && 'ondrop' in div);
+    };
 
-    TODO: Add additional checks to get it to work for child nodes
-    that inherit "contenteditable" from parent nodes. This may be
-    too computationally intensive to be placed inside of the `_poll`
-    loop, however.
+    supportsDD = featureDetect_DD();
 
-    @method _isEditable
-    @param {Node} node
-    @protected
-    @static
-    **/
-    _isEditable = function (node) {
-        // Performance cheat because this is used inside `_poll`
-        var domNode = node._node;
-        return domNode.contentEditable === 'true' ||
-               domNode.contentEditable === '';
-    },
+    // if supportsDD && !iOS, then we can use native HTML5 drag and drop
+    // no polyfill needed
 
+    // iOS claims that draggable is in the element but doesn't allow drag and drop:
+    // https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariWebContent/HandlingEvents/HandlingEvents.html
+
+    if (iOS || !supportsDD) {
+        // we need a custom drag and drop solution
+    }
 
     /*
      * Creates the `hover` event. The eventobject has the property `e.hover` which is a `Promise`.
      * You can use this Promise to get notification of the end of hover. The Promise e.hover gets resolved with
      * `relatedTarget` as argument: the node where the mouse went into when leaving a.target.
      *
-     * @method _setupValueChange
+     * @method setupHover
      * @private
      * @since 0.0.2
      */
-    _setupValueChange = function() {
+    setupDD = function() {
         // create only after subscribing to the `hover`-event
-        Event.after('mouseover', function(e) {
-            console.info(NAME, 'setting up mouseover event');
-            var node = e.target;
-            e.hover = new Promise(function(fulfill, reject) {
-                Event.after(
-                    'mouseout',
-                    function(e) {
-                        fulfill(e.relatedTarget);
-                    },
-                    function(ev) {
-                        return (ev.target===node);
-                    }
-                );
+        Event.after([MOUSE+'down', 'panstart'], function(e) {
+            console.log(NAME, 'setupHover: setting up mouseover event');
+            var node = e.target,
+                moveEv, evtType, x, y;
+
+            // because we listen to 2 eventypes, but we don't want to setup twice, we need to store
+            // data on the node that tells whether dragging already started
+
+            if (node.getData(DATA_KEY)) {
+                return;
+            }
+
+            // we set data to the node: key='dragDrop' value=xy-position, which we may need
+            // to return a proxy on drop-fail
+            x = node.getX();
+            y = node.getY();
+            node.setXY(x, y);
+            // now we can read their current inline values
+            node.setData(DATA_KEY, {
+                x: x,
+                y: y,
+                xStart: node.getInlineStyle('left'),
+                yStart: node.getInlineStyle('top'),
+                mousex: e.clientX+window.getScrollLeft(),
+                mousey: e.clientY+window.getScrollTop()
             });
-            Event.emit(node, 'UI:hover', e);
-        });
+console.warn('STORE '+x+' | '+y);
+
+            evtType = (e.type===MOUSE+'down') ? MOUSE : 'pan';
+
+            e.drag = Promise.manage();
+
+            e.setOnDrag = function(callbackFn) {
+                e.drag.setCallback(callbackFn);
+            };
+
+            moveEv = Event.after(evtType+'move', function(ev) {
+                // move the object
+                handleMove(e, ev);
+                e.drag.callback(e);
+            });
+
+            Event.onceAfter((evtType===MOUSE) ? MOUSE+'up' : 'panend', function(ev) {
+                moveEv.detach();
+                // handle drop
+                handleDrop(e, ev);
+                node.removeData(DATA_KEY);
+                e.drag.fulfill(e);
+            });
+
+            handleDragStart(e, node, x, y);
+
+            Event.emit(node, 'UI:dragdrop', e);
+        }, '[draggable="true"], [draggable="proxy"]');
     };
 
-    // Event.notify('UI:valuechange', _setupValueChange, Event);
+    handleDragStart = function(e, node, x, y) {
+console.info('handleDragStart '+node.id);
+        var proxy = (node.getAttr(DRAGGABLE)===PROXY),
+            movableNode = e.movableNode = proxy ? node.clone(true) : node;
+
+        movableNode.setXY(x, y);
+        movableNode.setData(PREV_Z, movableNode.getInlineStyle(Z_INDEX));
+        movableNode.setInlineStyle(Z_INDEX, ZINDEX_DURING_DRAG);
+
+        if (proxy) {
+            movableNode.setInlineStyle('opacity', DRAG_OPACITY);
+            node.parentNode.insertAfter(movableNode, node);
+        }
+    };
+
+    handleMove = function(e, ev) {
+console.info('DragMove '+e.movableNode.id);
+        var node = e.movableNode,
+            data = node.getData(DATA_KEY);
+        node.setXY(data.x+ev.clientX+window.getScrollLeft()-data.mousex, data.y+ev.clientY+window.getScrollTop()-data.mousey);
+    };
+
+    handleDrop = function(e, ev) {
+console.info('DragDrop '+e.movableNode.id);
+        var node = e.movableNode,
+            prevZ = node.getData(PREV_Z),
+            proxy = (node.getAttr(DRAGGABLE)===PROXY),
+            data = node.getData(DATA_KEY),
+            removeClass;
+        removeClass = function() {
+            node.removeClass(DD_TRANSITION_CLASS);
+            node.removeEventListener && node.removeEventListener('transitionend', removeClass, true);
+        };
+        prevZ ? node.setInlineStyle(Z_INDEX, prevZ) : node.removeInlineStyle(Z_INDEX);
+
+        if (proxy) {
+            node.remove();
+        }
+        else {
+console.warn('SETTING TO '+data.x+' | '+data.y);
+            node.addClass(DD_TRANSITION_CLASS);
+            // transitions only work with IE10+, and that browser has addEventListener
+            // when it doesn't have, it doesn;t harm to leave the transitionclass on: it would work anyway
+            // nevertheless we will remove it with a timeout
+            if (node.addEventListener) {
+                node.addEventListener('transitionend', removeClass, true);
+            }
+            else {
+                LATER(removeClass, 1000);
+            }
+            node.setXY(data.xStart, data.yStart, true);
+        }
+    };
+
+    setupDD();
+
+    // also extend window.Element:
+    window.Element && (function(ElementPrototype) {
+       /**
+        * Makes the HtmlElement draggable
+        *
+        * @method setDraggable
+        * @param [proxy] {Boolean} whether the HtmlElement is a proxy-node during drag
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.setDraggable = function(proxy) {
+            this.setAttr(DRAGGABLE, proxy ? PROXY : "true");
+            return this;
+        };
+       /**
+        * Removes draggability of the HtmlElement
+        *
+        * @method removeDraggable
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.removeDraggable = function() {
+            this.removeAttr(DRAGGABLE);
+            return this;
+        };
+    }(window.Element.prototype));
 
     return Event;
 };
-
-},{"../event-dom.js":10}],12:[function(require,module,exports){
+},{"../css/dragdrop.css":11,"../event-dom.js":12,"js-ext":27,"polyfill/polyfill-base.js":46,"utils":48,"window-ext":51}],14:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7043,7 +7256,7 @@ module.exports = function (window) {
             console.log(NAME, 'setupHover: setting up mouseover event');
             var node = e.target;
             e.hover = new Promise(function(fulfill, reject) {
-                Event.after(
+                Event.onceAfter(
                     'mouseout',
                     function(e) {
                         fulfill(e.relatedTarget);
@@ -7082,7 +7295,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":10}],13:[function(require,module,exports){
+},{"../event-dom.js":12}],15:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7231,9 +7444,9 @@ module.exports = function (window) {
 
         valueChangeData = node.getData(DATA_KEY);
         // cancel previous timer: we don't want multiple timers:
-        valueChangeData.timer && valueChangeData.timer.cancel();
+        valueChangeData._pollTimer && valueChangeData._pollTimer.cancel();
         // setup a new timer:
-        valueChangeData.timer = UTILS.later(checkChanged.bind(null, e), POLL_INTERVAL, true);
+        valueChangeData._pollTimer = UTILS.later(checkChanged.bind(null, e), POLL_INTERVAL, true);
     },
 
 
@@ -7247,8 +7460,11 @@ module.exports = function (window) {
      */
     stopPolling = function(node) {
         console.log(NAME, 'stopPolling');
-        var valueChangeData = node.getData(DATA_KEY);
-        valueChangeData && valueChangeData.timer && valueChangeData.timer.cancel();
+        var valueChangeData;
+        if (node && node.getData) {
+            valueChangeData = node.getData(DATA_KEY);
+            valueChangeData && valueChangeData._pollTimer && valueChangeData._pollTimer.cancel();
+        }
     },
 
 
@@ -7325,7 +7541,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":10,"dom-ext":6,"utils":43}],14:[function(require,module,exports){
+},{"../event-dom.js":12,"dom-ext":7,"utils":48}],16:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7429,7 +7645,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event-dom":10,"hammerjs":1}],15:[function(require,module,exports){
+},{"event-dom":12,"hammerjs":2}],17:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -8065,7 +8281,8 @@ require('js-ext/lib/object.js');
         */
         _addMultiSubs: function(before, customEvent, callback, listener, filter, prepend) {
             console.log(NAME, '_addMultiSubs');
-            var instance = this;
+            var instance = this,
+                subscribers;
             if ((typeof listener === 'string') || (typeof listener === 'function')) {
                 prepend = filter;
                 filter = listener;
@@ -8084,16 +8301,17 @@ require('js-ext/lib/object.js');
             if (!Array.isArray(customEvent)) {
                 return instance._addSubscriber(listener, before, customEvent, callback, filter, prepend);
             }
+            subscribers = [];
             customEvent.forEach(
                 function(ce) {
-                    instance._addSubscriber(listener, before, ce, callback, filter, prepend);
+                    subscribers.push(instance._addSubscriber(listener, before, ce, callback, filter, prepend));
                 }
             );
             return {
                 detach: function() {
-                    customEvent.each(
-                        function(ce) {
-                            instance._removeSubscriber(listener, before, ce, callback);
+                    subscribers.each(
+                        function(subscriber) {
+                            subscriber.detach();
                         }
                     );
                 }
@@ -8725,7 +8943,7 @@ require('js-ext/lib/object.js');
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/lib/function.js":27,"js-ext/lib/object.js":28,"polyfill/polyfill-base.js":41}],16:[function(require,module,exports){
+},{"js-ext/lib/function.js":29,"js-ext/lib/object.js":30,"polyfill/polyfill-base.js":46}],18:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8844,7 +9062,7 @@ Event.Emitter = function(emitterName) {
     Event.defineEmitter(newEmitter, emitterName);
     return newEmitter;
 };
-},{"./index.js":18}],17:[function(require,module,exports){
+},{"./index.js":20}],19:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8991,11 +9209,11 @@ Event.Listener = {
         return Event.onceBefore(customEvent, callback, this, filter, prepend);
     }
 };
-},{"./index.js":18}],18:[function(require,module,exports){
+},{"./index.js":20}],20:[function(require,module,exports){
 module.exports = require('./event-base.js');
 require('./event-emitter.js');
 require('./event-listener.js');
-},{"./event-base.js":15,"./event-emitter.js":16,"./event-listener.js":17}],19:[function(require,module,exports){
+},{"./event-base.js":17,"./event-emitter.js":18,"./event-listener.js":19}],21:[function(require,module,exports){
 
 "use strict";
 
@@ -9113,7 +9331,7 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"./io.js":23,"xmldom":2}],20:[function(require,module,exports){
+},{"./io.js":25,"xmldom":3}],22:[function(require,module,exports){
 "use strict";
 
 var NAME = '[io-stream]: ',
@@ -9231,7 +9449,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"./io.js":23}],21:[function(require,module,exports){
+},{"./io.js":25}],23:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9659,7 +9877,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"./io.js":23,"js-ext/lib/string.js":30,"polyfill/lib/json.js":37}],22:[function(require,module,exports){
+},{"./io.js":25,"js-ext/lib/string.js":32,"polyfill/lib/json.js":40}],24:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9802,7 +10020,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"./io.js":23,"js-ext":25}],23:[function(require,module,exports){
+},{"./io.js":25,"js-ext":27}],25:[function(require,module,exports){
 (function (global){
 /**
  * Provides core IO-functionality.
@@ -9818,7 +10036,6 @@ module.exports = function (window) {
 "use strict";
 
 require('polyfill/polyfill-base.js');
-require('ypromise');
 require('js-ext');
 
 var NAME = '[io]: ',
@@ -10120,7 +10337,7 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":25,"polyfill/polyfill-base.js":41,"ypromise":5}],24:[function(require,module,exports){
+},{"js-ext":27,"polyfill/polyfill-base.js":46}],26:[function(require,module,exports){
 module.exports = {
     'abstract': true,
     'arguments': true,
@@ -10189,13 +10406,13 @@ module.exports = {
     'with': true,
     'yield': true
 };
-},{}],25:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
 require('./lib/array.js');
 require('./lib/promise.js');
-},{"./lib/array.js":26,"./lib/function.js":27,"./lib/object.js":28,"./lib/promise.js":29,"./lib/string.js":30}],26:[function(require,module,exports){
+},{"./lib/array.js":28,"./lib/function.js":29,"./lib/object.js":30,"./lib/promise.js":31,"./lib/string.js":32}],28:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -10238,7 +10455,7 @@ require('./lib/promise.js');
         return instance;
     });
 }(Array.prototype));
-},{}],27:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -10459,7 +10676,7 @@ defineProperties(Function.prototype, {
 defineProperty(Object.prototype, 'createClass', function (constructor, prototype) {
 	return Function.prototype.subClass.apply(this, arguments);
 });
-},{"polyfill/polyfill-base.js":41}],28:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":46}],30:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -10626,6 +10843,15 @@ defineProperties(Object.prototype, {
         return Object.keys(this);
     },
     /**
+     * Returns the number of keys of the object
+     *
+     * @method size
+     * @return {Number} Number of items
+     */
+    size: function () {
+        return Object.keys(this).length;
+    },
+    /**
      * Loops through the object collection the values of all its properties.
      * It is the counterpart of the [`keys`](#method_keys).
      *
@@ -10700,8 +10926,6 @@ defineProperties(Object.prototype, {
         return m;
     }
 
-
-
 });
 
 /**
@@ -10738,7 +10962,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"polyfill/polyfill-base.js":41}],29:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":46}],31:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10755,6 +10979,7 @@ Object.merge = function () {
 */
 
 require('polyfill/polyfill-base.js');
+require('polyfill/lib/promise.js');
 require('ypromise');
 
 var NAME = '[promise-ext]: ',
@@ -10971,11 +11196,12 @@ Promise.chainFns = function (funcs, finishAll) {
 };
 
 /**
- * Returns a Promise with 3 additional methods:
+ * Returns a Promise with 4 additional methods:
  *
  * promise.fulfill
  * promise.reject
  * promise.callback
+ * promise.setCallback
  *
  * With Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.
  * You can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any.
@@ -11003,7 +11229,8 @@ Promise.chainFns = function (funcs, finishAll) {
  *     }, 2000);
  *
  * @method manage
- * @param callbackFn {Function} invoked everytime promiseinstance.callback() is called.
+ * @param [callbackFn] {Function} invoked everytime promiseinstance.callback() is called.
+ *        You may as weel (re)set this method atny time lare by using promise.setCallback()
  * @return {Promise} with three handles: fulfill, reject and callback.
  * @static
  */
@@ -11035,10 +11262,14 @@ Promise.manage = function (callbackFn) {
         }
     };
 
+    promise.setCallback = function (newCallbackFn) {
+        callbackFn = newCallbackFn;
+    };
+
     return promise;
 };
 
-},{"polyfill/polyfill-base.js":41,"ypromise":5}],30:[function(require,module,exports){
+},{"polyfill/lib/promise.js":45,"polyfill/polyfill-base.js":46,"ypromise":6}],32:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -11239,7 +11470,7 @@ Promise.manage = function (callbackFn) {
 
 }(String.prototype));
 
-},{}],31:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 (function (global){
 if (!Array.filter) {
     (function (global) {
@@ -11265,7 +11496,7 @@ if (!Array.filter) {
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],32:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 (function (global){
 if (!Array.forEach) {
     (function (global) {
@@ -11284,7 +11515,7 @@ if (!Array.forEach) {
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],33:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 "use strict";
 
 Array.prototype.indexOf || (Array.prototype.indexOf=function indexOf(searchElement) {
@@ -11298,14 +11529,14 @@ Array.prototype.indexOf || (Array.prototype.indexOf=function indexOf(searchEleme
     }
     return -1;
 });
-},{}],34:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 "use strict";
 
 Array.isArray || (Array.isArray = function isArray(array) {
     return array && Object.prototype.toString.call(array) === '[object Array]';
 });
 
-},{}],35:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 (function (global){
 if (!Array.some) {
     (function (global) {
@@ -11327,7 +11558,23 @@ if (!Array.some) {
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],36:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
+"use strict";
+
+// based upon https://gist.github.com/amannm/4965459
+module.exports = function (window) {
+    window.CSSStyleDeclaration && (function(CSSStyleDeclarationPrototype) {
+        CSSStyleDeclarationPrototype.opacity || Object.defineProperty(CSSStyleDeclarationPrototype, 'opacity', {
+            get: function() {
+                return '' + (parseFloat(((this.filter).substring(48)).replace(')', '')) / 100);
+            },
+            set: function(value) {
+                this.filter = 'progid:DXImageTransform.Microsoft.Alpha(opacity=' + Math.round(100 * value) + ')';
+            }
+        });
+    }(window.CSSStyleDeclaration.prototype));
+};
+},{}],39:[function(require,module,exports){
 "use strict";
 
 // based upon https://gist.github.com/jonathantneal/3062955
@@ -11347,7 +11594,7 @@ module.exports = function (window) {
         };
     }(window.Element.prototype));
 };
-},{}],37:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -11700,7 +11947,7 @@ module.exports = function (window) {
 })(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],38:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 "use strict";
 var DOCUMENT_POSITION_CONTAINED_BY = 16;
 module.exports = function (window) {
@@ -11711,7 +11958,7 @@ module.exports = function (window) {
         };
     }(window.Node.prototype));
 };
-},{}],39:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 "use strict";
 
 Object.create || (Object.create = function (o) {
@@ -11719,7 +11966,7 @@ Object.create || (Object.create = function (o) {
     F.prototype = o;
     return new F();
 });
-},{}],40:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 "use strict";
 
 // In Internet Explorer 8 Object.defineProperty only accepts DOM objects
@@ -11753,24 +12000,65 @@ Object.defineProperties || (Object.defineProperties=function defineProperties(ob
     }
     return object;
 });
-},{}],41:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
+"use strict";
+
+if (!Object.keys) {
+    var hasOwnProp = Object.prototype.hasOwnProperty,
+        hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
+        dontEnums = [
+          'toString',
+          'toLocaleString',
+          'valueOf',
+          'hasOwnProperty',
+          'isPrototypeOf',
+          'propertyIsEnumerable',
+          'constructor'
+        ],
+        dontEnumsLength = dontEnums.length;
+
+    Object.keys = function(obj) {
+        var result = [], prop, i;
+
+        for (prop in obj) {
+            if (hasOwnProp.call(obj, prop)) {
+                result.push(prop);
+            }
+        }
+
+        if (hasDontEnumBug) {
+            for (i = 0; i < dontEnumsLength; i++) {
+                if (hasOwnProp.call(obj, dontEnums[i])) {
+                    result.push(dontEnums[i]);
+                }
+            }
+        }
+        return result;
+    };
+}
+},{}],45:[function(require,module,exports){
+require('ypromise');
+},{"ypromise":6}],46:[function(require,module,exports){
 require('./lib/array.filter.js');
 require('./lib/array.foreach.js');
 require('./lib/array.indexof.js');
 require('./lib/array.isarray.js');
 require('./lib/array.some.js');
 require('./lib/object.create.js');
+require('./lib/object.keys.js');
 require('./lib/object.defineproperty.js');
-},{"./lib/array.filter.js":31,"./lib/array.foreach.js":32,"./lib/array.indexof.js":33,"./lib/array.isarray.js":34,"./lib/array.some.js":35,"./lib/object.create.js":39,"./lib/object.defineproperty.js":40}],42:[function(require,module,exports){
+require('./lib/css.opacity.js');
+},{"./lib/array.filter.js":33,"./lib/array.foreach.js":34,"./lib/array.indexof.js":35,"./lib/array.isarray.js":36,"./lib/array.some.js":37,"./lib/css.opacity.js":38,"./lib/object.create.js":42,"./lib/object.defineproperty.js":43,"./lib/object.keys.js":44}],47:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/json.js');
-},{"./lib/json.js":37,"./polyfill-base.js":41}],43:[function(require,module,exports){
+require('./lib/promise.js');
+},{"./lib/json.js":40,"./lib/promise.js":45,"./polyfill-base.js":46}],48:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
 	later: require('./lib/timers.js').later,
 	async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":44,"./lib/timers.js":45}],44:[function(require,module,exports){
+},{"./lib/idgenerator.js":49,"./lib/timers.js":50}],49:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -11827,7 +12115,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"polyfill/polyfill-base.js":41}],45:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":46}],50:[function(require,module,exports){
 (function (process,global){
 /**
  * Collection of various utility functions.
@@ -11987,13 +12275,13 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":48,"polyfill/polyfill-base.js":41}],46:[function(require,module,exports){
+},{"_process":53,"polyfill/polyfill-base.js":46}],51:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":47}],47:[function(require,module,exports){
+},{"./lib/sizes.js":52}],52:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
@@ -12085,7 +12373,7 @@ module.exports = function (window) {
     };
 
 };
-},{}],48:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -12239,10 +12527,9 @@ process.chdir = function (dir) {
     };
 
     require('polyfill');
-    require('ypromise');
+    require('js-ext');
     require('window-ext')(window);
     require('dom-ext')(window);
-    require('js-ext');
 
     var fakedom = window.navigator.userAgent==='fake',
         Event = fakedom ? require('event') : require('event-mobile')(window),
@@ -12256,7 +12543,7 @@ process.chdir = function (dir) {
     if (!fakedom) {
         require('event-dom/extra/hover.js')(window);
         require('event-dom/extra/valuechange.js')(window);
-        require('event-dom/extra/drag.js')(window);
+        require('event-dom/extra/dragdrop.js')(window);
     }
     /**
      * Reference to the `idGenerator` function in [utils](../modules/utils.html)
@@ -12310,4 +12597,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"dom-ext":6,"event":18,"event-dom/extra/drag.js":11,"event-dom/extra/hover.js":12,"event-dom/extra/valuechange.js":13,"event-mobile":14,"io/io-cors-ie9.js":19,"io/io-stream.js":20,"io/io-transfer.js":21,"io/io-xml.js":22,"js-ext":25,"js-ext/extra/reserved-words.js":24,"node-win":undefined,"polyfill":42,"utils":43,"window-ext":46,"ypromise":5}]},{},[]);
+},{"dom-ext":7,"event":20,"event-dom/extra/dragdrop.js":13,"event-dom/extra/hover.js":14,"event-dom/extra/valuechange.js":15,"event-mobile":16,"io/io-cors-ie9.js":21,"io/io-stream.js":22,"io/io-transfer.js":23,"io/io-xml.js":24,"js-ext":27,"js-ext/extra/reserved-words.js":26,"node-win":undefined,"polyfill":47,"utils":48,"window-ext":51}]},{},[]);

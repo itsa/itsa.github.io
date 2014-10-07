@@ -69,6 +69,15 @@ console.log({a: 1, b: 2}.keys());
 console.log(Object.keys({a: 1, b: 2}));
 ```
 
+### size
+
+Returns the number of keys in the object.
+
+```js
+console.log({a: 15, b: 25}.size());
+// prints 2
+```
+
 ### values
 
 Returns an array with the values of the properties.
@@ -366,8 +375,9 @@ Promise.**manage**(`callbackFn`) returns a new Promise that is supposed to be ma
 * promise.fulfill
 * promise.reject
 * promise.callback
+* promise.setCallback
 
-You can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any. The method promise.**fulfill**() and promise.**reject**() are meant to resolve the promise from outside, just like deferred can do.
+You can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any, or the callback which is set at a later time using `setCallback()`. The method promise.**fulfill**() and promise.**reject**() are meant to resolve the promise from outside, just like deferred can do.
 
 ####Promise.manage####
 ```js

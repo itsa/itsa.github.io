@@ -103,6 +103,10 @@ Adds a class to the HtmlElement. If the class already exists it won't be duplica
 ###append###
 Appends a HtmlElement or text at the end of HtmlElement's innerHTML.
 
+###clone###
+Returns a duplicate of the node. Use cloneNode(true) for a `deep` clone.
+Almost the same as native cloneNode(), but you should use clone(), because it also clones any data set with setData().
+
 ###defineInlineStyle###
 Sets the inline-style of the HtmlElement exactly to the specified `value`, overruling previous values.
 

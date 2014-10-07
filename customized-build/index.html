@@ -159,23 +159,24 @@ Notice that the exported <code class="prettyprint">ITSA</code> can be required b
     The last step is to create the loaderfile using <a href="http://browserify.org" target="_blank">Browerify</a>. Because you need a minified file, you need to minify as well. We use uglifyjs to minify, but you are free to use any minifier you want.
 </p>
 
-<h2>Install browserify and uglify-js:</h2>
-<p>If you don't have them yet, install browserify and uglifyjs on your system globally:
+<h2>Install browserify, cssify and uglify-js:</h2>
+<p>If you don't have them yet, install browserify, cssify and uglifyjs on your system globally:
 
 {% highlight js %}
 npm install -g browserify
+npm install -g cssify
 npm install -g uglify-js
 {% endhighlight %}
 
-By installing it globally, you have the command-line commands available.
+By installing it globally, you have the command-line commands available. `cssify` is also automaticly installed locally, for it needs to be there as well.
 </p>
 
 <h2>Create loaderfile:</h2>
 <p>
-Final step is to create two build files. One just browserified with all comments and not minified, the second will be minified. You can choose any name you want for these files. Notice that we have set specific options to uglify so that the compressed file works with <code class="prettyprint">ITSA</code>'s code.
+Final step is to create two build files. One just browserified with all comments and not minified, the second will be minified. You can choose any name you want for these files. Notice that you have to use browserify with the option `-g cssify` to build with css-files. Also notice that we have set specific options to uglify so that the compressed file works with <code class="prettyprint">ITSA</code>'s code.
 {% highlight js %}
-browserify index.js > build.js
-uglifyjs build.js  -b ascii_only=true,beautify=false -c drop_debugger,drop_console,warnings=false -m > build-min.js
+browserify -g cssify index.js > build.js
+uglifyjs build.js -b ascii_only=true,beautify=false -c drop_debugger,drop_console,warnings=false -m > build-min.js
 {% endhighlight %}
 </p>
 

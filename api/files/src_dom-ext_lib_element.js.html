@@ -81,6 +81,8 @@
             
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
+                <li><a href="../modules/event-dragdrop.html">event-dragdrop</a></li>
+            
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
@@ -197,6 +199,7 @@ module.exports = function (window) {
     window.Element &amp;&amp; (function(ElementPrototype) {
 
         require(&#x27;js-ext/lib/string.js&#x27;);
+        require(&#x27;js-ext/lib/object.js&#x27;);
         require(&#x27;./document.js&#x27;)(window);
         require(&#x27;polyfill/lib/element.matchesselector.js&#x27;)(window);
         require(&#x27;window-ext&#x27;)(window);
@@ -228,6 +231,31 @@ module.exports = function (window) {
         */
         ElementPrototype.append = function(content, escape) {
             return window.document._insert(this, &#x27;appendChild&#x27;, content, null, escape);
+        };
+
+       /**
+        * Returns a duplicate of the node. Use cloneNode(true) for a &#x60;deep&#x60; clone.
+        * Almost the same as native cloneNode(), but you should use clone(), because it also clones any data set with setData().
+        *
+        * @method clone
+        * @param content {HtmlElement|HtmlElementList|String} content to append. In case of HTML, it will be escaped.
+        * @param [deep] {Boolean} whether to perform a &#x60;deep&#x60; clone: with all descendants
+        * @return {HtmlElement} a clone of this HtmlElement
+        * @since 0.0.1
+        */
+        ElementPrototype.clone = function(deep) {
+            var instance = this,
+                cloned = instance.cloneNode(deep);
+            if (instance._data.size()&gt;0) {
+                Object.defineProperty(cloned, &#x27;_data&#x27;, {
+                    configurable: false,
+                    enumerable: false,
+                    writable: false,
+                    value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {}&#x27;s properties itself
+                });
+                cloned._data.merge(instance._data);
+            }
+            return cloned;
         };
 
        /**
@@ -587,7 +615,10 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
+        // to prevent recursion, we backup document.insertBefore:
+        ElementPrototype._insertBefore = ElementPrototype.insertBefore;
         ElementPrototype.insertBefore = function(content, refElement, escape) {
+            // to prevent recursion, we cannot call document.insertBefore
             return window.document.insertBefore.apply(this, arguments);
         };
 
@@ -947,21 +978,32 @@ module.exports = function (window) {
          * Set the position of an html element in page coordinates.
          * The element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
          * @method setXY
-         * @param element The target element
-         * @param {Array} xy Contains X &amp; Y values for new position (coordinates are page-based)
-         * @param {Boolean} noRetry By default we try and set the position a second time if the first fails
+         * @param x {Number} x-value for new position (coordinates are page-based)
+         * @param y {Number} y-value for new position (coordinates are page-based)
          */
-        ElementPrototype.setXY = function(x, y) {
+        ElementPrototype.setXY = function(x, y, v) {
             var instance = this,
                 position = instance.getStyle(POSITION),
-                currentX, currentY;
+                dif;
 
             // default position to relative
-            (position===&#x27;static&#x27;) &amp;&amp; instance.setInlineStyle(POSITION, &#x27;relative&#x27;);
-            currentX = instance.getX();
-            currentY = instance.getY();
-            x &amp;&amp; instance.setInlineStyle(&#x27;left&#x27;, (x - currentX) + &#x27;px&#x27;);
-            y &amp;&amp; instance.setInlineStyle(&#x27;top&#x27;, (y - currentY) + &#x27;px&#x27;);
+            if (position===&#x27;static&#x27;) {
+                instance.setInlineStyle(POSITION, &#x27;relative&#x27;);
+            }
+            if (x) {
+                instance.setInlineStyle(&#x27;left&#x27;, x + &#x27;px&#x27;);
+                if (!v) {
+                dif = (instance.getX()-x);
+                (dif!==0) &amp;&amp; (instance.setInlineStyle(&#x27;left&#x27;, (x - dif) + &#x27;px&#x27;));
+                }
+            }
+            if (y) {
+                instance.setInlineStyle(&#x27;top&#x27;, y + &#x27;px&#x27;);
+                if (!v) {
+                dif = (instance.getY()-y);
+                (dif!==0) &amp;&amp; (instance.setInlineStyle(&#x27;top&#x27;, (y - dif) + &#x27;px&#x27;));
+                }
+            }
         };
 
         /**

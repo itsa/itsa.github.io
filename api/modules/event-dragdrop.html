@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/event-dom/extra/drag.js - Itsa</title>
+    <title>event-dragdrop - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -80,6 +80,8 @@
                 <li><a href="../modules/event.html">event</a></li>
             
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
+            
+                <li><a href="../modules/event-dragdrop.html">event-dragdrop</a></li>
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
@@ -160,99 +162,55 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/event-dom/extra/drag.js</h1>
+                        <h1>event-dragdrop Module</h1>
+<div class="box clearfix meta">
+    
 
-<div class="file">
-    <pre class="code prettyprint linenums">
-&quot;use strict&quot;;
+    
 
-/**
- * Adds the &#x60;hover&#x60; event as a DOM-event to event-dom. more about DOM-events:
- * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
- *
- * Should be called using  the provided &#x60;mergeInto&#x60;-method like this:
- *
- *
- * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * @example
- * Event = require(&#x27;event-dom/hover.js&#x27;)(window);
- *
- * or
- *
- * @example
- * Event = require(&#x27;event-dom&#x27;)(window);
- * require(&#x27;event-dom/event-hover.js&#x27;)(window);
- *
- * @module event
- * @submodule event-hover
- * @class Event
- * @since 0.0.2
-*/
+    
+        <div class="foundat">
+            Defined in: <a href="../files/src_event-dom_extra_dragdrop.js.html#l3"><code>src&#x2F;event-dom&#x2F;extra&#x2F;dragdrop.js:3</code></a>
+        </div>
+    
+
+    
+        <p>Available since 0.0.2</p>
+    
+</div>
 
 
-var NAME = &#x27;[event-drag]: &#x27;;
 
-module.exports = function (window) {
-    var Event = require(&#x27;../event-dom.js&#x27;)(window),
+<div class="box intro">
+    <p>Adds the <code>hover</code> event as a DOM-event to event-dom. more about DOM-events:
+<a href="http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/">http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/</a></p>
+<p>More about drag and drop: <a href="https://dev.opera.com/articles/drag-and-drop/">https://dev.opera.com/articles/drag-and-drop/</a></p>
+<p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
+New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 
-    /**
-    Check to see if a node has editable content or not.
-
-    TODO: Add additional checks to get it to work for child nodes
-    that inherit &quot;contenteditable&quot; from parent nodes. This may be
-    too computationally intensive to be placed inside of the &#x60;_poll&#x60;
-    loop, however.
-
-    @method _isEditable
-    @param {Node} node
-    @protected
-    @static
-    **/
-    _isEditable = function (node) {
-        // Performance cheat because this is used inside &#x60;_poll&#x60;
-        var domNode = node._node;
-        return domNode.contentEditable === &#x27;true&#x27; ||
-               domNode.contentEditable === &#x27;&#x27;;
-    },
+</div>
 
 
-    /*
-     * Creates the &#x60;hover&#x60; event. The eventobject has the property &#x60;e.hover&#x60; which is a &#x60;Promise&#x60;.
-     * You can use this Promise to get notification of the end of hover. The Promise e.hover gets resolved with
-     * &#x60;relatedTarget&#x60; as argument: the node where the mouse went into when leaving a.target.
-     *
-     * @method _setupValueChange
-     * @private
-     * @since 0.0.2
-     */
-    _setupValueChange = function() {
-        // create only after subscribing to the &#x60;hover&#x60;-event
-        Event.after(&#x27;mouseover&#x27;, function(e) {
-            console.info(NAME, &#x27;setting up mouseover event&#x27;);
-            var node = e.target;
-            e.hover = new Promise(function(fulfill, reject) {
-                Event.after(
-                    &#x27;mouseout&#x27;,
-                    function(e) {
-                        fulfill(e.relatedTarget);
-                    },
-                    function(ev) {
-                        return (ev.target===node);
-                    }
-                );
-            });
-            Event.emit(node, &#x27;UI:hover&#x27;, e);
-        });
-    };
+    <div class="example">
+        <h4>Example:</h4>
+        <div class="example-content">
+            <p>Event = require(&#39;event-dom/dragdrop.js&#39;)(window);</p>
+<p>or</p>
+<p>Event = require(&#39;event-dom&#39;)(window);
+require(&#39;event-dom/event-dragdrop.js&#39;)(window);</p>
 
-    // Event.notify(&#x27;UI:valuechange&#x27;, _setupValueChange, Event);
+        </div>
+    </div>
 
-    return Event;
-};
 
-    </pre>
+<div class="yui3-g">
+    <div class="yui3-u-1-2">
+        
+    </div>
+
+    <div class="yui3-u-1-2">
+        
+    </div>
 </div>
 
                     </div>

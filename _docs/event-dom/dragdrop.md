@@ -1,8 +1,8 @@
 ---
 module: event-dom
 maintainer: Marco Asbreuk
-title: hover event
-intro: "The hover-event is a single event. But it also notifies you when the hover has finished. You can inspect the Promise e.hover.then for this purpose."
+title: drag and drop
+intro: "Frag and drop is done by a single event: <b>dragdrop</b>. The eventobject notifies you when the drag has finished. You can inspect the Promise e.drag.then for this purpose. You can also be notified on drag-move by setting a callback-function through: <b>e.setOnDrag(callbackFn)</b>. Draggable HtmlElements have the attribute: <b>draggable=\"true\"</b>"
 ---
 
 <style type="text/css">
@@ -58,11 +58,11 @@ intro: "The hover-event is a single event. But it also notifies you when the hov
 Mouse the mouse over the 5 containers:
 
 <div class="base-container">
-    <div id="cont-1" class="container"></div>
+    <div id="cont-1" class="container" draggable="proxy"></div>
     <div id="cont-2" class="container"></div>
     <div id="cont-3" class="container"></div>
     <div id="cont-4" class="container"></div>
-    <div id="cont-5" class="container"></div>
+    <div id="cont-5" class="container" draggable="true"></div>
 </div>
 
 <p class="spaced">Code-example:</p>
@@ -104,11 +104,11 @@ Mouse the mouse over the 5 containers:
 
     var showMsg = function(e) {
         var node = e.target;
-        node.innerHTML = 'Mouse entered';
-        e.hover.then(function(relatedTarget) {
-            node.innerHTML = relatedTarget.id ? 'Went to '+relatedTarget.id : '';
+        node.innerHTML = 'Dragging';
+        e.drag.then(function(ev) {
+            node.innerHTML = 'END';
         });
     };
 
-    ITSA.Event.after('hover', showMsg, '.container');
+   // ITSA.Event.after('dragdrop', showMsg, '.container');
 </script>

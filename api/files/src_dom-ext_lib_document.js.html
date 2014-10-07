@@ -81,6 +81,8 @@
             
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
+                <li><a href="../modules/event-dragdrop.html">event-dragdrop</a></li>
+            
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
@@ -237,7 +239,7 @@ module.exports = function (window) {
         }
 /*jshint boss:false */
         return fragment;
-    };
+    },
 
    /**
     * Inserts a HtmlElement or text at the specified position.
@@ -251,7 +253,7 @@ module.exports = function (window) {
     * @return {HtmlElement} the original HtmlElement so it can be chained
     * @since 0.0.1
     */
-    DOCUMENT._insert = function(htmlElement, method, content, refElement, escape) {
+    _insert = function(htmlElement, method, content, refElement, escape) {
         var first;
         // cannot check if isArray: NodeList and HTMLCollection are extended with &#x60;forEach()&#x60; but they are no arrays
         if (content.forEach) {
@@ -361,9 +363,9 @@ module.exports = function (window) {
             children = instance.children,
             index = children.indexOf(refElement);
         if ((index==-1) || (index===children.length-1)) {
-            return instance.DOCUMENT._insert(instance, &#x27;appendChild&#x27;, content, null, escape);
+            return _insert(instance, &#x27;appendChild&#x27;, content, null, escape);
         }
-        return instance.DOCUMENT._insert(instance, &#x27;insertBefore&#x27;, content, children[index+1], escape);
+        return _insert(instance, (instance._insertBefore ? &#x27;_&#x27; : &#x27;&#x27;) + &#x27;insertBefore&#x27;, content, children[index+1], escape);
     };
 
    /**
@@ -380,9 +382,9 @@ module.exports = function (window) {
         var instance = this,
             index = instance.children.indexOf(refElement);
         if (index==-1) {
-            return instance.DOCUMENT._insert(instance, &#x27;appendChild&#x27;, content, null, escape);
+            return _insert(instance, &#x27;appendChild&#x27;, content, null, escape);
         }
-        return instance.DOCUMENT._insert(instance, &#x27;insertBefore&#x27;, content, refElement, escape);
+        return _insert(instance, (instance._insertBefore ? &#x27;_&#x27; : &#x27;&#x27;) + &#x27;insertBefore&#x27;, content, refElement, escape);
     };
 
    /**

@@ -119,10 +119,10 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/event-dom/extra/drag.js": {
-            "name": "src/event-dom/extra/drag.js",
+        "src/event-dom/extra/dragdrop.js": {
+            "name": "src/event-dom/extra/dragdrop.js",
             "modules": {
-                "event-hover": 1
+                "event-dragdrop": 1
             },
             "classes": {},
             "fors": {},
@@ -130,7 +130,9 @@
         },
         "src/event-dom/extra/hover.js": {
             "name": "src/event-dom/extra/hover.js",
-            "modules": {},
+            "modules": {
+                "event-hover": 1
+            },
             "classes": {},
             "fors": {},
             "namespaces": {}
@@ -417,6 +419,7 @@
             "submodules": {
                 "event-emitter": 1,
                 "event-listener": 1,
+                "event-dragdrop": 1,
                 "event-hover": 1,
                 "event-dom": 1,
                 "event-mobile": 1
@@ -473,6 +476,24 @@
             ],
             "since": "0.0.1"
         },
+        "event-dragdrop": {
+            "name": "event-dragdrop",
+            "submodules": {},
+            "classes": {},
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "event",
+            "namespace": "",
+            "file": "src/event-dom/extra/dragdrop.js",
+            "line": 3,
+            "description": "Adds the `hover` event as a DOM-event to event-dom. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\nMore about drag and drop: https://dev.opera.com/articles/drag-and-drop/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "example": [
+                "\nEvent = require('event-dom/dragdrop.js')(window);\n\nor",
+                "\nEvent = require('event-dom')(window);\nrequire('event-dom/event-dragdrop.js')(window);"
+            ],
+            "since": "0.0.2"
+        },
         "event-hover": {
             "name": "event-hover",
             "submodules": {},
@@ -482,7 +503,7 @@
             "namespaces": {},
             "module": "event",
             "namespace": "",
-            "file": "src/event-dom/extra/drag.js",
+            "file": "src/event-dom/extra/hover.js",
             "line": 3,
             "description": "Adds the `hover` event as a DOM-event to event-dom. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\nShould be called using  the provided `mergeInto`-method like this:\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "example": [
@@ -7771,7 +7792,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 40,
+            "line": 41,
             "description": "Adds a class to the HtmlElement. If the class already exists it won't be duplicated.",
             "itemtype": "method",
             "name": "addClass",
@@ -7790,7 +7811,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 54,
+            "line": 55,
             "description": "Appends a HtmlElement or text at the end of HtmlElement's innerHTML.",
             "itemtype": "method",
             "name": "append",
@@ -7814,7 +7835,35 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 67,
+            "line": 68,
+            "description": "Returns a duplicate of the node. Use cloneNode(true) for a `deep` clone.\nAlmost the same as native cloneNode(), but you should use clone(), because it also clones any data set with setData().",
+            "itemtype": "method",
+            "name": "clone",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "content to append. In case of HTML, it will be escaped.",
+                    "type": "HtmlElement|HtmlElementList|String"
+                },
+                {
+                    "name": "deep",
+                    "description": "whether to perform a `deep` clone: with all descendants",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "a clone of this HtmlElement",
+                "type": "HtmlElement"
+            },
+            "since": "0.0.1",
+            "class": "Element",
+            "module": "dom-ext",
+            "submodule": "lib/element.js"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 93,
             "description": "Sets the inline-style of the HtmlElement exactly to the specified `value`, overruling previous values.\nMaking the HtmlElement's inline-style look like: style=\"value\".\n\nThis is meant for a quick one-time setup. For individually inline style-properties to be set, you can use `setInlineStyle()`.",
             "itemtype": "method",
             "name": "defineInlineStyle",
@@ -7833,7 +7882,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 83,
+            "line": 109,
             "description": "Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.",
             "itemtype": "method",
             "name": "first",
@@ -7856,7 +7905,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 95,
+            "line": 121,
             "description": "Gets a NodeList of HtmlElements, specified by the css-selector.",
             "itemtype": "method",
             "name": "getAll",
@@ -7878,7 +7927,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 107,
+            "line": 133,
             "description": "Gets an attribute of the HtmlElement.\nCautious: do not use `value` to retrieve the value. Use `getValue()` instead.\n\nAlias for getAttribute().",
             "itemtype": "method",
             "name": "getAttr",
@@ -7900,7 +7949,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 122,
+            "line": 148,
             "description": "Gets the HtmlElement's class as a whole String.\n\nAlias for this.className",
             "itemtype": "method",
             "name": "getClass",
@@ -7915,7 +7964,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 135,
+            "line": 161,
             "description": "Returns data set specified by `key`. If not set, `undefined` will be returned.",
             "itemtype": "method",
             "name": "getData",
@@ -7937,7 +7986,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 147,
+            "line": 173,
             "description": "Gets one HtmlElement, specified by the css-selector. To retrieve a single element by id,\nyou need to prepend the id-name with a `#`. When multiple HtmlElement's match, the first is returned.",
             "itemtype": "method",
             "name": "getElement",
@@ -7959,7 +8008,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 160,
+            "line": 186,
             "description": "Gets the height of the element in pixels. Included are padding and border, not any margins.",
             "itemtype": "method",
             "name": "getHeight",
@@ -7983,7 +8032,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 172,
+            "line": 198,
             "description": "Returns the innerContent of the HtmlElement as a string with HTML entities.\n\nAlias for innerHTML",
             "itemtype": "method",
             "name": "getHtml",
@@ -7998,7 +8047,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 185,
+            "line": 211,
             "description": "Gets the HtmlElement's id.\n\nAlias for this.id",
             "itemtype": "method",
             "name": "getId",
@@ -8013,7 +8062,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 198,
+            "line": 224,
             "description": "Returns inline style of the specified property. `Inline` means: what is set directly on the HtmlElement,\nthis doesn't mean necesairy how it is looked like: when no css is set inline, the HtmlElement might still have\nan appearance because of other CSS-rules.\n\nIn most cases, you would be interesting in using `getStyle()` instead.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "getInlineStyle",
@@ -8028,7 +8077,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 215,
+            "line": 241,
             "description": "Gets the left-scroll offset of the content of the HtmlElement.\nOnly apropriate when the HtmlElement has overflow.",
             "itemtype": "method",
             "name": "getScrollLeft",
@@ -8043,7 +8092,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 227,
+            "line": 253,
             "description": "Gets the top-scroll offset of the content of the HtmlElement.\nOnly apropriate when the HtmlElement has overflow.",
             "itemtype": "method",
             "name": "getScrollTop",
@@ -8058,7 +8107,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 239,
+            "line": 265,
             "description": "Returns cascaded style of the specified property. `Cascaded` means: the actual present style,\nthe way it is visible (calculated through the DOM-tree).\n\nNote1: values are absolute: percentages and points are converted to absolute values, sizes are in pixels, colors in rgb/rgba-format.\nNote2: you cannot query shotcut-properties: use `margin-left` instead of `margin`.\nNote3: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine.",
             "itemtype": "method",
             "name": "getCascadeStyle",
@@ -8086,7 +8135,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 257,
+            "line": 283,
             "description": "Gets the HtmlElement's tagname. Always uppercased.\n\nAlias for this.nodeName",
             "itemtype": "method",
             "name": "getTag",
@@ -8101,7 +8150,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 270,
+            "line": 296,
             "description": "Gets the text content of the HtmlElement and its descendants.\nIf you need full HTML, you should use getHTML().\n\nAlias for textContent",
             "itemtype": "method",
             "name": "getText",
@@ -8116,7 +8165,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 292,
+            "line": 318,
             "description": "Gets the width of the element in pixels. Included are padding and border, not any margins.",
             "itemtype": "method",
             "name": "getWidth",
@@ -8140,7 +8189,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 304,
+            "line": 330,
             "description": "Gets the value of the following HtmlElements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>",
             "itemtype": "method",
             "name": "getValue",
@@ -8155,7 +8204,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 325,
+            "line": 351,
             "description": "Gets the x-position (in the window.document) of the element in pixels.\nwindow.document-related: regardless of the window's scroll-position.",
             "itemtype": "method",
             "name": "getX",
@@ -8170,7 +8219,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 337,
+            "line": 363,
             "description": "Gets the y-position (in the window.document) of the element in pixels.\nwindow.document-related: regardless of the window's scroll-position.",
             "itemtype": "method",
             "name": "getY",
@@ -8185,7 +8234,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 349,
+            "line": 375,
             "description": "Whether the HtmlElement has the attribute set.\n\nAlias for hasAttribute().",
             "itemtype": "method",
             "name": "hasAttr",
@@ -8207,7 +8256,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 363,
+            "line": 389,
             "description": "Checks whether the className is present on the Element.",
             "itemtype": "method",
             "name": "hasClass",
@@ -8229,7 +8278,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 376,
+            "line": 402,
             "description": "If the Element has data set specified by `key`.",
             "itemtype": "method",
             "name": "hasData",
@@ -8251,7 +8300,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 388,
+            "line": 414,
             "description": "Checks whether HtmlElement currently has the focus.",
             "itemtype": "method",
             "name": "hasFocus",
@@ -8273,7 +8322,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 400,
+            "line": 426,
             "description": "Inserts a HtmlElement or text inside HtmlElement's innerHTML after `refElement`.",
             "itemtype": "method",
             "name": "insertAfter",
@@ -8303,7 +8352,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 414,
+            "line": 440,
             "description": "Inserts a HtmlElement or text inside HtmlElement's innerHTML before `refElement`.",
             "itemtype": "method",
             "name": "insertBefore",
@@ -8333,7 +8382,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 428,
+            "line": 457,
             "description": "Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.",
             "itemtype": "method",
             "name": "last",
@@ -8356,7 +8405,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 440,
+            "line": 469,
             "description": "Returns the next of the HtmlElement's siblings, or the next that matches `cssSelector`.",
             "itemtype": "method",
             "name": "next",
@@ -8379,7 +8428,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 459,
+            "line": 488,
             "description": "Prepends a HtmlElement or text at the start of HtmlElement's innerHTML.",
             "itemtype": "method",
             "name": "prepend",
@@ -8404,7 +8453,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 477,
+            "line": 506,
             "description": "Returns the previous of the HtmlElement's siblings, or the previous that matches `cssSelector`.",
             "itemtype": "method",
             "name": "prev",
@@ -8427,7 +8476,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 496,
+            "line": 525,
             "description": "Removes the HtmlElement from the DOM.",
             "itemtype": "method",
             "name": "remove",
@@ -8438,7 +8487,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 506,
+            "line": 535,
             "description": "Removes the attribute from the HtmlElement.\n\nAlias for removeAttribute().",
             "itemtype": "method",
             "name": "removeAttr",
@@ -8460,7 +8509,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 520,
+            "line": 549,
             "description": "Removes a className from the HtmlElement.",
             "itemtype": "method",
             "name": "removeClass",
@@ -8479,7 +8528,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 535,
+            "line": 564,
             "description": "Removes data specified by `key`. When no arguments are passed, all node-data (key-value pairs) will be removed.",
             "itemtype": "method",
             "name": "removeData",
@@ -8498,7 +8547,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 561,
+            "line": 590,
             "description": "Removes a css-property (inline) out of the HtmlElement. Use camelCase.",
             "itemtype": "method",
             "name": "removeInlineStyle",
@@ -8517,7 +8566,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 574,
+            "line": 603,
             "description": "Replaces the HtmlElement with a new HtmlElement.",
             "itemtype": "method",
             "name": "replace",
@@ -8541,7 +8590,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 586,
+            "line": 615,
             "description": "Replaces the className of the HtmlElement with a new className.\nIf the previous className is not available, the new className is set nevertheless.",
             "itemtype": "method",
             "name": "replaceClass",
@@ -8570,7 +8619,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 605,
+            "line": 634,
             "description": "Scrolls the content of the HtmlElement into the specified scrollposition.\nOnly available when the HtmlElement has overflow.",
             "itemtype": "method",
             "name": "scrollTo",
@@ -8594,7 +8643,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 622,
+            "line": 651,
             "description": "Sets the attribute on the HtmlElement with the specified value.\n\nAlias for setAttribute().",
             "itemtype": "method",
             "name": "setAttr",
@@ -8618,7 +8667,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 638,
+            "line": 667,
             "description": "Sets the HtmlElement's class as a whole String. Cleaning up any previous classes.\n\nAlias for this.className = value",
             "itemtype": "method",
             "name": "setClass",
@@ -8637,7 +8686,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 653,
+            "line": 682,
             "description": "Stores arbitary `data` at the HtmlElement. This has nothing to do with node-attributes whatsoever,\nit is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.",
             "itemtype": "method",
             "name": "setData",
@@ -8661,7 +8710,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 675,
+            "line": 704,
             "description": "Sets the content of the HtmlElement (innerHTML). Careful: only set content like this if you controll the data and\nare sure what is going inside. Otherwise XSS might occur. If you let the user insert, or insert right from a db,\nyou might be better of using setContent().",
             "itemtype": "method",
             "name": "setHTML",
@@ -8680,7 +8729,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 690,
+            "line": 719,
             "description": "Gets the serialized HTML fragment describing the element including its descendants.\n\nalias for outerHTML()",
             "itemtype": "method",
             "name": "serialize",
@@ -8692,7 +8741,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 703,
+            "line": 732,
             "description": "Sets a css-property (inline) out of the HtmlElement. Use camelCase.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "setStyle",
@@ -8716,7 +8765,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 722,
+            "line": 751,
             "description": "Sets the content of the HtmlElement. This is a safe way to set the content, because HTML is not parsed.\nIf you do need to set HTML inside the node, use setHTML().",
             "itemtype": "method",
             "name": "setText",
@@ -8741,7 +8790,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 744,
+            "line": 773,
             "description": "Sets the value of the following HtmlElements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>\n\nWill fire an `valuechange` event, in case both the `itsa/event` as well as\n`itsa/event-dom/extra/event-valuechange.js` are used.\n\nTherefore it is highly suggested to use `setValue()` instead of setting the value manually.",
             "itemtype": "method",
             "name": "setValue",
@@ -8760,24 +8809,20 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 780,
+            "line": 809,
             "description": "Set the position of an html element in page coordinates.\nThe element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
             "itemtype": "method",
             "name": "setXY",
             "params": [
                 {
-                    "name": "element",
-                    "description": "The target element"
+                    "name": "x",
+                    "description": "x-value for new position (coordinates are page-based)",
+                    "type": "Number"
                 },
                 {
-                    "name": "xy",
-                    "description": "Contains X & Y values for new position (coordinates are page-based)",
-                    "type": "Array"
-                },
-                {
-                    "name": "noRetry",
-                    "description": "By default we try and set the position a second time if the first fails",
-                    "type": "Boolean"
+                    "name": "y",
+                    "description": "y-value for new position (coordinates are page-based)",
+                    "type": "Number"
                 }
             ],
             "class": "Element",
@@ -8786,7 +8831,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 801,
+            "line": 841,
             "description": "Set the X position of an html element in page coordinates, regardless of how the element is positioned.\nThe element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
             "itemtype": "method",
             "name": "setX",
@@ -8807,7 +8852,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 812,
+            "line": 852,
             "description": "Set the Y position of an html element in page coordinates, regardless of how the element is positioned.\nThe element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
             "itemtype": "method",
             "name": "setY",
@@ -8828,7 +8873,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 823,
+            "line": 863,
             "description": "Tests if the HtmlElement would be selected by the specified cssSelector.\nAlias for `matchesSelector()`",
             "itemtype": "method",
             "name": "test",
@@ -8850,7 +8895,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 836,
+            "line": 876,
             "description": "Toggles the className of the Element.",
             "itemtype": "method",
             "name": "toggleClass",
@@ -9775,7 +9820,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 670,
+            "line": 672,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -9827,7 +9872,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 777,
+            "line": 779,
             "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.rendered (optional) --> `true` the vDOM rendered the dom</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n              <li>e.status.renderPrevented (optional) -->  `reason|true` if the event got renderPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n    <li>e.preventRender() --> by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()` or `e.preventRender()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li>\n<ul>",
             "static": 1,
             "itemtype": "method",
@@ -9884,7 +9929,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 933,
+            "line": 935,
             "description": "Does the actual invocation of a subscriber.",
             "itemtype": "method",
             "name": "_invokeSubs",
@@ -9926,7 +9971,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 983,
+            "line": 985,
             "description": "Removes a subscriber from the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`.",
             "static": 1,
             "itemtype": "method",
@@ -9962,7 +10007,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1048,
+            "line": 1050,
             "description": "Removes subscribers from the multiple customevents. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -9987,7 +10032,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1103,
+            "line": 1105,
             "description": "Adds a property to the default eventobject's prototype which passes through all eventcycles.\nGoes through Object.defineProperty with configurable, enumerable and writable\nall set to false.",
             "itemtype": "method",
             "name": "_setEventObjProperty",
@@ -10012,7 +10057,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1123,
+            "line": 1125,
             "description": "Objecthash containing all defined custom-events\nwhich has a structure like this:\n\n_ce = {\n    'UI:click': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    },\n    'redmodel:save': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -10026,7 +10071,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1155,
+            "line": 1157,
             "description": "Objecthash containing all defined before and after subscribers\nwhich has a structure like this (`b` represents `before` and `a` represents `after`)\nEvery item that gets in the array consist by itself of 3 properties:\n                                                         subscriberitem = {\n                                                             o: listener,\n                                                             cb: callbackFn(e),\n                                                             f: filter\n                                                         };\n\n_subs = {\n    'UI:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    '*:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    'redmodel:save': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -10040,7 +10085,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1206,
+            "line": 1208,
             "description": "Internal list of finalize-subscribers which are invoked at the finalization-cycle, which happens after the after-subscribers.\nIs an array of function-references.",
             "itemtype": "property",
             "name": "_final",
@@ -10054,7 +10099,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1218,
+            "line": 1220,
             "description": "Object that acts as the prototype of the eventobject.\nTo add more methods, you can use `_setEventObjProperty`",
             "itemtype": "property",
             "name": "_defaultEventObj",
@@ -10068,7 +10113,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1234,
+            "line": 1236,
             "description": "Objecthash containing all detach-notifiers, keyed by customEvent name.\nThis list is maintained by `notifyDetach` and `unNotifyDetach`\n\n_detachNotifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_detachNotifiers",
@@ -10082,7 +10127,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1261,
+            "line": 1263,
             "description": "Objecthash containing all notifiers, keyed by customEvent name.\nThis list is maintained by `notify` and `unNotify`\n\n_notifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_notifiers",
@@ -10362,24 +10407,36 @@
             "submodule": "event-listener"
         },
         {
-            "file": "src/event-dom/extra/drag.js",
-            "line": 34,
-            "description": "Check to see if a node has editable content or not.\n\nTODO: Add additional checks to get it to work for child nodes\nthat inherit \"contenteditable\" from parent nodes. This may be\ntoo computationally intensive to be placed inside of the `_poll`\nloop, however.",
+            "file": "src/event-dom/extra/dragdrop.js",
+            "line": 194,
+            "description": "Makes the HtmlElement draggable",
             "itemtype": "method",
-            "name": "_isEditable",
+            "name": "setDraggable",
             "params": [
                 {
-                    "name": "node",
-                    "description": "",
-                    "type": "Node"
+                    "name": "proxy",
+                    "description": "whether the HtmlElement is a proxy-node during drag",
+                    "type": "Boolean",
+                    "optional": true
                 }
             ],
-            "access": "protected",
-            "tagname": "",
-            "static": 1,
+            "chainable": 1,
+            "since": "0.0.1",
             "class": "Event",
             "module": "event",
-            "submodule": "event-hover"
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/event-dom/extra/dragdrop.js",
+            "line": 206,
+            "description": "Removes draggability of the HtmlElement",
+            "itemtype": "method",
+            "name": "removeDraggable",
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
         },
         {
             "file": "src/event-dom/extra/valuechange.js",
@@ -11189,7 +11246,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 67,
+            "line": 66,
             "description": "Initializes the xhr-instance, based on the config-params.\nThis method is the standard way of doing xhr-requests without processing streams.",
             "itemtype": "method",
             "name": "_initXHR",
@@ -11281,7 +11338,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 148,
+            "line": 147,
             "description": "Adds the `headers`-object to `xhr`-headers.",
             "itemtype": "method",
             "name": "_setHeaders",
@@ -11309,7 +11366,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 178,
+            "line": 177,
             "description": "Adds 2 methods on the xhr-instance which are used by xhr when events occur:\n\nxhr.onreadystatechange()\nxhr.ontimeout()  // only XMLHttpRequest2\n\nThese events are responsible for making the Promise resolve.",
             "itemtype": "method",
             "name": "_setReadyHandle",
@@ -11337,7 +11394,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 222,
+            "line": 221,
             "description": "Stringifies an object into one string with every pair separated by `&`",
             "itemtype": "method",
             "name": "_toQueryString",
@@ -11359,7 +11416,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 243,
+            "line": 242,
             "description": "Sends a HTTP request to the server and returns a Promise with an additional .abort() method to cancel the request.\nThis method is the standard way of doing xhr-requests without processing streams.",
             "itemtype": "method",
             "name": "request",
@@ -11451,7 +11508,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 107,
+            "line": 106,
             "description": "Reference to the `idGenerator` function in [utils](../modules/utils.html)",
             "itemtype": "property",
             "name": "idGenerator",
@@ -11462,7 +11519,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 118,
+            "line": 117,
             "description": "Reference to the [IO](io.html) object",
             "itemtype": "property",
             "name": "IO",
@@ -11473,7 +11530,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 130,
+            "line": 129,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",
@@ -11697,6 +11754,20 @@
         {
             "file": "src/js-ext/lib/object.js",
             "line": 166,
+            "description": "Returns the number of keys of the object",
+            "itemtype": "method",
+            "name": "size",
+            "return": {
+                "description": "Number of items",
+                "type": "Number"
+            },
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "lib/object.js"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 175,
             "description": "Loops through the object collection the values of all its properties.\nIt is the counterpart of the [`keys`](#method_keys).",
             "itemtype": "method",
             "name": "values",
@@ -11710,7 +11781,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 186,
+            "line": 195,
             "description": "Returns true if the object has no own members",
             "itemtype": "method",
             "name": "isEmpty",
@@ -11724,7 +11795,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 199,
+            "line": 208,
             "description": "Returns a shallow copy of the object.\nIt does not clone objects within the object, it does a simple, shallow clone.\nFast, mostly useful for plain hash maps.",
             "itemtype": "method",
             "name": "shallowClone",
@@ -11738,7 +11809,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 220,
+            "line": 229,
             "description": "Merges into this object the properties of the given object.\nIf the second argument is true, the properties on the source object will be overwritten\nby those of the second object of the same name, otherwise, they are preserved.",
             "itemtype": "method",
             "name": "merge",
@@ -11761,7 +11832,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 245,
+            "line": 252,
             "description": "Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object",
             "itemtype": "method",
             "name": "isObject",
@@ -11775,7 +11846,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 255,
+            "line": 262,
             "description": "Returns a new object resulting of merging the properties of the given objects.\nThe copying is shallow, complex properties will reference the very same object.\nProperties in later objects do **not overwrite** properties of the same name in earlier objects.\nIf any of the objects is missing, it will be skiped.",
             "example": [
                 "\n\n var foo = function (config) {\n      config = Object.merge(config, defaultConfig);\n }"
@@ -11801,7 +11872,7 @@
         },
         {
             "file": "src/js-ext/lib/promise.js",
-            "line": 25,
+            "line": 26,
             "description": "Promise which can be put at the very end of a chain, even after .catch().\nWill invoke the callback function regardless whether the chain resolves or rejects.\n\nThe argument of the callback will be either its fulfilled or rejected argument, but\nit is wisely not to handle it. The results should have been handled in an earlier step\nof the chain: .finally() basicly means you want to execute code after the chain, regardless\nwhether it's resolved or rejected.\n\n**Note:** .finally() <u>does not return a Promise</u>: it should be used as the very last step of a Promisechain.\nIf you need an intermediate method, you should take .thenFulfill().",
             "itemtype": "method",
             "name": "finally",
@@ -11818,7 +11889,7 @@
         },
         {
             "file": "src/js-ext/lib/promise.js",
-            "line": 45,
+            "line": 46,
             "description": "Will always return a fulfilled Promise.\n\nTypical usage will be by making it part of a Promisechain: it makes the chain go\ninto its fulfilled phase.",
             "example": [
                 "\n\npromise1\n.then(promise2)\n.thenFulfill()\n.then(handleFulfilled, handleRejected) // handleFulfilled always gets invoked"
@@ -11843,7 +11914,7 @@
         },
         {
             "file": "src/js-ext/lib/promise.js",
-            "line": 76,
+            "line": 77,
             "description": "Returns a Promise that always fulfills. It is fulfilled when ALL items are resolved (either fulfilled\nor rejected). This is useful for waiting for the resolution of multiple\npromises, such as reading multiple files in Node.js or making multiple XHR\nrequests in the browser. Because -on the contrary of `Promise.all`- **finishAll** waits until\nall single Promises are resolved, you can handle all promises, even if some gets rejected.",
             "itemtype": "method",
             "name": "finishAll",
@@ -11865,7 +11936,7 @@
         },
         {
             "file": "src/js-ext/lib/promise.js",
-            "line": 140,
+            "line": 141,
             "description": "Returns a Promise which chains the function-calls. Like an automated Promise-chain.\nInvokes the functionreferences in a chain. You MUST supply function-references, it doesn't\nmatter wheter these functions return a Promise or not. Any returnvalues are passed through to\nthe next function.\n\n**Cautious:** you need to pass function-references, not invoke them!\nchainFns will invoke them when the time is ready. Regarding to this, there is a difference with\nusing Promise.all() where you should pass invoked Promises.\n\nIf one of the functions returns a Promise, the chain\nwill wait its execution for this function to be resolved.\n\nIf you need specific context or arguments: use Function.bind for these items.\nIf one of the items returns a rejected Promise, by default: the whole chain rejects\nand following functions in the chain will not be invoked. When `finishAll` is set `true`\nthe chain will always continue even with rejected Promises.\n\nReturning functionvalues are passed through the chain adding them as an extra argument\nto the next function in the chain (argument is added on the right)",
             "example": [
                 "\n    var a = [], p1, p2, p3;\n    p1 = function(a) {\n        return new Promise(function(resolve, reject) {\n            I.later(function() {\n                console.log('resolving promise p1: '+a);\n                resolve(a);\n            }, 1000);\n        });\n    };\n    p2 = function(b, r) {\n        var value = b+r;\n        console.log('returning p2: '+value);\n        return value;\n    };\n    p3 = function(c, r) {\n        return new Promise(function(resolve, reject) {\n            I.later(function() {\n                var value = b+r;\n                console.log('resolving promise p3: '+value);\n                resolve(value);\n            }, 1000);\n        });\n    };\n    a.push(p1.bind(undefined, 100));\n    a.push(p2.bind(undefined, 200));\n    a.push(p3.bind(undefined, 300));\n    Promise.chainFns(a).then(\n        function(r) {\n            console.log('chain resolved with '+r);\n        },\n        function(err) {\n            console.log('chain-error '+err);\n        }\n    );"
@@ -11897,8 +11968,8 @@
         },
         {
             "file": "src/js-ext/lib/promise.js",
-            "line": 232,
-            "description": "Returns a Promise with 3 additional methods:\n\npromise.fulfill\npromise.reject\npromise.callback\n\nWith Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.\nYou can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any.\npromise.**fulfill**() and promise.**reject**() are meant to resolve the promise from outside, just like deferred can do.",
+            "line": 233,
+            "description": "Returns a Promise with 4 additional methods:\n\npromise.fulfill\npromise.reject\npromise.callback\npromise.setCallback\n\nWith Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.\nYou can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any.\npromise.**fulfill**() and promise.**reject**() are meant to resolve the promise from outside, just like deferred can do.",
             "example": [
                 "\n    var promise = Promise.manage(\n        function(msg) {\n            alert(msg);\n        }\n    );\n\n    promise.then(\n        function() {\n            // promise is fulfilled, no further actions can be taken\n        }\n    );\n\n    setTimeout(function() {\n        promise.callback('hey, I\\'m still busy');\n    }, 1000);\n\n    setTimeout(function() {\n        promise.fulfill();\n    }, 2000);"
             ],
@@ -11907,8 +11978,9 @@
             "params": [
                 {
                     "name": "callbackFn",
-                    "description": "invoked everytime promiseinstance.callback() is called.",
-                    "type": "Function"
+                    "description": "invoked everytime promiseinstance.callback() is called.\n       You may as weel (re)set this method atny time lare by using promise.setCallback()",
+                    "type": "Function",
+                    "optional": true
                 }
             ],
             "return": {

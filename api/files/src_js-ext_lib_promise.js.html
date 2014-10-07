@@ -81,6 +81,8 @@
             
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
+                <li><a href="../modules/event-dragdrop.html">event-dragdrop</a></li>
+            
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
@@ -180,6 +182,7 @@
 */
 
 require(&#x27;polyfill/polyfill-base.js&#x27;);
+require(&#x27;polyfill/lib/promise.js&#x27;);
 require(&#x27;ypromise&#x27;);
 
 var NAME = &#x27;[promise-ext]: &#x27;,
@@ -396,11 +399,12 @@ Promise.chainFns = function (funcs, finishAll) {
 };
 
 /**
- * Returns a Promise with 3 additional methods:
+ * Returns a Promise with 4 additional methods:
  *
  * promise.fulfill
  * promise.reject
  * promise.callback
+ * promise.setCallback
  *
  * With Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.
  * You can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any.
@@ -428,7 +432,8 @@ Promise.chainFns = function (funcs, finishAll) {
  *     }, 2000);
  *
  * @method manage
- * @param callbackFn {Function} invoked everytime promiseinstance.callback() is called.
+ * @param [callbackFn] {Function} invoked everytime promiseinstance.callback() is called.
+ *        You may as weel (re)set this method atny time lare by using promise.setCallback()
  * @return {Promise} with three handles: fulfill, reject and callback.
  * @static
  */
@@ -458,6 +463,10 @@ Promise.manage = function (callbackFn) {
             console.log(&#x27;NAME, manage.callback is invoked&#x27;);
             callbackFn &amp;&amp; callbackFn.apply(undefined, arguments);
         }
+    };
+
+    promise.setCallback = function (newCallbackFn) {
+        callbackFn = newCallbackFn;
     };
 
     return promise;
