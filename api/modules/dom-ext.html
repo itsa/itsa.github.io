@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>extend-promise - Itsa</title>
+    <title>dom-ext - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -41,6 +41,12 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/Array.html">Array</a></li>
+            
+                <li><a href="../classes/document.html">document</a></li>
+            
+                <li><a href="../classes/Element.html">Element</a></li>
+            
                 <li><a href="../classes/Event.html">Event</a></li>
             
                 <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
@@ -53,9 +59,13 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
+                <li><a href="../classes/NodeList.html">NodeList</a></li>
+            
                 <li><a href="../classes/Object.html">Object</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
+            
+                <li><a href="../classes/String.html">String</a></li>
             
                 <li><a href="../classes/Utils.html">Utils</a></li>
             
@@ -64,6 +74,8 @@
             </ul>
 
             <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -76,12 +88,6 @@
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
-            
-                <li><a href="../modules/extend-function.html">extend-function</a></li>
-            
-                <li><a href="../modules/extend-object.html">extend-object</a></li>
-            
-                <li><a href="../modules/extend-promise.html">extend-promise</a></li>
             
                 <li><a href="../modules/io.html">io</a></li>
             
@@ -98,6 +104,22 @@
                 <li><a href="../modules/itsa.build.html">itsa.build</a></li>
             
                 <li><a href="../modules/js-ext.html">js-ext</a></li>
+            
+                <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
+            
+                <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
+            
+                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
+            
+                <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
+            
+                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
+            
+                <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
+            
+                <li><a href="../modules/lib_promise.s.html">lib/promise.s</a></li>
+            
+                <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
             
                 <li><a href="../modules/node-win.html">node-win</a></li>
             
@@ -138,7 +160,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>extend-promise Module</h1>
+                        <h1>dom-ext Module</h1>
 <div class="box clearfix meta">
     
 
@@ -146,7 +168,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_js-ext_lib_promise.js.html#l3"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:3</code></a>
+            Defined in: <a href="../files/src_dom-ext_lib_nodelist.js.html#l3"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;nodelist.js:3</code></a>
         </div>
     
 
@@ -156,11 +178,7 @@
 
 
 <div class="box intro">
-    <p>Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,
-But are all Promise/A+ compatable.</p>
-<p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
-New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
-
+    
 </div>
 
 
@@ -173,8 +191,20 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             <ul class="module-classes">
             
                 <li class="module-class">
-                    <a href="../classes/Promise.html">
-                        Promise
+                    <a href="../classes/document.html">
+                        document
+                    </a>
+                </li>
+            
+                <li class="module-class">
+                    <a href="../classes/Element.html">
+                        Element
+                    </a>
+                </li>
+            
+                <li class="module-class">
+                    <a href="../classes/NodeList.html">
+                        NodeList
                     </a>
                 </li>
             
@@ -183,6 +213,57 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
     </div>
 
     <div class="yui3-u-1-2">
+        
+            <p>This module is a rollup of the following modules:</p>
+
+            <ul class="module-submodules">
+            
+                <li class="module-submodule">
+                    <a href="../modules/lib/document.js.html">
+                        lib/document.js
+                    </a>
+
+                    <div class="module-submodule-description">
+                        Integrates DOM-events to event. more about DOM-events:
+http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+
+
+<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+                    </div>
+                </li>
+            
+                <li class="module-submodule">
+                    <a href="../modules/lib/element.js.html">
+                        lib/element.js
+                    </a>
+
+                    <div class="module-submodule-description">
+                        Integrates DOM-events to event. more about DOM-events:
+http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+
+
+<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+                    </div>
+                </li>
+            
+                <li class="module-submodule">
+                    <a href="../modules/lib/nodelist.js.html">
+                        lib/nodelist.js
+                    </a>
+
+                    <div class="module-submodule-description">
+                        Integrates DOM-events to event. more about DOM-events:
+http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+
+
+<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+                    </div>
+                </li>
+            
+            </ul>
         
     </div>
 </div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/event-dom/extra/event-valuechange.js - Itsa</title>
+    <title>src/event-dom/extra/valuechange.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -41,6 +41,12 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/Array.html">Array</a></li>
+            
+                <li><a href="../classes/document.html">document</a></li>
+            
+                <li><a href="../classes/Element.html">Element</a></li>
+            
                 <li><a href="../classes/Event.html">Event</a></li>
             
                 <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
@@ -53,9 +59,13 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
+                <li><a href="../classes/NodeList.html">NodeList</a></li>
+            
                 <li><a href="../classes/Object.html">Object</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
+            
+                <li><a href="../classes/String.html">String</a></li>
             
                 <li><a href="../classes/Utils.html">Utils</a></li>
             
@@ -64,6 +74,8 @@
             </ul>
 
             <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -76,12 +88,6 @@
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
-            
-                <li><a href="../modules/extend-function.html">extend-function</a></li>
-            
-                <li><a href="../modules/extend-object.html">extend-object</a></li>
-            
-                <li><a href="../modules/extend-promise.html">extend-promise</a></li>
             
                 <li><a href="../modules/io.html">io</a></li>
             
@@ -98,6 +104,22 @@
                 <li><a href="../modules/itsa.build.html">itsa.build</a></li>
             
                 <li><a href="../modules/js-ext.html">js-ext</a></li>
+            
+                <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
+            
+                <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
+            
+                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
+            
+                <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
+            
+                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
+            
+                <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
+            
+                <li><a href="../modules/lib_promise.s.html">lib/promise.s</a></li>
+            
+                <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
             
                 <li><a href="../modules/node-win.html">node-win</a></li>
             
@@ -138,7 +160,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/event-dom/extra/event-valuechange.js</h1>
+                        <h1 class="file-heading">File: src/event-dom/extra/valuechange.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -187,21 +209,23 @@ var NAME = &#x27;[event-valuechange]: &#x27;,
     **/
     POLL_INTERVAL = 50;
 
-console.info(NAME, &#x27;valuechange fase A&#x27;);
-
 module.exports = function (window) {
-console.info(NAME, &#x27;valuechange fase B&#x27;);
-    var Event = require(&#x27;../event-dom.js&#x27;)(window),
 
+    var Event = require(&#x27;../event-dom.js&#x27;)(window),
     subscriberBlur,
     subscriberFocus,
     subscriberKeypress,
-
     subscriberClick,
 
-
-
-
+    /*
+     * Checks if the HtmlElement is editable.
+     *
+     * @method editableNode
+     * @param node {HtmlElement}
+     * @private
+     * @return {Boolean} whether the HtmlElement is editable.
+     * @since 0.0.1
+     */
     editableNode = function(node) {
         var editable;
         if (node===window.document) {
@@ -211,6 +235,15 @@ console.info(NAME, &#x27;valuechange fase B&#x27;);
         return node.test(&#x27;input, textarea, select&#x27;) || ((editable=node.getAttr(&#x27;contenteditable&#x27;)) &amp;&amp; (editable!==&#x27;false&#x27;));
     },
 
+
+    /*
+     * Gets invokes when the HtmlElement gets focus. Initializes a &#x60;keypress&#x60; and &#x60;click&#x60;/&#x27;press&#x27; eventlisteners.
+     *
+     * @method startFocus
+     * @param e {Object} eventobject
+     * @private
+     * @since 0.0.1
+     */
     startFocus = function(e) {
         console.log(NAME, &#x27;startFocus&#x27;);
         var node = e.target,
@@ -239,10 +272,17 @@ console.info(NAME, &#x27;valuechange fase B&#x27;);
         // should be after mousepress: the node has to be focussed first to start capturing
         // check all buttons: the user may have swapped functionality
         // Also, check &#x60;press&#x60; event, which is generated by HammerJS: this to support mobile:
-        subscriberClick = Event.after([&#x27;click&#x27;, &#x27;press&#x27;], startPolling);
-
+        subscriberClick = Event.after(&#x27;tap&#x27;, startPolling);
     },
 
+
+    /*
+     * Removes the &#x60;focus&#x60; and &#x60;blur&#x60; events and ends the polling - if running. Because there are no subscribers anymore.
+     *
+     * @method endFocus
+     * @private
+     * @since 0.0.1
+     */
     endFocus = function(e) {
         console.log(NAME, &#x27;endFocus&#x27;);
         subscriberKeypress &amp;&amp; subscriberKeypress.detach();
@@ -251,9 +291,7 @@ console.info(NAME, &#x27;valuechange fase B&#x27;);
     },
 
     /*
-     * Creates the &#x60;hover&#x60; event. The eventobject has the property &#x60;e.hover&#x60; which is a &#x60;Promise&#x60;.
-     * You can use this Promise to get notification of the end of hover. The Promise e.hover gets resolved with
-     * &#x60;relatedTarget&#x60; as argument: the node where the mouse went into when leaving a.target.
+     * Creates the &#x60;focus&#x60; and &#x60;blur&#x60; events. Also invokes &#x60;startFocus&#x60; to do inititalization.
      *
      * @method setupValueChange
      * @private
@@ -267,6 +305,14 @@ console.info(NAME, &#x27;valuechange fase B&#x27;);
         startFocus({target: window.document.activeElement});
     },
 
+
+    /*
+     * Starts polling in case of mouseclicks.
+     *
+     * @method startPolling
+     * @private
+     * @since 0.0.1
+     */
     startPolling = function(e) {
         var node = e.target,
             valueChangeData;
@@ -283,16 +329,38 @@ console.info(NAME, &#x27;valuechange fase B&#x27;);
         valueChangeData.timer = UTILS.later(checkChanged.bind(null, e), POLL_INTERVAL, true);
     },
 
+
+    /*
+     * Stops polling on the specific HtmlElement
+     *
+     * @method stopPolling
+     * @param node {HtmlElement} the HtmlElement that should stop polling.
+     * @private
+     * @since 0.0.1
+     */
     stopPolling = function(node) {
         console.log(NAME, &#x27;stopPolling&#x27;);
         var valueChangeData = node.getData(DATA_KEY);
         valueChangeData &amp;&amp; valueChangeData.timer &amp;&amp; valueChangeData.timer.cancel();
     },
 
+
+    /*
+     * Checks e.target if its value has changed. If so, it will fire the &#x60;valuechange&#x60;-event.
+     *
+     * @method checkChanged
+     * @param e {Object} eventobject
+     * @private
+     * @since 0.0.1
+     */
     checkChanged = function(e) {
         console.log(NAME, &#x27;checkChanged&#x27;);
-        var node = e.target,
-            prevData = node.getData(DATA_KEY),
+        var node = e.target;
+        // because of delegating all matched HtmlElements come along: only check the node that has focus:
+        if (window.document.activeElement!==node) {
+            return;
+        }
+        var prevData = node.getData(DATA_KEY),
             editable = ((editable=node.getAttr(&#x27;contenteditable&#x27;)) &amp;&amp; (editable!==&#x27;false&#x27;)),
             currentData = editable ? node.innerHTML : node[VALUE];
         if (currentData!==prevData.prevVal) {
@@ -304,11 +372,11 @@ console.info(NAME, &#x27;valuechange fase B&#x27;);
     },
 
     /*
-     * Removes the &#x60;hover&#x60; event. Because there are no subscribers anymore.
+     * Removes the &#x60;focus&#x60; and &#x60;blur&#x60; events and ends the polling - if running. Because there are no subscribers anymore.
      *
      * @method teardownValueChange
      * @private
-     * @since 0.0.2
+     * @since 0.0.1
      */
     teardownValueChange = function() {
         // check if there aren&#x27;t any subscribers anymore.
@@ -328,7 +396,16 @@ console.info(NAME, &#x27;valuechange fase B&#x27;);
     Event.notify(&#x27;UI:valuechange&#x27;, setupValueChange, Event, true);
     Event.notifyDetach(&#x27;UI:valuechange&#x27;, teardownValueChange, Event);
 
-    // Set up document._emitVC, so that Element.setValue() will emit the &#x60;valuechange&#x60;-event:
+
+    /*
+     * Emits the &#x60;valuechange&#x60;-event on the specified node. Also adds e.value with the new value.
+     *
+     * @method _emitVC
+     * @param node {HtmlElement} the HtmlElement that fires the event
+     * @param value {String} the new value
+     * @private
+     * @since 0.0.1
+     */
     window.document._emitVC = function(node, value) {
         console.log(NAME, &#x27;document._emitVC&#x27;);
         var e = {

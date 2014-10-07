@@ -1,27 +1,30 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
+        "Array",
+        "Element",
         "Event",
         "Event.Emitter",
         "Event.Listener",
         "Function",
         "IO",
         "ITSA",
+        "NodeList",
         "Object",
         "Promise",
+        "String",
         "Utils",
+        "document",
         "window"
     ],
     "modules": [
+        "dom-ext",
         "event",
         "event-dom",
         "event-emitter",
         "event-hover",
         "event-listener",
         "event-mobile",
-        "extend-function",
-        "extend-object",
-        "extend-promise",
         "io",
         "io-assets",
         "io-cors",
@@ -30,10 +33,22 @@ YUI.add("yuidoc-meta", function(Y) {
         "io-xml",
         "itsa.build",
         "js-ext",
+        "lib/array.js",
+        "lib/document.js",
+        "lib/element.js",
+        "lib/function.js",
+        "lib/nodelist.js",
+        "lib/object.js",
+        "lib/promise.s",
+        "lib/string.js",
         "node-win",
         "utils"
     ],
     "allModules": [
+        {
+            "displayName": "dom-ext",
+            "name": "dom-ext"
+        },
         {
             "displayName": "event",
             "name": "event",
@@ -63,21 +78,6 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "event-mobile",
             "name": "event-mobile",
             "description": "Integrates mobile-events to event-dom. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        {
-            "displayName": "extend-function",
-            "name": "extend-function",
-            "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        {
-            "displayName": "extend-object",
-            "name": "extend-object",
-            "description": "Pollyfils for often used functionality for Objects\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        {
-            "displayName": "extend-promise",
-            "name": "extend-promise",
-            "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "io",
@@ -117,6 +117,46 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "js-ext",
             "name": "js-ext"
+        },
+        {
+            "displayName": "lib/array.js",
+            "name": "lib_array.js",
+            "description": "Pollyfils for often used functionality for Arrays\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "lib/document.js",
+            "name": "lib_document.js",
+            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "lib/element.js",
+            "name": "lib_element.js",
+            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "lib/function.js",
+            "name": "lib_function.js",
+            "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "lib/nodelist.js",
+            "name": "lib_nodelist.js",
+            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "lib/object.js",
+            "name": "lib_object.js",
+            "description": "Pollyfils for often used functionality for Objects\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "lib/promise.s",
+            "name": "lib_promise.s",
+            "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "lib/string.js",
+            "name": "lib_string.js",
+            "description": "Pollyfils for often used functionality for Strings\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "node-win",
