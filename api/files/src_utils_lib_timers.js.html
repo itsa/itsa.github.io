@@ -176,132 +176,150 @@
  * @static
 */
 
-&quot;use strict&quot;;
 
-require(&#x27;polyfill/polyfill-base.js&#x27;);
+(function (global) {
 
-var NAME = &#x27;[utils-timers]: &#x27;;
-/**
- * Forces a function to be run asynchronously, but as fast as possible. In Node.js
- * this is achieved using &#x60;setImmediate&#x60; or &#x60;process.nextTick&#x60;.
- *
- * @method _asynchronizer
- * @param callbackFn {Function} The function to call asynchronously
- * @static
- * @private
-**/
-var _asynchronizer = (typeof setImmediate !== &#x27;undefined&#x27;) ?
-                        function (fn) {setImmediate(fn);} :
-                        ((typeof process !== &#x27;undefined&#x27;) &amp;&amp; process.nextTick) ?
-                            process.nextTick :
-                            function (fn) {setTimeout(fn, 0);};
+    &quot;use strict&quot;;
 
+    require(&#x27;polyfill/polyfill-base.js&#x27;);
 
-/**
- * Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function
- * requires a specific execution context or arguments, wrap it with Function.bind.
- *
- * I.async returns an object with a cancel method.  If the cancel method is
- * called before the callback function, the callback function won&#x27;t be called.
- *
- * @method async
- * @param {Function} callbackFn
- * @param [invokeAfterFn=true] {boolean} set to false to prevent the _afterSyncFn to be invoked
- * @return {Object} An object with a cancel method.  If the cancel method is
- * called before the callback function, the callback function won&#x27;t be called.
-**/
-module.exports.async = function (callbackFn, invokeAfterFn) {
-    console.log(NAME, &#x27;async&#x27;);
-    var host = this,
-        canceled;
+    var NAME = &#x27;[utils-timers]: &#x27;,
+        _asynchronizer, _async;
 
-    invokeAfterFn = (typeof invokeAfterFn === &#x27;boolean&#x27;) ? invokeAfterFn : true;
-    (typeof callbackFn===&#x27;function&#x27;) &amp;&amp; _asynchronizer(function () {
-        if (!canceled) {
-            console.log(NAME, &#x27;async is running its callbakcFn&#x27;);
-            callbackFn();
-            // in case host._afterAsyncFn is defined: invoke it, to identify that later has been executed
-            invokeAfterFn &amp;&amp; host._afterAsyncFn &amp;&amp; host._afterAsyncFn();
-        }
-    });
+    /**
+     * Forces a function to be run asynchronously, but as fast as possible. In Node.js
+     * this is achieved using &#x60;setImmediate&#x60; or &#x60;process.nextTick&#x60;.
+     *
+     * @method _asynchronizer
+     * @param callbackFn {Function} The function to call asynchronously
+     * @static
+     * @private
+    **/
+    _asynchronizer = (typeof setImmediate !== &#x27;undefined&#x27;) ? function (fn) {setImmediate(fn);} :
+                        ((typeof process !== &#x27;undefined&#x27;) &amp;&amp; process.nextTick) ? process.nextTick : function (fn) {setTimeout(fn, 0);};
 
-    return {
-        cancel: function () {
-            canceled = true;
-        }
-    };
-};
+    /**
+     * Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function
+     * requires a specific execution context or arguments, wrap it with Function.bind.
+     *
+     * I.async returns an object with a cancel method.  If the cancel method is
+     * called before the callback function, the callback function won&#x27;t be called.
+     *
+     * @method async
+     * @param {Function} callbackFn
+     * @param [invokeAfterFn=true] {boolean} set to false to prevent the _afterSyncFn to be invoked
+     * @return {Object} An object with a cancel method.  If the cancel method is
+     * called before the callback function, the callback function won&#x27;t be called.
+    **/
+    _async = function (callbackFn, invokeAfterFn) {
+        console.log(NAME, &#x27;async&#x27;);
+        var host = this || global,
+            canceled;
 
-/**
- * Invokes the callbackFn after a timeout (asynchronous). If the function
- * requires a specific execution context or arguments, wrap it with Function.bind.
- *
- * To invoke the callback function periodic, set &#x27;periodic&#x27; either &#x27;true&#x27;, or specify a second timeout.
- * If number, then periodic is considered &#x27;true&#x27; but with a perdiod defined by &#x27;periodic&#x27;,
- * which means: the first timer executes after &#x27;timeout&#x27; and next timers after &#x27;period&#x27;.
- *
- * I.later returns an object with a cancel method.  If the cancel() method is
- * called before the callback function, the callback function won&#x27;t be called.
- *
- * @method later
- * @param callbackFn {Function} the function to execute.
- * @param [timeout] {Number} the number of milliseconds to wait until the callbackFn is executed.
- * when not set, the callback function is invoked once in the next turn of the JavaScript event loop.
- * @param [periodic] {boolean|Number} if true, executes continuously at supplied, if number, then periodic is considered &#x27;true&#x27; but with a perdiod
- * defined by &#x27;periodic&#x27;, which means: the first timer executes after &#x27;timeout&#x27; and next timers after &#x27;period&#x27;.
- * The interval executes until canceled.
- * @param [invokeAfterFn=true] {boolean} set to false to prevent the _afterSyncFn to be invoked
- * @return {object} a timer object. Call the cancel() method on this object to stop the timer.
-*/
-module.exports.later = function (callbackFn, timeout, periodic, invokeAfterFn) {
-    console.log(NAME, &#x27;later --&gt; timeout: &#x27;+timeout+&#x27;ms | periodic: &#x27;+periodic);
-    var host = this,
-        canceled = false;
-    invokeAfterFn = (typeof invokeAfterFn === &#x27;boolean&#x27;) ? invokeAfterFn : true;
-    if (!timeout) {
-        return host.async(callbackFn);
-    }
-    var interval = periodic,
-        secondtimeout = (typeof interval===&#x27;number&#x27;),
-        secondairId,
-        wrapper = function() {
-            // IE 8- and also nodejs may execute a callback, so in order to preserve
-            // the cancel() === no more runny-run, we have to build in an extra conditional
+        invokeAfterFn = (typeof invokeAfterFn === &#x27;boolean&#x27;) ? invokeAfterFn : true;
+        (typeof callbackFn===&#x27;function&#x27;) &amp;&amp; _asynchronizer(function () {
             if (!canceled) {
-                console.log(NAME, &#x27;later is running its callbakcFn&#x27;);
+                console.log(NAME, &#x27;async is running its callbakcFn&#x27;);
                 callbackFn();
-                secondtimeout &amp;&amp; (secondairId=setInterval(wrapperInterval, interval));
                 // in case host._afterAsyncFn is defined: invoke it, to identify that later has been executed
                 invokeAfterFn &amp;&amp; host._afterAsyncFn &amp;&amp; host._afterAsyncFn();
-                // break closure inside returned object:
+            }
+        });
+
+        return {
+            cancel: function () {
+                canceled = true;
+            }
+        };
+    };
+
+    /**
+     * Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function
+     * requires a specific execution context or arguments, wrap it with Function.bind.
+     *
+     * I.async returns an object with a cancel method.  If the cancel method is
+     * called before the callback function, the callback function won&#x27;t be called.
+     *
+     * @method async
+     * @param {Function} callbackFn
+     * @param [invokeAfterFn=true] {boolean} set to false to prevent the _afterSyncFn to be invoked
+     * @return {Object} An object with a cancel method.  If the cancel method is
+     * called before the callback function, the callback function won&#x27;t be called.
+    **/
+    module.exports.async = _async;
+
+    /**
+     * Invokes the callbackFn after a timeout (asynchronous). If the function
+     * requires a specific execution context or arguments, wrap it with Function.bind.
+     *
+     * To invoke the callback function periodic, set &#x27;periodic&#x27; either &#x27;true&#x27;, or specify a second timeout.
+     * If number, then periodic is considered &#x27;true&#x27; but with a perdiod defined by &#x27;periodic&#x27;,
+     * which means: the first timer executes after &#x27;timeout&#x27; and next timers after &#x27;period&#x27;.
+     *
+     * I.later returns an object with a cancel method.  If the cancel() method is
+     * called before the callback function, the callback function won&#x27;t be called.
+     *
+     * @method later
+     * @param callbackFn {Function} the function to execute.
+     * @param [timeout] {Number} the number of milliseconds to wait until the callbackFn is executed.
+     * when not set, the callback function is invoked once in the next turn of the JavaScript event loop.
+     * @param [periodic] {boolean|Number} if true, executes continuously at supplied, if number, then periodic is considered &#x27;true&#x27; but with a perdiod
+     * defined by &#x27;periodic&#x27;, which means: the first timer executes after &#x27;timeout&#x27; and next timers after &#x27;period&#x27;.
+     * The interval executes until canceled.
+     * @param [invokeAfterFn=true] {boolean} set to false to prevent the _afterSyncFn to be invoked
+     * @return {object} a timer object. Call the cancel() method on this object to stop the timer.
+    */
+    module.exports.later = function (callbackFn, timeout, periodic, invokeAfterFn) {
+        console.log(NAME, &#x27;later --&gt; timeout: &#x27;+timeout+&#x27;ms | periodic: &#x27;+periodic);
+        var host = this || global,
+            canceled = false;
+        invokeAfterFn = (typeof invokeAfterFn === &#x27;boolean&#x27;) ? invokeAfterFn : true;
+        if (!timeout) {
+            return _async(callbackFn);
+        }
+        var interval = periodic,
+            secondtimeout = (typeof interval===&#x27;number&#x27;),
+            secondairId,
+            wrapper = function() {
+                // IE 8- and also nodejs may execute a callback, so in order to preserve
+                // the cancel() === no more runny-run, we have to build in an extra conditional
+                if (!canceled) {
+                    console.log(NAME, &#x27;later is running its callbakcFn&#x27;);
+                    callbackFn();
+                    secondtimeout &amp;&amp; (secondairId=setInterval(wrapperInterval, interval));
+                    // in case host._afterAsyncFn is defined: invoke it, to identify that later has been executed
+                    invokeAfterFn &amp;&amp; host._afterAsyncFn &amp;&amp; host._afterAsyncFn();
+                    // break closure inside returned object:
+                    id = null;
+                }
+            },
+            wrapperInterval = function() {
+                // IE 8- and also nodejs may execute a setInterval callback one last time
+                // after clearInterval was called, so in order to preserve
+                // the cancel() === no more runny-run, we have to build in an extra conditional
+                if (!canceled) {
+                    console.log(NAME, &#x27;later is running its callbakcFn&#x27;);
+                    callbackFn();
+                    // in case host._afterAsyncFn is defined: invoke it, to identify that later has been executed
+                    invokeAfterFn &amp;&amp; host._afterAsyncFn &amp;&amp; host._afterAsyncFn();
+                }
+            },
+            id;
+        (typeof callbackFn===&#x27;function&#x27;) &amp;&amp; (id=(interval &amp;&amp; !secondtimeout) ? setInterval(wrapperInterval, timeout) : setTimeout(wrapper, timeout));
+
+        return {
+            cancel: function() {
+                canceled = true;
+                (interval &amp;&amp; !secondtimeout) ? clearInterval(id) : clearTimeout(id);
+                secondairId &amp;&amp; clearInterval(secondairId);
+                // break closure:
                 id = null;
+                secondairId = null;
             }
-        },
-        wrapperInterval = function() {
-            // IE 8- and also nodejs may execute a setInterval callback one last time
-            // after clearInterval was called, so in order to preserve
-            // the cancel() === no more runny-run, we have to build in an extra conditional
-            if (!canceled) {
-                console.log(NAME, &#x27;later is running its callbakcFn&#x27;);
-                callbackFn();
-                // in case host._afterAsyncFn is defined: invoke it, to identify that later has been executed
-                invokeAfterFn &amp;&amp; host._afterAsyncFn &amp;&amp; host._afterAsyncFn();
-            }
-        },
-        id;
-    (typeof callbackFn===&#x27;function&#x27;) &amp;&amp; (id=(interval &amp;&amp; !secondtimeout) ? setInterval(wrapperInterval, timeout) : setTimeout(wrapper, timeout));
-
-    return {
-        cancel: function() {
-            canceled = true;
-            (interval &amp;&amp; !secondtimeout) ? clearInterval(id) : clearTimeout(id);
-            secondairId &amp;&amp; clearInterval(secondairId);
-            // break closure:
-            id = null;
-            secondairId = null;
-        }
+        };
     };
-};
+
+}(typeof global !== &#x27;undefined&#x27; ? global : /* istanbul ignore next */ this));
 
     </pre>
 </div>
