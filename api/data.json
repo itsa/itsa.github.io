@@ -12454,7 +12454,7 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 18,
+            "line": 23,
             "description": "Forces a function to be run asynchronously, but as fast as possible. In Node.js\nthis is achieved using `setImmediate` or `process.nextTick`.",
             "itemtype": "method",
             "name": "_asynchronizer",
@@ -12473,7 +12473,7 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 34,
+            "line": 35,
             "description": "Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function\nrequires a specific execution context or arguments, wrap it with Function.bind.\n\nI.async returns an object with a cancel method.  If the cancel method is\ncalled before the callback function, the callback function won't be called.",
             "itemtype": "method",
             "name": "async",
@@ -12500,7 +12500,34 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 69,
+            "line": 70,
+            "description": "Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function\nrequires a specific execution context or arguments, wrap it with Function.bind.\n\nI.async returns an object with a cancel method.  If the cancel method is\ncalled before the callback function, the callback function won't be called.",
+            "itemtype": "method",
+            "name": "async",
+            "params": [
+                {
+                    "name": "callbackFn",
+                    "description": "",
+                    "type": "Function"
+                },
+                {
+                    "name": "invokeAfterFn",
+                    "description": "set to false to prevent the _afterSyncFn to be invoked",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
+                }
+            ],
+            "return": {
+                "description": "An object with a cancel method.  If the cancel method is\ncalled before the callback function, the callback function won't be called.",
+                "type": "Object"
+            },
+            "class": "Utils",
+            "module": "utils"
+        },
+        {
+            "file": "src/utils/lib/timers.js",
+            "line": 85,
             "description": "Invokes the callbackFn after a timeout (asynchronous). If the function\nrequires a specific execution context or arguments, wrap it with Function.bind.\n\nTo invoke the callback function periodic, set 'periodic' either 'true', or specify a second timeout.\nIf number, then periodic is considered 'true' but with a perdiod defined by 'periodic',\nwhich means: the first timer executes after 'timeout' and next timers after 'period'.\n\nI.later returns an object with a cancel method.  If the cancel() method is\ncalled before the callback function, the callback function won't be called.",
             "itemtype": "method",
             "name": "later",
