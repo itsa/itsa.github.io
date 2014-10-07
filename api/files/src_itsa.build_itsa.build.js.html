@@ -41,6 +41,12 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/Array.html">Array</a></li>
+            
+                <li><a href="../classes/document.html">document</a></li>
+            
+                <li><a href="../classes/Element.html">Element</a></li>
+            
                 <li><a href="../classes/Event.html">Event</a></li>
             
                 <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
@@ -53,9 +59,13 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
+                <li><a href="../classes/NodeList.html">NodeList</a></li>
+            
                 <li><a href="../classes/Object.html">Object</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
+            
+                <li><a href="../classes/String.html">String</a></li>
             
                 <li><a href="../classes/Utils.html">Utils</a></li>
             
@@ -64,6 +74,8 @@
             </ul>
 
             <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -76,12 +88,6 @@
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
-            
-                <li><a href="../modules/extend-function.html">extend-function</a></li>
-            
-                <li><a href="../modules/extend-object.html">extend-object</a></li>
-            
-                <li><a href="../modules/extend-promise.html">extend-promise</a></li>
             
                 <li><a href="../modules/io.html">io</a></li>
             
@@ -98,6 +104,22 @@
                 <li><a href="../modules/itsa.build.html">itsa.build</a></li>
             
                 <li><a href="../modules/js-ext.html">js-ext</a></li>
+            
+                <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
+            
+                <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
+            
+                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
+            
+                <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
+            
+                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
+            
+                <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
+            
+                <li><a href="../modules/lib_promise.s.html">lib/promise.s</a></li>
+            
+                <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
             
                 <li><a href="../modules/node-win.html">node-win</a></li>
             
@@ -244,9 +266,9 @@
         EVENT_NAME_TIMERS_EXECUTION = &#x27;timers:asyncfunc&#x27;;
 
     if (!fakedom) {
-        require(&#x27;event-dom/extra/event-hover.js&#x27;)(window);
-        require(&#x27;event-dom/extra/event-valuechange.js&#x27;)(window);
-        require(&#x27;event-dom/extra/event-drag.js&#x27;)(window);
+        require(&#x27;event-dom/extra/hover.js&#x27;)(window);
+        require(&#x27;event-dom/extra/valuechange.js&#x27;)(window);
+        require(&#x27;event-dom/extra/drag.js&#x27;)(window);
     }
     /**
      * Reference to the &#x60;idGenerator&#x60; function in [utils](../modules/utils.html)

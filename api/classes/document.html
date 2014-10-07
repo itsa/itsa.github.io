@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Object - Itsa</title>
+    <title>document - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -160,7 +160,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>Object Class</h1>
+                        <h1>document Class</h1>
 <div class="box meta">
     
 
@@ -168,14 +168,14 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_js-ext_lib_object.js.html#l66"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:66</code></a>
+            Defined in: <a href="../files/src_dom-ext_lib_document.js.html#l3"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:3</code></a>
         </div>
     
 
     
         
-            Module: <a href="../modules/lib_object.js.html">lib/object.js</a><br>
-            Parent Module: <a href="../modules/js-ext.html">js-ext</a>
+            Module: <a href="../modules/lib_document.js.html">lib/document.js</a><br>
+            Parent Module: <a href="../modules/dom-ext.html">dom-ext</a>
         
     
 
@@ -185,7 +185,10 @@
 
 
 <div class="box intro">
-    <p>Pollyfils for often used functionality for objects</p>
+    <p>Integrates DOM-events to event. more about DOM-events:
+<a href="http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/">http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/</a></p>
+<p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
+New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 
 </div>
 
@@ -214,49 +217,42 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_createClass">createClass</a>
+                                <a href="#method__insert">_insert</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_each">each</a>
+                                <a href="#method_first">first</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_isEmpty">isEmpty</a>
+                                <a href="#method_getAll">getAll</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_isObject">isObject</a>
+                                <a href="#method_getElement">getElement</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_keys">keys</a>
+                                <a href="#method_getFocussed">getFocussed</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_map">map</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_merge">merge</a>
+                                <a href="#method_html">html</a>
 
                                 
                                     <span class="flag static">static</span>
@@ -265,28 +261,35 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_merge">merge</a>
+                                <a href="#method_insertAfter">insertAfter</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_shallowClone">shallowClone</a>
+                                <a href="#method_insertBefore">insertBefore</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_some">some</a>
+                                <a href="#method_last">last</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_values">values</a>
+                                <a href="#method_replace">replace</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_test">test</a>
 
                                 
                                 
@@ -308,8 +311,8 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_createClass" class="method item">
-    <h3 class="name"><code>createClass</code></h3>
+                    <div id="method__insert" class="method item">
+    <h3 class="name"><code>_insert</code></h3>
 
     
         <div class="args">
@@ -317,13 +320,31 @@
             
                 <li class="arg">
                     
-                        <code class="optional">[constructor]</code>
+                        <code>htmlElement</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code class="optional">[prototype]</code>
+                        <code>method</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>content</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>refElement</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>escape</code>
                     
                 </li>
             
@@ -333,7 +354,7 @@
 
     
         <span class="returns-inline">
-            <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>
+            <span class="type">HtmlElement</span>
         </span>
     
 
@@ -353,8 +374,6 @@
         
             
                 
-                    <p>Provided by the <a href="../modules/lib/function.js.html">lib/function.js</a> module.</p>
-                
                 <p>
                 
                 Defined in
@@ -362,7 +381,7 @@
             
         
         
-        <a href="../files/src_js-ext_lib_function.js.html#l209"><code>src&#x2F;js-ext&#x2F;lib&#x2F;function.js:209</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l76"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:76</code></a>
         
         </p>
 
@@ -370,10 +389,12 @@
         
 
         
+            <p>Available since 0.0.1</p>
+        
     </div>
 
     <div class="description">
-        <p>Returns a base class with the given constructor and prototype methods</p>
+        <p>Inserts a HtmlElement or text at the specified position.</p>
 
     </div>
 
@@ -385,32 +406,188 @@
             
                 <li class="param">
                     
-                        <code class="param-name optional">[constructor]</code>
-                        <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>
+                        <code class="param-name">htmlElement</code>
+                        <span class="type">HtmlElement</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the HtmlElement where the action should be applied to</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">method</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>method to be used (either <code>insertBefore</code> or <code>appendChild</code>)</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">content</code>
+                        <span class="type">HtmlElement | HtmlElementList | <a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>content to append</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">refElement</code>
+                        <span class="type">HtmlElement</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>reference-element in case of <code>insertBefore</code></p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">escape</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>whether to insert <code>escaped</code> content, leading it into only text inserted</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">HtmlElement</span>:
+                    
+                    <p>the original HtmlElement so it can be chained</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_first" class="method item">
+    <h3 class="name"><code>first</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[cssSelector]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">HtmlElement | Null</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_dom-ext_lib_document.js.html#l120"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:120</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Returns the first of the HtmlElement&#39;s siblings, or the first that matches <code>cssSelector</code>.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[cssSelector]</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
                         <span class="flag optional" title="This parameter is optional.">optional</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>constructor for the class</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[prototype]</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Hash map of prototype members of the new class</p>
+                        <p>css-selector to be used as a filter</p>
 
                     </div>
 
@@ -428,10 +605,8 @@
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>:
+                        <span class="type">HtmlElement | Null</span>:
                     
-                    <p>the new class</p>
-
                 
             </div>
         </div>
@@ -441,8 +616,8 @@
 </div>
 
                 
-                    <div id="method_each" class="method item">
-    <h3 class="name"><code>each</code></h3>
+                    <div id="method_getAll" class="method item">
+    <h3 class="name"><code>getAll</code></h3>
 
     
         <div class="args">
@@ -450,7 +625,7 @@
             
                 <li class="arg">
                     
-                        <code>fn</code>
+                        <code>cssSelector</code>
                     
                 </li>
             
@@ -459,7 +634,9 @@
     
 
     
-
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/NodeList.html" class="crosslink">NodeList</a></span>
+        </span>
     
 
     
@@ -469,7 +646,7 @@
     
 
     
-        <span class="flag chainable">chainable</span>
+
     
 
     
@@ -485,7 +662,7 @@
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l71"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:71</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l141"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:141</code></a>
         
         </p>
 
@@ -493,13 +670,12 @@
         
 
         
+            <p>Available since 0.0.1</p>
+        
     </div>
 
     <div class="description">
-        <p>Loops through all properties in the object.  Equivalent to Array.forEach.
-The callback is provided with the value of the property, the name of the property
-and a reference to the whole object itself.
-The context to run the callback in can be overriden, otherwise it is undefined.</p>
+        <p>Gets a NodeList of HtmlElements, specified by the css-selector.</p>
 
     </div>
 
@@ -511,17 +687,14 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
                 <li class="param">
                     
-                        <code class="param-name">fn</code>
-                        <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>
+                        <code class="param-name">cssSelector</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>Function to be executed on each item in the object.  It will receive
-                     value {any} value of the property
-                     key {string} name of the property
-                     obj {Object} the whole of the object</p>
+                        <p>css-selector to match</p>
 
                     </div>
 
@@ -533,74 +706,15 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
     
 
     
-
-    
-</div>
-
-                
-                    <div id="method_isEmpty" class="method item">
-    <h3 class="name"><code>isEmpty</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_js-ext_lib_object.js.html#l186"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:186</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Returns true if the object has no own members</p>
-
-    </div>
-
-    
-
-    
         <div class="returns">
             <h4>Returns:</h4>
 
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+                        <span class="type"><a href="../classes/NodeList.html" class="crosslink">NodeList</a></span>:
                     
-                    <p>true if the object is empty</p>
+                    <p>NodeList of HtmlElements that match the css-selector</p>
 
                 
             </div>
@@ -611,154 +725,8 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
 </div>
 
                 
-                    <div id="method_isObject" class="method item">
-    <h3 class="name"><code>isObject</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_js-ext_lib_object.js.html#l245"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:245</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object</p>
-
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
-                    
-                    <p>true if the object is empty</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_keys" class="method item">
-    <h3 class="name"><code>keys</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_js-ext_lib_object.js.html#l157"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:157</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Returns the keys of the object.</p>
-
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>:
-                    
-                    <p>Keys of the object</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_map" class="method item">
-    <h3 class="name"><code>map</code></h3>
+                    <div id="method_getElement" class="method item">
+    <h3 class="name"><code>getElement</code></h3>
 
     
         <div class="args">
@@ -766,7 +734,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
                 <li class="arg">
                     
-                        <code>fn</code>
+                        <code>cssSelector</code>
                     
                 </li>
             
@@ -776,7 +744,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
 
     
         <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+            <span class="type">HtmlElement | Null</span>
         </span>
     
 
@@ -803,7 +771,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l125"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:125</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l158"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:158</code></a>
         
         </p>
 
@@ -811,17 +779,13 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
         
 
         
+            <p>Available since 0.0.1</p>
+        
     </div>
 
     <div class="description">
-        <p>Loops through the properties in an object until the callback assembling a new object
-with its properties set to the values returned by the callback function.
-If the callback function returns <code>undefined</code> the property will not be copied to the new object.
-The resulting object will have the same keys as the original, except for those where the callback
-returned <code>undefined</code> which will have dissapeared.
-The callback is provided with the value of the property, the name of the property
-and a reference to the whole object itself.
-The context to run the callback in can be overriden, otherwise it is undefined.</p>
+        <p>Gets one HtmlElement, specified by the css-selector. To retrieve a single element by id,
+you need to prepend the id-name with a <code>#</code>. When multiple HtmlElement&#39;s match, the first is returned.</p>
 
     </div>
 
@@ -833,17 +797,14 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
                 <li class="param">
                     
-                        <code class="param-name">fn</code>
-                        <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>
+                        <code class="param-name">cssSelector</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>Function to be executed on each item in the object.  It will receive
-                     value {any} value of the property
-                     key {string} name of the property
-                     obj {Object} the whole of the object</p>
+                        <p>css-selector to match</p>
 
                     </div>
 
@@ -861,9 +822,9 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                        <span class="type">HtmlElement | Null</span>:
                     
-                    <p>The new object with its properties set to the values returned by the callback function.</p>
+                    <p>the HtmlElement that was search for</p>
 
                 
             </div>
@@ -874,8 +835,84 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
 </div>
 
                 
-                    <div id="method_merge" class="method item">
-    <h3 class="name"><code>merge</code></h3>
+                    <div id="method_getFocussed" class="method item">
+    <h3 class="name"><code>getFocussed</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">HtmlElement | Null</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_dom-ext_lib_document.js.html#l171"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:171</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Gets the HtmlElement that currently has the focus.
+alias for <code>activeElement</code></p>
+
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">HtmlElement | Null</span>:
+                    
+                    <p>the HtmlElement that has focus</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_html" class="method item">
+    <h3 class="name"><code>html</code></h3>
 
     
         <div class="args">
@@ -883,7 +920,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
                 <li class="arg">
                     
-                        <code>obj</code>
+                        <code>string</code>
                     
                 </li>
             
@@ -893,7 +930,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
 
     
         <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+            <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
         </span>
     
 
@@ -922,7 +959,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l255"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:255</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l38"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:38</code></a>
         
         </p>
 
@@ -933,11 +970,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
     </div>
 
     <div class="description">
-        <p>Returns a new object resulting of merging the properties of the given objects.
-The copying is shallow, complex properties will reference the very same object.
-Properties in later objects do <strong>not overwrite</strong> properties of the same name in earlier objects.
-If any of the objects is missing, it will be skiped.</p>
-
+        
     </div>
 
     
@@ -948,16 +981,14 @@ If any of the objects is missing, it will be skiped.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">obj</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <code class="param-name">string</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
                     
 
-                    
-                        <span class="flag multiple" title="This argument may occur one or more times.">multiple</span>
                     
 
                     <div class="param-description">
-                        <p>Objects whose properties are to be merged</p>
+                        <p>String to escape.</p>
 
                     </div>
 
@@ -975,32 +1006,21 @@ If any of the objects is missing, it will be skiped.</p>
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>:
                     
-                    <p>new object with the properties merged in.</p>
+                    <p>Escaped string.</p>
 
                 
             </div>
         </div>
     
 
-    
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <p> var foo = function (config) {
-      config = Object.merge(config, defaultConfig);
- }</p>
-
-            </div>
-        </div>
     
 </div>
 
                 
-                    <div id="method_merge" class="method item">
-    <h3 class="name"><code>merge</code></h3>
+                    <div id="method_insertAfter" class="method item">
+    <h3 class="name"><code>insertAfter</code></h3>
 
     
         <div class="args">
@@ -1008,13 +1028,19 @@ If any of the objects is missing, it will be skiped.</p>
             
                 <li class="arg">
                     
-                        <code>obj</code>
+                        <code>content</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>force</code>
+                        <code>refElement</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[escape]</code>
                     
                 </li>
             
@@ -1049,7 +1075,7 @@ If any of the objects is missing, it will be skiped.</p>
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l220"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:220</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l183"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:183</code></a>
         
         </p>
 
@@ -1057,12 +1083,12 @@ If any of the objects is missing, it will be skiped.</p>
         
 
         
+            <p>Available since 0.0.1</p>
+        
     </div>
 
     <div class="description">
-        <p>Merges into this object the properties of the given object.
-If the second argument is true, the properties on the source object will be overwritten
-by those of the second object of the same name, otherwise, they are preserved.</p>
+        <p>Inserts a HtmlElement or text inside HtmlElement&#39;s innerHTML after <code>refElement</code>.</p>
 
     </div>
 
@@ -1074,14 +1100,14 @@ by those of the second object of the same name, otherwise, they are preserved.</
             
                 <li class="param">
                     
-                        <code class="param-name">obj</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <code class="param-name">content</code>
+                        <span class="type">HtmlElement | HtmlElementList | <a href="../classes/String.html" class="crosslink">String</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>Object with the properties to be added to the original object</p>
+                        <p>content to insert</p>
 
                     </div>
 
@@ -1090,15 +1116,31 @@ by those of the second object of the same name, otherwise, they are preserved.</
             
                 <li class="param">
                     
-                        <code class="param-name">force</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <code class="param-name">refElement</code>
+                        <span class="type">HtmlElement</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>If true, the properties in <code>obj</code> will override those of the same name
-       in the original object</p>
+                        <p>the HtmlElement where the content should be placed after</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[escape]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>whether to insert <code>escaped</code> content, leading it into only text inserted</p>
 
                     </div>
 
@@ -1115,16 +1157,164 @@ by those of the second object of the same name, otherwise, they are preserved.</
 </div>
 
                 
-                    <div id="method_shallowClone" class="method item">
-    <h3 class="name"><code>shallowClone</code></h3>
+                    <div id="method_insertBefore" class="method item">
+    <h3 class="name"><code>insertBefore</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>content</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>refElement</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[escape]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_dom-ext_lib_document.js.html#l203"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:203</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Inserts a HtmlElement or text inside HtmlElement&#39;s innerHTML before <code>refElement</code>.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">content</code>
+                        <span class="type">HtmlElement | HtmlElementList | <a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>content to insert</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">refElement</code>
+                        <span class="type">HtmlElement</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the HtmlElement where the content should be placed before</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[escape]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>whether to insert <code>escaped</code> content, leading it into only text inserted</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_last" class="method item">
+    <h3 class="name"><code>last</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[cssSelector]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
     
         <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+            <span class="type">HtmlElement | Null</span>
         </span>
     
 
@@ -1151,7 +1341,7 @@ by those of the second object of the same name, otherwise, they are preserved.</
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l199"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:199</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l222"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:222</code></a>
         
         </p>
 
@@ -1159,15 +1349,40 @@ by those of the second object of the same name, otherwise, they are preserved.</
         
 
         
+            <p>Available since 0.0.1</p>
+        
     </div>
 
     <div class="description">
-        <p>Returns a shallow copy of the object.
-It does not clone objects within the object, it does a simple, shallow clone.
-Fast, mostly useful for plain hash maps.</p>
+        <p>Returns the last of the HtmlElement&#39;s siblings, or the last that matches <code>cssSelector</code>.</p>
 
     </div>
 
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[cssSelector]</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>css-selector to be used as a filter</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -1177,10 +1392,8 @@ Fast, mostly useful for plain hash maps.</p>
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                        <span class="type">HtmlElement | Null</span>:
                     
-                    <p>shallow copy of the original</p>
-
                 
             </div>
         </div>
@@ -1190,8 +1403,8 @@ Fast, mostly useful for plain hash maps.</p>
 </div>
 
                 
-                    <div id="method_some" class="method item">
-    <h3 class="name"><code>some</code></h3>
+                    <div id="method_replace" class="method item">
+    <h3 class="name"><code>replace</code></h3>
 
     
         <div class="args">
@@ -1199,7 +1412,123 @@ Fast, mostly useful for plain hash maps.</p>
             
                 <li class="arg">
                     
-                        <code>fn</code>
+                        <code>newHtmlElement</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[escape]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_dom-ext_lib_document.js.html#l242"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:242</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Replaces the HtmlElement with a new HtmlElement.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">newHtmlElement</code>
+                        <span class="type">HtmlElement | <a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the new HtmlElement</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[escape]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>whether to insert <code>escaped</code> content, leading it into only text inserted</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_test" class="method item">
+    <h3 class="name"><code>test</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>cssSelector</code>
                     
                 </li>
             
@@ -1236,7 +1565,7 @@ Fast, mostly useful for plain hash maps.</p>
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l97"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:97</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l259"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:259</code></a>
         
         </p>
 
@@ -1244,14 +1573,13 @@ Fast, mostly useful for plain hash maps.</p>
         
 
         
+            <p>Available since 0.0.1</p>
+        
     </div>
 
     <div class="description">
-        <p>Loops through the properties in an object until the callback function returns <em>truish</em>.
-The callback is provided with the value of the property, the name of the property
-and a reference to the whole object itself.
-The order in which the elements are visited is not predictable.
-The context to run the callback in can be overriden, otherwise it is undefined.</p>
+        <p>Tests if the HtmlElement would be selected by the specified cssSelector.
+Alias for <code>matchesSelector()</code></p>
 
     </div>
 
@@ -1263,17 +1591,14 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
                 <li class="param">
                     
-                        <code class="param-name">fn</code>
-                        <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>
+                        <code class="param-name">cssSelector</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>Function to be executed on each item in the object.  It will receive
-                     value {any} value of the property
-                     key {string} name of the property
-                     obj {Object} the whole of the object</p>
+                        <p>the css-selector to test against</p>
 
                     </div>
 
@@ -1293,81 +1618,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
                     
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
                     
-                    <p>true if the loop was interrupted by the callback function returning <em>truish</em>.</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_values" class="method item">
-    <h3 class="name"><code>values</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_js-ext_lib_object.js.html#l166"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:166</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Loops through the object collection the values of all its properties.
-It is the counterpart of the <a href="#method_keys"><code>keys</code></a>.</p>
-
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>:
-                    
-                    <p>values of the object</p>
+                    <p>whether or not the node matches the selector</p>
 
                 
             </div>

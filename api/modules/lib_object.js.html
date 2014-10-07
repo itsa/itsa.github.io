@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/event-dom/event-drag.js - Itsa</title>
+    <title>lib/object.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -41,6 +41,12 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/Array.html">Array</a></li>
+            
+                <li><a href="../classes/document.html">document</a></li>
+            
+                <li><a href="../classes/Element.html">Element</a></li>
+            
                 <li><a href="../classes/Event.html">Event</a></li>
             
                 <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
@@ -53,9 +59,13 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
+                <li><a href="../classes/NodeList.html">NodeList</a></li>
+            
                 <li><a href="../classes/Object.html">Object</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
+            
+                <li><a href="../classes/String.html">String</a></li>
             
                 <li><a href="../classes/Utils.html">Utils</a></li>
             
@@ -64,6 +74,8 @@
             </ul>
 
             <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -76,12 +88,6 @@
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
-            
-                <li><a href="../modules/extend-function.html">extend-function</a></li>
-            
-                <li><a href="../modules/extend-object.html">extend-object</a></li>
-            
-                <li><a href="../modules/extend-promise.html">extend-promise</a></li>
             
                 <li><a href="../modules/io.html">io</a></li>
             
@@ -98,6 +104,22 @@
                 <li><a href="../modules/itsa.build.html">itsa.build</a></li>
             
                 <li><a href="../modules/js-ext.html">js-ext</a></li>
+            
+                <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
+            
+                <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
+            
+                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
+            
+                <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
+            
+                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
+            
+                <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
+            
+                <li><a href="../modules/lib_promise.s.html">lib/promise.s</a></li>
+            
+                <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
             
                 <li><a href="../modules/node-win.html">node-win</a></li>
             
@@ -138,99 +160,52 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/event-dom/event-drag.js</h1>
+                        <h1>lib_object.js Module</h1>
+<div class="box clearfix meta">
+    
 
-<div class="file">
-    <pre class="code prettyprint linenums">
-&quot;use strict&quot;;
+    
 
-/**
- * Adds the &#x60;hover&#x60; event as a DOM-event to event-dom. more about DOM-events:
- * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
- *
- * Should be called using  the provided &#x60;mergeInto&#x60;-method like this:
- *
- *
- * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * @example
- * Event = require(&#x27;event-dom/hover.js&#x27;)(window);
- *
- * or
- *
- * @example
- * Event = require(&#x27;event-dom&#x27;)(window);
- * require(&#x27;event-dom/event-hover.js&#x27;)(window);
- *
- * @module event
- * @submodule event-hover
- * @class Event
- * @since 0.0.2
-*/
+    
+        <div class="foundat">
+            Defined in: <a href="../files/src_js-ext_lib_object.js.html#l66"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:66</code></a>
+        </div>
+    
+
+    
+</div>
 
 
-var NAME = &#x27;[event-hover]: &#x27;;
 
-module.exports = function (window) {
-    var Event = require(&#x27;./event-dom.js&#x27;)(window),
+<div class="box intro">
+    <p>Pollyfils for often used functionality for Objects
+<i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
+ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 
-    /**
-    Check to see if a node has editable content or not.
-
-    TODO: Add additional checks to get it to work for child nodes
-    that inherit &quot;contenteditable&quot; from parent nodes. This may be
-    too computationally intensive to be placed inside of the &#x60;_poll&#x60;
-    loop, however.
-
-    @method _isEditable
-    @param {Node} node
-    @protected
-    @static
-    **/
-    _isEditable = function (node) {
-        // Performance cheat because this is used inside &#x60;_poll&#x60;
-        var domNode = node._node;
-        return domNode.contentEditable === &#x27;true&#x27; ||
-               domNode.contentEditable === &#x27;&#x27;;
-    },
+</div>
 
 
-    /*
-     * Creates the &#x60;hover&#x60; event. The eventobject has the property &#x60;e.hover&#x60; which is a &#x60;Promise&#x60;.
-     * You can use this Promise to get notification of the end of hover. The Promise e.hover gets resolved with
-     * &#x60;relatedTarget&#x60; as argument: the node where the mouse went into when leaving a.target.
-     *
-     * @method _setupValueChange
-     * @private
-     * @since 0.0.2
-     */
-    _setupValueChange = function() {
-        // create only after subscribing to the &#x60;hover&#x60;-event
-        Event.after(&#x27;mouseover&#x27;, function(e) {
-            console.info(NAME, &#x27;setting up mouseover event&#x27;);
-            var node = e.target;
-            e.hover = new Promise(function(fulfill, reject) {
-                Event.after(
-                    &#x27;mouseout&#x27;,
-                    function(e) {
-                        fulfill(e.relatedTarget);
-                    },
-                    function(ev) {
-                        return (ev.target===node);
-                    }
-                );
-            });
-            Event.emit(node, &#x27;UI:hover&#x27;, e);
-        });
-    };
 
-    Event.notify(&#x27;UI:valuechange&#x27;, _setupValueChange, Event);
+<div class="yui3-g">
+    <div class="yui3-u-1-2">
+        
+            <p>This module provides the following classes:</p>
 
-    return Event;
-};
+            <ul class="module-classes">
+            
+                <li class="module-class">
+                    <a href="../classes/Object.html">
+                        Object
+                    </a>
+                </li>
+            
+            </ul>
+        
+    </div>
 
-    </pre>
+    <div class="yui3-u-1-2">
+        
+    </div>
 </div>
 
                     </div>

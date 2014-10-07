@@ -4994,6 +4994,23 @@ module.exports = function (window) {
 },{"./lib/document.js":7,"./lib/element.js":8,"./lib/nodelist.js":9}],7:[function(require,module,exports){
 "use strict";
 
+/**
+ * Integrates DOM-events to event. more about DOM-events:
+ * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @example
+ * require('dom-ext/lib/document.js')(window);
+ *
+ * @module dom-ext
+ * @submodule lib/document.js
+ * @class document
+ * @since 0.0.1
+*/
+
 module.exports = function (window) {
     require('polyfill/lib/array.some.js');
     require('polyfill/lib/array.isarray.js');
@@ -5249,6 +5266,23 @@ module.exports = function (window) {
 };
 },{"./nodelist.js":9,"polyfill/lib/array.isarray.js":34,"polyfill/lib/array.some.js":35,"polyfill/lib/element.matchesselector.js":36}],8:[function(require,module,exports){
 "use strict";
+
+/**
+ * Integrates DOM-events to event. more about DOM-events:
+ * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @example
+ * require('dom-ext/lib/element.js')(window);
+ *
+ * @module dom-ext
+ * @submodule lib/element.js
+ * @class Element
+ * @since 0.0.1
+*/
 
 module.exports = function (window) {
 
@@ -6085,6 +6119,23 @@ module.exports = function (window) {
 },{"./document.js":7,"js-ext/extra/reserved-words.js":24,"js-ext/lib/string.js":30,"polyfill/lib/element.matchesselector.js":36,"window-ext":46}],9:[function(require,module,exports){
 "use strict";
 
+/**
+ * Integrates DOM-events to event. more about DOM-events:
+ * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @example
+ * require('dom-ext/lib/nodelist.js')(window);
+ *
+ * @module dom-ext
+ * @submodule lib/nodelist.js
+ * @class NodeList
+ * @since 0.0.1
+*/
+
 require('polyfill/polyfill-base.js');
 
 module.exports = function (window) {
@@ -6388,7 +6439,7 @@ module.exports = function (window) {
 
 var NAME = '[event-dom]: ',
     Event = require('event'),
-    async = require('utils').async,
+    later = require('utils').later,
     OUTSIDE = 'outside',
     REGEXP_UI = /^UI:/,
     REGEXP_NODE_ID = /^#\S+$/,
@@ -6621,11 +6672,11 @@ module.exports = function (window) {
             // we need to do this asynchronous: this way we pass them AFTER the DOM-event's defaultFn
             // also make sure to paas-in the payload of the manipulated eventobject
             subscribers = _getSubscribers(e, false, subs, wildcard_named_subs, named_wildcard_subs, wildcard_wildcard_subs);
-            (subscribers.length>0) && async(Event._emit.bind(Event, e.target, customEvent, eventobject, [], subscribers, _preProcessor, true), false);
+            (subscribers.length>0) && later(Event._emit.bind(Event, e.target, customEvent, eventobject, [], subscribers, _preProcessor, true), 10, false);
 
             // now check outside subscribers
             subscribers = _getSubscribers(e, false, subsOutside, wildcard_named_subsOutside);
-            (subscribers.length>0) && async(Event._emit.bind(Event, e.target, customEvent+OUTSIDE, eventobjectOutside, [], subscribers, _preProcessor, true), false);
+            (subscribers.length>0) && later(Event._emit.bind(Event, e.target, customEvent+OUTSIDE, eventobjectOutside, [], subscribers, _preProcessor, true), 10, false);
         }
     };
 
@@ -6759,7 +6810,7 @@ module.exports = function (window) {
         }
 
         if (NEW_EVENTSYSTEM) {
-            // one exeption: windowresize sould be transformed into `resize` in the window-object
+            // one exeption: windowresize should listen to the window-object
             if (eventName==='resize') {
                 window.addEventListener(eventName, _evCallback);
             }
@@ -6769,9 +6820,9 @@ module.exports = function (window) {
             }
         }
         else if (OLD_EVENTSYSTEM) {
-            // one exeption: windowresize sould be transformed into `resize` in the window-object
-            if (eventName==='windowresize') {
-                window.addEventListener('resize', _evCallback);
+            // one exeption: windowresize should listen to the window-object
+            if (eventName==='resize') {
+                window.attachEvent('on'+eventName, _evCallback);
             }
             else {
                 DOCUMENT.attachEvent('on'+eventName, _evCallback);
@@ -7077,21 +7128,23 @@ var NAME = '[event-valuechange]: ',
     **/
     POLL_INTERVAL = 50;
 
-console.info(NAME, 'valuechange fase A');
-
 module.exports = function (window) {
-console.info(NAME, 'valuechange fase B');
-    var Event = require('../event-dom.js')(window),
 
+    var Event = require('../event-dom.js')(window),
     subscriberBlur,
     subscriberFocus,
     subscriberKeypress,
-
     subscriberClick,
 
-
-
-
+    /*
+     * Checks if the HtmlElement is editable.
+     *
+     * @method editableNode
+     * @param node {HtmlElement}
+     * @private
+     * @return {Boolean} whether the HtmlElement is editable.
+     * @since 0.0.1
+     */
     editableNode = function(node) {
         var editable;
         if (node===window.document) {
@@ -7101,6 +7154,15 @@ console.info(NAME, 'valuechange fase B');
         return node.test('input, textarea, select') || ((editable=node.getAttr('contenteditable')) && (editable!=='false'));
     },
 
+
+    /*
+     * Gets invokes when the HtmlElement gets focus. Initializes a `keypress` and `click`/'press' eventlisteners.
+     *
+     * @method startFocus
+     * @param e {Object} eventobject
+     * @private
+     * @since 0.0.1
+     */
     startFocus = function(e) {
         console.log(NAME, 'startFocus');
         var node = e.target,
@@ -7129,10 +7191,17 @@ console.info(NAME, 'valuechange fase B');
         // should be after mousepress: the node has to be focussed first to start capturing
         // check all buttons: the user may have swapped functionality
         // Also, check `press` event, which is generated by HammerJS: this to support mobile:
-        subscriberClick = Event.after(['click', 'press'], startPolling);
-
+        subscriberClick = Event.after('tap', startPolling);
     },
 
+
+    /*
+     * Removes the `focus` and `blur` events and ends the polling - if running. Because there are no subscribers anymore.
+     *
+     * @method endFocus
+     * @private
+     * @since 0.0.1
+     */
     endFocus = function(e) {
         console.log(NAME, 'endFocus');
         subscriberKeypress && subscriberKeypress.detach();
@@ -7141,9 +7210,7 @@ console.info(NAME, 'valuechange fase B');
     },
 
     /*
-     * Creates the `hover` event. The eventobject has the property `e.hover` which is a `Promise`.
-     * You can use this Promise to get notification of the end of hover. The Promise e.hover gets resolved with
-     * `relatedTarget` as argument: the node where the mouse went into when leaving a.target.
+     * Creates the `focus` and `blur` events. Also invokes `startFocus` to do inititalization.
      *
      * @method setupValueChange
      * @private
@@ -7157,6 +7224,14 @@ console.info(NAME, 'valuechange fase B');
         startFocus({target: window.document.activeElement});
     },
 
+
+    /*
+     * Starts polling in case of mouseclicks.
+     *
+     * @method startPolling
+     * @private
+     * @since 0.0.1
+     */
     startPolling = function(e) {
         var node = e.target,
             valueChangeData;
@@ -7173,16 +7248,38 @@ console.info(NAME, 'valuechange fase B');
         valueChangeData.timer = UTILS.later(checkChanged.bind(null, e), POLL_INTERVAL, true);
     },
 
+
+    /*
+     * Stops polling on the specific HtmlElement
+     *
+     * @method stopPolling
+     * @param node {HtmlElement} the HtmlElement that should stop polling.
+     * @private
+     * @since 0.0.1
+     */
     stopPolling = function(node) {
         console.log(NAME, 'stopPolling');
         var valueChangeData = node.getData(DATA_KEY);
         valueChangeData && valueChangeData.timer && valueChangeData.timer.cancel();
     },
 
+
+    /*
+     * Checks e.target if its value has changed. If so, it will fire the `valuechange`-event.
+     *
+     * @method checkChanged
+     * @param e {Object} eventobject
+     * @private
+     * @since 0.0.1
+     */
     checkChanged = function(e) {
         console.log(NAME, 'checkChanged');
-        var node = e.target,
-            prevData = node.getData(DATA_KEY),
+        var node = e.target;
+        // because of delegating all matched HtmlElements come along: only check the node that has focus:
+        if (window.document.activeElement!==node) {
+            return;
+        }
+        var prevData = node.getData(DATA_KEY),
             editable = ((editable=node.getAttr('contenteditable')) && (editable!=='false')),
             currentData = editable ? node.innerHTML : node[VALUE];
         if (currentData!==prevData.prevVal) {
@@ -7194,11 +7291,11 @@ console.info(NAME, 'valuechange fase B');
     },
 
     /*
-     * Removes the `hover` event. Because there are no subscribers anymore.
+     * Removes the `focus` and `blur` events and ends the polling - if running. Because there are no subscribers anymore.
      *
      * @method teardownValueChange
      * @private
-     * @since 0.0.2
+     * @since 0.0.1
      */
     teardownValueChange = function() {
         // check if there aren't any subscribers anymore.
@@ -7218,7 +7315,16 @@ console.info(NAME, 'valuechange fase B');
     Event.notify('UI:valuechange', setupValueChange, Event, true);
     Event.notifyDetach('UI:valuechange', teardownValueChange, Event);
 
-    // Set up document._emitVC, so that Element.setValue() will emit the `valuechange`-event:
+
+    /*
+     * Emits the `valuechange`-event on the specified node. Also adds e.value with the new value.
+     *
+     * @method _emitVC
+     * @param node {HtmlElement} the HtmlElement that fires the event
+     * @param value {String} the new value
+     * @private
+     * @since 0.0.1
+     */
     window.document._emitVC = function(node, value) {
         console.log(NAME, 'document._emitVC');
         var e = {
@@ -7731,7 +7837,7 @@ require('js-ext/lib/object.js');
          * @param callback {Function} subscriber: will be invoked when the customEvent is called (before any subscribers.
          *                 Recieves 3 arguments: the `subscriber-object`, `customEvent` and the complete subscriptionobject.
          * @param context {Object} context of the callback
-         * @param [once] {Boolean} whether the subscriptions should be removed after the first invokation
+         * @param [once=false] {Boolean} whether the subscriptions should be removed after the first invokation
          * @chainable
          * @since 0.0.1
         */
@@ -7763,7 +7869,7 @@ require('js-ext/lib/object.js');
          * @param callback {Function} subscriber: will be invoked when the customEvent is called (before any subscribers.
          *                 Recieves 2 arguments: the `subscriber-object` and `customEvent`.
          * @param context {Object} context of the callback
-         * @param [once] {Boolean} whether the subscriptions should be removed after the first invokation
+         * @param [once=false] {Boolean} whether the subscriptions should be removed after the first invokation
          * @chainable
          * @since 0.0.1
         */
@@ -9160,10 +9266,12 @@ module.exports = function (window) {
  * @since 0.0.1
 */
 
+require('polyfill/lib/json.js');
+require('js-ext/lib/string.js');
+
 var NAME = '[io-transfer]: ',
-    DATEPATTERN = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/,
     REVIVER = function(key, value) {
-        return DATEPATTERN.test(value) ? new Date(value) : value;
+        return ((typeof value==='string') && value.toDate()) || value;
     },
     MIME_JSON = 'application/json',
     CONTENT_TYPE = 'Content-Type',
@@ -9172,8 +9280,6 @@ var NAME = '[io-transfer]: ',
     REGEXP_OBJECT = /^( )*{/,
     REGEXP_REMOVE_LAST_COMMA = /^(.*),( )*$/,
     entendXHR;
-
-require('polyfill/lib/json.js');
 
 module.exports = function (window) {
 
@@ -9567,7 +9673,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"./io.js":23,"polyfill/lib/json.js":37}],22:[function(require,module,exports){
+},{"./io.js":23,"js-ext/lib/string.js":30,"polyfill/lib/json.js":37}],22:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10104,16 +10210,34 @@ require('./lib/string.js');
 require('./lib/array.js');
 require('./lib/promise.js');
 },{"./lib/array.js":26,"./lib/function.js":27,"./lib/object.js":28,"./lib/promise.js":29,"./lib/string.js":30}],26:[function(require,module,exports){
+/**
+ *
+ * Pollyfils for often used functionality for Arrays
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module js-ext
+ * @submodule lib/array.js
+ * @class Array
+ *
+ */
+
 "use strict";
 
 (function(ArrayPrototype) {
-    // extending prototypes
+    /**
+     * Shuffles the items in the Array randomly
+     *
+     * @method shuffle
+     * @chainable
+     */
     Array.shuffle || (ArrayPrototype.shuffle=function () {
         var instance = this,
             counter = instance.length,
             temp, index;
         // While there are elements in the instance
-        while (counter > 0) {
+        while (counter>0) {
             // Pick a random index
             index = Math.floor(Math.random() * counter);
 
@@ -10125,6 +10249,7 @@ require('./lib/promise.js');
             instance[counter] = instance[index];
             instance[index] = temp;
         }
+        return instance;
     });
 }(Array.prototype));
 },{}],27:[function(require,module,exports){
@@ -10136,7 +10261,8 @@ require('./lib/promise.js');
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  * @module js-ext
- * @submodule extend-function
+ * @submodule lib/function.js
+ * @class Function
  *
 */
 
@@ -10356,7 +10482,8 @@ defineProperty(Object.prototype, 'createClass', function (constructor, prototype
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  * @module js-ext
- * @submodule extend-object
+ * @submodule lib/object.js
+ * @class Object
  *
 */
 
@@ -10430,7 +10557,6 @@ defineProperties(Object.prototype, {
      *                      obj {Object} the whole of the object
      * @chainable
      */
-
     each: function (fn, context) {
         if (context) return _each(this, fn, context);
         var keys = Object.keys(this),
@@ -10638,7 +10764,7 @@ Object.merge = function () {
  *
  *
  * @module js-ext
- * @submodule extend-promise
+ * @submodule lib/promise.s
  * @class Promise
 */
 
@@ -10927,6 +11053,19 @@ Promise.manage = function (callbackFn) {
 };
 
 },{"polyfill/polyfill-base.js":41,"ypromise":5}],30:[function(require,module,exports){
+/**
+ *
+ * Pollyfils for often used functionality for Strings
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module js-ext
+ * @submodule lib/string.js
+ * @class String
+ *
+ */
+
 "use strict";
 
 (function(StringPrototype) {
@@ -10936,66 +11075,184 @@ Promise.manage = function (callbackFn) {
         TRIM_LEFT_REGEX  = new RegExp('^' + WHITESPACE_CLASS),
         TRIM_RIGHT_REGEX = new RegExp(WHITESPACE_CLASS + '$'),
         TRIMREGEX        = new RegExp(TRIM_LEFT_REGEX.source + '|' + TRIM_RIGHT_REGEX.source, 'g'),
-        PATTERN_EMAIL = '^[\\w!#$%&\'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&\'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$',
+        PATTERN_EMAIL = new RegExp('^[\\w!#$%&\'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&\'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$'),
         PATTERN_URLEND = '[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)+(/[\\w-]+)*',
-        PATTERN_URLHTTP =  '^(http://)?'+PATTERN_URLEND,
-        PATTERN_URLHTTPS =  '^https://'+PATTERN_URLEND,
-        PATTERN_URL = '^(https?://)?'+PATTERN_URLEND,
-        PATTERN_INTEGER = '^(([-]?[1-9][0-9]*)|0)$',
+        PATTERN_URLHTTP = new RegExp('^(http://)?'+PATTERN_URLEND),
+        PATTERN_URLHTTPS = new RegExp('^https://'+PATTERN_URLEND),
+        PATTERN_URL = new RegExp('^(https?://)?'+PATTERN_URLEND),
+        PATTERN_INTEGER = /^(([-]?[1-9][0-9]*)|0)$/,
         PATTERN_FLOAT_START = '^[-]?(([1-9][0-9]*)|0)(\\',
         PATTERN_FLOAT_END = '[0-9]+)?$',
-        PATTERN_FLOAT_COMMA = PATTERN_FLOAT_START + ',' + PATTERN_FLOAT_END,
-        PATTERN_FLOAT_PERIOD = PATTERN_FLOAT_START + '.' + PATTERN_FLOAT_END;
+        PATTERN_FLOAT_COMMA = new RegExp(PATTERN_FLOAT_START + ',' + PATTERN_FLOAT_END),
+        PATTERN_FLOAT_DOT = new RegExp(PATTERN_FLOAT_START + '.' + PATTERN_FLOAT_END),
+        PATTERN_HEX_COLOR_HASHALPHA = /^#[0-9A-F]{4}([0-9A-F]{4})?$/,
+        PATTERN_HEX_COLOR_HASH = /^#[0-9A-F]{3}([0-9A-F]{3})?$/,
+        PATTERN_HEX_COLOR_ALPHA = /^[0-9A-F]{4}([0-9A-F]{4})?$/,
+        PATTERN_HEX_COLOR = /^[0-9A-F]{3}([0-9A-F]{3})?$/;
 
-    String.substitute || (StringPrototype.substitute=function(obj) {
-        return this.replace(SUBREGEX, function (match, key) {
-            return (obj[key]===undefined) ? match : obj[key];
-        });
-    });
-
-    String.startsWith || (StringPrototype.startsWith=function(test, caseInsensitive) {
-        return this.test('^'+test, caseInsensitive ? 'i': '');
-    });
-
+    /**
+     * Checks if the string ends with the value specified by `test`
+     *
+     * @method endsWith
+     * @param test {String} the string to test for
+     * @param [caseInsensitive=false] {Boolean} whether to ignore case-sensivity
+     * @return {Boolean} whether the string ends with `test`
+     */
     String.endsWith || (StringPrototype.endsWith=function(test, caseInsensitive) {
         return this.test(test+'$', caseInsensitive ? 'i': '');
     });
 
-    String.trimLeft || (StringPrototype.trimLeft=function() {
-        return this.replace(TRIM_LEFT_REGEX, '');
+    /**
+     * Checks if the string starts with the value specified by `test`
+     *
+     * @method startsWith
+     * @param test {String} the string to test for
+     * @param [caseInsensitive=false] {Boolean} whether to ignore case-sensivity
+     * @return {Boolean} whether the string starts with `test`
+     */
+    String.startsWith || (StringPrototype.startsWith=function(test, caseInsensitive) {
+        return this.test('^'+test, caseInsensitive ? 'i': '');
     });
 
-    String.trimRight || (StringPrototype.trimRight=function() {
-        return this.replace(TRIM_RIGHT_REGEX, '');
+    /**
+     * Performs `{placeholder}` substitution on a string. The object passed
+     * provides values to replace the `{placeholder}`s.
+     * `{placeholder}` token names must match property names of the object.
+     *
+     * `{placeholder}` tokens that are undefined on the object map will be removed.
+     *
+     * @example
+     * var greeting = '{message} {who}!';
+     * greeting.substitute({message: 'Hello'}); // results into 'Hello !'
+     *
+     * @method substitute
+     * @param obj {Object} Object containing replacement values.
+     * @return {String} the substitute result.
+     */
+    String.substitute || (StringPrototype.substitute=function(obj) {
+        return this.replace(SUBREGEX, function (match, key) {
+            return (obj[key]===undefined) ? '' : obj[key];
+        });
     });
 
-    String.trim || (StringPrototype.trim=function() {
-        return this.replace(TRIMREGEX, '');
-    });
-
+    /**
+     * Returns a ISO-8601 Date-object build by the String's value.
+     * If the String-value doesn't match ISO-8601, `null` will be returned.
+     *
+     * ISO-8601 Date's are generated by JSON.stringify(), so it's very handy to be able to reconvert them.
+     *
+     * @example
+     * var birthday = '2010-02-10T14:45:30.000Z';
+     * birthday.toDate(); // --> Wed Feb 10 2010 15:45:30 GMT+0100 (CET)
+     *
+     * @method toDate
+     * @return {Date|null} the Date represented by the String's value or null when invalid
+     */
     String.toDate || (StringPrototype.toDate=function() {
         return DATEPATTERN.test(this) ? new Date(this) : null;
     });
 
-    StringPrototype.validateFloat = function(comma) {
-        return comma ? PATTERN_FLOAT_COMMA.test(this) : PATTERN_FLOAT_PERIOD.test(this);
-    };
+    /**
+     * Generated the string without any white-spaces at the start or end.
+     *
+     * @method trim
+     * @return {String} new String without leading and trailing white-spaces
+     */
+    String.trim || (StringPrototype.trim=function() {
+        return this.replace(TRIMREGEX, '');
+    });
 
-    StringPrototype.validateNumber = function() {
-        return PATTERN_INTEGER.test(this);
-    };
+    /**
+     * Generated the string without any white-spaces at the beginning.
+     *
+     * @method trimLeft
+     * @return {String} new String without leading white-spaces
+     */
+    String.trimLeft || (StringPrototype.trimLeft=function() {
+        return this.replace(TRIM_LEFT_REGEX, '');
+    });
 
+    /**
+     * Generated the string without any white-spaces at the end.
+     *
+     * @method trimRight
+     * @return {String} new String without trailing white-spaces
+     */
+    String.trimRight || (StringPrototype.trimRight=function() {
+        return this.replace(TRIM_RIGHT_REGEX, '');
+    });
+
+    /**
+     * Validates if the String's value represents a valid emailaddress.
+     *
+     * @method validateEmail
+     * @return {Boolean} whether the String's value is a valid emailaddress.
+     */
     StringPrototype.validateEmail = function() {
         return PATTERN_EMAIL.test(this);
     };
 
+    /**
+     * Validates if the String's value represents a valid floated number.
+     *
+     * @method validateFloat
+     * @param [comma] {Boolean} whether to use a comma as decimal separator instead of a dot
+     * @return {Boolean} whether the String's value is a valid floated number.
+     */
+    StringPrototype.validateFloat = function(comma) {
+        return comma ? PATTERN_FLOAT_COMMA.test(this) : PATTERN_FLOAT_DOT.test(this);
+    };
+
+    /**
+     * Validates if the String's value represents a hexadecimal color.
+     *
+     * @method validateHexaColor
+     * @param [options] {Object}
+     * @param [options.hashtag=false] {Boolean} whether the hashtag should be part of the String
+     * @param [options.alpha=false] {Boolean} whether to accept alpha transparancy
+     * @return {Boolean} whether the String's value is a valid hexadecimal color.
+     */
+    StringPrototype.validateHexaColor = function(options) {
+        var instance = this;
+        options || (options={});
+        if (options.hashtag) {
+            return options.alpha ? PATTERN_HEX_COLOR_HASHALPHA.test(instance) : PATTERN_HEX_COLOR_HASH.test(instance);
+        }
+        else {
+            return options.alpha ? PATTERN_HEX_COLOR_ALPHA.test(instance) : PATTERN_HEX_COLOR.test(instance);
+        }
+    };
+
+    /**
+     * Validates if the String's value represents a valid integer number.
+     *
+     * @method validateNumber
+     * @return {Boolean} whether the String's value is a valid integer number.
+     */
+    StringPrototype.validateNumber = function() {
+        return PATTERN_INTEGER.test(this);
+    };
+
+    /**
+     * Validates if the String's value represents a valid URL.
+     *
+     * @method validateURL
+     * @param [options] {Object}
+     * @param [options.http] {Boolean} to force matching starting with `http://`
+     * @param [options.https] {Boolean} to force matching starting with `https://`
+     * @return {Boolean} whether the String's value is a valid URL.
+     */
     StringPrototype.validateURL = function(options) {
         var instance = this;
         options || (options={});
+        if (options.http && options.https) {
+            return false;
+        }
         return options.http ? PATTERN_URLHTTP.test(instance) : (options.https ? PATTERN_URLHTTPS.test(instance) : PATTERN_URL.test(instance));
     };
 
 }(String.prototype));
+
 },{}],31:[function(require,module,exports){
 (function (global){
 if (!Array.filter) {
@@ -11993,9 +12250,9 @@ process.chdir = function (dir) {
         EVENT_NAME_TIMERS_EXECUTION = 'timers:asyncfunc';
 
     if (!fakedom) {
-        require('event-dom/extra/event-hover.js')(window);
-        require('event-dom/extra/event-valuechange.js')(window);
-        require('event-dom/extra/event-drag.js')(window);
+        require('event-dom/extra/hover.js')(window);
+        require('event-dom/extra/valuechange.js')(window);
+        require('event-dom/extra/drag.js')(window);
     }
     /**
      * Reference to the `idGenerator` function in [utils](../modules/utils.html)
@@ -12049,4 +12306,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"dom-ext":6,"event":18,"event-dom/extra/event-drag.js":11,"event-dom/extra/event-hover.js":12,"event-dom/extra/event-valuechange.js":13,"event-mobile":14,"io/io-cors-ie9.js":19,"io/io-stream.js":20,"io/io-transfer.js":21,"io/io-xml.js":22,"js-ext":25,"js-ext/extra/reserved-words.js":24,"node-win":undefined,"polyfill":42,"utils":43,"window-ext":46,"ypromise":5}]},{},[]);
+},{"dom-ext":6,"event":18,"event-dom/extra/drag.js":11,"event-dom/extra/hover.js":12,"event-dom/extra/valuechange.js":13,"event-mobile":14,"io/io-cors-ie9.js":19,"io/io-stream.js":20,"io/io-transfer.js":21,"io/io-xml.js":22,"js-ext":25,"js-ext/extra/reserved-words.js":24,"node-win":undefined,"polyfill":42,"utils":43,"window-ext":46,"ypromise":5}]},{},[]);
