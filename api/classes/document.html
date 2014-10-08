@@ -263,20 +263,6 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_insertAfter">insertAfter</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_insertBefore">insertBefore</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
                                 <a href="#method_last">last</a>
 
                                 
@@ -556,7 +542,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_dom-ext_lib_document.js.html#l120"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:120</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l124"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:124</code></a>
         
         </p>
 
@@ -664,7 +650,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_dom-ext_lib_document.js.html#l141"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:141</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l145"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:145</code></a>
         
         </p>
 
@@ -773,7 +759,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_dom-ext_lib_document.js.html#l158"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:158</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l162"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:162</code></a>
         
         </p>
 
@@ -873,7 +859,7 @@ you need to prepend the id-name with a <code>#</code>. When multiple HtmlElement
             
         
         
-        <a href="../files/src_dom-ext_lib_document.js.html#l171"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:171</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l175"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:175</code></a>
         
         </p>
 
@@ -1021,282 +1007,6 @@ alias for <code>activeElement</code></p>
 </div>
 
                 
-                    <div id="method_insertAfter" class="method item">
-    <h3 class="name"><code>insertAfter</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>content</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>refElement</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code class="optional">[escape]</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag chainable">chainable</span>
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_dom-ext_lib_document.js.html#l183"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:183</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Inserts a HtmlElement or text inside HtmlElement&#39;s innerHTML after <code>refElement</code>.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">content</code>
-                        <span class="type">HtmlElement | HtmlElementList | <a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>content to insert</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">refElement</code>
-                        <span class="type">HtmlElement</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the HtmlElement where the content should be placed after</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[escape]</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>whether to insert <code>escaped</code> content, leading it into only text inserted</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_insertBefore" class="method item">
-    <h3 class="name"><code>insertBefore</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>content</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>refElement</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code class="optional">[escape]</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag chainable">chainable</span>
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_dom-ext_lib_document.js.html#l203"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:203</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Inserts a HtmlElement or text inside HtmlElement&#39;s innerHTML before <code>refElement</code>.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">content</code>
-                        <span class="type">HtmlElement | HtmlElementList | <a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>content to insert</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">refElement</code>
-                        <span class="type">HtmlElement</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the HtmlElement where the content should be placed before</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[escape]</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>whether to insert <code>escaped</code> content, leading it into only text inserted</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
                     <div id="method_last" class="method item">
     <h3 class="name"><code>last</code></h3>
 
@@ -1343,7 +1053,7 @@ alias for <code>activeElement</code></p>
             
         
         
-        <a href="../files/src_dom-ext_lib_document.js.html#l222"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:222</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l187"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:187</code></a>
         
         </p>
 
@@ -1455,7 +1165,7 @@ alias for <code>activeElement</code></p>
             
         
         
-        <a href="../files/src_dom-ext_lib_document.js.html#l242"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:242</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l207"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:207</code></a>
         
         </p>
 
@@ -1567,7 +1277,7 @@ alias for <code>activeElement</code></p>
             
         
         
-        <a href="../files/src_dom-ext_lib_document.js.html#l259"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:259</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l224"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:224</code></a>
         
         </p>
 

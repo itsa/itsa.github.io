@@ -188,16 +188,23 @@
 module.exports = function (window) {
 
     var POSITION = &#x27;position&#x27;,
-    RESERVED_WORDS = require(&#x27;js-ext/extra/reserved-words.js&#x27;),
+        BLOCK = &#x27;el-block&#x27;,
+        BORDERBOX = &#x27;el-borderbox&#x27;,
+        NO_TRANS = &#x27;el-notrans&#x27;,
+        INVISIBLE = &#x27;el-invisible&#x27;,
+        CONSTRAIN_ATTR = &#x27;xy-constrain&#x27;,
+        RESERVED_WORDS = require(&#x27;js-ext/extra/reserved-words.js&#x27;),
+        REGEXP_NODE_ID = /^#\S+$/,
 
-    toCamelCase = function(input) {
-        return input.toLowerCase().replace(/-(.)/g, function(match, group) {
-            return group.toUpperCase();
-        });
-    };
+        toCamelCase = function(input) {
+            return input.toLowerCase().replace(/-(.)/g, function(match, group) {
+                return group.toUpperCase();
+            });
+        };
 
     window.Element &amp;&amp; (function(ElementPrototype) {
 
+        require(&#x27;../css/element.css&#x27;);
         require(&#x27;js-ext/lib/string.js&#x27;);
         require(&#x27;js-ext/lib/object.js&#x27;);
         require(&#x27;./document.js&#x27;)(window);
@@ -207,30 +214,18 @@ module.exports = function (window) {
         var documentElement = window.document.documentElement;
 
        /**
-        * Adds a class to the HtmlElement. If the class already exists it won&#x27;t be duplicated.
-        *
-        * @method addClass
-        * @param className {String} className to be added
-        * @chainable
-        * @since 0.0.1
-        */
-        ElementPrototype.addClass = function(className) {
-            var instance = this;
-            instance.hasClass(className) || (instance.className += ((instance.className.length&gt;0) ? &#x27; &#x27; : &#x27;&#x27;) + className);
-            return instance;
-        };
-
-       /**
-        * Appends a HtmlElement or text at the end of HtmlElement&#x27;s innerHTML.
+        * Appends a HtmlElement or text at the end of HtmlElement&#x27;s innerHTML, or before the &#x60;refElement&#x60;.
         *
         * @method append
         * @param content {HtmlElement|HtmlElementList|String} content to append
-        * @param escape {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
+        * @param [refElement] {HtmlElement|HtmlElementList|String} reference Element where the content should be appended
+        * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.append = function(content, escape) {
-            return window.document._insert(this, &#x27;appendChild&#x27;, content, null, escape);
+        ElementPrototype.append = function(content, refElement, escape) {
+            refElement &amp;&amp; (this.children.indexOf(refElement)!==-1) &amp;&amp; (refElement=refElement.next());
+            return window.document._insert(this, refElement ? &#x27;insertBefore&#x27; : &#x27;appendChild&#x27;, content, refElement, escape);
         };
 
        /**
@@ -592,37 +587,6 @@ module.exports = function (window) {
         };
 
        /**
-        * Inserts a HtmlElement or text inside HtmlElement&#x27;s innerHTML after &#x60;refElement&#x60;.
-        *
-        * @method insertAfter
-        * @param content {HtmlElement|HtmlElementList|String} content to insert
-        * @param refElement {HtmlElement} the HtmlElement where the content should be placed after
-        * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
-        * @chainable
-        * @since 0.0.1
-        */
-        ElementPrototype.insertAfter = function(content, refElement, escape) {
-            return window.document.insertAfter.apply(this, arguments);
-        };
-
-       /**
-        * Inserts a HtmlElement or text inside HtmlElement&#x27;s innerHTML before &#x60;refElement&#x60;.
-        *
-        * @method insertBefore
-        * @param content {HtmlElement|HtmlElementList|String} content to insert
-        * @param refElement {HtmlElement} the HtmlElement where the content should be placed before
-        * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
-        * @chainable
-        * @since 0.0.1
-        */
-        // to prevent recursion, we backup document.insertBefore:
-        ElementPrototype._insertBefore = ElementPrototype.insertBefore;
-        ElementPrototype.insertBefore = function(content, refElement, escape) {
-            // to prevent recursion, we cannot call document.insertBefore
-            return window.document.insertBefore.apply(this, arguments);
-        };
-
-       /**
         * Returns the last of the HtmlElement&#x27;s siblings, or the last that matches &#x60;cssSelector&#x60;.
         *
         * @method last
@@ -654,21 +618,22 @@ module.exports = function (window) {
         };
 
        /**
-        * Prepends a HtmlElement or text at the start of HtmlElement&#x27;s innerHTML.
+        * Prepends a HtmlElement or text at the start of HtmlElement&#x27;s innerHTML, or before the &#x60;refElement&#x60;.
         *
         * @method prepend
         * @param content {HtmlElement|HtmlElementList|String} content to prepend
+        * @param [refElement] {HtmlElement|HtmlElementList|String} reference Element where the content should be prepended
         * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.prepend = function(content, escape) {
+        ElementPrototype.prepend = function(content, refElement, escape) {
             var instance = this,
                 children = instance.children;
             if (children.length===0) {
                 return instance.window.document._insert(instance, &#x27;appendChild&#x27;, content, null, escape);
             }
-            return instance.window.document._insert(instance, &#x27;insertBefore&#x27;, content, children[0], escape);
+            return instance.window.document._insert(instance, &#x27;insertBefore&#x27;, content, (refElement &amp;&amp; (children.indexOf(refElement)!==-1)) ? refElement : children[0], escape);
         };
 
        /**
@@ -697,7 +662,8 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         ElementPrototype.remove = function() {
-            this.parentNode.removeChild(this);
+            var parent = this.parentNode;
+            parent &amp;&amp; parent.removeChild(this);
         };
 
        /**
@@ -794,7 +760,7 @@ module.exports = function (window) {
         ElementPrototype.replaceClass = function(prevClassName, newClassName, force) {
             var instance = this;
             if (force || instance.hasClass(prevClassName)) {
-                instance.removeClass(prevClassName).addClass(newClassName);
+                instance.removeClass(prevClassName).setClass(newClassName);
             }
             return instance;
         };
@@ -833,16 +799,30 @@ module.exports = function (window) {
         };
 
        /**
+        * Adds a class to the HtmlElement. If the class already exists it won&#x27;t be duplicated.
+        *
+        * @method setClass
+        * @param className {String} className to be added
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.setClass = function(className) {
+            var instance = this;
+            instance.hasClass(className) || (instance.className += ((instance.className.length&gt;0) ? &#x27; &#x27; : &#x27;&#x27;) + className);
+            return instance;
+        };
+
+       /**
         * Sets the HtmlElement&#x27;s class as a whole String. Cleaning up any previous classes.
         *
         * Alias for this.className = value
         *
-        * @method setClass
+        * @method setClassName
         * @param value {Any} the value that belongs to &#x60;key&#x60;
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.setClass = function(value) {
+        ElementPrototype.setClassName = function(value) {
             this.className = value;
             return this;
         };
@@ -975,35 +955,114 @@ module.exports = function (window) {
         };
 
        /**
-         * Set the position of an html element in page coordinates.
-         * The element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
-         * @method setXY
+         * Checks whether a point specified with x,y is within the HtmlElement&#x27;s region.
+         *
+         * @method insidePos
          * @param x {Number} x-value for new position (coordinates are page-based)
          * @param y {Number} y-value for new position (coordinates are page-based)
          */
-        ElementPrototype.setXY = function(x, y, v) {
+        ElementPrototype.insidePos = function(x, y) {
+            var instance = this,
+                left = instance.getX(),
+                top = instance.getY(),
+                right = left + instance.offsetWidth,
+                bottom = top + instance.offsetHeight;
+            return (x&gt;=left) &amp;&amp; (x&lt;=right) &amp;&amp; (y&gt;=top) &amp;&amp; (y&lt;=bottom);
+        };
+
+       /**
+         * Set the position of an html element in page coordinates.
+         * The element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
+         *
+         * If the HtmlElement has the attribute &#x60;xy-constrian&#x60; set, then its position cannot exceed any matching container it lies within.
+         *
+         * @method setXY
+         * @param x {Number} x-value for new position (coordinates are page-based)
+         * @param y {Number} y-value for new position (coordinates are page-based)
+         * @param [notransition=false] {Boolean} set true if you are sure positioning is without transition.
+         *        this isn&#x27;t required, but it speeds up positioning. Only use when no transition is used:
+         *        when there is a transition, setting this argument &#x60;true&#x60; would miscalculate the position.
+         */
+        ElementPrototype.setXY = function(x, y, notransition) {
             var instance = this,
                 position = instance.getStyle(POSITION),
-                dif;
+                dif, start, finalValue, constrainedSelector, match, constrainNode, byExactId,
+                containerTop, containerRight, containerLeft, containerBottom, requestedX, requestedY;
 
             // default position to relative
             if (position===&#x27;static&#x27;) {
                 instance.setInlineStyle(POSITION, &#x27;relative&#x27;);
             }
+            // make sure it has sizes and can be positioned
+            instance.setClass(BLOCK).setClass(INVISIBLE).setClass(BORDERBOX);
+/*jshint boss:true */
+            if (constrainedSelector=instance.getAttr(CONSTRAIN_ATTR)) {
+/*jshint boss:false */
+                match = false;
+                constrainNode = instance;
+                byExactId = REGEXP_NODE_ID.test(constrainedSelector);
+                while (constrainNode.matchesSelector &amp;&amp; !match) {
+                    match = byExactId ? (constrainNode.id===constrainedSelector.substr(1)) : constrainNode.matchesSelector(constrainedSelector);
+                    // if there is a match, then make sure x and y fall within the region
+                    if (match) {
+                        containerLeft = constrainNode.getX();
+                        containerTop = constrainNode.getY();
+                        containerRight = containerLeft + constrainNode.offsetWidth;
+                        containerBottom = containerTop + constrainNode.offsetHeight;
+
+                        requestedX = x || instance.getX();
+                        if ((requestedX+instance.offsetWidth)&gt;containerRight) {
+                            x = requestedX = containerRight - instance.offsetWidth;
+                        }
+                        (requestedX&lt;containerLeft) &amp;&amp; (x=containerLeft);
+
+                        requestedY = y || instance.getY();
+                        if ((requestedY+instance.offsetHeight)&gt;containerBottom) {
+                            y = requestedY = containerBottom - instance.offsetHeight;
+                        }
+                        (requestedY&lt;containerTop) &amp;&amp; (y=containerTop);
+                    }
+                    constrainNode = constrainNode.parentNode;
+                }
+            }
             if (x) {
-                instance.setInlineStyle(&#x27;left&#x27;, x + &#x27;px&#x27;);
-                if (!v) {
-                dif = (instance.getX()-x);
-                (dif!==0) &amp;&amp; (instance.setInlineStyle(&#x27;left&#x27;, (x - dif) + &#x27;px&#x27;));
+                // check if there is a transition:
+                if (notransition) {
+                    instance.setInlineStyle(&#x27;left&#x27;, x + &#x27;px&#x27;);
+                    dif = (instance.getX()-x);
+                    (dif!==0) &amp;&amp; (instance.setInlineStyle(&#x27;left&#x27;, (x - dif) + &#x27;px&#x27;));
+                }
+                else {
+                    start = instance.getInlineStyle(&#x27;left&#x27;);
+                    instance.setClass(NO_TRANS);
+                    instance.setInlineStyle(&#x27;left&#x27;, x + &#x27;px&#x27;);
+                    dif = (instance.getX()-x);
+                    finalValue = (x - dif);
+                    // now reset and go to finalX with transition
+                    instance.setInlineStyle(&#x27;left&#x27;, start);
+                    instance.removeClass(NO_TRANS);
+                    instance.setInlineStyle(&#x27;left&#x27;, finalValue + &#x27;px&#x27;);
                 }
             }
             if (y) {
-                instance.setInlineStyle(&#x27;top&#x27;, y + &#x27;px&#x27;);
-                if (!v) {
-                dif = (instance.getY()-y);
-                (dif!==0) &amp;&amp; (instance.setInlineStyle(&#x27;top&#x27;, (y - dif) + &#x27;px&#x27;));
+                if (notransition) {
+                    instance.setInlineStyle(&#x27;top&#x27;, y + &#x27;px&#x27;);
+                    dif = (instance.getY()-y);
+                    (dif!==0) &amp;&amp; (instance.setInlineStyle(&#x27;top&#x27;, (y - dif) + &#x27;px&#x27;));
+                }
+                else {
+                    start = instance.getInlineStyle(&#x27;top&#x27;);
+                    instance.setClass(NO_TRANS);
+                    instance.setInlineStyle(&#x27;top&#x27;, y + &#x27;px&#x27;);
+                    dif = (instance.getY()-y);
+                    finalValue = (y - dif);
+                    // now reset and go to finalX with transition
+                    instance.setInlineStyle(&#x27;top&#x27;, start);
+                    instance.removeClass(NO_TRANS);
+                    instance.setInlineStyle(&#x27;top&#x27;, finalValue + &#x27;px&#x27;);
                 }
             }
+            instance.removeClass(BLOCK).removeClass(BORDERBOX).removeClass(INVISIBLE);
         };
 
         /**
@@ -1051,7 +1110,7 @@ module.exports = function (window) {
         */
         ElementPrototype.toggleClass = function(className) {
             var instance = this;
-            instance.hasClass(className) ? instance.removeClass(className) : instance.addClass(className);
+            instance.hasClass(className) ? instance.removeClass(className) : instance.setClass(className);
             return instance;
         };
 

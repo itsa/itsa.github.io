@@ -196,26 +196,44 @@
 
 var NAME = &#x27;[event-dragdrop]: &#x27;,
     ZINDEX_DURING_DRAG = 999,
+    CTRL_PRESSED = false,
     Z_INDEX = &#x27;z-index&#x27;,
-    DRAG_OPACITY = &#x27;0.6&#x27;,
     PREV_Z = &#x27;_prevZ&#x27;,
     DRAGGABLE = &#x27;draggable&#x27;,
+    DD_DRAGGING_CLASS = &#x27;dd-dragging&#x27;,
+    CONSTRAIN_ATTR = &#x27;xy-constrain&#x27;,
     PROXY = &#x27;proxy&#x27;,
     MOUSE = &#x27;mouse&#x27;,
     DATA_KEY = &#x27;dragDrop&#x27;,
+    DATA_KEY_DROPZONE = &#x27;dropZone&#x27;,
+    DD_EFFECT_ALLOWED = &#x27;dd-effect-allowed&#x27;,
+    DD_DROPZONE = &#x27;dd-dropzone&#x27;,
+    NO_TRANS_CLASS = &#x27;el-notrans&#x27;, // delivered by &#x60;dom-ext&#x60;
+    INVISIBLE_CLASS = &#x27;el-invisible&#x27;, // delivered by &#x60;dom-ext&#x60;
     DD_TRANSITION_CLASS = &#x27;dd-transition&#x27;,
+    DD_OPACITY_CLASS = &#x27;dd-opacity&#x27;,
+    HIGH_Z_CLASS = &#x27;dd-high-z&#x27;,
+    DD_DROPACTIVE_CLASS = &#x27;dropactive&#x27;,
+    REGEXP_MOVE = /\bmove\b/i,
+    REGEXP_COPY = /\bcopy\b/i,
     LATER = require(&#x27;utils&#x27;).later;
 
 require(&#x27;polyfill/polyfill-base.js&#x27;);
 require(&#x27;js-ext&#x27;);
-require(&#x27;window-ext&#x27;);
 require(&#x27;../css/dragdrop.css&#x27;);
+require(&#x27;./hover.js&#x27;);
 
 module.exports = function (window) {
     var Event = require(&#x27;../event-dom.js&#x27;)(window),
         UA = window.navigator.userAgent,
         iOS = !!UA.match(&#x27;iPhone OS&#x27;) || !!UA.match(&#x27;iPad&#x27;),
-        featureDetect_DD, supportsDD, setupDD, teardownDD, handleMove, handleDrop, handleDragStart;
+        dragOverPromiseList = [],
+        featureDetect_DD, supportsDD, setupDD, teardownDD, handleMove, handleDrop, teardownDragOverEvent, allowSwitch, _getAllowedEffects,
+        handleDragStart, currentNode, allowCopy, movableNode, setupDragOverEvent, dragOverEvent, lastMouseOverNode, onlyCopy, dropEffect,
+        lastMouseX, lastMouseY, setBack;
+
+    require(&#x27;window-ext&#x27;)(window);
+    require(&#x27;dom-ext&#x27;)(window);
 
     featureDetect_DD = function() {
         var div = window.document.createElement(&#x27;div&#x27;);
@@ -234,6 +252,104 @@ module.exports = function (window) {
         // we need a custom drag and drop solution
     }
 
+    _getAllowedEffects = function(node) {
+        var allowedEffects = node.getAttr(DD_EFFECT_ALLOWED);
+        allowedEffects &amp;&amp; (allowedEffects=allowedEffects.toLowerCase());
+        return allowedEffects || &#x27;move&#x27;;
+    };
+
+    allowCopy = function(node) {
+        var allowedEffects = _getAllowedEffects(node);
+        return (allowedEffects===&#x27;all&#x27;) || (allowedEffects===&#x27;copy&#x27;);
+    };
+
+    onlyCopy = function(node) {
+        var allowedEffects = _getAllowedEffects(node);
+        return (allowedEffects===&#x27;copy&#x27;);
+    };
+
+    allowSwitch = function(node) {
+        var allowedEffects = _getAllowedEffects(node);
+        return (allowedEffects===&#x27;all&#x27;);
+    };
+
+    setupDragOverEvent = function() {
+        var dropzones = window.document.getAll(&#x27;[dropzone]&#x27;);
+        if (dropzones.length&gt;0) {
+            dragOverEvent = Event.after([&#x27;mousemove&#x27;, &#x27;dd-fake-mousemove&#x27;], function(e) {
+                if (currentNode) {
+                    lastMouseOverNode = e.target;
+                    dropzones.forEach(
+                        function(dropzone) {
+                            if (dropzone.hasData(DATA_KEY_DROPZONE)) {
+                                return;
+                            }
+                            var dropzoneAccept = dropzone.getAttr(&#x27;dropzone&#x27;) || &#x27;&#x27;,
+                                dropzoneMove = REGEXP_MOVE.test(dropzoneAccept),
+                                dropzoneCopy = REGEXP_COPY.test(dropzoneAccept),
+                                dragOverPromise, dragOutEvent, eventobject, allowed;
+
+                            if (e.clientX) {
+                                lastMouseX = e.clientX+window.getScrollLeft();
+                                lastMouseY = e.clientY+window.getScrollTop();
+                            }
+
+                            // check if the mouse is inside the dropzone
+                            // also check if the mouse is inside the dragged node: the dragged node might have been constrained
+                            // and check if the dragged node is allowed to go into the dropzone
+                            allowed = (!dropzoneMove &amp;&amp; !dropzoneCopy) || (dropzoneCopy &amp;&amp; (dropEffect===&#x27;copy&#x27;)) || (dropzoneMove &amp;&amp; (dropEffect===&#x27;move&#x27;));
+                            if (dropEffect &amp;&amp; allowed &amp;&amp; dropzone.insidePos(lastMouseX, lastMouseY) &amp;&amp; movableNode.insidePos(lastMouseX, lastMouseY)) {
+                                dropzone.setData(DATA_KEY_DROPZONE, true);
+                                // mouse is in area of dropzone
+                                dragOverPromise = Promise.manage();
+                                eventobject = {
+                                    target: dropzone,
+                                    dragover: dragOverPromise
+                                };
+                                dragOutEvent = Event.after(
+                                    [&#x27;mousemove&#x27;, &#x27;dd-fake-mousemove&#x27;],
+                                    function(ev) {
+                                        dragOverPromise.fulfill(ev.target);
+                                    },
+                                    function(ev) {
+                                        var allowed, dropzoneAccept, dropzoneMove, dropzoneCopy;
+                                        if (ev.type===&#x27;dd-fake-mousemove&#x27;) {
+                                            dropzoneAccept = dropzone.getAttr(&#x27;dropzone&#x27;) || &#x27;&#x27;;
+                                            dropzoneMove = REGEXP_MOVE.test(dropzoneAccept);
+                                            dropzoneCopy = REGEXP_COPY.test(dropzoneAccept);
+                                            allowed = (!dropzoneMove &amp;&amp; !dropzoneCopy) || (dropzoneCopy &amp;&amp; (dropEffect===&#x27;copy&#x27;)) || (dropzoneMove &amp;&amp; (dropEffect===&#x27;move&#x27;));
+                                            return !allowed;
+                                        }
+                                        return !dropzone.insidePos(ev.clientX+window.getScrollLeft(), ev.clientY+window.getScrollTop());
+                                    }
+                                );
+                                dragOverPromise.finally(
+                                    function() {
+                                        dragOutEvent.detach();
+                                        dropzone.removeData(DATA_KEY_DROPZONE);
+                                    }
+                                );
+                                dragOverPromiseList.push(dragOverPromise);
+                                Event.emit(dropzone, &#x27;UI:dd-dragover&#x27;, eventobject);
+                            }
+                        }
+                    );
+                }
+            });
+        }
+    };
+
+    teardownDragOverEvent = function() {
+        if (dragOverEvent) {
+            dragOverEvent.detach();
+            dragOverPromiseList.forEach(function(promise) {
+                promise.fulfill(lastMouseOverNode);
+            });
+            dragOverPromiseList.length = 0;
+        }
+        dragOverEvent = null;
+    };
+
     /*
      * Creates the &#x60;hover&#x60; event. The eventobject has the property &#x60;e.hover&#x60; which is a &#x60;Promise&#x60;.
      * You can use this Promise to get notification of the end of hover. The Promise e.hover gets resolved with
@@ -244,24 +360,58 @@ module.exports = function (window) {
      * @since 0.0.2
      */
     setupDD = function() {
-        // create only after subscribing to the &#x60;hover&#x60;-event
-        Event.after([MOUSE+&#x27;down&#x27;, &#x27;panstart&#x27;], function(e) {
+
+        Event.after([&#x27;keydown&#x27;, &#x27;keyup&#x27;], function(e) {
+            CTRL_PRESSED = e.ctrlKey || e.metaKey;
+            if (currentNode &amp;&amp; allowSwitch(currentNode)) {
+                dropEffect = CTRL_PRESSED ? &#x27;copy&#x27; : &#x27;move&#x27;;
+                if (CTRL_PRESSED) {
+                    currentNode.removeClass(INVISIBLE_CLASS);
+                    movableNode.setClass(DD_OPACITY_CLASS);
+                }
+                else {
+                    currentNode.setClass(INVISIBLE_CLASS);
+                    movableNode.removeClass(DD_OPACITY_CLASS);
+                }
+                // now, it could be that any droptarget should change its appearance (DD_DROPACTIVE_CLASS).
+                // we need to recalculate it for all targets
+                // we do this by emitting a &#x27;dd-fake-mousemove&#x27; event
+                lastMouseOverNode &amp;&amp; Event.emit(lastMouseOverNode, &#x27;UI:dd-fake-mousemove&#x27;);
+            }
+        });
+
+        // prevent contextmenu on draggable elements that have the ability to copy themselves:
+        window.oncontextmenu = function () {
+            return currentNode ? !allowCopy(currentNode) : true;
+        };
+
+        Event.after(&#x27;dd-dragover&#x27;, function(e) {
+            console.log(NAME, &#x27;dragged over&#x27;);
+            e.target.setClass(DD_DROPACTIVE_CLASS);
+            e.dragover.then(
+                function() {
+                    e.target.removeClass(DD_DROPACTIVE_CLASS);
+                }
+            );
+        });
+
+        Event.before([MOUSE+&#x27;down&#x27;, &#x27;panstart&#x27;], function(e) {
             console.log(NAME, &#x27;setupHover: setting up mouseover event&#x27;);
             var node = e.target,
                 moveEv, evtType, x, y;
 
             // because we listen to 2 eventypes, but we don&#x27;t want to setup twice, we need to store
             // data on the node that tells whether dragging already started
-
-            if (node.getData(DATA_KEY)) {
+            if (currentNode) {
                 return;
             }
+
+            currentNode = node;
 
             // we set data to the node: key=&#x27;dragDrop&#x27; value=xy-position, which we may need
             // to return a proxy on drop-fail
             x = node.getX();
             y = node.getY();
-            node.setXY(x, y);
             // now we can read their current inline values
             node.setData(DATA_KEY, {
                 x: x,
@@ -271,7 +421,6 @@ module.exports = function (window) {
                 mousex: e.clientX+window.getScrollLeft(),
                 mousey: e.clientY+window.getScrollTop()
             });
-console.warn(&#x27;STORE &#x27;+x+&#x27; | &#x27;+y);
 
             evtType = (e.type===MOUSE+&#x27;down&#x27;) ? MOUSE : &#x27;pan&#x27;;
 
@@ -290,69 +439,115 @@ console.warn(&#x27;STORE &#x27;+x+&#x27; | &#x27;+y);
             Event.onceAfter((evtType===MOUSE) ? MOUSE+&#x27;up&#x27; : &#x27;panend&#x27;, function(ev) {
                 moveEv.detach();
                 // handle drop
-                handleDrop(e, ev);
+                movableNode.hasAttr(DD_DROPZONE) &amp;&amp; handleDrop(e, ev);
+                currentNode = null;
+                e.dragFinished = true;
                 node.removeData(DATA_KEY);
+                teardownDragOverEvent();
                 e.drag.fulfill(e);
             });
 
-            handleDragStart(e, node, x, y);
+            setupDragOverEvent();
+            handleDragStart(e, x, y);
 
-            Event.emit(node, &#x27;UI:dragdrop&#x27;, e);
-        }, &#x27;[draggable=&quot;true&quot;], [draggable=&quot;proxy&quot;]&#x27;);
+            Event.emit(node, &#x27;UI:dd-drop&#x27;, e);
+        }, &#x27;[draggable=&quot;true&quot;]&#x27;);
     };
 
-    handleDragStart = function(e, node, x, y) {
-console.info(&#x27;handleDragStart &#x27;+node.id);
-        var proxy = (node.getAttr(DRAGGABLE)===PROXY),
-            movableNode = e.movableNode = proxy ? node.clone(true) : node;
+    handleDragStart = function(e, x, y) {
+        var proxy = currentNode.hasAttr(DD_DROPZONE);
 
-        movableNode.setXY(x, y);
-        movableNode.setData(PREV_Z, movableNode.getInlineStyle(Z_INDEX));
-        movableNode.setInlineStyle(Z_INDEX, ZINDEX_DURING_DRAG);
+        movableNode = proxy ? currentNode.clone(true) : currentNode;
+
+
+        movableNode.setClass(NO_TRANS_CLASS).setClass(HIGH_Z_CLASS);
 
         if (proxy) {
-            movableNode.setInlineStyle(&#x27;opacity&#x27;, DRAG_OPACITY);
-            node.parentNode.insertAfter(movableNode, node);
+            dropEffect = (onlyCopy(currentNode) || (CTRL_PRESSED &amp;&amp; allowCopy(currentNode))) ? &#x27;copy&#x27; : &#x27;move&#x27;;
+            (dropEffect===&#x27;copy&#x27;) ? movableNode.setClass(DD_OPACITY_CLASS) : currentNode.setClass(INVISIBLE_CLASS);
+            movableNode.setClass(INVISIBLE_CLASS);
+            currentNode.parentNode.append(movableNode);
+            movableNode.setXY(x, y, true);
+            movableNode.removeClass(INVISIBLE_CLASS);
+        }
+        else {
+            dropEffect = null;
+            movableNode.setXY(x, y, true);
         }
     };
 
     handleMove = function(e, ev) {
-console.info(&#x27;DragMove &#x27;+e.movableNode.id);
-        var node = e.movableNode,
-            data = node.getData(DATA_KEY);
-        node.setXY(data.x+ev.clientX+window.getScrollLeft()-data.mousex, data.y+ev.clientY+window.getScrollTop()-data.mousey);
+console.info(&#x27;DragMove &#x27;+movableNode.id);
+        if (e.dragFinished) {
+            return;
+        }
+        var data = movableNode.getData(DATA_KEY);
+        movableNode.setClass(DD_DRAGGING_CLASS);
+        movableNode.setXY(data.x+ev.clientX+window.getScrollLeft()-data.mousex, data.y+ev.clientY+window.getScrollTop()-data.mousey, true);
     };
 
     handleDrop = function(e, ev) {
-console.info(&#x27;DragDrop &#x27;+e.movableNode.id);
-        var node = e.movableNode,
-            prevZ = node.getData(PREV_Z),
-            proxy = (node.getAttr(DRAGGABLE)===PROXY),
-            data = node.getData(DATA_KEY),
-            removeClass;
-        removeClass = function() {
-            node.removeClass(DD_TRANSITION_CLASS);
-            node.removeEventListener &amp;&amp; node.removeEventListener(&#x27;transitionend&#x27;, removeClass, true);
-        };
-        prevZ ? node.setInlineStyle(Z_INDEX, prevZ) : node.removeInlineStyle(Z_INDEX);
+console.info(&#x27;DragDrop &#x27;+movableNode.id);
+        var targetNode, originalConstrain;
 
-        if (proxy) {
-            node.remove();
+        window.document.getAll(&#x27;[dropzone]&#x27;).some(function(dropzone) {
+            if (dropzone.hasData(DATA_KEY_DROPZONE)) {
+                targetNode = dropzone;
+            }
+            return targetNode;
+        });
+        if (targetNode) {
+            targetNode.append(currentNode);
+            originalConstrain = currentNode.getAttr(CONSTRAIN_ATTR);
+            currentNode.setAttr(CONSTRAIN_ATTR, &#x27;[dropzone]&#x27;);
+            currentNode.setXY(movableNode.getX(), movableNode.getY());
+            currentNode.setAttr(CONSTRAIN_ATTR, originalConstrain);
+            currentNode.removeClass(INVISIBLE_CLASS);
+            movableNode.remove();
         }
         else {
-console.warn(&#x27;SETTING TO &#x27;+data.x+&#x27; | &#x27;+data.y);
-            node.addClass(DD_TRANSITION_CLASS);
+            setBack(e, ev);
+        }
+    };
+
+    setBack = function(e, ev) {
+console.info(&#x27;setBack &#x27;+movableNode.id);
+        var proxy = movableNode.hasAttr(DD_DROPZONE),
+            data = movableNode.getData(DATA_KEY),
+            tearDown;
+        tearDown = function(notransRemoval) {
+            notransRemoval || (movableNode.removeEventListener &amp;&amp; movableNode.removeEventListener(&#x27;transitionend&#x27;, tearDown, true));
+            if (proxy) {
+                // we must take e.target instead of currentNode --&gt; because asynchronisity, currentNode is already null
+                e.target.removeClass(INVISIBLE_CLASS);
+                movableNode.remove();
+            }
+            else {
+                movableNode.removeClass(DD_TRANSITION_CLASS).removeClass(HIGH_Z_CLASS);
+            }
+        };
+
+        movableNode.removeClass(NO_TRANS_CLASS);
+
+        if (movableNode.hasClass(DD_DRAGGING_CLASS)) {
+            movableNode.removeClass(DD_DRAGGING_CLASS);
+            movableNode.setClass(DD_TRANSITION_CLASS);
             // transitions only work with IE10+, and that browser has addEventListener
             // when it doesn&#x27;t have, it doesn;t harm to leave the transitionclass on: it would work anyway
             // nevertheless we will remove it with a timeout
-            if (node.addEventListener) {
-                node.addEventListener(&#x27;transitionend&#x27;, removeClass, true);
+            if (movableNode.addEventListener) {
+                movableNode.addEventListener(&#x27;transitionend&#x27;, tearDown, true);
             }
             else {
-                LATER(removeClass, 1000);
+                LATER(tearDown, 250);
             }
-            node.setXY(data.xStart, data.yStart, true);
         }
+        else {
+            tearDown(true);
+        }
+        movableNode.setInlineStyle(&#x27;left&#x27;, data.xStart);
+        movableNode.setInlineStyle(&#x27;top&#x27;, data.yStart);
+
     };
 
     setupDD();

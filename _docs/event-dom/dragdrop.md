@@ -2,13 +2,31 @@
 module: event-dom
 maintainer: Marco Asbreuk
 title: drag and drop
-intro: "Frag and drop is done by a single event: <b>dragdrop</b>. The eventobject notifies you when the drag has finished. You can inspect the Promise e.drag.then for this purpose. You can also be notified on drag-move by setting a callback-function through: <b>e.setOnDrag(callbackFn)</b>. Draggable HtmlElements have the attribute: <b>draggable=\"true\"</b>"
+intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobject notifies you when the drag has finished. You can inspect the Promise e.drag.then for this purpose. You can also be notified on drag-move by setting a callback-function through: <b>e.setOnDrag(callbackFn)</b>. Draggable HtmlElements have the attribute: <b>draggable=\"true\"</b>"
 ---
 
 <style type="text/css">
     .base-container {
         position: absolute;
-        top: 9em;
+        top: 32em;
+        width: 500px;
+        height: 300px;
+        background-color: #FF0;
+    }
+    .drop-container {
+        position: absolute;
+        top: 32em;
+        left: 600px;
+        width: 200px;
+        height: 200px;
+        border: solid 2px #000;
+        background-color: #0FF;
+    }
+    .drop-container.second {
+        left: 850px;
+    }
+    .drop-container.third {
+        left: 1100px;
     }
     .container {
         text-align: center;
@@ -17,7 +35,7 @@ intro: "Frag and drop is done by a single event: <b>dragdrop</b>. The eventobjec
         height: 100px;
         width: 100px;
         background-color: #ddd;
-        border: solid 1px #000;
+        border: solid 10px #000;
         position: absolute;
         z-index: 1;
         -webkit-touch-callout: none;
@@ -30,40 +48,52 @@ intro: "Frag and drop is done by a single event: <b>dragdrop</b>. The eventobjec
     }
     #cont-1 {
         left: 50px;
-        top: 300px;
+        top: 0;
     }
     #cont-2 {
         left: 180px;
-        top: 300px;
+        top: 0;
     }
     #cont-3 {
         left: 50px;
-        top: 440px;
+        top: 140px;
     }
     #cont-4 {
         left: 180px;
-        top: 440px;
+        top: 140px;
     }
     #cont-5 {
         left: 115px;
-        top: 365px;
+        top: 65px;
         z-index: 2;
         background-color: #F00;
     }
     .body-content.module p.spaced {
         margin-top: 20em;
     }
+    .dropactive {
+        opacity: 0.6;
+        filter: alpha(opacity=60); /* For IE8 and earlier */
+        border: dotted 2px #000;
+    }
 </style>
 
 Mouse the mouse over the 5 containers:
 
 <div class="base-container">
-    <div id="cont-1" class="container" draggable="proxy"></div>
-    <div id="cont-2" class="container"></div>
-    <div id="cont-3" class="container"></div>
-    <div id="cont-4" class="container"></div>
-    <div id="cont-5" class="container" draggable="true"></div>
+    <div id="cont-1" class="container" draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">1</div>
+    <div id="cont-2" class="container" draggable="true" xy-constrain=".base-container">2</div>
+    <div id="cont-3" class="container" draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="move">3</div>
+    <div id="cont-4" class="container" draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="copy">4</div>
+    <div id="cont-5" class="container" draggable="true">5</div>
 </div>
+
+<div class="drop-container" dropzone="move"></div>
+
+<div class="drop-container second" dropzone="copy"></div>
+
+<div class="drop-container third" dropzone></div>
+
 
 <p class="spaced">Code-example:</p>
 
@@ -100,7 +130,7 @@ Mouse the mouse over the 5 containers:
 <script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa');
-    var container = document.getElementById('container');
+    var container = document.getElement('#cont-5');
 
     var showMsg = function(e) {
         var node = e.target;
@@ -109,6 +139,17 @@ Mouse the mouse over the 5 containers:
             node.innerHTML = 'END';
         });
     };
+
+
+// console.info(container.getInlineStyle('left'));
+// console.info(container.getInlineStyle('top'));
+    // container.setXY(100, null);
+
+    ITSA.later(function() {
+// container.setInlineStyle('left', container.getInlineStyle('left'));
+// container.setInlineStyle('top', container.getInlineStyle('top'));
+        // container.setXY(200);
+    }, 4000);
 
    // ITSA.Event.after('dragdrop', showMsg, '.container');
 </script>

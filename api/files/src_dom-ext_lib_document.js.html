@@ -285,6 +285,10 @@ module.exports = function (window) {
         return htmlElement;
     };
 
+    DOCUMENT._insert = function() {
+        return _insert.apply(null, arguments);
+    };
+
    /**
     * Returns the first of the HtmlElement&#x27;s siblings, or the first that matches &#x60;cssSelector&#x60;.
     *
@@ -346,45 +350,6 @@ module.exports = function (window) {
     */
     DOCUMENT.getFocussed = function() {
         return this.activeElement;
-    };
-
-   /**
-    * Inserts a HtmlElement or text inside HtmlElement&#x27;s innerHTML after &#x60;refElement&#x60;.
-    *
-    * @method insertAfter
-    * @param content {HtmlElement|HtmlElementList|String} content to insert
-    * @param refElement {HtmlElement} the HtmlElement where the content should be placed after
-    * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
-    * @chainable
-    * @since 0.0.1
-    */
-    DOCUMENT.insertAfter = function(content, refElement, escape) {
-        var instance = this,
-            children = instance.children,
-            index = children.indexOf(refElement);
-        if ((index==-1) || (index===children.length-1)) {
-            return _insert(instance, &#x27;appendChild&#x27;, content, null, escape);
-        }
-        return _insert(instance, (instance._insertBefore ? &#x27;_&#x27; : &#x27;&#x27;) + &#x27;insertBefore&#x27;, content, children[index+1], escape);
-    };
-
-   /**
-    * Inserts a HtmlElement or text inside HtmlElement&#x27;s innerHTML before &#x60;refElement&#x60;.
-    *
-    * @method insertBefore
-    * @param content {HtmlElement|HtmlElementList|String} content to insert
-    * @param refElement {HtmlElement} the HtmlElement where the content should be placed before
-    * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
-    * @chainable
-    * @since 0.0.1
-    */
-    DOCUMENT.insertBefore = function(content, refElement, escape) {
-        var instance = this,
-            index = instance.children.indexOf(refElement);
-        if (index==-1) {
-            return _insert(instance, &#x27;appendChild&#x27;, content, null, escape);
-        }
-        return _insert(instance, (instance._insertBefore ? &#x27;_&#x27; : &#x27;&#x27;) + &#x27;insertBefore&#x27;, content, refElement, escape);
     };
 
    /**

@@ -59,12 +59,6 @@ Gets one HtmlElement, specified by the css-selector. To retrieve a single elemen
 ###getFocussed###
 Gets the HtmlElement that currently has the focus.
 
-###insertAfter###
-Inserts a HtmlElement or text inside HtmlElement's innerHTML after `refElement`.
-
-###insertBefore###
-Inserts a HtmlElement or text inside HtmlElement's innerHTML before `refElement`.
-
 ###last###
 Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.
 
@@ -96,9 +90,6 @@ Scrolls the HtmlElement into the current view.
 
 
 ##Extended methods##
-
-###addClass###
-Adds a class to the HtmlElement. If the class already exists it won't be duplicated.
 
 ###append###
 Appends a HtmlElement or text at the end of HtmlElement's innerHTML.
@@ -179,11 +170,8 @@ If the Element has data set specified by `key`.
 ###hasFocus###
 Checks whether HtmlElement currently has the focus.
 
-###insertAfter###
-Inserts a HtmlElement or text inside HtmlElement's innerHTML after `refElement`.
-
-###insertBefore###
-Inserts a HtmlElement or text inside HtmlElement's innerHTML before `refElement`.
+###insidePos###
+Checks whether a point specified with x,y is within the HtmlElement's region.
 
 ###last###
 Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.
@@ -222,6 +210,9 @@ Scrolls the content of the HtmlElement into the specified scrollposition. Only a
 Sets the attribute on the HtmlElement with the specified value. Alias for setAttribute().
 
 ###setClass###
+Adds a class to the HtmlElement. If the class already exists it won't be duplicated.
+
+###setClassName###
 Sets the HtmlElement's class as a whole String. Cleaning up any previous classes.
 
 ###setData###
@@ -273,9 +264,6 @@ Number of items in the NodeList/HTMLCollection
 ##Extended methods##
 For all HtmlElements of the NodeList/HTMLCollection:
 
-###addClass###
-Adds a class to the HtmlElement. If the class already exists it won't be duplicated.
-
 ###append###
 Appends a HtmlElement or text at the end of HtmlElement's innerHTML.
 
@@ -311,6 +299,9 @@ If the previous className is not available, the new className is set nevertheles
 Sets the attribute on the HtmlElement with the specified value.
 
 ###setClass###
+Adds a class to the HtmlElement. If the class already exists it won't be duplicated.
+
+###setClassName###
 Sets the class to the HtmlElement. Cleaning up any previous classes.
 
 ###setData###

@@ -7580,7 +7580,7 @@
         },
         {
             "file": "src/dom-ext/lib/document.js",
-            "line": 120,
+            "line": 124,
             "description": "Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.",
             "itemtype": "method",
             "name": "first",
@@ -7603,7 +7603,7 @@
         },
         {
             "file": "src/dom-ext/lib/document.js",
-            "line": 141,
+            "line": 145,
             "description": "Gets a NodeList of HtmlElements, specified by the css-selector.",
             "itemtype": "method",
             "name": "getAll",
@@ -7625,7 +7625,7 @@
         },
         {
             "file": "src/dom-ext/lib/document.js",
-            "line": 158,
+            "line": 162,
             "description": "Gets one HtmlElement, specified by the css-selector. To retrieve a single element by id,\nyou need to prepend the id-name with a `#`. When multiple HtmlElement's match, the first is returned.",
             "itemtype": "method",
             "name": "getElement",
@@ -7647,7 +7647,7 @@
         },
         {
             "file": "src/dom-ext/lib/document.js",
-            "line": 171,
+            "line": 175,
             "description": "Gets the HtmlElement that currently has the focus.\nalias for `activeElement`",
             "itemtype": "method",
             "name": "getFocussed",
@@ -7662,67 +7662,7 @@
         },
         {
             "file": "src/dom-ext/lib/document.js",
-            "line": 183,
-            "description": "Inserts a HtmlElement or text inside HtmlElement's innerHTML after `refElement`.",
-            "itemtype": "method",
-            "name": "insertAfter",
-            "params": [
-                {
-                    "name": "content",
-                    "description": "content to insert",
-                    "type": "HtmlElement|HtmlElementList|String"
-                },
-                {
-                    "name": "refElement",
-                    "description": "the HtmlElement where the content should be placed after",
-                    "type": "HtmlElement"
-                },
-                {
-                    "name": "escape",
-                    "description": "whether to insert `escaped` content, leading it into only text inserted",
-                    "type": "Boolean",
-                    "optional": true
-                }
-            ],
-            "chainable": 1,
-            "since": "0.0.1",
-            "class": "document",
-            "module": "dom-ext",
-            "submodule": "lib/document.js"
-        },
-        {
-            "file": "src/dom-ext/lib/document.js",
-            "line": 203,
-            "description": "Inserts a HtmlElement or text inside HtmlElement's innerHTML before `refElement`.",
-            "itemtype": "method",
-            "name": "insertBefore",
-            "params": [
-                {
-                    "name": "content",
-                    "description": "content to insert",
-                    "type": "HtmlElement|HtmlElementList|String"
-                },
-                {
-                    "name": "refElement",
-                    "description": "the HtmlElement where the content should be placed before",
-                    "type": "HtmlElement"
-                },
-                {
-                    "name": "escape",
-                    "description": "whether to insert `escaped` content, leading it into only text inserted",
-                    "type": "Boolean",
-                    "optional": true
-                }
-            ],
-            "chainable": 1,
-            "since": "0.0.1",
-            "class": "document",
-            "module": "dom-ext",
-            "submodule": "lib/document.js"
-        },
-        {
-            "file": "src/dom-ext/lib/document.js",
-            "line": 222,
+            "line": 187,
             "description": "Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.",
             "itemtype": "method",
             "name": "last",
@@ -7745,7 +7685,7 @@
         },
         {
             "file": "src/dom-ext/lib/document.js",
-            "line": 242,
+            "line": 207,
             "description": "Replaces the HtmlElement with a new HtmlElement.",
             "itemtype": "method",
             "name": "replace",
@@ -7770,7 +7710,7 @@
         },
         {
             "file": "src/dom-ext/lib/document.js",
-            "line": 259,
+            "line": 224,
             "description": "Tests if the HtmlElement would be selected by the specified cssSelector.\nAlias for `matchesSelector()`",
             "itemtype": "method",
             "name": "test",
@@ -7792,27 +7732,8 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 41,
-            "description": "Adds a class to the HtmlElement. If the class already exists it won't be duplicated.",
-            "itemtype": "method",
-            "name": "addClass",
-            "params": [
-                {
-                    "name": "className",
-                    "description": "className to be added",
-                    "type": "String"
-                }
-            ],
-            "chainable": 1,
-            "since": "0.0.1",
-            "class": "Element",
-            "module": "dom-ext",
-            "submodule": "lib/element.js"
-        },
-        {
-            "file": "src/dom-ext/lib/element.js",
-            "line": 55,
-            "description": "Appends a HtmlElement or text at the end of HtmlElement's innerHTML.",
+            "line": 48,
+            "description": "Appends a HtmlElement or text at the end of HtmlElement's innerHTML, or before the `refElement`.",
             "itemtype": "method",
             "name": "append",
             "params": [
@@ -7822,9 +7743,16 @@
                     "type": "HtmlElement|HtmlElementList|String"
                 },
                 {
+                    "name": "refElement",
+                    "description": "reference Element where the content should be appended",
+                    "type": "HtmlElement|HtmlElementList|String",
+                    "optional": true
+                },
+                {
                     "name": "escape",
                     "description": "whether to insert `escaped` content, leading it into only text inserted",
-                    "type": "Boolean"
+                    "type": "Boolean",
+                    "optional": true
                 }
             ],
             "chainable": 1,
@@ -7835,7 +7763,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 68,
+            "line": 63,
             "description": "Returns a duplicate of the node. Use cloneNode(true) for a `deep` clone.\nAlmost the same as native cloneNode(), but you should use clone(), because it also clones any data set with setData().",
             "itemtype": "method",
             "name": "clone",
@@ -7863,7 +7791,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 93,
+            "line": 88,
             "description": "Sets the inline-style of the HtmlElement exactly to the specified `value`, overruling previous values.\nMaking the HtmlElement's inline-style look like: style=\"value\".\n\nThis is meant for a quick one-time setup. For individually inline style-properties to be set, you can use `setInlineStyle()`.",
             "itemtype": "method",
             "name": "defineInlineStyle",
@@ -7882,7 +7810,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 109,
+            "line": 104,
             "description": "Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.",
             "itemtype": "method",
             "name": "first",
@@ -7905,7 +7833,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 121,
+            "line": 116,
             "description": "Gets a NodeList of HtmlElements, specified by the css-selector.",
             "itemtype": "method",
             "name": "getAll",
@@ -7927,7 +7855,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 133,
+            "line": 128,
             "description": "Gets an attribute of the HtmlElement.\nCautious: do not use `value` to retrieve the value. Use `getValue()` instead.\n\nAlias for getAttribute().",
             "itemtype": "method",
             "name": "getAttr",
@@ -7949,7 +7877,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 148,
+            "line": 143,
             "description": "Gets the HtmlElement's class as a whole String.\n\nAlias for this.className",
             "itemtype": "method",
             "name": "getClass",
@@ -7964,7 +7892,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 161,
+            "line": 156,
             "description": "Returns data set specified by `key`. If not set, `undefined` will be returned.",
             "itemtype": "method",
             "name": "getData",
@@ -7986,7 +7914,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 173,
+            "line": 168,
             "description": "Gets one HtmlElement, specified by the css-selector. To retrieve a single element by id,\nyou need to prepend the id-name with a `#`. When multiple HtmlElement's match, the first is returned.",
             "itemtype": "method",
             "name": "getElement",
@@ -8008,7 +7936,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 186,
+            "line": 181,
             "description": "Gets the height of the element in pixels. Included are padding and border, not any margins.",
             "itemtype": "method",
             "name": "getHeight",
@@ -8032,7 +7960,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 198,
+            "line": 193,
             "description": "Returns the innerContent of the HtmlElement as a string with HTML entities.\n\nAlias for innerHTML",
             "itemtype": "method",
             "name": "getHtml",
@@ -8047,7 +7975,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 211,
+            "line": 206,
             "description": "Gets the HtmlElement's id.\n\nAlias for this.id",
             "itemtype": "method",
             "name": "getId",
@@ -8062,7 +7990,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 224,
+            "line": 219,
             "description": "Returns inline style of the specified property. `Inline` means: what is set directly on the HtmlElement,\nthis doesn't mean necesairy how it is looked like: when no css is set inline, the HtmlElement might still have\nan appearance because of other CSS-rules.\n\nIn most cases, you would be interesting in using `getStyle()` instead.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "getInlineStyle",
@@ -8077,7 +8005,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 241,
+            "line": 236,
             "description": "Gets the left-scroll offset of the content of the HtmlElement.\nOnly apropriate when the HtmlElement has overflow.",
             "itemtype": "method",
             "name": "getScrollLeft",
@@ -8092,7 +8020,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 253,
+            "line": 248,
             "description": "Gets the top-scroll offset of the content of the HtmlElement.\nOnly apropriate when the HtmlElement has overflow.",
             "itemtype": "method",
             "name": "getScrollTop",
@@ -8107,7 +8035,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 265,
+            "line": 260,
             "description": "Returns cascaded style of the specified property. `Cascaded` means: the actual present style,\nthe way it is visible (calculated through the DOM-tree).\n\nNote1: values are absolute: percentages and points are converted to absolute values, sizes are in pixels, colors in rgb/rgba-format.\nNote2: you cannot query shotcut-properties: use `margin-left` instead of `margin`.\nNote3: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine.",
             "itemtype": "method",
             "name": "getCascadeStyle",
@@ -8135,7 +8063,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 283,
+            "line": 278,
             "description": "Gets the HtmlElement's tagname. Always uppercased.\n\nAlias for this.nodeName",
             "itemtype": "method",
             "name": "getTag",
@@ -8150,7 +8078,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 296,
+            "line": 291,
             "description": "Gets the text content of the HtmlElement and its descendants.\nIf you need full HTML, you should use getHTML().\n\nAlias for textContent",
             "itemtype": "method",
             "name": "getText",
@@ -8165,7 +8093,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 318,
+            "line": 313,
             "description": "Gets the width of the element in pixels. Included are padding and border, not any margins.",
             "itemtype": "method",
             "name": "getWidth",
@@ -8189,7 +8117,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 330,
+            "line": 325,
             "description": "Gets the value of the following HtmlElements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>",
             "itemtype": "method",
             "name": "getValue",
@@ -8204,7 +8132,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 351,
+            "line": 346,
             "description": "Gets the x-position (in the window.document) of the element in pixels.\nwindow.document-related: regardless of the window's scroll-position.",
             "itemtype": "method",
             "name": "getX",
@@ -8219,7 +8147,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 363,
+            "line": 358,
             "description": "Gets the y-position (in the window.document) of the element in pixels.\nwindow.document-related: regardless of the window's scroll-position.",
             "itemtype": "method",
             "name": "getY",
@@ -8234,7 +8162,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 375,
+            "line": 370,
             "description": "Whether the HtmlElement has the attribute set.\n\nAlias for hasAttribute().",
             "itemtype": "method",
             "name": "hasAttr",
@@ -8256,7 +8184,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 389,
+            "line": 384,
             "description": "Checks whether the className is present on the Element.",
             "itemtype": "method",
             "name": "hasClass",
@@ -8278,7 +8206,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 402,
+            "line": 397,
             "description": "If the Element has data set specified by `key`.",
             "itemtype": "method",
             "name": "hasData",
@@ -8300,7 +8228,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 414,
+            "line": 409,
             "description": "Checks whether HtmlElement currently has the focus.",
             "itemtype": "method",
             "name": "hasFocus",
@@ -8322,67 +8250,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 426,
-            "description": "Inserts a HtmlElement or text inside HtmlElement's innerHTML after `refElement`.",
-            "itemtype": "method",
-            "name": "insertAfter",
-            "params": [
-                {
-                    "name": "content",
-                    "description": "content to insert",
-                    "type": "HtmlElement|HtmlElementList|String"
-                },
-                {
-                    "name": "refElement",
-                    "description": "the HtmlElement where the content should be placed after",
-                    "type": "HtmlElement"
-                },
-                {
-                    "name": "escape",
-                    "description": "whether to insert `escaped` content, leading it into only text inserted",
-                    "type": "Boolean",
-                    "optional": true
-                }
-            ],
-            "chainable": 1,
-            "since": "0.0.1",
-            "class": "Element",
-            "module": "dom-ext",
-            "submodule": "lib/element.js"
-        },
-        {
-            "file": "src/dom-ext/lib/element.js",
-            "line": 440,
-            "description": "Inserts a HtmlElement or text inside HtmlElement's innerHTML before `refElement`.",
-            "itemtype": "method",
-            "name": "insertBefore",
-            "params": [
-                {
-                    "name": "content",
-                    "description": "content to insert",
-                    "type": "HtmlElement|HtmlElementList|String"
-                },
-                {
-                    "name": "refElement",
-                    "description": "the HtmlElement where the content should be placed before",
-                    "type": "HtmlElement"
-                },
-                {
-                    "name": "escape",
-                    "description": "whether to insert `escaped` content, leading it into only text inserted",
-                    "type": "Boolean",
-                    "optional": true
-                }
-            ],
-            "chainable": 1,
-            "since": "0.0.1",
-            "class": "Element",
-            "module": "dom-ext",
-            "submodule": "lib/element.js"
-        },
-        {
-            "file": "src/dom-ext/lib/element.js",
-            "line": 457,
+            "line": 421,
             "description": "Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.",
             "itemtype": "method",
             "name": "last",
@@ -8405,7 +8273,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 469,
+            "line": 433,
             "description": "Returns the next of the HtmlElement's siblings, or the next that matches `cssSelector`.",
             "itemtype": "method",
             "name": "next",
@@ -8428,8 +8296,8 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 488,
-            "description": "Prepends a HtmlElement or text at the start of HtmlElement's innerHTML.",
+            "line": 452,
+            "description": "Prepends a HtmlElement or text at the start of HtmlElement's innerHTML, or before the `refElement`.",
             "itemtype": "method",
             "name": "prepend",
             "params": [
@@ -8437,6 +8305,12 @@
                     "name": "content",
                     "description": "content to prepend",
                     "type": "HtmlElement|HtmlElementList|String"
+                },
+                {
+                    "name": "refElement",
+                    "description": "reference Element where the content should be prepended",
+                    "type": "HtmlElement|HtmlElementList|String",
+                    "optional": true
                 },
                 {
                     "name": "escape",
@@ -8453,7 +8327,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 506,
+            "line": 471,
             "description": "Returns the previous of the HtmlElement's siblings, or the previous that matches `cssSelector`.",
             "itemtype": "method",
             "name": "prev",
@@ -8476,7 +8350,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 525,
+            "line": 490,
             "description": "Removes the HtmlElement from the DOM.",
             "itemtype": "method",
             "name": "remove",
@@ -8487,7 +8361,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 535,
+            "line": 501,
             "description": "Removes the attribute from the HtmlElement.\n\nAlias for removeAttribute().",
             "itemtype": "method",
             "name": "removeAttr",
@@ -8509,7 +8383,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 549,
+            "line": 515,
             "description": "Removes a className from the HtmlElement.",
             "itemtype": "method",
             "name": "removeClass",
@@ -8528,7 +8402,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 564,
+            "line": 530,
             "description": "Removes data specified by `key`. When no arguments are passed, all node-data (key-value pairs) will be removed.",
             "itemtype": "method",
             "name": "removeData",
@@ -8547,7 +8421,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 590,
+            "line": 556,
             "description": "Removes a css-property (inline) out of the HtmlElement. Use camelCase.",
             "itemtype": "method",
             "name": "removeInlineStyle",
@@ -8566,7 +8440,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 603,
+            "line": 569,
             "description": "Replaces the HtmlElement with a new HtmlElement.",
             "itemtype": "method",
             "name": "replace",
@@ -8590,7 +8464,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 615,
+            "line": 581,
             "description": "Replaces the className of the HtmlElement with a new className.\nIf the previous className is not available, the new className is set nevertheless.",
             "itemtype": "method",
             "name": "replaceClass",
@@ -8619,7 +8493,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 634,
+            "line": 600,
             "description": "Scrolls the content of the HtmlElement into the specified scrollposition.\nOnly available when the HtmlElement has overflow.",
             "itemtype": "method",
             "name": "scrollTo",
@@ -8643,7 +8517,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 651,
+            "line": 617,
             "description": "Sets the attribute on the HtmlElement with the specified value.\n\nAlias for setAttribute().",
             "itemtype": "method",
             "name": "setAttr",
@@ -8667,10 +8541,29 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 667,
-            "description": "Sets the HtmlElement's class as a whole String. Cleaning up any previous classes.\n\nAlias for this.className = value",
+            "line": 633,
+            "description": "Adds a class to the HtmlElement. If the class already exists it won't be duplicated.",
             "itemtype": "method",
             "name": "setClass",
+            "params": [
+                {
+                    "name": "className",
+                    "description": "className to be added",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Element",
+            "module": "dom-ext",
+            "submodule": "lib/element.js"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 647,
+            "description": "Sets the HtmlElement's class as a whole String. Cleaning up any previous classes.\n\nAlias for this.className = value",
+            "itemtype": "method",
+            "name": "setClassName",
             "params": [
                 {
                     "name": "value",
@@ -8686,7 +8579,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 682,
+            "line": 662,
             "description": "Stores arbitary `data` at the HtmlElement. This has nothing to do with node-attributes whatsoever,\nit is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.",
             "itemtype": "method",
             "name": "setData",
@@ -8710,7 +8603,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 704,
+            "line": 684,
             "description": "Sets the content of the HtmlElement (innerHTML). Careful: only set content like this if you controll the data and\nare sure what is going inside. Otherwise XSS might occur. If you let the user insert, or insert right from a db,\nyou might be better of using setContent().",
             "itemtype": "method",
             "name": "setHTML",
@@ -8729,7 +8622,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 719,
+            "line": 699,
             "description": "Gets the serialized HTML fragment describing the element including its descendants.\n\nalias for outerHTML()",
             "itemtype": "method",
             "name": "serialize",
@@ -8741,7 +8634,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 732,
+            "line": 712,
             "description": "Sets a css-property (inline) out of the HtmlElement. Use camelCase.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "setStyle",
@@ -8765,7 +8658,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 751,
+            "line": 731,
             "description": "Sets the content of the HtmlElement. This is a safe way to set the content, because HTML is not parsed.\nIf you do need to set HTML inside the node, use setHTML().",
             "itemtype": "method",
             "name": "setText",
@@ -8790,7 +8683,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 773,
+            "line": 753,
             "description": "Sets the value of the following HtmlElements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>\n\nWill fire an `valuechange` event, in case both the `itsa/event` as well as\n`itsa/event-dom/extra/event-valuechange.js` are used.\n\nTherefore it is highly suggested to use `setValue()` instead of setting the value manually.",
             "itemtype": "method",
             "name": "setValue",
@@ -8809,10 +8702,10 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 809,
-            "description": "Set the position of an html element in page coordinates.\nThe element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
+            "line": 789,
+            "description": "Checks whether a point specified with x,y is within the HtmlElement's region.",
             "itemtype": "method",
-            "name": "setXY",
+            "name": "insidePos",
             "params": [
                 {
                     "name": "x",
@@ -8831,7 +8724,36 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 841,
+            "line": 805,
+            "description": "Set the position of an html element in page coordinates.\nThe element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).\n\nIf the HtmlElement has the attribute `xy-constrian` set, then its position cannot exceed any matching container it lies within.",
+            "itemtype": "method",
+            "name": "setXY",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "x-value for new position (coordinates are page-based)",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "y-value for new position (coordinates are page-based)",
+                    "type": "Number"
+                },
+                {
+                    "name": "notransition",
+                    "description": "set true if you are sure positioning is without transition.\n       this isn't required, but it speeds up positioning. Only use when no transition is used:\n       when there is a transition, setting this argument `true` would miscalculate the position.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "class": "Element",
+            "module": "dom-ext",
+            "submodule": "lib/element.js"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 900,
             "description": "Set the X position of an html element in page coordinates, regardless of how the element is positioned.\nThe element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
             "itemtype": "method",
             "name": "setX",
@@ -8852,7 +8774,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 852,
+            "line": 911,
             "description": "Set the Y position of an html element in page coordinates, regardless of how the element is positioned.\nThe element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
             "itemtype": "method",
             "name": "setY",
@@ -8873,7 +8795,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 863,
+            "line": 922,
             "description": "Tests if the HtmlElement would be selected by the specified cssSelector.\nAlias for `matchesSelector()`",
             "itemtype": "method",
             "name": "test",
@@ -8895,7 +8817,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 876,
+            "line": 935,
             "description": "Toggles the className of the Element.",
             "itemtype": "method",
             "name": "toggleClass",
@@ -8915,25 +8837,6 @@
         {
             "file": "src/dom-ext/lib/nodelist.js",
             "line": 44,
-            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nAdds a class to the HtmlElement. If the class already exists it won't be duplicated.",
-            "itemtype": "method",
-            "name": "addClass",
-            "params": [
-                {
-                    "name": "className",
-                    "description": "className to be added",
-                    "type": "String"
-                }
-            ],
-            "chainable": 1,
-            "since": "0.0.1",
-            "class": "NodeList",
-            "module": "dom-ext",
-            "submodule": "lib/nodelist.js"
-        },
-        {
-            "file": "src/dom-ext/lib/nodelist.js",
-            "line": 57,
             "description": "For all HtmlElements of the NodeList/HTMLCollection:\nAppends a HtmlElement or text at the end of HtmlElement's innerHTML.",
             "itemtype": "method",
             "name": "append",
@@ -8957,7 +8860,7 @@
         },
         {
             "file": "src/dom-ext/lib/nodelist.js",
-            "line": 71,
+            "line": 58,
             "description": "For all HtmlElements of the NodeList/HTMLCollection:\nSets the inline-style of the HtmlElement exactly to the specified `value`, overruling previous values.\nMaking the HtmlElement's inline-style look like: style=\"value\".\n\nThis is meant for a quick one-time setup. For individually inline style-properties to be set, you can use `setInlineStyle()`.",
             "itemtype": "method",
             "name": "defineInlineStyle",
@@ -8976,7 +8879,7 @@
         },
         {
             "file": "src/dom-ext/lib/nodelist.js",
-            "line": 87,
+            "line": 74,
             "description": "For all HtmlElements of the NodeList/HTMLCollection:\nPrepends a HtmlElement or text at the start of HtmlElement's innerHTML.",
             "itemtype": "method",
             "name": "prepend",
@@ -9001,7 +8904,7 @@
         },
         {
             "file": "src/dom-ext/lib/nodelist.js",
-            "line": 101,
+            "line": 88,
             "description": "For all HtmlElements of the NodeList/HTMLCollection:\nRemoves the HtmlElement from the DOM.",
             "itemtype": "method",
             "name": "remove",
@@ -9012,7 +8915,7 @@
         },
         {
             "file": "src/dom-ext/lib/nodelist.js",
-            "line": 112,
+            "line": 99,
             "description": "For all HtmlElements of the NodeList/HTMLCollection:\nRemoves the attribute from the HtmlElement.\n\nAlias for removeAttribute().",
             "itemtype": "method",
             "name": "removeAttr",
@@ -9034,7 +8937,7 @@
         },
         {
             "file": "src/dom-ext/lib/nodelist.js",
-            "line": 127,
+            "line": 114,
             "description": "For all HtmlElements of the NodeList/HTMLCollection:\nRemoves a className from the HtmlElement.",
             "itemtype": "method",
             "name": "removeClass",
@@ -9053,7 +8956,7 @@
         },
         {
             "file": "src/dom-ext/lib/nodelist.js",
-            "line": 140,
+            "line": 127,
             "description": "For all HtmlElements of the NodeList/HTMLCollection:\nRemoves data specified by `key`. When no arguments are passed, all node-data (key-value pairs) will be removed.",
             "itemtype": "method",
             "name": "removeData",
@@ -9072,7 +8975,7 @@
         },
         {
             "file": "src/dom-ext/lib/nodelist.js",
-            "line": 153,
+            "line": 140,
             "description": "For all HtmlElements of the NodeList/HTMLCollection:\nRemoves a css-property (inline) out of the HtmlElement. Use camelCase.",
             "itemtype": "method",
             "name": "removeInlineStyle",
@@ -9091,7 +8994,7 @@
         },
         {
             "file": "src/dom-ext/lib/nodelist.js",
-            "line": 166,
+            "line": 153,
             "description": "For all HtmlElements of the NodeList/HTMLCollection:\nReplaces the HtmlElement with a new HtmlElement.",
             "itemtype": "method",
             "name": "replace",
@@ -9115,7 +9018,7 @@
         },
         {
             "file": "src/dom-ext/lib/nodelist.js",
-            "line": 179,
+            "line": 166,
             "description": "For all HtmlElements of the NodeList/HTMLCollection:\nReplaces the className of the HtmlElement with a new className.\nIf the previous className is not available, the new className is set nevertheless.",
             "itemtype": "method",
             "name": "replaceClass",
@@ -9144,7 +9047,7 @@
         },
         {
             "file": "src/dom-ext/lib/nodelist.js",
-            "line": 195,
+            "line": 182,
             "description": "For all HtmlElements of the NodeList/HTMLCollection:\nSets the attribute on the HtmlElement with the specified value.\n\nAlias for setAttribute().",
             "itemtype": "method",
             "name": "setAttr",
@@ -9168,10 +9071,29 @@
         },
         {
             "file": "src/dom-ext/lib/nodelist.js",
+            "line": 198,
+            "description": "For all HtmlElements of the NodeList/HTMLCollection:\nAdds a class to the HtmlElement. If the class already exists it won't be duplicated.",
+            "itemtype": "method",
+            "name": "setClass",
+            "params": [
+                {
+                    "name": "className",
+                    "description": "className to be added",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "NodeList",
+            "module": "dom-ext",
+            "submodule": "lib/nodelist.js"
+        },
+        {
+            "file": "src/dom-ext/lib/nodelist.js",
             "line": 211,
             "description": "For all HtmlElements of the NodeList/HTMLCollection:\nSets the class to the HtmlElement. Cleaning up any previous classes.",
             "itemtype": "method",
-            "name": "setClass",
+            "name": "setClassName",
             "params": [
                 {
                     "name": "value",
@@ -10408,7 +10330,7 @@
         },
         {
             "file": "src/event-dom/extra/dragdrop.js",
-            "line": 194,
+            "line": 389,
             "description": "Makes the HtmlElement draggable",
             "itemtype": "method",
             "name": "setDraggable",
@@ -10428,7 +10350,7 @@
         },
         {
             "file": "src/event-dom/extra/dragdrop.js",
-            "line": 206,
+            "line": 401,
             "description": "Removes draggability of the HtmlElement",
             "itemtype": "method",
             "name": "removeDraggable",
@@ -11508,7 +11430,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 106,
+            "line": 107,
             "description": "Reference to the `idGenerator` function in [utils](../modules/utils.html)",
             "itemtype": "property",
             "name": "idGenerator",
@@ -11519,7 +11441,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 117,
+            "line": 118,
             "description": "Reference to the [IO](io.html) object",
             "itemtype": "property",
             "name": "IO",
@@ -11530,7 +11452,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 129,
+            "line": 130,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",

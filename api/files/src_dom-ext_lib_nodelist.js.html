@@ -211,19 +211,6 @@ module.exports = function (window) {
 
        /**
         * For all HtmlElements of the NodeList/HTMLCollection:
-        * Adds a class to the HtmlElement. If the class already exists it won&#x27;t be duplicated.
-        *
-        * @method addClass
-        * @param className {String} className to be added
-        * @chainable
-        * @since 0.0.1
-        */
-        NodeListPrototype.addClass = HTMLCollectionPrototype.addClass = function(className) {
-            return forEach(this, &#x27;addClass&#x27;, arguments);
-        };
-
-       /**
-        * For all HtmlElements of the NodeList/HTMLCollection:
         * Appends a HtmlElement or text at the end of HtmlElement&#x27;s innerHTML.
         *
         * @method append
@@ -378,15 +365,28 @@ module.exports = function (window) {
 
        /**
         * For all HtmlElements of the NodeList/HTMLCollection:
-        * Sets the class to the HtmlElement. Cleaning up any previous classes.
+        * Adds a class to the HtmlElement. If the class already exists it won&#x27;t be duplicated.
         *
         * @method setClass
+        * @param className {String} className to be added
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.setClass = HTMLCollectionPrototype.setClass = function(className) {
+            return forEach(this, &#x27;setClass&#x27;, arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Sets the class to the HtmlElement. Cleaning up any previous classes.
+        *
+        * @method setClassName
         * @param value {Any} the value that belongs to &#x60;key&#x60;
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.setClass = HTMLCollectionPrototype.addClass = function(className) {
-            return forEach(this, &#x27;setClass&#x27;, arguments);
+        NodeListPrototype.setClassName = HTMLCollectionPrototype.setClassName = function(className) {
+            return forEach(this, &#x27;setClassName&#x27;, arguments);
         };
 
        /**
