@@ -61,6 +61,8 @@
             
                 <li><a href="../classes/NodeList.html">NodeList</a></li>
             
+                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
                 <li><a href="../classes/Object.html">Object</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
@@ -110,6 +112,8 @@
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
                 <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
+            
+                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
             
                 <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
             
@@ -241,6 +245,20 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item method">
                                 <a href="#method_first">first</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_forceIntoView">forceIntoView</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_forceIntoView">forceIntoView</a>
 
                                 
                                 
@@ -1080,6 +1098,202 @@ Making the HtmlElement&#39;s inline-style look like: style=&quot;value&quot;.</p
 </div>
 
                 
+                    <div id="method_forceIntoView" class="method item">
+    <h3 class="name"><code>forceIntoView</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[notransition=false]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_dom-ext_lib_element.js.html#l116"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:116</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Forces the HtmlElement to be inside the window-view. Differs from <code>scrollIntoView()</code> in a way
+that <code>forceIntoView()</code> doesn&#39;t change the position when it&#39;s inside the view, whereas
+<code>scrollIntoView()</code> sets it on top of the view.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[notransition=false]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>set true if you are sure positioning is without transition.
+       this isn&#39;t required, but it speeds up positioning. Only use when no transition is used:
+       when there is a transition, setting this argument <code>true</code> would miscalculate the position.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_forceIntoView" class="method item">
+    <h3 class="name"><code>forceIntoView</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[notransition=false]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_dom-ext_lib_element.js.html#l178"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:178</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Forces the HtmlElement to be inside the window-view. Differs from <code>scrollIntoView()</code> in a way
+that <code>forceIntoView()</code> doesn&#39;t change the position when it&#39;s inside the view, whereas
+<code>scrollIntoView()</code> sets it on top of the view.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[notransition=false]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>set true if you are sure positioning is without transition.
+       this isn&#39;t required, but it speeds up positioning. Only use when no transition is used:
+       when there is a transition, setting this argument <code>true</code> would miscalculate the position.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_getAll" class="method item">
     <h3 class="name"><code>getAll</code></h3>
 
@@ -1126,7 +1340,7 @@ Making the HtmlElement&#39;s inline-style look like: style=&quot;value&quot;.</p
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l116"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:116</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l221"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:221</code></a>
         
         </p>
 
@@ -1235,7 +1449,7 @@ Making the HtmlElement&#39;s inline-style look like: style=&quot;value&quot;.</p
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l128"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:128</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l233"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:233</code></a>
         
         </p>
 
@@ -1351,7 +1565,7 @@ Cautious: do not use <code>value</code> to retrieve the value. Use <code>getValu
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l260"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:260</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l366"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:366</code></a>
         
         </p>
 
@@ -1471,7 +1685,7 @@ Note3: no need to camelCase cssProperty: both <code>margin-left</code> as well a
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l143"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:143</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l248"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:248</code></a>
         
         </p>
 
@@ -1557,7 +1771,7 @@ Note3: no need to camelCase cssProperty: both <code>margin-left</code> as well a
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l156"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:156</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l261"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:261</code></a>
         
         </p>
 
@@ -1666,7 +1880,7 @@ Note3: no need to camelCase cssProperty: both <code>margin-left</code> as well a
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l168"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:168</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l273"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:273</code></a>
         
         </p>
 
@@ -1776,7 +1990,7 @@ you need to prepend the id-name with a <code>#</code>. When multiple HtmlElement
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l181"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:181</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l286"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:286</code></a>
         
         </p>
 
@@ -1789,7 +2003,8 @@ you need to prepend the id-name with a <code>#</code>. When multiple HtmlElement
     </div>
 
     <div class="description">
-        <p>Gets the height of the element in pixels. Included are padding and border, not any margins.</p>
+        <p>Gets the height of the element in pixels. Included are padding and border, not any margins.
+By setting the argument <code>overflow</code> you get the total height, included the invisible overflow.</p>
 
     </div>
 
@@ -1876,7 +2091,7 @@ you need to prepend the id-name with a <code>#</code>. When multiple HtmlElement
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l193"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:193</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l299"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:299</code></a>
         
         </p>
 
@@ -1952,7 +2167,7 @@ you need to prepend the id-name with a <code>#</code>. When multiple HtmlElement
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l206"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:206</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l312"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:312</code></a>
         
         </p>
 
@@ -2028,7 +2243,7 @@ you need to prepend the id-name with a <code>#</code>. When multiple HtmlElement
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l219"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:219</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l325"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:325</code></a>
         
         </p>
 
@@ -2107,7 +2322,7 @@ an appearance because of other CSS-rules.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l236"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:236</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l342"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:342</code></a>
         
         </p>
 
@@ -2183,7 +2398,7 @@ Only apropriate when the HtmlElement has overflow.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l248"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:248</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l354"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:354</code></a>
         
         </p>
 
@@ -2259,7 +2474,7 @@ Only apropriate when the HtmlElement has overflow.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l278"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:278</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l384"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:384</code></a>
         
         </p>
 
@@ -2335,7 +2550,7 @@ Only apropriate when the HtmlElement has overflow.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l291"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:291</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l397"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:397</code></a>
         
         </p>
 
@@ -2412,7 +2627,7 @@ If you need full HTML, you should use getHTML().</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l325"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:325</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l432"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:432</code></a>
         
         </p>
 
@@ -2502,7 +2717,7 @@ If you need full HTML, you should use getHTML().</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l313"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:313</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l419"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:419</code></a>
         
         </p>
 
@@ -2515,7 +2730,8 @@ If you need full HTML, you should use getHTML().</p>
     </div>
 
     <div class="description">
-        <p>Gets the width of the element in pixels. Included are padding and border, not any margins.</p>
+        <p>Gets the width of the element in pixels. Included are padding and border, not any margins.
+By setting the argument <code>overflow</code> you get the total width, included the invisible overflow.</p>
 
     </div>
 
@@ -2602,7 +2818,7 @@ If you need full HTML, you should use getHTML().</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l346"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:346</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l453"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:453</code></a>
         
         </p>
 
@@ -2678,7 +2894,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l358"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:358</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l465"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:465</code></a>
         
         </p>
 
@@ -2764,7 +2980,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l370"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:370</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l477"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:477</code></a>
         
         </p>
 
@@ -2873,7 +3089,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l384"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:384</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l491"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:491</code></a>
         
         </p>
 
@@ -2982,7 +3198,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l397"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:397</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l504"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:504</code></a>
         
         </p>
 
@@ -3089,7 +3305,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l409"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:409</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l516"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:516</code></a>
         
         </p>
 
@@ -3200,7 +3416,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l789"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:789</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l896"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:896</code></a>
         
         </p>
 
@@ -3309,7 +3525,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l421"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:421</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l528"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:528</code></a>
         
         </p>
 
@@ -3417,7 +3633,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l433"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:433</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l540"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:540</code></a>
         
         </p>
 
@@ -3535,7 +3751,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l452"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:452</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l559"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:559</code></a>
         
         </p>
 
@@ -3664,7 +3880,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l471"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:471</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l578"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:578</code></a>
         
         </p>
 
@@ -3758,7 +3974,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l490"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:490</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l597"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:597</code></a>
         
         </p>
 
@@ -3829,7 +4045,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l501"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:501</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l608"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:608</code></a>
         
         </p>
 
@@ -3936,7 +4152,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l515"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:515</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l622"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:622</code></a>
         
         </p>
 
@@ -4029,7 +4245,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l530"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:530</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l637"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:637</code></a>
         
         </p>
 
@@ -4122,7 +4338,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l556"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:556</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l663"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:663</code></a>
         
         </p>
 
@@ -4219,7 +4435,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l569"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:569</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l676"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:676</code></a>
         
         </p>
 
@@ -4341,7 +4557,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l581"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:581</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l688"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:688</code></a>
         
         </p>
 
@@ -4473,7 +4689,7 @@ If the previous className is not available, the new className is set nevertheles
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l600"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:600</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l707"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:707</code></a>
         
         </p>
 
@@ -4573,7 +4789,7 @@ Only available when the HtmlElement has overflow.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l699"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:699</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l806"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:806</code></a>
         
         </p>
 
@@ -4649,7 +4865,7 @@ Only available when the HtmlElement has overflow.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l617"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:617</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l724"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:724</code></a>
         
         </p>
 
@@ -4758,7 +4974,7 @@ Only available when the HtmlElement has overflow.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l633"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:633</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l740"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:740</code></a>
         
         </p>
 
@@ -4851,7 +5067,7 @@ Only available when the HtmlElement has overflow.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l647"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:647</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l754"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:754</code></a>
         
         </p>
 
@@ -4951,7 +5167,7 @@ Only available when the HtmlElement has overflow.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l662"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:662</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l769"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:769</code></a>
         
         </p>
 
@@ -5061,7 +5277,7 @@ it is just a way to bind any data to the specific Element so it can be retrieved
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l684"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:684</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l791"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:791</code></a>
         
         </p>
 
@@ -5162,7 +5378,7 @@ you might be better of using setContent().</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l712"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:712</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l819"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:819</code></a>
         
         </p>
 
@@ -5278,7 +5494,7 @@ you might be better of using setContent().</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l731"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:731</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l838"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:838</code></a>
         
         </p>
 
@@ -5389,7 +5605,7 @@ If you do need to set HTML inside the node, use setHTML().</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l753"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:753</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l860"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:860</code></a>
         
         </p>
 
@@ -5494,7 +5710,7 @@ If you do need to set HTML inside the node, use setHTML().</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l900"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:900</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l1025"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:1025</code></a>
         
         </p>
 
@@ -5612,7 +5828,7 @@ The element(s) must be part of the DOM tree to have page coordinates (display:no
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l805"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:805</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l913"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:913</code></a>
         
         </p>
 
@@ -5744,7 +5960,7 @@ The element must be part of the DOM tree to have page coordinates (display:none 
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l911"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:911</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l1036"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:1036</code></a>
         
         </p>
 
@@ -5854,7 +6070,7 @@ The element(s) must be part of the DOM tree to have page coordinates (display:no
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l922"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:922</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l1047"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:1047</code></a>
         
         </p>
 
@@ -5962,7 +6178,7 @@ Alias for <code>matchesSelector()</code></p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l935"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:935</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l1060"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:1060</code></a>
         
         </p>
 

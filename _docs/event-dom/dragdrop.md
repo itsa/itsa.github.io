@@ -11,7 +11,9 @@ intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobjec
         top: 32em;
         width: 500px;
         height: 300px;
+       /* overflow: scroll; */
         background-color: #FF0;
+        border: solid 10px #0F0;
     }
     .drop-container {
         position: absolute;
@@ -63,8 +65,8 @@ intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobjec
         top: 140px;
     }
     #cont-5 {
-        left: 115px;
-        top: 65px;
+        left: 100px;
+        top: 60px;
         z-index: 2;
         background-color: #F00;
     }
@@ -76,23 +78,27 @@ intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobjec
         filter: alpha(opacity=60); /* For IE8 and earlier */
         border: dotted 2px #000;
     }
+    #Xfilling {
+        width: 700px;
+        height: 500px;
+        background-color: #00F;
+    }
 </style>
 
 Mouse the mouse over the 5 containers:
 
-<div class="base-container">
-    <div id="cont-1" class="container" draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">1</div>
+<div id="constr" class="base-container">
+    <div id="cont-1" class="container" draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all" dd-handle="i">the <i>handle</i> is here</div>
     <div id="cont-2" class="container" draggable="true" xy-constrain=".base-container">2</div>
-    <div id="cont-3" class="container" draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="move">3</div>
+    <div id="cont-3" class="container" draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="move">this is <i>no handle</i></div>
     <div id="cont-4" class="container" draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="copy">4</div>
-    <div id="cont-5" class="container" draggable="true">5</div>
+    <div id="cont-5" class="container">5</div>
+    <div id="filling"></div>
 </div>
 
-<div class="drop-container" dropzone="move"></div>
-
-<div class="drop-container second" dropzone="copy"></div>
-
-<div class="drop-container third" dropzone></div>
+<div id='dz1' class="drop-container"></div>
+<div id='dz2' class="drop-container second"></div>
+<div id='dz3' class="drop-container third"></div>
 
 
 <p class="spaced">Code-example:</p>
@@ -140,16 +146,27 @@ Mouse the mouse over the 5 containers:
         });
     };
 
+document.getElement('#dz1').plug(ITSA.NodeDropzone, {move: true});
+document.getElement('#dz2').plug(ITSA.NodeDropzone, {copy: true});
+document.getElement('#dz3').plug(ITSA.NodeDropzone);
+
+document.getElement('#constr').scrollTo(0,100);
+
+var c = document.getElement('#constr');
+console.warn('offsetWidth '+c.offsetWidth);
+console.warn('scrollWidth '+c.scrollWidth);
+console.warn('getBoundingBoxClientRect().width '+c.getBoundingClientRect().width);
+
 
 // console.info(container.getInlineStyle('left'));
 // console.info(container.getInlineStyle('top'));
     // container.setXY(100, null);
 
     ITSA.later(function() {
-// container.setInlineStyle('left', container.getInlineStyle('left'));
-// container.setInlineStyle('top', container.getInlineStyle('top'));
-        // container.setXY(200);
-    }, 4000);
+        container.plug(ITSA.NodeDD);
+        container.plug(ITSA.NodeConstrain);
+    }, 1000);
+
 
    // ITSA.Event.after('dragdrop', showMsg, '.container');
 </script>

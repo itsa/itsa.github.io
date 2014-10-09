@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/io/io-xml.js - Itsa</title>
+    <title>src/io/extra/io-cors-ie9.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -61,6 +61,8 @@
             
                 <li><a href="../classes/NodeList.html">NodeList</a></li>
             
+                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
                 <li><a href="../classes/Object.html">Object</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
@@ -110,6 +112,8 @@
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
                 <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
+            
+                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
             
                 <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
             
@@ -162,10 +166,11 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/io/io-xml.js</h1>
+                        <h1 class="file-heading">File: src/io/extra/io-cors-ie9.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
+
 &quot;use strict&quot;;
 
 /**
@@ -174,140 +179,114 @@
  *
  * @example
  * var IO = require(&quot;io&quot;);
- * var IOxml = require(&quot;io-xml&quot;);
- * IOxml.mergeInto(IO);
+ * var IOcors = require(&quot;io-cors&quot;);
+ * IOcors.mergeInto(IO);
+ *
  *
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  * @module io
- * @submodule io-xml
+ * @submodule io-cors
  * @class IO
  * @since 0.0.1
 */
 
-require(&#x27;js-ext&#x27;);
+var NAME = &#x27;[io-cors-ie9]: &#x27;,
+    XmlDOMParser = require(&#x27;xmldom&#x27;).DOMParser,
+    UNKNOW_ERROR = &#x27;Unknown XDR-error&#x27;, // XDR doesn&#x27;t specify the error
+    REQUEST_TIMEOUT = &#x27;Request-timeout&#x27;,
+    REGEXP_EXTRACT_URL = new RegExp(&quot;^((([a-z][a-z0-9-.]*):\/\/)?(([^\/?#:]+)(:(\\d+))?)?)?(\/?[a-z0-9-._~%!$&amp;&#x27;()*+,;=@]+(\/[a-z0-9-._~%!$&amp;&#x27;()*+,;=:@]+)*\/?|\/)?([#?](.*)|$)&quot;, &quot;i&quot;),
+    currentDomain,
+    BODY_METHODS = {
+        POST: 1,
+        PUT: 1
+    },
+    VALID_XDR_METHODS = {
+        GET: 1,
+        POST: 1
+    };
 
-var NAME = &#x27;[io-xml]: &#x27;,
-    REGEXP_XML = /(?: )*(&lt;\?xml (?:.)*\?&gt;)(?: )*(&lt;(?:\w)+&gt;)/;
 
 module.exports = function (window) {
 
-    var IO = require(&#x27;./io.js&#x27;)(window),
+    var IO = require(&#x27;../io.js&#x27;)(window),
 
-    /*
-     * Adds properties to the xhr-object: in case of streaming,
-     * xhr._parseStream=function is created to parse streamed data.
-     *
-     * @method _progressHandle
-     * @param xhr {Object} containing the xhr-instance
-     * @param props {Object} the propertie-object that is added too xhr and can be expanded
-     * @param options {Object} options of the request
-     * @private
-    */
-    _entendXHR = function(xhr, props, options, promise) {
-        var parser, followingstream, regegexp_endcont, regexpxml, xmlstart, container, endcontainer;
-        if ((typeof options.streamback === &#x27;function&#x27;) &amp;&amp; options.headers &amp;&amp; (options.headers.Accept===&#x27;text/xml&#x27;)) {
-            console.log(NAME, &#x27;entendXHR&#x27;);
-            parser = new window.DOMParser();
-            xhr._parseStream = function(streamData) {
-                var fragment, parialdata;
-                console.log(NAME, &#x27;entendXHR --&gt; _parseStream&#x27;);
-                try {
-                    if (!followingstream) {
-                        regexpxml = streamData.match(REGEXP_XML);
-                        if (regexpxml) {
-                            xmlstart = regexpxml[1];
-                            container = regexpxml[2];
-                            endcontainer = &#x27;&lt;/&#x27;+container.substr(1);
-                            regegexp_endcont = new RegExp(&#x27;(.*)&#x27;+endcontainer+&#x27;( )*$&#x27;);
+    isCrossDomain = function (url) {
+        var domain;
+        if (window.navigator.userAgent===&#x27;fake&#x27;) {
+            return false;
+        }
+        domain = url.match(REGEXP_EXTRACT_URL)[1]; // will be undefined for relative url&#x27;s
+        // in case of absoulte url: make it lowercase:
+        domain &amp;&amp; (domain.toLowerCase());
+        // get the browserdomain:
+        currentDomain || (currentDomain=window.location.href.match(REGEXP_EXTRACT_URL)[1].toLowerCase());
+        // crossdomain will only be true with absolute url&#x27;s which differ from browser domain:
+        return domain &amp;&amp; (currentDomain !== domain);
+    },
+
+    entendXHR = function(xhr, props, options /*, promise */) {
+        var crossDomain;
+        if (!props._isXHR2) {
+            crossDomain = isCrossDomain(options.url);
+            if (crossDomain &amp;&amp; !props._isXDR) {
+                if (typeof window.XDomainRequest !== &#x27;undefined&#x27;) {
+                    xhr = new window.XDomainRequest();
+                    props._isXDR = true;
+                }
+            }
+            props._CORS_IE = crossDomain &amp;&amp; props._isXDR;
+        }
+        props._CORS_IE &amp;&amp; !VALID_XDR_METHODS[options.method] &amp;&amp; (options.method=(BODY_METHODS[options.method] ? &#x27;POST&#x27; : &#x27;GET&#x27;));
+
+    // TODO: check how to deal with opera-mini
+
+        return xhr;
+    },
+
+    readyHandleXDR = function(xhr, promise, headers, method) {
+        if (xhr._isXDR) {
+            console.log(NAME, &#x27;readyHandleXDR&#x27;);
+            // for XDomainRequest, we need &#x27;onload&#x27; instead of &#x27;onreadystatechange&#x27;
+            xhr.onload || (xhr.onload=function() {
+                var responseText = xhr.responseText,
+                    xmlRequest = headers &amp;&amp; (headers.Accept===&#x27;text/xml&#x27;),
+                    responseobject;
+                clearTimeout(xhr._timer);
+                console.log(NAME, &#x27;xhr.onload invokes with responseText=&#x27;+responseText);
+                // to remain consisten with XHR, we define an object with the same structure
+                responseobject = {
+                    _contenttype: xhr.contentType,
+                    responseText: responseText,
+                    responseXML: xmlRequest ? new XmlDOMParser().parseFromString(responseText) : null,
+                    readyState: 4,
+                    status: 200, // XDomainRequest returns only OK or Error
+                    // XDomainRequest only returns the header Content-Type:
+                    getAllResponseHeaders: function () {
+                        return &#x27;Content-Type: &#x27;+this._contenttype;
+                    },
+                    getResponseHeader: function (name) {
+                        if (name===&#x27;Content-Type&#x27;) {
+                            return this._contenttype;
                         }
                     }
-                    parialdata = (followingstream ? xmlstart+container : &#x27;&#x27;) + streamData;
-                    regegexp_endcont.test(streamData) || (parialdata+=endcontainer);
-                    fragment = parser.parseFromString(parialdata, &#x27;text/xml&#x27;);
-                    followingstream = true;
-                    return fragment;
-                }
-                catch(err) {
-                    promise.reject(err);
-                }
-            };
+                };
+                promise.fulfill(responseobject);
+            });
+            xhr.onerror || (xhr.onerror=function() {
+                clearTimeout(xhr._timer);
+                promise.reject(UNKNOW_ERROR);
+            });
         }
-        return xhr;
     };
 
-    IO._xhrList.push(_entendXHR);
-
-    /**
-     * Performs an AJAX request with the GET HTTP method and expects a JSON-object.
-     * The resolved Promise-callback returns an object (JSON-parsed serverresponse).
-     *
-     * Additional request-parameters can be on the url (with questionmark), through &#x60;params&#x60;, or both.
-     *
-     * The Promise gets fulfilled if the server responses with &#x60;STATUS-CODE&#x60; in the 200-range (excluded 204).
-     * It will be rejected if a timeout occurs (see &#x60;options.timeout&#x60;), or if &#x60;xhr.abort()&#x60; gets invoked.
-     *
-     * Note1: If you expect the server to response with data that consist of Date-properties, you should set &#x60;options.parseJSONDate&#x60; true.
-     *        Parsing takes a bit longer, but it will generate trully Date-objects.
-     * Note2: CORS is supported, as long as the responseserver is set up to:
-     *       a) has a response header which allows the clientdomain:
-     *          header(&#x27;Access-Control-Allow-Origin: http://www.some-site.com&#x27;); or header(&#x27;Access-Control-Allow-Origin: *&#x27;);
-     *       b) in cae you have set a custom HEADER (through &#x27;options&#x27;), the responseserver MUST listen and respond
-     *          to requests with the OPTION-method
-     *       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/
-     *
-     * @method readXML
-     * @param url {String} URL of the resource server
-     * @param [params] {Object} additional parameters.
-     * @param [options] {Object} See also: [&#x60;I.io&#x60;](#method_xhr)
-     *    @param [options.url] {String} The url to which the request is sent.
-     *    can be ignored, even if streams are used --&gt; the returned Promise will always hold all data
-     *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
-     *    @param [options.params] {Object} Data to be sent to the server.
-     *    @param [options.body] {Object} The content for the request body for POST method.
-     *    @param [options.headers] {Object} HTTP request headers.
-     *    @param [options.responseType=&#x27;text&#x27;] {String} The response type.
-     *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
-     *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
-     *    @param [options.parseJSONDate=false] {boolean} Whether the server returns JSON-stringified data which has Date-objects.
-     * @return {Promise}
-     * on success:
-        * Object received data
-     * on failure an Error object
-        * reason {Error}
-    */
-    IO.readXML = function(url, params, options) {
-        var XMLOptions = {
-                headers: {&#x27;Accept&#x27;: &#x27;text/xml&#x27;},
-                method: &#x27;GET&#x27;,
-                url: url,
-                data: params
-            },
-            ioPromise, returnPromise;
-        options &amp;&amp; XMLOptions.merge(options);
-        ioPromise = this.request(XMLOptions);
-        returnPromise = ioPromise.then(
-            function(xhrResponse) {
-                // if the responsetype is no &quot;text/xml&quot;, then throw an error, else return xhrResponse.responseXML;
-                // note that nodejs has &quot;Content-Type&quot; in lowercase!
-                // Also: XDR DOES NOT support getResponseHeader() --&gt; so we must just assume the data is text/xml
-                var contenttype = !xhrResponse._isXDR &amp;&amp; (xhrResponse.getResponseHeader(&#x27;Content-Type&#x27;) || xhrResponse.getResponseHeader(&#x27;content-type&#x27;));
-                if (xhrResponse._isXDR || /^text\/xml/.test(contenttype)) {
-                    // cautious: when streaming, xhrResponse.responseXML will be undefined in case of using XDR
-                    return xhrResponse.responseXML || (new window.DOMParser()).parseFromString(xhrResponse.responseText, &#x27;text/xml&#x27;);
-                }
-                // when code comes here: no valid xml response:
-                throw new Error(&#x27;recieved Content-Type is no XML&#x27;);
-            }
-        );
-        // set &#x60;abort&#x60; to the thennable-promise:
-        returnPromise.abort = ioPromise.abort;
-        return returnPromise;
-    };
+    IO._xhrList.push(entendXHR);
+    IO._xhrInitList.push(readyHandleXDR);
 
     return IO;
 };
+
     </pre>
 </div>
 

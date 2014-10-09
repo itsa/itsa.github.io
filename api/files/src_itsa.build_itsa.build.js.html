@@ -61,6 +61,8 @@
             
                 <li><a href="../classes/NodeList.html">NodeList</a></li>
             
+                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
                 <li><a href="../classes/Object.html">Object</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
@@ -110,6 +112,8 @@
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
                 <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
+            
+                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
             
                 <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
             
@@ -256,7 +260,6 @@
     require(&#x27;polyfill&#x27;);
     require(&#x27;js-ext&#x27;);
     require(&#x27;window-ext&#x27;)(window);
-    require(&#x27;dom-ext&#x27;)(window);
 
     var fakedom = window.navigator.userAgent===&#x27;fake&#x27;,
         Event = fakedom ? require(&#x27;event&#x27;) : require(&#x27;event-mobile&#x27;)(window),
@@ -267,11 +270,6 @@
         },
         EVENT_NAME_TIMERS_EXECUTION = &#x27;timers:asyncfunc&#x27;;
 
-    if (!fakedom) {
-        require(&#x27;event-dom/extra/hover.js&#x27;)(window);
-        require(&#x27;event-dom/extra/valuechange.js&#x27;)(window);
-        require(&#x27;event-dom/extra/dragdrop.js&#x27;)(window);
-    }
     /**
      * Reference to the &#x60;idGenerator&#x60; function in [utils](../modules/utils.html)
      *
@@ -280,8 +278,15 @@
      * @static
     */
 
+    ITSA.merge(require(&#x27;dom-ext&#x27;)(window));
     ITSA.merge(require(&#x27;utils&#x27;));
     ITSA.RESERVED_WORDS = require(&#x27;js-ext/extra/reserved-words.js&#x27;);
+
+    if (!fakedom) {
+        require(&#x27;event-dom/extra/hover.js&#x27;)(window);
+        require(&#x27;event-dom/extra/valuechange.js&#x27;)(window);
+        ITSA.merge(require(&#x27;drag-drop&#x27;)(window));
+    }
 
     /**
      * Reference to the [IO](io.html) object
@@ -289,11 +294,11 @@
      * @type Object
      * @static
     */
-    ITSA.IO = require(&#x27;io/io-transfer.js&#x27;)(window);
+    ITSA.IO = require(&#x27;io/extra/io-transfer.js&#x27;)(window);
     ITSA.IO.config.merge(io_config);
-    require(&#x27;io/io-cors-ie9.js&#x27;)(window);
-    require(&#x27;io/io-stream.js&#x27;)(window);
-    require(&#x27;io/io-xml.js&#x27;)(window);
+    require(&#x27;io/extra/io-cors-ie9.js&#x27;)(window);
+    require(&#x27;io/extra/io-stream.js&#x27;)(window);
+    require(&#x27;io/extra/io-xml.js&#x27;)(window);
 
     /**
      * [Event](Event.html)-instance

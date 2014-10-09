@@ -104,6 +104,9 @@ Sets the inline-style of the HtmlElement exactly to the specified `value`, overr
 ###first###
 Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.
 
+###forceIntoView###
+Forces the HtmlElement to be inside the window-view. Differs from `scrollIntoView()` in a way that `forceIntoView()` doesn't change the position when it's inside the view, whereas `scrollIntoView()` sets it on top of the view.
+
 ###getAttr###
 Gets an attribute of the HtmlElement. Alias for getAttribute().
 
@@ -120,7 +123,7 @@ Returns data set specified by `key`. If not set, `undefined` will be returned.
 Gets one HtmlElement, specified by the css-selector. To retrieve a single element by id, you need to prepend the id-name with a `#`. When multiple HtmlElement's match, the first is returned.
 
 ###getHeight###
-Gets the height of the element in pixels. Included are padding and border, not any margins.
+Gets the height of the element in pixels. Included are padding and border, not any margins. By setting the argument `overflow` you get the total height, included the invisible overflow.
 
 ###getHtml###
 Returns the innerContent of the HtmlElement as a string with HTML entities.
@@ -150,7 +153,7 @@ Gets the text content of the HtmlElement and its descendants. If you need full H
 Gets the value of the following HtmlElements: **input**, **textarea**, **select** or any container that is `contenteditable`
 
 ###getWidth###
-Gets the width of the element in pixels. Included are padding and border, not any margins.
+Gets the width of the element in pixels. Included are padding and border, not any margins. By setting the argument `overflow` you get the total width, included the invisible overflow.
 
 ###getX###
 Gets the x-position (in the document) of the element in pixels. Document-related: regardless of the window's scroll-position.

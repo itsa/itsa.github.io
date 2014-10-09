@@ -10,6 +10,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "IO",
         "ITSA",
         "NodeList",
+        "NodePlugin",
         "Object",
         "Promise",
         "String",
@@ -36,6 +37,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "js-ext",
         "lib/array.js",
         "lib/document.js",
+        "lib/element-plugin.js",
         "lib/element.js",
         "lib/function.js",
         "lib/nodelist.js",
@@ -132,6 +134,11 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "lib/document.js",
             "name": "lib_document.js",
+            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "lib/element-plugin.js",
+            "name": "lib_element-plugin.js",
             "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {

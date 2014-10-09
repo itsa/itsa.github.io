@@ -61,6 +61,8 @@
             
                 <li><a href="../classes/NodeList.html">NodeList</a></li>
             
+                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
                 <li><a href="../classes/Object.html">Object</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
@@ -110,6 +112,8 @@
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
                 <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
+            
+                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
             
                 <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
             
@@ -193,8 +197,8 @@ module.exports = function (window) {
         NO_TRANS = &#x27;el-notrans&#x27;,
         INVISIBLE = &#x27;el-invisible&#x27;,
         CONSTRAIN_ATTR = &#x27;xy-constrain&#x27;,
-        RESERVED_WORDS = require(&#x27;js-ext/extra/reserved-words.js&#x27;),
         REGEXP_NODE_ID = /^#\S+$/,
+        RESERVED_WORDS = require(&#x27;js-ext/extra/reserved-words.js&#x27;),
 
         toCamelCase = function(input) {
             return input.toLowerCase().replace(/-(.)/g, function(match, group) {
@@ -282,6 +286,111 @@ module.exports = function (window) {
         };
 
        /**
+        * Forces the HtmlElement to be inside the window-view. Differs from &#x60;scrollIntoView()&#x60; in a way
+        * that &#x60;forceIntoView()&#x60; doesn&#x27;t change the position when it&#x27;s inside the view, whereas
+        * &#x60;scrollIntoView()&#x60; sets it on top of the view.
+        *
+        * @method forceIntoView
+        * @param [notransition=false] {Boolean} set true if you are sure positioning is without transition.
+        *        this isn&#x27;t required, but it speeds up positioning. Only use when no transition is used:
+        *        when there is a transition, setting this argument &#x60;true&#x60; would miscalculate the position.
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.forceIntoNodeView = function(cssSelector) {
+console.warn(&#x27;forceIntoNodeView&#x27;);
+            var instance = this,
+                parentOverflowNode = this.parentNode,
+                match;
+            while ((parentOverflowNode!==window.document) &amp;&amp; !(match=(parentOverflowNode.getStyle(&#x27;overflow&#x27;)===&#x27;scroll&#x27;))) {
+                parentOverflowNode = parentOverflowNode.parentNode;
+            }
+            if (parentOverflowNode!==window.document) {
+
+                var left = instance.getX(),
+                    width = instance.offsetWidth,
+                    right = left + width,
+                    height = instance.offsetHeight,
+                    top = instance.getY(),
+                    bottom = top + height,
+                    scrollLeft = parentOverflowNode.getScrollLeft(),
+                    windowLeft = parentOverflowNode.getX()-scrollLeft,
+                    scrollTop = parentOverflowNode.getScrollTop(),
+                    windowTop = parentOverflowNode.getY()-scrollTop,
+                    parentOverflowNodeStartTop = parentOverflowNode.getY()+parseInt(parentOverflowNode.getStyle(&#x27;border-top-width&#x27;) || 0, 10),
+                    parentOverflowNodeStartLeft = parentOverflowNode.getX()+parseInt(parentOverflowNode.getStyle(&#x27;border-left-width&#x27;) || 0, 10),
+                    windowRight = windowLeft + parentOverflowNode.getWidth(),
+                    windowBottom = windowTop + parentOverflowNode.getHeight(),
+                    parentOverflowNodeStopRight = parentOverflowNode.getX()+parentOverflowNode.getWidth()-parseInt(parentOverflowNode.getStyle(&#x27;border-right-width&#x27;) || 0, 10),
+                    parentOverflowNodeStopBottom = parentOverflowNode.getY()+parentOverflowNode.getHeight()-parseInt(parentOverflowNode.getStyle(&#x27;border-bottom-width&#x27;) || 0, 10),
+                    newX, newY;
+
+
+                if (left&lt;parentOverflowNodeStartLeft) {
+                    newX = Math.max(0, scrollLeft+left-parentOverflowNodeStartLeft);
+                }
+                else if (right&gt;parentOverflowNodeStopRight) {
+                    newX = scrollLeft + right - parentOverflowNodeStopRight;
+                }
+
+
+                if (top&lt;parentOverflowNodeStartTop) {
+                    newY = Math.max(0, scrollTop+top-parentOverflowNodeStartTop);
+                }
+                else if (bottom&gt;parentOverflowNodeStopBottom) {
+                    newY = scrollTop + bottom - parentOverflowNodeStopBottom;
+                }
+                if ((newX!==undefined) || (newY!==undefined)) {
+                    parentOverflowNode.scrollTo((newX!==undefined) ? newX : scrollLeft,(newY!==undefined) ? newY : scrollTop);
+                }
+            }
+            return instance;
+        };
+
+       /**
+        * Forces the HtmlElement to be inside the window-view. Differs from &#x60;scrollIntoView()&#x60; in a way
+        * that &#x60;forceIntoView()&#x60; doesn&#x27;t change the position when it&#x27;s inside the view, whereas
+        * &#x60;scrollIntoView()&#x60; sets it on top of the view.
+        *
+        * @method forceIntoView
+        * @param [notransition=false] {Boolean} set true if you are sure positioning is without transition.
+        *        this isn&#x27;t required, but it speeds up positioning. Only use when no transition is used:
+        *        when there is a transition, setting this argument &#x60;true&#x60; would miscalculate the position.
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.forceIntoView = function(notransition) {
+            var instance = this,
+                left = instance.getX(),
+                width = instance.offsetWidth,
+                right = left + width,
+                height = instance.offsetHeight,
+                top = instance.getY(),
+                bottom = top + height,
+                windowLeft = window.getScrollLeft(),
+                windowTop = window.getScrollTop(),
+                windowRight = windowLeft + window.getWidth(),
+                windowBottom = windowTop + window.getHeight(),
+                newX, newY;
+            if (left&lt;windowLeft) {
+                newX = Math.max(0, left);
+            }
+            else if (right&gt;windowRight) {
+                newX = windowLeft + right - windowRight;
+            }
+            if (top&lt;windowTop) {
+                newY = Math.max(0, top);
+            }
+            else if (bottom&gt;windowBottom) {
+                newY = windowTop + bottom - windowBottom;
+            }
+            if ((newX!==undefined) || (newY!==undefined)) {
+                window.scrollTo((newX!==undefined) ? newX : windowLeft, (newY!==undefined) ? newY : windowTop);
+            }
+            return instance;
+        };
+
+       /**
         * Gets a NodeList of HtmlElements, specified by the css-selector.
         *
         * @method getAll
@@ -348,6 +457,7 @@ module.exports = function (window) {
 
        /**
         * Gets the height of the element in pixels. Included are padding and border, not any margins.
+        * By setting the argument &#x60;overflow&#x60; you get the total height, included the invisible overflow.
         *
         * @method getHeight
         * @param [overflow=false] {Boolean} in case of elements that overflow: return total height, included the invisible overflow
@@ -480,6 +590,7 @@ module.exports = function (window) {
 
        /**
         * Gets the width of the element in pixels. Included are padding and border, not any margins.
+        * By setting the argument &#x60;overflow&#x60; you get the total width, included the invisible overflow.
         *
         * @method getWidth
         * @param [overflow=false] {Boolean} in case of elements that overflow: return total width, included the invisible overflow
@@ -677,7 +788,7 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         ElementPrototype.removeAttr = function(attributeName) {
-            return this.hasAttribute.apply(this, arguments);
+            return this.removeAttribute.apply(this, arguments);
         };
 
        /**
@@ -794,7 +905,7 @@ module.exports = function (window) {
          * @since 0.0.1
         */
         ElementPrototype.setAttr = function(attributeName, value) {
-            this.setAttribute.apply(this, arguments);
+            this.setAttribute.call(this, attributeName, value || &#x27;&#x27;);
             return this;
         };
 
@@ -970,6 +1081,7 @@ module.exports = function (window) {
             return (x&gt;=left) &amp;&amp; (x&lt;=right) &amp;&amp; (y&gt;=top) &amp;&amp; (y&lt;=bottom);
         };
 
+
        /**
          * Set the position of an html element in page coordinates.
          * The element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
@@ -998,34 +1110,51 @@ module.exports = function (window) {
 /*jshint boss:true */
             if (constrainedSelector=instance.getAttr(CONSTRAIN_ATTR)) {
 /*jshint boss:false */
-                match = false;
-                constrainNode = instance;
-                byExactId = REGEXP_NODE_ID.test(constrainedSelector);
-                while (constrainNode.matchesSelector &amp;&amp; !match) {
-                    match = byExactId ? (constrainNode.id===constrainedSelector.substr(1)) : constrainNode.matchesSelector(constrainedSelector);
-                    // if there is a match, then make sure x and y fall within the region
-                    if (match) {
-                        containerLeft = constrainNode.getX();
-                        containerTop = constrainNode.getY();
-                        containerRight = containerLeft + constrainNode.offsetWidth;
-                        containerBottom = containerTop + constrainNode.offsetHeight;
-
-                        requestedX = x || instance.getX();
-                        if ((requestedX+instance.offsetWidth)&gt;containerRight) {
-                            x = requestedX = containerRight - instance.offsetWidth;
-                        }
-                        (requestedX&lt;containerLeft) &amp;&amp; (x=containerLeft);
-
-                        requestedY = y || instance.getY();
-                        if ((requestedY+instance.offsetHeight)&gt;containerBottom) {
-                            y = requestedY = containerBottom - instance.offsetHeight;
-                        }
-                        (requestedY&lt;containerTop) &amp;&amp; (y=containerTop);
+                if (constrainedSelector===&#x27;window&#x27;) {
+                    containerLeft = window.getScrollLeft();
+                    containerTop = window.getScrollTop();
+                    containerRight = containerLeft + window.getWidth();
+                    containerBottom = containerTop + window.getHeight();
+                    requestedX = x || instance.getX();
+                    if ((requestedX+instance.offsetWidth)&gt;containerRight) {
+                        x = requestedX = containerRight - instance.offsetWidth;
                     }
-                    constrainNode = constrainNode.parentNode;
+                    (requestedX&lt;containerLeft) &amp;&amp; (x=containerLeft);
+                    requestedY = y || instance.getY();
+                    if ((requestedY+instance.offsetHeight)&gt;containerBottom) {
+                        y = requestedY = containerBottom - instance.offsetHeight;
+                    }
+                    (requestedY&lt;containerTop) &amp;&amp; (y=containerTop);
+                }
+                else {
+                    match = false;
+                    constrainNode = instance;
+                    byExactId = REGEXP_NODE_ID.test(constrainedSelector);
+                    while (constrainNode.matchesSelector &amp;&amp; !match) {
+                        match = byExactId ? (constrainNode.id===constrainedSelector.substr(1)) : constrainNode.matchesSelector(constrainedSelector);
+                        // if there is a match, then make sure x and y fall within the region
+                        if (match) {
+                            containerLeft = constrainNode.getX() + parseInt(constrainNode.getStyle(&#x27;border-left-width&#x27;) || 0, 10);
+                            containerTop = constrainNode.getY() + parseInt(constrainNode.getStyle(&#x27;border-top-width&#x27;) || 0, 10);
+                            containerRight = containerLeft + constrainNode.scrollWidth;
+                            containerBottom = containerTop + constrainNode.scrollHeight;
+                            requestedX = x || instance.getX();
+                            if ((requestedX+instance.offsetWidth)&gt;containerRight) {
+                                x = requestedX = containerRight - instance.offsetWidth;
+                            }
+                            (requestedX&lt;containerLeft) &amp;&amp; (x=containerLeft);
+
+                            requestedY = y || instance.getY();
+                            if ((requestedY+instance.offsetHeight)&gt;containerBottom) {
+                                y = requestedY = containerBottom - instance.offsetHeight;
+                            }
+                            (requestedY&lt;containerTop) &amp;&amp; (y=containerTop);
+                        }
+                        constrainNode = constrainNode.parentNode;
+                    }
                 }
             }
-            if (x) {
+            if (typeof x === &#x27;number&#x27;) {
                 // check if there is a transition:
                 if (notransition) {
                     instance.setInlineStyle(&#x27;left&#x27;, x + &#x27;px&#x27;);
@@ -1044,7 +1173,7 @@ module.exports = function (window) {
                     instance.setInlineStyle(&#x27;left&#x27;, finalValue + &#x27;px&#x27;);
                 }
             }
-            if (y) {
+            if (typeof y === &#x27;number&#x27;) {
                 if (notransition) {
                     instance.setInlineStyle(&#x27;top&#x27;, y + &#x27;px&#x27;);
                     dif = (instance.getY()-y);

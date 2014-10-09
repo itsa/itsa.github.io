@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/js-ext/lib/function.js - Itsa</title>
+    <title>src/io/extra/io-xml.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -166,230 +166,152 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/js-ext/lib/function.js</h1>
+                        <h1 class="file-heading">File: src/io/extra/io-xml.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+
 /**
+ * Extends io by adding the method &#x60;readXML&#x60; to it.
+ * Should be called using  the provided &#x60;mergeInto&#x60;-method like this:
  *
- * Pollyfils for often used functionality for Functions
+ * @example
+ * var IO = require(&quot;io&quot;);
+ * var IOxml = require(&quot;io-xml&quot;);
+ * IOxml.mergeInto(IO);
  *
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
- * @module js-ext
- * @submodule lib/function.js
- * @class Function
- *
+ * @module io
+ * @submodule io-xml
+ * @class IO
+ * @since 0.0.1
 */
 
-&quot;use strict&quot;;
+require(&#x27;js-ext&#x27;);
 
-require(&#x27;polyfill/polyfill-base.js&#x27;);
+var NAME = &#x27;[io-xml]: &#x27;,
+    REGEXP_XML = /(?: )*(&lt;\?xml (?:.)*\?&gt;)(?: )*(&lt;(?:\w)+&gt;)/;
 
-// Define configurable, writable and non-enumerable props
-// if they don&#x27;t exist.
-var defineProperty = function (object, name, method, force) {
-    if (!force &amp;&amp; (name in object)) {
-        return;
-    }
-    Object.defineProperty(object, name, {
-        configurable: true,
-        enumerable: false,
-        writable: true,
-        value: method
-    });
-};
-var defineProperties = function (object, map, force) {
-    var names = Object.keys(map),
-        l = names.length,
-        i = -1,
-        name;
-    while (++i &lt; l) {
-        name = names[i];
-        defineProperty(object, name, map[name], force);
-    }
-};
-var NOOP = function () {};
+module.exports = function (window) {
 
-/**
- * Pollyfils for often used functionality for Function
- * @class Function
-*/
+    var IO = require(&#x27;../io.js&#x27;)(window),
 
-defineProperties(Function.prototype, {
-
-    /**
-     * Merges the given map of properties into the &#x60;prototype&#x60; of the Class.
-     * **Not** to be used on instances.
+    /*
+     * Adds properties to the xhr-object: in case of streaming,
+     * xhr._parseStream=function is created to parse streamed data.
      *
-     * The members in the hash map will become members with
-     * instances of the merged class.
-     *
-     * By default, this method will not override existing prototype members,
-     * unless the second argument &#x60;force&#x60; is true.
-     *
-     * @method mergePrototypes
-     * @param map {Object} Hash map of properties to add to the prototype of this object
-     * @param force {Boolean}  If true, existing members will be overwritten
-     * @chainable
-     */
-    mergePrototypes: function (map, force) {
-        var proto = this.prototype;
-
-        var names = Object.keys(map || {}),
-            l = names.length,
-            i = -1,
-            name;
-        while (++i &lt; l) {
-            name = names[i];
-            if (!force &amp;&amp; name in proto) continue;
-            proto[name] = map[name];
-        }
-        return this;
-
-    },
-
-    /**
-     * Returns a newly created class inheriting from this class
-     * using the given &#x60;constructor&#x60; with the
-     * prototypes listed in &#x60;prototypes&#x60; merged in.
-     *
-     *
-     * The newly created class has the &#x60;$super&#x60; static property
-     * available to access all of is ancestor&#x27;s instance methods.
-     *
-     * Further methods can be added via the [mergePrototypes](#method_mergePrototypes).
-     *
-     * @example
-     *
-     *     var Circle = Shape.subClass(
-     *         function (x, y, r) {
-     *             this.r = r;
-     *             Circle.$super.constructor.call(this, x, y);
-     *         },
-     *         {
-     *             area: function () {
-     *                 return this.r * this.r * Math.PI;
-     *             }
-     *         }
-     *     );
-     *
-     * @method subClass
-     * @param [constructor] {Function} The function that will serve as constructor for the new class.
-     *        If &#x60;undefined&#x60; defaults to &#x60;Object.constructor&#x60;
-     * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
-     * @return the new class.
-     */
-    subClass: function (constructor, prototypes) {
-
-        if ((arguments.length === 1) &amp;&amp; (typeof constructor !== &#x27;function&#x27;)) {
-            prototypes = constructor;
-            constructor = null;
-        }
-
-
-        constructor = constructor || function (ancestor) {
-            return function () {
-                ancestor.apply(this, arguments);
-            };
-        }(this);
-
-
-        var baseProt = this.prototype,
-            rp = Object.create(baseProt);
-        constructor.prototype = rp;
-
-        rp.constructor = constructor;
-        constructor.$super = baseProt;
-        constructor.$orig = {};
-
-        constructor.mergePrototypes(prototypes, true);
-        return constructor;
-    },
-
-    /**
-     * Overwrites the given prototype functions with the ones given in
-     * the hashmap while still providing a means of calling the original
-     * overridden method.
-     *
-     * The patching function will receive a reference to the original method
-     * prepended to the arguments the original would have received.
-     *
-     * @method patch
-     * @param map {Object} Hash map of method names to their new implementation.
-     * @chainable
+     * @method _progressHandle
+     * @param xhr {Object} containing the xhr-instance
+     * @param props {Object} the propertie-object that is added too xhr and can be expanded
+     * @param options {Object} options of the request
+     * @private
     */
-    patch: function (map) {
-        var proto = this.prototype;
-
-        var names = Object.keys(map || {}),
-            l = names.length,
-            i = -1,
-            name;
-        while (++i &lt; l) {
-            name = names[i];
-            /*jshint -W083 */
-            proto[name] = (function (original) {
-                return function () {
-                    /*jshint +W083 */
-                    var a = Array.prototype.slice.call(arguments, 0);
-                    a.unshift(original || NOOP);
-                    return map[name].apply(this, a);
-                };
-            })(proto[name]);
+    _entendXHR = function(xhr, props, options, promise) {
+        var parser, followingstream, regegexp_endcont, regexpxml, xmlstart, container, endcontainer;
+        if ((typeof options.streamback === &#x27;function&#x27;) &amp;&amp; options.headers &amp;&amp; (options.headers.Accept===&#x27;text/xml&#x27;)) {
+            console.log(NAME, &#x27;entendXHR&#x27;);
+            parser = new window.DOMParser();
+            xhr._parseStream = function(streamData) {
+                var fragment, parialdata;
+                console.log(NAME, &#x27;entendXHR --&gt; _parseStream&#x27;);
+                try {
+                    if (!followingstream) {
+                        regexpxml = streamData.match(REGEXP_XML);
+                        if (regexpxml) {
+                            xmlstart = regexpxml[1];
+                            container = regexpxml[2];
+                            endcontainer = &#x27;&lt;/&#x27;+container.substr(1);
+                            regegexp_endcont = new RegExp(&#x27;(.*)&#x27;+endcontainer+&#x27;( )*$&#x27;);
+                        }
+                    }
+                    parialdata = (followingstream ? xmlstart+container : &#x27;&#x27;) + streamData;
+                    regegexp_endcont.test(streamData) || (parialdata+=endcontainer);
+                    fragment = parser.parseFromString(parialdata, &#x27;text/xml&#x27;);
+                    followingstream = true;
+                    return fragment;
+                }
+                catch(err) {
+                    promise.reject(err);
+                }
+            };
         }
-        return this;
-    },
+        return xhr;
+    };
+
+    IO._xhrList.push(_entendXHR);
 
     /**
-     * Sets the context of which the function will be execute. in the
-     * supplied object&#x27;s context, optionally adding any additional
-     * supplied parameters to the end of the arguments the function
-     * is executed with.
+     * Performs an AJAX request with the GET HTTP method and expects a JSON-object.
+     * The resolved Promise-callback returns an object (JSON-parsed serverresponse).
      *
-     * @method rbind
-     * @param [context] {Object} the execution context.
-     *        The value is ignored if the bound function is constructed using the new operator.
-     * @param [args*] {any} args* 0..n arguments to append to the end of
-     *        arguments collection supplied to the function.
-     * @return {function} the wrapped function.
-     */
-    rbind: function (context /*, args* */ ) {
-        var thisFunction = this,
-            arrayArgs,
-            slice = Array.prototype.slice;
-        context || (context = this);
-        if (arguments.length &gt; 1) {
-            // removing &#x60;context&#x60; (first item) by slicing it out:
-            arrayArgs = slice.call(arguments, 1);
-        }
-
-        return (arrayArgs ?
-            function () {
-                // over here, &#x60;arguments&#x60; will be the &quot;new&quot; arguments when the final function is called!
-                return thisFunction.apply(context, slice.call(arguments, 0).concat(arrayArgs));
-            } :
-            function () {
-                // over here, &#x60;arguments&#x60; will be the &quot;new&quot; arguments when the final function is called!
-                return thisFunction.apply(context, arguments);
+     * Additional request-parameters can be on the url (with questionmark), through &#x60;params&#x60;, or both.
+     *
+     * The Promise gets fulfilled if the server responses with &#x60;STATUS-CODE&#x60; in the 200-range (excluded 204).
+     * It will be rejected if a timeout occurs (see &#x60;options.timeout&#x60;), or if &#x60;xhr.abort()&#x60; gets invoked.
+     *
+     * Note1: If you expect the server to response with data that consist of Date-properties, you should set &#x60;options.parseJSONDate&#x60; true.
+     *        Parsing takes a bit longer, but it will generate trully Date-objects.
+     * Note2: CORS is supported, as long as the responseserver is set up to:
+     *       a) has a response header which allows the clientdomain:
+     *          header(&#x27;Access-Control-Allow-Origin: http://www.some-site.com&#x27;); or header(&#x27;Access-Control-Allow-Origin: *&#x27;);
+     *       b) in cae you have set a custom HEADER (through &#x27;options&#x27;), the responseserver MUST listen and respond
+     *          to requests with the OPTION-method
+     *       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/
+     *
+     * @method readXML
+     * @param url {String} URL of the resource server
+     * @param [params] {Object} additional parameters.
+     * @param [options] {Object} See also: [&#x60;I.io&#x60;](#method_xhr)
+     *    @param [options.url] {String} The url to which the request is sent.
+     *    can be ignored, even if streams are used --&gt; the returned Promise will always hold all data
+     *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
+     *    @param [options.params] {Object} Data to be sent to the server.
+     *    @param [options.body] {Object} The content for the request body for POST method.
+     *    @param [options.headers] {Object} HTTP request headers.
+     *    @param [options.responseType=&#x27;text&#x27;] {String} The response type.
+     *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
+     *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
+     *    @param [options.parseJSONDate=false] {boolean} Whether the server returns JSON-stringified data which has Date-objects.
+     * @return {Promise}
+     * on success:
+        * Object received data
+     * on failure an Error object
+        * reason {Error}
+    */
+    IO.readXML = function(url, params, options) {
+        var XMLOptions = {
+                headers: {&#x27;Accept&#x27;: &#x27;text/xml&#x27;},
+                method: &#x27;GET&#x27;,
+                url: url,
+                data: params
+            },
+            ioPromise, returnPromise;
+        options &amp;&amp; XMLOptions.merge(options);
+        ioPromise = this.request(XMLOptions);
+        returnPromise = ioPromise.then(
+            function(xhrResponse) {
+                // if the responsetype is no &quot;text/xml&quot;, then throw an error, else return xhrResponse.responseXML;
+                // note that nodejs has &quot;Content-Type&quot; in lowercase!
+                // Also: XDR DOES NOT support getResponseHeader() --&gt; so we must just assume the data is text/xml
+                var contenttype = !xhrResponse._isXDR &amp;&amp; (xhrResponse.getResponseHeader(&#x27;Content-Type&#x27;) || xhrResponse.getResponseHeader(&#x27;content-type&#x27;));
+                if (xhrResponse._isXDR || /^text\/xml/.test(contenttype)) {
+                    // cautious: when streaming, xhrResponse.responseXML will be undefined in case of using XDR
+                    return xhrResponse.responseXML || (new window.DOMParser()).parseFromString(xhrResponse.responseText, &#x27;text/xml&#x27;);
+                }
+                // when code comes here: no valid xml response:
+                throw new Error(&#x27;recieved Content-Type is no XML&#x27;);
             }
         );
-    }
-});
+        // set &#x60;abort&#x60; to the thennable-promise:
+        returnPromise.abort = ioPromise.abort;
+        return returnPromise;
+    };
 
-/**
- * Returns a base class with the given constructor and prototype methods
- *
- * @for Object
- * @method createClass
- * @param [constructor] {Function} constructor for the class
- * @param [prototype] {Object} Hash map of prototype members of the new class
- * @return {Function} the new class
-*/
-defineProperty(Object.prototype, &#x27;createClass&#x27;, function (constructor, prototype) {
-    return Function.prototype.subClass.apply(this, arguments);
-});
+    return IO;
+};
     </pre>
 </div>
 

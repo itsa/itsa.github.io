@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/event-dom/extra/dragdrop.js - Itsa</title>
+    <title>src/drag-drop/drag-drop.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -61,6 +61,8 @@
             
                 <li><a href="../classes/NodeList.html">NodeList</a></li>
             
+                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
                 <li><a href="../classes/Object.html">Object</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
@@ -110,6 +112,8 @@
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
                 <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
+            
+                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
             
                 <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
             
@@ -162,7 +166,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/event-dom/extra/dragdrop.js</h1>
+                        <h1 class="file-heading">File: src/drag-drop/drag-drop.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -220,37 +224,19 @@ var NAME = &#x27;[event-dragdrop]: &#x27;,
 
 require(&#x27;polyfill/polyfill-base.js&#x27;);
 require(&#x27;js-ext&#x27;);
-require(&#x27;../css/dragdrop.css&#x27;);
-require(&#x27;./hover.js&#x27;);
+require(&#x27;./css/drag-drop.css&#x27;);
 
 module.exports = function (window) {
-    var Event = require(&#x27;../event-dom.js&#x27;)(window),
+    var Event = require(&#x27;event-dom&#x27;)(window),
+        NodePlugin = require(&#x27;dom-ext&#x27;)(window).NodePlugin,
         UA = window.navigator.userAgent,
         iOS = !!UA.match(&#x27;iPhone OS&#x27;) || !!UA.match(&#x27;iPad&#x27;),
         dragOverPromiseList = [],
-        featureDetect_DD, supportsDD, setupDD, teardownDD, handleMove, handleDrop, teardownDragOverEvent, allowSwitch, _getAllowedEffects,
+        setupDD, teardownDD, handleMove, handleDrop, teardownDragOverEvent, allowSwitch, _getAllowedEffects,
         handleDragStart, currentNode, allowCopy, movableNode, setupDragOverEvent, dragOverEvent, lastMouseOverNode, onlyCopy, dropEffect,
-        lastMouseX, lastMouseY, setBack;
+        lastMouseX, lastMouseY, setBack, elementSetXY_BKP, NodeDD, NodeDropzone, movableNodeWinConstrained, movableNodeNodeConstrained;
 
     require(&#x27;window-ext&#x27;)(window);
-    require(&#x27;dom-ext&#x27;)(window);
-
-    featureDetect_DD = function() {
-        var div = window.document.createElement(&#x27;div&#x27;);
-        return (DRAGGABLE in div) || (&#x27;ondragstart&#x27; in div &amp;&amp; &#x27;ondrop&#x27; in div);
-    };
-
-    supportsDD = featureDetect_DD();
-
-    // if supportsDD &amp;&amp; !iOS, then we can use native HTML5 drag and drop
-    // no polyfill needed
-
-    // iOS claims that draggable is in the element but doesn&#x27;t allow drag and drop:
-    // https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariWebContent/HandlingEvents/HandlingEvents.html
-
-    if (iOS || !supportsDD) {
-        // we need a custom drag and drop solution
-    }
 
     _getAllowedEffects = function(node) {
         var allowedEffects = node.getAttr(DD_EFFECT_ALLOWED);
@@ -303,7 +289,8 @@ module.exports = function (window) {
                                 // mouse is in area of dropzone
                                 dragOverPromise = Promise.manage();
                                 eventobject = {
-                                    target: dropzone,
+                                    sourceTarget: dropzone,
+                                    currentTarget: window.document,
                                     dragover: dragOverPromise
                                 };
                                 dragOutEvent = Event.after(
@@ -398,12 +385,26 @@ module.exports = function (window) {
         Event.before([MOUSE+&#x27;down&#x27;, &#x27;panstart&#x27;], function(e) {
             console.log(NAME, &#x27;setupHover: setting up mouseover event&#x27;);
             var node = e.target,
-                moveEv, evtType, x, y;
+                moveEv, evtType, x, y, handle, availableHandles, insideHandle;
 
             // because we listen to 2 eventypes, but we don&#x27;t want to setup twice, we need to store
             // data on the node that tells whether dragging already started
             if (currentNode) {
                 return;
+            }
+
+            // first check if there is a handle to determine if the drag started here:
+            handle = node.getAttr(&#x27;dd-handle&#x27;);
+            if (handle) {
+                availableHandles = node.getAll(handle);
+                insideHandle = false;
+                availableHandles.some(function(handleNode) {
+                    insideHandle = handleNode.contains(e.sourceTarget);
+                    return insideHandle;
+                });
+                if (!insideHandle) {
+                    return;
+                }
             }
 
             currentNode = node;
@@ -439,7 +440,12 @@ module.exports = function (window) {
             Event.onceAfter((evtType===MOUSE) ? MOUSE+&#x27;up&#x27; : &#x27;panend&#x27;, function(ev) {
                 moveEv.detach();
                 // handle drop
-                movableNode.hasAttr(DD_DROPZONE) &amp;&amp; handleDrop(e, ev);
+                if (movableNode.hasAttr(DD_DROPZONE)) {
+                    handleDrop(e, ev, currentNode);
+                }
+                else {
+                    movableNode.removeClass(NO_TRANS_CLASS).removeClass(HIGH_Z_CLASS).removeClass(DD_DRAGGING_CLASS);
+                }
                 currentNode = null;
                 e.dragFinished = true;
                 node.removeData(DATA_KEY);
@@ -455,12 +461,15 @@ module.exports = function (window) {
     };
 
     handleDragStart = function(e, x, y) {
-        var proxy = currentNode.hasAttr(DD_DROPZONE);
+        var proxy = currentNode.hasAttr(DD_DROPZONE),
+            constrained = currentNode.getAttr(CONSTRAIN_ATTR);
 
         movableNode = proxy ? currentNode.clone(true) : currentNode;
 
+        movableNodeWinConstrained = (constrained===&#x27;window&#x27;);
+        movableNodeNodeConstrained = !movableNodeWinConstrained &amp;&amp; constrained;
 
-        movableNode.setClass(NO_TRANS_CLASS).setClass(HIGH_Z_CLASS);
+        movableNode.setClass(NO_TRANS_CLASS).setClass(HIGH_Z_CLASS).setClass(DD_DRAGGING_CLASS);
 
         if (proxy) {
             dropEffect = (onlyCopy(currentNode) || (CTRL_PRESSED &amp;&amp; allowCopy(currentNode))) ? &#x27;copy&#x27; : &#x27;move&#x27;;
@@ -482,11 +491,12 @@ console.info(&#x27;DragMove &#x27;+movableNode.id);
             return;
         }
         var data = movableNode.getData(DATA_KEY);
-        movableNode.setClass(DD_DRAGGING_CLASS);
         movableNode.setXY(data.x+ev.clientX+window.getScrollLeft()-data.mousex, data.y+ev.clientY+window.getScrollTop()-data.mousey, true);
+        movableNodeWinConstrained || movableNode.forceIntoView(true);
+        movableNodeNodeConstrained &amp;&amp; movableNode.forceIntoNodeView();
     };
 
-    handleDrop = function(e, ev) {
+    handleDrop = function(e, ev, originalCurrentNode) {
 console.info(&#x27;DragDrop &#x27;+movableNode.id);
         var targetNode, originalConstrain;
 
@@ -506,11 +516,11 @@ console.info(&#x27;DragDrop &#x27;+movableNode.id);
             movableNode.remove();
         }
         else {
-            setBack(e, ev);
+            setBack(e, ev, originalCurrentNode);
         }
     };
 
-    setBack = function(e, ev) {
+    setBack = function(e, ev, originalCurrentNode) {
 console.info(&#x27;setBack &#x27;+movableNode.id);
         var proxy = movableNode.hasAttr(DD_DROPZONE),
             data = movableNode.getData(DATA_KEY),
@@ -518,12 +528,12 @@ console.info(&#x27;setBack &#x27;+movableNode.id);
         tearDown = function(notransRemoval) {
             notransRemoval || (movableNode.removeEventListener &amp;&amp; movableNode.removeEventListener(&#x27;transitionend&#x27;, tearDown, true));
             if (proxy) {
-                // we must take e.target instead of currentNode --&gt; because asynchronisity, currentNode is already null
-                e.target.removeClass(INVISIBLE_CLASS);
+                // we must take originalCurrentNode instead of currentNode --&gt; because asynchronisity, currentNode is already null
+                originalCurrentNode.removeClass(INVISIBLE_CLASS);
                 movableNode.remove();
             }
             else {
-                movableNode.removeClass(DD_TRANSITION_CLASS).removeClass(HIGH_Z_CLASS);
+                movableNode.removeClass(DD_TRANSITION_CLASS).removeClass(HIGH_Z_CLASS).removeClass(DD_DRAGGING_CLASS);
             }
         };
 
@@ -550,8 +560,6 @@ console.info(&#x27;setBack &#x27;+movableNode.id);
 
     };
 
-    setupDD();
-
     // also extend window.Element:
     window.Element &amp;&amp; (function(ElementPrototype) {
        /**
@@ -566,6 +574,7 @@ console.info(&#x27;setBack &#x27;+movableNode.id);
             this.setAttr(DRAGGABLE, proxy ? PROXY : &quot;true&quot;);
             return this;
         };
+
        /**
         * Removes draggability of the HtmlElement
         *
@@ -579,7 +588,37 @@ console.info(&#x27;setBack &#x27;+movableNode.id);
         };
     }(window.Element.prototype));
 
-    return Event;
+    setupDD();
+
+    NodeDD = NodePlugin.subClass(
+        function (config) {
+            config || (config={});
+            this.draggable = true;
+            this[&#x27;dd-dropzone&#x27;] = config.dropzone;
+            this[&#x27;xy-constrain&#x27;] = config.constrain;
+            this[&#x27;dd-handle&#x27;] = config.handle;
+            this[&#x27;dd-effect-allowed&#x27;] = config.effectAllowed;
+        }
+    );
+
+    NodeDropzone = NodePlugin.subClass(
+        function (config) {
+            var dropzone = &#x27;true&#x27;;
+            config || (config={});
+            if (config.copy &amp;&amp; !config.move) {
+                dropzone = &#x27;copy&#x27;;
+            }
+            else if (!config.copy &amp;&amp; config.move) {
+                dropzone = &#x27;move&#x27;;
+            }
+            this.dropzone = dropzone;
+        }
+    );
+
+    return {
+        NodeDD: NodeDD,
+        NodeDropzone: NodeDropzone
+    };
 };
     </pre>
 </div>

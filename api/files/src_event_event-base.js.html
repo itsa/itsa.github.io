@@ -61,6 +61,8 @@
             
                 <li><a href="../classes/NodeList.html">NodeList</a></li>
             
+                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
                 <li><a href="../classes/Object.html">Object</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
@@ -110,6 +112,8 @@
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
                 <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
+            
+                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
             
                 <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
             
@@ -1036,7 +1040,8 @@ require(&#x27;js-ext/lib/object.js&#x27;);
             }
             else {
                 e = Object.create(instance._defaultEventObj);
-                e.target = (payload &amp;&amp; payload.target) || emitter; // make it possible to force a specific e.target
+                // e.target = (payload &amp;&amp; payload.target) || emitter; // make it possible to force a specific e.target
+                e.target = emitter;
                 e.type = eventName;
                 e.emitter = emitterName;
                 e.status = {};

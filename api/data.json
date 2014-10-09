@@ -66,6 +66,17 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/dom-ext/lib/element-plugin.js": {
+            "name": "src/dom-ext/lib/element-plugin.js",
+            "modules": {
+                "lib/element-plugin.js": 1
+            },
+            "classes": {
+                "NodePlugin": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/dom-ext/lib/element.js": {
             "name": "src/dom-ext/lib/element.js",
             "modules": {
@@ -85,6 +96,15 @@
             "classes": {
                 "NodeList": 1
             },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/drag-drop/drag-drop.js": {
+            "name": "src/drag-drop/drag-drop.js",
+            "modules": {
+                "event-dragdrop": 1
+            },
+            "classes": {},
             "fors": {},
             "namespaces": {}
         },
@@ -116,15 +136,6 @@
             "classes": {
                 "Event.Listener": 1
             },
-            "fors": {},
-            "namespaces": {}
-        },
-        "src/event-dom/extra/dragdrop.js": {
-            "name": "src/event-dom/extra/dragdrop.js",
-            "modules": {
-                "event-dragdrop": 1
-            },
-            "classes": {},
             "fors": {},
             "namespaces": {}
         },
@@ -164,8 +175,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/io/io-assets.js": {
-            "name": "src/io/io-assets.js",
+        "src/io/extra/io-assets.js": {
+            "name": "src/io/extra/io-assets.js",
             "modules": {
                 "io-assets": 1
             },
@@ -173,8 +184,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/io/io-cors-ie9.js": {
-            "name": "src/io/io-cors-ie9.js",
+        "src/io/extra/io-cors-ie9.js": {
+            "name": "src/io/extra/io-cors-ie9.js",
             "modules": {
                 "io-cors": 1
             },
@@ -182,8 +193,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/io/io-jsonp.js": {
-            "name": "src/io/io-jsonp.js",
+        "src/io/extra/io-jsonp.js": {
+            "name": "src/io/extra/io-jsonp.js",
             "modules": {
                 "io-jsonp": 1
             },
@@ -191,15 +202,15 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/io/io-stream.js": {
-            "name": "src/io/io-stream.js",
+        "src/io/extra/io-stream.js": {
+            "name": "src/io/extra/io-stream.js",
             "modules": {},
             "classes": {},
             "fors": {},
             "namespaces": {}
         },
-        "src/io/io-transfer.js": {
-            "name": "src/io/io-transfer.js",
+        "src/io/extra/io-transfer.js": {
+            "name": "src/io/extra/io-transfer.js",
             "modules": {
                 "io-transfer": 1
             },
@@ -207,8 +218,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/io/io-xml.js": {
-            "name": "src/io/io-xml.js",
+        "src/io/extra/io-xml.js": {
+            "name": "src/io/extra/io-xml.js",
             "modules": {
                 "io-xml": 1
             },
@@ -344,11 +355,13 @@
             "name": "dom-ext",
             "submodules": {
                 "lib/document.js": 1,
+                "lib/element-plugin.js": 1,
                 "lib/element.js": 1,
                 "lib/nodelist.js": 1
             },
             "classes": {
                 "document": 1,
+                "NodePlugin": 1,
                 "Element": 1,
                 "NodeList": 1
             },
@@ -373,6 +386,25 @@
             "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "example": [
                 "\nrequire('dom-ext/lib/document.js')(window);"
+            ],
+            "since": "0.0.1"
+        },
+        "lib/element-plugin.js": {
+            "name": "lib/element-plugin.js",
+            "submodules": {},
+            "classes": {
+                "NodePlugin": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "dom-ext",
+            "namespace": "",
+            "file": "src/dom-ext/lib/element-plugin.js",
+            "line": 3,
+            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "example": [
+                "\nrequire('dom-ext/lib/element.js')(window);"
             ],
             "since": "0.0.1"
         },
@@ -417,9 +449,9 @@
         "event": {
             "name": "event",
             "submodules": {
+                "event-dragdrop": 1,
                 "event-emitter": 1,
                 "event-listener": 1,
-                "event-dragdrop": 1,
                 "event-hover": 1,
                 "event-dom": 1,
                 "event-mobile": 1
@@ -437,6 +469,24 @@
             "description": "Defines the Event-Class, which should be instantiated to get its functionality\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "is_constructor": 1,
             "since": "0.0.1"
+        },
+        "event-dragdrop": {
+            "name": "event-dragdrop",
+            "submodules": {},
+            "classes": {},
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "event",
+            "namespace": "",
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 3,
+            "description": "Adds the `hover` event as a DOM-event to event-dom. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\nMore about drag and drop: https://dev.opera.com/articles/drag-and-drop/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "example": [
+                "\nEvent = require('event-dom/dragdrop.js')(window);\n\nor",
+                "\nEvent = require('event-dom')(window);\nrequire('event-dom/event-dragdrop.js')(window);"
+            ],
+            "since": "0.0.2"
         },
         "event-emitter": {
             "name": "event-emitter",
@@ -475,24 +525,6 @@
                 "\n    var Event = require('event');<br>"
             ],
             "since": "0.0.1"
-        },
-        "event-dragdrop": {
-            "name": "event-dragdrop",
-            "submodules": {},
-            "classes": {},
-            "fors": {},
-            "is_submodule": 1,
-            "namespaces": {},
-            "module": "event",
-            "namespace": "",
-            "file": "src/event-dom/extra/dragdrop.js",
-            "line": 3,
-            "description": "Adds the `hover` event as a DOM-event to event-dom. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\nMore about drag and drop: https://dev.opera.com/articles/drag-and-drop/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
-            "example": [
-                "\nEvent = require('event-dom/dragdrop.js')(window);\n\nor",
-                "\nEvent = require('event-dom')(window);\nrequire('event-dom/event-dragdrop.js')(window);"
-            ],
-            "since": "0.0.2"
         },
         "event-hover": {
             "name": "event-hover",
@@ -576,7 +608,7 @@
             "namespaces": {},
             "module": "io",
             "namespace": "",
-            "file": "src/io/io-assets.js",
+            "file": "src/io/extra/io-assets.js",
             "line": 3,
             "description": "Extends io by adding the method `readXML` to it.\nShould be called using  the provided `mergeInto`-method like this:",
             "example": [
@@ -593,7 +625,7 @@
             "namespaces": {},
             "module": "io",
             "namespace": "",
-            "file": "src/io/io-cors-ie9.js",
+            "file": "src/io/extra/io-cors-ie9.js",
             "line": 4,
             "description": "Extends io by adding the method `readXML` to it.\nShould be called using  the provided `mergeInto`-method like this:",
             "example": [
@@ -610,7 +642,7 @@
             "namespaces": {},
             "module": "io",
             "namespace": "",
-            "file": "src/io/io-jsonp.js",
+            "file": "src/io/extra/io-jsonp.js",
             "line": 3,
             "description": "Extends io by adding the method `readXML` to it.\nShould be called using  the provided `mergeInto`-method like this:",
             "example": [
@@ -627,7 +659,7 @@
             "namespaces": {},
             "module": "io",
             "namespace": "",
-            "file": "src/io/io-transfer.js",
+            "file": "src/io/extra/io-transfer.js",
             "line": 3,
             "description": "Extends io by adding the method `readXML` to it.\nShould be called using  the provided `mergeInto`-method like this:",
             "example": [
@@ -815,6 +847,24 @@
                 "\nrequire('dom-ext/lib/document.js')(window);"
             ]
         },
+        "NodePlugin": {
+            "name": "NodePlugin",
+            "shortname": "NodePlugin",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "dom-ext",
+            "submodule": "lib/element-plugin.js",
+            "namespace": "",
+            "file": "src/dom-ext/lib/element-plugin.js",
+            "line": 3,
+            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "example": [
+                "\nrequire('dom-ext/lib/element.js')(window);"
+            ]
+        },
         "Element": {
             "name": "Element",
             "shortname": "Element",
@@ -860,14 +910,14 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "event",
+            "submodule": "event-mobile",
             "namespace": "",
             "file": "src/event-mobile/event-mobile.js",
             "line": 3,
             "description": "Integrates mobile-events to event-dom. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "example": [
                 "\nEvent = require('event-mobile')(window);"
-            ],
-            "submodule": "event-mobile"
+            ]
         },
         "Event.Emitter": {
             "name": "Event.Emitter",
@@ -7731,6 +7781,38 @@
             "submodule": "lib/document.js"
         },
         {
+            "file": "src/dom-ext/lib/element-plugin.js",
+            "line": 28,
+            "description": "Makes the HtmlElement draggable",
+            "itemtype": "method",
+            "name": "setDraggable",
+            "params": [
+                {
+                    "name": "proxy",
+                    "description": "whether the HtmlElement is a proxy-node during drag",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "NodePlugin",
+            "module": "dom-ext",
+            "submodule": "lib/element-plugin.js"
+        },
+        {
+            "file": "src/dom-ext/lib/element-plugin.js",
+            "line": 42,
+            "description": "Removes draggability of the HtmlElement",
+            "itemtype": "method",
+            "name": "removeDraggable",
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "NodePlugin",
+            "module": "dom-ext",
+            "submodule": "lib/element-plugin.js"
+        },
+        {
             "file": "src/dom-ext/lib/element.js",
             "line": 48,
             "description": "Appends a HtmlElement or text at the end of HtmlElement's innerHTML, or before the `refElement`.",
@@ -7834,6 +7916,48 @@
         {
             "file": "src/dom-ext/lib/element.js",
             "line": 116,
+            "description": "Forces the HtmlElement to be inside the window-view. Differs from `scrollIntoView()` in a way\nthat `forceIntoView()` doesn't change the position when it's inside the view, whereas\n`scrollIntoView()` sets it on top of the view.",
+            "itemtype": "method",
+            "name": "forceIntoView",
+            "params": [
+                {
+                    "name": "notransition",
+                    "description": "set true if you are sure positioning is without transition.\n       this isn't required, but it speeds up positioning. Only use when no transition is used:\n       when there is a transition, setting this argument `true` would miscalculate the position.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Element",
+            "module": "dom-ext",
+            "submodule": "lib/element.js"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 178,
+            "description": "Forces the HtmlElement to be inside the window-view. Differs from `scrollIntoView()` in a way\nthat `forceIntoView()` doesn't change the position when it's inside the view, whereas\n`scrollIntoView()` sets it on top of the view.",
+            "itemtype": "method",
+            "name": "forceIntoView",
+            "params": [
+                {
+                    "name": "notransition",
+                    "description": "set true if you are sure positioning is without transition.\n       this isn't required, but it speeds up positioning. Only use when no transition is used:\n       when there is a transition, setting this argument `true` would miscalculate the position.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Element",
+            "module": "dom-ext",
+            "submodule": "lib/element.js"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 221,
             "description": "Gets a NodeList of HtmlElements, specified by the css-selector.",
             "itemtype": "method",
             "name": "getAll",
@@ -7855,7 +7979,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 128,
+            "line": 233,
             "description": "Gets an attribute of the HtmlElement.\nCautious: do not use `value` to retrieve the value. Use `getValue()` instead.\n\nAlias for getAttribute().",
             "itemtype": "method",
             "name": "getAttr",
@@ -7877,7 +8001,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 143,
+            "line": 248,
             "description": "Gets the HtmlElement's class as a whole String.\n\nAlias for this.className",
             "itemtype": "method",
             "name": "getClass",
@@ -7892,7 +8016,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 156,
+            "line": 261,
             "description": "Returns data set specified by `key`. If not set, `undefined` will be returned.",
             "itemtype": "method",
             "name": "getData",
@@ -7914,7 +8038,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 168,
+            "line": 273,
             "description": "Gets one HtmlElement, specified by the css-selector. To retrieve a single element by id,\nyou need to prepend the id-name with a `#`. When multiple HtmlElement's match, the first is returned.",
             "itemtype": "method",
             "name": "getElement",
@@ -7936,8 +8060,8 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 181,
-            "description": "Gets the height of the element in pixels. Included are padding and border, not any margins.",
+            "line": 286,
+            "description": "Gets the height of the element in pixels. Included are padding and border, not any margins.\nBy setting the argument `overflow` you get the total height, included the invisible overflow.",
             "itemtype": "method",
             "name": "getHeight",
             "params": [
@@ -7960,7 +8084,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 193,
+            "line": 299,
             "description": "Returns the innerContent of the HtmlElement as a string with HTML entities.\n\nAlias for innerHTML",
             "itemtype": "method",
             "name": "getHtml",
@@ -7975,7 +8099,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 206,
+            "line": 312,
             "description": "Gets the HtmlElement's id.\n\nAlias for this.id",
             "itemtype": "method",
             "name": "getId",
@@ -7990,7 +8114,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 219,
+            "line": 325,
             "description": "Returns inline style of the specified property. `Inline` means: what is set directly on the HtmlElement,\nthis doesn't mean necesairy how it is looked like: when no css is set inline, the HtmlElement might still have\nan appearance because of other CSS-rules.\n\nIn most cases, you would be interesting in using `getStyle()` instead.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "getInlineStyle",
@@ -8005,7 +8129,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 236,
+            "line": 342,
             "description": "Gets the left-scroll offset of the content of the HtmlElement.\nOnly apropriate when the HtmlElement has overflow.",
             "itemtype": "method",
             "name": "getScrollLeft",
@@ -8020,7 +8144,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 248,
+            "line": 354,
             "description": "Gets the top-scroll offset of the content of the HtmlElement.\nOnly apropriate when the HtmlElement has overflow.",
             "itemtype": "method",
             "name": "getScrollTop",
@@ -8035,7 +8159,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 260,
+            "line": 366,
             "description": "Returns cascaded style of the specified property. `Cascaded` means: the actual present style,\nthe way it is visible (calculated through the DOM-tree).\n\nNote1: values are absolute: percentages and points are converted to absolute values, sizes are in pixels, colors in rgb/rgba-format.\nNote2: you cannot query shotcut-properties: use `margin-left` instead of `margin`.\nNote3: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine.",
             "itemtype": "method",
             "name": "getCascadeStyle",
@@ -8063,7 +8187,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 278,
+            "line": 384,
             "description": "Gets the HtmlElement's tagname. Always uppercased.\n\nAlias for this.nodeName",
             "itemtype": "method",
             "name": "getTag",
@@ -8078,7 +8202,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 291,
+            "line": 397,
             "description": "Gets the text content of the HtmlElement and its descendants.\nIf you need full HTML, you should use getHTML().\n\nAlias for textContent",
             "itemtype": "method",
             "name": "getText",
@@ -8093,8 +8217,8 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 313,
-            "description": "Gets the width of the element in pixels. Included are padding and border, not any margins.",
+            "line": 419,
+            "description": "Gets the width of the element in pixels. Included are padding and border, not any margins.\nBy setting the argument `overflow` you get the total width, included the invisible overflow.",
             "itemtype": "method",
             "name": "getWidth",
             "params": [
@@ -8117,7 +8241,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 325,
+            "line": 432,
             "description": "Gets the value of the following HtmlElements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>",
             "itemtype": "method",
             "name": "getValue",
@@ -8132,7 +8256,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 346,
+            "line": 453,
             "description": "Gets the x-position (in the window.document) of the element in pixels.\nwindow.document-related: regardless of the window's scroll-position.",
             "itemtype": "method",
             "name": "getX",
@@ -8147,7 +8271,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 358,
+            "line": 465,
             "description": "Gets the y-position (in the window.document) of the element in pixels.\nwindow.document-related: regardless of the window's scroll-position.",
             "itemtype": "method",
             "name": "getY",
@@ -8162,7 +8286,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 370,
+            "line": 477,
             "description": "Whether the HtmlElement has the attribute set.\n\nAlias for hasAttribute().",
             "itemtype": "method",
             "name": "hasAttr",
@@ -8184,7 +8308,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 384,
+            "line": 491,
             "description": "Checks whether the className is present on the Element.",
             "itemtype": "method",
             "name": "hasClass",
@@ -8206,7 +8330,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 397,
+            "line": 504,
             "description": "If the Element has data set specified by `key`.",
             "itemtype": "method",
             "name": "hasData",
@@ -8228,7 +8352,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 409,
+            "line": 516,
             "description": "Checks whether HtmlElement currently has the focus.",
             "itemtype": "method",
             "name": "hasFocus",
@@ -8250,7 +8374,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 421,
+            "line": 528,
             "description": "Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.",
             "itemtype": "method",
             "name": "last",
@@ -8273,7 +8397,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 433,
+            "line": 540,
             "description": "Returns the next of the HtmlElement's siblings, or the next that matches `cssSelector`.",
             "itemtype": "method",
             "name": "next",
@@ -8296,7 +8420,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 452,
+            "line": 559,
             "description": "Prepends a HtmlElement or text at the start of HtmlElement's innerHTML, or before the `refElement`.",
             "itemtype": "method",
             "name": "prepend",
@@ -8327,7 +8451,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 471,
+            "line": 578,
             "description": "Returns the previous of the HtmlElement's siblings, or the previous that matches `cssSelector`.",
             "itemtype": "method",
             "name": "prev",
@@ -8350,7 +8474,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 490,
+            "line": 597,
             "description": "Removes the HtmlElement from the DOM.",
             "itemtype": "method",
             "name": "remove",
@@ -8361,7 +8485,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 501,
+            "line": 608,
             "description": "Removes the attribute from the HtmlElement.\n\nAlias for removeAttribute().",
             "itemtype": "method",
             "name": "removeAttr",
@@ -8383,7 +8507,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 515,
+            "line": 622,
             "description": "Removes a className from the HtmlElement.",
             "itemtype": "method",
             "name": "removeClass",
@@ -8402,7 +8526,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 530,
+            "line": 637,
             "description": "Removes data specified by `key`. When no arguments are passed, all node-data (key-value pairs) will be removed.",
             "itemtype": "method",
             "name": "removeData",
@@ -8421,7 +8545,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 556,
+            "line": 663,
             "description": "Removes a css-property (inline) out of the HtmlElement. Use camelCase.",
             "itemtype": "method",
             "name": "removeInlineStyle",
@@ -8440,7 +8564,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 569,
+            "line": 676,
             "description": "Replaces the HtmlElement with a new HtmlElement.",
             "itemtype": "method",
             "name": "replace",
@@ -8464,7 +8588,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 581,
+            "line": 688,
             "description": "Replaces the className of the HtmlElement with a new className.\nIf the previous className is not available, the new className is set nevertheless.",
             "itemtype": "method",
             "name": "replaceClass",
@@ -8493,7 +8617,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 600,
+            "line": 707,
             "description": "Scrolls the content of the HtmlElement into the specified scrollposition.\nOnly available when the HtmlElement has overflow.",
             "itemtype": "method",
             "name": "scrollTo",
@@ -8517,7 +8641,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 617,
+            "line": 724,
             "description": "Sets the attribute on the HtmlElement with the specified value.\n\nAlias for setAttribute().",
             "itemtype": "method",
             "name": "setAttr",
@@ -8541,7 +8665,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 633,
+            "line": 740,
             "description": "Adds a class to the HtmlElement. If the class already exists it won't be duplicated.",
             "itemtype": "method",
             "name": "setClass",
@@ -8560,7 +8684,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 647,
+            "line": 754,
             "description": "Sets the HtmlElement's class as a whole String. Cleaning up any previous classes.\n\nAlias for this.className = value",
             "itemtype": "method",
             "name": "setClassName",
@@ -8579,7 +8703,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 662,
+            "line": 769,
             "description": "Stores arbitary `data` at the HtmlElement. This has nothing to do with node-attributes whatsoever,\nit is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.",
             "itemtype": "method",
             "name": "setData",
@@ -8603,7 +8727,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 684,
+            "line": 791,
             "description": "Sets the content of the HtmlElement (innerHTML). Careful: only set content like this if you controll the data and\nare sure what is going inside. Otherwise XSS might occur. If you let the user insert, or insert right from a db,\nyou might be better of using setContent().",
             "itemtype": "method",
             "name": "setHTML",
@@ -8622,7 +8746,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 699,
+            "line": 806,
             "description": "Gets the serialized HTML fragment describing the element including its descendants.\n\nalias for outerHTML()",
             "itemtype": "method",
             "name": "serialize",
@@ -8634,7 +8758,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 712,
+            "line": 819,
             "description": "Sets a css-property (inline) out of the HtmlElement. Use camelCase.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "setStyle",
@@ -8658,7 +8782,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 731,
+            "line": 838,
             "description": "Sets the content of the HtmlElement. This is a safe way to set the content, because HTML is not parsed.\nIf you do need to set HTML inside the node, use setHTML().",
             "itemtype": "method",
             "name": "setText",
@@ -8683,7 +8807,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 753,
+            "line": 860,
             "description": "Sets the value of the following HtmlElements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>\n\nWill fire an `valuechange` event, in case both the `itsa/event` as well as\n`itsa/event-dom/extra/event-valuechange.js` are used.\n\nTherefore it is highly suggested to use `setValue()` instead of setting the value manually.",
             "itemtype": "method",
             "name": "setValue",
@@ -8702,7 +8826,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 789,
+            "line": 896,
             "description": "Checks whether a point specified with x,y is within the HtmlElement's region.",
             "itemtype": "method",
             "name": "insidePos",
@@ -8724,7 +8848,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 805,
+            "line": 913,
             "description": "Set the position of an html element in page coordinates.\nThe element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).\n\nIf the HtmlElement has the attribute `xy-constrian` set, then its position cannot exceed any matching container it lies within.",
             "itemtype": "method",
             "name": "setXY",
@@ -8753,7 +8877,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 900,
+            "line": 1025,
             "description": "Set the X position of an html element in page coordinates, regardless of how the element is positioned.\nThe element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
             "itemtype": "method",
             "name": "setX",
@@ -8774,7 +8898,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 911,
+            "line": 1036,
             "description": "Set the Y position of an html element in page coordinates, regardless of how the element is positioned.\nThe element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
             "itemtype": "method",
             "name": "setY",
@@ -8795,7 +8919,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 922,
+            "line": 1047,
             "description": "Tests if the HtmlElement would be selected by the specified cssSelector.\nAlias for `matchesSelector()`",
             "itemtype": "method",
             "name": "test",
@@ -8817,7 +8941,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 935,
+            "line": 1060,
             "description": "Toggles the className of the Element.",
             "itemtype": "method",
             "name": "toggleClass",
@@ -9217,6 +9341,38 @@
             "class": "NodeList",
             "module": "dom-ext",
             "submodule": "lib/nodelist.js"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 393,
+            "description": "Makes the HtmlElement draggable",
+            "itemtype": "method",
+            "name": "setDraggable",
+            "params": [
+                {
+                    "name": "proxy",
+                    "description": "whether the HtmlElement is a proxy-node during drag",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 406,
+            "description": "Removes draggability of the HtmlElement",
+            "itemtype": "method",
+            "name": "removeDraggable",
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
         },
         {
             "file": "src/event/event-base.js",
@@ -9851,7 +10007,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 935,
+            "line": 936,
             "description": "Does the actual invocation of a subscriber.",
             "itemtype": "method",
             "name": "_invokeSubs",
@@ -9893,7 +10049,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 985,
+            "line": 986,
             "description": "Removes a subscriber from the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`.",
             "static": 1,
             "itemtype": "method",
@@ -9929,7 +10085,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1050,
+            "line": 1051,
             "description": "Removes subscribers from the multiple customevents. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -9954,7 +10110,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1105,
+            "line": 1106,
             "description": "Adds a property to the default eventobject's prototype which passes through all eventcycles.\nGoes through Object.defineProperty with configurable, enumerable and writable\nall set to false.",
             "itemtype": "method",
             "name": "_setEventObjProperty",
@@ -9979,7 +10135,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1125,
+            "line": 1126,
             "description": "Objecthash containing all defined custom-events\nwhich has a structure like this:\n\n_ce = {\n    'UI:click': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    },\n    'redmodel:save': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -9993,7 +10149,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1157,
+            "line": 1158,
             "description": "Objecthash containing all defined before and after subscribers\nwhich has a structure like this (`b` represents `before` and `a` represents `after`)\nEvery item that gets in the array consist by itself of 3 properties:\n                                                         subscriberitem = {\n                                                             o: listener,\n                                                             cb: callbackFn(e),\n                                                             f: filter\n                                                         };\n\n_subs = {\n    'UI:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    '*:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    'redmodel:save': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -10007,7 +10163,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1208,
+            "line": 1209,
             "description": "Internal list of finalize-subscribers which are invoked at the finalization-cycle, which happens after the after-subscribers.\nIs an array of function-references.",
             "itemtype": "property",
             "name": "_final",
@@ -10021,7 +10177,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1220,
+            "line": 1221,
             "description": "Object that acts as the prototype of the eventobject.\nTo add more methods, you can use `_setEventObjProperty`",
             "itemtype": "property",
             "name": "_defaultEventObj",
@@ -10035,7 +10191,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1236,
+            "line": 1237,
             "description": "Objecthash containing all detach-notifiers, keyed by customEvent name.\nThis list is maintained by `notifyDetach` and `unNotifyDetach`\n\n_detachNotifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_detachNotifiers",
@@ -10049,7 +10205,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1263,
+            "line": 1264,
             "description": "Objecthash containing all notifiers, keyed by customEvent name.\nThis list is maintained by `notify` and `unNotify`\n\n_notifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_notifiers",
@@ -10329,38 +10485,6 @@
             "submodule": "event-listener"
         },
         {
-            "file": "src/event-dom/extra/dragdrop.js",
-            "line": 389,
-            "description": "Makes the HtmlElement draggable",
-            "itemtype": "method",
-            "name": "setDraggable",
-            "params": [
-                {
-                    "name": "proxy",
-                    "description": "whether the HtmlElement is a proxy-node during drag",
-                    "type": "Boolean",
-                    "optional": true
-                }
-            ],
-            "chainable": 1,
-            "since": "0.0.1",
-            "class": "Event",
-            "module": "event",
-            "submodule": "event-dragdrop"
-        },
-        {
-            "file": "src/event-dom/extra/dragdrop.js",
-            "line": 401,
-            "description": "Removes draggability of the HtmlElement",
-            "itemtype": "method",
-            "name": "removeDraggable",
-            "chainable": 1,
-            "since": "0.0.1",
-            "class": "Event",
-            "module": "event",
-            "submodule": "event-dragdrop"
-        },
-        {
             "file": "src/event-dom/extra/valuechange.js",
             "line": 34,
             "description": "Interval (in milliseconds) at which to poll for changes to the value of an\nelement with one or more `valuechange` subscribers when the user is likely\nto be interacting with it.",
@@ -10441,7 +10565,7 @@
             "submodule": "event-mobile"
         },
         {
-            "file": "src/io/io-assets.js",
+            "file": "src/io/extra/io-assets.js",
             "line": 27,
             "description": "Creates a `<style>` tag to load the CSS file at the given url.",
             "itemtype": "method",
@@ -10490,7 +10614,7 @@
             "submodule": "io-assets"
         },
         {
-            "file": "src/io/io-assets.js",
+            "file": "src/io/extra/io-assets.js",
             "line": 45,
             "description": "Creates a `<script>` tag to load the script at the given url.",
             "itemtype": "method",
@@ -10539,7 +10663,7 @@
             "submodule": "io-assets"
         },
         {
-            "file": "src/io/io-jsonp.js",
+            "file": "src/io/extra/io-jsonp.js",
             "line": 29,
             "description": "Creates a `<style>` tag to load the CSS file at the given url.",
             "itemtype": "method",
@@ -10588,7 +10712,7 @@
             "submodule": "io-jsonp"
         },
         {
-            "file": "src/io/io-stream.js",
+            "file": "src/io/extra/io-stream.js",
             "line": 63,
             "description": "Adds 2 methods on the xhr-instance which are used by xhr when events occur:\n\nxhr.onload()\nxhr.onerror()  // only XMLHttpRequest2\n\nThese events are only added in case of XDR",
             "itemtype": "method",
@@ -10611,7 +10735,7 @@
             "module": "io"
         },
         {
-            "file": "src/io/io-stream.js",
+            "file": "src/io/extra/io-stream.js",
             "line": 95,
             "description": "Adds a `headers` X-Stream=true in case of a streaming request.",
             "itemtype": "method",
@@ -10639,7 +10763,7 @@
             "module": "io"
         },
         {
-            "file": "src/io/io-transfer.js",
+            "file": "src/io/extra/io-transfer.js",
             "line": 86,
             "description": "Performs an AJAX GET request.  Shortcut for a call to [`xhr`](#method_xhr) with `method` set to  `'GET'`.\nAdditional parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `params` should be a plain object with only primitive types which are transformed into key/value pairs.",
             "itemtype": "method",
@@ -10707,7 +10831,7 @@
             "submodule": "io-transfer"
         },
         {
-            "file": "src/io/io-transfer.js",
+            "file": "src/io/extra/io-transfer.js",
             "line": 130,
             "description": "Performs an AJAX request with the GET HTTP method and expects a JSON-object.\nThe resolved Promise-callback returns an object (JSON-parsed serverresponse).\n\nAdditional request-parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: If you expect the server to response with data that consist of Date-properties, you should set `options.parseJSONDate` true.\n       Parsing takes a bit longer, but it will generate trully Date-objects.\nNote2: CORS is supported, as long as the responseserver is set up to:\n      a) has a response header which allows the clientdomain:\n         header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n      b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n         to requests with the OPTION-method\n      More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/",
             "itemtype": "method",
@@ -10776,7 +10900,7 @@
             "submodule": "io-transfer"
         },
         {
-            "file": "src/io/io-transfer.js",
+            "file": "src/io/extra/io-transfer.js",
             "line": 192,
             "description": "Sends data (object) which will be JSON-stringified before sending.\nPerforms an AJAX request with the PUT HTTP method by default.\nWhen options.allfields is `false`, it will use the POST-method: see Note2.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: The server needs to inspect the bodyparam: 'action', which always equals 'update'.\n       'body.action' is the way to distinquish 'I.IO.updateObject' from 'I.IO.insertObject'.\n       On purpose, we didn't make this distinction through a custom CONTENT-HEADER, because\n       that would lead into a more complicated CORS-setup (see Note3)\nNote2: By default this method uses the PUT-request: which is preferable is you send the WHOLE object.\n       if you send part of the fields, set `options.allfields`=false.\n       This will lead into using the POST-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote3: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote4: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
@@ -10851,7 +10975,7 @@
             "submodule": "io-transfer"
         },
         {
-            "file": "src/io/io-transfer.js",
+            "file": "src/io/extra/io-transfer.js",
             "line": 240,
             "description": "Performs an AJAX request with the POST HTTP method by default.\nWhen options.allfields is `true`, it will use the PUT-method: see Note2.\nThe send data is an object which will be JSON-stringified before sending.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n'body.action' has the value 'insert'\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: The server needs to inspect the bodyparam: 'action', which always equals 'insert'.\n       'body.action' is the way to distinquish 'I.IO.insertObject' from 'I.IO.updateObject'.\n       On purpose, we didn't make this distinction through a custom CONTENT-HEADER, because\n       that would lead into a more complicated CORS-setup (see Note3)\nNote2: By default this method uses the POST-request: which is preferable if you don't know all the fields (like its unique id).\n       if you send ALL the fields, set `options.allfields`=true.\n       This will lead into using the PUT-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote3: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote4: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
@@ -10926,7 +11050,7 @@
             "submodule": "io-transfer"
         },
         {
-            "file": "src/io/io-transfer.js",
+            "file": "src/io/extra/io-transfer.js",
             "line": 288,
             "description": "Performs an AJAX request with the PUT HTTP method by default.\nWhen options.allfields is `false`, it will use the POST-method: see Note2.\nThe send data is an object which will be JSON-stringified before sending.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: By default this method uses the PUT-request: which is preferable is you send the WHOLE object.\n       if you send part of the fields, set `options.allfields`=false.\n       This will lead into using the POST-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote2: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote3: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
@@ -10994,7 +11118,7 @@
             "submodule": "io-transfer"
         },
         {
-            "file": "src/io/io-transfer.js",
+            "file": "src/io/extra/io-transfer.js",
             "line": 374,
             "description": "Performs an AJAX DELETE request.  Shortcut for a call to [`xhr`](#method_xhr) with `method` set to  `'DELETE'`.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `data` should be a plain object with only primitive types which are transformed into key/value pairs.",
             "itemtype": "method",
@@ -11073,7 +11197,7 @@
             "submodule": "io-transfer"
         },
         {
-            "file": "src/io/io-xml.js",
+            "file": "src/io/extra/io-xml.js",
             "line": 74,
             "description": "Performs an AJAX request with the GET HTTP method and expects a JSON-object.\nThe resolved Promise-callback returns an object (JSON-parsed serverresponse).\n\nAdditional request-parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: If you expect the server to response with data that consist of Date-properties, you should set `options.parseJSONDate` true.\n       Parsing takes a bit longer, but it will generate trully Date-objects.\nNote2: CORS is supported, as long as the responseserver is set up to:\n      a) has a response header which allows the clientdomain:\n         header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n      b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n         to requests with the OPTION-method\n      More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/",
             "itemtype": "method",
@@ -11430,7 +11554,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 107,
+            "line": 101,
             "description": "Reference to the `idGenerator` function in [utils](../modules/utils.html)",
             "itemtype": "property",
             "name": "idGenerator",
@@ -11441,7 +11565,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 118,
+            "line": 119,
             "description": "Reference to the [IO](io.html) object",
             "itemtype": "property",
             "name": "IO",
@@ -11452,7 +11576,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 130,
+            "line": 131,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",
