@@ -133,7 +133,7 @@ Mouse the mouse over the 5 containers:
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
     var container = document.getElement('#cont-5');
@@ -151,7 +151,7 @@ document.getElement('#dz2').plug(ITSA.NodeDropzone, {copy: true});
 document.getElement('#dz3').plug(ITSA.NodeDropzone);
 
 document.getElement('#constr').scrollTo(0,100);
-
+alert(document.getElement('.spaced').getStyle('border-left-width'));
 var c = document.getElement('#constr');
 console.warn('offsetWidth '+c.offsetWidth);
 console.warn('scrollWidth '+c.scrollWidth);

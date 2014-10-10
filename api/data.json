@@ -7814,7 +7814,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 48,
+            "line": 57,
             "description": "Appends a HtmlElement or text at the end of HtmlElement's innerHTML, or before the `refElement`.",
             "itemtype": "method",
             "name": "append",
@@ -7845,7 +7845,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 63,
+            "line": 72,
             "description": "Returns a duplicate of the node. Use cloneNode(true) for a `deep` clone.\nAlmost the same as native cloneNode(), but you should use clone(), because it also clones any data set with setData().",
             "itemtype": "method",
             "name": "clone",
@@ -7873,7 +7873,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 88,
+            "line": 97,
             "description": "Sets the inline-style of the HtmlElement exactly to the specified `value`, overruling previous values.\nMaking the HtmlElement's inline-style look like: style=\"value\".\n\nThis is meant for a quick one-time setup. For individually inline style-properties to be set, you can use `setInlineStyle()`.",
             "itemtype": "method",
             "name": "defineInlineStyle",
@@ -7892,7 +7892,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 104,
+            "line": 113,
             "description": "Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.",
             "itemtype": "method",
             "name": "first",
@@ -7915,17 +7915,16 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 116,
-            "description": "Forces the HtmlElement to be inside the window-view. Differs from `scrollIntoView()` in a way\nthat `forceIntoView()` doesn't change the position when it's inside the view, whereas\n`scrollIntoView()` sets it on top of the view.",
+            "line": 125,
+            "description": "Forces the HtmlElement to be inside an ancestor-HtmlElement that has the `overfow=\"scroll\" set.",
             "itemtype": "method",
-            "name": "forceIntoView",
+            "name": "forceIntoNodeView",
             "params": [
                 {
-                    "name": "notransition",
-                    "description": "set true if you are sure positioning is without transition.\n       this isn't required, but it speeds up positioning. Only use when no transition is used:\n       when there is a transition, setting this argument `true` would miscalculate the position.",
-                    "type": "Boolean",
-                    "optional": true,
-                    "optdefault": "false"
+                    "name": "ancestor",
+                    "description": "the HtmlElement where it should be forced into its view.\n       Only use this when you know the ancestor and this ancestor has an `overflow=\"scroll\"` property\n       when not set, this method will seek through the doc-tree upwards for the first HtmlElement that does match this criteria.",
+                    "type": "HtmlElement",
+                    "optional": true
                 }
             ],
             "chainable": 1,
@@ -7936,7 +7935,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 178,
+            "line": 185,
             "description": "Forces the HtmlElement to be inside the window-view. Differs from `scrollIntoView()` in a way\nthat `forceIntoView()` doesn't change the position when it's inside the view, whereas\n`scrollIntoView()` sets it on top of the view.",
             "itemtype": "method",
             "name": "forceIntoView",
@@ -7947,6 +7946,38 @@
                     "type": "Boolean",
                     "optional": true,
                     "optdefault": "false"
+                },
+                {
+                    "name": "rectangle",
+                    "description": "Set this if you have already calculated the window-rectangle (used for preformance within drag-drop)",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "x",
+                            "description": "scrollLeft of window",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "y",
+                            "description": "scrollTop of window",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "w",
+                            "description": "width of window",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "h",
+                            "description": "height of window",
+                            "type": "Number",
+                            "optional": true
+                        }
+                    ]
                 }
             ],
             "chainable": 1,
@@ -7957,7 +7988,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 221,
+            "line": 243,
             "description": "Gets a NodeList of HtmlElements, specified by the css-selector.",
             "itemtype": "method",
             "name": "getAll",
@@ -7979,7 +8010,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 233,
+            "line": 255,
             "description": "Gets an attribute of the HtmlElement.\nCautious: do not use `value` to retrieve the value. Use `getValue()` instead.\n\nAlias for getAttribute().",
             "itemtype": "method",
             "name": "getAttr",
@@ -8001,7 +8032,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 248,
+            "line": 270,
             "description": "Gets the HtmlElement's class as a whole String.\n\nAlias for this.className",
             "itemtype": "method",
             "name": "getClass",
@@ -8016,7 +8047,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 261,
+            "line": 283,
             "description": "Returns data set specified by `key`. If not set, `undefined` will be returned.",
             "itemtype": "method",
             "name": "getData",
@@ -8038,7 +8069,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 273,
+            "line": 295,
             "description": "Gets one HtmlElement, specified by the css-selector. To retrieve a single element by id,\nyou need to prepend the id-name with a `#`. When multiple HtmlElement's match, the first is returned.",
             "itemtype": "method",
             "name": "getElement",
@@ -8060,7 +8091,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 286,
+            "line": 308,
             "description": "Gets the height of the element in pixels. Included are padding and border, not any margins.\nBy setting the argument `overflow` you get the total height, included the invisible overflow.",
             "itemtype": "method",
             "name": "getHeight",
@@ -8084,7 +8115,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 299,
+            "line": 321,
             "description": "Returns the innerContent of the HtmlElement as a string with HTML entities.\n\nAlias for innerHTML",
             "itemtype": "method",
             "name": "getHtml",
@@ -8099,7 +8130,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 312,
+            "line": 334,
             "description": "Gets the HtmlElement's id.\n\nAlias for this.id",
             "itemtype": "method",
             "name": "getId",
@@ -8114,7 +8145,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 325,
+            "line": 347,
             "description": "Returns inline style of the specified property. `Inline` means: what is set directly on the HtmlElement,\nthis doesn't mean necesairy how it is looked like: when no css is set inline, the HtmlElement might still have\nan appearance because of other CSS-rules.\n\nIn most cases, you would be interesting in using `getStyle()` instead.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "getInlineStyle",
@@ -8129,7 +8160,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 342,
+            "line": 364,
             "description": "Gets the left-scroll offset of the content of the HtmlElement.\nOnly apropriate when the HtmlElement has overflow.",
             "itemtype": "method",
             "name": "getScrollLeft",
@@ -8144,7 +8175,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 354,
+            "line": 376,
             "description": "Gets the top-scroll offset of the content of the HtmlElement.\nOnly apropriate when the HtmlElement has overflow.",
             "itemtype": "method",
             "name": "getScrollTop",
@@ -8159,7 +8190,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 366,
+            "line": 388,
             "description": "Returns cascaded style of the specified property. `Cascaded` means: the actual present style,\nthe way it is visible (calculated through the DOM-tree).\n\nNote1: values are absolute: percentages and points are converted to absolute values, sizes are in pixels, colors in rgb/rgba-format.\nNote2: you cannot query shotcut-properties: use `margin-left` instead of `margin`.\nNote3: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine.",
             "itemtype": "method",
             "name": "getCascadeStyle",
@@ -8187,7 +8218,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 384,
+            "line": 406,
             "description": "Gets the HtmlElement's tagname. Always uppercased.\n\nAlias for this.nodeName",
             "itemtype": "method",
             "name": "getTag",
@@ -8202,7 +8233,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 397,
+            "line": 419,
             "description": "Gets the text content of the HtmlElement and its descendants.\nIf you need full HTML, you should use getHTML().\n\nAlias for textContent",
             "itemtype": "method",
             "name": "getText",
@@ -8217,7 +8248,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 419,
+            "line": 441,
             "description": "Gets the width of the element in pixels. Included are padding and border, not any margins.\nBy setting the argument `overflow` you get the total width, included the invisible overflow.",
             "itemtype": "method",
             "name": "getWidth",
@@ -8241,7 +8272,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 432,
+            "line": 454,
             "description": "Gets the value of the following HtmlElements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>",
             "itemtype": "method",
             "name": "getValue",
@@ -8256,7 +8287,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 453,
+            "line": 475,
             "description": "Gets the x-position (in the window.document) of the element in pixels.\nwindow.document-related: regardless of the window's scroll-position.",
             "itemtype": "method",
             "name": "getX",
@@ -8271,7 +8302,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 465,
+            "line": 487,
             "description": "Gets the y-position (in the window.document) of the element in pixels.\nwindow.document-related: regardless of the window's scroll-position.",
             "itemtype": "method",
             "name": "getY",
@@ -8286,7 +8317,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 477,
+            "line": 499,
             "description": "Whether the HtmlElement has the attribute set.\n\nAlias for hasAttribute().",
             "itemtype": "method",
             "name": "hasAttr",
@@ -8308,7 +8339,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 491,
+            "line": 513,
             "description": "Checks whether the className is present on the Element.",
             "itemtype": "method",
             "name": "hasClass",
@@ -8330,7 +8361,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 504,
+            "line": 526,
             "description": "If the Element has data set specified by `key`.",
             "itemtype": "method",
             "name": "hasData",
@@ -8352,7 +8383,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 516,
+            "line": 538,
             "description": "Checks whether HtmlElement currently has the focus.",
             "itemtype": "method",
             "name": "hasFocus",
@@ -8374,7 +8405,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 528,
+            "line": 550,
             "description": "Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.",
             "itemtype": "method",
             "name": "last",
@@ -8397,7 +8428,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 540,
+            "line": 562,
             "description": "Returns the next of the HtmlElement's siblings, or the next that matches `cssSelector`.",
             "itemtype": "method",
             "name": "next",
@@ -8420,7 +8451,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 559,
+            "line": 581,
             "description": "Prepends a HtmlElement or text at the start of HtmlElement's innerHTML, or before the `refElement`.",
             "itemtype": "method",
             "name": "prepend",
@@ -8451,7 +8482,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 578,
+            "line": 600,
             "description": "Returns the previous of the HtmlElement's siblings, or the previous that matches `cssSelector`.",
             "itemtype": "method",
             "name": "prev",
@@ -8474,7 +8505,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 597,
+            "line": 619,
             "description": "Removes the HtmlElement from the DOM.",
             "itemtype": "method",
             "name": "remove",
@@ -8485,7 +8516,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 608,
+            "line": 630,
             "description": "Removes the attribute from the HtmlElement.\n\nAlias for removeAttribute().",
             "itemtype": "method",
             "name": "removeAttr",
@@ -8507,7 +8538,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 622,
+            "line": 644,
             "description": "Removes a className from the HtmlElement.",
             "itemtype": "method",
             "name": "removeClass",
@@ -8526,7 +8557,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 637,
+            "line": 659,
             "description": "Removes data specified by `key`. When no arguments are passed, all node-data (key-value pairs) will be removed.",
             "itemtype": "method",
             "name": "removeData",
@@ -8545,7 +8576,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 663,
+            "line": 685,
             "description": "Removes a css-property (inline) out of the HtmlElement. Use camelCase.",
             "itemtype": "method",
             "name": "removeInlineStyle",
@@ -8564,7 +8595,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 676,
+            "line": 698,
             "description": "Replaces the HtmlElement with a new HtmlElement.",
             "itemtype": "method",
             "name": "replace",
@@ -8588,7 +8619,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 688,
+            "line": 710,
             "description": "Replaces the className of the HtmlElement with a new className.\nIf the previous className is not available, the new className is set nevertheless.",
             "itemtype": "method",
             "name": "replaceClass",
@@ -8617,7 +8648,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 707,
+            "line": 729,
             "description": "Scrolls the content of the HtmlElement into the specified scrollposition.\nOnly available when the HtmlElement has overflow.",
             "itemtype": "method",
             "name": "scrollTo",
@@ -8641,7 +8672,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 724,
+            "line": 746,
             "description": "Sets the attribute on the HtmlElement with the specified value.\n\nAlias for setAttribute().",
             "itemtype": "method",
             "name": "setAttr",
@@ -8665,7 +8696,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 740,
+            "line": 762,
             "description": "Adds a class to the HtmlElement. If the class already exists it won't be duplicated.",
             "itemtype": "method",
             "name": "setClass",
@@ -8684,7 +8715,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 754,
+            "line": 776,
             "description": "Sets the HtmlElement's class as a whole String. Cleaning up any previous classes.\n\nAlias for this.className = value",
             "itemtype": "method",
             "name": "setClassName",
@@ -8703,7 +8734,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 769,
+            "line": 791,
             "description": "Stores arbitary `data` at the HtmlElement. This has nothing to do with node-attributes whatsoever,\nit is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.",
             "itemtype": "method",
             "name": "setData",
@@ -8727,7 +8758,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 791,
+            "line": 813,
             "description": "Sets the content of the HtmlElement (innerHTML). Careful: only set content like this if you controll the data and\nare sure what is going inside. Otherwise XSS might occur. If you let the user insert, or insert right from a db,\nyou might be better of using setContent().",
             "itemtype": "method",
             "name": "setHTML",
@@ -8746,7 +8777,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 806,
+            "line": 828,
             "description": "Gets the serialized HTML fragment describing the element including its descendants.\n\nalias for outerHTML()",
             "itemtype": "method",
             "name": "serialize",
@@ -8758,7 +8789,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 819,
+            "line": 841,
             "description": "Sets a css-property (inline) out of the HtmlElement. Use camelCase.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "setStyle",
@@ -8782,7 +8813,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 838,
+            "line": 860,
             "description": "Sets the content of the HtmlElement. This is a safe way to set the content, because HTML is not parsed.\nIf you do need to set HTML inside the node, use setHTML().",
             "itemtype": "method",
             "name": "setText",
@@ -8807,7 +8838,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 860,
+            "line": 882,
             "description": "Sets the value of the following HtmlElements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>\n\nWill fire an `valuechange` event, in case both the `itsa/event` as well as\n`itsa/event-dom/extra/event-valuechange.js` are used.\n\nTherefore it is highly suggested to use `setValue()` instead of setting the value manually.",
             "itemtype": "method",
             "name": "setValue",
@@ -8826,7 +8857,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 896,
+            "line": 918,
             "description": "Checks whether a point specified with x,y is within the HtmlElement's region.",
             "itemtype": "method",
             "name": "insidePos",
@@ -8848,7 +8879,42 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 913,
+            "line": 935,
+            "description": "Set the position of an html element in page coordinates.\nThe element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).\n\nIf the HtmlElement has the attribute `xy-constrian` set, then its position cannot exceed any matching container it lies within.",
+            "itemtype": "method",
+            "name": "setXY",
+            "params": [
+                {
+                    "name": "x",
+                    "description": "x-value for new position (coordinates are page-based)",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "y-value for new position (coordinates are page-based)",
+                    "type": "Number"
+                },
+                {
+                    "name": "constrain",
+                    "description": "if you want to constrain the positioning. In case of `Object`, you need to pass an object\n       with the properties: {x, y, w, h} where x and y are absolute pixels of the document (like calculated with getX() and getY()).",
+                    "type": "'window', HtmlElement, Object",
+                    "optional": true
+                },
+                {
+                    "name": "notransition",
+                    "description": "set true if you are sure positioning is without transition.\n       this isn't required, but it speeds up positioning. Only use when no transition is used:\n       when there is a transition, setting this argument `true` would miscalculate the position.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "class": "Element",
+            "module": "dom-ext",
+            "submodule": "lib/element.js"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 1049,
             "description": "Set the position of an html element in page coordinates.\nThe element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).\n\nIf the HtmlElement has the attribute `xy-constrian` set, then its position cannot exceed any matching container it lies within.",
             "itemtype": "method",
             "name": "setXY",
@@ -8877,7 +8943,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 1025,
+            "line": 1161,
             "description": "Set the X position of an html element in page coordinates, regardless of how the element is positioned.\nThe element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
             "itemtype": "method",
             "name": "setX",
@@ -8898,7 +8964,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 1036,
+            "line": 1172,
             "description": "Set the Y position of an html element in page coordinates, regardless of how the element is positioned.\nThe element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
             "itemtype": "method",
             "name": "setY",
@@ -8919,7 +8985,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 1047,
+            "line": 1183,
             "description": "Tests if the HtmlElement would be selected by the specified cssSelector.\nAlias for `matchesSelector()`",
             "itemtype": "method",
             "name": "test",
@@ -8941,7 +9007,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 1060,
+            "line": 1196,
             "description": "Toggles the className of the Element.",
             "itemtype": "method",
             "name": "toggleClass",
