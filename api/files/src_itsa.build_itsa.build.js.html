@@ -256,6 +256,11 @@
         base: &#x27;/components&#x27;
     };
 
+    ITSA.Plugins = {
+
+    };
+
+
     require(&#x27;css&#x27;);
     require(&#x27;polyfill&#x27;);
     require(&#x27;js-ext&#x27;);
@@ -268,7 +273,8 @@
             debug: true,
             base: &#x27;/build&#x27;
         },
-        EVENT_NAME_TIMERS_EXECUTION = &#x27;timers:asyncfunc&#x27;;
+        EVENT_NAME_TIMERS_EXECUTION = &#x27;timers:asyncfunc&#x27;,
+        dragdrop;
 
     /**
      * Reference to the &#x60;idGenerator&#x60; function in [utils](../modules/utils.html)
@@ -278,14 +284,19 @@
      * @static
     */
 
-    ITSA.merge(require(&#x27;dom-ext&#x27;)(window));
+    ITSA.Plugins.merge(require(&#x27;dom-ext&#x27;)(window).Plugins);
+
     ITSA.merge(require(&#x27;utils&#x27;));
     ITSA.RESERVED_WORDS = require(&#x27;js-ext/extra/reserved-words.js&#x27;);
 
     if (!fakedom) {
         require(&#x27;event-dom/extra/hover.js&#x27;)(window);
         require(&#x27;event-dom/extra/valuechange.js&#x27;)(window);
-        ITSA.merge(require(&#x27;drag-drop&#x27;)(window));
+        // setup dragdrop:
+        dragdrop = require(&#x27;drag-drop&#x27;)(window);
+        ITSA.DD = dragdrop.DD;
+        ITSA.Plugins.merge(dragdrop.Plugins);
+        ITSA.DD.init();
     }
 
     /**

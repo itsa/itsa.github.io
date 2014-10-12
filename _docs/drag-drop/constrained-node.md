@@ -1,5 +1,5 @@
 ---
-module: event-dom
+module: drag-drop
 maintainer: Marco Asbreuk
 title: drag and drop
 intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobject notifies you when the drag has finished. You can inspect the Promise e.drag.then for this purpose. You can also be notified on drag-move by setting a callback-function through: <b>e.setOnDrag(callbackFn)</b>. Draggable HtmlElements have the attribute: <b>draggable=\"true\"</b>"
@@ -11,7 +11,7 @@ intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobjec
         top: 32em;
         width: 500px;
         height: 300px;
-       /* overflow: scroll; */
+        /* overflow: scroll; */
         background-color: #FF0;
         border: solid 10px #0F0;
     }
@@ -78,6 +78,10 @@ intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobjec
         filter: alpha(opacity=60); /* For IE8 and earlier */
         border: dotted 2px #000;
     }
+    .container.dd-dragging {
+        background-color: #0F0;
+    }
+
     #Xfilling {
         width: 700px;
         height: 500px;
@@ -88,11 +92,11 @@ intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobjec
 Mouse the mouse over the 5 containers:
 
 <div id="constr" class="base-container">
-    <div id="cont-1" class="container" draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all" dd-handle="i">the <i>handle</i> is here</div>
+    <div id="cont-1" class="container" draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all" dd-handle="i">the <i id="idI">handle</i> is here</div>
     <div id="cont-2" class="container" draggable="true" xy-constrain=".base-container">2</div>
     <div id="cont-3" class="container" draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="move">this is <i>no handle</i></div>
     <div id="cont-4" class="container" draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="copy">4</div>
-    <div id="cont-5" class="container">5</div>
+    <div id="cont-5" class="container" xy-constrain="window">5</div>
     <div id="filling"></div>
 </div>
 
@@ -133,7 +137,7 @@ Mouse the mouse over the 5 containers:
 </script>
 ```
 
-<script src="../../dist/itsabuild-min.js"></script>
+<script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa');
     var container = document.getElement('#cont-5');
@@ -146,16 +150,11 @@ Mouse the mouse over the 5 containers:
         });
     };
 
-document.getElement('#dz1').plug(ITSA.NodeDropzone, {move: true});
-document.getElement('#dz2').plug(ITSA.NodeDropzone, {copy: true});
-document.getElement('#dz3').plug(ITSA.NodeDropzone);
+document.getElement('#dz1').plug(ITSA.Plugins.NodeDropzone, {move: true});
+document.getElement('#dz2').plug(ITSA.Plugins.NodeDropzone, {copy: true});
+document.getElement('#dz3').plug(ITSA.Plugins.NodeDropzone);
 
 document.getElement('#constr').scrollTo(0,100);
-alert(document.getElement('.spaced').getStyle('border-left-width'));
-var c = document.getElement('#constr');
-console.warn('offsetWidth '+c.offsetWidth);
-console.warn('scrollWidth '+c.scrollWidth);
-console.warn('getBoundingBoxClientRect().width '+c.getBoundingClientRect().width);
 
 
 // console.info(container.getInlineStyle('left'));
@@ -163,10 +162,9 @@ console.warn('getBoundingBoxClientRect().width '+c.getBoundingClientRect().width
     // container.setXY(100, null);
 
     ITSA.later(function() {
-        container.plug(ITSA.NodeDD);
-        container.plug(ITSA.NodeConstrain);
-    }, 1000);
-
+        container.plug(ITSA.Plugins.NodeDD);
+        container.plug(ITSA.Plugins.NodePlugin);
+    }, 10);
 
    // ITSA.Event.after('dragdrop', showMsg, '.container');
 </script>

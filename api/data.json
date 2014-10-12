@@ -99,11 +99,18 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/drag-drop/drag-drop.js": {
-            "name": "src/drag-drop/drag-drop.js",
+        "src/drag-drop/Xdrag-drop.js": {
+            "name": "src/drag-drop/Xdrag-drop.js",
             "modules": {
                 "event-dragdrop": 1
             },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/drag-drop/drag-drop.js": {
+            "name": "src/drag-drop/drag-drop.js",
+            "modules": {},
             "classes": {},
             "fors": {},
             "namespaces": {}
@@ -479,7 +486,7 @@
             "namespaces": {},
             "module": "event",
             "namespace": "",
-            "file": "src/drag-drop/drag-drop.js",
+            "file": "src/drag-drop/Xdrag-drop.js",
             "line": 3,
             "description": "Adds the `hover` event as a DOM-event to event-dom. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\nMore about drag and drop: https://dev.opera.com/articles/drag-and-drop/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "example": [
@@ -7814,7 +7821,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 57,
+            "line": 58,
             "description": "Appends a HtmlElement or text at the end of HtmlElement's innerHTML, or before the `refElement`.",
             "itemtype": "method",
             "name": "append",
@@ -7845,7 +7852,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 72,
+            "line": 73,
             "description": "Returns a duplicate of the node. Use cloneNode(true) for a `deep` clone.\nAlmost the same as native cloneNode(), but you should use clone(), because it also clones any data set with setData().",
             "itemtype": "method",
             "name": "clone",
@@ -7873,7 +7880,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 97,
+            "line": 98,
             "description": "Sets the inline-style of the HtmlElement exactly to the specified `value`, overruling previous values.\nMaking the HtmlElement's inline-style look like: style=\"value\".\n\nThis is meant for a quick one-time setup. For individually inline style-properties to be set, you can use `setInlineStyle()`.",
             "itemtype": "method",
             "name": "defineInlineStyle",
@@ -7892,7 +7899,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 113,
+            "line": 114,
             "description": "Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.",
             "itemtype": "method",
             "name": "first",
@@ -7915,7 +7922,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 125,
+            "line": 126,
             "description": "Forces the HtmlElement to be inside an ancestor-HtmlElement that has the `overfow=\"scroll\" set.",
             "itemtype": "method",
             "name": "forceIntoNodeView",
@@ -7928,14 +7935,14 @@
                 }
             ],
             "chainable": 1,
-            "since": "0.0.1",
+            "since": "0.0.2",
             "class": "Element",
             "module": "dom-ext",
             "submodule": "lib/element.js"
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 185,
+            "line": 194,
             "description": "Forces the HtmlElement to be inside the window-view. Differs from `scrollIntoView()` in a way\nthat `forceIntoView()` doesn't change the position when it's inside the view, whereas\n`scrollIntoView()` sets it on top of the view.",
             "itemtype": "method",
             "name": "forceIntoView",
@@ -7981,14 +7988,14 @@
                 }
             ],
             "chainable": 1,
-            "since": "0.0.1",
+            "since": "0.0.2",
             "class": "Element",
             "module": "dom-ext",
             "submodule": "lib/element.js"
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 243,
+            "line": 253,
             "description": "Gets a NodeList of HtmlElements, specified by the css-selector.",
             "itemtype": "method",
             "name": "getAll",
@@ -8010,7 +8017,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 255,
+            "line": 265,
             "description": "Gets an attribute of the HtmlElement.\nCautious: do not use `value` to retrieve the value. Use `getValue()` instead.\n\nAlias for getAttribute().",
             "itemtype": "method",
             "name": "getAttr",
@@ -8032,7 +8039,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 270,
+            "line": 280,
             "description": "Gets the HtmlElement's class as a whole String.\n\nAlias for this.className",
             "itemtype": "method",
             "name": "getClass",
@@ -8047,7 +8054,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 283,
+            "line": 293,
             "description": "Returns data set specified by `key`. If not set, `undefined` will be returned.",
             "itemtype": "method",
             "name": "getData",
@@ -8069,7 +8076,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 295,
+            "line": 305,
             "description": "Gets one HtmlElement, specified by the css-selector. To retrieve a single element by id,\nyou need to prepend the id-name with a `#`. When multiple HtmlElement's match, the first is returned.",
             "itemtype": "method",
             "name": "getElement",
@@ -8091,7 +8098,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 308,
+            "line": 318,
             "description": "Gets the height of the element in pixels. Included are padding and border, not any margins.\nBy setting the argument `overflow` you get the total height, included the invisible overflow.",
             "itemtype": "method",
             "name": "getHeight",
@@ -8115,7 +8122,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 321,
+            "line": 331,
             "description": "Returns the innerContent of the HtmlElement as a string with HTML entities.\n\nAlias for innerHTML",
             "itemtype": "method",
             "name": "getHtml",
@@ -8130,7 +8137,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 334,
+            "line": 344,
             "description": "Gets the HtmlElement's id.\n\nAlias for this.id",
             "itemtype": "method",
             "name": "getId",
@@ -8145,7 +8152,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 347,
+            "line": 357,
             "description": "Returns inline style of the specified property. `Inline` means: what is set directly on the HtmlElement,\nthis doesn't mean necesairy how it is looked like: when no css is set inline, the HtmlElement might still have\nan appearance because of other CSS-rules.\n\nIn most cases, you would be interesting in using `getStyle()` instead.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "getInlineStyle",
@@ -8160,7 +8167,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 364,
+            "line": 374,
             "description": "Gets the left-scroll offset of the content of the HtmlElement.\nOnly apropriate when the HtmlElement has overflow.",
             "itemtype": "method",
             "name": "getScrollLeft",
@@ -8175,7 +8182,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 376,
+            "line": 386,
             "description": "Gets the top-scroll offset of the content of the HtmlElement.\nOnly apropriate when the HtmlElement has overflow.",
             "itemtype": "method",
             "name": "getScrollTop",
@@ -8190,7 +8197,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 388,
+            "line": 398,
             "description": "Returns cascaded style of the specified property. `Cascaded` means: the actual present style,\nthe way it is visible (calculated through the DOM-tree).\n\nNote1: values are absolute: percentages and points are converted to absolute values, sizes are in pixels, colors in rgb/rgba-format.\nNote2: you cannot query shotcut-properties: use `margin-left` instead of `margin`.\nNote3: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine.",
             "itemtype": "method",
             "name": "getCascadeStyle",
@@ -8218,7 +8225,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 406,
+            "line": 416,
             "description": "Gets the HtmlElement's tagname. Always uppercased.\n\nAlias for this.nodeName",
             "itemtype": "method",
             "name": "getTag",
@@ -8233,7 +8240,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 419,
+            "line": 429,
             "description": "Gets the text content of the HtmlElement and its descendants.\nIf you need full HTML, you should use getHTML().\n\nAlias for textContent",
             "itemtype": "method",
             "name": "getText",
@@ -8248,7 +8255,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 441,
+            "line": 451,
             "description": "Gets the width of the element in pixels. Included are padding and border, not any margins.\nBy setting the argument `overflow` you get the total width, included the invisible overflow.",
             "itemtype": "method",
             "name": "getWidth",
@@ -8272,7 +8279,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 454,
+            "line": 464,
             "description": "Gets the value of the following HtmlElements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>",
             "itemtype": "method",
             "name": "getValue",
@@ -8287,7 +8294,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 475,
+            "line": 485,
             "description": "Gets the x-position (in the window.document) of the element in pixels.\nwindow.document-related: regardless of the window's scroll-position.",
             "itemtype": "method",
             "name": "getX",
@@ -8302,7 +8309,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 487,
+            "line": 497,
             "description": "Gets the y-position (in the window.document) of the element in pixels.\nwindow.document-related: regardless of the window's scroll-position.",
             "itemtype": "method",
             "name": "getY",
@@ -8317,7 +8324,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 499,
+            "line": 509,
             "description": "Whether the HtmlElement has the attribute set.\n\nAlias for hasAttribute().",
             "itemtype": "method",
             "name": "hasAttr",
@@ -8339,7 +8346,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 513,
+            "line": 523,
             "description": "Checks whether the className is present on the Element.",
             "itemtype": "method",
             "name": "hasClass",
@@ -8361,7 +8368,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 526,
+            "line": 536,
             "description": "If the Element has data set specified by `key`.",
             "itemtype": "method",
             "name": "hasData",
@@ -8383,7 +8390,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 538,
+            "line": 548,
             "description": "Checks whether HtmlElement currently has the focus.",
             "itemtype": "method",
             "name": "hasFocus",
@@ -8405,7 +8412,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 550,
+            "line": 560,
             "description": "Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.",
             "itemtype": "method",
             "name": "last",
@@ -8428,7 +8435,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 562,
+            "line": 572,
             "description": "Returns the next of the HtmlElement's siblings, or the next that matches `cssSelector`.",
             "itemtype": "method",
             "name": "next",
@@ -8451,7 +8458,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 581,
+            "line": 591,
             "description": "Prepends a HtmlElement or text at the start of HtmlElement's innerHTML, or before the `refElement`.",
             "itemtype": "method",
             "name": "prepend",
@@ -8482,7 +8489,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 600,
+            "line": 610,
             "description": "Returns the previous of the HtmlElement's siblings, or the previous that matches `cssSelector`.",
             "itemtype": "method",
             "name": "prev",
@@ -8505,7 +8512,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 619,
+            "line": 629,
             "description": "Removes the HtmlElement from the DOM.",
             "itemtype": "method",
             "name": "remove",
@@ -8516,7 +8523,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 630,
+            "line": 640,
             "description": "Removes the attribute from the HtmlElement.\n\nAlias for removeAttribute().",
             "itemtype": "method",
             "name": "removeAttr",
@@ -8538,7 +8545,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 644,
+            "line": 654,
             "description": "Removes a className from the HtmlElement.",
             "itemtype": "method",
             "name": "removeClass",
@@ -8557,7 +8564,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 659,
+            "line": 669,
             "description": "Removes data specified by `key`. When no arguments are passed, all node-data (key-value pairs) will be removed.",
             "itemtype": "method",
             "name": "removeData",
@@ -8576,7 +8583,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 685,
+            "line": 695,
             "description": "Removes a css-property (inline) out of the HtmlElement. Use camelCase.",
             "itemtype": "method",
             "name": "removeInlineStyle",
@@ -8595,7 +8602,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 698,
+            "line": 708,
             "description": "Replaces the HtmlElement with a new HtmlElement.",
             "itemtype": "method",
             "name": "replace",
@@ -8619,7 +8626,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 710,
+            "line": 720,
             "description": "Replaces the className of the HtmlElement with a new className.\nIf the previous className is not available, the new className is set nevertheless.",
             "itemtype": "method",
             "name": "replaceClass",
@@ -8648,7 +8655,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 729,
+            "line": 739,
             "description": "Scrolls the content of the HtmlElement into the specified scrollposition.\nOnly available when the HtmlElement has overflow.",
             "itemtype": "method",
             "name": "scrollTo",
@@ -8672,7 +8679,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 746,
+            "line": 756,
             "description": "Sets the attribute on the HtmlElement with the specified value.\n\nAlias for setAttribute().",
             "itemtype": "method",
             "name": "setAttr",
@@ -8696,7 +8703,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 762,
+            "line": 772,
             "description": "Adds a class to the HtmlElement. If the class already exists it won't be duplicated.",
             "itemtype": "method",
             "name": "setClass",
@@ -8715,7 +8722,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 776,
+            "line": 786,
             "description": "Sets the HtmlElement's class as a whole String. Cleaning up any previous classes.\n\nAlias for this.className = value",
             "itemtype": "method",
             "name": "setClassName",
@@ -8734,7 +8741,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 791,
+            "line": 801,
             "description": "Stores arbitary `data` at the HtmlElement. This has nothing to do with node-attributes whatsoever,\nit is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.",
             "itemtype": "method",
             "name": "setData",
@@ -8758,7 +8765,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 813,
+            "line": 823,
             "description": "Sets the content of the HtmlElement (innerHTML). Careful: only set content like this if you controll the data and\nare sure what is going inside. Otherwise XSS might occur. If you let the user insert, or insert right from a db,\nyou might be better of using setContent().",
             "itemtype": "method",
             "name": "setHTML",
@@ -8777,7 +8784,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 828,
+            "line": 838,
             "description": "Gets the serialized HTML fragment describing the element including its descendants.\n\nalias for outerHTML()",
             "itemtype": "method",
             "name": "serialize",
@@ -8789,7 +8796,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 841,
+            "line": 851,
             "description": "Sets a css-property (inline) out of the HtmlElement. Use camelCase.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "setStyle",
@@ -8813,7 +8820,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 860,
+            "line": 870,
             "description": "Sets the content of the HtmlElement. This is a safe way to set the content, because HTML is not parsed.\nIf you do need to set HTML inside the node, use setHTML().",
             "itemtype": "method",
             "name": "setText",
@@ -8838,7 +8845,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 882,
+            "line": 892,
             "description": "Sets the value of the following HtmlElements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>\n\nWill fire an `valuechange` event, in case both the `itsa/event` as well as\n`itsa/event-dom/extra/event-valuechange.js` are used.\n\nTherefore it is highly suggested to use `setValue()` instead of setting the value manually.",
             "itemtype": "method",
             "name": "setValue",
@@ -8857,7 +8864,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 918,
+            "line": 928,
             "description": "Checks whether a point specified with x,y is within the HtmlElement's region.",
             "itemtype": "method",
             "name": "insidePos",
@@ -8873,13 +8880,14 @@
                     "type": "Number"
                 }
             ],
+            "since": "0.0.2",
             "class": "Element",
             "module": "dom-ext",
             "submodule": "lib/element.js"
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 935,
+            "line": 945,
             "description": "Set the position of an html element in page coordinates.\nThe element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).\n\nIf the HtmlElement has the attribute `xy-constrian` set, then its position cannot exceed any matching container it lies within.",
             "itemtype": "method",
             "name": "setXY",
@@ -8896,8 +8904,8 @@
                 },
                 {
                     "name": "constrain",
-                    "description": "if you want to constrain the positioning. In case of `Object`, you need to pass an object\n       with the properties: {x, y, w, h} where x and y are absolute pixels of the document (like calculated with getX() and getY()).",
-                    "type": "'window', HtmlElement, Object",
+                    "description": "\n<ul>\n    <li><b>'window'</b> to constrain to the visible window</li>\n    <li><b>HtmlElement</b> to constrain to a specified HtmlElement</li>\n    <li><b>Object</b> to constrain to an object with the properties: {x, y, w, h} where x and y are absolute pixels of the document\n           (like calculated with getX() and getY()).</li>\n    <li><b>String</b> to constrain to a specified css-selector, which should be an ancestor</li>\n</ul>",
+                    "type": "'window', HtmlElement, Object, String",
                     "optional": true
                 },
                 {
@@ -8908,42 +8916,15 @@
                     "optdefault": "false"
                 }
             ],
+            "chainable": 1,
+            "since": "0.0.2",
             "class": "Element",
             "module": "dom-ext",
             "submodule": "lib/element.js"
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 1049,
-            "description": "Set the position of an html element in page coordinates.\nThe element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).\n\nIf the HtmlElement has the attribute `xy-constrian` set, then its position cannot exceed any matching container it lies within.",
-            "itemtype": "method",
-            "name": "setXY",
-            "params": [
-                {
-                    "name": "x",
-                    "description": "x-value for new position (coordinates are page-based)",
-                    "type": "Number"
-                },
-                {
-                    "name": "y",
-                    "description": "y-value for new position (coordinates are page-based)",
-                    "type": "Number"
-                },
-                {
-                    "name": "notransition",
-                    "description": "set true if you are sure positioning is without transition.\n       this isn't required, but it speeds up positioning. Only use when no transition is used:\n       when there is a transition, setting this argument `true` would miscalculate the position.",
-                    "type": "Boolean",
-                    "optional": true,
-                    "optdefault": "false"
-                }
-            ],
-            "class": "Element",
-            "module": "dom-ext",
-            "submodule": "lib/element.js"
-        },
-        {
-            "file": "src/dom-ext/lib/element.js",
-            "line": 1161,
+            "line": 1082,
             "description": "Set the X position of an html element in page coordinates, regardless of how the element is positioned.\nThe element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
             "itemtype": "method",
             "name": "setX",
@@ -8964,7 +8945,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 1172,
+            "line": 1093,
             "description": "Set the Y position of an html element in page coordinates, regardless of how the element is positioned.\nThe element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
             "itemtype": "method",
             "name": "setY",
@@ -8985,7 +8966,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 1183,
+            "line": 1104,
             "description": "Tests if the HtmlElement would be selected by the specified cssSelector.\nAlias for `matchesSelector()`",
             "itemtype": "method",
             "name": "test",
@@ -9007,7 +8988,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 1196,
+            "line": 1117,
             "description": "Toggles the className of the Element.",
             "itemtype": "method",
             "name": "toggleClass",
@@ -9409,7 +9390,7 @@
             "submodule": "lib/nodelist.js"
         },
         {
-            "file": "src/drag-drop/drag-drop.js",
+            "file": "src/drag-drop/Xdrag-drop.js",
             "line": 393,
             "description": "Makes the HtmlElement draggable",
             "itemtype": "method",
@@ -9429,12 +9410,490 @@
             "submodule": "event-dragdrop"
         },
         {
-            "file": "src/drag-drop/drag-drop.js",
+            "file": "src/drag-drop/Xdrag-drop.js",
             "line": 406,
             "description": "Removes draggability of the HtmlElement",
             "itemtype": "method",
             "name": "removeDraggable",
             "chainable": 1,
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 64,
+            "description": "Returns the allowed effects on the dragable-HtmlElement. Is determined by the attribute `dd-effect-allowed`\nWill be set to \"move\" when undefined.",
+            "itemtype": "method",
+            "name": "_allowedEffects",
+            "params": [
+                {
+                    "name": "dragableElement",
+                    "description": "HtmlElement that is checked for its allowed effects",
+                    "type": "HtmlElement"
+                }
+            ],
+            "return": {
+                "description": "allowed effects: \"move\", \"copy\" or \"all\"",
+                "type": "String"
+            },
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 81,
+            "description": "Default function for the `*:dd-drag`-event",
+            "itemtype": "method",
+            "name": "_defFnDrag",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 119,
+            "description": "Default function for the `*:dd-drop`-event",
+            "itemtype": "method",
+            "name": "_defFnDrag",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                },
+                {
+                    "name": "sourceNode",
+                    "description": "the original HtmlElement",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dragNode",
+                    "description": "the dragged HtmlElement (either original or clone)",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dropzoneSpecified",
+                    "description": "whether the sourceNode had a dropzone specified",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "x",
+                    "description": "x-position in coordinaties relative to `document` (like getX())",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "y-position in coordinaties relative to `document` (like getX())",
+                    "type": "Number"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 143,
+            "description": "Default function for the `*:dd-over`-event",
+            "itemtype": "method",
+            "name": "_defFnOver",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 162,
+            "description": "Default function for the `UI:dd-start`-event",
+            "itemtype": "method",
+            "name": "_defFnDrag",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 180,
+            "description": "Defines the definition of the `dd-start` event: the first phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)",
+            "itemtype": "method",
+            "name": "_defineDDStart",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 198,
+            "description": "Defines the definition of the `dd-drop` event: the last phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)",
+            "itemtype": "method",
+            "name": "_defineDropEv",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                },
+                {
+                    "name": "sourceNode",
+                    "description": "the original HtmlElement",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dragNode",
+                    "description": "the dragged HtmlElement (either original or clone)",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dropzoneSpecified",
+                    "description": "whether the sourceNode had a dropzone specified",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "x",
+                    "description": "x-position in coordinaties relative to `document` (like getX())",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "y-position in coordinaties relative to `document` (like getX())",
+                    "type": "Number"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 219,
+            "description": "Defines the definition of the `dd-over` event.\nAlso sets up listeners to tricker dd-over when the mouse is above an dropzone.",
+            "itemtype": "method",
+            "name": "_defineOverEv",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 304,
+            "description": "Sets the draggable node back to its original position",
+            "itemtype": "method",
+            "name": "_setBack",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                },
+                {
+                    "name": "sourceNode",
+                    "description": "the original HtmlElement",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dragNode",
+                    "description": "the dragged HtmlElement (either original or clone)",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dropzoneSpecified",
+                    "description": "whether the sourceNode had a dropzone specified",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "x",
+                    "description": "x-position in coordinaties relative to `document` (like getX())",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "y-position in coordinaties relative to `document` (like getX())",
+                    "type": "Number"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 384,
+            "description": "Default function for the `*:dd-drag`-event",
+            "itemtype": "method",
+            "name": "_initializeDrag",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 497,
+            "description": "Prevented function for the `*:dd-start`-event",
+            "itemtype": "method",
+            "name": "_prevFnStart",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 510,
+            "description": "Sets the draggable node back to its original position",
+            "itemtype": "method",
+            "name": "_setBack",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                },
+                {
+                    "name": "sourceNode",
+                    "description": "the original HtmlElement",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dragNode",
+                    "description": "the dragged HtmlElement (either original or clone)",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dropzoneSpecified",
+                    "description": "whether the sourceNode had a dropzone specified",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "x",
+                    "description": "x-position in coordinaties relative to `document` (like getX())",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "y-position in coordinaties relative to `document` (like getX())",
+                    "type": "Number"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 559,
+            "description": "Sets up a `keydown` and `keyup` listener, to monitor whether a `ctrlKey` (windows) or `metaKey` (Mac)\nis pressed to support the copying of draggable items",
+            "itemtype": "method",
+            "name": "_setupKeyEv",
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 596,
+            "description": "Engine behinf the dragdrop-cycle.\nSets up a `mousedown` listener to initiate a drag-drop eventcycle. The eventcycle start whenever\none of these events happens on a HtmlElement with the attribute `draggable=\"true\"`.\nThe drag-drop eventcycle consists of the events: `dd-start`, `emitterName:dd-drag` and `emitterName:dd-drop`",
+            "itemtype": "method",
+            "name": "_setupMouseEv",
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 651,
+            "description": "Cleansup the dragover subscriber and fulfills any dropzone-promise.",
+            "itemtype": "method",
+            "name": "_teardownOverEvent",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 670,
+            "description": "Returns true if the dropzone-HtmlElement accepts copy-dragables.\nIs determined by the attribute `dd-effect-allowed=\"copy\"` or `dd-effect-allowed=\"all\"`",
+            "itemtype": "method",
+            "name": "allowCopy",
+            "params": [
+                {
+                    "name": "dropzone",
+                    "description": "HtmlElement that is checked for its allowed effects",
+                    "type": "HtmlElement"
+                }
+            ],
+            "return": {
+                "description": "if copy-dragables are allowed",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 685,
+            "description": "Returns true if the dragable-HtmlElement allowes to switch between `copy` and `move`.",
+            "itemtype": "method",
+            "name": "allowSwitch",
+            "params": [
+                {
+                    "name": "dragableElement",
+                    "description": "HtmlElement that is checked for its allowed effects",
+                    "type": "HtmlElement"
+                }
+            ],
+            "return": {
+                "description": "if copy-dragables are allowed",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 699,
+            "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "dragableElement",
+                    "description": "HtmlElement that is checked for its allowed effects",
+                    "type": "HtmlElement"
+                }
+            ],
+            "return": {
+                "description": "if copy-dragables are allowed",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 718,
+            "description": "Returns true if the dragable-HtmlElement accepts only copy-dragables (no moveable)\nIs determined by the attribute `dd-effect-allowed=\"copy\"`",
+            "itemtype": "method",
+            "name": "onlyCopy",
+            "params": [
+                {
+                    "name": "dragableElement",
+                    "description": "HtmlElement that is checked for its allowed effects",
+                    "type": "HtmlElement"
+                }
+            ],
+            "return": {
+                "description": "if only copy-dragables are allowed",
+                "type": "Boolean"
+            },
             "since": "0.0.1",
             "class": "Event",
             "module": "event",
@@ -10073,7 +10532,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 936,
+            "line": 937,
             "description": "Does the actual invocation of a subscriber.",
             "itemtype": "method",
             "name": "_invokeSubs",
@@ -10115,7 +10574,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 986,
+            "line": 987,
             "description": "Removes a subscriber from the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`.",
             "static": 1,
             "itemtype": "method",
@@ -10151,7 +10610,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1051,
+            "line": 1052,
             "description": "Removes subscribers from the multiple customevents. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -10176,7 +10635,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1106,
+            "line": 1107,
             "description": "Adds a property to the default eventobject's prototype which passes through all eventcycles.\nGoes through Object.defineProperty with configurable, enumerable and writable\nall set to false.",
             "itemtype": "method",
             "name": "_setEventObjProperty",
@@ -10201,7 +10660,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1126,
+            "line": 1127,
             "description": "Objecthash containing all defined custom-events\nwhich has a structure like this:\n\n_ce = {\n    'UI:click': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    },\n    'redmodel:save': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -10215,7 +10674,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1158,
+            "line": 1159,
             "description": "Objecthash containing all defined before and after subscribers\nwhich has a structure like this (`b` represents `before` and `a` represents `after`)\nEvery item that gets in the array consist by itself of 3 properties:\n                                                         subscriberitem = {\n                                                             o: listener,\n                                                             cb: callbackFn(e),\n                                                             f: filter\n                                                         };\n\n_subs = {\n    'UI:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    '*:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    'redmodel:save': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -10229,7 +10688,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1209,
+            "line": 1210,
             "description": "Internal list of finalize-subscribers which are invoked at the finalization-cycle, which happens after the after-subscribers.\nIs an array of function-references.",
             "itemtype": "property",
             "name": "_final",
@@ -10243,7 +10702,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1221,
+            "line": 1222,
             "description": "Object that acts as the prototype of the eventobject.\nTo add more methods, you can use `_setEventObjProperty`",
             "itemtype": "property",
             "name": "_defaultEventObj",
@@ -10257,7 +10716,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1237,
+            "line": 1238,
             "description": "Objecthash containing all detach-notifiers, keyed by customEvent name.\nThis list is maintained by `notifyDetach` and `unNotifyDetach`\n\n_detachNotifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_detachNotifiers",
@@ -10271,7 +10730,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1264,
+            "line": 1265,
             "description": "Objecthash containing all notifiers, keyed by customEvent name.\nThis list is maintained by `notify` and `unNotify`\n\n_notifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_notifiers",
@@ -11620,7 +12079,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 101,
+            "line": 107,
             "description": "Reference to the `idGenerator` function in [utils](../modules/utils.html)",
             "itemtype": "property",
             "name": "idGenerator",
@@ -11631,7 +12090,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 119,
+            "line": 130,
             "description": "Reference to the [IO](io.html) object",
             "itemtype": "property",
             "name": "IO",
@@ -11642,7 +12101,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 131,
+            "line": 142,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",

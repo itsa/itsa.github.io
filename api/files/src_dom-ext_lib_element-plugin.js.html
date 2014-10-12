@@ -249,8 +249,10 @@ module.exports = function (window) {
     );
 
     return {
-        NodePlugin: NodePlugin,
-        NodeConstrain: NodeConstrain
+        Plugins: {
+            NodePlugin: NodePlugin,
+            NodeConstrain: NodeConstrain
+        }
     };
 
 };

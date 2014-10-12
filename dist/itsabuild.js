@@ -5022,7 +5022,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":58}],7:[function(require,module,exports){
+},{"_process":59}],7:[function(require,module,exports){
 var css = "a:focus {\n    outline: 0;\n}\n\na[target=\"_blank\"]:focus {\n    outline: 1px solid #129fea;\n}\n\n/* because we think the padding and margin should always be part of the size,\n   we define \"box-sizing: border-box\" for all elements */\n\n* {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],8:[function(require,module,exports){
 var css = "/*!\nPure v0.5.0\nCopyright 2014 Yahoo! Inc. All rights reserved.\nLicensed under the BSD License.\nhttps://github.com/yahoo/pure/blob/master/LICENSE.md\n*/\n/*!\nnormalize.css v^3.0 | MIT License | git.io/normalize\nCopyright (c) Nicolas Gallagher and Jonathan Neal\n*/\n/*! normalize.css v3.0.2 | MIT License | git.io/normalize */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS text size adjust after orientation change, without disabling\n *    user zoom.\n */\n\nhtml {\n  font-family: sans-serif; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * Improve readability when focused and also mouse hovered in all browsers.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  -moz-box-sizing: content-box;\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit; /* 1 */\n  font: inherit; /* 2 */\n  margin: 0; /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n  cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome\n *    (include `-moz` to future-proof).\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  -moz-box-sizing: content-box;\n  -webkit-box-sizing: content-box; /* 2 */\n  box-sizing: content-box;\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}\n\n/*csslint important:false*/\n\n/* ==========================================================================\n   Pure Base Extras\n   ========================================================================== */\n\n/**\n * Extra rules that Pure adds on top of Normalize.css\n */\n\n/**\n * Always hide an element when it has the `hidden` HTML attribute.\n */\n\n[hidden] {\n    display: none !important;\n}\n\n/**\n * Add this class to an image to make it fit within it's fluid parent wrapper while maintaining\n * aspect ratio.\n */\n.pure-img {\n    max-width: 100%;\n    height: auto;\n    display: block;\n}\n\n/*csslint regex-selectors:false, known-properties:false, duplicate-properties:false*/\n\n.pure-g {\n    letter-spacing: -0.31em; /* Webkit: collapse white-space between units */\n    *letter-spacing: normal; /* reset IE < 8 */\n    *word-spacing: -0.43em; /* IE < 8: collapse white-space between units */\n    text-rendering: optimizespeed; /* Webkit: fixes text-rendering: optimizeLegibility */\n\n    /*\n    Sets the font stack to fonts known to work properly with the above letter\n    and word spacings. See: https://github.com/yahoo/pure/issues/41/\n\n    The following font stack makes Pure Grids work on all known environments.\n\n    * FreeSans: Ships with many Linux distros, including Ubuntu\n\n    * Arimo: Ships with Chrome OS. Arimo has to be defined before Helvetica and\n      Arial to get picked up by the browser, even though neither is available\n      in Chrome OS.\n\n    * Droid Sans: Ships with all versions of Android.\n\n    * Helvetica, Arial, sans-serif: Common font stack on OS X and Windows.\n    */\n    font-family: FreeSans, Arimo, \"Droid Sans\", Helvetica, Arial, sans-serif;\n\n    /*\n    Use flexbox when possible to avoid `letter-spacing` side-effects.\n\n    NOTE: Firefox (as of 25) does not currently support flex-wrap, so the\n    `-moz-` prefix version is omitted.\n    */\n\n    display: -webkit-flex;\n    -webkit-flex-flow: row wrap;\n\n    /* IE10 uses display: flexbox */\n    display: -ms-flexbox;\n    -ms-flex-flow: row wrap;\n}\n\n/* Opera as of 12 on Windows needs word-spacing.\n   The \".opera-only\" selector is used to prevent actual prefocus styling\n   and is not required in markup.\n*/\n.opera-only :-o-prefocus,\n.pure-g {\n    word-spacing: -0.43em;\n}\n\n.pure-u {\n    display: inline-block;\n    *display: inline; /* IE < 8: fake inline-block */\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n/*\nResets the font family back to the OS/browser's default sans-serif font,\nthis the same font stack that Normalize.css sets for the `body`.\n*/\n.pure-g [class *= \"pure-u\"] {\n    font-family: sans-serif;\n}\n\n.pure-u-1,\n.pure-u-1-1,\n.pure-u-1-2,\n.pure-u-1-3,\n.pure-u-2-3,\n.pure-u-1-4,\n.pure-u-3-4,\n.pure-u-1-5,\n.pure-u-2-5,\n.pure-u-3-5,\n.pure-u-4-5,\n.pure-u-5-5,\n.pure-u-1-6,\n.pure-u-5-6,\n.pure-u-1-8,\n.pure-u-3-8,\n.pure-u-5-8,\n.pure-u-7-8,\n.pure-u-1-12,\n.pure-u-5-12,\n.pure-u-7-12,\n.pure-u-11-12,\n.pure-u-1-24,\n.pure-u-2-24,\n.pure-u-3-24,\n.pure-u-4-24,\n.pure-u-5-24,\n.pure-u-6-24,\n.pure-u-7-24,\n.pure-u-8-24,\n.pure-u-9-24,\n.pure-u-10-24,\n.pure-u-11-24,\n.pure-u-12-24,\n.pure-u-13-24,\n.pure-u-14-24,\n.pure-u-15-24,\n.pure-u-16-24,\n.pure-u-17-24,\n.pure-u-18-24,\n.pure-u-19-24,\n.pure-u-20-24,\n.pure-u-21-24,\n.pure-u-22-24,\n.pure-u-23-24,\n.pure-u-24-24 {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n.pure-u-1-24 {\n    width: 4.1667%;\n    *width: 4.1357%;\n}\n\n.pure-u-1-12,\n.pure-u-2-24 {\n    width: 8.3333%;\n    *width: 8.3023%;\n}\n\n.pure-u-1-8,\n.pure-u-3-24 {\n    width: 12.5000%;\n    *width: 12.4690%;\n}\n\n.pure-u-1-6,\n.pure-u-4-24 {\n    width: 16.6667%;\n    *width: 16.6357%;\n}\n\n.pure-u-1-5 {\n    width: 20%;\n    *width: 19.9690%;\n}\n\n.pure-u-5-24 {\n    width: 20.8333%;\n    *width: 20.8023%;\n}\n\n.pure-u-1-4,\n.pure-u-6-24 {\n    width: 25%;\n    *width: 24.9690%;\n}\n\n.pure-u-7-24 {\n    width: 29.1667%;\n    *width: 29.1357%;\n}\n\n.pure-u-1-3,\n.pure-u-8-24 {\n    width: 33.3333%;\n    *width: 33.3023%;\n}\n\n.pure-u-3-8,\n.pure-u-9-24 {\n    width: 37.5000%;\n    *width: 37.4690%;\n}\n\n.pure-u-2-5 {\n    width: 40%;\n    *width: 39.9690%;\n}\n\n.pure-u-5-12,\n.pure-u-10-24 {\n    width: 41.6667%;\n    *width: 41.6357%;\n}\n\n.pure-u-11-24 {\n    width: 45.8333%;\n    *width: 45.8023%;\n}\n\n.pure-u-1-2,\n.pure-u-12-24 {\n    width: 50%;\n    *width: 49.9690%;\n}\n\n.pure-u-13-24 {\n    width: 54.1667%;\n    *width: 54.1357%;\n}\n\n.pure-u-7-12,\n.pure-u-14-24 {\n    width: 58.3333%;\n    *width: 58.3023%;\n}\n\n.pure-u-3-5 {\n    width: 60%;\n    *width: 59.9690%;\n}\n\n.pure-u-5-8,\n.pure-u-15-24 {\n    width: 62.5000%;\n    *width: 62.4690%;\n}\n\n.pure-u-2-3,\n.pure-u-16-24 {\n    width: 66.6667%;\n    *width: 66.6357%;\n}\n\n.pure-u-17-24 {\n    width: 70.8333%;\n    *width: 70.8023%;\n}\n\n.pure-u-3-4,\n.pure-u-18-24 {\n    width: 75%;\n    *width: 74.9690%;\n}\n\n.pure-u-19-24 {\n    width: 79.1667%;\n    *width: 79.1357%;\n}\n\n.pure-u-4-5 {\n    width: 80%;\n    *width: 79.9690%;\n}\n\n.pure-u-5-6,\n.pure-u-20-24 {\n    width: 83.3333%;\n    *width: 83.3023%;\n}\n\n.pure-u-7-8,\n.pure-u-21-24 {\n    width: 87.5000%;\n    *width: 87.4690%;\n}\n\n.pure-u-11-12,\n.pure-u-22-24 {\n    width: 91.6667%;\n    *width: 91.6357%;\n}\n\n.pure-u-23-24 {\n    width: 95.8333%;\n    *width: 95.8023%;\n}\n\n.pure-u-1,\n.pure-u-1-1,\n.pure-u-5-5,\n.pure-u-24-24 {\n    width: 100%;\n}\n.pure-button {\n    /* Structure */\n    display: inline-block;\n    *display: inline; /*IE 6/7*/\n    zoom: 1;\n    line-height: normal;\n    white-space: nowrap;\n    vertical-align: baseline;\n    text-align: center;\n    cursor: pointer;\n    -webkit-user-drag: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n}\n\n/* Firefox: Get rid of the inner focus border */\n.pure-button::-moz-focus-inner {\n    padding: 0;\n    border: 0;\n}\n\n/*csslint outline-none:false*/\n\n.pure-button {\n    font-family: inherit;\n    font-size: 100%;\n    *font-size: 90%; /*IE 6/7 - To reduce IE's oversized button text*/\n    *overflow: visible; /*IE 6/7 - Because of IE's overly large left/right padding on buttons */\n    padding: 0.5em 1em;\n    color: #444; /* rgba not supported (IE 8) */\n    color: rgba(0, 0, 0, 0.80); /* rgba supported */\n    *color: #444; /* IE 6 & 7 */\n    border: 1px solid #999;  /*IE 6/7/8*/\n    border: none rgba(0, 0, 0, 0);  /*IE9 + everything else*/\n    background-color: #E6E6E6;\n    text-decoration: none;\n    border-radius: 2px;\n}\n\n.pure-button-hover,\n.pure-button:hover,\n.pure-button:focus {\n    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000',GradientType=0);\n    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), color-stop(40%, rgba(0,0,0, 0.05)), to(rgba(0,0,0, 0.10)));\n    background-image: -webkit-linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n    background-image: -moz-linear-gradient(top, rgba(0,0,0, 0.05) 0%, rgba(0,0,0, 0.10));\n    background-image: -o-linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n    background-image: linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n}\n.pure-button:focus {\n    outline: 0;\n}\n.pure-button-active,\n.pure-button:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset, 0 0 6px rgba(0,0,0, 0.20) inset;\n}\n\n.pure-button[disabled],\n.pure-button-disabled,\n.pure-button-disabled:hover,\n.pure-button-disabled:focus,\n.pure-button-disabled:active {\n    border: none;\n    background-image: none;\n    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);\n    filter: alpha(opacity=40);\n    -khtml-opacity: 0.40;\n    -moz-opacity: 0.40;\n    opacity: 0.40;\n    cursor: not-allowed;\n    box-shadow: none;\n}\n\n.pure-button-hidden {\n    display: none;\n}\n\n/* Firefox: Get rid of the inner focus border */\n.pure-button::-moz-focus-inner{\n    padding: 0;\n    border: 0;\n}\n\n.pure-button-primary,\n.pure-button-selected,\na.pure-button-primary,\na.pure-button-selected {\n    background-color: rgb(0, 120, 231);\n    color: #fff;\n}\n\n.pure-form input[type=\"text\"],\n.pure-form input[type=\"password\"],\n.pure-form input[type=\"email\"],\n.pure-form input[type=\"url\"],\n.pure-form input[type=\"date\"],\n.pure-form input[type=\"month\"],\n.pure-form input[type=\"time\"],\n.pure-form input[type=\"datetime\"],\n.pure-form input[type=\"datetime-local\"],\n.pure-form input[type=\"week\"],\n.pure-form input[type=\"number\"],\n.pure-form input[type=\"search\"],\n.pure-form input[type=\"tel\"],\n.pure-form input[type=\"color\"],\n.pure-form select,\n.pure-form textarea {\n    padding: 0.5em 0.6em;\n    display: inline-block;\n    border: 1px solid #ccc;\n    box-shadow: inset 0 1px 3px #ddd;\n    border-radius: 4px;\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type]) {\n    padding: 0.5em 0.6em;\n    display: inline-block;\n    border: 1px solid #ccc;\n    box-shadow: inset 0 1px 3px #ddd;\n    border-radius: 4px;\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n\n/* Chrome (as of v.32/34 on OS X) needs additional room for color to display. */\n/* May be able to remove this tweak as color inputs become more standardized across browsers. */\n.pure-form input[type=\"color\"] {\n    padding: 0.2em 0.5em;\n}\n\n\n.pure-form input[type=\"text\"]:focus,\n.pure-form input[type=\"password\"]:focus,\n.pure-form input[type=\"email\"]:focus,\n.pure-form input[type=\"url\"]:focus,\n.pure-form input[type=\"date\"]:focus,\n.pure-form input[type=\"month\"]:focus,\n.pure-form input[type=\"time\"]:focus,\n.pure-form input[type=\"datetime\"]:focus,\n.pure-form input[type=\"datetime-local\"]:focus,\n.pure-form input[type=\"week\"]:focus,\n.pure-form input[type=\"number\"]:focus,\n.pure-form input[type=\"search\"]:focus,\n.pure-form input[type=\"tel\"]:focus,\n.pure-form input[type=\"color\"]:focus,\n.pure-form select:focus,\n.pure-form textarea:focus {\n    outline: 0;\n    outline: thin dotted \\9; /* IE6-9 */\n    border-color: #129FEA;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type]):focus {\n    outline: 0;\n    outline: thin dotted \\9; /* IE6-9 */\n    border-color: #129FEA;\n}\n\n.pure-form input[type=\"file\"]:focus,\n.pure-form input[type=\"radio\"]:focus,\n.pure-form input[type=\"checkbox\"]:focus {\n    outline: thin dotted #333;\n    outline: 1px auto #129FEA;\n}\n.pure-form .pure-checkbox,\n.pure-form .pure-radio {\n    margin: 0.5em 0;\n    display: block;\n}\n\n.pure-form input[type=\"text\"][disabled],\n.pure-form input[type=\"password\"][disabled],\n.pure-form input[type=\"email\"][disabled],\n.pure-form input[type=\"url\"][disabled],\n.pure-form input[type=\"date\"][disabled],\n.pure-form input[type=\"month\"][disabled],\n.pure-form input[type=\"time\"][disabled],\n.pure-form input[type=\"datetime\"][disabled],\n.pure-form input[type=\"datetime-local\"][disabled],\n.pure-form input[type=\"week\"][disabled],\n.pure-form input[type=\"number\"][disabled],\n.pure-form input[type=\"search\"][disabled],\n.pure-form input[type=\"tel\"][disabled],\n.pure-form input[type=\"color\"][disabled],\n.pure-form select[disabled],\n.pure-form textarea[disabled] {\n    cursor: not-allowed;\n    background-color: #eaeded;\n    color: #cad2d3;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type])[disabled] {\n    cursor: not-allowed;\n    background-color: #eaeded;\n    color: #cad2d3;\n}\n.pure-form input[readonly],\n.pure-form select[readonly],\n.pure-form textarea[readonly] {\n    background: #eee; /* menu hover bg color */\n    color: #777; /* menu text color */\n    border-color: #ccc;\n}\n\n.pure-form input:focus:invalid,\n.pure-form textarea:focus:invalid,\n.pure-form select:focus:invalid {\n    color: #b94a48;\n    border-color: #ee5f5b;\n}\n.pure-form input:focus:invalid:focus,\n.pure-form textarea:focus:invalid:focus,\n.pure-form select:focus:invalid:focus {\n    border-color: #e9322d;\n}\n.pure-form input[type=\"file\"]:focus:invalid:focus,\n.pure-form input[type=\"radio\"]:focus:invalid:focus,\n.pure-form input[type=\"checkbox\"]:focus:invalid:focus {\n    outline-color: #e9322d;\n}\n.pure-form select {\n    border: 1px solid #ccc;\n    background-color: white;\n}\n.pure-form select[multiple] {\n    height: auto;\n}\n.pure-form label {\n    margin: 0.5em 0 0.2em;\n}\n.pure-form fieldset {\n    margin: 0;\n    padding: 0.35em 0 0.75em;\n    border: 0;\n}\n.pure-form legend {\n    display: block;\n    width: 100%;\n    padding: 0.3em 0;\n    margin-bottom: 0.3em;\n    color: #333;\n    border-bottom: 1px solid #e5e5e5;\n}\n\n.pure-form-stacked input[type=\"text\"],\n.pure-form-stacked input[type=\"password\"],\n.pure-form-stacked input[type=\"email\"],\n.pure-form-stacked input[type=\"url\"],\n.pure-form-stacked input[type=\"date\"],\n.pure-form-stacked input[type=\"month\"],\n.pure-form-stacked input[type=\"time\"],\n.pure-form-stacked input[type=\"datetime\"],\n.pure-form-stacked input[type=\"datetime-local\"],\n.pure-form-stacked input[type=\"week\"],\n.pure-form-stacked input[type=\"number\"],\n.pure-form-stacked input[type=\"search\"],\n.pure-form-stacked input[type=\"tel\"],\n.pure-form-stacked input[type=\"color\"],\n.pure-form-stacked select,\n.pure-form-stacked label,\n.pure-form-stacked textarea {\n    display: block;\n    margin: 0.25em 0;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form-stacked input:not([type]) {\n    display: block;\n    margin: 0.25em 0;\n}\n.pure-form-aligned input,\n.pure-form-aligned textarea,\n.pure-form-aligned select,\n/* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n.pure-form-aligned .pure-help-inline,\n.pure-form-message-inline {\n    display: inline-block;\n    *display: inline;\n    *zoom: 1;\n    vertical-align: middle;\n}\n.pure-form-aligned textarea {\n    vertical-align: top;\n}\n\n/* Aligned Forms */\n.pure-form-aligned .pure-control-group {\n    margin-bottom: 0.5em;\n}\n.pure-form-aligned .pure-control-group label {\n    text-align: right;\n    display: inline-block;\n    vertical-align: middle;\n    width: 10em;\n    margin: 0 1em 0 0;\n}\n.pure-form-aligned .pure-controls {\n    margin: 1.5em 0 0 10em;\n}\n\n/* Rounded Inputs */\n.pure-form input.pure-input-rounded,\n.pure-form .pure-input-rounded {\n    border-radius: 2em;\n    padding: 0.5em 1em;\n}\n\n/* Grouped Inputs */\n.pure-form .pure-group fieldset {\n    margin-bottom: 10px;\n}\n.pure-form .pure-group input {\n    display: block;\n    padding: 10px;\n    margin: 0;\n    border-radius: 0;\n    position: relative;\n    top: -1px;\n}\n.pure-form .pure-group input:focus {\n    z-index: 2;\n}\n.pure-form .pure-group input:first-child {\n    top: 1px;\n    border-radius: 4px 4px 0 0;\n}\n.pure-form .pure-group input:last-child {\n    top: -2px;\n    border-radius: 0 0 4px 4px;\n}\n.pure-form .pure-group button {\n    margin: 0.35em 0;\n}\n\n.pure-form .pure-input-1 {\n    width: 100%;\n}\n.pure-form .pure-input-2-3 {\n    width: 66%;\n}\n.pure-form .pure-input-1-2 {\n    width: 50%;\n}\n.pure-form .pure-input-1-3 {\n    width: 33%;\n}\n.pure-form .pure-input-1-4 {\n    width: 25%;\n}\n\n/* Inline help for forms */\n/* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n.pure-form .pure-help-inline,\n.pure-form-message-inline {\n    display: inline-block;\n    padding-left: 0.3em;\n    color: #666;\n    vertical-align: middle;\n    font-size: 0.875em;\n}\n\n/* Block help for forms */\n.pure-form-message {\n    display: block;\n    color: #666;\n    font-size: 0.875em;\n}\n\n@media only screen and (max-width : 480px) {\n    .pure-form button[type=\"submit\"] {\n        margin: 0.7em 0 0;\n    }\n\n    .pure-form input:not([type]),\n    .pure-form input[type=\"text\"],\n    .pure-form input[type=\"password\"],\n    .pure-form input[type=\"email\"],\n    .pure-form input[type=\"url\"],\n    .pure-form input[type=\"date\"],\n    .pure-form input[type=\"month\"],\n    .pure-form input[type=\"time\"],\n    .pure-form input[type=\"datetime\"],\n    .pure-form input[type=\"datetime-local\"],\n    .pure-form input[type=\"week\"],\n    .pure-form input[type=\"number\"],\n    .pure-form input[type=\"search\"],\n    .pure-form input[type=\"tel\"],\n    .pure-form input[type=\"color\"],\n    .pure-form label {\n        margin-bottom: 0.3em;\n        display: block;\n    }\n\n    .pure-group input:not([type]),\n    .pure-group input[type=\"text\"],\n    .pure-group input[type=\"password\"],\n    .pure-group input[type=\"email\"],\n    .pure-group input[type=\"url\"],\n    .pure-group input[type=\"date\"],\n    .pure-group input[type=\"month\"],\n    .pure-group input[type=\"time\"],\n    .pure-group input[type=\"datetime\"],\n    .pure-group input[type=\"datetime-local\"],\n    .pure-group input[type=\"week\"],\n    .pure-group input[type=\"number\"],\n    .pure-group input[type=\"search\"],\n    .pure-group input[type=\"tel\"],\n    .pure-group input[type=\"color\"] {\n        margin-bottom: 0;\n    }\n\n    .pure-form-aligned .pure-control-group label {\n        margin-bottom: 0.3em;\n        text-align: left;\n        display: block;\n        width: 100%;\n    }\n\n    .pure-form-aligned .pure-controls {\n        margin: 1.5em 0 0 0;\n    }\n\n    /* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n    .pure-form .pure-help-inline,\n    .pure-form-message-inline,\n    .pure-form-message {\n        display: block;\n        font-size: 0.75em;\n        /* Increased bottom padding to make it group with its related input element. */\n        padding: 0.2em 0 0.8em;\n    }\n}\n\n/*csslint adjoining-classes:false, outline-none:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n.pure-menu ul {\n    position: absolute;\n    visibility: hidden;\n}\n\n.pure-menu.pure-menu-open {\n    visibility: visible;\n    z-index: 2;\n    width: 100%;\n}\n\n.pure-menu ul {\n    left: -10000px;\n    list-style: none;\n    margin: 0;\n    padding: 0;\n    top: -10000px;\n    z-index: 1;\n}\n\n.pure-menu > ul { position: relative; }\n\n.pure-menu-open > ul {\n    left: 0;\n    top: 0;\n    visibility: visible;\n}\n\n.pure-menu-open > ul:focus {\n    outline: 0;\n}\n\n.pure-menu li { position: relative; }\n\n.pure-menu a,\n.pure-menu .pure-menu-heading {\n    display: block;\n    color: inherit;\n    line-height: 1.5em;\n    padding: 5px 20px;\n    text-decoration: none;\n    white-space: nowrap;\n}\n\n.pure-menu.pure-menu-horizontal > .pure-menu-heading {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    margin: 0;\n    vertical-align: middle;\n}\n.pure-menu.pure-menu-horizontal > ul {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    vertical-align: middle;\n}\n\n.pure-menu li a { padding: 5px 20px; }\n\n.pure-menu-can-have-children > .pure-menu-label:after {\n    content: '\\25B8';\n    float: right;\n    /* These specific fonts have the Unicode char we need. */\n    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'DejaVu Sans', sans-serif;\n    margin-right: -20px;\n    margin-top: -1px;\n}\n\n.pure-menu-can-have-children > .pure-menu-label {\n    padding-right: 30px;\n}\n\n.pure-menu-separator {\n    background-color: #dfdfdf;\n    display: block;\n    height: 1px;\n    font-size: 0;\n    margin: 7px 2px;\n    overflow: hidden;\n}\n\n.pure-menu-hidden {\n    display: none;\n}\n\n/* FIXED MENU */\n.pure-menu-fixed {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n}\n\n\n/* HORIZONTAL MENU CODE */\n\n/* Initial menus should be inline-block so that they are horizontal */\n.pure-menu-horizontal li {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    vertical-align: middle;\n}\n\n/* Submenus should still be display: block; */\n.pure-menu-horizontal li li {\n    display: block;\n}\n\n/* Content after should be down arrow */\n.pure-menu-horizontal > .pure-menu-children > .pure-menu-can-have-children > .pure-menu-label:after {\n    content: \"\\25BE\";\n}\n/*Add extra padding to elements that have the arrow so that the hover looks nice */\n.pure-menu-horizontal > .pure-menu-children > .pure-menu-can-have-children > .pure-menu-label {\n    padding-right: 30px;\n}\n\n/* Adjusting separator for vertical menus */\n.pure-menu-horizontal li.pure-menu-separator {\n    height: 50%;\n    width: 1px;\n    margin: 0 7px;\n}\n\n/* Submenus should be horizontal separator again */\n.pure-menu-horizontal li li.pure-menu-separator {\n    height: 1px;\n    width: auto;\n    margin: 7px 2px;\n}\n\n\n/*csslint adjoining-classes:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n/* MAIN MENU STYLING */\n\n.pure-menu.pure-menu-open,\n.pure-menu.pure-menu-horizontal li .pure-menu-children {\n    background: #fff; /* Old browsers */\n    border: 1px solid #b7b7b7;\n}\n\n/* remove borders for horizontal menus */\n.pure-menu.pure-menu-horizontal,\n.pure-menu.pure-menu-horizontal .pure-menu-heading {\n    border: none;\n}\n\n\n/* LINK STYLES */\n\n.pure-menu a {\n    border: 1px solid transparent;\n    border-left: none;\n    border-right: none;\n\n}\n\n.pure-menu a,\n.pure-menu .pure-menu-can-have-children > li:after {\n    color: #777;\n}\n\n.pure-menu .pure-menu-can-have-children > li:hover:after {\n    color: #fff;\n}\n\n/* Focus style for a dropdown menu-item when the parent has been opened */\n.pure-menu .pure-menu-open {\n    background: #dedede;\n}\n\n\n.pure-menu li a:hover,\n.pure-menu li a:focus {\n    background: #eee;\n}\n\n/* DISABLED STATES */\n.pure-menu li.pure-menu-disabled a:hover,\n.pure-menu li.pure-menu-disabled a:focus {\n    background: #fff;\n    color: #bfbfbf;\n}\n\n.pure-menu .pure-menu-disabled > a {\n    background-image: none;\n    border-color: transparent;\n    cursor: default;\n}\n\n.pure-menu .pure-menu-disabled > a,\n.pure-menu .pure-menu-can-have-children.pure-menu-disabled > a:after {\n    color: #bfbfbf;\n}\n\n/* HEADINGS */\n.pure-menu .pure-menu-heading {\n    color: #565d64;\n    text-transform: uppercase;\n    font-size: 90%;\n    margin-top: 0.5em;\n    border-bottom-width: 1px;\n    border-bottom-style: solid;\n    border-bottom-color: #dfdfdf;\n}\n\n/* ACTIVE MENU ITEM */\n.pure-menu .pure-menu-selected a {\n    color: #000;\n}\n\n/* FIXED MENU */\n.pure-menu.pure-menu-open.pure-menu-fixed {\n    border: none;\n    border-bottom: 1px solid #b7b7b7;\n}\n\n/*csslint box-model:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n\n.pure-paginator {\n\n    /* `pure-g` Grid styles */\n    letter-spacing: -0.31em; /* Webkit: collapse white-space between units */\n    *letter-spacing: normal; /* reset IE < 8 */\n    *word-spacing: -0.43em; /* IE < 8: collapse white-space between units */\n    text-rendering: optimizespeed; /* Webkit: fixes text-rendering: optimizeLegibility */\n\n    /* `pure-paginator` Specific styles */\n    list-style: none;\n    margin: 0;\n    padding: 0;\n}\n.opera-only :-o-prefocus,\n.pure-paginator {\n    word-spacing: -0.43em;\n}\n\n/* `pure-u` Grid styles */\n.pure-paginator li {\n    display: inline-block;\n    *display: inline; /* IE < 8: fake inline-block */\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n\n.pure-paginator .pure-button {\n    border-radius: 0;\n    padding: 0.8em 1.4em;\n    vertical-align: top;\n    height: 1.1em;\n}\n.pure-paginator .pure-button:focus,\n.pure-paginator .pure-button:active {\n    outline-style: none;\n}\n.pure-paginator .prev,\n.pure-paginator .next {\n    color: #C0C1C3;\n    text-shadow: 0 -1px 0 rgba(0,0,0, 0.45);\n}\n.pure-paginator .prev {\n    border-radius: 2px 0 0 2px;\n}\n.pure-paginator .next {\n    border-radius: 0 2px 2px 0;\n}\n\n@media (max-width: 480px) {\n    .pure-menu-horizontal {\n        width: 100%;\n    }\n\n    .pure-menu-children li {\n        display: block;\n        border-bottom: 1px solid black;\n    }\n}\n\n.pure-table {\n    /* Remove spacing between table cells (from Normalize.css) */\n    border-collapse: collapse;\n    border-spacing: 0;\n    empty-cells: show;\n    border: 1px solid #cbcbcb;\n}\n\n.pure-table caption {\n    color: #000;\n    font: italic 85%/1 arial, sans-serif;\n    padding: 1em 0;\n    text-align: center;\n}\n\n.pure-table td,\n.pure-table th {\n    border-left: 1px solid #cbcbcb;/*  inner column border */\n    border-width: 0 0 0 1px;\n    font-size: inherit;\n    margin: 0;\n    overflow: visible; /*to make ths where the title is really long work*/\n    padding: 0.5em 1em; /* cell padding */\n}\n.pure-table td:first-child,\n.pure-table th:first-child {\n    border-left-width: 0;\n}\n\n.pure-table thead {\n    background: #e0e0e0;\n    color: #000;\n    text-align: left;\n    vertical-align: bottom;\n}\n\n/*\nstriping:\n   even - #fff (white)\n   odd  - #f2f2f2 (light gray)\n*/\n.pure-table td {\n    background-color: transparent;\n}\n.pure-table-odd td {\n    background-color: #f2f2f2;\n}\n\n/* nth-child selector for modern browsers */\n.pure-table-striped tr:nth-child(2n-1) td {\n    background-color: #f2f2f2;\n}\n\n/* BORDERED TABLES */\n.pure-table-bordered td {\n    border-bottom: 1px solid #cbcbcb;\n}\n.pure-table-bordered tbody > tr:last-child > td {\n    border-bottom-width: 0;\n}\n\n\n/* HORIZONTAL BORDERED TABLES */\n\n.pure-table-horizontal td,\n.pure-table-horizontal th {\n    border-width: 0 0 1px 0;\n    border-bottom: 1px solid #cbcbcb;\n}\n.pure-table-horizontal tbody > tr:last-child > td {\n    border-bottom-width: 0;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -5358,8 +5358,10 @@ module.exports = function (window) {
     );
 
     return {
-        NodePlugin: NodePlugin,
-        NodeConstrain: NodeConstrain
+        Plugins: {
+            NodePlugin: NodePlugin,
+            NodeConstrain: NodeConstrain
+        }
     };
 
 };
@@ -5385,7 +5387,8 @@ module.exports = function (window) {
 
 module.exports = function (window) {
 
-    var POSITION = 'position',
+    var NAME = '[dom-ext]: ',
+        POSITION = 'position',
         BLOCK = 'el-block',
         BORDERBOX = 'el-borderbox',
         NO_TRANS = 'el-notrans',
@@ -5448,7 +5451,7 @@ module.exports = function (window) {
         ElementPrototype.clone = function(deep) {
             var instance = this,
                 cloned = instance.cloneNode(deep);
-            if (instance._data.size()>0) {
+            if (instance._data) {
                 Object.defineProperty(cloned, '_data', {
                     configurable: false,
                     enumerable: false,
@@ -5496,9 +5499,10 @@ module.exports = function (window) {
         *        Only use this when you know the ancestor and this ancestor has an `overflow="scroll"` property
         *        when not set, this method will seek through the doc-tree upwards for the first HtmlElement that does match this criteria.
         * @chainable
-        * @since 0.0.1
+        * @since 0.0.2
         */
         ElementPrototype.forceIntoNodeView = function(ancestor) {
+console.info(NAME, 'forceIntoNodeView');
             var instance = this,
                 parentOverflowNode = this.parentNode,
                 match, left, width, right, height, top, bottom, scrollLeft, scrollTop, parentOverflowNodeX, parentOverflowNodeY,
@@ -5512,6 +5516,7 @@ module.exports = function (window) {
                 }
             }
             if (parentOverflowNode!==window.document) {
+// console.warn(parentOverflowNode);
                 left = instance.getX();
                 width = instance.offsetWidth;
                 right = left + width;
@@ -5527,11 +5532,17 @@ module.exports = function (window) {
                 parentOverflowNodeStopRight = parentOverflowNodeX+parentOverflowNode.offsetWidth-parseInt(parentOverflowNode.getStyle('border-right-width'), 10);
                 parentOverflowNodeStopBottom = parentOverflowNodeY+parentOverflowNode.offsetHeight-parseInt(parentOverflowNode.getStyle('border-bottom-width'), 10);
 
+console.info('left: '+left+' | width: '+width+' | right: '+right);
+
+console.info('scrollLeft: '+scrollLeft+' | parentOverflowNodeX: '+parentOverflowNodeX+' | parentOverflowNodeStartLeft: '+parentOverflowNodeStartLeft+' | parentOverflowNodeStopRight: '+parentOverflowNodeStopRight);
+
                 if (left<parentOverflowNodeStartLeft) {
                     newX = Math.max(0, scrollLeft+left-parentOverflowNodeStartLeft);
+console.warn('< newX: '+newX);
                 }
                 else if (right>parentOverflowNodeStopRight) {
                     newX = scrollLeft + right - parentOverflowNodeStopRight;
+console.warn('> newX: '+newX);
                 }
 
                 if (top<parentOverflowNodeStartTop) {
@@ -5563,9 +5574,10 @@ module.exports = function (window) {
         * @param [rectangle.w] {Number} width of window
         * @param [rectangle.h] {Number} height of window
         * @chainable
-        * @since 0.0.1
+        * @since 0.0.2
         */
         ElementPrototype.forceIntoView = function(notransition, rectangle) {
+// console.info(NAME, 'forceIntoView');
             var instance = this,
                 left = instance.getX(),
                 width = instance.offsetWidth,
@@ -6287,6 +6299,7 @@ module.exports = function (window) {
          * @method insidePos
          * @param x {Number} x-value for new position (coordinates are page-based)
          * @param y {Number} y-value for new position (coordinates are page-based)
+         * @since 0.0.2
          */
         ElementPrototype.insidePos = function(x, y) {
             var instance = this,
@@ -6297,7 +6310,6 @@ module.exports = function (window) {
             return (x>=left) && (x<=right) && (y>=top) && (y<=bottom);
         };
 
-
        /**
          * Set the position of an html element in page coordinates.
          * The element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
@@ -6307,16 +6319,26 @@ module.exports = function (window) {
          * @method setXY
          * @param x {Number} x-value for new position (coordinates are page-based)
          * @param y {Number} y-value for new position (coordinates are page-based)
-         * @param [constrain] {'window', HtmlElement, Object} if you want to constrain the positioning. In case of `Object`, you need to pass an object
-         *        with the properties: {x, y, w, h} where x and y are absolute pixels of the document (like calculated with getX() and getY()).
+         * @param [constrain] {'window', HtmlElement, Object, String}
+         * <ul>
+         *     <li><b>'window'</b> to constrain to the visible window</li>
+         *     <li><b>HtmlElement</b> to constrain to a specified HtmlElement</li>
+         *     <li><b>Object</b> to constrain to an object with the properties: {x, y, w, h} where x and y are absolute pixels of the document
+         *            (like calculated with getX() and getY()).</li>
+         *     <li><b>String</b> to constrain to a specified css-selector, which should be an ancestor</li>
+         * </ul>
          * @param [notransition=false] {Boolean} set true if you are sure positioning is without transition.
          *        this isn't required, but it speeds up positioning. Only use when no transition is used:
          *        when there is a transition, setting this argument `true` would miscalculate the position.
+         * @chainable
+         * @since 0.0.2
          */
         ElementPrototype.setXY = function(x, y, constrain, notransition) {
+console.info(NAME, 'setXY '+x+','+y);
+console.info(constrain);
             var instance = this,
                 position = instance.getStyle(POSITION),
-                dif, start, finalValue, constrainedSelector, match, constrainNode, byExactId,
+                dif, start, finalValue, match, constrainNode, byExactId,
                 containerTop, containerRight, containerLeft, containerBottom, requestedX, requestedY;
 
             // default position to relative
@@ -6333,154 +6355,55 @@ module.exports = function (window) {
                     containerBottom = containerTop + window.getHeight();
                 }
                 else {
-                    if (constrain.matchesselector) {
-                        // HtmlElement --> we need to search the rectangle
+                    if (typeof constrain === 'string') {
                         match = false;
-                        constrainNode = instance;
-                        byExactId = REGEXP_NODE_ID.test(constrainedSelector);
+                        constrainNode = instance.parentNode;
+                        byExactId = REGEXP_NODE_ID.test(constrain);
                         while (constrainNode.matchesSelector && !match) {
-                            match = byExactId ? (constrainNode.id===constrainedSelector.substr(1)) : constrainNode.matchesSelector(constrainedSelector);
+                            match = byExactId ? (constrainNode.id===constrain.substr(1)) : constrainNode.matchesSelector(constrain);
                             // if there is a match, then make sure x and y fall within the region
                             match || (constrainNode=constrainNode.parentNode);
                         }
-
-                        if (match) {
-                            containerLeft = constrainNode.getX() + parseInt(constrainNode.getStyle(BORDER_LEFT_WIDTH), 10);
-                            containerTop = constrainNode.getY() + parseInt(constrainNode.getStyle(BORDER_TOP_WIDTH), 10);
-                            containerRight = containerLeft + constrainNode.scrollWidth;
-                            containerBottom = containerTop + constrainNode.scrollHeight;
-                        }
+                        // if HtmlElement found, then bound it to `constrain` as if the argument `constrain` was an HtmlElement
+                        match && (constrain=constrainNode);
+                    }
+                    if (constrain.matchesSelector) {
+                        // HtmlElement --> we need to search the rectangle
+                        containerLeft = constrain.getX() + parseInt(constrain.getStyle(BORDER_LEFT_WIDTH), 10);
+                        containerTop = constrain.getY() + parseInt(constrain.getStyle(BORDER_TOP_WIDTH), 10);
+                        containerRight = containerLeft + constrain.scrollWidth;
+                        containerBottom = containerTop + constrain.scrollHeight;
                     }
                     else {
-                        containerLeft = constrainNode.getX() + parseInt(constrainNode.getStyle(BORDER_LEFT_WIDTH), 10);
-                        containerTop = constrainNode.getY() + parseInt(constrainNode.getStyle(BORDER_TOP_WIDTH), 10);
-                        containerRight = containerLeft + constrainNode.scrollWidth;
-                        containerBottom = containerTop + constrainNode.scrollHeight;
+                        containerLeft = constrain.x;
+                        containerTop = constrain.y;
+                        containerRight = constrain.x + constrain.w;
+                        containerBottom = constrain.y + constrain.h;
                     }
                 }
-                if (containerLeft) {
-                    // found constrain
-                    requestedX = x || instance.getX();
-                    if ((requestedX+instance.offsetWidth)>containerRight) {
-                        x = requestedX = containerRight - instance.offsetWidth;
+                if (typeof containerLeft === NUMBER) {
+                    // found constrain, always redefine x and y
+                    x = requestedX = (typeof x===NUMBER) ? x : instance.getX();
+                    if (requestedX<containerLeft) {
+                        x = containerLeft;
                     }
-                    (requestedX<containerLeft) && (x=containerLeft);
-                    requestedY = y || instance.getY();
-                    if ((requestedY+instance.offsetHeight)>containerBottom) {
-                        y = requestedY = containerBottom - instance.offsetHeight;
-                    }
-                    (requestedY<containerTop) && (y=containerTop);
-                }
-            }
-            if (typeof x === NUMBER) {
-                // check if there is a transition:
-                if (notransition) {
-                    instance.setInlineStyle(LEFT, x + PX);
-                    dif = (instance.getX()-x);
-                    (dif!==0) && (instance.setInlineStyle(LEFT, (x - dif) + PX));
-                }
-                else {
-                    start = instance.getInlineStyle(LEFT);
-                    instance.setClass(NO_TRANS);
-                    instance.setInlineStyle(LEFT, x + PX);
-                    dif = (instance.getX()-x);
-                    finalValue = (x - dif);
-                    // now reset and go to finalX with transition
-                    instance.setInlineStyle(LEFT, start);
-                    instance.removeClass(NO_TRANS);
-                    instance.setInlineStyle(LEFT, finalValue + PX);
-                }
-            }
-            if (typeof y === NUMBER) {
-                if (notransition) {
-                    instance.setInlineStyle(TOP, y + PX);
-                    dif = (instance.getY()-y);
-                    (dif!==0) && (instance.setInlineStyle(TOP, (y - dif) + PX));
-                }
-                else {
-                    start = instance.getInlineStyle(TOP);
-                    instance.setClass(NO_TRANS);
-                    instance.setInlineStyle(TOP, y + PX);
-                    dif = (instance.getY()-y);
-                    finalValue = (y - dif);
-                    // now reset and go to finalX with transition
-                    instance.setInlineStyle(TOP, start);
-                    instance.removeClass(NO_TRANS);
-                    instance.setInlineStyle(TOP, finalValue + PX);
-                }
-            }
-            instance.removeClass(BLOCK).removeClass(BORDERBOX).removeClass(INVISIBLE);
-        };
-
-       /**
-         * Set the position of an html element in page coordinates.
-         * The element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
-         *
-         * If the HtmlElement has the attribute `xy-constrian` set, then its position cannot exceed any matching container it lies within.
-         *
-         * @method setXY
-         * @param x {Number} x-value for new position (coordinates are page-based)
-         * @param y {Number} y-value for new position (coordinates are page-based)
-         * @param [notransition=false] {Boolean} set true if you are sure positioning is without transition.
-         *        this isn't required, but it speeds up positioning. Only use when no transition is used:
-         *        when there is a transition, setting this argument `true` would miscalculate the position.
-         */
-        ElementPrototype.XsetXY = function(x, y, notransition) {
-            var instance = this,
-                position = instance.getStyle(POSITION),
-                dif, start, finalValue, constrainedSelector, match, constrainNode, byExactId,
-                containerTop, containerRight, containerLeft, containerBottom, requestedX, requestedY;
-
-            // default position to relative
-            if (position==='static') {
-                instance.setInlineStyle(POSITION, 'relative');
-            }
-            // make sure it has sizes and can be positioned
-            instance.setClass(BLOCK).setClass(INVISIBLE).setClass(BORDERBOX);
-/*jshint boss:true */
-            if (constrainedSelector=instance.getAttr(CONSTRAIN_ATTR)) {
-/*jshint boss:false */
-                if (constrainedSelector==='window') {
-                    containerLeft = window.getScrollLeft();
-                    containerTop = window.getScrollTop();
-                    containerRight = containerLeft + window.getWidth();
-                    containerBottom = containerTop + window.getHeight();
-                    requestedX = x || instance.getX();
-                    if ((requestedX+instance.offsetWidth)>containerRight) {
-                        x = requestedX = containerRight - instance.offsetWidth;
-                    }
-                    (requestedX<containerLeft) && (x=containerLeft);
-                    requestedY = y || instance.getY();
-                    if ((requestedY+instance.offsetHeight)>containerBottom) {
-                        y = requestedY = containerBottom - instance.offsetHeight;
-                    }
-                    (requestedY<containerTop) && (y=containerTop);
-                }
-                else {
-                    match = false;
-                    constrainNode = instance;
-                    byExactId = REGEXP_NODE_ID.test(constrainedSelector);
-                    while (constrainNode.matchesSelector && !match) {
-                        match = byExactId ? (constrainNode.id===constrainedSelector.substr(1)) : constrainNode.matchesSelector(constrainedSelector);
-                        // if there is a match, then make sure x and y fall within the region
-                        if (match) {
-                            containerLeft = constrainNode.getX() + parseInt(constrainNode.getStyle(BORDER_LEFT_WIDTH), 10);
-                            containerTop = constrainNode.getY() + parseInt(constrainNode.getStyle(BORDER_TOP_WIDTH), 10);
-                            containerRight = containerLeft + constrainNode.scrollWidth;
-                            containerBottom = containerTop + constrainNode.scrollHeight;
-                            requestedX = x || instance.getX();
-                            if ((requestedX+instance.offsetWidth)>containerRight) {
-                                x = requestedX = containerRight - instance.offsetWidth;
-                            }
-                            (requestedX<containerLeft) && (x=containerLeft);
-
-                            requestedY = y || instance.getY();
-                            if ((requestedY+instance.offsetHeight)>containerBottom) {
-                                y = requestedY = containerBottom - instance.offsetHeight;
-                            }
-                            (requestedY<containerTop) && (y=containerTop);
+                    else {
+                        if ((requestedX+instance.offsetWidth)>containerRight) {
+                            x = requestedX = containerRight - instance.offsetWidth;
                         }
-                        constrainNode = constrainNode.parentNode;
+                        // now we might need to reset to the left again:
+                        (requestedX<containerLeft) && (x=containerLeft);
+                    }
+                    y = requestedY = (typeof y===NUMBER) ? y : instance.getY();
+                    if (requestedY<containerTop) {
+                        y = containerTop;
+                    }
+                    else {
+                        if ((requestedY+instance.offsetHeight)>containerBottom) {
+                            y = requestedY = containerBottom - instance.offsetHeight;
+                        }
+                        // now we might need to reset to the top again:
+                        (requestedY<containerTop) && (y=containerTop);
                     }
                 }
             }
@@ -6521,7 +6444,7 @@ module.exports = function (window) {
                     instance.setInlineStyle(TOP, finalValue + PX);
                 }
             }
-            instance.removeClass(BLOCK).removeClass(BORDERBOX).removeClass(INVISIBLE);
+            return instance.removeClass(BLOCK).removeClass(BORDERBOX).removeClass(INVISIBLE);
         };
 
         /**
@@ -6575,7 +6498,7 @@ module.exports = function (window) {
 
     }(window.Element.prototype));
 };
-},{"../css/element.css":10,"./document.js":12,"js-ext/extra/reserved-words.js":31,"js-ext/lib/object.js":35,"js-ext/lib/string.js":37,"polyfill/lib/element.matchesselector.js":44,"window-ext":56}],15:[function(require,module,exports){
+},{"../css/element.css":10,"./document.js":12,"js-ext/extra/reserved-words.js":31,"js-ext/lib/object.js":35,"js-ext/lib/string.js":37,"polyfill/lib/element.matchesselector.js":44,"window-ext":57}],15:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6875,7 +6798,7 @@ module.exports = function (window) {
 
     }(window.NodeList && window.NodeList.prototype, window.HTMLCollection && window.HTMLCollection.prototype));
 };
-},{"polyfill/polyfill-base.js":51}],16:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":52}],16:[function(require,module,exports){
 var css = "[draggable] {\n    -moz-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n}\n.dd-dragging[draggable] {\n    cursor: move;\n}\n.dd-transition[draggable] {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 999 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],17:[function(require,module,exports){
 "use strict";
@@ -6906,18 +6829,13 @@ var css = "[draggable] {\n    -moz-user-select: none;\n    -khtml-user-select: n
 */
 
 
-var NAME = '[event-dragdrop]: ',
-    ZINDEX_DURING_DRAG = 999,
-    CTRL_PRESSED = false,
-    Z_INDEX = 'z-index',
-    PREV_Z = '_prevZ',
+var NAME = '[dragdrop]: ',
     DRAGGABLE = 'draggable',
     DD_DRAGGING_CLASS = 'dd-dragging',
     CONSTRAIN_ATTR = 'xy-constrain',
     PROXY = 'proxy',
     MOUSE = 'mouse',
     DATA_KEY = 'dragDrop',
-    DATA_KEY_DROPZONE = 'dropZone',
     DD_EFFECT_ALLOWED = 'dd-effect-allowed',
     DD_DROPZONE = 'dd-dropzone',
     NO_TRANS_CLASS = 'el-notrans', // delivered by `dom-ext`
@@ -6928,6 +6846,7 @@ var NAME = '[event-dragdrop]: ',
     DD_DROPACTIVE_CLASS = 'dropactive',
     REGEXP_MOVE = /\bmove\b/i,
     REGEXP_COPY = /\bcopy\b/i,
+    REGEXP_NODE_ID = /^#\S+$/,
     LATER = require('utils').later;
 
 require('polyfill/polyfill-base.js');
@@ -6936,367 +6855,684 @@ require('./css/drag-drop.css');
 
 module.exports = function (window) {
     var Event = require('event-dom')(window),
-        NodePlugin = require('dom-ext')(window).NodePlugin,
-        UA = window.navigator.userAgent,
-        iOS = !!UA.match('iPhone OS') || !!UA.match('iPad'),
-        dragOverPromiseList = [],
-        setupDD, teardownDD, handleMove, handleDrop, teardownDragOverEvent, allowSwitch, _getAllowedEffects,
-        handleDragStart, currentNode, allowCopy, movableNode, setupDragOverEvent, dragOverEvent, lastMouseOverNode, onlyCopy, dropEffect,
-        lastMouseX, lastMouseY, setBack, elementSetXY_BKP, NodeDD, NodeDropzone, movableNodeWinConstrained, movableNodeNodeConstrained;
+        NodePlugin = require('dom-ext')(window).Plugins.NodePlugin,
+        ctrlPressed = false,
+        initialised = false,
+        DD, dropEffect, NodeDD, NodeDropzone;
 
     require('window-ext')(window);
 
-    _getAllowedEffects = function(node) {
-        var allowedEffects = node.getAttr(DD_EFFECT_ALLOWED);
-        allowedEffects && (allowedEffects=allowedEffects.toLowerCase());
-        return allowedEffects || 'move';
-    };
+    DD = {
+       ddProps: {},
+      /**
+        * Returns the allowed effects on the dragable-HtmlElement. Is determined by the attribute `dd-effect-allowed`
+        * Will be set to "move" when undefined.
+        *
+        * @method _allowedEffects
+        * @param dragableElement {HtmlElement} HtmlElement that is checked for its allowed effects
+        * @return {String} allowed effects: "move", "copy" or "all"
+        * @private
+        * @since 0.0.1
+        */
+        _allowedEffects: function(dragableElement) {
+console.info(NAME, '_allowedEffects');
+            var allowedEffects = dragableElement.getAttr(DD_EFFECT_ALLOWED);
+            allowedEffects && (allowedEffects=allowedEffects.toLowerCase());
+            return allowedEffects || 'move';
+        },
 
-    allowCopy = function(node) {
-        var allowedEffects = _getAllowedEffects(node);
-        return (allowedEffects==='all') || (allowedEffects==='copy');
-    };
+        /**
+        * Default function for the `*:dd-drag`-event
+        *
+        * @method _defFnDrag
+        * @param e {Object} eventobject
+        * @private
+        * @since 0.0.1
+        */
+        _defFnDrag: function(e) {
+// console.info(NAME, '_defFnDrag: default function dd-drag');
+            var ddProps = this.ddProps,
+                dragNode = ddProps.dragNode,
+                constrainNode = ddProps.constrainNode,
+                winConstrained = ddProps.winConstrained;
+            // is the drag is finished, there will be no ddProps.defined
+            // return then, to prevent any events that stayed behind
+            if (!ddProps.defined) {
+                return;
+            }
 
-    onlyCopy = function(node) {
-        var allowedEffects = _getAllowedEffects(node);
-        return (allowedEffects==='copy');
-    };
+            // caution: the user might have put the mouse out of the screen and released the mousebutton!
+            // If that is the case, the a mouseup-event should be initiated instead of draggin the element
+            if (e.buttons===0) {
+                // no more button pressed
+                Event.emit(dragNode, 'dd-fake-mouseup');
+            }
+            else {
+// console.info(NAME, '_defFnDrag: dragging:');
+                if (constrainNode) {
+                    ddProps.constrain.x = ddProps.constrain.xOrig - constrainNode.getScrollLeft();
+                    ddProps.constrain.y = ddProps.constrain.yOrig - constrainNode.getScrollTop();
+                }
+                dragNode.setXY(ddProps.x+e.xMouse+(winConstrained ? ddProps.winScrollLeft : window.getScrollLeft())-e.xMouseOrigin, ddProps.y+e.yMouse+(winConstrained ? ddProps.winScrollTop : window.getScrollTop())-e.yMouseOrigin, ddProps.constrain, true);
+                ddProps.winConstrained || dragNode.forceIntoView(true);
+                constrainNode && dragNode.forceIntoNodeView(constrainNode);
+            }
+        },
 
-    allowSwitch = function(node) {
-        var allowedEffects = _getAllowedEffects(node);
-        return (allowedEffects==='all');
-    };
+        /**
+         * Default function for the `*:dd-drop`-event
+         *
+         * @method _defFnDrag
+         * @param e {Object} eventobject
+         * @param sourceNode {HtmlElement} the original HtmlElement
+         * @param dragNode {HtmlElement} the dragged HtmlElement (either original or clone)
+         * @param dropzoneSpecified {Boolean} whether the sourceNode had a dropzone specified
+         * @param x {Number} x-position in coordinaties relative to `document` (like getX())
+         * @param y {Number} y-position in coordinaties relative to `document` (like getX())
+         * @private
+         * @since 0.0.1
+         */
+        _defFnDrop: function(e, sourceNode, dragNode, dropzoneSpecified, x, y) {
+console.info(NAME, '_defFnDrop: default function dd-drop. dropzoneSpecified: '+dropzoneSpecified);
+            // handle drop
+            if (dropzoneSpecified) {
+                this._handleDrop(e, sourceNode, dragNode, dropzoneSpecified, x, y);
+            }
+            else {
+                dragNode.removeClass(NO_TRANS_CLASS).removeClass(HIGH_Z_CLASS).removeClass(DD_DRAGGING_CLASS);
+            }
+        },
 
-    setupDragOverEvent = function() {
-        var dropzones = window.document.getAll('[dropzone]');
-        if (dropzones.length>0) {
-            dragOverEvent = Event.after(['mousemove', 'dd-fake-mousemove'], function(e) {
-                if (currentNode) {
-                    lastMouseOverNode = e.target;
+       /**
+         * Default function for the `*:dd-over`-event
+         *
+         * @method _defFnOver
+         * @param e {Object} eventobject
+         * @private
+         * @since 0.0.1
+         */
+        _defFnOver: function(e) {
+console.info(NAME, '_defFnOver: default function dd-over');
+            var dropzone = e.target;
+            dropzone.setClass(DD_DROPACTIVE_CLASS);
+            e.over.then(
+                function() {
+                    dropzone.removeClass(DD_DROPACTIVE_CLASS);
+                }
+            );
+        },
+
+        /**
+         * Default function for the `UI:dd-start`-event
+         *
+         * @method _defFnDrag
+         * @param e {Object} eventobject
+         * @private
+         * @since 0.0.1
+         */
+        _defFnStart: function(e) {
+            var instance = this,
+                customEvent;
+            e.emitterName || (e.emitterName='UI'),
+            customEvent = e.emitterName + ':dd-drag';
+console.info(NAME, '_defFnStart: default function UI:dd-start. Defining customEvent '+customEvent);
+            Event.defineEvent(customEvent).defaultFn(instance._defFnDrag.bind(instance));
+            instance._initializeDrag(e);
+        },
+
+      /**
+        * Defines the definition of the `dd-start` event: the first phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)
+        *
+        * @method _defineDDStart
+        * @param e {Object} eventobject
+        * @private
+        * @since 0.0.1
+        */
+        _defineDDStart: function() {
+console.info(NAME, '_defineDDStart');
+            var instance = this;
+            // by using dd-start before dd-drag, the user can create a `before`-subscriber to dd-start
+            // and define e.emitterName and/or e.relatives before going into `dd-drag`
+            Event.defineEvent('UI:dd-start')
+                .defaultFn(instance._defFnStart.bind(instance))
+                .preventedFn(instance._prevFnStart.bind(instance));
+        },
+
+        /**
+         * Defines the definition of the `dd-drop` event: the last phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)
+         *
+         * @method _defineDropEv
+         * @param e {Object} eventobject
+         * @param sourceNode {HtmlElement} the original HtmlElement
+         * @param dragNode {HtmlElement} the dragged HtmlElement (either original or clone)
+         * @param dropzoneSpecified {Boolean} whether the sourceNode had a dropzone specified
+         * @param x {Number} x-position in coordinaties relative to `document` (like getX())
+         * @param y {Number} y-position in coordinaties relative to `document` (like getX())
+         * @private
+         * @since 0.0.1
+         */
+        _defineDropEv: function(emitterName, sourceNode, dragNode, dropzoneSpecified, x, y) {
+console.info(NAME, '_defineDropEv '+dragNode);
+            var instance = this;
+            Event.defineEvent(emitterName+':dd-drop')
+                .defaultFn(instance._defFnDrop.rbind(instance, sourceNode, dragNode, dropzoneSpecified, x, y))
+                .forceAssign(); // need to reassign, because all arguments need to be bound again
+        },
+
+        /**
+         * Defines the definition of the `dd-over` event.
+         * Also sets up listeners to tricker dd-over when the mouse is above an dropzone.
+         *
+         * @method _defineOverEv
+         * @param e {Object} eventobject
+         * @private
+         * @since 0.0.1
+         */
+        _defineOverEv: function(e) {
+console.info(NAME, '_defineOverEv');
+            var instance = this,
+                emitterName = e.emitterName,
+                ddProps = instance.ddProps,
+                dropzones = window.document.getAll('[dropzone]');
+            if (dropzones.length>0) {
+                Event.defineEvent(emitterName+':dd-over')
+                     .defaultFn(instance._defFnOver.bind(instance)); // no need to reassign
+                return Event.after(['mousemove', 'dd-fake-mousemove'], function(e2) {
+                    var overDropzone = false;
+                    ddProps.mouseOverNode = e.target;
                     dropzones.forEach(
                         function(dropzone) {
-                            if (dropzone.hasData(DATA_KEY_DROPZONE)) {
+                            // don't do double:
+                            if (dropzone === e.dropTarget) {
+                                overDropzone = true;
                                 return;
                             }
                             var dropzoneAccept = dropzone.getAttr('dropzone') || '',
                                 dropzoneMove = REGEXP_MOVE.test(dropzoneAccept),
                                 dropzoneCopy = REGEXP_COPY.test(dropzoneAccept),
-                                dragOverPromise, dragOutEvent, eventobject, allowed;
+                                dragOverPromise, dragOutEvent, allowed, xMouseLast, yMouseLast;
 
-                            if (e.clientX) {
-                                lastMouseX = e.clientX+window.getScrollLeft();
-                                lastMouseY = e.clientY+window.getScrollTop();
+                            if (e2.clientX) {
+                                ddProps.xMouseLast = e2.clientX + window.getScrollLeft();
+                                ddProps.yMouseLast = e2.clientY + window.getScrollTop();
                             }
 
                             // check if the mouse is inside the dropzone
                             // also check if the mouse is inside the dragged node: the dragged node might have been constrained
                             // and check if the dragged node is allowed to go into the dropzone
+                            xMouseLast = ddProps.xMouseLast;
+                            yMouseLast = ddProps.yMouseLast;
                             allowed = (!dropzoneMove && !dropzoneCopy) || (dropzoneCopy && (dropEffect==='copy')) || (dropzoneMove && (dropEffect==='move'));
-                            if (dropEffect && allowed && dropzone.insidePos(lastMouseX, lastMouseY) && movableNode.insidePos(lastMouseX, lastMouseY)) {
-                                dropzone.setData(DATA_KEY_DROPZONE, true);
+                            if (dropEffect && allowed && dropzone.insidePos(xMouseLast, yMouseLast) && ddProps.dragNode.insidePos(xMouseLast, yMouseLast)) {
+                                overDropzone = true;
+                                e.dropTarget = dropzone;
                                 // mouse is in area of dropzone
                                 dragOverPromise = Promise.manage();
-                                eventobject = {
-                                    sourceTarget: dropzone,
-                                    currentTarget: window.document,
-                                    dragover: dragOverPromise
-                                };
+                                e.over = dragOverPromise;
                                 dragOutEvent = Event.after(
                                     ['mousemove', 'dd-fake-mousemove'],
-                                    function(ev) {
-                                        dragOverPromise.fulfill(ev.target);
+                                    function(e3) {
+console.info(NAME, 'outside dropzone: fulfilling promise');
+                                        dragOverPromise.fulfill(e3.target);
                                     },
-                                    function(ev) {
+                                    function(e3) {
                                         var allowed, dropzoneAccept, dropzoneMove, dropzoneCopy;
-                                        if (ev.type==='dd-fake-mousemove') {
+                                        if (e3.type==='dd-fake-mousemove') {
                                             dropzoneAccept = dropzone.getAttr('dropzone') || '';
                                             dropzoneMove = REGEXP_MOVE.test(dropzoneAccept);
                                             dropzoneCopy = REGEXP_COPY.test(dropzoneAccept);
                                             allowed = (!dropzoneMove && !dropzoneCopy) || (dropzoneCopy && (dropEffect==='copy')) || (dropzoneMove && (dropEffect==='move'));
                                             return !allowed;
                                         }
-                                        return !dropzone.insidePos(ev.clientX+window.getScrollLeft(), ev.clientY+window.getScrollTop());
+                                        return !dropzone.insidePos((e3.clientX || e3.center.x)+window.getScrollLeft(), (e3.clientY || e3.center.y)+window.getScrollTop());
                                     }
                                 );
                                 dragOverPromise.finally(
                                     function() {
                                         dragOutEvent.detach();
-                                        dropzone.removeData(DATA_KEY_DROPZONE);
+                                        e.dropTarget = null;
                                     }
                                 );
-                                dragOverPromiseList.push(dragOverPromise);
-                                Event.emit(dropzone, 'UI:dd-dragover', eventobject);
+                                ddProps.dragOverList.push(dragOverPromise);
+console.info(NAME, 'Over dropzone: emitting dd-over event');
+                                Event.emit(dropzone, emitterName+':dd-over', e);
                             }
                         }
                     );
-                }
-            });
-        }
-    };
+                    overDropzone || (e.dropTarget=null);
+                });
+            }
+        },
 
-    teardownDragOverEvent = function() {
-        if (dragOverEvent) {
-            dragOverEvent.detach();
-            dragOverPromiseList.forEach(function(promise) {
-                promise.fulfill(lastMouseOverNode);
-            });
-            dragOverPromiseList.length = 0;
-        }
-        dragOverEvent = null;
-    };
-
-    /*
-     * Creates the `hover` event. The eventobject has the property `e.hover` which is a `Promise`.
-     * You can use this Promise to get notification of the end of hover. The Promise e.hover gets resolved with
-     * `relatedTarget` as argument: the node where the mouse went into when leaving a.target.
-     *
-     * @method setupHover
-     * @private
-     * @since 0.0.2
-     */
-    setupDD = function() {
-
-        Event.after(['keydown', 'keyup'], function(e) {
-            CTRL_PRESSED = e.ctrlKey || e.metaKey;
-            if (currentNode && allowSwitch(currentNode)) {
-                dropEffect = CTRL_PRESSED ? 'copy' : 'move';
-                if (CTRL_PRESSED) {
-                    currentNode.removeClass(INVISIBLE_CLASS);
-                    movableNode.setClass(DD_OPACITY_CLASS);
+      /**
+        * Sets the draggable node back to its original position
+        *
+        * @method _setBack
+        * @param e {Object} eventobject
+        * @param sourceNode {HtmlElement} the original HtmlElement
+        * @param dragNode {HtmlElement} the dragged HtmlElement (either original or clone)
+        * @param dropzoneSpecified {Boolean} whether the sourceNode had a dropzone specified
+        * @param x {Number} x-position in coordinaties relative to `document` (like getX())
+        * @param y {Number} y-position in coordinaties relative to `document` (like getX())
+        * @private
+        * @since 0.0.1
+        */
+        _handleDrop: function(e, sourceNode, dragNode, dropzoneSpecified, x, y) {
+console.info(NAME, '_handleDrop '+dragNode);
+            var instance = this,
+                dropzoneNode = e.dropTarget,
+                constrainRectangle, borderLeft, borderTop, dragNodeX, dragNodeY, match;
+            if (dropzoneNode) {
+                // reset its position, only now constrain it to the dropzondenode
+                // we need to specify exactly the droparea: because we don't want to compare to any
+                // scrollWidth/scrollHeight, but exaclty to the visible part of the dropzone
+                borderLeft = parseInt(dropzoneNode.getStyle('border-left-width'), 10);
+                borderTop = parseInt(dropzoneNode.getStyle('border-top-width'), 10);
+                constrainRectangle = {
+                    x: dropzoneNode.getX() + borderLeft,
+                    y: dropzoneNode.getY() + borderTop,
+                    w: dropzoneNode.offsetWidth - borderLeft - parseInt(dropzoneNode.getStyle('border-right-width'), 10),
+                    h: dropzoneNode.offsetHeight - borderTop - parseInt(dropzoneNode.getStyle('border-bottom-width'), 10)
+                };
+                if ((ctrlPressed && instance.allowCopy(dragNode)) || instance.onlyCopy(dragNode)) {
+                    // backup x,y before move it into dropzone (which leads to new x,y)
+                    dragNodeX = dragNode.getX();
+                    dragNodeY = dragNode.getY();
+                    // now move the dragNode into dropzone
+                    dropzoneNode.append(dragNode);
+                    dragNode.removeClass(DD_OPACITY_CLASS).removeClass(DD_TRANSITION_CLASS).removeClass(HIGH_Z_CLASS).removeClass(DD_DRAGGING_CLASS);
+                    dragNode.setXY(dragNodeX, dragNodeY, constrainRectangle);
+                    // make the new HtmlElement non-copyable: it only can be replaced inside its dropzone
+                    dragNode.setAttr('dd-effect-allowed', 'move')
+                            .setAttr('dd-copied-node', 'true'); // to make moving inside the dropzone possible without return to its startposition
                 }
                 else {
-                    currentNode.setClass(INVISIBLE_CLASS);
-                    movableNode.removeClass(DD_OPACITY_CLASS);
+                    dropzoneNode.append(sourceNode);
+                    sourceNode.setXY(dragNode.getX(), dragNode.getY(), constrainRectangle);
+                    sourceNode.removeClass(INVISIBLE_CLASS);
+                    dragNode.remove();
                 }
-                // now, it could be that any droptarget should change its appearance (DD_DROPACTIVE_CLASS).
-                // we need to recalculate it for all targets
-                // we do this by emitting a 'dd-fake-mousemove' event
-                lastMouseOverNode && Event.emit(lastMouseOverNode, 'UI:dd-fake-mousemove');
             }
-        });
-
-        // prevent contextmenu on draggable elements that have the ability to copy themselves:
-        window.oncontextmenu = function () {
-            return currentNode ? !allowCopy(currentNode) : true;
-        };
-
-        Event.after('dd-dragover', function(e) {
-            console.log(NAME, 'dragged over');
-            e.target.setClass(DD_DROPACTIVE_CLASS);
-            e.dragover.then(
-                function() {
-                    e.target.removeClass(DD_DROPACTIVE_CLASS);
+            else {
+                if (dragNode.hasAttr('dd-copied-node')) {
+                    // reset its position, only now constrain it to the dropzondenode
+                    // we need to specify exactly the droparea: because we don't want to compare to any
+                    // scrollWidth/scrollHeight, but exaclty to the visible part of the dropzone
+                    match = false;
+                    dropzoneNode = dragNode.parentNode;
+                    while (dropzoneNode.matchesSelector && !match) {
+                        match = dropzoneNode.matchesSelector('[dropzone]');
+                        // if there is a match, then make sure x and y fall within the region
+                        match || (dropzoneNode=dropzoneNode.parentNode);
+                    }
+                    if (match) {
+                        borderLeft = parseInt(dropzoneNode.getStyle('border-left-width'), 10);
+                        borderTop = parseInt(dropzoneNode.getStyle('border-top-width'), 10);
+                        constrainRectangle = {
+                            x: dropzoneNode.getX() + borderLeft,
+                            y: dropzoneNode.getY() + borderTop,
+                            w: dropzoneNode.offsetWidth - borderLeft - parseInt(dropzoneNode.getStyle('border-right-width'), 10),
+                            h: dropzoneNode.offsetHeight - borderTop - parseInt(dropzoneNode.getStyle('border-bottom-width'), 10)
+                        };
+                        dragNode.setXY(dragNode.getX(), dragNode.getY(), constrainRectangle);
+                    }
+                    dragNode.removeClass(DD_OPACITY_CLASS).removeClass(DD_TRANSITION_CLASS).removeClass(HIGH_Z_CLASS).removeClass(DD_DRAGGING_CLASS);
                 }
-            );
-        });
+                else {
+                    instance._setBack(e, sourceNode, dragNode, dropzoneSpecified, x, y);
+                }
+            }
+        },
 
-        Event.before([MOUSE+'down', 'panstart'], function(e) {
-            console.log(NAME, 'setupHover: setting up mouseover event');
-            var node = e.target,
-                moveEv, evtType, x, y, handle, availableHandles, insideHandle;
+       /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method _initializeDrag
+         * @param e {Object} eventobject
+         * @private
+         * @since 0.0.1
+         */
+        _initializeDrag: function(e) {
+console.info(NAME, '_initializeDrag '+e.xMouseOrigin);
+            var instance = this,
+                sourceNode = e.target,
+                dropzoneSpecified = sourceNode.hasAttr(DD_DROPZONE),
+                constrain = sourceNode.getAttr(CONSTRAIN_ATTR),
+                ddProps = instance.ddProps,
+                emitterName = e.emitterName,
+                moveEv, dragNode, x, y, byExactId, match, constrainNode, winConstrained, winScrollLeft, winScrollTop,
+                inlineLeft, inlineTop, xOrig, yOrig;
 
-            // because we listen to 2 eventypes, but we don't want to setup twice, we need to store
-            // data on the node that tells whether dragging already started
-            if (currentNode) {
-                return;
+            // define ddProps --> internal object with data about the draggable instance
+            ddProps.sourceNode = sourceNode;
+            ddProps.dragNode = dragNode = dropzoneSpecified ? sourceNode.clone(true) : sourceNode;
+            ddProps.x = x = sourceNode.getX();
+            ddProps.y = y = sourceNode.getY();
+            ddProps.inlineLeft = inlineLeft = sourceNode.getInlineStyle('left');
+            ddProps.inlineTop = inlineTop = sourceNode.getInlineStyle('top');
+            ddProps.dropzoneSpecified = dropzoneSpecified;
+            ddProps.winConstrained = winConstrained = (constrain==='window');
+            ddProps.xMouseLast = x;
+            ddProps.yMouseLast = y;
+
+            if (constrain) {
+                if (ddProps.winConstrained) {
+                    ddProps.winScrollLeft = winScrollLeft = window.getScrollLeft();
+                    ddProps.winScrollTop = winScrollTop = window.getScrollTop();
+                    ddProps.constrain = {
+                        x: winScrollLeft,
+                        y: winScrollTop,
+                        w: window.getWidth(),
+                        h: window.getHeight()
+                    };
+                }
+                else {
+                    byExactId = REGEXP_NODE_ID.test(constrain);
+                    constrainNode = sourceNode.parentNode;
+                    while (constrainNode.matchesSelector && !match) {
+                        match = byExactId ? (constrainNode.id===constrain.substr(1)) : constrainNode.matchesSelector(constrain);
+                        // if there is a match, then make sure x and y fall within the region
+                        if (match) {
+                            ddProps.constrainNode = constrainNode;
+                            xOrig = constrainNode.getX() + parseInt(constrainNode.getStyle('border-left-width'), 10);
+                            yOrig = constrainNode.getY() + parseInt(constrainNode.getStyle('border-top-width'), 10);
+                            ddProps.constrain = {
+                                xOrig: xOrig,
+                                yOrig: yOrig,
+                                x: xOrig - constrainNode.getScrollLeft(),
+                                y: yOrig - constrainNode.getScrollTop(),
+                                w: constrainNode.scrollWidth,
+                                h: constrainNode.scrollHeight
+                            };
+                        }
+                        else {
+                            constrainNode = constrainNode.parentNode;
+                        }
+                    }
+                }
             }
 
-            // first check if there is a handle to determine if the drag started here:
-            handle = node.getAttr('dd-handle');
-            if (handle) {
-                availableHandles = node.getAll(handle);
-                insideHandle = false;
-                availableHandles.some(function(handleNode) {
-                    insideHandle = handleNode.contains(e.sourceTarget);
-                    return insideHandle;
-                });
-                if (!insideHandle) {
+            // create listener for `mousemove` and transform it into the `*:dd:drag`-event
+            moveEv = Event.after(MOUSE+'move', function(e2) {
+                if (!e2.clientX && !e2.center) {
                     return;
                 }
-            }
-
-            currentNode = node;
-
-            // we set data to the node: key='dragDrop' value=xy-position, which we may need
-            // to return a proxy on drop-fail
-            x = node.getX();
-            y = node.getY();
-            // now we can read their current inline values
-            node.setData(DATA_KEY, {
-                x: x,
-                y: y,
-                xStart: node.getInlineStyle('left'),
-                yStart: node.getInlineStyle('top'),
-                mousex: e.clientX+window.getScrollLeft(),
-                mousey: e.clientY+window.getScrollTop()
-            });
-
-            evtType = (e.type===MOUSE+'down') ? MOUSE : 'pan';
-
-            e.drag = Promise.manage();
-
-            e.setOnDrag = function(callbackFn) {
-                e.drag.setCallback(callbackFn);
-            };
-
-            moveEv = Event.after(evtType+'move', function(ev) {
                 // move the object
-                handleMove(e, ev);
+                e.xMouse = e2.clientX || e2.center.x;
+                e.yMouse = e2.clientY || e2.center.y;
+                Event.emit(sourceNode, emitterName+':dd-drag', e);
                 e.drag.callback(e);
             });
 
-            Event.onceAfter((evtType===MOUSE) ? MOUSE+'up' : 'panend', function(ev) {
+            // create a custom over-event that fires exactly when the mouse is over any dropzone
+            // we cannot use `hover`, because that event fails when there is an absolute floated element outsize `dropzone`
+            // lying on top of the dropzone. -> we need to check by coördinates
+            instance.ddProps.dragOverEv = instance._defineOverEv(e);
+
+            instance.ddProps.dragDropEv = instance._defineDropEv(emitterName, sourceNode, dragNode, dropzoneSpecified, inlineLeft, inlineTop);
+
+            dragNode.setClass(NO_TRANS_CLASS).setClass(HIGH_Z_CLASS).setClass(DD_DRAGGING_CLASS);
+
+console.info(NAME, 'setting up mouseup  event');
+            Event.onceAfter([MOUSE+'up', 'dd-fake-mouseup'], function(e3) {
+console.info(NAME, 'Event '+e3.type+' occured');
                 moveEv.detach();
-                // handle drop
-                if (movableNode.hasAttr(DD_DROPZONE)) {
-                    handleDrop(e, ev, currentNode);
-                }
-                else {
-                    movableNode.removeClass(NO_TRANS_CLASS).removeClass(HIGH_Z_CLASS).removeClass(DD_DRAGGING_CLASS);
-                }
-                currentNode = null;
-                e.dragFinished = true;
-                node.removeData(DATA_KEY);
-                teardownDragOverEvent();
+                instance._teardownOverEvent(e);
+                instance.ddProps = {};
+                Event.emit(sourceNode, emitterName+':dd-drop', e);
                 e.drag.fulfill(e);
             });
 
-            setupDragOverEvent();
-            handleDragStart(e, x, y);
-
-            Event.emit(node, 'UI:dd-drop', e);
-        }, '[draggable="true"]');
-    };
-
-    handleDragStart = function(e, x, y) {
-        var proxy = currentNode.hasAttr(DD_DROPZONE),
-            constrained = currentNode.getAttr(CONSTRAIN_ATTR);
-
-        movableNode = proxy ? currentNode.clone(true) : currentNode;
-
-        movableNodeWinConstrained = (constrained==='window');
-        movableNodeNodeConstrained = !movableNodeWinConstrained && constrained;
-
-        movableNode.setClass(NO_TRANS_CLASS).setClass(HIGH_Z_CLASS).setClass(DD_DRAGGING_CLASS);
-
-        if (proxy) {
-            dropEffect = (onlyCopy(currentNode) || (CTRL_PRESSED && allowCopy(currentNode))) ? 'copy' : 'move';
-            (dropEffect==='copy') ? movableNode.setClass(DD_OPACITY_CLASS) : currentNode.setClass(INVISIBLE_CLASS);
-            movableNode.setClass(INVISIBLE_CLASS);
-            currentNode.parentNode.append(movableNode);
-            movableNode.setXY(x, y, true);
-            movableNode.removeClass(INVISIBLE_CLASS);
-        }
-        else {
-            dropEffect = null;
-            movableNode.setXY(x, y, true);
-        }
-    };
-
-    handleMove = function(e, ev) {
-console.info('DragMove '+movableNode.id);
-        if (e.dragFinished) {
-            return;
-        }
-        var data = movableNode.getData(DATA_KEY);
-        movableNode.setXY(data.x+ev.clientX+window.getScrollLeft()-data.mousex, data.y+ev.clientY+window.getScrollTop()-data.mousey, true);
-        movableNodeWinConstrained || movableNode.forceIntoView(true);
-        movableNodeNodeConstrained && movableNode.forceIntoNodeView();
-    };
-
-    handleDrop = function(e, ev, originalCurrentNode) {
-console.info('DragDrop '+movableNode.id);
-        var targetNode, originalConstrain;
-
-        window.document.getAll('[dropzone]').some(function(dropzone) {
-            if (dropzone.hasData(DATA_KEY_DROPZONE)) {
-                targetNode = dropzone;
-            }
-            return targetNode;
-        });
-        if (targetNode) {
-            targetNode.append(currentNode);
-            originalConstrain = currentNode.getAttr(CONSTRAIN_ATTR);
-            currentNode.setAttr(CONSTRAIN_ATTR, '[dropzone]');
-            currentNode.setXY(movableNode.getX(), movableNode.getY());
-            currentNode.setAttr(CONSTRAIN_ATTR, originalConstrain);
-            currentNode.removeClass(INVISIBLE_CLASS);
-            movableNode.remove();
-        }
-        else {
-            setBack(e, ev, originalCurrentNode);
-        }
-    };
-
-    setBack = function(e, ev, originalCurrentNode) {
-console.info('setBack '+movableNode.id);
-        var proxy = movableNode.hasAttr(DD_DROPZONE),
-            data = movableNode.getData(DATA_KEY),
-            tearDown;
-        tearDown = function(notransRemoval) {
-            notransRemoval || (movableNode.removeEventListener && movableNode.removeEventListener('transitionend', tearDown, true));
-            if (proxy) {
-                // we must take originalCurrentNode instead of currentNode --> because asynchronisity, currentNode is already null
-                originalCurrentNode.removeClass(INVISIBLE_CLASS);
-                movableNode.remove();
+            if (dropzoneSpecified) {
+                dropEffect = (instance.onlyCopy(sourceNode) || (ctrlPressed && instance.allowCopy(sourceNode))) ? 'copy' : 'move';
+                (dropEffect==='copy') ? dragNode.setClass(DD_OPACITY_CLASS) : sourceNode.setClass(INVISIBLE_CLASS);
+                dragNode.setClass(INVISIBLE_CLASS);
+                sourceNode.parentNode.append(dragNode);
+                dragNode.setXY(ddProps.xMouseLast, ddProps.yMouseLast, ddProps.constrain, true);
+                dragNode.removeClass(INVISIBLE_CLASS);
             }
             else {
-                movableNode.removeClass(DD_TRANSITION_CLASS).removeClass(HIGH_Z_CLASS).removeClass(DD_DRAGGING_CLASS);
+                dropEffect = null;
+                dragNode.setXY(ddProps.xMouseLast, ddProps.yMouseLast, ddProps.constrain, true);
             }
-        };
+        },
 
-        movableNode.removeClass(NO_TRANS_CLASS);
+        /**
+         * Prevented function for the `*:dd-start`-event
+         *
+         * @method _prevFnStart
+         * @param e {Object} eventobject
+         * @private
+         * @since 0.0.1
+         */
+        _prevFnStart: function(e) {
+console.info(NAME, '_prevFnStart');
+            e.drag.reject();
+        },
 
-        if (movableNode.hasClass(DD_DRAGGING_CLASS)) {
-            movableNode.removeClass(DD_DRAGGING_CLASS);
-            movableNode.setClass(DD_TRANSITION_CLASS);
+      /**
+        * Sets the draggable node back to its original position
+        *
+        * @method _setBack
+        * @param e {Object} eventobject
+        * @param sourceNode {HtmlElement} the original HtmlElement
+        * @param dragNode {HtmlElement} the dragged HtmlElement (either original or clone)
+        * @param dropzoneSpecified {Boolean} whether the sourceNode had a dropzone specified
+        * @param x {Number} x-position in coordinaties relative to `document` (like getX())
+        * @param y {Number} y-position in coordinaties relative to `document` (like getX())
+        * @private
+        * @since 0.0.1
+        */
+        _setBack: function(e, sourceNode, dragNode, dropzoneSpecified, x, y) {
+console.info(NAME, '_setBack to '+x+', '+y);
+            var tearedDown,
+                tearDown = function(notransRemoval) {
+console.info(NAME, '_setBack -> tearDown');
+                    // dragNode might be gone when this method is called for the second time
+                    // therefor check its existance:
+                    if (!tearedDown) {
+                        tearedDown = true;
+                        notransRemoval || (dragNode.removeEventListener && dragNode.removeEventListener('transitionend', tearDown, true));
+                        if (dropzoneSpecified) {
+                            sourceNode.removeClass(INVISIBLE_CLASS);
+                            dragNode.remove();
+                        }
+                        else {
+                            dragNode.removeClass(DD_TRANSITION_CLASS).removeClass(HIGH_Z_CLASS).removeClass(DD_DRAGGING_CLASS);
+                        }
+                    }
+                };
+
+            dragNode.removeClass(NO_TRANS_CLASS);
+
+            dragNode.removeClass(DD_DRAGGING_CLASS);
+            dragNode.setClass(DD_TRANSITION_CLASS);
             // transitions only work with IE10+, and that browser has addEventListener
             // when it doesn't have, it doesn;t harm to leave the transitionclass on: it would work anyway
             // nevertheless we will remove it with a timeout
-            if (movableNode.addEventListener) {
-                movableNode.addEventListener('transitionend', tearDown, true);
+            if (dragNode.addEventListener) {
+                dragNode.addEventListener('transitionend', tearDown, true);
             }
-            else {
-                LATER(tearDown, 250);
-            }
-        }
-        else {
-            tearDown(true);
-        }
-        movableNode.setInlineStyle('left', data.xStart);
-        movableNode.setInlineStyle('top', data.yStart);
+            // ALWAYS tearDowm after delay --> when there was no repositioning, there never will be a transition-event
+            LATER(tearDown, 250);
+            dragNode.setInlineStyle('left', x);
+            dragNode.setInlineStyle('top', y);
+        },
 
+      /**
+        * Sets up a `keydown` and `keyup` listener, to monitor whether a `ctrlKey` (windows) or `metaKey` (Mac)
+        * is pressed to support the copying of draggable items
+        *
+        * @method _setupKeyEv
+        * @private
+        * @since 0.0.1
+        */
+        _setupKeyEv: function() {
+console.info(NAME, '_setupKeyEv');
+            var instance = this;
+            Event.after(['keydown', 'keyup'], function(e) {
+console.info(NAME, 'event '+e.type);
+                var ddProps = instance.ddProps,
+                    sourceNode = ddProps.sourceNode,
+                    dragNode, mouseOverNode;
+                ctrlPressed = e.ctrlKey || e.metaKey;
+                if (sourceNode && instance.allowSwitch(sourceNode)) {
+                    dragNode = ddProps.dragNode;
+                    mouseOverNode = ddProps.mouseOverNode;
+                    dropEffect = ctrlPressed ? 'copy' : 'move';
+                    if (ctrlPressed) {
+                        sourceNode.removeClass(INVISIBLE_CLASS);
+                        dragNode.setClass(DD_OPACITY_CLASS);
+                    }
+                    else {
+                        sourceNode.setClass(INVISIBLE_CLASS);
+                        dragNode.removeClass(DD_OPACITY_CLASS);
+                    }
+                    // now, it could be that any droptarget should change its appearance (DD_DROPACTIVE_CLASS).
+                    // we need to recalculate it for all targets
+                    // we do this by emitting a 'dd-fake-mousemove' event
+                    mouseOverNode && Event.emit(mouseOverNode, 'UI:dd-fake-mousemove');
+                }
+            });
+        },
+
+      /**
+        * Engine behinf the dragdrop-cycle.
+        * Sets up a `mousedown` listener to initiate a drag-drop eventcycle. The eventcycle start whenever
+        * one of these events happens on a HtmlElement with the attribute `draggable="true"`.
+        * The drag-drop eventcycle consists of the events: `dd-start`, `emitterName:dd-drag` and `emitterName:dd-drop`
+        *
+        *
+        * @method _setupMouseEv
+        * @private
+        * @since 0.0.1
+        */
+        _setupMouseEv: function() {
+            var instance = this;
+console.info(NAME, '_setupMouseEv: setting up mousedown event');
+            Event.before(MOUSE+'down', function(e) {
+                var node = e.target,
+                    handle, availableHandles, insideHandle;
+
+                // first check if there is a handle to determine if the drag started here:
+                handle = node.getAttr('dd-handle');
+                if (handle) {
+                    availableHandles = node.getAll(handle);
+                    insideHandle = false;
+                    availableHandles.some(function(handleNode) {
+                        insideHandle = handleNode.contains(e.sourceTarget);
+                        return insideHandle;
+                    });
+                    if (!insideHandle) {
+                        return;
+                    }
+                }
+
+                // initialize ddProps: have to do here, because the event might not start because it wasn't inside the handle when it should be
+                instance.ddProps = {
+                    defined: true,
+                    dragOverList: []
+                };
+
+                // prevent the emitter from resetting e.target to e.sourceTarget:
+                e._noResetSourceTarget = true;
+                // add `drag`-Promise to the eventobject --> this Promise will be resolved once the pointer has released.
+                e.drag = Promise.manage();
+                // define e.setOnDrag --> users
+                e.setOnDrag = function(callbackFn) {
+                    e.drag.setCallback(callbackFn);
+                };
+                // store the orriginal mouseposition:
+                e.xMouseOrigin = e.clientX + window.getScrollLeft();
+                e.yMouseOrigin = e.clientY + window.getScrollTop();
+                // now we can start the eventcycle by emitting UI:dd-start:
+                Event.emit(e.target, 'UI:dd-start', e);
+            }, '[draggable="true"]');
+
+        },
+
+      /**
+        * Cleansup the dragover subscriber and fulfills any dropzone-promise.
+        *
+        * @method _teardownOverEvent
+        * @param e {Object} eventobject
+        * @private
+        * @since 0.0.1
+        */
+        _teardownOverEvent: function(e) {
+console.info('_teardownOverEvent');
+            var ddProps = this.ddProps,
+                dragOverEvent = ddProps.dragOverEv;
+            if (dragOverEvent) {
+                dragOverEvent.detach();
+                ddProps.dragOverList.forEach(function(promise) {
+                    promise.fulfill(e.dropTarget);
+                });
+            }
+        },
+       /**
+         * Returns true if the dropzone-HtmlElement accepts copy-dragables.
+         * Is determined by the attribute `dd-effect-allowed="copy"` or `dd-effect-allowed="all"`
+         *
+         * @method allowCopy
+         * @param dropzone {HtmlElement} HtmlElement that is checked for its allowed effects
+         * @return {Boolean} if copy-dragables are allowed
+         * @since 0.0.1
+         */
+        allowCopy: function(dropzone) {
+            var allowedEffects = this._allowedEffects(dropzone);
+console.info('allowCopy --> '+((allowedEffects==='all') || (allowedEffects==='copy')));
+            return (allowedEffects==='all') || (allowedEffects==='copy');
+        },
+
+       /**
+         * Returns true if the dragable-HtmlElement allowes to switch between `copy` and `move`.
+         *
+         * @method allowSwitch
+         * @param dragableElement {HtmlElement} HtmlElement that is checked for its allowed effects
+         * @return {Boolean} if copy-dragables are allowed
+         * @since 0.0.1
+         */
+        allowSwitch: function(dragableElement) {
+            var allowedEffects = this._allowedEffects(dragableElement);
+console.info('allowSwitch --> '+(allowedEffects==='all'));
+            return (allowedEffects==='all');
+        },
+
+       /**
+         * Initializes dragdrop. Needs to be invoked, otherwise DD won't run.
+         *
+         * @method init
+         * @param dragableElement {HtmlElement} HtmlElement that is checked for its allowed effects
+         * @return {Boolean} if copy-dragables are allowed
+         * @since 0.0.1
+         */
+        init: function() {
+console.info(NAME, 'init');
+            var instance = this;
+            if (!instance.initialised) {
+                instance._setupKeyEv();
+                instance._defineDDStart();
+                instance._setupMouseEv(); // engine behind the dragdrop-eventcycle
+            }
+            instance.initialised = true;
+        },
+
+       /**
+         * Returns true if the dragable-HtmlElement accepts only copy-dragables (no moveable)
+         * Is determined by the attribute `dd-effect-allowed="copy"`
+         *
+         * @method onlyCopy
+         * @param dragableElement {HtmlElement} HtmlElement that is checked for its allowed effects
+         * @return {Boolean} if only copy-dragables are allowed
+         * @since 0.0.1
+         */
+        onlyCopy: function(dragableElement) {
+            var allowedEffects = this._allowedEffects(dragableElement);
+console.info('onlyCopy --> '+(allowedEffects==='copy'));
+            return (allowedEffects==='copy');
+        }
     };
-
-    // also extend window.Element:
-    window.Element && (function(ElementPrototype) {
-       /**
-        * Makes the HtmlElement draggable
-        *
-        * @method setDraggable
-        * @param [proxy] {Boolean} whether the HtmlElement is a proxy-node during drag
-        * @chainable
-        * @since 0.0.1
-        */
-        ElementPrototype.setDraggable = function(proxy) {
-            this.setAttr(DRAGGABLE, proxy ? PROXY : "true");
-            return this;
-        };
-
-       /**
-        * Removes draggability of the HtmlElement
-        *
-        * @method removeDraggable
-        * @chainable
-        * @since 0.0.1
-        */
-        ElementPrototype.removeDraggable = function() {
-            this.removeAttr(DRAGGABLE);
-            return this;
-        };
-    }(window.Element.prototype));
-
-    setupDD();
 
     NodeDD = NodePlugin.subClass(
         function (config) {
@@ -7304,6 +7540,7 @@ console.info('setBack '+movableNode.id);
             this.draggable = true;
             this['dd-dropzone'] = config.dropzone;
             this['xy-constrain'] = config.constrain;
+            this['dd-emitter-name'] = config.emitterName;
             this['dd-handle'] = config.handle;
             this['dd-effect-allowed'] = config.effectAllowed;
         }
@@ -7311,7 +7548,8 @@ console.info('setBack '+movableNode.id);
 
     NodeDropzone = NodePlugin.subClass(
         function (config) {
-            var dropzone = 'true';
+            var dropzone = 'true',
+                emitterName;
             config || (config={});
             if (config.copy && !config.move) {
                 dropzone = 'copy';
@@ -7319,16 +7557,20 @@ console.info('setBack '+movableNode.id);
             else if (!config.copy && config.move) {
                 dropzone = 'move';
             }
+            (emitterName=config.emitterName) && (dropzone+=' emitter-name='+emitterName);
             this.dropzone = dropzone;
         }
     );
 
     return {
-        NodeDD: NodeDD,
-        NodeDropzone: NodeDropzone
+        DD: DD,
+        Plugins: {
+            NodeDD: NodeDD,
+            NodeDropzone: NodeDropzone
+        }
     };
 };
-},{"./css/drag-drop.css":16,"dom-ext":11,"event-dom":18,"js-ext":32,"polyfill/polyfill-base.js":51,"utils":53,"window-ext":56}],18:[function(require,module,exports){
+},{"./css/drag-drop.css":16,"dom-ext":11,"event-dom":18,"js-ext":32,"polyfill/polyfill-base.js":52,"utils":54,"window-ext":57}],18:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7815,7 +8057,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":25,"polyfill/lib/element.matchesselector.js":44,"polyfill/lib/node.contains.js":46,"utils":53}],19:[function(require,module,exports){
+},{"event":25,"polyfill/lib/element.matchesselector.js":44,"polyfill/lib/node.contains.js":46,"utils":54}],19:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8150,7 +8392,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":18,"dom-ext":11,"utils":53}],21:[function(require,module,exports){
+},{"../event-dom.js":18,"dom-ext":11,"utils":54}],21:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9157,8 +9399,9 @@ require('js-ext/lib/object.js');
             }
             e.status.ok = !e.status.halted && !e.status.defaultPrevented;
             // in case any subscriber changed e.target inside its filter (event-dom does this),
-            // then we reset e.target to its original:
-            e.sourceTarget && (e.target=e.sourceTarget);
+            // then we reset e.target to its original. But only if e._noResetSourceTarget is undefined:
+            // (e._noResetSourceTarget can be used to supress this behaviour --> dragdrop uses this)
+            e.sourceTarget && !e._noResetSourceTarget && (e.target=e.sourceTarget);
             if (customEventDefinition && !e.status.halted) {
                 // now invoke defFn
                 e.returnValue = e.status.defaultPrevented ?
@@ -9553,7 +9796,7 @@ require('js-ext/lib/object.js');
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/lib/function.js":34,"js-ext/lib/object.js":35,"polyfill/polyfill-base.js":51}],23:[function(require,module,exports){
+},{"js-ext/lib/function.js":34,"js-ext/lib/object.js":35,"polyfill/polyfill-base.js":52}],23:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10947,7 +11190,7 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":32,"polyfill/polyfill-base.js":51}],31:[function(require,module,exports){
+},{"js-ext":32,"polyfill/polyfill-base.js":52}],31:[function(require,module,exports){
 module.exports = {
     'abstract': true,
     'arguments': true,
@@ -11286,7 +11529,7 @@ defineProperties(Function.prototype, {
 defineProperty(Object.prototype, 'createClass', function (constructor, prototype) {
 	return Function.prototype.subClass.apply(this, arguments);
 });
-},{"polyfill/polyfill-base.js":51}],35:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":52}],35:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -11572,7 +11815,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"polyfill/polyfill-base.js":51}],36:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":52}],36:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11879,7 +12122,7 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill/lib/promise.js":50,"polyfill/polyfill-base.js":51,"ypromise":6}],37:[function(require,module,exports){
+},{"polyfill/lib/promise.js":50,"polyfill/polyfill-base.js":52,"ypromise":6}],37:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -12649,6 +12892,21 @@ if (!Object.keys) {
 },{}],50:[function(require,module,exports){
 require('ypromise');
 },{"ypromise":6}],51:[function(require,module,exports){
+(function (global){
+(function (global) {
+    "use strict";
+    if (!global.console) {
+        global.console = {
+            log: function() { /* NOOP */ },
+            info: function() { /* NOOP */ },
+            warn: function() { /* NOOP */ },
+            error: function() { /* NOOP */ }
+        };
+    }
+}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],52:[function(require,module,exports){
+require('./lib/window.console.js');
 require('./lib/array.filter.js');
 require('./lib/array.foreach.js');
 require('./lib/array.indexof.js');
@@ -12658,17 +12916,17 @@ require('./lib/object.create.js');
 require('./lib/object.keys.js');
 require('./lib/object.defineproperty.js');
 require('./lib/css.opacity.js');
-},{"./lib/array.filter.js":38,"./lib/array.foreach.js":39,"./lib/array.indexof.js":40,"./lib/array.isarray.js":41,"./lib/array.some.js":42,"./lib/css.opacity.js":43,"./lib/object.create.js":47,"./lib/object.defineproperty.js":48,"./lib/object.keys.js":49}],52:[function(require,module,exports){
+},{"./lib/array.filter.js":38,"./lib/array.foreach.js":39,"./lib/array.indexof.js":40,"./lib/array.isarray.js":41,"./lib/array.some.js":42,"./lib/css.opacity.js":43,"./lib/object.create.js":47,"./lib/object.defineproperty.js":48,"./lib/object.keys.js":49,"./lib/window.console.js":51}],53:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/json.js');
 require('./lib/promise.js');
-},{"./lib/json.js":45,"./lib/promise.js":50,"./polyfill-base.js":51}],53:[function(require,module,exports){
+},{"./lib/json.js":45,"./lib/promise.js":50,"./polyfill-base.js":52}],54:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
 	later: require('./lib/timers.js').later,
 	async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":54,"./lib/timers.js":55}],54:[function(require,module,exports){
+},{"./lib/idgenerator.js":55,"./lib/timers.js":56}],55:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -12725,7 +12983,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"polyfill/polyfill-base.js":51}],55:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":52}],56:[function(require,module,exports){
 (function (process,global){
 /**
  * Collection of various utility functions.
@@ -12885,13 +13143,13 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":58,"polyfill/polyfill-base.js":51}],56:[function(require,module,exports){
+},{"_process":59,"polyfill/polyfill-base.js":52}],57:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":57}],57:[function(require,module,exports){
+},{"./lib/sizes.js":58}],58:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
@@ -12983,7 +13241,7 @@ module.exports = function (window) {
     };
 
 };
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -13136,6 +13394,11 @@ process.chdir = function (dir) {
         base: '/components'
     };
 
+    ITSA.Plugins = {
+
+    };
+
+
     require('css');
     require('polyfill');
     require('js-ext');
@@ -13148,7 +13411,8 @@ process.chdir = function (dir) {
             debug: true,
             base: '/build'
         },
-        EVENT_NAME_TIMERS_EXECUTION = 'timers:asyncfunc';
+        EVENT_NAME_TIMERS_EXECUTION = 'timers:asyncfunc',
+        dragdrop;
 
     /**
      * Reference to the `idGenerator` function in [utils](../modules/utils.html)
@@ -13158,14 +13422,19 @@ process.chdir = function (dir) {
      * @static
     */
 
-    ITSA.merge(require('dom-ext')(window));
+    ITSA.Plugins.merge(require('dom-ext')(window).Plugins);
+
     ITSA.merge(require('utils'));
     ITSA.RESERVED_WORDS = require('js-ext/extra/reserved-words.js');
 
     if (!fakedom) {
         require('event-dom/extra/hover.js')(window);
         require('event-dom/extra/valuechange.js')(window);
-        ITSA.merge(require('drag-drop')(window));
+        // setup dragdrop:
+        dragdrop = require('drag-drop')(window);
+        ITSA.DD = dragdrop.DD;
+        ITSA.Plugins.merge(dragdrop.Plugins);
+        ITSA.DD.init();
     }
 
     /**
@@ -13209,4 +13478,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"css":9,"dom-ext":11,"drag-drop":17,"event":25,"event-dom/extra/hover.js":19,"event-dom/extra/valuechange.js":20,"event-mobile":21,"io/extra/io-cors-ie9.js":26,"io/extra/io-stream.js":27,"io/extra/io-transfer.js":28,"io/extra/io-xml.js":29,"js-ext":32,"js-ext/extra/reserved-words.js":31,"node-win":undefined,"polyfill":52,"utils":53,"window-ext":56}]},{},[]);
+},{"css":9,"dom-ext":11,"drag-drop":17,"event":25,"event-dom/extra/hover.js":19,"event-dom/extra/valuechange.js":20,"event-mobile":21,"io/extra/io-cors-ie9.js":26,"io/extra/io-stream.js":27,"io/extra/io-transfer.js":28,"io/extra/io-xml.js":29,"js-ext":32,"js-ext/extra/reserved-words.js":31,"node-win":undefined,"polyfill":53,"utils":54,"window-ext":57}]},{},[]);

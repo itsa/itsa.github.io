@@ -191,7 +191,8 @@
 
 module.exports = function (window) {
 
-    var POSITION = &#x27;position&#x27;,
+    var NAME = &#x27;[dom-ext]: &#x27;,
+        POSITION = &#x27;position&#x27;,
         BLOCK = &#x27;el-block&#x27;,
         BORDERBOX = &#x27;el-borderbox&#x27;,
         NO_TRANS = &#x27;el-notrans&#x27;,
@@ -254,7 +255,7 @@ module.exports = function (window) {
         ElementPrototype.clone = function(deep) {
             var instance = this,
                 cloned = instance.cloneNode(deep);
-            if (instance._data.size()&gt;0) {
+            if (instance._data) {
                 Object.defineProperty(cloned, &#x27;_data&#x27;, {
                     configurable: false,
                     enumerable: false,
@@ -302,9 +303,10 @@ module.exports = function (window) {
         *        Only use this when you know the ancestor and this ancestor has an &#x60;overflow=&quot;scroll&quot;&#x60; property
         *        when not set, this method will seek through the doc-tree upwards for the first HtmlElement that does match this criteria.
         * @chainable
-        * @since 0.0.1
+        * @since 0.0.2
         */
         ElementPrototype.forceIntoNodeView = function(ancestor) {
+console.info(NAME, &#x27;forceIntoNodeView&#x27;);
             var instance = this,
                 parentOverflowNode = this.parentNode,
                 match, left, width, right, height, top, bottom, scrollLeft, scrollTop, parentOverflowNodeX, parentOverflowNodeY,
@@ -318,6 +320,7 @@ module.exports = function (window) {
                 }
             }
             if (parentOverflowNode!==window.document) {
+// console.warn(parentOverflowNode);
                 left = instance.getX();
                 width = instance.offsetWidth;
                 right = left + width;
@@ -333,11 +336,17 @@ module.exports = function (window) {
                 parentOverflowNodeStopRight = parentOverflowNodeX+parentOverflowNode.offsetWidth-parseInt(parentOverflowNode.getStyle(&#x27;border-right-width&#x27;), 10);
                 parentOverflowNodeStopBottom = parentOverflowNodeY+parentOverflowNode.offsetHeight-parseInt(parentOverflowNode.getStyle(&#x27;border-bottom-width&#x27;), 10);
 
+console.info(&#x27;left: &#x27;+left+&#x27; | width: &#x27;+width+&#x27; | right: &#x27;+right);
+
+console.info(&#x27;scrollLeft: &#x27;+scrollLeft+&#x27; | parentOverflowNodeX: &#x27;+parentOverflowNodeX+&#x27; | parentOverflowNodeStartLeft: &#x27;+parentOverflowNodeStartLeft+&#x27; | parentOverflowNodeStopRight: &#x27;+parentOverflowNodeStopRight);
+
                 if (left&lt;parentOverflowNodeStartLeft) {
                     newX = Math.max(0, scrollLeft+left-parentOverflowNodeStartLeft);
+console.warn(&#x27;&lt; newX: &#x27;+newX);
                 }
                 else if (right&gt;parentOverflowNodeStopRight) {
                     newX = scrollLeft + right - parentOverflowNodeStopRight;
+console.warn(&#x27;&gt; newX: &#x27;+newX);
                 }
 
                 if (top&lt;parentOverflowNodeStartTop) {
@@ -369,9 +378,10 @@ module.exports = function (window) {
         * @param [rectangle.w] {Number} width of window
         * @param [rectangle.h] {Number} height of window
         * @chainable
-        * @since 0.0.1
+        * @since 0.0.2
         */
         ElementPrototype.forceIntoView = function(notransition, rectangle) {
+// console.info(NAME, &#x27;forceIntoView&#x27;);
             var instance = this,
                 left = instance.getX(),
                 width = instance.offsetWidth,
@@ -1093,6 +1103,7 @@ module.exports = function (window) {
          * @method insidePos
          * @param x {Number} x-value for new position (coordinates are page-based)
          * @param y {Number} y-value for new position (coordinates are page-based)
+         * @since 0.0.2
          */
         ElementPrototype.insidePos = function(x, y) {
             var instance = this,
@@ -1103,7 +1114,6 @@ module.exports = function (window) {
             return (x&gt;=left) &amp;&amp; (x&lt;=right) &amp;&amp; (y&gt;=top) &amp;&amp; (y&lt;=bottom);
         };
 
-
        /**
          * Set the position of an html element in page coordinates.
          * The element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
@@ -1113,16 +1123,26 @@ module.exports = function (window) {
          * @method setXY
          * @param x {Number} x-value for new position (coordinates are page-based)
          * @param y {Number} y-value for new position (coordinates are page-based)
-         * @param [constrain] {&#x27;window&#x27;, HtmlElement, Object} if you want to constrain the positioning. In case of &#x60;Object&#x60;, you need to pass an object
-         *        with the properties: {x, y, w, h} where x and y are absolute pixels of the document (like calculated with getX() and getY()).
+         * @param [constrain] {&#x27;window&#x27;, HtmlElement, Object, String}
+         * &lt;ul&gt;
+         *     &lt;li&gt;&lt;b&gt;&#x27;window&#x27;&lt;/b&gt; to constrain to the visible window&lt;/li&gt;
+         *     &lt;li&gt;&lt;b&gt;HtmlElement&lt;/b&gt; to constrain to a specified HtmlElement&lt;/li&gt;
+         *     &lt;li&gt;&lt;b&gt;Object&lt;/b&gt; to constrain to an object with the properties: {x, y, w, h} where x and y are absolute pixels of the document
+         *            (like calculated with getX() and getY()).&lt;/li&gt;
+         *     &lt;li&gt;&lt;b&gt;String&lt;/b&gt; to constrain to a specified css-selector, which should be an ancestor&lt;/li&gt;
+         * &lt;/ul&gt;
          * @param [notransition=false] {Boolean} set true if you are sure positioning is without transition.
          *        this isn&#x27;t required, but it speeds up positioning. Only use when no transition is used:
          *        when there is a transition, setting this argument &#x60;true&#x60; would miscalculate the position.
+         * @chainable
+         * @since 0.0.2
          */
         ElementPrototype.setXY = function(x, y, constrain, notransition) {
+console.info(NAME, &#x27;setXY &#x27;+x+&#x27;,&#x27;+y);
+console.info(constrain);
             var instance = this,
                 position = instance.getStyle(POSITION),
-                dif, start, finalValue, constrainedSelector, match, constrainNode, byExactId,
+                dif, start, finalValue, match, constrainNode, byExactId,
                 containerTop, containerRight, containerLeft, containerBottom, requestedX, requestedY;
 
             // default position to relative
@@ -1139,154 +1159,55 @@ module.exports = function (window) {
                     containerBottom = containerTop + window.getHeight();
                 }
                 else {
-                    if (constrain.matchesselector) {
-                        // HtmlElement --&gt; we need to search the rectangle
+                    if (typeof constrain === &#x27;string&#x27;) {
                         match = false;
-                        constrainNode = instance;
-                        byExactId = REGEXP_NODE_ID.test(constrainedSelector);
+                        constrainNode = instance.parentNode;
+                        byExactId = REGEXP_NODE_ID.test(constrain);
                         while (constrainNode.matchesSelector &amp;&amp; !match) {
-                            match = byExactId ? (constrainNode.id===constrainedSelector.substr(1)) : constrainNode.matchesSelector(constrainedSelector);
+                            match = byExactId ? (constrainNode.id===constrain.substr(1)) : constrainNode.matchesSelector(constrain);
                             // if there is a match, then make sure x and y fall within the region
                             match || (constrainNode=constrainNode.parentNode);
                         }
-
-                        if (match) {
-                            containerLeft = constrainNode.getX() + parseInt(constrainNode.getStyle(BORDER_LEFT_WIDTH), 10);
-                            containerTop = constrainNode.getY() + parseInt(constrainNode.getStyle(BORDER_TOP_WIDTH), 10);
-                            containerRight = containerLeft + constrainNode.scrollWidth;
-                            containerBottom = containerTop + constrainNode.scrollHeight;
-                        }
+                        // if HtmlElement found, then bound it to &#x60;constrain&#x60; as if the argument &#x60;constrain&#x60; was an HtmlElement
+                        match &amp;&amp; (constrain=constrainNode);
+                    }
+                    if (constrain.matchesSelector) {
+                        // HtmlElement --&gt; we need to search the rectangle
+                        containerLeft = constrain.getX() + parseInt(constrain.getStyle(BORDER_LEFT_WIDTH), 10);
+                        containerTop = constrain.getY() + parseInt(constrain.getStyle(BORDER_TOP_WIDTH), 10);
+                        containerRight = containerLeft + constrain.scrollWidth;
+                        containerBottom = containerTop + constrain.scrollHeight;
                     }
                     else {
-                        containerLeft = constrainNode.getX() + parseInt(constrainNode.getStyle(BORDER_LEFT_WIDTH), 10);
-                        containerTop = constrainNode.getY() + parseInt(constrainNode.getStyle(BORDER_TOP_WIDTH), 10);
-                        containerRight = containerLeft + constrainNode.scrollWidth;
-                        containerBottom = containerTop + constrainNode.scrollHeight;
+                        containerLeft = constrain.x;
+                        containerTop = constrain.y;
+                        containerRight = constrain.x + constrain.w;
+                        containerBottom = constrain.y + constrain.h;
                     }
                 }
-                if (containerLeft) {
-                    // found constrain
-                    requestedX = x || instance.getX();
-                    if ((requestedX+instance.offsetWidth)&gt;containerRight) {
-                        x = requestedX = containerRight - instance.offsetWidth;
+                if (typeof containerLeft === NUMBER) {
+                    // found constrain, always redefine x and y
+                    x = requestedX = (typeof x===NUMBER) ? x : instance.getX();
+                    if (requestedX&lt;containerLeft) {
+                        x = containerLeft;
                     }
-                    (requestedX&lt;containerLeft) &amp;&amp; (x=containerLeft);
-                    requestedY = y || instance.getY();
-                    if ((requestedY+instance.offsetHeight)&gt;containerBottom) {
-                        y = requestedY = containerBottom - instance.offsetHeight;
-                    }
-                    (requestedY&lt;containerTop) &amp;&amp; (y=containerTop);
-                }
-            }
-            if (typeof x === NUMBER) {
-                // check if there is a transition:
-                if (notransition) {
-                    instance.setInlineStyle(LEFT, x + PX);
-                    dif = (instance.getX()-x);
-                    (dif!==0) &amp;&amp; (instance.setInlineStyle(LEFT, (x - dif) + PX));
-                }
-                else {
-                    start = instance.getInlineStyle(LEFT);
-                    instance.setClass(NO_TRANS);
-                    instance.setInlineStyle(LEFT, x + PX);
-                    dif = (instance.getX()-x);
-                    finalValue = (x - dif);
-                    // now reset and go to finalX with transition
-                    instance.setInlineStyle(LEFT, start);
-                    instance.removeClass(NO_TRANS);
-                    instance.setInlineStyle(LEFT, finalValue + PX);
-                }
-            }
-            if (typeof y === NUMBER) {
-                if (notransition) {
-                    instance.setInlineStyle(TOP, y + PX);
-                    dif = (instance.getY()-y);
-                    (dif!==0) &amp;&amp; (instance.setInlineStyle(TOP, (y - dif) + PX));
-                }
-                else {
-                    start = instance.getInlineStyle(TOP);
-                    instance.setClass(NO_TRANS);
-                    instance.setInlineStyle(TOP, y + PX);
-                    dif = (instance.getY()-y);
-                    finalValue = (y - dif);
-                    // now reset and go to finalX with transition
-                    instance.setInlineStyle(TOP, start);
-                    instance.removeClass(NO_TRANS);
-                    instance.setInlineStyle(TOP, finalValue + PX);
-                }
-            }
-            instance.removeClass(BLOCK).removeClass(BORDERBOX).removeClass(INVISIBLE);
-        };
-
-       /**
-         * Set the position of an html element in page coordinates.
-         * The element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
-         *
-         * If the HtmlElement has the attribute &#x60;xy-constrian&#x60; set, then its position cannot exceed any matching container it lies within.
-         *
-         * @method setXY
-         * @param x {Number} x-value for new position (coordinates are page-based)
-         * @param y {Number} y-value for new position (coordinates are page-based)
-         * @param [notransition=false] {Boolean} set true if you are sure positioning is without transition.
-         *        this isn&#x27;t required, but it speeds up positioning. Only use when no transition is used:
-         *        when there is a transition, setting this argument &#x60;true&#x60; would miscalculate the position.
-         */
-        ElementPrototype.XsetXY = function(x, y, notransition) {
-            var instance = this,
-                position = instance.getStyle(POSITION),
-                dif, start, finalValue, constrainedSelector, match, constrainNode, byExactId,
-                containerTop, containerRight, containerLeft, containerBottom, requestedX, requestedY;
-
-            // default position to relative
-            if (position===&#x27;static&#x27;) {
-                instance.setInlineStyle(POSITION, &#x27;relative&#x27;);
-            }
-            // make sure it has sizes and can be positioned
-            instance.setClass(BLOCK).setClass(INVISIBLE).setClass(BORDERBOX);
-/*jshint boss:true */
-            if (constrainedSelector=instance.getAttr(CONSTRAIN_ATTR)) {
-/*jshint boss:false */
-                if (constrainedSelector===&#x27;window&#x27;) {
-                    containerLeft = window.getScrollLeft();
-                    containerTop = window.getScrollTop();
-                    containerRight = containerLeft + window.getWidth();
-                    containerBottom = containerTop + window.getHeight();
-                    requestedX = x || instance.getX();
-                    if ((requestedX+instance.offsetWidth)&gt;containerRight) {
-                        x = requestedX = containerRight - instance.offsetWidth;
-                    }
-                    (requestedX&lt;containerLeft) &amp;&amp; (x=containerLeft);
-                    requestedY = y || instance.getY();
-                    if ((requestedY+instance.offsetHeight)&gt;containerBottom) {
-                        y = requestedY = containerBottom - instance.offsetHeight;
-                    }
-                    (requestedY&lt;containerTop) &amp;&amp; (y=containerTop);
-                }
-                else {
-                    match = false;
-                    constrainNode = instance;
-                    byExactId = REGEXP_NODE_ID.test(constrainedSelector);
-                    while (constrainNode.matchesSelector &amp;&amp; !match) {
-                        match = byExactId ? (constrainNode.id===constrainedSelector.substr(1)) : constrainNode.matchesSelector(constrainedSelector);
-                        // if there is a match, then make sure x and y fall within the region
-                        if (match) {
-                            containerLeft = constrainNode.getX() + parseInt(constrainNode.getStyle(BORDER_LEFT_WIDTH), 10);
-                            containerTop = constrainNode.getY() + parseInt(constrainNode.getStyle(BORDER_TOP_WIDTH), 10);
-                            containerRight = containerLeft + constrainNode.scrollWidth;
-                            containerBottom = containerTop + constrainNode.scrollHeight;
-                            requestedX = x || instance.getX();
-                            if ((requestedX+instance.offsetWidth)&gt;containerRight) {
-                                x = requestedX = containerRight - instance.offsetWidth;
-                            }
-                            (requestedX&lt;containerLeft) &amp;&amp; (x=containerLeft);
-
-                            requestedY = y || instance.getY();
-                            if ((requestedY+instance.offsetHeight)&gt;containerBottom) {
-                                y = requestedY = containerBottom - instance.offsetHeight;
-                            }
-                            (requestedY&lt;containerTop) &amp;&amp; (y=containerTop);
+                    else {
+                        if ((requestedX+instance.offsetWidth)&gt;containerRight) {
+                            x = requestedX = containerRight - instance.offsetWidth;
                         }
-                        constrainNode = constrainNode.parentNode;
+                        // now we might need to reset to the left again:
+                        (requestedX&lt;containerLeft) &amp;&amp; (x=containerLeft);
+                    }
+                    y = requestedY = (typeof y===NUMBER) ? y : instance.getY();
+                    if (requestedY&lt;containerTop) {
+                        y = containerTop;
+                    }
+                    else {
+                        if ((requestedY+instance.offsetHeight)&gt;containerBottom) {
+                            y = requestedY = containerBottom - instance.offsetHeight;
+                        }
+                        // now we might need to reset to the top again:
+                        (requestedY&lt;containerTop) &amp;&amp; (y=containerTop);
                     }
                 }
             }
@@ -1327,7 +1248,7 @@ module.exports = function (window) {
                     instance.setInlineStyle(TOP, finalValue + PX);
                 }
             }
-            instance.removeClass(BLOCK).removeClass(BORDERBOX).removeClass(INVISIBLE);
+            return instance.removeClass(BLOCK).removeClass(BORDERBOX).removeClass(INVISIBLE);
         };
 
         /**
