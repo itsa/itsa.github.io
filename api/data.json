@@ -9423,7 +9423,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 64,
+            "line": 68,
             "description": "Returns the allowed effects on the dragable-HtmlElement. Is determined by the attribute `dd-effect-allowed`\nWill be set to \"move\" when undefined.",
             "itemtype": "method",
             "name": "_allowedEffects",
@@ -9447,7 +9447,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 81,
+            "line": 84,
             "description": "Default function for the `*:dd-drag`-event",
             "itemtype": "method",
             "name": "_defFnDrag",
@@ -9467,7 +9467,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 119,
+            "line": 122,
             "description": "Default function for the `*:dd-drop`-event",
             "itemtype": "method",
             "name": "_defFnDrag",
@@ -9512,7 +9512,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 143,
+            "line": 146,
             "description": "Default function for the `*:dd-over`-event",
             "itemtype": "method",
             "name": "_defFnOver",
@@ -9532,7 +9532,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 162,
+            "line": 165,
             "description": "Default function for the `UI:dd-start`-event",
             "itemtype": "method",
             "name": "_defFnDrag",
@@ -9552,7 +9552,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 180,
+            "line": 183,
             "description": "Defines the definition of the `dd-start` event: the first phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)",
             "itemtype": "method",
             "name": "_defineDDStart",
@@ -9572,7 +9572,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 198,
+            "line": 201,
             "description": "Defines the definition of the `dd-drop` event: the last phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)",
             "itemtype": "method",
             "name": "_defineDropEv",
@@ -9617,7 +9617,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 219,
+            "line": 222,
             "description": "Defines the definition of the `dd-over` event.\nAlso sets up listeners to tricker dd-over when the mouse is above an dropzone.",
             "itemtype": "method",
             "name": "_defineOverEv",
@@ -9637,7 +9637,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 304,
+            "line": 314,
             "description": "Sets the draggable node back to its original position",
             "itemtype": "method",
             "name": "_setBack",
@@ -9682,7 +9682,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 384,
+            "line": 394,
             "description": "Default function for the `*:dd-drag`-event",
             "itemtype": "method",
             "name": "_initializeDrag",
@@ -9702,7 +9702,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 497,
+            "line": 506,
             "description": "Prevented function for the `*:dd-start`-event",
             "itemtype": "method",
             "name": "_prevFnStart",
@@ -9722,7 +9722,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 510,
+            "line": 519,
             "description": "Sets the draggable node back to its original position",
             "itemtype": "method",
             "name": "_setBack",
@@ -9767,7 +9767,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 559,
+            "line": 568,
             "description": "Sets up a `keydown` and `keyup` listener, to monitor whether a `ctrlKey` (windows) or `metaKey` (Mac)\nis pressed to support the copying of draggable items",
             "itemtype": "method",
             "name": "_setupKeyEv",
@@ -9780,7 +9780,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 596,
+            "line": 605,
             "description": "Engine behinf the dragdrop-cycle.\nSets up a `mousedown` listener to initiate a drag-drop eventcycle. The eventcycle start whenever\none of these events happens on a HtmlElement with the attribute `draggable=\"true\"`.\nThe drag-drop eventcycle consists of the events: `dd-start`, `emitterName:dd-drag` and `emitterName:dd-drop`",
             "itemtype": "method",
             "name": "_setupMouseEv",
@@ -9793,7 +9793,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 651,
+            "line": 660,
             "description": "Cleansup the dragover subscriber and fulfills any dropzone-promise.",
             "itemtype": "method",
             "name": "_teardownOverEvent",
@@ -9813,7 +9813,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 670,
+            "line": 680,
             "description": "Returns true if the dropzone-HtmlElement accepts copy-dragables.\nIs determined by the attribute `dd-effect-allowed=\"copy\"` or `dd-effect-allowed=\"all\"`",
             "itemtype": "method",
             "name": "allowCopy",
@@ -9835,7 +9835,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 685,
+            "line": 695,
             "description": "Returns true if the dragable-HtmlElement allowes to switch between `copy` and `move`.",
             "itemtype": "method",
             "name": "allowSwitch",
@@ -9857,7 +9857,29 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 699,
+            "line": 708,
+            "description": "Returns the emitterName that the dropzone accepts.",
+            "itemtype": "method",
+            "name": "getDropzoneEmitter",
+            "params": [
+                {
+                    "name": "dropzone",
+                    "description": "dropzone attribute of the dropzone HtmlElement",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "the emitterName that is accepted",
+                "type": "String|null"
+            },
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event",
+            "submodule": "event-dragdrop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 722,
             "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
             "itemtype": "method",
             "name": "init",
@@ -9879,7 +9901,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 718,
+            "line": 741,
             "description": "Returns true if the dragable-HtmlElement accepts only copy-dragables (no moveable)\nIs determined by the attribute `dd-effect-allowed=\"copy\"`",
             "itemtype": "method",
             "name": "onlyCopy",

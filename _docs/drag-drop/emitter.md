@@ -1,34 +1,24 @@
 ---
 module: drag-drop
 maintainer: Marco Asbreuk
-title: drag and drop
+title: Emitter dropzones
 intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobject notifies you when the drag has finished. You can inspect the Promise e.drag.then for this purpose. You can also be notified on drag-move by setting a callback-function through: <b>e.setOnDrag(callbackFn)</b>. Draggable HtmlElements have the attribute: <b>draggable=\"true\"</b>"
 ---
 
 <style type="text/css">
     .base-container {
-        position: absolute;
-        top: 32em;
-        width: 500px;
-        height: 300px;
-        /* overflow: scroll; */
+        margin-bottom: 30px;
+        width: 350px;
+        height: 150px;
         background-color: #FF0;
         border: solid 10px #0F0;
     }
     .drop-container {
-        position: absolute;
-        top: 32em;
-        left: 600px;
-        width: 200px;
-        height: 200px;
+        margin-bottom: 30px;
+        width: 350px;
+        height: 150px;
         border: solid 2px #000;
         background-color: #0FF;
-    }
-    .drop-container.second {
-        left: 850px;
-    }
-    .drop-container.third {
-        left: 1100px;
     }
     .container {
         text-align: center;
@@ -38,8 +28,9 @@ intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobjec
         width: 100px;
         background-color: #ddd;
         border: solid 10px #000;
-        position: absolute;
-        z-index: 1;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -47,31 +38,6 @@ intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobjec
         -ms-user-select: none;
         user-select: none;
         cursor: default;
-    }
-    #cont-1 {
-        left: 50px;
-        top: 0;
-    }
-    #cont-2 {
-        left: 180px;
-        top: 0;
-    }
-    #cont-3 {
-        left: 50px;
-        top: 140px;
-    }
-    #cont-4 {
-        left: 180px;
-        top: 140px;
-    }
-    #cont-5 {
-        left: 100px;
-        top: 60px;
-        z-index: 2;
-        background-color: #F00;
-    }
-    .body-content.module p.spaced {
-        margin-top: 20em;
     }
     .dropactive {
         opacity: 0.6;
@@ -82,25 +48,20 @@ intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobjec
         background-color: #0F0;
     }
 
-    #Xfilling {
-        width: 700px;
-        height: 500px;
-        background-color: #00F;
-    }
 </style>
 
 Mouse the mouse over the 5 containers:
 
 <div class="base-container">
-    <div class="container" draggable="true" dd-emitter-name="blue"</div>
-    <div class="container" draggable="true" dd-emitter-name="blue"</div>
-    <div class="container" draggable="true" dd-emitter-name="blue"</div>
+    <div class="container" draggable="true" dd-emitter-name="blue"></div>
+    <div class="container" draggable="true" dd-emitter-name="blue"></div>
+    <div class="container" draggable="true" dd-emitter-name="blue"></div>
 </div>
 
 <div class="base-container">
-    <div class="container" draggable="true" dd-emitter-name="red"</div>
-    <div class="container" draggable="true" dd-emitter-name="red"</div>
-    <div class="container" draggable="true" dd-emitter-name="red"</div>
+    <div class="container" draggable="true" dd-emitter-name="red"></div>
+    <div class="container" draggable="true" dd-emitter-name="red"></div>
+    <div class="container" draggable="true" dd-emitter-name="red"></div>
 </div>
 
 <div class="drop-container" dropzone="emitter=blue"></div>
@@ -112,12 +73,19 @@ Mouse the mouse over the 5 containers:
 ```html
 <body>
     <div class="base-container">
-        <div id="cont1" class="container"></div>
-        <div id="cont2" class="container"></div>
-        <div id="cont3" class="container"></div>
-        <div id="cont4" class="container"></div>
-        <div id="cont5" class="container"></div>
+        <div class="container" draggable="true" dd-emitter-name="blue"></div>
+        <div class="container" draggable="true" dd-emitter-name="blue"></div>
+        <div class="container" draggable="true" dd-emitter-name="blue"></div>
     </div>
+
+    <div class="base-container">
+        <div class="container" draggable="true" dd-emitter-name="red"></div>
+        <div class="container" draggable="true" dd-emitter-name="red"></div>
+        <div class="container" draggable="true" dd-emitter-name="red"></div>
+    </div>
+
+    <div class="drop-container" dropzone="emitter=blue"></div>
+    <div class="drop-container" dropzone="move emitter=red"></div>
 </body>
 ```
 
@@ -125,48 +93,10 @@ Mouse the mouse over the 5 containers:
 <script src="itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
-    var container = document.getElementById('container');
-
-    var showMsg = function(e) {
-        var node = e.target;
-        node.innerHTML = 'Mouse entered';
-        e.hover.then(function(relatedTarget) {
-            node.innerHTML = relatedTarget.id ? 'Went to '+relatedTarget.id : '';
-        });
-    };
-
-    ITSA.Event.after('hover', showMsg, '.container');
 </script>
 ```
 
 <script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa');
-    var container = document.getElement('#cont-5');
-
-    var showMsg = function(e) {
-        var node = e.target;
-        node.innerHTML = 'Dragging';
-        e.drag.then(function(ev) {
-            node.innerHTML = 'END';
-        });
-    };
-
-document.getElement('#dz1').plug(ITSA.Plugins.NodeDropzone, {move: true});
-document.getElement('#dz2').plug(ITSA.Plugins.NodeDropzone, {copy: true});
-document.getElement('#dz3').plug(ITSA.Plugins.NodeDropzone);
-
-document.getElement('#constr').scrollTo(0,100);
-
-
-// console.info(container.getInlineStyle('left'));
-// console.info(container.getInlineStyle('top'));
-    // container.setXY(100, null);
-
-    ITSA.later(function() {
-        container.plug(ITSA.Plugins.NodeDD);
-        container.plug(ITSA.Plugins.NodePlugin);
-    }, 10);
-
-   // ITSA.Event.after('dragdrop', showMsg, '.container');
 </script>

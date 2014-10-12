@@ -216,6 +216,9 @@ var NAME = &#x27;[dragdrop]: &#x27;,
     REGEXP_MOVE = /\bmove\b/i,
     REGEXP_COPY = /\bcopy\b/i,
     REGEXP_NODE_ID = /^#\S+$/,
+    REGEXP_ALL = /\ball\b/i,
+    REGEXP_COPY = /\bcopy\b/i,
+    REGEXP_EMITTER = /\bemitter=(\w+)\b/,
     LATER = require(&#x27;utils&#x27;).later;
 
 require(&#x27;polyfill/polyfill-base.js&#x27;);
@@ -227,7 +230,8 @@ module.exports = function (window) {
         NodePlugin = require(&#x27;dom-ext&#x27;)(window).Plugins.NodePlugin,
         ctrlPressed = false,
         initialised = false,
-        DD, dropEffect, NodeDD, NodeDropzone;
+        dropEffect = &#x27;move&#x27;,
+        DD, NodeDD, NodeDropzone;
 
     require(&#x27;window-ext&#x27;)(window);
 
@@ -246,7 +250,6 @@ module.exports = function (window) {
         _allowedEffects: function(dragableElement) {
 console.info(NAME, &#x27;_allowedEffects&#x27;);
             var allowedEffects = dragableElement.getAttr(DD_EFFECT_ALLOWED);
-            allowedEffects &amp;&amp; (allowedEffects=allowedEffects.toLowerCase());
             return allowedEffects || &#x27;move&#x27;;
         },
 
@@ -342,7 +345,7 @@ console.info(NAME, &#x27;_defFnOver: default function dd-over&#x27;);
         _defFnStart: function(e) {
             var instance = this,
                 customEvent;
-            e.emitterName || (e.emitterName=&#x27;UI&#x27;),
+            e.emitterName = e.emitterName || e.target.getAttr(&#x27;dd-emitter-name&#x27;) || &#x27;UI&#x27;,
             customEvent = e.emitterName + &#x27;:dd-drag&#x27;;
 console.info(NAME, &#x27;_defFnStart: default function UI:dd-start. Defining customEvent &#x27;+customEvent);
             Event.defineEvent(customEvent).defaultFn(instance._defFnDrag.bind(instance));
@@ -419,7 +422,7 @@ console.info(NAME, &#x27;_defineOverEv&#x27;);
                             var dropzoneAccept = dropzone.getAttr(&#x27;dropzone&#x27;) || &#x27;&#x27;,
                                 dropzoneMove = REGEXP_MOVE.test(dropzoneAccept),
                                 dropzoneCopy = REGEXP_COPY.test(dropzoneAccept),
-                                dragOverPromise, dragOutEvent, allowed, xMouseLast, yMouseLast;
+                                dragOverPromise, dragOutEvent, effectAllowed, emitterAllowed, dropzoneEmitter, xMouseLast, yMouseLast;
 
                             if (e2.clientX) {
                                 ddProps.xMouseLast = e2.clientX + window.getScrollLeft();
@@ -428,43 +431,50 @@ console.info(NAME, &#x27;_defineOverEv&#x27;);
 
                             // check if the mouse is inside the dropzone
                             // also check if the mouse is inside the dragged node: the dragged node might have been constrained
-                            // and check if the dragged node is allowed to go into the dropzone
+                            // and check if the dragged node is effectAllowed to go into the dropzone
                             xMouseLast = ddProps.xMouseLast;
                             yMouseLast = ddProps.yMouseLast;
-                            allowed = (!dropzoneMove &amp;&amp; !dropzoneCopy) || (dropzoneCopy &amp;&amp; (dropEffect===&#x27;copy&#x27;)) || (dropzoneMove &amp;&amp; (dropEffect===&#x27;move&#x27;));
-                            if (dropEffect &amp;&amp; allowed &amp;&amp; dropzone.insidePos(xMouseLast, yMouseLast) &amp;&amp; ddProps.dragNode.insidePos(xMouseLast, yMouseLast)) {
-                                overDropzone = true;
-                                e.dropTarget = dropzone;
-                                // mouse is in area of dropzone
-                                dragOverPromise = Promise.manage();
-                                e.over = dragOverPromise;
-                                dragOutEvent = Event.after(
-                                    [&#x27;mousemove&#x27;, &#x27;dd-fake-mousemove&#x27;],
-                                    function(e3) {
-console.info(NAME, &#x27;outside dropzone: fulfilling promise&#x27;);
-                                        dragOverPromise.fulfill(e3.target);
-                                    },
-                                    function(e3) {
-                                        var allowed, dropzoneAccept, dropzoneMove, dropzoneCopy;
-                                        if (e3.type===&#x27;dd-fake-mousemove&#x27;) {
-                                            dropzoneAccept = dropzone.getAttr(&#x27;dropzone&#x27;) || &#x27;&#x27;;
-                                            dropzoneMove = REGEXP_MOVE.test(dropzoneAccept);
-                                            dropzoneCopy = REGEXP_COPY.test(dropzoneAccept);
-                                            allowed = (!dropzoneMove &amp;&amp; !dropzoneCopy) || (dropzoneCopy &amp;&amp; (dropEffect===&#x27;copy&#x27;)) || (dropzoneMove &amp;&amp; (dropEffect===&#x27;move&#x27;));
-                                            return !allowed;
+
+                            if (dropzone.insidePos(xMouseLast, yMouseLast) &amp;&amp; ddProps.dragNode.insidePos(xMouseLast, yMouseLast)) {
+                                effectAllowed = (!dropzoneMove &amp;&amp; !dropzoneCopy) || (dropzoneCopy &amp;&amp; (dropEffect===&#x27;copy&#x27;)) || (dropzoneMove &amp;&amp; (dropEffect===&#x27;move&#x27;));
+                                dropzoneEmitter = instance.getDropzoneEmitter(dropzoneAccept);
+console.warn(dropzoneEmitter+&#x27; | &#x27;+emitterName);
+                                emitterAllowed = !dropzoneEmitter || (dropzoneEmitter===emitterName);
+console.warn(emitterAllowed);
+                                if (effectAllowed &amp;&amp; emitterAllowed) {
+                                    overDropzone = true;
+                                    e.dropTarget = dropzone;
+                                    // mouse is in area of dropzone
+                                    dragOverPromise = Promise.manage();
+                                    e.over = dragOverPromise;
+                                    dragOutEvent = Event.after(
+                                        [&#x27;mousemove&#x27;, &#x27;dd-fake-mousemove&#x27;],
+                                        function(e3) {
+    console.info(NAME, &#x27;outside dropzone: fulfilling promise&#x27;);
+                                            dragOverPromise.fulfill(e3.target);
+                                        },
+                                        function(e3) {
+                                            var effectAllowed, dropzoneAccept, dropzoneMove, dropzoneCopy;
+                                            if (e3.type===&#x27;dd-fake-mousemove&#x27;) {
+                                                dropzoneAccept = dropzone.getAttr(&#x27;dropzone&#x27;) || &#x27;&#x27;;
+                                                dropzoneMove = REGEXP_MOVE.test(dropzoneAccept);
+                                                dropzoneCopy = REGEXP_COPY.test(dropzoneAccept);
+                                                effectAllowed = (!dropzoneMove &amp;&amp; !dropzoneCopy) || (dropzoneCopy &amp;&amp; (dropEffect===&#x27;copy&#x27;)) || (dropzoneMove &amp;&amp; (dropEffect===&#x27;move&#x27;));
+                                                return !effectAllowed;
+                                            }
+                                            return !dropzone.insidePos((e3.clientX || e3.center.x)+window.getScrollLeft(), (e3.clientY || e3.center.y)+window.getScrollTop());
                                         }
-                                        return !dropzone.insidePos((e3.clientX || e3.center.x)+window.getScrollLeft(), (e3.clientY || e3.center.y)+window.getScrollTop());
-                                    }
-                                );
-                                dragOverPromise.finally(
-                                    function() {
-                                        dragOutEvent.detach();
-                                        e.dropTarget = null;
-                                    }
-                                );
-                                ddProps.dragOverList.push(dragOverPromise);
-console.info(NAME, &#x27;Over dropzone: emitting dd-over event&#x27;);
-                                Event.emit(dropzone, emitterName+&#x27;:dd-over&#x27;, e);
+                                    );
+                                    dragOverPromise.finally(
+                                        function() {
+                                            dragOutEvent.detach();
+                                            e.dropTarget = null;
+                                        }
+                                    );
+                                    ddProps.dragOverList.push(dragOverPromise);
+    console.info(NAME, &#x27;Over dropzone: emitting dd-over event&#x27;);
+                                    Event.emit(dropzone, emitterName+&#x27;:dd-over&#x27;, e);
+                                }
                             }
                         }
                     );
@@ -565,10 +575,10 @@ console.info(NAME, &#x27;_handleDrop &#x27;+dragNode);
 console.info(NAME, &#x27;_initializeDrag &#x27;+e.xMouseOrigin);
             var instance = this,
                 sourceNode = e.target,
-                dropzoneSpecified = sourceNode.hasAttr(DD_DROPZONE),
                 constrain = sourceNode.getAttr(CONSTRAIN_ATTR),
                 ddProps = instance.ddProps,
                 emitterName = e.emitterName,
+                dropzoneSpecified = sourceNode.hasAttr(DD_DROPZONE) || (emitterName!==&#x27;UI&#x27;),
                 moveEv, dragNode, x, y, byExactId, match, constrainNode, winConstrained, winScrollLeft, winScrollTop,
                 inlineLeft, inlineTop, xOrig, yOrig;
 
@@ -583,7 +593,6 @@ console.info(NAME, &#x27;_initializeDrag &#x27;+e.xMouseOrigin);
             ddProps.winConstrained = winConstrained = (constrain===&#x27;window&#x27;);
             ddProps.xMouseLast = x;
             ddProps.yMouseLast = y;
-
             if (constrain) {
                 if (ddProps.winConstrained) {
                     ddProps.winScrollLeft = winScrollLeft = window.getScrollLeft();
@@ -839,6 +848,7 @@ console.info(&#x27;_teardownOverEvent&#x27;);
                 });
             }
         },
+
        /**
          * Returns true if the dropzone-HtmlElement accepts copy-dragables.
          * Is determined by the attribute &#x60;dd-effect-allowed=&quot;copy&quot;&#x60; or &#x60;dd-effect-allowed=&quot;all&quot;&#x60;
@@ -850,8 +860,8 @@ console.info(&#x27;_teardownOverEvent&#x27;);
          */
         allowCopy: function(dropzone) {
             var allowedEffects = this._allowedEffects(dropzone);
-console.info(&#x27;allowCopy --&gt; &#x27;+((allowedEffects===&#x27;all&#x27;) || (allowedEffects===&#x27;copy&#x27;)));
-            return (allowedEffects===&#x27;all&#x27;) || (allowedEffects===&#x27;copy&#x27;);
+console.info(&#x27;allowCopy --&gt; &#x27;+REGEXP_ALL.test(allowedEffects) || REGEXP_COPY.test(allowedEffects));
+            return REGEXP_ALL.test(allowedEffects) || REGEXP_COPY.test(allowedEffects);
         },
 
        /**
@@ -863,9 +873,22 @@ console.info(&#x27;allowCopy --&gt; &#x27;+((allowedEffects===&#x27;all&#x27;) |
          * @since 0.0.1
          */
         allowSwitch: function(dragableElement) {
-            var allowedEffects = this._allowedEffects(dragableElement);
-console.info(&#x27;allowSwitch --&gt; &#x27;+(allowedEffects===&#x27;all&#x27;));
-            return (allowedEffects===&#x27;all&#x27;);
+console.info(&#x27;allowSwitch --&gt; &#x27;+REGEXP_ALL.test(this._allowedEffects(dragableElement)));
+            return REGEXP_ALL.test(this._allowedEffects(dragableElement));
+        },
+
+       /**
+         * Returns the emitterName that the dropzone accepts.
+         *
+         * @method getDropzoneEmitter
+         * @param dropzone {String} dropzone attribute of the dropzone HtmlElement
+         * @return {String|null} the emitterName that is accepted
+         * @since 0.0.1
+         */
+        getDropzoneEmitter: function(dropzone) {
+            var extract = dropzone.match(REGEXP_EMITTER);
+console.info(&#x27;getDropzoneEmitter --&gt; &#x27;+(extract &amp;&amp; extract[1]));
+            return extract &amp;&amp; extract[1];
         },
 
        /**
@@ -897,9 +920,8 @@ console.info(NAME, &#x27;init&#x27;);
          * @since 0.0.1
          */
         onlyCopy: function(dragableElement) {
-            var allowedEffects = this._allowedEffects(dragableElement);
-console.info(&#x27;onlyCopy --&gt; &#x27;+(allowedEffects===&#x27;copy&#x27;));
-            return (allowedEffects===&#x27;copy&#x27;);
+console.info(&#x27;onlyCopy --&gt; &#x27;+REGEXP_COPY.test(this._allowedEffects(dragableElement)));
+            return REGEXP_COPY.test(this._allowedEffects(dragableElement));
         }
     };
 
