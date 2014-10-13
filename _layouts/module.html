@@ -19,10 +19,10 @@
     {% include moduleheader.html %}
     <div class="module-description pure-g">
         <div class="pure-u-3-4">
-            module: <a href="./index.html">{{ page.module }}</a>{% if page.version %}<span class="moduleversion"><a href="history.html">version {{ page.version }}</a></span>{% endif %}
+            module: <a href="./index.html">{{ page.module }}</a>{% if page.version %}<span class="extrainfo"><a href="history.html">version {{ page.version }}</a></span>{% endif %}
             <br>
             {% if page.modulesize %}
-                size-min gzipped: {{ page.modulesize }} kb
+                size-min gzipped: {{ page.modulesize }} kb {% if page.modulesize %}<span class="extrainfo">(incl. dependencies: {{ page.modulesizecombined }} kb)</span>{% endif %}
                 <br>
                 dependencies: {% if page.dependencies %}{{ page.dependencies }}{% else %}-{% endif %}
             {% else %}

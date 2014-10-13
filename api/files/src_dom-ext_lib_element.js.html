@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/Array.html">Array</a></li>
             
+                <li><a href="../classes/DD.html">DD</a></li>
+            
                 <li><a href="../classes/document.html">document</a></li>
             
                 <li><a href="../classes/Element.html">Element</a></li>
@@ -78,6 +80,8 @@
             <ul id="api-modules" class="apis modules">
             
                 <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+            
+                <li><a href="../modules/drag-drop.html">drag-drop</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -201,12 +205,16 @@ module.exports = function (window) {
         REGEXP_NODE_ID = /^#\S+$/,
         RESERVED_WORDS = require(&#x27;js-ext/extra/reserved-words.js&#x27;),
 
-        BORDER_LEFT_WIDTH = &#x27;border-left-width&#x27;,
-        BORDER_TOP_WIDTH = &#x27;border-top-width&#x27;,
         APPEND_CHILD = &#x27;appendChild&#x27;,
         INSERT_BEFORE = &#x27;insertBefore&#x27;,
         LEFT = &#x27;left&#x27;,
         TOP = &#x27;top&#x27;,
+        BORDER = &#x27;border&#x27;,
+        WIDTH = &#x27;width&#x27;,
+        BORDER_LEFT_WIDTH = BORDER+&#x27;-left-&#x27;+WIDTH,
+        BORDER_RIGHT_WIDTH = BORDER+&#x27;-right-&#x27;+WIDTH,
+        BORDER_TOP_WIDTH = BORDER+&#x27;-top-&#x27;+WIDTH,
+        BORDER_BOTTOM_WIDTH = BORDER+&#x27;-bottom-&#x27;+WIDTH,
         NUMBER = &#x27;number&#x27;,
         PX = &#x27;px&#x27;,
 
@@ -306,7 +314,7 @@ module.exports = function (window) {
         * @since 0.0.2
         */
         ElementPrototype.forceIntoNodeView = function(ancestor) {
-console.info(NAME, &#x27;forceIntoNodeView&#x27;);
+            console.log(NAME, &#x27;forceIntoNodeView&#x27;);
             var instance = this,
                 parentOverflowNode = this.parentNode,
                 match, left, width, right, height, top, bottom, scrollLeft, scrollTop, parentOverflowNodeX, parentOverflowNodeY,
@@ -320,7 +328,6 @@ console.info(NAME, &#x27;forceIntoNodeView&#x27;);
                 }
             }
             if (parentOverflowNode!==window.document) {
-// console.warn(parentOverflowNode);
                 left = instance.getX();
                 width = instance.offsetWidth;
                 right = left + width;
@@ -333,20 +340,14 @@ console.info(NAME, &#x27;forceIntoNodeView&#x27;);
                 parentOverflowNodeY = parentOverflowNode.getY();
                 parentOverflowNodeStartTop = parentOverflowNodeY+parseInt(parentOverflowNode.getStyle(BORDER_TOP_WIDTH), 10);
                 parentOverflowNodeStartLeft = parentOverflowNodeX+parseInt(parentOverflowNode.getStyle(BORDER_LEFT_WIDTH), 10);
-                parentOverflowNodeStopRight = parentOverflowNodeX+parentOverflowNode.offsetWidth-parseInt(parentOverflowNode.getStyle(&#x27;border-right-width&#x27;), 10);
-                parentOverflowNodeStopBottom = parentOverflowNodeY+parentOverflowNode.offsetHeight-parseInt(parentOverflowNode.getStyle(&#x27;border-bottom-width&#x27;), 10);
-
-console.info(&#x27;left: &#x27;+left+&#x27; | width: &#x27;+width+&#x27; | right: &#x27;+right);
-
-console.info(&#x27;scrollLeft: &#x27;+scrollLeft+&#x27; | parentOverflowNodeX: &#x27;+parentOverflowNodeX+&#x27; | parentOverflowNodeStartLeft: &#x27;+parentOverflowNodeStartLeft+&#x27; | parentOverflowNodeStopRight: &#x27;+parentOverflowNodeStopRight);
+                parentOverflowNodeStopRight = parentOverflowNodeX+parentOverflowNode.offsetWidth-parseInt(parentOverflowNode.getStyle(BORDER_RIGHT_WIDTH), 10);
+                parentOverflowNodeStopBottom = parentOverflowNodeY+parentOverflowNode.offsetHeight-parseInt(parentOverflowNode.getStyle(BORDER_BOTTOM_WIDTH), 10);
 
                 if (left&lt;parentOverflowNodeStartLeft) {
                     newX = Math.max(0, scrollLeft+left-parentOverflowNodeStartLeft);
-console.warn(&#x27;&lt; newX: &#x27;+newX);
                 }
                 else if (right&gt;parentOverflowNodeStopRight) {
                     newX = scrollLeft + right - parentOverflowNodeStopRight;
-console.warn(&#x27;&gt; newX: &#x27;+newX);
                 }
 
                 if (top&lt;parentOverflowNodeStartTop) {
@@ -381,7 +382,7 @@ console.warn(&#x27;&gt; newX: &#x27;+newX);
         * @since 0.0.2
         */
         ElementPrototype.forceIntoView = function(notransition, rectangle) {
-// console.info(NAME, &#x27;forceIntoView&#x27;);
+            console.log(NAME, &#x27;forceIntoView&#x27;);
             var instance = this,
                 left = instance.getX(),
                 width = instance.offsetWidth,
@@ -727,6 +728,23 @@ console.warn(&#x27;&gt; newX: &#x27;+newX);
         */
         ElementPrototype.hasFocus = function() {
             return (window.document.activeElement===this);
+        };
+
+       /**
+         * Checks whether a point specified with x,y is within the HtmlElement&#x27;s region.
+         *
+         * @method insidePos
+         * @param x {Number} x-value for new position (coordinates are page-based)
+         * @param y {Number} y-value for new position (coordinates are page-based)
+         * @since 0.0.2
+         */
+        ElementPrototype.insidePos = function(x, y) {
+            var instance = this,
+                left = instance.getX(),
+                top = instance.getY(),
+                right = left + instance.offsetWidth,
+                bottom = top + instance.offsetHeight;
+            return (x&gt;=left) &amp;&amp; (x&lt;=right) &amp;&amp; (y&gt;=top) &amp;&amp; (y&lt;=bottom);
         };
 
        /**
@@ -1097,21 +1115,15 @@ console.warn(&#x27;&gt; newX: &#x27;+newX);
             return instance;
         };
 
-       /**
-         * Checks whether a point specified with x,y is within the HtmlElement&#x27;s region.
-         *
-         * @method insidePos
-         * @param x {Number} x-value for new position (coordinates are page-based)
-         * @param y {Number} y-value for new position (coordinates are page-based)
-         * @since 0.0.2
+        /**
+         * Set the X position of an html element in page coordinates, regardless of how the element is positioned.
+         * The element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
+         * @method setX
+         * @param element The target element
+         * @param {Number} x The X values for new position (coordinates are page-based)
          */
-        ElementPrototype.insidePos = function(x, y) {
-            var instance = this,
-                left = instance.getX(),
-                top = instance.getY(),
-                right = left + instance.offsetWidth,
-                bottom = top + instance.offsetHeight;
-            return (x&gt;=left) &amp;&amp; (x&lt;=right) &amp;&amp; (y&gt;=top) &amp;&amp; (y&lt;=bottom);
+        ElementPrototype.setX = function(node, x) {
+            return this.setXY(x);
         };
 
        /**
@@ -1138,11 +1150,10 @@ console.warn(&#x27;&gt; newX: &#x27;+newX);
          * @since 0.0.2
          */
         ElementPrototype.setXY = function(x, y, constrain, notransition) {
-console.info(NAME, &#x27;setXY &#x27;+x+&#x27;,&#x27;+y);
-console.info(constrain);
+            console.log(NAME, &#x27;setXY &#x27;+x+&#x27;,&#x27;+y);
             var instance = this,
                 position = instance.getStyle(POSITION),
-                dif, start, finalValue, match, constrainNode, byExactId,
+                dif, start, finalValue, match, constrainNode, byExactId, parent, clone,
                 containerTop, containerRight, containerLeft, containerBottom, requestedX, requestedY;
 
             // default position to relative
@@ -1150,7 +1161,8 @@ console.info(constrain);
                 instance.setInlineStyle(POSITION, &#x27;relative&#x27;);
             }
             // make sure it has sizes and can be positioned
-            instance.setClass(BLOCK).setClass(INVISIBLE).setClass(BORDERBOX);
+            instance.setClass(INVISIBLE).setClass(BORDERBOX);
+            (instance.getInlineStyle(&#x27;display&#x27;)===&#x27;none&#x27;) &amp;&amp; instance.setClass(BLOCK);
             if (constrain) {
                 if (constrain===&#x27;window&#x27;) {
                     containerLeft = window.getScrollLeft();
@@ -1214,52 +1226,45 @@ console.info(constrain);
             if (typeof x === NUMBER) {
                 // check if there is a transition:
                 if (notransition) {
+                    instance.setClass(INVISIBLE);
                     instance.setInlineStyle(LEFT, x + PX);
                     dif = (instance.getX()-x);
                     (dif!==0) &amp;&amp; (instance.setInlineStyle(LEFT, (x - dif) + PX));
+                    instance.removeClass(INVISIBLE);
                 }
                 else {
-                    start = instance.getInlineStyle(LEFT);
-                    instance.setClass(NO_TRANS);
-                    instance.setInlineStyle(LEFT, x + PX);
-                    dif = (instance.getX()-x);
-                    finalValue = (x - dif);
-                    // now reset and go to finalX with transition
-                    instance.setInlineStyle(LEFT, start);
-                    instance.removeClass(NO_TRANS);
-                    instance.setInlineStyle(LEFT, finalValue + PX);
+                    // we will clone the node, make it invisible and without transitions and look what its correction should be
+                    clone = instance.clone();
+                    clone.setClass(NO_TRANS).setClass(INVISIBLE);
+                    parent = instance.parentNode;
+                    parent.append(clone);
+                    clone.setInlineStyle(LEFT, x+PX);
+                    dif = (clone.getX()-x);
+                    parent.removeChild(clone);
+                    instance.setInlineStyle(LEFT, (x - dif) + PX);
                 }
             }
             if (typeof y === NUMBER) {
                 if (notransition) {
+                    instance.setClass(INVISIBLE);
                     instance.setInlineStyle(TOP, y + PX);
                     dif = (instance.getY()-y);
                     (dif!==0) &amp;&amp; (instance.setInlineStyle(TOP, (y - dif) + PX));
+                    instance.removeClass(INVISIBLE);
                 }
                 else {
-                    start = instance.getInlineStyle(TOP);
-                    instance.setClass(NO_TRANS);
-                    instance.setInlineStyle(TOP, y + PX);
-                    dif = (instance.getY()-y);
-                    finalValue = (y - dif);
-                    // now reset and go to finalX with transition
-                    instance.setInlineStyle(TOP, start);
-                    instance.removeClass(NO_TRANS);
-                    instance.setInlineStyle(TOP, finalValue + PX);
+                    // we will clone the node, make it invisible and without transitions and look what its correction should be
+                    clone = instance.clone();
+                    clone.setClass(NO_TRANS).setClass(INVISIBLE);
+                    parent = instance.parentNode;
+                    parent.append(clone);
+                    clone.setInlineStyle(TOP, y+PX);
+                    dif = (clone.getY()-y);
+                    parent.removeChild(clone);
+                    instance.setInlineStyle(TOP, (y - dif) + PX);
                 }
             }
             return instance.removeClass(BLOCK).removeClass(BORDERBOX).removeClass(INVISIBLE);
-        };
-
-        /**
-         * Set the X position of an html element in page coordinates, regardless of how the element is positioned.
-         * The element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
-         * @method setX
-         * @param element The target element
-         * @param {Number} x The X values for new position (coordinates are page-based)
-         */
-        ElementPrototype.setX = function(node, x) {
-            return this.setXY(x);
         };
 
         /**

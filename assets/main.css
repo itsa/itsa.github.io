@@ -42,6 +42,10 @@ span.purple {
     color: #000;
 }
 
+.body-content .highlight .k {
+    font-weight: normal;
+}
+
 a:not(.pure-button),
 a:hover:not(.pure-button),
 a:visited:not(.pure-button) {

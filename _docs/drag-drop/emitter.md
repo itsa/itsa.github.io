@@ -1,8 +1,8 @@
 ---
 module: drag-drop
 maintainer: Marco Asbreuk
-title: Emitter dropzones
-intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobject notifies you when the drag has finished. You can inspect the Promise e.drag.then for this purpose. You can also be notified on drag-move by setting a callback-function through: <b>e.setOnDrag(callbackFn)</b>. Draggable HtmlElements have the attribute: <b>draggable=\"true\"</b>"
+title: Emitter-dropzones
+intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobject notifies you when the drag has finished. You can inspect the Promise e.drag.then for this purpose. You can also be notified on drag-move by setting a callback-function through: <b>e.setOnDrag(callbackFn)</b>. Draggable HtmlElements have the attribute: <b>dd-draggable=\"true\"</b>"
 ---
 
 <style type="text/css">
@@ -10,6 +10,7 @@ intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobjec
         margin-bottom: 30px;
         width: 350px;
         height: 150px;
+        /*position: relative;*/
         background-color: #FF0;
         border: solid 10px #0F0;
     }
@@ -26,7 +27,6 @@ intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobjec
         padding-top: 1.5em;
         height: 100px;
         width: 100px;
-        background-color: #ddd;
         border: solid 10px #000;
         display: inline-block;
         *display: inline;
@@ -39,6 +39,12 @@ intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobjec
         user-select: none;
         cursor: default;
     }
+    .container[dd-emitter-name="blue"] {
+        background-color: #00F;
+    }
+    .container[dd-emitter-name="red"] {
+        background-color: #F00;
+    }
     .dropactive {
         opacity: 0.6;
         filter: alpha(opacity=60); /* For IE8 and earlier */
@@ -47,21 +53,24 @@ intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobjec
     .container.dd-dragging {
         background-color: #0F0;
     }
+    #con {
+/*        position: relative; */
+    }
 
 </style>
 
 Mouse the mouse over the 5 containers:
 
 <div class="base-container">
-    <div class="container" draggable="true" dd-emitter-name="blue"></div>
-    <div class="container" draggable="true" dd-emitter-name="blue"></div>
-    <div class="container" draggable="true" dd-emitter-name="blue"></div>
+    <div class="container" dd-draggable="true" dd-emitter-name="blue" dd-effect-allowed="all">1</div>
+    <div id="con" class="container" dd-draggable="true" dd-emitter-name="blue">2</div>
+    <div class="container" dd-draggable="true" dd-emitter-name="blue">3</div>
 </div>
 
 <div class="base-container">
-    <div class="container" draggable="true" dd-emitter-name="red"></div>
-    <div class="container" draggable="true" dd-emitter-name="red"></div>
-    <div class="container" draggable="true" dd-emitter-name="red"></div>
+    <div class="container" dd-draggable="true" dd-emitter-name="red">1</div>
+    <div class="container" dd-draggable="true" dd-emitter-name="red">2</div>
+    <div class="container" dd-draggable="true" dd-emitter-name="red">3</div>
 </div>
 
 <div class="drop-container" dropzone="emitter=blue"></div>
@@ -73,15 +82,15 @@ Mouse the mouse over the 5 containers:
 ```html
 <body>
     <div class="base-container">
-        <div class="container" draggable="true" dd-emitter-name="blue"></div>
-        <div class="container" draggable="true" dd-emitter-name="blue"></div>
-        <div class="container" draggable="true" dd-emitter-name="blue"></div>
+        <div class="container" dd-draggable="true" dd-emitter-name="blue"></div>
+        <div class="container" dd-draggable="true" dd-emitter-name="blue"></div>
+        <div class="container" dd-draggable="true" dd-emitter-name="blue"></div>
     </div>
 
     <div class="base-container">
-        <div class="container" draggable="true" dd-emitter-name="red"></div>
-        <div class="container" draggable="true" dd-emitter-name="red"></div>
-        <div class="container" draggable="true" dd-emitter-name="red"></div>
+        <div class="container" dd-draggable="true" dd-emitter-name="red"></div>
+        <div class="container" dd-draggable="true" dd-emitter-name="red"></div>
+        <div class="container" dd-draggable="true" dd-emitter-name="red"></div>
     </div>
 
     <div class="drop-container" dropzone="emitter=blue"></div>

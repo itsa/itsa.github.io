@@ -1,8 +1,8 @@
 ---
 module: drag-drop
 maintainer: Marco Asbreuk
-title: drag and drop
-intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobject notifies you when the drag has finished. You can inspect the Promise e.drag.then for this purpose. You can also be notified on drag-move by setting a callback-function through: <b>e.setOnDrag(callbackFn)</b>. Draggable HtmlElements have the attribute: <b>draggable=\"true\"</b>"
+title: Change drop-behaviour
+intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobject notifies you when the drag has finished. You can inspect the Promise e.drag.then for this purpose. You can also be notified on drag-move by setting a callback-function through: <b>e.setOnDrag(callbackFn)</b>. Draggable HtmlElements have the attribute: <b>dd-draggable=\"true\"</b>"
 ---
 
 <style type="text/css">
@@ -92,10 +92,10 @@ intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobjec
 Mouse the mouse over the 5 containers:
 
 <div id="constr" class="base-container">
-    <div id="cont-1" class="container" draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all" dd-handle="i">the <i id="idI">handle</i> is here</div>
-    <div id="cont-2" class="container" draggable="true" xy-constrain=".base-container">2</div>
-    <div id="cont-3" class="container" draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="move">this is <i>no handle</i></div>
-    <div id="cont-4" class="container" draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="copy">4</div>
+    <div id="cont-1" class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all" dd-handle="i">the <i id="idI">handle</i> is here</div>
+    <div id="cont-2" class="container" dd-draggable="true" xy-constrain=".base-container">2</div>
+    <div id="cont-3" class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="move">this is <i>no handle</i></div>
+    <div id="cont-4" class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="copy">4</div>
     <div id="cont-5" class="container" xy-constrain="window">5</div>
     <div id="filling"></div>
 </div>

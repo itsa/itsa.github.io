@@ -37,8 +37,7 @@ h1.moduleheader {
     padding: 0.75em;
     color: #555;
 }
-
-span.moduleversion {
+span.extrainfo {
     margin-left: 1em;
     font-size: 0.8em;
 }
@@ -90,6 +89,9 @@ span.moduleversion {
 }
 .body-content.module p {
     margin: 0.5em 0 1em;
+}
+.body-content.module p.module-intro {
+    margin-bottom: 2.5em;
 }
 .body-content.module p.table-header {
     margin: 0;
@@ -180,7 +182,7 @@ span.moduleversion {
     text-decoration: none;
 }
 
-.module-description span.moduleversion a {
+.module-description span.extrainfo a {
     font-weight: normal;
     text-decoration: underline;
 }

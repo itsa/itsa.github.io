@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/event-dom/extra/hover.js - Itsa</title>
+    <title>drag-drop - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -170,100 +170,63 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/event-dom/extra/hover.js</h1>
+                        <h1>drag-drop Module</h1>
+<div class="box clearfix meta">
+    
 
-<div class="file">
-    <pre class="code prettyprint linenums">
-&quot;use strict&quot;;
+    
 
-/**
- * Adds the &#x60;hover&#x60; event as a DOM-event to event-dom. more about DOM-events:
- * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
- *
- * Should be called using  the provided &#x60;mergeInto&#x60;-method like this:
- *
- *
- * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * @example
- * Event = require(&#x27;event-dom/hover.js&#x27;)(window);
- *
- * or
- *
- * @example
- * Event = require(&#x27;event-dom&#x27;)(window);
- * require(&#x27;event-dom/event-hover.js&#x27;)(window);
- *
- * @module event
- * @submodule event-hover
- * @class Event
- * @since 0.0.2
-*/
+    
+        <div class="foundat">
+            Defined in: <a href="../files/src_drag-drop_drag-drop.js.html#l3"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:3</code></a>
+        </div>
+    
+
+    
+        <p>Available since 0.0.4</p>
+    
+</div>
 
 
-var NAME = &#x27;[event-hover]: &#x27;;
 
-module.exports = function (window) {
-    var Event = require(&#x27;../event-dom.js&#x27;)(window),
+<div class="box intro">
+    <p>Provides <code>drag and drop</code> functionality</p>
+<p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
+New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 
-    subscriber,
+</div>
 
-    /*
-     * Creates the &#x60;hover&#x60; event. The eventobject has the property &#x60;e.hover&#x60; which is a &#x60;Promise&#x60;.
-     * You can use this Promise to get notification of the end of hover. The Promise e.hover gets resolved with
-     * &#x60;relatedTarget&#x60; as argument: the node where the mouse went into when leaving a.target.
-     *
-     * @method setupHover
-     * @private
-     * @since 0.0.2
-     */
-    setupHover = function() {
-        // create only after subscribing to the &#x60;hover&#x60;-event
-        subscriber = Event.after(&#x27;mouseover&#x27;, function(e) {
-            console.log(NAME, &#x27;setupHover: setting up mouseover event&#x27;);
-            var node = e.target;
-            e.hover = new Promise(function(fulfill, reject) {
-                Event.onceAfter(
-                    &#x27;mouseout&#x27;,
-                    function(e) {
-                        fulfill(e.relatedTarget);
-                    },
-                    function(ev) {
-                        return (ev.target===node);
-                    }
-                );
-            });
-            Event.emit(node, &#x27;UI:hover&#x27;, e);
-        });
-    },
 
-    /*
-     * Removes the &#x60;hover&#x60; event. Because there are no subscribers anymore.
-     *
-     * @method teardownHover
-     * @private
-     * @since 0.0.2
-     */
-    teardownHover = function() {
-        // check if there aren&#x27;t any subscribers anymore.
-        // in that case, we detach the &#x60;mouseover&#x60; lister because we don&#x27;t want to
-        // loose performance.
-        if (!Event._subs[&#x27;UI:hover&#x27;]) {
-            console.log(NAME, &#x27;teardownHover: stop setting up mouseover event&#x27;);
-            subscriber.detach();
-            // reinit notifier, because it is a one-time notifier:
-            Event.notify(&#x27;UI:hover&#x27;, setupHover, Event, true);
-        }
-    };
+    <div class="example">
+        <h4>Example:</h4>
+        <div class="example-content">
+            <p>DD = require(&#39;drag-drop&#39;)(window);
+DD.init();</p>
 
-    Event.notify(&#x27;UI:hover&#x27;, setupHover, Event, true);
-    Event.notifyDetach(&#x27;UI:hover&#x27;, teardownHover, Event);
+        </div>
+    </div>
 
-    return Event;
-};
 
-    </pre>
+<div class="yui3-g">
+    <div class="yui3-u-1-2">
+        
+            <p>This module provides the following classes:</p>
+
+            <ul class="module-classes">
+            
+                <li class="module-class">
+                    <a href="../classes/DD.html">
+                        DD
+                    </a>
+                </li>
+            
+            </ul>
+        
+    </div>
+
+    <div class="yui3-u-1-2">
+        
+    </div>
 </div>
 
                     </div>
