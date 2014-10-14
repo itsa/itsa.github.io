@@ -87,8 +87,6 @@
             
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
-                <li><a href="../modules/event-dragdrop.html">event-dragdrop</a></li>
-            
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
@@ -288,13 +286,27 @@ module.exports = function (window) {
             escape &amp;&amp; (content=escapeHTML(content));
             (typeof content === &#x27;string&#x27;) &amp;&amp; (content=_createFragment(content));
             htmlElement[method](content, refElement);
-
         }
         return htmlElement;
     };
 
     DOCUMENT._insert = function() {
         return _insert.apply(null, arguments);
+    };
+
+   /**
+    * Creates a full HtmlElement at once. Differs from document.createElement in a way that the latter only accepts the
+    * tag-name, where &#x60;createElementFull&#x60; accepts a full definition.
+    *
+    * Note that as long as the new Element is not in the DOM, it has not all HtmlElement extended features
+    *
+    * @method createElementFull
+    * @param content {String} Full string version of an Element
+    * @return {HtmlElement|null}
+    * @since 0.0.1
+    */
+    DOCUMENT.createElementFull = function(content) {
+        return _createFragment(content);
     };
 
    /**

@@ -47,6 +47,9 @@ document.body.append(el);
 
 ##Extended methods##
 
+###createElementFull###
+Creates a full HtmlElement at once. Differs from document.createElement in a way that the latter only accepts the tag-name, where `createElementFull` accepts a full definition. Note that as long as the new Element is not in the DOM, it has not all HtmlElement extended features.
+
 ###first###
 Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.
 
@@ -100,6 +103,9 @@ Almost the same as native cloneNode(), but you should use clone(), because it al
 
 ###defineInlineStyle###
 Sets the inline-style of the HtmlElement exactly to the specified `value`, overruling previous values.
+
+###empty###
+Empties the content of the HtmlElement. Alias for setText('');
 
 ###first###
 Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.

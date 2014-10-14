@@ -17,6 +17,9 @@ intro: "Draggable elements can be setup using the attribute <b>dd-draggable=\"tr
         *display: inline;
         *zoom: 1;
     }
+    .body-content.module p.spaced {
+        margin-top: 150px;
+    }
 </style>
 
 Drag the 2 rectangles. The first is constrained using html, the second is set up using javascript.
@@ -37,12 +40,16 @@ Drag the 2 rectangles. The first is constrained using html, the second is set up
 <script src="itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
+
+    ITSA.DD.init();
     document.getElement('#without').plug(ITSA.Plugins.NodeConstrain);
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
+
+    ITSA.DD.init();
     document.getElement('#without').plug(ITSA.Plugins.NodeDD);
 </script>

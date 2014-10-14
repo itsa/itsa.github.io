@@ -24,7 +24,6 @@ YUI.add("yuidoc-meta", function(Y) {
         "drag-drop",
         "event",
         "event-dom",
-        "event-dragdrop",
         "event-emitter",
         "event-hover",
         "event-listener",
@@ -68,11 +67,6 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "event-dom",
             "name": "event-dom",
             "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        {
-            "displayName": "event-dragdrop",
-            "name": "event-dragdrop",
-            "description": "Adds the `hover` event as a DOM-event to event-dom. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\nMore about drag and drop: https://dev.opera.com/articles/drag-and-drop/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "event-emitter",

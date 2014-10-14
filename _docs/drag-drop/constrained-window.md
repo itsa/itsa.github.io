@@ -37,6 +37,8 @@ Drag the 2 rectangles: they will be constrained inside the window. The first is 
 <script src="itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
+
+    ITSA.DD.init();
     document.getElement('#without').plug(ITSA.Plugins.NodeConstrain);
 </script>
 ```
@@ -44,5 +46,7 @@ Drag the 2 rectangles: they will be constrained inside the window. The first is 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
+
+    ITSA.DD.init();
     document.getElement('#without').plug(ITSA.Plugins.NodeConstrain);
 </script>

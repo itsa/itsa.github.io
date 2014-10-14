@@ -82,8 +82,8 @@ body {
 }
 
 body,
-.pure-g [class *= "pure-u"],
-.pure-g-r [class *= "pure-u"] {
+body .pure-g [class *= "pure-u"],
+body .pure-g-r [class *= "pure-u"] {
     /* Set your content font stack here: */
     font-family: "avenir-next", "sans-serif", helvetica, arial;
     line-height: 1.5em;

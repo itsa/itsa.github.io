@@ -87,8 +87,6 @@
             
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
-                <li><a href="../modules/event-dragdrop.html">event-dragdrop</a></li>
-            
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
@@ -289,6 +287,18 @@ module.exports = function (window) {
         ElementPrototype.defineInlineStyle = function(value) {
             this.style.cssText = value;
             return this;
+        };
+
+       /**
+        * Empties the content of the HtmlElement.
+        * Alias for setText(&#x27;&#x27;);
+        *
+        * @method empty
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.empty = function(cssSelector) {
+            return this.setText(&#x27;&#x27;);
         };
 
        /**
@@ -611,7 +621,7 @@ module.exports = function (window) {
         */
         ElementPrototype.getText = function() {
             var instance = this;
-            if (window.documentElement.textContent) {
+            if (documentElement.textContent) {
                 return instance.textContent;
             }
             // now we are in IE8-, but it might not return the same as textContent

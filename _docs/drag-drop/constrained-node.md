@@ -48,6 +48,8 @@ Drag the 2 rectangles: they will be constrained to their container. The first is
 <script src="itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
+
+    ITSA.DD.init();
     document.getElement('#without').plug(ITSA.Plugins.NodeConstrain, {selector: '.base-container'});
 </script>
 ```
@@ -55,5 +57,7 @@ Drag the 2 rectangles: they will be constrained to their container. The first is
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
+
+    ITSA.DD.init();
     document.getElement('#without').plug(ITSA.Plugins.NodeConstrain, {selector: '.base-container'});
 </script>

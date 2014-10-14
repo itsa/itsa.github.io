@@ -2,99 +2,93 @@
 module: drag-drop
 maintainer: Marco Asbreuk
 title: Moving multiple items
-intro: "Drag and drop is done by a single event: <b>dragdrop</b>. The eventobject notifies you when the drag has finished. You can inspect the Promise e.drag.then for this purpose. You can also be notified on drag-move by setting a callback-function through: <b>e.setOnDrag(callbackFn)</b>. Draggable HtmlElements have the attribute: <b>dd-draggable=\"true\"</b>"
+intro: "Multiple items can be dragged at once by specifying <b>e.relatives</b> inside a before-subscriber to the <b>dd-start</b> event."
 ---
 
 <style type="text/css">
     .base-container {
-        margin-bottom: 30px;
-        width: 350px;
-        height: 150px;
-        /*position: relative;*/
-        background-color: #FF0;
-        border: solid 10px #0F0;
-    }
-    .drop-container {
-        margin-bottom: 30px;
-        width: 350px;
-        height: 150px;
-        border: solid 2px #000;
-        background-color: #0FF;
+        width: 100%;
+        height: 180px;
+        background-color: #EEE;
+        border: solid 8px #999;
+        margin-bottom: 1em;
+        padding: 20px;
     }
     .container {
-        text-align: center;
-        margin: 2em 0;
-        padding-top: 1.5em;
+        margin: 10px;
         height: 100px;
         width: 100px;
-        border: solid 10px #000;
+        background-color: #990073;
+        border: 10px solid #000;
+        cursor: default;
         display: inline-block;
         *display: inline;
         *zoom: 1;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        cursor: default;
+        color: #FFF;
+        text-align: center;
+        font-size: 16px;
+        line-height: 1.6em;
+        padding: 16px 8px 0;
     }
-    .container[dd-emitter-name="blue"] {
-        background-color: #00F;
+    .drop-container {
+        width: 100%;
+        height: 300px;
+        border: solid 8px #000;
+        background-color: #c0e5fd;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        margin-right: 20px;
+        text-align: center;
+        font-size: 17px;
+        padding-top: 130px;
     }
-    .container[dd-emitter-name="red"] {
-        background-color: #F00;
+    .dropactive[dropzone] {
+        border-style: dashed;
     }
-    .dropactive {
-        opacity: 0.6;
-        filter: alpha(opacity=60); /* For IE8 and earlier */
-        border: dotted 2px #000;
+    .dd-master[dd-draggable="true"],
+    .selected[dd-draggable="true"] {
+        border-color: #AAA;
     }
-    .container.dd-dragging {
-        background-color: #0F0;
-    }
-    #con {
-/*        position: relative; */
-    }
-
 </style>
 
-Mouse the mouse over the 5 containers:
+Drag the items to the dropzones. The `movable or copyable` items will be copyable when the `Ctrl`-key (or `cmd`-key on a Mac) is pressed during dragging. Use the same Ctrl/cmd button to select multiple items.
 
-<div class="base-container">
-    <div class="container" dd-draggable="true" dd-emitter-name="blue" dd-effect-allowed="all">1</div>
-    <div id="con" class="container" dd-draggable="true" dd-emitter-name="blue" dd-effect-allowed="all">2</div>
-    <div class="container" dd-draggable="true" dd-emitter-name="blue" dd-effect-allowed="all">3</div>
+<div id="constr" class="base-container">
+    <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 1</div>
+    <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 2</div>
+    <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 3</div>
+    <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 4</div>
+    <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 5</div>
 </div>
 
-<div class="base-container">
-    <div class="container" dd-draggable="true" dd-emitter-name="red">1</div>
-    <div class="container" dd-draggable="true" dd-emitter-name="red">2</div>
-    <div class="container" dd-draggable="true" dd-emitter-name="red">3</div>
-</div>
-
-<div class="drop-container" dropzone="emitter=blue"></div>
-<div class="drop-container" dropzone="move emitter=red"></div>
-
+<div class="drop-container" dropzone="true">dropzone</div>
 
 <p class="spaced">Code-example:</p>
 
+```css
+<style type="text/css">
+    .dropactive[dropzone] {
+        border-style: dashed;
+    }
+    .dd-master[dd-draggable="true"],
+    .selected[dd-draggable="true"] {
+        border-color: #AAA;
+    }
+</style>
+```
+
 ```html
 <body>
-    <div class="base-container">
-        <div class="container" dd-draggable="true" dd-emitter-name="blue"></div>
-        <div class="container" dd-draggable="true" dd-emitter-name="blue"></div>
-        <div class="container" dd-draggable="true" dd-emitter-name="blue"></div>
+    <div id="constr" class="base-container">
+        <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 1</div>
+        <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 2</div>
+        <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 3</div>
+        <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 4</div>
+        <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 5</div>
     </div>
 
-    <div class="base-container">
-        <div class="container" dd-draggable="true" dd-emitter-name="red"></div>
-        <div class="container" dd-draggable="true" dd-emitter-name="red"></div>
-        <div class="container" dd-draggable="true" dd-emitter-name="red"></div>
-    </div>
-
-    <div class="drop-container" dropzone="emitter=blue"></div>
-    <div class="drop-container" dropzone="move emitter=red"></div>
+    <div class="drop-container" dropzone="true">dropzone</div>
 </body>
 ```
 
@@ -102,13 +96,54 @@ Mouse the mouse over the 5 containers:
 <script src="itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
+
+    ITSA.DD.init();
+
+    ITSA.Event.before('mousedown', function(e) {
+        var ctrlPressed = e.ctrlKey || e.metaKey;
+        if (!ctrlPressed) {
+            document.getAll('.selected').removeClass('selected');
+        }
+        e.target.toggleClass('selected');
+    }, '[dd-draggable="true"]');
+
+    ITSA.Event.before('mousedownoutside', function(e) {
+        document.getAll('.selected').removeClass('selected');
+    }, '[dd-draggable="true"]');
+
+    ITSA.Event.before('dd-start', function(e) {
+        e.relatives = document.getAll('.selected');
+    });
+
+    ITSA.Event.after('dd-dropzone', function(e) {
+        document.getAll('.selected').removeClass('selected');
+    });
 </script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
+
+    ITSA.DD.init();
+
+    ITSA.Event.before('mousedown', function(e) {
+        var ctrlPressed = e.ctrlKey || e.metaKey;
+        if (!ctrlPressed) {
+            document.getAll('.selected').removeClass('selected');
+        }
+        e.target.toggleClass('selected');
+    }, '[dd-draggable="true"]');
+
+    ITSA.Event.before('mousedownoutside', function(e) {
+        document.getAll('.selected').removeClass('selected');
+    }, '[dd-draggable="true"]');
+
     ITSA.Event.before('dd-start', function(e) {
-        e.relatives = document.getAll('div[dd-emitter-name="blue"]');
+        e.relatives = document.getAll('.selected');
+    });
+
+    ITSA.Event.after('dd-dropzone', function(e) {
+        document.getAll('.selected').removeClass('selected');
     });
 </script>

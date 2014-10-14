@@ -87,8 +87,6 @@
             
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
-                <li><a href="../modules/event-dragdrop.html">event-dragdrop</a></li>
-            
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
@@ -228,6 +226,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item method">
                                 <a href="#method__insert">_insert</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_createElementFull">createElementFull</a>
 
                                 
                                 
@@ -504,6 +509,115 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
 </div>
 
                 
+                    <div id="method_createElementFull" class="method item">
+    <h3 class="name"><code>createElementFull</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>content</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">HtmlElement | Null</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_dom-ext_lib_document.js.html#l123"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:123</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Creates a full HtmlElement at once. Differs from document.createElement in a way that the latter only accepts the
+tag-name, where <code>createElementFull</code> accepts a full definition.</p>
+<p>Note that as long as the new Element is not in the DOM, it has not all HtmlElement extended features</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">content</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Full string version of an Element</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">HtmlElement | Null</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_first" class="method item">
     <h3 class="name"><code>first</code></h3>
 
@@ -550,7 +664,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_dom-ext_lib_document.js.html#l124"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:124</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l138"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:138</code></a>
         
         </p>
 
@@ -658,7 +772,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_dom-ext_lib_document.js.html#l145"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:145</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l159"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:159</code></a>
         
         </p>
 
@@ -767,7 +881,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_dom-ext_lib_document.js.html#l162"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:162</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l176"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:176</code></a>
         
         </p>
 
@@ -867,7 +981,7 @@ you need to prepend the id-name with a <code>#</code>. When multiple HtmlElement
             
         
         
-        <a href="../files/src_dom-ext_lib_document.js.html#l175"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:175</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l189"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:189</code></a>
         
         </p>
 
@@ -1061,7 +1175,7 @@ alias for <code>activeElement</code></p>
             
         
         
-        <a href="../files/src_dom-ext_lib_document.js.html#l187"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:187</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l201"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:201</code></a>
         
         </p>
 
@@ -1173,7 +1287,7 @@ alias for <code>activeElement</code></p>
             
         
         
-        <a href="../files/src_dom-ext_lib_document.js.html#l207"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:207</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l221"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:221</code></a>
         
         </p>
 
@@ -1285,7 +1399,7 @@ alias for <code>activeElement</code></p>
             
         
         
-        <a href="../files/src_dom-ext_lib_document.js.html#l224"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:224</code></a>
+        <a href="../files/src_dom-ext_lib_document.js.html#l238"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;document.js:238</code></a>
         
         </p>
 

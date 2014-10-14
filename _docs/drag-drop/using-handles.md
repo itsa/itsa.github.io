@@ -25,6 +25,9 @@ intro: "Draggable elements can have handles wher you can drag them. You set this
         margin: 0;
         text-align: center;
     }
+    .body-content.module p.spaced {
+        margin-top: 10em;
+    }
 </style>
 
 Drag the 2 rectangles. The first is constrained using html, the second is set up using javascript.
@@ -45,6 +48,8 @@ Drag the 2 rectangles. The first is constrained using html, the second is set up
 <script src="itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
+
+    ITSA.DD.init();
     document.getElement('#without').plug(ITSA.Plugins.NodeDD, {handle: 'h1'});
 </script>
 ```
@@ -52,5 +57,7 @@ Drag the 2 rectangles. The first is constrained using html, the second is set up
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
+
+    ITSA.DD.init();
     document.getElement('#without').plug(ITSA.Plugins.NodeDD, {handle: 'h1'});
 </script>

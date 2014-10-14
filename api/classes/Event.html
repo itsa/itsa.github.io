@@ -87,8 +87,6 @@
             
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
-                <li><a href="../modules/event-dragdrop.html">event-dragdrop</a></li>
-            
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
@@ -398,20 +396,6 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
 
                                 
                                     <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_removeDraggable">removeDraggable</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_setDraggable">setDraggable</a>
-
                                 
                                 
                             </li>
@@ -1366,6 +1350,136 @@ the Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will 
             
                 <li class="arg">
                     
+                        <code>customEvent</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/event.html">event</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_event_event-base.js.html#l1052"><code>src&#x2F;event&#x2F;event-base.js:1052</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Removes subscribers from the multiple customevents. The customEvent must conform the syntax:
+<code>emitterName:eventName</code>. Wildcard <code>*</code> may be used for both <code>emitterName</code> as well as <code>eventName</code>
+If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
+<p>Examples of valid customevents:</p>
+<ul>
+    <li>&#39;redmodel:save&#39;</li>
+    <li>&#39;UI:click&#39;</li>
+    <li>&#39;click&#39; --&gt; alias for &#39;UI:click&#39;</li>
+    <li>&#39;<code>*</code>:click&#39; --&gt; careful: will listen to both UIs and non-UI- click-events</li>
+    <li>&#39;redmodel:<code>*</code>&#39;</li>
+    <li>&#39;<code>*</code>:<code>*</code>&#39;</li>
+</ul>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Object that creates the subscriber (and will be listening by <code>listener.after(...)</code>)</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">customEvent</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>conform the syntax: <code>emitterName:eventName</code>, wildcard <code>*</code> may be used for both
+       <code>emitterName</code> as well as only <code>eventName</code>, in which case &#39;UI&#39; will become the emmiterName.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method__removeSubscriber" class="method item private">
+    <h3 class="name"><code>_removeSubscriber</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
                         <code>before</code>
                     
                 </li>
@@ -1502,136 +1616,6 @@ the Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will 
                     <div class="param-description">
                         <p>subscriber to the event, when not set, all subscribers of the listener to this customEvent
                   will be removed.</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method__removeSubscriber" class="method item private">
-    <h3 class="name"><code>_removeSubscriber</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>listener</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>customEvent</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/event.html">event</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_event_event-base.js.html#l1052"><code>src&#x2F;event&#x2F;event-base.js:1052</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Removes subscribers from the multiple customevents. The customEvent must conform the syntax:
-<code>emitterName:eventName</code>. Wildcard <code>*</code> may be used for both <code>emitterName</code> as well as <code>eventName</code>
-If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
-<p>Examples of valid customevents:</p>
-<ul>
-    <li>&#39;redmodel:save&#39;</li>
-    <li>&#39;UI:click&#39;</li>
-    <li>&#39;click&#39; --&gt; alias for &#39;UI:click&#39;</li>
-    <li>&#39;<code>*</code>:click&#39; --&gt; careful: will listen to both UIs and non-UI- click-events</li>
-    <li>&#39;redmodel:<code>*</code>&#39;</li>
-    <li>&#39;<code>*</code>:<code>*</code>&#39;</li>
-</ul>
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">listener</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Object that creates the subscriber (and will be listening by <code>listener.after(...)</code>)</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">customEvent</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>conform the syntax: <code>emitterName:eventName</code>, wildcard <code>*</code> may be used for both
-       <code>emitterName</code> as well as only <code>eventName</code>, in which case &#39;UI&#39; will become the emmiterName.</p>
 
                     </div>
 
@@ -2683,198 +2667,6 @@ unless you force to assign with <code>.forceAssign()</code></p>
                     
                 </li>
             
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | Undefined</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/event.html">event</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_event_event-base.js.html#l290"><code>src&#x2F;event&#x2F;event-base.js:290</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Emits the event <code>eventName</code> on behalf of <code>emitter</code>, which becomes e.target in the eventobject.
-During this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.
-The eventobject is created with at least these properties:</p>
-<ul>
-    <li>e.target --&gt; source that triggered the event (instance or DOM-node), specified by <code>emitter</code></li>
-    <li>e.type --&gt; eventName</li>
-    <li>e.emitter --&gt; emitterName</li>
-    <li>e.status --&gt; status-information:
-         <ul>
-              <li>e.status.ok --&gt; <code>true|false</code> whether the event got executed (not halted or defaultPrevented)</li>
-              <li>e.status.defaultFn (optional) --&gt; <code>true</code> if any defaultFn got invoked</li>
-              <li>e.status.preventedFn (optional) --&gt; <code>true</code> if any preventedFn got invoked</li>
-              <li>e.status.rendered (optional) --&gt; <code>true</code> the vDOM rendered the dom</li>
-              <li>e.status.halted (optional) --&gt; <code>reason|true</code> if the event got halted and optional the why</li>
-              <li>e.status.defaultPrevented (optional) --&gt;  <code>reason|true</code> if the event got defaultPrevented and optional the why</li>
-              <li>e.status.renderPrevented (optional) --&gt;  <code>reason|true</code> if the event got renderPrevented and optional the why</li>
-         </ul>
-    </li>
-</ul>
-
-<p>The optional <code>payload</code> is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.
-If payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.</p>
-<p>The eventobject also has these methods:</p>
-<ul>
-    <li>e.halt() --&gt; stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>
-    <li>e.preventDefault() --&gt; instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>
-    <li>e.preventRender() --&gt; by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>
-</ul>
-
-<p><ul>
-    <li>First, before-subscribers are invoked: this is the place where you might call <code>e.halt()</code>, <code>a.preventDefault()</code> or <code>e.preventRender()</code></li>
-    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>
-    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>
-    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li></p>
-<ul>
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[emitter]</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>instance that emits the events</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">customEvent</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Full customEvent conform syntax <code>emitterName:eventName</code>.
-       <code>emitterName</code> is available as <strong>e.emitter</strong>, <code>eventName</code> as <strong>e.type</strong>.</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">payload</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>extra payload to be added to the event-object</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | Undefined</span>:
-                    
-                    <p>eventobject or undefined when the event was halted or preventDefaulted.</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_emit" class="method item">
-    <h3 class="name"><code>emit</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code class="optional">[emitter]</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>customEvent</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>payload</code>
-                    
-                </li>
-            
                 <li class="arg">
                     
                         <code class="optional">[beforeSubscribers]</code>
@@ -3112,6 +2904,198 @@ If payload.silent is set true, the subscribers are not getting invoked: only the
                     <div class="param-description">
                         <p>whether <code>payload</code> should be used as the ventobject instead of creating a new
                      eventobject and merge payload. <b>should not be used</b> other than by any submodule like <code>event-dom</code>.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | Undefined</span>:
+                    
+                    <p>eventobject or undefined when the event was halted or preventDefaulted.</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_emit" class="method item">
+    <h3 class="name"><code>emit</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[emitter]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>customEvent</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>payload</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | Undefined</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/event.html">event</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_event_event-base.js.html#l290"><code>src&#x2F;event&#x2F;event-base.js:290</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Emits the event <code>eventName</code> on behalf of <code>emitter</code>, which becomes e.target in the eventobject.
+During this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.
+The eventobject is created with at least these properties:</p>
+<ul>
+    <li>e.target --&gt; source that triggered the event (instance or DOM-node), specified by <code>emitter</code></li>
+    <li>e.type --&gt; eventName</li>
+    <li>e.emitter --&gt; emitterName</li>
+    <li>e.status --&gt; status-information:
+         <ul>
+              <li>e.status.ok --&gt; <code>true|false</code> whether the event got executed (not halted or defaultPrevented)</li>
+              <li>e.status.defaultFn (optional) --&gt; <code>true</code> if any defaultFn got invoked</li>
+              <li>e.status.preventedFn (optional) --&gt; <code>true</code> if any preventedFn got invoked</li>
+              <li>e.status.rendered (optional) --&gt; <code>true</code> the vDOM rendered the dom</li>
+              <li>e.status.halted (optional) --&gt; <code>reason|true</code> if the event got halted and optional the why</li>
+              <li>e.status.defaultPrevented (optional) --&gt;  <code>reason|true</code> if the event got defaultPrevented and optional the why</li>
+              <li>e.status.renderPrevented (optional) --&gt;  <code>reason|true</code> if the event got renderPrevented and optional the why</li>
+         </ul>
+    </li>
+</ul>
+
+<p>The optional <code>payload</code> is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.
+If payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.</p>
+<p>The eventobject also has these methods:</p>
+<ul>
+    <li>e.halt() --&gt; stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>
+    <li>e.preventDefault() --&gt; instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>
+    <li>e.preventRender() --&gt; by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>
+</ul>
+
+<p><ul>
+    <li>First, before-subscribers are invoked: this is the place where you might call <code>e.halt()</code>, <code>a.preventDefault()</code> or <code>e.preventRender()</code></li>
+    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>
+    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>
+    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li></p>
+<ul>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[emitter]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>instance that emits the events</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">customEvent</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Full customEvent conform syntax <code>emitterName:eventName</code>.
+       <code>emitterName</code> is available as <strong>e.emitter</strong>, <code>eventName</code> as <strong>e.type</strong>.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">payload</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>extra payload to be added to the event-object</p>
 
                     </div>
 
@@ -4024,163 +4008,6 @@ No need to <code>detach()</code> (unless you want to undescribe before the first
                 
             </div>
         </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_removeDraggable" class="method item">
-    <h3 class="name"><code>removeDraggable</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag chainable">chainable</span>
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/event-dragdrop.html">event-dragdrop</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_drag-drop_Xdrag-drop.js.html#l406"><code>src&#x2F;drag-drop&#x2F;Xdrag-drop.js:406</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Removes draggability of the HtmlElement</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_setDraggable" class="method item">
-    <h3 class="name"><code>setDraggable</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code class="optional">[proxy]</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag chainable">chainable</span>
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/event-dragdrop.html">event-dragdrop</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_drag-drop_Xdrag-drop.js.html#l393"><code>src&#x2F;drag-drop&#x2F;Xdrag-drop.js:393</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Makes the HtmlElement draggable</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[proxy]</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>whether the HtmlElement is a proxy-node during drag</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
     
 
     

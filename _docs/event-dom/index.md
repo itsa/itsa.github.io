@@ -12,7 +12,7 @@ firstpar: get-started-onlywindow
 
 #Features#
 
-This module bring DOM-events to a higher level:
+This module brings DOM-events to a higher level:
 
 * subscribers work regardless of the domnode being part of the dom
 * by using delegation, you can save many Event-subscribers
