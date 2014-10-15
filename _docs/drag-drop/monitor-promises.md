@@ -2,7 +2,7 @@
 module: drag-drop
 maintainer: Marco Asbreuk
 title: Monitoring with Promises
-intro: "Dragging can be monitored by listening to the dd-start event and use the e.dd Promise. Or for dropzones, listen to dd-over and use the e.over Promise.<br><br><b>Note:</b> it is recomended to use this Promise-way instead of subscribing to every single dd-event."
+intro: "Dragging can be monitored by listening to the 'dd' event and use the e.dd Promise. Or for dropzones, listen to 'dropzone' and use the e.dropzone Promise.<br><br><b>Note:</b> it is recomended to use this Promise-way instead of subscribing to every single dd-event."
 ---
 
 <style type="text/css">
@@ -84,15 +84,13 @@ Drag the item and watch for the events.
 <script>
     var ITSA = require('itsa'),
         monitorContStart = document.getElement('.monitor-container.spaced'),
-        monitorContOver = document.getElement('.monitor-container:not(.spaced)'),
-        timerStart, timerOver;
+        monitorContOver = document.getElement('.monitor-container:not(.spaced)');
 
     ITSA.DD.init();
 
 
-    ITSA.Event.after('dd-start', function(e) {
-        timerStart && timerStart.cancel();
-        monitorContStart.setHTML('dd-start --> drag started');
+    ITSA.Event.after('dd', function(e) {
+        monitorContStart.setHTML('dd --> drag started');
 
         e.dd.setCallback(function() {
             var node = monitorContStart.getElement('.monitor-drag'),
@@ -118,25 +116,18 @@ Drag the item and watch for the events.
                 else {
                     monitorContStart.append('dd-drag --> dropped outside any dropzone');
                 }
-                timerStart = ITSA.later(function() {
-                    monitorContStart.empty();
-                }, 2000);
             }
         );
     });
 
 
-    ITSA.Event.after('dd-over', function(e) {
+    ITSA.Event.after('dropzone', function(e) {
         var dropId = e.dropTarget.getId();
-        timerOver && timerOver.cancel();
-        monitorContOver.setHTML('dd-over --> dragged over dropzone '+dropId);
+        monitorContOver.setHTML('dropzone --> dragged over dropzone '+dropId);
 
-        e.over.then(
+        e.dropzone.then(
             function(onDropzone) {
-                monitorContOver.append('<br>dd-over --> '+(onDropzone ? 'dropped inside ' : 'moved outside ')+dropId);
-                timerOver = ITSA.later(function() {
-                    monitorContOver.empty();
-                }, 2000);
+                monitorContOver.append('<br>dropzone --> '+(onDropzone ? 'dropped inside ' : 'moved outside ')+dropId);
             }
         );
     });
@@ -147,15 +138,13 @@ Drag the item and watch for the events.
 <script>
     var ITSA = require('itsa'),
         monitorContStart = document.getElement('.monitor-container.spaced'),
-        monitorContOver = document.getElement('.monitor-container:not(.spaced)'),
-        timerStart, timerOver;
+        monitorContOver = document.getElement('.monitor-container:not(.spaced)');
 
     ITSA.DD.init();
 
 
-    ITSA.Event.after('dd-start', function(e) {
-        timerStart && timerStart.cancel();
-        monitorContStart.setHTML('dd-start --> drag started');
+    ITSA.Event.after('dd', function(e) {
+        monitorContStart.setHTML('dd --> drag started');
 
         e.dd.setCallback(function() {
             var node = monitorContStart.getElement('.monitor-drag'),
@@ -176,30 +165,23 @@ Drag the item and watch for the events.
             function() {
                 var dropId = e.dropTarget && e.dropTarget.getId();
                 if (dropId) {
-                    monitorContStart.append('dd-drag --> dropped inside '+dropId);
+                    monitorContStart.append('e.dd.then() --> dropped inside '+dropId);
                 }
                 else {
-                    monitorContStart.append('dd-drag --> dropped outside any dropzone');
+                    monitorContStart.append('e.dd.then() --> dropped outside any dropzone');
                 }
-                timerStart = ITSA.later(function() {
-                    monitorContStart.empty();
-                }, 2000);
             }
         );
     });
 
 
-    ITSA.Event.after('dd-over', function(e) {
+    ITSA.Event.after('dropzone', function(e) {
         var dropId = e.dropTarget.getId();
-        timerOver && timerOver.cancel();
-        monitorContOver.setHTML('dd-over --> dragged over dropzone '+dropId);
+        monitorContOver.setHTML('dropzone --> dragged over dropzone '+dropId);
 
-        e.over.then(
+        e.dropzone.then(
             function(onDropzone) {
-                monitorContOver.append('<br>dd-over --> '+(onDropzone ? 'dropped inside ' : 'moved outside ')+dropId);
-                timerOver = ITSA.later(function() {
-                    monitorContOver.empty();
-                }, 2000);
+                monitorContOver.append('<br>e.dropzone.then() --> '+(onDropzone ? 'dropped inside ' : 'moved outside ')+dropId);
             }
         );
     });

@@ -193,6 +193,7 @@
 
 require(&#x27;js-ext/lib/function.js&#x27;);
 require(&#x27;js-ext/lib/object.js&#x27;);
+require(&#x27;./nodelist.js&#x27;);
 
 module.exports = function (window) {
     var NodePlugin, NodeConstrain;
@@ -200,10 +201,11 @@ module.exports = function (window) {
     // also extend window.Element:
     window.Element &amp;&amp; (function(ElementPrototype) {
        /**
-        * Makes the HtmlElement draggable
+        * Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.
         *
-        * @method setDraggable
-        * @param [proxy] {Boolean} whether the HtmlElement is a proxy-node during drag
+        * @method plug
+        * @param pluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
+        * @param options {Object} any options that should be passed through when the class is instantiated.
         * @chainable
         * @since 0.0.1
         */
@@ -214,9 +216,10 @@ module.exports = function (window) {
         };
 
        /**
-        * Removes draggability of the HtmlElement
+        * Unplugs a NodePlugin from the HtmlElement.
         *
-        * @method removeDraggable
+        * @method unplug
+        * @param pluginClass {NodePlugin} The plugin that should be unplugged. Needs to be the Class, not an instance!
         * @chainable
         * @since 0.0.1
         */
@@ -226,6 +229,44 @@ module.exports = function (window) {
             return this;
         };
     }(window.Element.prototype));
+
+
+    window.NodeList &amp;&amp; window.HTMLCollection &amp;&amp; (function(NodeListPrototype, HTMLCollectionPrototype) {
+        var forEach = function(instance, method, args) {
+                instance.forEach(function(element) {
+                    element[method].apply(element, args);
+                });
+                return instance;
+            };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.
+        *
+        * @method plug
+        * @param pluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
+        * @param options {Object} any options that should be passed through when the class is instantiated.
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.plug = HTMLCollectionPrototype.plug = function(NodePluginClass, options) {
+            return forEach(this, &#x27;plug&#x27;, arguments);
+        };
+
+       /**
+        * Unplugs a NodePlugin from the HtmlElement.
+        *
+        * @method unplug
+        * @param pluginClass {NodePlugin} The plugin that should be unplugged. Needs to be the Class, not an instance!
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.unplug = HTMLCollectionPrototype.unplug = function(NodePluginClass) {
+            return forEach(this, &#x27;unplug&#x27;, arguments);
+        };
+
+    }(window.NodeList.prototype, window.HTMLCollection.prototype));
+
 
     NodePlugin = Object.createClass(null, {
         setup: function (hostElement) {

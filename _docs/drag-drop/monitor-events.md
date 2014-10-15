@@ -2,7 +2,7 @@
 module: drag-drop
 maintainer: Marco Asbreuk
 title: Monitoring with events
-intro: "Dragging can be monitored using the dd-start, dd-drag, dd-over, dd-out, dd-drop and dd-dropzone events. <br><br><b>Note:</b> it is highly recommended to use the Promised-way instead of this example."
+intro: "Dragging can be monitored using the dd, dd-drag, dd-over, dd-out, dd-drop and dd-dropzone events. <br><br><b>Note:</b> it is highly recommended to use the Promised-way instead of this example."
 ---
 
 <style type="text/css">
@@ -31,10 +31,13 @@ intro: "Dragging can be monitored using the dd-start, dd-drag, dd-over, dd-out, 
     .monitor-container {
         margin-top: 230px;
         width: 100%;
-        min-height: 200px;
+        min-height: 100px;
         border: solid 1px #000;
         background-color: #ddd;
         padding: 10px 20px;
+    }
+    .monitor-container.dz {
+        margin-top: 20px;
     }
     .body-content.module .monitor-container p {
         margin: 0;
@@ -53,6 +56,7 @@ Drag the item and watch for the events.
 <div id="dropzone-1" class="drop-container" dropzone="true">dropzone</div>
 <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me</div>
 <div class="monitor-container"></div>
+<div class="monitor-container dz"></div>
 
 <p class="spaced">Code-example:</p>
 
@@ -66,9 +70,10 @@ Drag the item and watch for the events.
 
 ```html
 <body>
-    <div class="drop-container" dropzone="true">dropzone</div>
+    <div id="dropzone-1" class="drop-container" dropzone="true">dropzone</div>
     <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me</div>
     <div class="monitor-container"></div>
+    <div class="monitor-container dz"></div>
 </body>
 ```
 
@@ -76,12 +81,15 @@ Drag the item and watch for the events.
 <script src="itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa'),
-        monitorCont = document.getElement('.monitor-container');
+        monitorCont = document.getElement('.monitor-container'),
+        monitorContDropzone = document.getElement('.monitor-container.dz');
 
     ITSA.DD.init();
 
-    ITSA.Event.after('dd-start', function(e) {
-        monitorCont.setHTML('dd-start --> drag started');
+    //=======================================================================
+
+    ITSA.Event.after('dd', function(e) {
+        monitorCont.setHTML('dd --> drag started');
     });
 
     ITSA.Event.after('dd-drag', function(e) {
@@ -99,24 +107,31 @@ Drag the item and watch for the events.
         }
     });
 
-    ITSA.Event.after(['dd-over', 'dd-out', 'dd-drop', 'dd-dropzone'], function(e) {
-        var dropId = e.dropTarget && e.dropTarget.getId();
-        if (dropId) {
-            monitorCont.append(((e.type==='dd-drop') ? 'after ' : '')+e.type+' --> inside '+dropId+'<br>');
-        }
-        else {
-            monitorCont.append(((e.type==='dd-drop') ? 'after ' : '')+e.type+' --> outside any dropzone<br>');
-        }
-    });
-
     ITSA.Event.before('dd-drop', function(e) {
         var dropId = e.dropTarget && e.dropTarget.getId();
         if (dropId) {
-            monitorCont.append('before '+e.type+' --> inside '+dropId+'<br>');
+            monitorCont.append('before dd-drop --> inside '+dropId+'<br>');
         }
         else {
-            monitorCont.append('before '+e.type+' --> outside any dropzone<br>');
+            monitorCont.append('before dd-drop --> outside any dropzone<br>');
         }
+    });
+
+    ITSA.Event.after('dd-drop', function(e) {
+        var dropId = e.dropTarget && e.dropTarget.getId();
+        if (dropId) {
+            monitorCont.append('after dd-drop --> inside '+dropId+'<br>');
+        }
+        else {
+            monitorCont.append('after dd-drop --> outside any dropzone<br>');
+        }
+    });
+
+    //=======================================================================
+
+    ITSA.Event.after(['dropzone', 'dropzone-out', 'dropzone-drop'], function(e) {
+        var dropId = e.dropTarget.getId();
+        monitorContDropzone.append(((e.type==='dd-drop') ? 'after ' : '')+e.type+' --> inside '+dropId+'<br>');
     });
 </script>
 ```
@@ -124,12 +139,15 @@ Drag the item and watch for the events.
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa'),
-        monitorCont = document.getElement('.monitor-container');
+        monitorCont = document.getElement('.monitor-container'),
+        monitorContDropzone = document.getElement('.monitor-container.dz');
 
     ITSA.DD.init();
 
-    ITSA.Event.after('dd-start', function(e) {
-        monitorCont.setHTML('dd-start --> drag started');
+    //=======================================================================
+
+    ITSA.Event.after('dd', function(e) {
+        monitorCont.setHTML('dd --> drag started');
     });
 
     ITSA.Event.after('dd-drag', function(e) {
@@ -147,23 +165,30 @@ Drag the item and watch for the events.
         }
     });
 
-    ITSA.Event.after(['dd-over', 'dd-out', 'dd-drop', 'dd-dropzone'], function(e) {
-        var dropId = e.dropTarget && e.dropTarget.getId();
-        if (dropId) {
-            monitorCont.append(((e.type==='dd-drop') ? 'after ' : '')+e.type+' --> inside '+dropId+'<br>');
-        }
-        else {
-            monitorCont.append(((e.type==='dd-drop') ? 'after ' : '')+e.type+' --> outside any dropzone<br>');
-        }
-    });
-
     ITSA.Event.before('dd-drop', function(e) {
         var dropId = e.dropTarget && e.dropTarget.getId();
         if (dropId) {
-            monitorCont.append('before '+e.type+' --> inside '+dropId+'<br>');
+            monitorCont.append('before dd-drop --> inside '+dropId+'<br>');
         }
         else {
-            monitorCont.append('before '+e.type+' --> outside any dropzone<br>');
+            monitorCont.append('before dd-drop --> outside any dropzone<br>');
         }
+    });
+
+    ITSA.Event.after('dd-drop', function(e) {
+        var dropId = e.dropTarget && e.dropTarget.getId();
+        if (dropId) {
+            monitorCont.append('after dd-drop --> inside '+dropId+'<br>');
+        }
+        else {
+            monitorCont.append('after dd-drop --> outside any dropzone<br>');
+        }
+    });
+
+    //=======================================================================
+
+    ITSA.Event.after(['dropzone', 'dropzone-out', 'dropzone-drop'], function(e) {
+        var dropId = e.dropTarget.getId();
+        monitorContDropzone.append(((e.type==='dd-drop') ? 'after ' : '')+e.type+' --> inside '+dropId+'<br>');
     });
 </script>

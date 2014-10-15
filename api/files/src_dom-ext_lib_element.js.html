@@ -741,6 +741,30 @@ module.exports = function (window) {
         };
 
        /**
+         * Checks whether the HtmlElement lies within the specified selector (which can be a CSS-selector or a HtmlElement)
+         *
+         * @method inside
+         * @param selector {HtmlElement|String} the selector, specified by a Node or a css-selector
+         * @return {HtmlElement|null} the nearest HtmlElement that matches the selector, or &#x60;null&#x60; when not found
+         * @since 0.0.2
+         */
+        ElementPrototype.inside = function(selector) {
+            var instance = this,
+                parentNode;
+            if (typeof selector===&#x27;string&#x27;) {
+                parentNode = instance.parentNode;
+                while ((parentNode!==window.document) &amp;&amp; !parentNode.matchesSelector(selector)) {
+                    parentNode = parentNode.parentNode;
+                }
+                return (parentNode!==window.document) ? parentNode : null;
+            }
+            else {
+                // selector should be an HtmlElement
+                return ((selector!==instance) &amp;&amp; selector.contains(instance)) ? selector : null;
+            }
+        };
+
+       /**
          * Checks whether a point specified with x,y is within the HtmlElement&#x27;s region.
          *
          * @method insidePos
@@ -861,8 +885,10 @@ module.exports = function (window) {
         */
         ElementPrototype.removeClass = function(className) {
             var instance = this,
-                regexp = new RegExp(&#x27;(?:^|\\s+)&#x27; + className + &#x27;(?:\\s+|$)&#x27;, &#x27;g&#x27;);
-            instance.className = instance.className.replace(regexp, &#x27; &#x27;).trim();
+                regexp = new RegExp(&#x27;(?:^|\\s+)&#x27; + className + &#x27;(?:\\s+|$)&#x27;, &#x27;g&#x27;),
+                newClassName = instance.className.replace(regexp, &#x27; &#x27;).trim();
+
+            (newClassName===&#x27;&#x27;) ? instance.removeAttr(&#x27;class&#x27;) : (instance.className=newClassName);
             return instance;
         };
 

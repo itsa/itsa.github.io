@@ -179,6 +179,9 @@ If the Element has data set specified by `key`.
 ###hasFocus###
 Checks whether HtmlElement currently has the focus.
 
+###inside###
+Checks whether the HtmlElement lies within the specified selector (which can be a CSS-selector or a HtmlElement).
+
 ###insidePos###
 Checks whether a point specified with x,y is within the HtmlElement's region.
 
@@ -327,3 +330,24 @@ Sets the content of the HtmlElement. This is a safe way to set the content, beca
 
 ###toggleClass###
 Toggles the className of the Element.
+
+
+#Node Plugins#
+
+##HtmlElement##
+
+###plug###
+Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.
+
+###unplug###
+Unplugs a NodePlugin from the HtmlElement.
+
+
+##NodeList##
+For all HtmlElements of the NodeList/HTMLCollection:
+
+###plug###
+Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.
+
+###unplug###
+Unplugs a NodePlugin from the HtmlElement.

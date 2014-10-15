@@ -279,6 +279,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                             </li>
                         
                             <li class="index-item method private">
+                                <a href="#method__handleDrop">_handleDrop</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
                                 <a href="#method__initializeDrag">_initializeDrag</a>
 
                                 
@@ -287,13 +294,6 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item method private">
                                 <a href="#method__prevFnStart">_prevFnStart</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method private">
-                                <a href="#method__setBack">_setBack</a>
 
                                 
                                 
@@ -426,7 +426,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l99"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:99</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l103"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:103</code></a>
         
         </p>
 
@@ -564,7 +564,7 @@ Will be set to &quot;move&quot; when undefined.</p>
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l165"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:165</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l169"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:169</code></a>
         
         </p>
 
@@ -737,7 +737,7 @@ Will be set to &quot;move&quot; when undefined.</p>
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l231"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:231</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l242"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:242</code></a>
         
         </p>
 
@@ -830,7 +830,7 @@ Will be set to &quot;move&quot; when undefined.</p>
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l115"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:115</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l119"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:119</code></a>
         
         </p>
 
@@ -923,7 +923,7 @@ Will be set to &quot;move&quot; when undefined.</p>
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l211"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:211</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l222"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:222</code></a>
         
         </p>
 
@@ -936,7 +936,7 @@ Will be set to &quot;move&quot; when undefined.</p>
     </div>
 
     <div class="description">
-        <p>Default function for the <code>*:dd-over</code>-event</p>
+        <p>Default function for the <code>*:dropzone</code>-event</p>
 
     </div>
 
@@ -1016,7 +1016,7 @@ Will be set to &quot;move&quot; when undefined.</p>
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l249"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:249</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l260"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:260</code></a>
         
         </p>
 
@@ -1139,7 +1139,7 @@ Will be set to &quot;move&quot; when undefined.</p>
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l267"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:267</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l278"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:278</code></a>
         
         </p>
 
@@ -1281,6 +1281,12 @@ Will be set to &quot;move&quot; when undefined.</p>
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code>dropzones</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -1312,7 +1318,7 @@ Will be set to &quot;move&quot; when undefined.</p>
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l289"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:289</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l300"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:300</code></a>
         
         </p>
 
@@ -1325,7 +1331,7 @@ Will be set to &quot;move&quot; when undefined.</p>
     </div>
 
     <div class="description">
-        <p>Defines the definition of the <code>dd-over</code> event.
+        <p>Defines the definition of the <code>dropzone</code> event.
 Also sets up listeners to tricker dd-over when the mouse is above an dropzone.</p>
 
     </div>
@@ -1352,93 +1358,16 @@ Also sets up listeners to tricker dd-over when the mouse is above an dropzone.</
                     
                 </li>
             
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method__initializeDrag" class="method item private">
-    <h3 class="name"><code>_initializeDrag</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>e</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_drag-drop_drag-drop.js.html#l503"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:503</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Default function for the <code>*:dd-drag</code>-event</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
                 <li class="param">
                     
-                        <code class="param-name">e</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <code class="param-name">dropzones</code>
+                        <span class="type"><a href="../classes/NodeList.html" class="crosslink">NodeList</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>eventobject</p>
+                        <p>list with dropzonenodes</p>
 
                     </div>
 
@@ -1455,101 +1384,8 @@ Also sets up listeners to tricker dd-over when the mouse is above an dropzone.</
 </div>
 
                 
-                    <div id="method__prevFnStart" class="method item private">
-    <h3 class="name"><code>_prevFnStart</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>e</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_drag-drop_drag-drop.js.html#l658"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:658</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Prevented function for the <code>*:dd-start</code>-event</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">e</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>eventobject</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method__setBack" class="method item private">
-    <h3 class="name"><code>_setBack</code></h3>
+                    <div id="method__handleDrop" class="method item private">
+    <h3 class="name"><code>_handleDrop</code></h3>
 
     
         <div class="args">
@@ -1622,7 +1458,7 @@ Also sets up listeners to tricker dd-over when the mouse is above an dropzone.</
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l378"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:378</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l386"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:386</code></a>
         
         </p>
 
@@ -1751,6 +1587,192 @@ Also sets up listeners to tricker dd-over when the mouse is above an dropzone.</
 </div>
 
                 
+                    <div id="method__initializeDrag" class="method item private">
+    <h3 class="name"><code>_initializeDrag</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>e</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_drag-drop_drag-drop.js.html#l588"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:588</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Default function for the <code>*:dd-drag</code>-event</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">e</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>eventobject</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method__prevFnStart" class="method item private">
+    <h3 class="name"><code>_prevFnStart</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>e</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_drag-drop_drag-drop.js.html#l748"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:748</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Prevented function for the <code>*:dd-start</code>-event</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">e</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>eventobject</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method__setBack" class="method item private">
     <h3 class="name"><code>_setBack</code></h3>
 
@@ -1819,7 +1841,7 @@ Also sets up listeners to tricker dd-over when the mouse is above an dropzone.</
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l671"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:671</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l761"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:761</code></a>
         
         </p>
 
@@ -1966,7 +1988,7 @@ Also sets up listeners to tricker dd-over when the mouse is above an dropzone.</
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l738"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:738</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l835"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:835</code></a>
         
         </p>
 
@@ -2026,7 +2048,7 @@ is pressed to support the copying of draggable items</p>
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l783"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:783</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l880"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:880</code></a>
         
         </p>
 
@@ -2110,7 +2132,7 @@ The drag-drop eventcycle consists of the events: <code>dd-start</code>, <code>em
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l838"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:838</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l971"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:971</code></a>
         
         </p>
 
@@ -2237,7 +2259,7 @@ The drag-drop eventcycle consists of the events: <code>dd-start</code>, <code>em
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l863"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:863</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l996"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:996</code></a>
         
         </p>
 
@@ -2347,7 +2369,7 @@ Is determined by the attribute <code>dd-effect-allowed=&quot;copy&quot;</code> o
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l878"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:878</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l1011"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:1011</code></a>
         
         </p>
 
@@ -2456,7 +2478,7 @@ Is determined by the attribute <code>dd-effect-allowed=&quot;copy&quot;</code> o
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l891"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:891</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l1024"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:1024</code></a>
         
         </p>
 
@@ -2565,7 +2587,7 @@ Is determined by the attribute <code>dd-effect-allowed=&quot;copy&quot;</code> o
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l905"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:905</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l1038"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:1038</code></a>
         
         </p>
 
@@ -2674,7 +2696,7 @@ Is determined by the attribute <code>dd-effect-allowed=&quot;copy&quot;</code> o
             
         
         
-        <a href="../files/src_drag-drop_drag-drop.js.html#l924"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:924</code></a>
+        <a href="../files/src_drag-drop_drag-drop.js.html#l1057"><code>src&#x2F;drag-drop&#x2F;drag-drop.js:1057</code></a>
         
         </p>
 

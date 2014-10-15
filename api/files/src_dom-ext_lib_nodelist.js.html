@@ -194,7 +194,7 @@
 require(&#x27;polyfill/polyfill-base.js&#x27;);
 
 module.exports = function (window) {
-    (function(NodeListPrototype, HTMLCollectionPrototype) {
+    window.NodeList &amp;&amp; window.HTMLCollection &amp;&amp; (function(NodeListPrototype, HTMLCollectionPrototype) {
         var arrayMethods = Object.getOwnPropertyNames(Array.prototype),
             forEach = function(instance, method, args) {
                 instance.forEach(function(element) {
@@ -469,7 +469,7 @@ module.exports = function (window) {
             return forEach(this, &#x27;toggleClass&#x27;, arguments);
         };
 
-    }(window.NodeList &amp;&amp; window.NodeList.prototype, window.HTMLCollection &amp;&amp; window.HTMLCollection.prototype));
+    }(window.NodeList.prototype, window.HTMLCollection.prototype));
 };
     </pre>
 </div>

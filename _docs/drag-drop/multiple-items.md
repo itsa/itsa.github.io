@@ -30,6 +30,14 @@ intro: "Multiple items can be dragged at once by specifying <b>e.relatives</b> i
         line-height: 1.6em;
         padding: 16px 8px 0;
     }
+    .container {
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        float: left;
+        position: relative;
+    }
     .drop-container {
         width: 100%;
         height: 300px;
@@ -46,23 +54,23 @@ intro: "Multiple items can be dragged at once by specifying <b>e.relatives</b> i
     .dropactive[dropzone] {
         border-style: dashed;
     }
-    .dd-master[dd-draggable="true"],
-    .selected[dd-draggable="true"] {
+    .dd-master,
+    .container.selected {
         border-color: #AAA;
     }
 </style>
 
 Drag the items to the dropzones. The `movable or copyable` items will be copyable when the `Ctrl`-key (or `cmd`-key on a Mac) is pressed during dragging. Use the same Ctrl/cmd button to select multiple items.
 
-<div id="constr" class="base-container">
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 1</div>
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 2</div>
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 3</div>
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 4</div>
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 5</div>
+<div class="base-container" dd-draggable=".container" dd-dropzone=".drop-container" dd-effect-allowed="all">
+    <div class="container">drag me nr. 1</div>
+    <div class="container">drag me nr. 2</div>
+    <div class="container">drag me nr. 3</div>
+    <div class="container">drag me nr. 4</div>
+    <div class="container">drag me nr. 5</div>
 </div>
 
-<div class="drop-container" dropzone="true">dropzone</div>
+<div class="drop-container" dropzone="true" dd-draggable=".container" dd-dropzone=".drop-container">dropzone</div>
 
 <p class="spaced">Code-example:</p>
 
@@ -71,24 +79,34 @@ Drag the items to the dropzones. The `movable or copyable` items will be copyabl
     .dropactive[dropzone] {
         border-style: dashed;
     }
-    .dd-master[dd-draggable="true"],
-    .selected[dd-draggable="true"] {
+    .dd-master,
+    .container.selected {
         border-color: #AAA;
+    }
+
+    /* give delegated items the same CSS as [draggable]: */
+    .container {
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        float: left;
+        position: relative;
     }
 </style>
 ```
 
 ```html
 <body>
-    <div id="constr" class="base-container">
-        <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 1</div>
-        <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 2</div>
-        <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 3</div>
-        <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 4</div>
-        <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me nr. 5</div>
+    <div class="base-container" dd-draggable=".container" dd-dropzone=".drop-container" dd-effect-allowed="all">
+        <div class="container">drag me nr. 1</div>
+        <div class="container">drag me nr. 2</div>
+        <div class="container">drag me nr. 3</div>
+        <div class="container">drag me nr. 4</div>
+        <div class="container">drag me nr. 5</div>
     </div>
 
-    <div class="drop-container" dropzone="true">dropzone</div>
+    <div class="drop-container" dropzone="true" dd-draggable=".container" dd-dropzone=".drop-container">dropzone</div>
 </body>
 ```
 
@@ -105,17 +123,17 @@ Drag the items to the dropzones. The `movable or copyable` items will be copyabl
             document.getAll('.selected').removeClass('selected');
         }
         e.target.toggleClass('selected');
-    }, '[dd-draggable="true"]');
+    }, '.container');
 
     ITSA.Event.before('mousedownoutside', function(e) {
         document.getAll('.selected').removeClass('selected');
-    }, '[dd-draggable="true"]');
+    }, '.container');
 
-    ITSA.Event.before('dd-start', function(e) {
+    ITSA.Event.before('dd', function(e) {
         e.relatives = document.getAll('.selected');
     });
 
-    ITSA.Event.after('dd-dropzone', function(e) {
+    ITSA.Event.after('dropzone-drop', function(e) {
         document.getAll('.selected').removeClass('selected');
     });
 </script>
@@ -133,17 +151,17 @@ Drag the items to the dropzones. The `movable or copyable` items will be copyabl
             document.getAll('.selected').removeClass('selected');
         }
         e.target.toggleClass('selected');
-    }, '[dd-draggable="true"]');
+    }, '.container');
 
     ITSA.Event.before('mousedownoutside', function(e) {
         document.getAll('.selected').removeClass('selected');
-    }, '[dd-draggable="true"]');
+    }, '.container');
 
-    ITSA.Event.before('dd-start', function(e) {
+    ITSA.Event.before('dd', function(e) {
         e.relatives = document.getAll('.selected');
     });
 
-    ITSA.Event.after('dd-dropzone', function(e) {
+    ITSA.Event.after('dropzone-drop', function(e) {
         document.getAll('.selected').removeClass('selected');
     });
 </script>

@@ -17,6 +17,7 @@ extracodefirstpar: DD.init();
 This module bring Drag and Drop to a higher level:
 
 * Functionalities `based upon HTML`
+* Functionalities can be set both at the Element or at a parent-container
 * Draggable items can be `constrained`
 * `Move` or `Copy` items
 * Define `dropzones` where draggable items can be dropped into
@@ -44,6 +45,19 @@ HtmlElements are made draggable by defining the attribute `dd-draggable="true"`:
 <div dd-draggable="true">drag me</div>
 ```
 
+You can also define this behaviour at a parent Element that works like a container. Working this way, you need to specify which **descendants** need to be draggable by setting a css-selector `dd-draggable="css-selector"`:
+
+```html
+<div dd-draggable="div"> <!-- this div is not draggable -->
+    <div>drag me</div> <!-- draggable -->
+    <div>drag me</div> <!-- draggable -->
+    <div>drag me</div> <!-- draggable -->
+    <div>drag me</div> <!-- draggable -->
+    <div>drag me</div> <!-- draggable -->
+</div>
+```
+
+
 ##Drop##
 
 HtmlElements can act as a `dropzone` where draggable items can be dropped inside. Dropzones are defined with the attribute `dropzone="true | move | copy"`. The type of dropzone determines wheter it accepts only copyable items, movable items, or both. As you can see later on, a dropzone can be limites to accept special emitters as well.
@@ -64,7 +78,7 @@ Not only do you need to define dropzones, you also need to tell the draggable it
 
 ###dd-handle###
 
-###dd-emitter-name###
+###dd-emittername###
 
 ##Using Plugins##
 
@@ -103,7 +117,7 @@ Is delivered by the module `dom-ext`.
 
 ###dropzone="move"###
 
-###dropzone="emitter-name"###
+###dropzone="emittername"###
 
 ##Using Plugins##
 
