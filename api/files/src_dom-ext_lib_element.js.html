@@ -741,6 +741,25 @@ module.exports = function (window) {
         };
 
        /**
+         * Checks whether the HtmlElement has its rectangle inside the outboud-Element.
+         * This is no check of the DOM-tree, but purely based upon coordinates.
+         *
+         * @method rectangleInside
+         * @param outboundElement {HtmlElement} the Element where this element should lie inside
+         * @return {Boolean} whether the Element lies inside the outboundElement
+         * @since 0.0.2
+         */
+        ElementPrototype.rectangleInside = function(outboundElement) {
+            var instance = this,
+                outerRect = outboundElement.getBoundingClientRect(),
+                innerRect = instance.getBoundingClientRect();
+            return (outerRect.left&lt;=innerRect.left) &amp;&amp;
+                   (outerRect.top&lt;=innerRect.top) &amp;&amp;
+                   ((outerRect.left+outboundElement.offsetWidth)&gt;=(innerRect.left+instance.offsetWidth)) &amp;&amp;
+                   ((outerRect.top+outboundElement.offsetHeight)&gt;=(innerRect.top+instance.offsetHeight));
+        };
+
+       /**
          * Checks whether the HtmlElement lies within the specified selector (which can be a CSS-selector or a HtmlElement)
          *
          * @method inside

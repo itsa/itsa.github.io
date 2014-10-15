@@ -197,6 +197,9 @@ Prepends a HtmlElement or text at the start of HtmlElement's innerHTML.
 ###prev###
 Returns the previous of the HtmlElement's siblings, or the previous that matches `cssSelector`.
 
+###rectangleInside###
+Checks whether the HtmlElement has its rectangle inside the outboud-Element. This is no check of the DOM-tree, but purely based upon coordinates.
+
 ###remove###
 Removes the HtmlElement from the DOM.
 

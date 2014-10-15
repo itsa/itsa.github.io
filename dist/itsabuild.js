@@ -5990,6 +5990,25 @@ module.exports = function (window) {
         };
 
        /**
+         * Checks whether the HtmlElement has its rectangle inside the outboud-Element.
+         * This is no check of the DOM-tree, but purely based upon coordinates.
+         *
+         * @method rectangleInside
+         * @param outboundElement {HtmlElement} the Element where this element should lie inside
+         * @return {Boolean} whether the Element lies inside the outboundElement
+         * @since 0.0.2
+         */
+        ElementPrototype.rectangleInside = function(outboundElement) {
+            var instance = this,
+                outerRect = outboundElement.getBoundingClientRect(),
+                innerRect = instance.getBoundingClientRect();
+            return (outerRect.left<=innerRect.left) &&
+                   (outerRect.top<=innerRect.top) &&
+                   ((outerRect.left+outboundElement.offsetWidth)>=(innerRect.left+instance.offsetWidth)) &&
+                   ((outerRect.top+outboundElement.offsetHeight)>=(innerRect.top+instance.offsetHeight));
+        };
+
+       /**
          * Checks whether the HtmlElement lies within the specified selector (which can be a CSS-selector or a HtmlElement)
          *
          * @method inside
@@ -7038,6 +7057,14 @@ module.exports = function (window) {
             // If that is the case, the a mouseup-event should be initiated instead of draggin the element
             if (e.buttons===0) {
                 // no more button pressed
+                /**
+                * Fired when the mouse comes back into the browser-window while dd-drag was busy yet no buttons are pressed.
+                * This is a correction to the fact that the mouseup-event wasn't noticed because the mouse was outside the browser.
+                *
+                * @event dd-fake-mouseup
+                * @private
+                * @since 0.1
+                */
                 Event.emit(dragNode, DD_FAKE_MOUSEUP);
             }
             else {
@@ -7071,8 +7098,7 @@ module.exports = function (window) {
          * @param sourceNode {HtmlElement} the original HtmlElement
          * @param dragNode {HtmlElement} the dragged HtmlElement (either original or clone)
          * @param dropzoneSpecified {Boolean} whether the sourceNode had a dropzone specified
-         * @param x {Number} x-position in coordinaties relative to `document` (like getX())
-         * @param y {Number} y-position in coordinaties relative to `document` (like getX())
+         * @param relatives {Array} hash with all draggables that are being move togerther with the master draggable
          * @private
          * @since 0.0.1
          */
@@ -7113,7 +7139,7 @@ module.exports = function (window) {
                     }
                 );
             }
-            instance.restoreDraggables = function() {/* NOOP */};
+            instance.restoreDraggables = function() {/* NOOP */ return this;};
         },
 
        /**
@@ -7131,6 +7157,18 @@ module.exports = function (window) {
             e.dropzone.then(
                 function(insideDropTarget) {
                     dropzone.removeClass(DD_DROPACTIVE_CLASS);
+                    /**
+                    * Fired when the checkbox changes its value<br />
+                    * Listen for this event instead of 'checkedChange',
+                    * because this event is also fired when the checkbox changes its 'disabled'-state
+                    * (switching value null/boolean)
+                    *
+                    * @event valuechange
+                    * @param e {EventFacade} Event Facade including:
+                    * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
+                    * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
+                    * @since 0.1
+                    */
                     insideDropTarget || e._noDDoutEvt || Event.emit(dropzone, e.emitterName+':'+DROPZONE_OUT, e);
                 }
             );
@@ -7182,6 +7220,9 @@ module.exports = function (window) {
          * @param dropzoneSpecified {Boolean} whether the sourceNode had a dropzone specified
          * @param x {Number} x-position in coordinaties relative to `document` (like getX())
          * @param y {Number} y-position in coordinaties relative to `document` (like getX())
+         * @param inlineLeft {String} inline css `left` for the original sourceNode
+         * @param inlineTop {String} inline css `top` for the original sourceNode
+         * @param relatives {Array} hash with all draggables that are being move togerther with the master draggable
          * @private
          * @since 0.0.1
          */
@@ -7271,6 +7312,18 @@ module.exports = function (window) {
                                     }
                                 );
                                 ddProps.dragOverList.push(dragOverPromise);
+                                /**
+                                * Fired when the checkbox changes its value<br />
+                                * Listen for this event instead of 'checkedChange',
+                                * because this event is also fired when the checkbox changes its 'disabled'-state
+                                * (switching value null/boolean)
+                                *
+                                * @event valuechange
+                                * @param e {EventFacade} Event Facade including:
+                                * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
+                                * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
+                                * @since 0.1
+                                */
                                 Event.emit(dropzone, emitterName+':'+DROPZONE, e);
                             }
                         }
@@ -7287,26 +7340,21 @@ module.exports = function (window) {
         * @param e {Object} eventobject
         * @param sourceNode {HtmlElement} the original HtmlElement
         * @param dragNode {HtmlElement} the dragged HtmlElement (either original or clone)
-        * @param dropzoneSpecified {Boolean} whether the sourceNode had a dropzone specified
-        * @param x {Number} x-position in coordinaties relative to `document` (like getX())
-        * @param y {Number} y-position in coordinaties relative to `document` (like getX())
+        * @param relatives {Array} hash with all draggables that are being move togerther with the master draggable
         * @private
         * @since 0.0.1
         */
         _handleDrop: function(e, sourceNode, dragNode, relatives) {
             console.log(NAME, '_handleDrop '+dragNode);
-console.info('_handleDrop start');
             var instance = this,
                 dropzoneNode = e.dropTarget,
                 delegatedDragging = sourceNode.hasClass(DEL_DRAGGABLE),
                 constrainRectangle, borderLeft, borderTop, dragNodeX, dragNodeY, match, copyToDropzone, moveToDropzone,
                 moveInsideDropzone, isCopied, dropzoneDelegatedDraggable, dropzoneIsDelegated;
             if (dropzoneNode) {
-console.info('_handleDrop is dropzoneNode');
                 dropzoneDelegatedDraggable = dropzoneNode.getAttr(DD_MINUSDRAGGABLE);
                 dropzoneIsDelegated = dropzoneDelegatedDraggable && (dropzoneNode.getAttr(DD_MINUSDRAGGABLE)!=='true');
                 copyToDropzone = function(nodeSource, nodeDrag, shiftX, shiftY) {
-console.info('_handleDrop copyToDropzone');
                     if (delegatedDragging) {
                         dropzoneIsDelegated || nodeDrag.setAttr(DD_MINUSDRAGGABLE, TRUE);
                         nodeDrag.removeClass(DEL_DRAGGABLE);
@@ -7334,7 +7382,6 @@ console.info('_handleDrop copyToDropzone');
                     nodeDrag.setAttr(DD_DROPZONE_MOVABLE, TRUE); // to make moving inside the dropzone possible without return to its startposition
                 };
                 moveToDropzone = function(nodeSource, nodeDrag, shiftX, shiftY) {
-console.info('_handleDrop moveToDropzone');
                     nodeSource.setInlineStyle(POSITION, ABSOLUTE);
                     if (delegatedDragging) {
                         dropzoneIsDelegated || nodeSource.setAttr(DD_MINUSDRAGGABLE, TRUE);
@@ -7397,11 +7444,23 @@ console.info('_handleDrop moveToDropzone');
                 }
 
                 sourceNode.removeClass(DEL_DRAGGABLE);
+                /**
+                * Fired when the checkbox changes its value<br />
+                * Listen for this event instead of 'checkedChange',
+                * because this event is also fired when the checkbox changes its 'disabled'-state
+                * (switching value null/boolean)
+                *
+                * @event valuechange
+                * @param e {EventFacade} Event Facade including:
+                * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
+                * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
+                * @since 0.1
+                */
                 Event.emit(e.copyTarget, e.emitterName+':'+DROPZONE_DROP, e);
             }
             else {
-                if (dragNode.hasAttr(DD_DROPZONE_MOVABLE)) {
-console.info('_handleDrop has dd-dropzone-movable');
+                (dragNode.hasAttr(DD_DROPZONE_MOVABLE)) && (dropzoneNode=dragNode.inside(DROPZONE_BRACKETS));
+                if (dropzoneNode && dragNode.rectangleInside(dropzoneNode)) {
                     moveInsideDropzone = function(hasMatch, nodeSource, nodeDrag, shiftX, shiftY) {
                         hasMatch && nodeSource.setXY(nodeSource+shiftX, nodeSource+shiftY, constrainRectangle);
 
@@ -7413,18 +7472,13 @@ console.info('_handleDrop has dd-dropzone-movable');
                         [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTERNAME, DD_HANDLE, DD_EFFECT_ALLOWED].forEach(function(attribute) {
                             var data = '_del_'+attribute,
                                 attr = dragNode.getData(data);
-console.info('check attribute '+attribute);
                             if (attr) {
-console.info('attribute '+attribute+' was set on DATA');
                                 if (dropzoneIsDelegated) {
-console.info('nodeSource.removeAttr(attribute)');
                                     nodeSource.removeAttr(attribute);
                                 }
                                 else {
-console.info('nodeSource.setAttr(attribute)');
                                     nodeSource.setAttr(attribute, attr);
                                 }
-console.info('nodeSource.removeData(attribute)');
                                 nodeSource.removeData(data);
                             }
                         });
@@ -7434,33 +7488,26 @@ console.info('nodeSource.removeData(attribute)');
                     // reset its position, only now constrain it to the dropzondenode
                     // we need to specify exactly the droparea: because we don't want to compare to any
                     // scrollWidth/scrollHeight, but exaclty to the visible part of the dropzone
-                    dropzoneNode = dragNode.inside(DROPZONE_BRACKETS);
-                    if (dropzoneNode) {
-                        dropzoneDelegatedDraggable = dropzoneNode.getAttr(DD_MINUSDRAGGABLE);
-                        dropzoneIsDelegated = dropzoneDelegatedDraggable && (dropzoneNode.getAttr(DD_MINUSDRAGGABLE)!=='true');
-                        borderLeft = parseInt(dropzoneNode.getStyle(BORDER_LEFT_WIDTH), 10);
-                        borderTop = parseInt(dropzoneNode.getStyle(BORDER_TOP_WIDTH), 10);
-                        constrainRectangle = {
-                            x: dropzoneNode.getX() + borderLeft,
-                            y: dropzoneNode.getY() + borderTop,
-                            w: dropzoneNode.offsetWidth - borderLeft - parseInt(dropzoneNode.getStyle(BORDER_RIGHT_WIDTH), 10),
-                            h: dropzoneNode.offsetHeight - borderTop - parseInt(dropzoneNode.getStyle(BORDER_BOTTOM_WIDTH), 10)
-                        };
-                        dragNodeX = dragNode.getX();
-                        dragNodeY = dragNode.getY();
-                    }
+                    dropzoneDelegatedDraggable = dropzoneNode.getAttr(DD_MINUSDRAGGABLE);
+                    dropzoneIsDelegated = dropzoneDelegatedDraggable && (dropzoneNode.getAttr(DD_MINUSDRAGGABLE)!=='true');
+                    borderLeft = parseInt(dropzoneNode.getStyle(BORDER_LEFT_WIDTH), 10);
+                    borderTop = parseInt(dropzoneNode.getStyle(BORDER_TOP_WIDTH), 10);
+                    constrainRectangle = {
+                        x: dropzoneNode.getX() + borderLeft,
+                        y: dropzoneNode.getY() + borderTop,
+                        w: dropzoneNode.offsetWidth - borderLeft - parseInt(dropzoneNode.getStyle(BORDER_RIGHT_WIDTH), 10),
+                        h: dropzoneNode.offsetHeight - borderTop - parseInt(dropzoneNode.getStyle(BORDER_BOTTOM_WIDTH), 10)
+                    };
+                    dragNodeX = dragNode.getX();
+                    dragNodeY = dragNode.getY();
                     relatives && relatives.forEach(
                         function(item) {
                             (sourceNode!==item.sourceNode) && moveInsideDropzone(dropzoneNode, item.sourceNode, item.dragNode, item.shiftX, item.shiftY);
                         }
                     );
                     moveInsideDropzone(dropzoneNode, sourceNode, dragNode, 0, 0);
-
-
-
                 }
                 else {
-console.info('_handleDrop restore');
                     instance.restoreDraggables();
                 }
             }
@@ -7468,20 +7515,6 @@ console.info('_handleDrop restore');
             dragNode.removeClass(DD_MASTER_CLASS);
         },
 
-
-restoreDraggables: function() {/* NOOP */},
-
-_restoreDraggables: function(e, sourceNode, dragNode, dropzoneSpecified, x, y, inlineLeft, inlineTop, relatives) {
-    console.log('_restoreDraggables');
-    var instance = this;
-    instance.restoreDraggables = function() {/* NOOP */};
-    instance._setBack(e, sourceNode, dragNode, dropzoneSpecified, x, y, inlineLeft, inlineTop, e.dropzone);
-    relatives && relatives.forEach(
-        function(item) {
-            (dragNode!==item.dragNode) && instance._setBack(e, item.sourceNode, item.dragNode, dropzoneSpecified, x+item.shiftX, y+item.shiftY, item.inlineLeft, item.inlineTop);
-        }
-    );
-},
        /**
          * Default function for the `*:dd-drag`-event
          *
@@ -7571,6 +7604,18 @@ _restoreDraggables: function(e, sourceNode, dragNode, dropzoneSpecified, x, y, i
                 // move the object
                 e.xMouse = e2.clientX;
                 e.yMouse = e2.clientY;
+                /**
+                * Fired when the checkbox changes its value<br />
+                * Listen for this event instead of 'checkedChange',
+                * because this event is also fired when the checkbox changes its 'disabled'-state
+                * (switching value null/boolean)
+                *
+                * @event valuechange
+                * @param e {EventFacade} Event Facade including:
+                * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
+                * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
+                * @since 0.1
+                */
                 Event.emit(sourceNode, emitterName+':'+DD_DRAG, e);
                 e.dd.callback();
             });
@@ -7584,6 +7629,18 @@ _restoreDraggables: function(e, sourceNode, dragNode, dropzoneSpecified, x, y, i
                 moveEv.detach();
                 instance._teardownOverEvent(e, e3.clientX, e3.clientY);
                 instance.ddProps = {};
+                /**
+                * Fired when the checkbox changes its value<br />
+                * Listen for this event instead of 'checkedChange',
+                * because this event is also fired when the checkbox changes its 'disabled'-state
+                * (switching value null/boolean)
+                *
+                * @event valuechange
+                * @param e {EventFacade} Event Facade including:
+                * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
+                * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
+                * @since 0.1
+                */
                 Event.emit(sourceNode, emitterName+':'+DD_DROP, e);
                 e.dd.fulfill();
             });
@@ -7655,6 +7712,36 @@ _restoreDraggables: function(e, sourceNode, dragNode, dropzoneSpecified, x, y, i
             e.dd.reject();
         },
 
+       /**
+         * Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,
+         * so you can choose to do set the draggables back conditionally.
+         *
+         * @method _restoreDraggables
+         * @param e {Object} eventobject
+         * @param sourceNode {HtmlElement} the original HtmlElement
+         * @param dragNode {HtmlElement} the dragged HtmlElement (either original or clone)
+         * @param dropzoneSpecified {Boolean} whether the sourceNode had a dropzone specified
+         * @param x {Number} x-position in coordinaties relative to `document` (like getX())
+         * @param y {Number} y-position in coordinaties relative to `document` (like getX())
+         * @param inlineLeft {String} inline css `left` for the original sourceNode
+         * @param inlineTop {String} inline css `top` for the original sourceNode
+         * @param relatives {Array} hash with all draggables that are being move togerther with the master draggable
+         * @private
+         * @since 0.0.1
+         */
+        _restoreDraggables: function(e, sourceNode, dragNode, dropzoneSpecified, x, y, inlineLeft, inlineTop, relatives) {
+            console.log('_restoreDraggables');
+            var instance = this;
+            instance.restoreDraggables = function() {/* NOOP */ return this;};
+            instance._setBack(e, sourceNode, dragNode, dropzoneSpecified, x, y, inlineLeft, inlineTop, e.dropzone);
+            relatives && relatives.forEach(
+                function(item) {
+                    (dragNode!==item.dragNode) && instance._setBack(e, item.sourceNode, item.dragNode, dropzoneSpecified, x+item.shiftX, y+item.shiftY, item.inlineLeft, item.inlineTop);
+                }
+            );
+            return instance;
+        },
+
       /**
         * Sets the draggable node back to its original position
         *
@@ -7664,10 +7751,13 @@ _restoreDraggables: function(e, sourceNode, dragNode, dropzoneSpecified, x, y, i
         * @param dropzoneSpecified {Boolean} whether the sourceNode had a dropzone specified
         * @param x {Number} x-position in coordinaties relative to `document` (like getX())
         * @param y {Number} y-position in coordinaties relative to `document` (like getX())
+        * @param inlineLeft {String} inline css `left` for the original sourceNode
+        * @param inlineTop {String} inline css `top` for the original sourceNode
+        * @param [emitDropzoneEvent] {Boolean} whether dropzone-event should be emitted
         * @private
         * @since 0.0.1
         */
-        _setBack: function(e, sourceNode, dragNode, dropzoneSpecified, x, y, inlineLeft, inlineTop, emitDDout) {
+        _setBack: function(e, sourceNode, dragNode, dropzoneSpecified, x, y, inlineLeft, inlineTop, emitDropzoneEvent) {
             console.log(NAME, '_setBack to '+x+', '+y);
             var tearedDown,
                 winScrollTop,
@@ -7711,7 +7801,7 @@ _restoreDraggables: function(e, sourceNode, dragNode, dropzoneSpecified, x, y, i
             LATER(tearDown, 260);
             dragNode.setXY(x, y);
             // now we might need to fire a last `dropzone` event when the dragged element returns to a dropzone when it wasn't before set it back
-            if (emitDDout) {
+            if (emitDropzoneEvent) {
                 dropzones = window.document.getAll(DROPZONE_BRACKETS);
                 if (dropzones) {
                     winScrollTop = window.getScrollTop();
@@ -7769,6 +7859,19 @@ _restoreDraggables: function(e, sourceNode, dragNode, dropzoneSpecified, x, y, i
                     // now, it could be that any droptarget should change its appearance (DD_DROPACTIVE_CLASS).
                     // we need to recalculate it for all targets
                     // we do this by emitting a DD_FAKE_MOUSEMOVE event
+                    /**
+                    * Fired when the checkbox changes its value<br />
+                    * Listen for this event instead of 'checkedChange',
+                    * because this event is also fired when the checkbox changes its 'disabled'-state
+                    * (switching value null/boolean)
+                    *
+                    * @event valuechange
+                    * @param e {EventFacade} Event Facade including:
+                    * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
+                    * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
+                    * @private
+                    * @since 0.1
+                    */
                     mouseOverNode && Event.emit(mouseOverNode, UI+':'+DD_FAKE_MOUSEMOVE);
                 }
             });
@@ -7826,7 +7929,19 @@ _restoreDraggables: function(e, sourceNode, dragNode, dropzoneSpecified, x, y, i
                 // store the orriginal mouseposition:
                 e.xMouseOrigin = e.clientX + window.getScrollLeft();
                 e.yMouseOrigin = e.clientY + window.getScrollTop();
-                // now we can start the eventcycle by emitting UI:dd-start:
+                // now we can start the eventcycle by emitting UI:dd:
+                /**
+                * Fired when the checkbox changes its value<br />
+                * Listen for this event instead of 'checkedChange',
+                * because this event is also fired when the checkbox changes its 'disabled'-state
+                * (switching value null/boolean)
+                *
+                * @event valuechange
+                * @param e {EventFacade} Event Facade including:
+                * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
+                * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
+                * @since 0.1
+                */
                 Event.emit(e.target, UI_DD_START, e);
             };
 
@@ -7963,7 +8078,19 @@ _restoreDraggables: function(e, sourceNode, dragNode, dropzoneSpecified, x, y, i
         onlyCopy: function(dragableElement) {
             console.log('onlyCopy --> '+REGEXP_COPY.test(this._allowedEffects(dragableElement)));
             return REGEXP_COPY.test(this._allowedEffects(dragableElement));
-        }
+        },
+
+       /**
+         * Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,
+         * so you can choose to do set the draggables back conditionally.
+         *
+         * @method restoreDraggables
+         * @private
+         * @chainable
+         * @since 0.0.1
+         */
+        restoreDraggables: function() {/* NOOP */ return this;}
+
     };
 
     NodeDD = NodePlugin.subClass(

@@ -470,6 +470,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_rectangleInside">rectangleInside</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_remove">remove</a>
 
                                 
@@ -3575,7 +3582,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l569"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:569</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l588"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:588</code></a>
         
         </p>
 
@@ -3686,7 +3693,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l593"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:593</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l612"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:612</code></a>
         
         </p>
 
@@ -3797,7 +3804,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l610"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:610</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l629"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:629</code></a>
         
         </p>
 
@@ -3905,7 +3912,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l622"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:622</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l641"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:641</code></a>
         
         </p>
 
@@ -4023,7 +4030,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l641"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:641</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l660"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:660</code></a>
         
         </p>
 
@@ -4152,7 +4159,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l660"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:660</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l679"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:679</code></a>
         
         </p>
 
@@ -4214,6 +4221,116 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
 </div>
 
                 
+                    <div id="method_rectangleInside" class="method item">
+    <h3 class="name"><code>rectangleInside</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>outboundElement</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_dom-ext_lib_element.js.html#l569"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:569</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.2</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Checks whether the HtmlElement has its rectangle inside the outboud-Element.
+This is no check of the DOM-tree, but purely based upon coordinates.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">outboundElement</code>
+                        <span class="type">HtmlElement</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the Element where this element should lie inside</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+                    
+                    <p>whether the Element lies inside the outboundElement</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_remove" class="method item">
     <h3 class="name"><code>remove</code></h3>
 
@@ -4246,7 +4363,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l679"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:679</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l698"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:698</code></a>
         
         </p>
 
@@ -4317,7 +4434,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l690"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:690</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l709"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:709</code></a>
         
         </p>
 
@@ -4424,7 +4541,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l704"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:704</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l723"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:723</code></a>
         
         </p>
 
@@ -4517,7 +4634,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l721"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:721</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l740"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:740</code></a>
         
         </p>
 
@@ -4610,7 +4727,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l747"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:747</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l766"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:766</code></a>
         
         </p>
 
@@ -4707,7 +4824,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l760"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:760</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l779"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:779</code></a>
         
         </p>
 
@@ -4829,7 +4946,7 @@ window.document-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l772"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:772</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l791"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:791</code></a>
         
         </p>
 
@@ -4961,7 +5078,7 @@ If the previous className is not available, the new className is set nevertheles
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l791"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:791</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l810"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:810</code></a>
         
         </p>
 
@@ -5061,7 +5178,7 @@ Only available when the HtmlElement has overflow.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l890"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:890</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l909"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:909</code></a>
         
         </p>
 
@@ -5137,7 +5254,7 @@ Only available when the HtmlElement has overflow.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l808"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:808</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l827"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:827</code></a>
         
         </p>
 
@@ -5246,7 +5363,7 @@ Only available when the HtmlElement has overflow.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l824"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:824</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l843"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:843</code></a>
         
         </p>
 
@@ -5339,7 +5456,7 @@ Only available when the HtmlElement has overflow.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l838"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:838</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l857"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:857</code></a>
         
         </p>
 
@@ -5439,7 +5556,7 @@ Only available when the HtmlElement has overflow.</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l853"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:853</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l872"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:872</code></a>
         
         </p>
 
@@ -5549,7 +5666,7 @@ it is just a way to bind any data to the specific Element so it can be retrieved
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l875"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:875</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l894"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:894</code></a>
         
         </p>
 
@@ -5650,7 +5767,7 @@ you might be better of using setContent().</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l903"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:903</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l922"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:922</code></a>
         
         </p>
 
@@ -5766,7 +5883,7 @@ you might be better of using setContent().</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l922"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:922</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l941"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:941</code></a>
         
         </p>
 
@@ -5877,7 +5994,7 @@ If you do need to set HTML inside the node, use setHTML().</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l944"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:944</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l963"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:963</code></a>
         
         </p>
 
@@ -5982,7 +6099,7 @@ If you do need to set HTML inside the node, use setHTML().</p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l980"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:980</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l999"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:999</code></a>
         
         </p>
 
@@ -6108,7 +6225,7 @@ The element(s) must be part of the DOM tree to have page coordinates (display:no
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l991"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:991</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l1010"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:1010</code></a>
         
         </p>
 
@@ -6264,7 +6381,7 @@ The element must be part of the DOM tree to have page coordinates (display:none 
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l1132"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:1132</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l1151"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:1151</code></a>
         
         </p>
 
@@ -6374,7 +6491,7 @@ The element(s) must be part of the DOM tree to have page coordinates (display:no
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l1143"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:1143</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l1162"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:1162</code></a>
         
         </p>
 
@@ -6482,7 +6599,7 @@ Alias for <code>matchesSelector()</code></p>
             
         
         
-        <a href="../files/src_dom-ext_lib_element.js.html#l1156"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:1156</code></a>
+        <a href="../files/src_dom-ext_lib_element.js.html#l1175"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element.js:1175</code></a>
         
         </p>
 

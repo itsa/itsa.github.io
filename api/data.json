@@ -8511,6 +8511,28 @@
         {
             "file": "src/dom-ext/lib/element.js",
             "line": 569,
+            "description": "Checks whether the HtmlElement has its rectangle inside the outboud-Element.\nThis is no check of the DOM-tree, but purely based upon coordinates.",
+            "itemtype": "method",
+            "name": "rectangleInside",
+            "params": [
+                {
+                    "name": "outboundElement",
+                    "description": "the Element where this element should lie inside",
+                    "type": "HtmlElement"
+                }
+            ],
+            "return": {
+                "description": "whether the Element lies inside the outboundElement",
+                "type": "Boolean"
+            },
+            "since": "0.0.2",
+            "class": "Element",
+            "module": "dom-ext",
+            "submodule": "lib/element.js"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 588,
             "description": "Checks whether the HtmlElement lies within the specified selector (which can be a CSS-selector or a HtmlElement)",
             "itemtype": "method",
             "name": "inside",
@@ -8532,7 +8554,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 593,
+            "line": 612,
             "description": "Checks whether a point specified with x,y is within the HtmlElement's region.",
             "itemtype": "method",
             "name": "insidePos",
@@ -8555,7 +8577,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 610,
+            "line": 629,
             "description": "Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.",
             "itemtype": "method",
             "name": "last",
@@ -8578,7 +8600,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 622,
+            "line": 641,
             "description": "Returns the next of the HtmlElement's siblings, or the next that matches `cssSelector`.",
             "itemtype": "method",
             "name": "next",
@@ -8601,7 +8623,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 641,
+            "line": 660,
             "description": "Prepends a HtmlElement or text at the start of HtmlElement's innerHTML, or before the `refElement`.",
             "itemtype": "method",
             "name": "prepend",
@@ -8632,7 +8654,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 660,
+            "line": 679,
             "description": "Returns the previous of the HtmlElement's siblings, or the previous that matches `cssSelector`.",
             "itemtype": "method",
             "name": "prev",
@@ -8655,7 +8677,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 679,
+            "line": 698,
             "description": "Removes the HtmlElement from the DOM.",
             "itemtype": "method",
             "name": "remove",
@@ -8666,7 +8688,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 690,
+            "line": 709,
             "description": "Removes the attribute from the HtmlElement.\n\nAlias for removeAttribute().",
             "itemtype": "method",
             "name": "removeAttr",
@@ -8688,7 +8710,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 704,
+            "line": 723,
             "description": "Removes a className from the HtmlElement.",
             "itemtype": "method",
             "name": "removeClass",
@@ -8707,7 +8729,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 721,
+            "line": 740,
             "description": "Removes data specified by `key`. When no arguments are passed, all node-data (key-value pairs) will be removed.",
             "itemtype": "method",
             "name": "removeData",
@@ -8726,7 +8748,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 747,
+            "line": 766,
             "description": "Removes a css-property (inline) out of the HtmlElement. Use camelCase.",
             "itemtype": "method",
             "name": "removeInlineStyle",
@@ -8745,7 +8767,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 760,
+            "line": 779,
             "description": "Replaces the HtmlElement with a new HtmlElement.",
             "itemtype": "method",
             "name": "replace",
@@ -8769,7 +8791,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 772,
+            "line": 791,
             "description": "Replaces the className of the HtmlElement with a new className.\nIf the previous className is not available, the new className is set nevertheless.",
             "itemtype": "method",
             "name": "replaceClass",
@@ -8798,7 +8820,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 791,
+            "line": 810,
             "description": "Scrolls the content of the HtmlElement into the specified scrollposition.\nOnly available when the HtmlElement has overflow.",
             "itemtype": "method",
             "name": "scrollTo",
@@ -8822,7 +8844,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 808,
+            "line": 827,
             "description": "Sets the attribute on the HtmlElement with the specified value.\n\nAlias for setAttribute().",
             "itemtype": "method",
             "name": "setAttr",
@@ -8846,7 +8868,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 824,
+            "line": 843,
             "description": "Adds a class to the HtmlElement. If the class already exists it won't be duplicated.",
             "itemtype": "method",
             "name": "setClass",
@@ -8865,7 +8887,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 838,
+            "line": 857,
             "description": "Sets the HtmlElement's class as a whole String. Cleaning up any previous classes.\n\nAlias for this.className = value",
             "itemtype": "method",
             "name": "setClassName",
@@ -8884,7 +8906,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 853,
+            "line": 872,
             "description": "Stores arbitary `data` at the HtmlElement. This has nothing to do with node-attributes whatsoever,\nit is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.",
             "itemtype": "method",
             "name": "setData",
@@ -8908,7 +8930,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 875,
+            "line": 894,
             "description": "Sets the content of the HtmlElement (innerHTML). Careful: only set content like this if you controll the data and\nare sure what is going inside. Otherwise XSS might occur. If you let the user insert, or insert right from a db,\nyou might be better of using setContent().",
             "itemtype": "method",
             "name": "setHTML",
@@ -8927,7 +8949,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 890,
+            "line": 909,
             "description": "Gets the serialized HTML fragment describing the element including its descendants.\n\nalias for outerHTML()",
             "itemtype": "method",
             "name": "serialize",
@@ -8939,7 +8961,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 903,
+            "line": 922,
             "description": "Sets a css-property (inline) out of the HtmlElement. Use camelCase.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "setStyle",
@@ -8963,7 +8985,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 922,
+            "line": 941,
             "description": "Sets the content of the HtmlElement. This is a safe way to set the content, because HTML is not parsed.\nIf you do need to set HTML inside the node, use setHTML().",
             "itemtype": "method",
             "name": "setText",
@@ -8988,7 +9010,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 944,
+            "line": 963,
             "description": "Sets the value of the following HtmlElements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>\n\nWill fire an `valuechange` event, in case both the `itsa/event` as well as\n`itsa/event-dom/extra/event-valuechange.js` are used.\n\nTherefore it is highly suggested to use `setValue()` instead of setting the value manually.",
             "itemtype": "method",
             "name": "setValue",
@@ -9007,7 +9029,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 980,
+            "line": 999,
             "description": "Set the X position of an html element in page coordinates, regardless of how the element is positioned.\nThe element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
             "itemtype": "method",
             "name": "setX",
@@ -9028,7 +9050,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 991,
+            "line": 1010,
             "description": "Set the position of an html element in page coordinates.\nThe element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).\n\nIf the HtmlElement has the attribute `xy-constrian` set, then its position cannot exceed any matching container it lies within.",
             "itemtype": "method",
             "name": "setXY",
@@ -9065,7 +9087,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 1132,
+            "line": 1151,
             "description": "Set the Y position of an html element in page coordinates, regardless of how the element is positioned.\nThe element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
             "itemtype": "method",
             "name": "setY",
@@ -9086,7 +9108,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 1143,
+            "line": 1162,
             "description": "Tests if the HtmlElement would be selected by the specified cssSelector.\nAlias for `matchesSelector()`",
             "itemtype": "method",
             "name": "test",
@@ -9108,7 +9130,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 1156,
+            "line": 1175,
             "description": "Toggles the className of the Element.",
             "itemtype": "method",
             "name": "toggleClass",
@@ -9553,7 +9575,19 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 169,
+            "line": 144,
+            "description": "Fired when the mouse comes back into the browser-window while dd-drag was busy yet no buttons are pressed.\nThis is a correction to the fact that the mouseup-event wasn't noticed because the mouse was outside the browser.",
+            "itemtype": "event",
+            "name": "dd-fake-mouseup",
+            "access": "private",
+            "tagname": "",
+            "since": "0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 177,
             "description": "Default function for the `*:dd-drop`-event",
             "itemtype": "method",
             "name": "_defFnDrag",
@@ -9579,14 +9613,9 @@
                     "type": "Boolean"
                 },
                 {
-                    "name": "x",
-                    "description": "x-position in coordinaties relative to `document` (like getX())",
-                    "type": "Number"
-                },
-                {
-                    "name": "y",
-                    "description": "y-position in coordinaties relative to `document` (like getX())",
-                    "type": "Number"
+                    "name": "relatives",
+                    "description": "hash with all draggables that are being move togerther with the master draggable",
+                    "type": "Array"
                 }
             ],
             "access": "private",
@@ -9597,7 +9626,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 222,
+            "line": 229,
             "description": "Default function for the `*:dropzone`-event",
             "itemtype": "method",
             "name": "_defFnOver",
@@ -9616,7 +9645,36 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 242,
+            "line": 244,
+            "description": "Fired when the checkbox changes its value<br />\nListen for this event instead of 'checkedChange',\nbecause this event is also fired when the checkbox changes its 'disabled'-state\n(switching value null/boolean)",
+            "itemtype": "event",
+            "name": "valuechange",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "Event Facade including:",
+                    "type": "EventFacade",
+                    "props": [
+                        {
+                            "name": "newVal",
+                            "description": "New value of the checkbox; will be 'null' when is disabled.",
+                            "type": "Boolean|null"
+                        },
+                        {
+                            "name": "prevVal",
+                            "description": "Previous value of the checkbox; will be 'null' when was disabled.",
+                            "type": "Boolean|null"
+                        }
+                    ]
+                }
+            ],
+            "since": "0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 261,
             "description": "Default function for the `UI:dd-start`-event",
             "itemtype": "method",
             "name": "_defFnDrag",
@@ -9635,7 +9693,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 260,
+            "line": 279,
             "description": "Defines the definition of the `dd-start` event: the first phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)",
             "itemtype": "method",
             "name": "_defineDDStart",
@@ -9654,7 +9712,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 278,
+            "line": 297,
             "description": "Defines the definition of the `dd-drop` event: the last phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)",
             "itemtype": "method",
             "name": "_defineDropEv",
@@ -9688,6 +9746,21 @@
                     "name": "y",
                     "description": "y-position in coordinaties relative to `document` (like getX())",
                     "type": "Number"
+                },
+                {
+                    "name": "inlineLeft",
+                    "description": "inline css `left` for the original sourceNode",
+                    "type": "String"
+                },
+                {
+                    "name": "inlineTop",
+                    "description": "inline css `top` for the original sourceNode",
+                    "type": "String"
+                },
+                {
+                    "name": "relatives",
+                    "description": "hash with all draggables that are being move togerther with the master draggable",
+                    "type": "Array"
                 }
             ],
             "access": "private",
@@ -9698,7 +9771,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 300,
+            "line": 322,
             "description": "Defines the definition of the `dropzone` event.\nAlso sets up listeners to tricker dd-over when the mouse is above an dropzone.",
             "itemtype": "method",
             "name": "_defineOverEv",
@@ -9722,10 +9795,198 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 386,
+            "line": 399,
+            "description": "Fired when the checkbox changes its value<br />\nListen for this event instead of 'checkedChange',\nbecause this event is also fired when the checkbox changes its 'disabled'-state\n(switching value null/boolean)",
+            "itemtype": "event",
+            "name": "valuechange",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "Event Facade including:",
+                    "type": "EventFacade",
+                    "props": [
+                        {
+                            "name": "newVal",
+                            "description": "New value of the checkbox; will be 'null' when is disabled.",
+                            "type": "Boolean|null"
+                        },
+                        {
+                            "name": "prevVal",
+                            "description": "Previous value of the checkbox; will be 'null' when was disabled.",
+                            "type": "Boolean|null"
+                        }
+                    ]
+                }
+            ],
+            "since": "0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 420,
             "description": "Sets the draggable node back to its original position",
             "itemtype": "method",
             "name": "_handleDrop",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                },
+                {
+                    "name": "sourceNode",
+                    "description": "the original HtmlElement",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dragNode",
+                    "description": "the dragged HtmlElement (either original or clone)",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "relatives",
+                    "description": "hash with all draggables that are being move togerther with the master draggable",
+                    "type": "Array"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 531,
+            "description": "Fired when the checkbox changes its value<br />\nListen for this event instead of 'checkedChange',\nbecause this event is also fired when the checkbox changes its 'disabled'-state\n(switching value null/boolean)",
+            "itemtype": "event",
+            "name": "valuechange",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "Event Facade including:",
+                    "type": "EventFacade",
+                    "props": [
+                        {
+                            "name": "newVal",
+                            "description": "New value of the checkbox; will be 'null' when is disabled.",
+                            "type": "Boolean|null"
+                        },
+                        {
+                            "name": "prevVal",
+                            "description": "Previous value of the checkbox; will be 'null' when was disabled.",
+                            "type": "Boolean|null"
+                        }
+                    ]
+                }
+            ],
+            "since": "0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 602,
+            "description": "Default function for the `*:dd-drag`-event",
+            "itemtype": "method",
+            "name": "_initializeDrag",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 691,
+            "description": "Fired when the checkbox changes its value<br />\nListen for this event instead of 'checkedChange',\nbecause this event is also fired when the checkbox changes its 'disabled'-state\n(switching value null/boolean)",
+            "itemtype": "event",
+            "name": "valuechange",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "Event Facade including:",
+                    "type": "EventFacade",
+                    "props": [
+                        {
+                            "name": "newVal",
+                            "description": "New value of the checkbox; will be 'null' when is disabled.",
+                            "type": "Boolean|null"
+                        },
+                        {
+                            "name": "prevVal",
+                            "description": "Previous value of the checkbox; will be 'null' when was disabled.",
+                            "type": "Boolean|null"
+                        }
+                    ]
+                }
+            ],
+            "since": "0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 716,
+            "description": "Fired when the checkbox changes its value<br />\nListen for this event instead of 'checkedChange',\nbecause this event is also fired when the checkbox changes its 'disabled'-state\n(switching value null/boolean)",
+            "itemtype": "event",
+            "name": "valuechange",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "Event Facade including:",
+                    "type": "EventFacade",
+                    "props": [
+                        {
+                            "name": "newVal",
+                            "description": "New value of the checkbox; will be 'null' when is disabled.",
+                            "type": "Boolean|null"
+                        },
+                        {
+                            "name": "prevVal",
+                            "description": "Previous value of the checkbox; will be 'null' when was disabled.",
+                            "type": "Boolean|null"
+                        }
+                    ]
+                }
+            ],
+            "since": "0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 786,
+            "description": "Prevented function for the `*:dd-start`-event",
+            "itemtype": "method",
+            "name": "_prevFnStart",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 799,
+            "description": "Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,\nso you can choose to do set the draggables back conditionally.",
+            "itemtype": "method",
+            "name": "_restoreDraggables",
             "params": [
                 {
                     "name": "e",
@@ -9756,44 +10017,21 @@
                     "name": "y",
                     "description": "y-position in coordinaties relative to `document` (like getX())",
                     "type": "Number"
-                }
-            ],
-            "access": "private",
-            "tagname": "",
-            "since": "0.0.1",
-            "class": "DD",
-            "module": "drag-drop"
-        },
-        {
-            "file": "src/drag-drop/drag-drop.js",
-            "line": 588,
-            "description": "Default function for the `*:dd-drag`-event",
-            "itemtype": "method",
-            "name": "_initializeDrag",
-            "params": [
+                },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
-                }
-            ],
-            "access": "private",
-            "tagname": "",
-            "since": "0.0.1",
-            "class": "DD",
-            "module": "drag-drop"
-        },
-        {
-            "file": "src/drag-drop/drag-drop.js",
-            "line": 748,
-            "description": "Prevented function for the `*:dd-start`-event",
-            "itemtype": "method",
-            "name": "_prevFnStart",
-            "params": [
+                    "name": "inlineLeft",
+                    "description": "inline css `left` for the original sourceNode",
+                    "type": "String"
+                },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "inlineTop",
+                    "description": "inline css `top` for the original sourceNode",
+                    "type": "String"
+                },
+                {
+                    "name": "relatives",
+                    "description": "hash with all draggables that are being move togerther with the master draggable",
+                    "type": "Array"
                 }
             ],
             "access": "private",
@@ -9804,7 +10042,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 761,
+            "line": 829,
             "description": "Sets the draggable node back to its original position",
             "itemtype": "method",
             "name": "_setBack",
@@ -9833,6 +10071,22 @@
                     "name": "y",
                     "description": "y-position in coordinaties relative to `document` (like getX())",
                     "type": "Number"
+                },
+                {
+                    "name": "inlineLeft",
+                    "description": "inline css `left` for the original sourceNode",
+                    "type": "String"
+                },
+                {
+                    "name": "inlineTop",
+                    "description": "inline css `top` for the original sourceNode",
+                    "type": "String"
+                },
+                {
+                    "name": "emitDropzoneEvent",
+                    "description": "whether dropzone-event should be emitted",
+                    "type": "Boolean",
+                    "optional": true
                 }
             ],
             "access": "private",
@@ -9843,7 +10097,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 835,
+            "line": 906,
             "description": "Sets up a `keydown` and `keyup` listener, to monitor whether a `ctrlKey` (windows) or `metaKey` (Mac)\nis pressed to support the copying of draggable items",
             "itemtype": "method",
             "name": "_setupKeyEv",
@@ -9855,7 +10109,38 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 880,
+            "line": 946,
+            "description": "Fired when the checkbox changes its value<br />\nListen for this event instead of 'checkedChange',\nbecause this event is also fired when the checkbox changes its 'disabled'-state\n(switching value null/boolean)",
+            "itemtype": "event",
+            "name": "valuechange",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "Event Facade including:",
+                    "type": "EventFacade",
+                    "props": [
+                        {
+                            "name": "newVal",
+                            "description": "New value of the checkbox; will be 'null' when is disabled.",
+                            "type": "Boolean|null"
+                        },
+                        {
+                            "name": "prevVal",
+                            "description": "Previous value of the checkbox; will be 'null' when was disabled.",
+                            "type": "Boolean|null"
+                        }
+                    ]
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 964,
             "description": "Engine behinf the dragdrop-cycle.\nSets up a `mousedown` listener to initiate a drag-drop eventcycle. The eventcycle start whenever\none of these events happens on a HtmlElement with the attribute `dd-draggable=\"true\"`.\nThe drag-drop eventcycle consists of the events: `dd-start`, `emitterName:dd-drag` and `emitterName:dd-drop`",
             "itemtype": "method",
             "name": "_setupMouseEv",
@@ -9867,7 +10152,36 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 971,
+            "line": 1017,
+            "description": "Fired when the checkbox changes its value<br />\nListen for this event instead of 'checkedChange',\nbecause this event is also fired when the checkbox changes its 'disabled'-state\n(switching value null/boolean)",
+            "itemtype": "event",
+            "name": "valuechange",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "Event Facade including:",
+                    "type": "EventFacade",
+                    "props": [
+                        {
+                            "name": "newVal",
+                            "description": "New value of the checkbox; will be 'null' when is disabled.",
+                            "type": "Boolean|null"
+                        },
+                        {
+                            "name": "prevVal",
+                            "description": "Previous value of the checkbox; will be 'null' when was disabled.",
+                            "type": "Boolean|null"
+                        }
+                    ]
+                }
+            ],
+            "since": "0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 1067,
             "description": "Cleansup the dragover subscriber and fulfills any dropzone-promise.",
             "itemtype": "method",
             "name": "_teardownOverEvent",
@@ -9896,7 +10210,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 996,
+            "line": 1092,
             "description": "Returns true if the dropzone-HtmlElement accepts copy-dragables.\nIs determined by the attribute `dd-effect-allowed=\"copy\"` or `dd-effect-allowed=\"all\"`",
             "itemtype": "method",
             "name": "allowCopy",
@@ -9917,7 +10231,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 1011,
+            "line": 1107,
             "description": "Returns true if the dragable-HtmlElement allowes to switch between `copy` and `move`.",
             "itemtype": "method",
             "name": "allowSwitch",
@@ -9938,7 +10252,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 1024,
+            "line": 1120,
             "description": "Returns the emitterName that the dropzone accepts.",
             "itemtype": "method",
             "name": "getDropzoneEmitter",
@@ -9959,7 +10273,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 1038,
+            "line": 1134,
             "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
             "itemtype": "method",
             "name": "init",
@@ -9980,7 +10294,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 1057,
+            "line": 1153,
             "description": "Returns true if the dragable-HtmlElement accepts only copy-dragables (no moveable)\nIs determined by the attribute `dd-effect-allowed=\"copy\"`",
             "itemtype": "method",
             "name": "onlyCopy",
@@ -9995,6 +10309,19 @@
                 "description": "if only copy-dragables are allowed",
                 "type": "Boolean"
             },
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop.js",
+            "line": 1167,
+            "description": "Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,\nso you can choose to do set the draggables back conditionally.",
+            "itemtype": "method",
+            "name": "restoreDraggables",
+            "access": "private",
+            "tagname": "",
+            "chainable": 1,
             "since": "0.0.1",
             "class": "DD",
             "module": "drag-drop"
