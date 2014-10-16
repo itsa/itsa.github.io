@@ -1,5 +1,5 @@
 ---
-module: drag-drop
+module: drag
 itsaclassname: DD
 version: 0.0.1
 modulesize: 4.04

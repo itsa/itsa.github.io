@@ -299,6 +299,13 @@ Validates if the String's value represents a valid URL.
 
 Array gets extended with the following new methods:
 
+###inArray###
+Checks whether an item is inside the Array. Alias for (array.indexOf(item) > -1).
+
+###remove###
+Removes an item from the array.
+
+
 ###shuffle###
 Shuffles the items in the Array randomly.
 

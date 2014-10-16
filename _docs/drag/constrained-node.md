@@ -1,5 +1,5 @@
 ---
-module: drag-drop
+module: drag
 maintainer: Marco Asbreuk
 title: Constrained to a node
 intro: "Draggable elements can be constrained by setting the attribute <b>xy-constrain=\"css-selector\"</b>, or using javascript by using <b>node.plugin(ITSA.Plugins.NodeConstrain, {selector: 'css-selector'})</b>. The plugin does nothing more than add the right attribute to the draggable Element, and it just works.</b>"
@@ -49,7 +49,7 @@ Drag the 2 rectangles: they will be constrained to their container. The first is
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init();
+    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
     document.getElement('#without').plug(ITSA.Plugins.NodeConstrain, {selector: '.base-container'});
 </script>
 ```
@@ -58,6 +58,6 @@ Drag the 2 rectangles: they will be constrained to their container. The first is
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init();
+    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
     document.getElement('#without').plug(ITSA.Plugins.NodeConstrain, {selector: '.base-container'});
 </script>

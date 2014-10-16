@@ -5022,7 +5022,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":59}],7:[function(require,module,exports){
+},{"_process":62}],7:[function(require,module,exports){
 var css = "a:focus {\n    outline: 0;\n}\n\na[target=\"_blank\"]:focus {\n    outline: 1px solid #129fea;\n}\n\n/* because we think the padding and margin should always be part of the size,\n   we define \"box-sizing: border-box\" for all elements */\n\n* {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],8:[function(require,module,exports){
 var css = "/*!\nPure v0.5.0\nCopyright 2014 Yahoo! Inc. All rights reserved.\nLicensed under the BSD License.\nhttps://github.com/yahoo/pure/blob/master/LICENSE.md\n*/\n/*!\nnormalize.css v^3.0 | MIT License | git.io/normalize\nCopyright (c) Nicolas Gallagher and Jonathan Neal\n*/\n/*! normalize.css v3.0.2 | MIT License | git.io/normalize */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS text size adjust after orientation change, without disabling\n *    user zoom.\n */\n\nhtml {\n  font-family: sans-serif; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * Improve readability when focused and also mouse hovered in all browsers.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  -moz-box-sizing: content-box;\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit; /* 1 */\n  font: inherit; /* 2 */\n  margin: 0; /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n  cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome\n *    (include `-moz` to future-proof).\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  -moz-box-sizing: content-box;\n  -webkit-box-sizing: content-box; /* 2 */\n  box-sizing: content-box;\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}\n\n/*csslint important:false*/\n\n/* ==========================================================================\n   Pure Base Extras\n   ========================================================================== */\n\n/**\n * Extra rules that Pure adds on top of Normalize.css\n */\n\n/**\n * Always hide an element when it has the `hidden` HTML attribute.\n */\n\n[hidden] {\n    display: none !important;\n}\n\n/**\n * Add this class to an image to make it fit within it's fluid parent wrapper while maintaining\n * aspect ratio.\n */\n.pure-img {\n    max-width: 100%;\n    height: auto;\n    display: block;\n}\n\n/*csslint regex-selectors:false, known-properties:false, duplicate-properties:false*/\n\n.pure-g {\n    letter-spacing: -0.31em; /* Webkit: collapse white-space between units */\n    *letter-spacing: normal; /* reset IE < 8 */\n    *word-spacing: -0.43em; /* IE < 8: collapse white-space between units */\n    text-rendering: optimizespeed; /* Webkit: fixes text-rendering: optimizeLegibility */\n\n    /*\n    Sets the font stack to fonts known to work properly with the above letter\n    and word spacings. See: https://github.com/yahoo/pure/issues/41/\n\n    The following font stack makes Pure Grids work on all known environments.\n\n    * FreeSans: Ships with many Linux distros, including Ubuntu\n\n    * Arimo: Ships with Chrome OS. Arimo has to be defined before Helvetica and\n      Arial to get picked up by the browser, even though neither is available\n      in Chrome OS.\n\n    * Droid Sans: Ships with all versions of Android.\n\n    * Helvetica, Arial, sans-serif: Common font stack on OS X and Windows.\n    */\n    font-family: FreeSans, Arimo, \"Droid Sans\", Helvetica, Arial, sans-serif;\n\n    /*\n    Use flexbox when possible to avoid `letter-spacing` side-effects.\n\n    NOTE: Firefox (as of 25) does not currently support flex-wrap, so the\n    `-moz-` prefix version is omitted.\n    */\n\n    display: -webkit-flex;\n    -webkit-flex-flow: row wrap;\n\n    /* IE10 uses display: flexbox */\n    display: -ms-flexbox;\n    -ms-flex-flow: row wrap;\n}\n\n/* Opera as of 12 on Windows needs word-spacing.\n   The \".opera-only\" selector is used to prevent actual prefocus styling\n   and is not required in markup.\n*/\n.opera-only :-o-prefocus,\n.pure-g {\n    word-spacing: -0.43em;\n}\n\n.pure-u {\n    display: inline-block;\n    *display: inline; /* IE < 8: fake inline-block */\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n/*\nResets the font family back to the OS/browser's default sans-serif font,\nthis the same font stack that Normalize.css sets for the `body`.\n*/\n.pure-g [class *= \"pure-u\"] {\n    font-family: sans-serif;\n}\n\n.pure-u-1,\n.pure-u-1-1,\n.pure-u-1-2,\n.pure-u-1-3,\n.pure-u-2-3,\n.pure-u-1-4,\n.pure-u-3-4,\n.pure-u-1-5,\n.pure-u-2-5,\n.pure-u-3-5,\n.pure-u-4-5,\n.pure-u-5-5,\n.pure-u-1-6,\n.pure-u-5-6,\n.pure-u-1-8,\n.pure-u-3-8,\n.pure-u-5-8,\n.pure-u-7-8,\n.pure-u-1-12,\n.pure-u-5-12,\n.pure-u-7-12,\n.pure-u-11-12,\n.pure-u-1-24,\n.pure-u-2-24,\n.pure-u-3-24,\n.pure-u-4-24,\n.pure-u-5-24,\n.pure-u-6-24,\n.pure-u-7-24,\n.pure-u-8-24,\n.pure-u-9-24,\n.pure-u-10-24,\n.pure-u-11-24,\n.pure-u-12-24,\n.pure-u-13-24,\n.pure-u-14-24,\n.pure-u-15-24,\n.pure-u-16-24,\n.pure-u-17-24,\n.pure-u-18-24,\n.pure-u-19-24,\n.pure-u-20-24,\n.pure-u-21-24,\n.pure-u-22-24,\n.pure-u-23-24,\n.pure-u-24-24 {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n.pure-u-1-24 {\n    width: 4.1667%;\n    *width: 4.1357%;\n}\n\n.pure-u-1-12,\n.pure-u-2-24 {\n    width: 8.3333%;\n    *width: 8.3023%;\n}\n\n.pure-u-1-8,\n.pure-u-3-24 {\n    width: 12.5000%;\n    *width: 12.4690%;\n}\n\n.pure-u-1-6,\n.pure-u-4-24 {\n    width: 16.6667%;\n    *width: 16.6357%;\n}\n\n.pure-u-1-5 {\n    width: 20%;\n    *width: 19.9690%;\n}\n\n.pure-u-5-24 {\n    width: 20.8333%;\n    *width: 20.8023%;\n}\n\n.pure-u-1-4,\n.pure-u-6-24 {\n    width: 25%;\n    *width: 24.9690%;\n}\n\n.pure-u-7-24 {\n    width: 29.1667%;\n    *width: 29.1357%;\n}\n\n.pure-u-1-3,\n.pure-u-8-24 {\n    width: 33.3333%;\n    *width: 33.3023%;\n}\n\n.pure-u-3-8,\n.pure-u-9-24 {\n    width: 37.5000%;\n    *width: 37.4690%;\n}\n\n.pure-u-2-5 {\n    width: 40%;\n    *width: 39.9690%;\n}\n\n.pure-u-5-12,\n.pure-u-10-24 {\n    width: 41.6667%;\n    *width: 41.6357%;\n}\n\n.pure-u-11-24 {\n    width: 45.8333%;\n    *width: 45.8023%;\n}\n\n.pure-u-1-2,\n.pure-u-12-24 {\n    width: 50%;\n    *width: 49.9690%;\n}\n\n.pure-u-13-24 {\n    width: 54.1667%;\n    *width: 54.1357%;\n}\n\n.pure-u-7-12,\n.pure-u-14-24 {\n    width: 58.3333%;\n    *width: 58.3023%;\n}\n\n.pure-u-3-5 {\n    width: 60%;\n    *width: 59.9690%;\n}\n\n.pure-u-5-8,\n.pure-u-15-24 {\n    width: 62.5000%;\n    *width: 62.4690%;\n}\n\n.pure-u-2-3,\n.pure-u-16-24 {\n    width: 66.6667%;\n    *width: 66.6357%;\n}\n\n.pure-u-17-24 {\n    width: 70.8333%;\n    *width: 70.8023%;\n}\n\n.pure-u-3-4,\n.pure-u-18-24 {\n    width: 75%;\n    *width: 74.9690%;\n}\n\n.pure-u-19-24 {\n    width: 79.1667%;\n    *width: 79.1357%;\n}\n\n.pure-u-4-5 {\n    width: 80%;\n    *width: 79.9690%;\n}\n\n.pure-u-5-6,\n.pure-u-20-24 {\n    width: 83.3333%;\n    *width: 83.3023%;\n}\n\n.pure-u-7-8,\n.pure-u-21-24 {\n    width: 87.5000%;\n    *width: 87.4690%;\n}\n\n.pure-u-11-12,\n.pure-u-22-24 {\n    width: 91.6667%;\n    *width: 91.6357%;\n}\n\n.pure-u-23-24 {\n    width: 95.8333%;\n    *width: 95.8023%;\n}\n\n.pure-u-1,\n.pure-u-1-1,\n.pure-u-5-5,\n.pure-u-24-24 {\n    width: 100%;\n}\n.pure-button {\n    /* Structure */\n    display: inline-block;\n    *display: inline; /*IE 6/7*/\n    zoom: 1;\n    line-height: normal;\n    white-space: nowrap;\n    vertical-align: baseline;\n    text-align: center;\n    cursor: pointer;\n    -webkit-user-drag: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n}\n\n/* Firefox: Get rid of the inner focus border */\n.pure-button::-moz-focus-inner {\n    padding: 0;\n    border: 0;\n}\n\n/*csslint outline-none:false*/\n\n.pure-button {\n    font-family: inherit;\n    font-size: 100%;\n    *font-size: 90%; /*IE 6/7 - To reduce IE's oversized button text*/\n    *overflow: visible; /*IE 6/7 - Because of IE's overly large left/right padding on buttons */\n    padding: 0.5em 1em;\n    color: #444; /* rgba not supported (IE 8) */\n    color: rgba(0, 0, 0, 0.80); /* rgba supported */\n    *color: #444; /* IE 6 & 7 */\n    border: 1px solid #999;  /*IE 6/7/8*/\n    border: none rgba(0, 0, 0, 0);  /*IE9 + everything else*/\n    background-color: #E6E6E6;\n    text-decoration: none;\n    border-radius: 2px;\n}\n\n.pure-button-hover,\n.pure-button:hover,\n.pure-button:focus {\n    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000',GradientType=0);\n    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), color-stop(40%, rgba(0,0,0, 0.05)), to(rgba(0,0,0, 0.10)));\n    background-image: -webkit-linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n    background-image: -moz-linear-gradient(top, rgba(0,0,0, 0.05) 0%, rgba(0,0,0, 0.10));\n    background-image: -o-linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n    background-image: linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n}\n.pure-button:focus {\n    outline: 0;\n}\n.pure-button-active,\n.pure-button:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset, 0 0 6px rgba(0,0,0, 0.20) inset;\n}\n\n.pure-button[disabled],\n.pure-button-disabled,\n.pure-button-disabled:hover,\n.pure-button-disabled:focus,\n.pure-button-disabled:active {\n    border: none;\n    background-image: none;\n    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);\n    filter: alpha(opacity=40);\n    -khtml-opacity: 0.40;\n    -moz-opacity: 0.40;\n    opacity: 0.40;\n    cursor: not-allowed;\n    box-shadow: none;\n}\n\n.pure-button-hidden {\n    display: none;\n}\n\n/* Firefox: Get rid of the inner focus border */\n.pure-button::-moz-focus-inner{\n    padding: 0;\n    border: 0;\n}\n\n.pure-button-primary,\n.pure-button-selected,\na.pure-button-primary,\na.pure-button-selected {\n    background-color: rgb(0, 120, 231);\n    color: #fff;\n}\n\n.pure-form input[type=\"text\"],\n.pure-form input[type=\"password\"],\n.pure-form input[type=\"email\"],\n.pure-form input[type=\"url\"],\n.pure-form input[type=\"date\"],\n.pure-form input[type=\"month\"],\n.pure-form input[type=\"time\"],\n.pure-form input[type=\"datetime\"],\n.pure-form input[type=\"datetime-local\"],\n.pure-form input[type=\"week\"],\n.pure-form input[type=\"number\"],\n.pure-form input[type=\"search\"],\n.pure-form input[type=\"tel\"],\n.pure-form input[type=\"color\"],\n.pure-form select,\n.pure-form textarea {\n    padding: 0.5em 0.6em;\n    display: inline-block;\n    border: 1px solid #ccc;\n    box-shadow: inset 0 1px 3px #ddd;\n    border-radius: 4px;\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type]) {\n    padding: 0.5em 0.6em;\n    display: inline-block;\n    border: 1px solid #ccc;\n    box-shadow: inset 0 1px 3px #ddd;\n    border-radius: 4px;\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n\n/* Chrome (as of v.32/34 on OS X) needs additional room for color to display. */\n/* May be able to remove this tweak as color inputs become more standardized across browsers. */\n.pure-form input[type=\"color\"] {\n    padding: 0.2em 0.5em;\n}\n\n\n.pure-form input[type=\"text\"]:focus,\n.pure-form input[type=\"password\"]:focus,\n.pure-form input[type=\"email\"]:focus,\n.pure-form input[type=\"url\"]:focus,\n.pure-form input[type=\"date\"]:focus,\n.pure-form input[type=\"month\"]:focus,\n.pure-form input[type=\"time\"]:focus,\n.pure-form input[type=\"datetime\"]:focus,\n.pure-form input[type=\"datetime-local\"]:focus,\n.pure-form input[type=\"week\"]:focus,\n.pure-form input[type=\"number\"]:focus,\n.pure-form input[type=\"search\"]:focus,\n.pure-form input[type=\"tel\"]:focus,\n.pure-form input[type=\"color\"]:focus,\n.pure-form select:focus,\n.pure-form textarea:focus {\n    outline: 0;\n    outline: thin dotted \\9; /* IE6-9 */\n    border-color: #129FEA;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type]):focus {\n    outline: 0;\n    outline: thin dotted \\9; /* IE6-9 */\n    border-color: #129FEA;\n}\n\n.pure-form input[type=\"file\"]:focus,\n.pure-form input[type=\"radio\"]:focus,\n.pure-form input[type=\"checkbox\"]:focus {\n    outline: thin dotted #333;\n    outline: 1px auto #129FEA;\n}\n.pure-form .pure-checkbox,\n.pure-form .pure-radio {\n    margin: 0.5em 0;\n    display: block;\n}\n\n.pure-form input[type=\"text\"][disabled],\n.pure-form input[type=\"password\"][disabled],\n.pure-form input[type=\"email\"][disabled],\n.pure-form input[type=\"url\"][disabled],\n.pure-form input[type=\"date\"][disabled],\n.pure-form input[type=\"month\"][disabled],\n.pure-form input[type=\"time\"][disabled],\n.pure-form input[type=\"datetime\"][disabled],\n.pure-form input[type=\"datetime-local\"][disabled],\n.pure-form input[type=\"week\"][disabled],\n.pure-form input[type=\"number\"][disabled],\n.pure-form input[type=\"search\"][disabled],\n.pure-form input[type=\"tel\"][disabled],\n.pure-form input[type=\"color\"][disabled],\n.pure-form select[disabled],\n.pure-form textarea[disabled] {\n    cursor: not-allowed;\n    background-color: #eaeded;\n    color: #cad2d3;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type])[disabled] {\n    cursor: not-allowed;\n    background-color: #eaeded;\n    color: #cad2d3;\n}\n.pure-form input[readonly],\n.pure-form select[readonly],\n.pure-form textarea[readonly] {\n    background: #eee; /* menu hover bg color */\n    color: #777; /* menu text color */\n    border-color: #ccc;\n}\n\n.pure-form input:focus:invalid,\n.pure-form textarea:focus:invalid,\n.pure-form select:focus:invalid {\n    color: #b94a48;\n    border-color: #ee5f5b;\n}\n.pure-form input:focus:invalid:focus,\n.pure-form textarea:focus:invalid:focus,\n.pure-form select:focus:invalid:focus {\n    border-color: #e9322d;\n}\n.pure-form input[type=\"file\"]:focus:invalid:focus,\n.pure-form input[type=\"radio\"]:focus:invalid:focus,\n.pure-form input[type=\"checkbox\"]:focus:invalid:focus {\n    outline-color: #e9322d;\n}\n.pure-form select {\n    border: 1px solid #ccc;\n    background-color: white;\n}\n.pure-form select[multiple] {\n    height: auto;\n}\n.pure-form label {\n    margin: 0.5em 0 0.2em;\n}\n.pure-form fieldset {\n    margin: 0;\n    padding: 0.35em 0 0.75em;\n    border: 0;\n}\n.pure-form legend {\n    display: block;\n    width: 100%;\n    padding: 0.3em 0;\n    margin-bottom: 0.3em;\n    color: #333;\n    border-bottom: 1px solid #e5e5e5;\n}\n\n.pure-form-stacked input[type=\"text\"],\n.pure-form-stacked input[type=\"password\"],\n.pure-form-stacked input[type=\"email\"],\n.pure-form-stacked input[type=\"url\"],\n.pure-form-stacked input[type=\"date\"],\n.pure-form-stacked input[type=\"month\"],\n.pure-form-stacked input[type=\"time\"],\n.pure-form-stacked input[type=\"datetime\"],\n.pure-form-stacked input[type=\"datetime-local\"],\n.pure-form-stacked input[type=\"week\"],\n.pure-form-stacked input[type=\"number\"],\n.pure-form-stacked input[type=\"search\"],\n.pure-form-stacked input[type=\"tel\"],\n.pure-form-stacked input[type=\"color\"],\n.pure-form-stacked select,\n.pure-form-stacked label,\n.pure-form-stacked textarea {\n    display: block;\n    margin: 0.25em 0;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form-stacked input:not([type]) {\n    display: block;\n    margin: 0.25em 0;\n}\n.pure-form-aligned input,\n.pure-form-aligned textarea,\n.pure-form-aligned select,\n/* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n.pure-form-aligned .pure-help-inline,\n.pure-form-message-inline {\n    display: inline-block;\n    *display: inline;\n    *zoom: 1;\n    vertical-align: middle;\n}\n.pure-form-aligned textarea {\n    vertical-align: top;\n}\n\n/* Aligned Forms */\n.pure-form-aligned .pure-control-group {\n    margin-bottom: 0.5em;\n}\n.pure-form-aligned .pure-control-group label {\n    text-align: right;\n    display: inline-block;\n    vertical-align: middle;\n    width: 10em;\n    margin: 0 1em 0 0;\n}\n.pure-form-aligned .pure-controls {\n    margin: 1.5em 0 0 10em;\n}\n\n/* Rounded Inputs */\n.pure-form input.pure-input-rounded,\n.pure-form .pure-input-rounded {\n    border-radius: 2em;\n    padding: 0.5em 1em;\n}\n\n/* Grouped Inputs */\n.pure-form .pure-group fieldset {\n    margin-bottom: 10px;\n}\n.pure-form .pure-group input {\n    display: block;\n    padding: 10px;\n    margin: 0;\n    border-radius: 0;\n    position: relative;\n    top: -1px;\n}\n.pure-form .pure-group input:focus {\n    z-index: 2;\n}\n.pure-form .pure-group input:first-child {\n    top: 1px;\n    border-radius: 4px 4px 0 0;\n}\n.pure-form .pure-group input:last-child {\n    top: -2px;\n    border-radius: 0 0 4px 4px;\n}\n.pure-form .pure-group button {\n    margin: 0.35em 0;\n}\n\n.pure-form .pure-input-1 {\n    width: 100%;\n}\n.pure-form .pure-input-2-3 {\n    width: 66%;\n}\n.pure-form .pure-input-1-2 {\n    width: 50%;\n}\n.pure-form .pure-input-1-3 {\n    width: 33%;\n}\n.pure-form .pure-input-1-4 {\n    width: 25%;\n}\n\n/* Inline help for forms */\n/* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n.pure-form .pure-help-inline,\n.pure-form-message-inline {\n    display: inline-block;\n    padding-left: 0.3em;\n    color: #666;\n    vertical-align: middle;\n    font-size: 0.875em;\n}\n\n/* Block help for forms */\n.pure-form-message {\n    display: block;\n    color: #666;\n    font-size: 0.875em;\n}\n\n@media only screen and (max-width : 480px) {\n    .pure-form button[type=\"submit\"] {\n        margin: 0.7em 0 0;\n    }\n\n    .pure-form input:not([type]),\n    .pure-form input[type=\"text\"],\n    .pure-form input[type=\"password\"],\n    .pure-form input[type=\"email\"],\n    .pure-form input[type=\"url\"],\n    .pure-form input[type=\"date\"],\n    .pure-form input[type=\"month\"],\n    .pure-form input[type=\"time\"],\n    .pure-form input[type=\"datetime\"],\n    .pure-form input[type=\"datetime-local\"],\n    .pure-form input[type=\"week\"],\n    .pure-form input[type=\"number\"],\n    .pure-form input[type=\"search\"],\n    .pure-form input[type=\"tel\"],\n    .pure-form input[type=\"color\"],\n    .pure-form label {\n        margin-bottom: 0.3em;\n        display: block;\n    }\n\n    .pure-group input:not([type]),\n    .pure-group input[type=\"text\"],\n    .pure-group input[type=\"password\"],\n    .pure-group input[type=\"email\"],\n    .pure-group input[type=\"url\"],\n    .pure-group input[type=\"date\"],\n    .pure-group input[type=\"month\"],\n    .pure-group input[type=\"time\"],\n    .pure-group input[type=\"datetime\"],\n    .pure-group input[type=\"datetime-local\"],\n    .pure-group input[type=\"week\"],\n    .pure-group input[type=\"number\"],\n    .pure-group input[type=\"search\"],\n    .pure-group input[type=\"tel\"],\n    .pure-group input[type=\"color\"] {\n        margin-bottom: 0;\n    }\n\n    .pure-form-aligned .pure-control-group label {\n        margin-bottom: 0.3em;\n        text-align: left;\n        display: block;\n        width: 100%;\n    }\n\n    .pure-form-aligned .pure-controls {\n        margin: 1.5em 0 0 0;\n    }\n\n    /* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n    .pure-form .pure-help-inline,\n    .pure-form-message-inline,\n    .pure-form-message {\n        display: block;\n        font-size: 0.75em;\n        /* Increased bottom padding to make it group with its related input element. */\n        padding: 0.2em 0 0.8em;\n    }\n}\n\n/*csslint adjoining-classes:false, outline-none:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n.pure-menu ul {\n    position: absolute;\n    visibility: hidden;\n}\n\n.pure-menu.pure-menu-open {\n    visibility: visible;\n    z-index: 2;\n    width: 100%;\n}\n\n.pure-menu ul {\n    left: -10000px;\n    list-style: none;\n    margin: 0;\n    padding: 0;\n    top: -10000px;\n    z-index: 1;\n}\n\n.pure-menu > ul { position: relative; }\n\n.pure-menu-open > ul {\n    left: 0;\n    top: 0;\n    visibility: visible;\n}\n\n.pure-menu-open > ul:focus {\n    outline: 0;\n}\n\n.pure-menu li { position: relative; }\n\n.pure-menu a,\n.pure-menu .pure-menu-heading {\n    display: block;\n    color: inherit;\n    line-height: 1.5em;\n    padding: 5px 20px;\n    text-decoration: none;\n    white-space: nowrap;\n}\n\n.pure-menu.pure-menu-horizontal > .pure-menu-heading {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    margin: 0;\n    vertical-align: middle;\n}\n.pure-menu.pure-menu-horizontal > ul {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    vertical-align: middle;\n}\n\n.pure-menu li a { padding: 5px 20px; }\n\n.pure-menu-can-have-children > .pure-menu-label:after {\n    content: '\\25B8';\n    float: right;\n    /* These specific fonts have the Unicode char we need. */\n    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'DejaVu Sans', sans-serif;\n    margin-right: -20px;\n    margin-top: -1px;\n}\n\n.pure-menu-can-have-children > .pure-menu-label {\n    padding-right: 30px;\n}\n\n.pure-menu-separator {\n    background-color: #dfdfdf;\n    display: block;\n    height: 1px;\n    font-size: 0;\n    margin: 7px 2px;\n    overflow: hidden;\n}\n\n.pure-menu-hidden {\n    display: none;\n}\n\n/* FIXED MENU */\n.pure-menu-fixed {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n}\n\n\n/* HORIZONTAL MENU CODE */\n\n/* Initial menus should be inline-block so that they are horizontal */\n.pure-menu-horizontal li {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    vertical-align: middle;\n}\n\n/* Submenus should still be display: block; */\n.pure-menu-horizontal li li {\n    display: block;\n}\n\n/* Content after should be down arrow */\n.pure-menu-horizontal > .pure-menu-children > .pure-menu-can-have-children > .pure-menu-label:after {\n    content: \"\\25BE\";\n}\n/*Add extra padding to elements that have the arrow so that the hover looks nice */\n.pure-menu-horizontal > .pure-menu-children > .pure-menu-can-have-children > .pure-menu-label {\n    padding-right: 30px;\n}\n\n/* Adjusting separator for vertical menus */\n.pure-menu-horizontal li.pure-menu-separator {\n    height: 50%;\n    width: 1px;\n    margin: 0 7px;\n}\n\n/* Submenus should be horizontal separator again */\n.pure-menu-horizontal li li.pure-menu-separator {\n    height: 1px;\n    width: auto;\n    margin: 7px 2px;\n}\n\n\n/*csslint adjoining-classes:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n/* MAIN MENU STYLING */\n\n.pure-menu.pure-menu-open,\n.pure-menu.pure-menu-horizontal li .pure-menu-children {\n    background: #fff; /* Old browsers */\n    border: 1px solid #b7b7b7;\n}\n\n/* remove borders for horizontal menus */\n.pure-menu.pure-menu-horizontal,\n.pure-menu.pure-menu-horizontal .pure-menu-heading {\n    border: none;\n}\n\n\n/* LINK STYLES */\n\n.pure-menu a {\n    border: 1px solid transparent;\n    border-left: none;\n    border-right: none;\n\n}\n\n.pure-menu a,\n.pure-menu .pure-menu-can-have-children > li:after {\n    color: #777;\n}\n\n.pure-menu .pure-menu-can-have-children > li:hover:after {\n    color: #fff;\n}\n\n/* Focus style for a dropdown menu-item when the parent has been opened */\n.pure-menu .pure-menu-open {\n    background: #dedede;\n}\n\n\n.pure-menu li a:hover,\n.pure-menu li a:focus {\n    background: #eee;\n}\n\n/* DISABLED STATES */\n.pure-menu li.pure-menu-disabled a:hover,\n.pure-menu li.pure-menu-disabled a:focus {\n    background: #fff;\n    color: #bfbfbf;\n}\n\n.pure-menu .pure-menu-disabled > a {\n    background-image: none;\n    border-color: transparent;\n    cursor: default;\n}\n\n.pure-menu .pure-menu-disabled > a,\n.pure-menu .pure-menu-can-have-children.pure-menu-disabled > a:after {\n    color: #bfbfbf;\n}\n\n/* HEADINGS */\n.pure-menu .pure-menu-heading {\n    color: #565d64;\n    text-transform: uppercase;\n    font-size: 90%;\n    margin-top: 0.5em;\n    border-bottom-width: 1px;\n    border-bottom-style: solid;\n    border-bottom-color: #dfdfdf;\n}\n\n/* ACTIVE MENU ITEM */\n.pure-menu .pure-menu-selected a {\n    color: #000;\n}\n\n/* FIXED MENU */\n.pure-menu.pure-menu-open.pure-menu-fixed {\n    border: none;\n    border-bottom: 1px solid #b7b7b7;\n}\n\n/*csslint box-model:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n\n.pure-paginator {\n\n    /* `pure-g` Grid styles */\n    letter-spacing: -0.31em; /* Webkit: collapse white-space between units */\n    *letter-spacing: normal; /* reset IE < 8 */\n    *word-spacing: -0.43em; /* IE < 8: collapse white-space between units */\n    text-rendering: optimizespeed; /* Webkit: fixes text-rendering: optimizeLegibility */\n\n    /* `pure-paginator` Specific styles */\n    list-style: none;\n    margin: 0;\n    padding: 0;\n}\n.opera-only :-o-prefocus,\n.pure-paginator {\n    word-spacing: -0.43em;\n}\n\n/* `pure-u` Grid styles */\n.pure-paginator li {\n    display: inline-block;\n    *display: inline; /* IE < 8: fake inline-block */\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n\n.pure-paginator .pure-button {\n    border-radius: 0;\n    padding: 0.8em 1.4em;\n    vertical-align: top;\n    height: 1.1em;\n}\n.pure-paginator .pure-button:focus,\n.pure-paginator .pure-button:active {\n    outline-style: none;\n}\n.pure-paginator .prev,\n.pure-paginator .next {\n    color: #C0C1C3;\n    text-shadow: 0 -1px 0 rgba(0,0,0, 0.45);\n}\n.pure-paginator .prev {\n    border-radius: 2px 0 0 2px;\n}\n.pure-paginator .next {\n    border-radius: 0 2px 2px 0;\n}\n\n@media (max-width: 480px) {\n    .pure-menu-horizontal {\n        width: 100%;\n    }\n\n    .pure-menu-children li {\n        display: block;\n        border-bottom: 1px solid black;\n    }\n}\n\n.pure-table {\n    /* Remove spacing between table cells (from Normalize.css) */\n    border-collapse: collapse;\n    border-spacing: 0;\n    empty-cells: show;\n    border: 1px solid #cbcbcb;\n}\n\n.pure-table caption {\n    color: #000;\n    font: italic 85%/1 arial, sans-serif;\n    padding: 1em 0;\n    text-align: center;\n}\n\n.pure-table td,\n.pure-table th {\n    border-left: 1px solid #cbcbcb;/*  inner column border */\n    border-width: 0 0 0 1px;\n    font-size: inherit;\n    margin: 0;\n    overflow: visible; /*to make ths where the title is really long work*/\n    padding: 0.5em 1em; /* cell padding */\n}\n.pure-table td:first-child,\n.pure-table th:first-child {\n    border-left-width: 0;\n}\n\n.pure-table thead {\n    background: #e0e0e0;\n    color: #000;\n    text-align: left;\n    vertical-align: bottom;\n}\n\n/*\nstriping:\n   even - #fff (white)\n   odd  - #f2f2f2 (light gray)\n*/\n.pure-table td {\n    background-color: transparent;\n}\n.pure-table-odd td {\n    background-color: #f2f2f2;\n}\n\n/* nth-child selector for modern browsers */\n.pure-table-striped tr:nth-child(2n-1) td {\n    background-color: #f2f2f2;\n}\n\n/* BORDERED TABLES */\n.pure-table-bordered td {\n    border-bottom: 1px solid #cbcbcb;\n}\n.pure-table-bordered tbody > tr:last-child > td {\n    border-bottom-width: 0;\n}\n\n\n/* HORIZONTAL BORDERED TABLES */\n\n.pure-table-horizontal td,\n.pure-table-horizontal th {\n    border-width: 0 0 1px 0;\n    border-bottom: 1px solid #cbcbcb;\n}\n.pure-table-horizontal tbody > tr:last-child > td {\n    border-bottom-width: 0;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -5292,7 +5292,7 @@ module.exports = function (window) {
     };
 
 };
-},{"./nodelist.js":15,"polyfill/lib/array.isarray.js":41,"polyfill/lib/array.some.js":42,"polyfill/lib/element.matchesselector.js":44}],13:[function(require,module,exports){
+},{"./nodelist.js":15,"polyfill/lib/array.isarray.js":44,"polyfill/lib/array.some.js":45,"polyfill/lib/element.matchesselector.js":47}],13:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5420,7 +5420,7 @@ module.exports = function (window) {
     };
 
 };
-},{"./nodelist.js":15,"js-ext/lib/function.js":34,"js-ext/lib/object.js":35}],14:[function(require,module,exports){
+},{"./nodelist.js":15,"js-ext/lib/function.js":36,"js-ext/lib/object.js":37}],14:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5477,6 +5477,8 @@ module.exports = function (window) {
         require('js-ext/lib/string.js');
         require('js-ext/lib/object.js');
         require('./document.js')(window);
+        require('polyfill/lib/array.isarray.js');
+        require('polyfill/lib/array.every.js');
         require('polyfill/lib/element.matchesselector.js')(window);
         require('window-ext')(window);
 
@@ -5956,13 +5958,23 @@ module.exports = function (window) {
         * Checks whether the className is present on the Element.
         *
         * @method hasClass
-        * @param newHtmlElement {HtmlElement} the new HtmlElement
-        * @return {Boolean} whether the className is present on the Element
+        * @param className {String|Array} the className to check for. May be an Array of classNames.
+        * @return {Boolean} whether the className (or classNames) is present on the Element
         * @since 0.0.1
         */
         ElementPrototype.hasClass = function(className) {
-            var regexp = new RegExp('\\b' + className + '\\b');
-            return regexp.test(this.className);
+            var instance = this,
+                check = function(cl) {
+                    var regexp = new RegExp('\\b' + cl + '\\b');
+                    return regexp.test(instance.className);
+                };
+            if (typeof className === 'string') {
+                return check(className);
+            }
+            else if (Array.isArray(className)) {
+                return className.every(check);
+            }
+            return false;
         };
 
        /**
@@ -6147,16 +6159,23 @@ module.exports = function (window) {
         * Removes a className from the HtmlElement.
         *
         * @method removeClass
-        * @param className {String} the className that should be removed.
+        * @param className {String|Array} the className that should be removed. May be an Array of classNames.
         * @chainable
         * @since 0.0.1
         */
         ElementPrototype.removeClass = function(className) {
             var instance = this,
-                regexp = new RegExp('(?:^|\\s+)' + className + '(?:\\s+|$)', 'g'),
-                newClassName = instance.className.replace(regexp, ' ').trim();
-
-            (newClassName==='') ? instance.removeAttr('class') : (instance.className=newClassName);
+                doRemove = function(cl) {
+                    var regexp = new RegExp('(?:^|\\s+)' + cl + '(?:\\s+|$)', 'g');
+                    instance.className = instance.className.replace(regexp, ' ').trim();
+                };
+            if (typeof className === 'string') {
+                doRemove(className);
+            }
+            else if (Array.isArray(className)) {
+                className.forEach(doRemove);
+            }
+            (instance.className==='') && instance.removeAttr('class');
             return instance;
         };
 
@@ -6267,13 +6286,21 @@ module.exports = function (window) {
         * Adds a class to the HtmlElement. If the class already exists it won't be duplicated.
         *
         * @method setClass
-        * @param className {String} className to be added
+        * @param className {String|Array} className to be added, may be an array of classNames
         * @chainable
         * @since 0.0.1
         */
         ElementPrototype.setClass = function(className) {
-            var instance = this;
-            instance.hasClass(className) || (instance.className += ((instance.className.length>0) ? ' ' : '') + className);
+            var instance = this,
+                doSet = function(cl) {
+                    instance.hasClass(cl) || (instance.className += ((instance.className.length>0) ? ' ' : '') + cl);
+                };
+            if (typeof className === 'string') {
+                doSet(className);
+            }
+            else if (Array.isArray(className)) {
+                className.forEach(doSet);
+            }
             return instance;
         };
 
@@ -6611,7 +6638,7 @@ module.exports = function (window) {
 
     }(window.Element.prototype));
 };
-},{"../css/element.css":10,"./document.js":12,"js-ext/extra/reserved-words.js":31,"js-ext/lib/object.js":35,"js-ext/lib/string.js":37,"polyfill/lib/element.matchesselector.js":44,"window-ext":57}],15:[function(require,module,exports){
+},{"../css/element.css":10,"./document.js":12,"js-ext/extra/reserved-words.js":33,"js-ext/lib/object.js":37,"js-ext/lib/string.js":39,"polyfill/lib/array.every.js":40,"polyfill/lib/array.isarray.js":44,"polyfill/lib/element.matchesselector.js":47,"window-ext":60}],15:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6911,7 +6938,7 @@ module.exports = function (window) {
 
     }(window.NodeList.prototype, window.HTMLCollection.prototype));
 };
-},{"polyfill/polyfill-base.js":52}],16:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":55}],16:[function(require,module,exports){
 var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 999 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],17:[function(require,module,exports){
 "use strict";
@@ -6998,6 +7025,7 @@ var NAME = '[dragdrop]: ',
     TRANS_END = 'transitionend',
     TRUE = 'true',
     DD_MINUSDRAGGABLE = DD_MINUS+DRAGGABLE,
+    PLUGIN_ATTRS = [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTERNAME, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE],
     LATER = require('utils').later;
 
 require('polyfill/polyfill-base.js');
@@ -7007,6 +7035,8 @@ require('./css/drag-drop.css');
 module.exports = function (window) {
     var Event = require('event-dom')(window),
         NodePlugin = require('dom-ext')(window).Plugins.NodePlugin,
+        DragModule = require('drag')(window),
+        $superInit = DragModule.Drag.init(),
         ctrlPressed = false,
         initialised = false,
         dropEffect = MOVE,
@@ -7015,7 +7045,6 @@ module.exports = function (window) {
     require('window-ext')(window);
 
     DD = {
-       ddProps: {},
       /**
         * Returns the allowed effects on the dragable-HtmlElement. Is determined by the attribute `dd-effect-allowed`
         * Will be set to "move" when undefined.
@@ -7033,67 +7062,9 @@ module.exports = function (window) {
         },
 
         /**
-        * Default function for the `*:dd-drag`-event
-        *
-        * @method _defFnDrag
-        * @param e {Object} eventobject
-        * @private
-        * @since 0.0.1
-        */
-        _defFnDrag: function(e) {
-            console.log(NAME, '_defFnDrag: default function dd-drag');
-            var ddProps = this.ddProps,
-                dragNode = ddProps.dragNode,
-                constrainNode = ddProps.constrainNode,
-                winConstrained = ddProps.winConstrained,
-                x, y;
-            // is the drag is finished, there will be no ddProps.defined
-            // return then, to prevent any events that stayed behind
-            if (!ddProps.defined) {
-                return;
-            }
-
-            // caution: the user might have put the mouse out of the screen and released the mousebutton!
-            // If that is the case, the a mouseup-event should be initiated instead of draggin the element
-            if (e.buttons===0) {
-                // no more button pressed
-                /**
-                * Fired when the mouse comes back into the browser-window while dd-drag was busy yet no buttons are pressed.
-                * This is a correction to the fact that the mouseup-event wasn't noticed because the mouse was outside the browser.
-                *
-                * @event dd-fake-mouseup
-                * @private
-                * @since 0.1
-                */
-                Event.emit(dragNode, DD_FAKE_MOUSEUP);
-            }
-            else {
-                console.log(NAME, '_defFnDrag: dragging:');
-                if (constrainNode) {
-                    ddProps.constrain.x = ddProps.constrain.xOrig - constrainNode.getScrollLeft();
-                    ddProps.constrain.y = ddProps.constrain.yOrig - constrainNode.getScrollTop();
-                }
-
-                x = ddProps.x+e.xMouse+(winConstrained ? ddProps.winScrollLeft : window.getScrollLeft())-e.xMouseOrigin;
-                y = ddProps.y+e.yMouse+(winConstrained ? ddProps.winScrollTop : window.getScrollTop())-e.yMouseOrigin;
-
-                dragNode.setXY(x, y, ddProps.constrain, true);
-
-                ddProps.relatives && ddProps.relatives.forEach(
-                    function(item) {
-                        item.dragNode.setXY(x+item.shiftX, y+item.shiftY, null, true);
-                    }
-                );
-
-                ddProps.winConstrained || dragNode.forceIntoView(true);
-                constrainNode && dragNode.forceIntoNodeView(constrainNode);
-            }
-        },
-
-        /**
-         * Default function for the `*:dd-drop`-event
+         * Default function for the `*:dd-drop`-event. Overrides the definition of the `drag`-module.
          *
-         * @method _defFnDrag
+         * @method _defFnDrop
          * @param e {Object} eventobject
          * @param sourceNode {HtmlElement} the original HtmlElement
          * @param dragNode {HtmlElement} the dragged HtmlElement (either original or clone)
@@ -7108,7 +7079,7 @@ module.exports = function (window) {
                 ddProps = instance.ddProps,
                 willBeCopied,
                 removeClasses = function (node) {
-                    node.removeClass(NO_TRANS_CLASS).removeClass(HIGH_Z_CLASS).removeClass(DD_DRAGGING_CLASS).removeClass(DEL_DRAGGABLE);
+                    node.removeClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS, DEL_DRAGGABLE]);
                 };
 
             willBeCopied =  (e.dropTarget && ((ctrlPressed && instance.allowCopy(dragNode)) || instance.onlyCopy(dragNode)));
@@ -7125,7 +7096,7 @@ module.exports = function (window) {
                 instance._handleDrop(e, sourceNode, dragNode, relatives);
             }
             else {
-                [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTERNAME, DD_HANDLE, DD_EFFECT_ALLOWED].forEach(function(attribute) {
+                PLUGIN_ATTRS.forEach(function(attribute) {
                     var data = '_del_'+attribute;
                     if (dragNode.getData(data)) {
                         dragNode.removeAttr(attribute);
@@ -7175,42 +7146,6 @@ module.exports = function (window) {
         },
 
         /**
-         * Default function for the `UI:dd-start`-event
-         *
-         * @method _defFnDrag
-         * @param e {Object} eventobject
-         * @private
-         * @since 0.0.1
-         */
-        _defFnStart: function(e) {
-            var instance = this,
-                customEvent;
-            e.emitterName = e.emitterName || e.target.getAttr(DD_EMITTERNAME) || UI,
-            customEvent = e.emitterName + ':'+DD_DRAG;
-            console.log(NAME, '_defFnStart: default function UI:dd-start. Defining customEvent '+customEvent);
-            Event.defineEvent(customEvent).defaultFn(instance._defFnDrag.bind(instance));
-            instance._initializeDrag(e);
-        },
-
-      /**
-        * Defines the definition of the `dd-start` event: the first phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)
-        *
-        * @method _defineDDStart
-        * @param e {Object} eventobject
-        * @private
-        * @since 0.0.1
-        */
-        _defineDDStart: function() {
-            console.log(NAME, '_defineDDStart');
-            var instance = this;
-            // by using dd-start before dd-drag, the user can create a `before`-subscriber to dd-start
-            // and define e.emitterName and/or e.relatives before going into `dd-drag`
-            Event.defineEvent(UI_DD_START)
-                .defaultFn(instance._defFnStart.bind(instance))
-                .preventedFn(instance._prevFnStart.bind(instance));
-        },
-
-        /**
          * Defines the definition of the `dd-drop` event: the last phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)
          *
          * @method _defineDropEv
@@ -7226,13 +7161,23 @@ module.exports = function (window) {
          * @private
          * @since 0.0.1
          */
-        _defineDropEv: function(e, emitterName, sourceNode, dragNode, dropzoneSpecified, x, y, inlineLeft, inlineTop, relatives) {
-            console.log(NAME, '_defineDropEv '+dragNode);
-            var instance = this;
+        _defineDropEv: function(e, ddProps) {
+            console.log(NAME, '_defineDropEv '+ddProps.dragNode);
+            var instance = this,
+                emitterName = e.emiterName,
+                sourceNode = ddProps.sourceNode,
+                dragNode = ddProps.dragNode,
+                dropzoneSpecified = ddProps.dropzoneSpecified,
+                x = ddProps.x,
+                y = ddProps.y,
+                inlineLeft = ddProps.inlineLeft,
+                inlineTop = ddProps.inlineTop,
+                relatives = ddProps.relatives;
+
             instance.restoreDraggables = instance._restoreDraggables.bind(instance, e, sourceNode, dragNode, dropzoneSpecified, x, y, inlineLeft, inlineTop, relatives);
             Event.defineEvent(emitterName+':'+DD_DROP)
                 .defaultFn(instance._defFnDrop.rbind(instance, sourceNode, dragNode, dropzoneSpecified, relatives))
-                .forceAssign(); // need to reassign, because all arguments need to be bound again
+                .forceAssign(); // need to reassign, because all arguments need to be bound again and we need to override the definition of the `drag`-module
         },
 
         /**
@@ -7359,7 +7304,7 @@ module.exports = function (window) {
                         dropzoneIsDelegated || nodeDrag.setAttr(DD_MINUSDRAGGABLE, TRUE);
                         nodeDrag.removeClass(DEL_DRAGGABLE);
                     }
-                    [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTERNAME, DD_HANDLE, DD_EFFECT_ALLOWED].forEach(function(attribute) {
+                    PLUGIN_ATTRS.forEach(function(attribute) {
                         var data = '_del_'+attribute,
                             attr = sourceNode.getData(data);
                         if (attr) {
@@ -7375,11 +7320,10 @@ module.exports = function (window) {
                         }
                     });
                     dropzoneNode.append(nodeDrag);
-                    nodeDrag.removeClass(DD_OPACITY_CLASS).removeClass(DD_TRANSITION_CLASS).removeClass(HIGH_Z_CLASS).removeClass(DD_DRAGGING_CLASS).removeClass(NO_TRANS_CLASS);
+                    nodeDrag.removeClass([DD_OPACITY_CLASS, DD_TRANSITION_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS, NO_TRANS_CLASS]);
                     nodeDrag.setXY(dragNodeX+shiftX, dragNodeY+shiftY, constrainRectangle);
                     // make the new HtmlElement non-copyable: it only can be replaced inside its dropzone
-                    dropzoneIsDelegated || nodeDrag.setAttr(DD_EFFECT_ALLOWED, MOVE);
-                    nodeDrag.setAttr(DD_DROPZONE_MOVABLE, TRUE); // to make moving inside the dropzone possible without return to its startposition
+                    dropzoneIsDelegated || nodeDrag.setAttr(DD_EFFECT_ALLOWED, MOVE).setAttr(DD_DROPZONE_MOVABLE, TRUE); // to make moving inside the dropzone possible without return to its startposition
                 };
                 moveToDropzone = function(nodeSource, nodeDrag, shiftX, shiftY) {
                     nodeSource.setInlineStyle(POSITION, ABSOLUTE);
@@ -7387,7 +7331,7 @@ module.exports = function (window) {
                         dropzoneIsDelegated || nodeSource.setAttr(DD_MINUSDRAGGABLE, TRUE);
                         nodeSource.removeClass(DEL_DRAGGABLE);
                     }
-                    [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTERNAME, DD_HANDLE, DD_EFFECT_ALLOWED].forEach(function(attribute) {
+                    PLUGIN_ATTRS.forEach(function(attribute) {
                         var data = '_del_'+attribute,
                             attr = sourceNode.getData(data);
                         if (attr) {
@@ -7403,8 +7347,7 @@ module.exports = function (window) {
                     dropzoneNode.append(nodeSource);
                     nodeSource.setXY(dragNodeX+shiftX, dragNodeY+shiftY, constrainRectangle);
                     // make the new HtmlElement non-copyable: it only can be replaced inside its dropzone
-                    dropzoneIsDelegated || nodeSource.setAttr(DD_EFFECT_ALLOWED, MOVE);
-                    nodeSource.setAttr(DD_DROPZONE_MOVABLE, TRUE); // to make moving inside the dropzone possible without return to its startposition
+                    dropzoneIsDelegated || nodeSource.setAttr(DD_EFFECT_ALLOWED, MOVE).setAttr(DD_DROPZONE_MOVABLE, TRUE); // to make moving inside the dropzone possible without return to its startposition
                     nodeSource.removeClass(DD_HIDDEN_SOURCE_CLASS);
                     nodeDrag.remove();
                 };
@@ -7463,13 +7406,10 @@ module.exports = function (window) {
                 if (dropzoneNode && dragNode.rectangleInside(dropzoneNode)) {
                     moveInsideDropzone = function(hasMatch, nodeSource, nodeDrag, shiftX, shiftY) {
                         hasMatch && nodeSource.setXY(nodeSource+shiftX, nodeSource+shiftY, constrainRectangle);
-
-                        // nodeDrag.removeClass(DD_OPACITY_CLASS).removeClass(DD_TRANSITION_CLASS).removeClass(HIGH_Z_CLASS).removeClass(DD_DRAGGING_CLASS);
-
                         if (delegatedDragging) {
                             nodeSource.removeClass(DEL_DRAGGABLE);
                         }
-                        [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTERNAME, DD_HANDLE, DD_EFFECT_ALLOWED].forEach(function(attribute) {
+                        PLUGIN_ATTRS.forEach(function(attribute) {
                             var data = '_del_'+attribute,
                                 attr = dragNode.getData(data);
                             if (attr) {
@@ -7513,203 +7453,6 @@ module.exports = function (window) {
             }
             sourceNode.removeClass(DD_MASTER_CLASS);
             dragNode.removeClass(DD_MASTER_CLASS);
-        },
-
-       /**
-         * Default function for the `*:dd-drag`-event
-         *
-         * @method _initializeDrag
-         * @param e {Object} eventobject
-         * @private
-         * @since 0.0.1
-         */
-        _initializeDrag: function(e) {
-            console.log(NAME, '_initializeDrag '+e.xMouseOrigin);
-            var instance = this,
-                sourceNode = e.target,
-                constrain = sourceNode.getAttr(CONSTRAIN_ATTR),
-                ddProps = instance.ddProps,
-                emitterName = e.emitterName,
-                dropzoneSpecified = sourceNode.hasAttr(DD_DROPZONE) || (emitterName!==UI),
-                moveEv, dragNode, x, y, byExactId, match, constrainNode, winConstrained, winScrollLeft, winScrollTop,
-                inlineLeft, inlineTop, xOrig, yOrig, setupDragnode, dropzones;
-
-            setupDragnode = function(nodeSource, nodeDrag, shiftX, shiftY) {
-                (dropEffect===COPY) ? nodeDrag.setClass(DD_OPACITY_CLASS) : nodeSource.setClass(DD_HIDDEN_SOURCE_CLASS);
-                nodeDrag.setClass(INVISIBLE_CLASS);
-
-                nodeDrag.setInlineStyle(POSITION, ABSOLUTE);
-                nodeSource.parentNode.append(nodeDrag, nodeSource);
-
-                nodeDrag.setXY(ddProps.xMouseLast+shiftX, ddProps.yMouseLast+shiftY, ddProps.constrain, true);
-                nodeDrag.removeClass(INVISIBLE_CLASS);
-            };
-            // define ddProps --> internal object with data about the draggable instance
-            ddProps.sourceNode = sourceNode;
-            ddProps.dragNode = dragNode = dropzoneSpecified ? sourceNode.clone(true) : sourceNode;
-            ddProps.x = x = sourceNode.getX();
-            ddProps.y = y = sourceNode.getY();
-            ddProps.inlineLeft = inlineLeft = sourceNode.getInlineStyle(LEFT);
-            ddProps.inlineTop = inlineTop = sourceNode.getInlineStyle(TOP);
-            ddProps.dropzoneSpecified = dropzoneSpecified;
-            ddProps.winConstrained = winConstrained = (constrain===WINDOW);
-            ddProps.xMouseLast = x;
-            ddProps.yMouseLast = y;
-
-            e.dragTarget = sourceNode; // equals e.target, but the event dd-drop-zone has e.target set to dragNode, which might be a copy
-            e.copyTarget = dragNode;
-
-            if (constrain) {
-                if (ddProps.winConstrained) {
-                    ddProps.winScrollLeft = winScrollLeft = window.getScrollLeft();
-                    ddProps.winScrollTop = winScrollTop = window.getScrollTop();
-                    ddProps.constrain = {
-                        x: winScrollLeft,
-                        y: winScrollTop,
-                        w: window.getWidth(),
-                        h: window.getHeight()
-                    };
-                }
-                else {
-                    byExactId = REGEXP_NODE_ID.test(constrain);
-                    constrainNode = sourceNode.parentNode;
-                    while (constrainNode.matchesSelector && !match) {
-                        match = byExactId ? (constrainNode.id===constrain.substr(1)) : constrainNode.matchesSelector(constrain);
-                        // if there is a match, then make sure x and y fall within the region
-                        if (match) {
-                            ddProps.constrainNode = constrainNode;
-                            xOrig = constrainNode.getX() + parseInt(constrainNode.getStyle(BORDER_LEFT_WIDTH), 10);
-                            yOrig = constrainNode.getY() + parseInt(constrainNode.getStyle(BORDER_TOP_WIDTH), 10);
-                            ddProps.constrain = {
-                                xOrig: xOrig,
-                                yOrig: yOrig,
-                                x: xOrig - constrainNode.getScrollLeft(),
-                                y: yOrig - constrainNode.getScrollTop(),
-                                w: constrainNode.scrollWidth,
-                                h: constrainNode.scrollHeight
-                            };
-                        }
-                        else {
-                            constrainNode = constrainNode.parentNode;
-                        }
-                    }
-                }
-            }
-
-            // create listener for `mousemove` and transform it into the `*:dd:drag`-event
-            moveEv = Event.after(MOUSE+MOVE, function(e2) {
-                if (!e2.clientX) {
-                    return;
-                }
-                // move the object
-                e.xMouse = e2.clientX;
-                e.yMouse = e2.clientY;
-                /**
-                * Fired when the checkbox changes its value<br />
-                * Listen for this event instead of 'checkedChange',
-                * because this event is also fired when the checkbox changes its 'disabled'-state
-                * (switching value null/boolean)
-                *
-                * @event valuechange
-                * @param e {EventFacade} Event Facade including:
-                * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
-                * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
-                * @since 0.1
-                */
-                Event.emit(sourceNode, emitterName+':'+DD_DRAG, e);
-                e.dd.callback();
-            });
-
-            // prepare dragNode class for the right CSS:
-            dragNode.setClass(NO_TRANS_CLASS)
-                    .setClass(HIGH_Z_CLASS)
-                    .setClass(DD_DRAGGING_CLASS);
-
-            Event.onceAfter([MOUSE+UP, DD_FAKE_MOUSEUP], function(e3) {
-                moveEv.detach();
-                instance._teardownOverEvent(e, e3.clientX, e3.clientY);
-                instance.ddProps = {};
-                /**
-                * Fired when the checkbox changes its value<br />
-                * Listen for this event instead of 'checkedChange',
-                * because this event is also fired when the checkbox changes its 'disabled'-state
-                * (switching value null/boolean)
-                *
-                * @event valuechange
-                * @param e {EventFacade} Event Facade including:
-                * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
-                * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
-                * @since 0.1
-                */
-                Event.emit(sourceNode, emitterName+':'+DD_DROP, e);
-                e.dd.fulfill();
-            });
-
-            if (dropzoneSpecified) {
-                dropEffect = (instance.onlyCopy(sourceNode) || (ctrlPressed && instance.allowCopy(sourceNode))) ? COPY : MOVE;
-                setupDragnode(sourceNode, dragNode, 0, 0);
-            }
-            else {
-                dropEffect = null;
-                dragNode.setXY(ddProps.xMouseLast, ddProps.yMouseLast, ddProps.constrain, true);
-            }
-
-            if (e.relatives) {
-                // relatives are extra HtmlElements that should be moved aside with the main dragged element
-                // e.relatives is a selector, e.relativeNodes will be an array with nodes
-                e.relativeNodes = [];
-                e.relativeCopyNodes = [];
-                sourceNode.setClass(DD_MASTER_CLASS);
-                dragNode.setClass(DD_MASTER_CLASS);
-                ddProps.relatives = [];
-                e.relatives.forEach(
-                    function(node) {
-                        var item;
-                        if (node !== sourceNode) {
-                            item = {
-                                sourceNode: node,
-                                dragNode: dropzoneSpecified ? node.clone(true) : node,
-                                shiftX: node.getX() - x,
-                                shiftY: node.getY() - y,
-                                inlineLeft: node.getInlineStyle(LEFT),
-                                inlineTop: node.getInlineStyle(TOP)
-                            };
-                            item.dragNode.setClass(NO_TRANS_CLASS)
-                                         .setClass(HIGH_Z_CLASS)
-                                         .setClass(DD_DRAGGING_CLASS);
-                            dropzoneSpecified && setupDragnode(item.sourceNode, item.dragNode, item.shiftX, item.shiftY);
-                            ddProps.relatives.push(item);
-                            e.relativeNodes.push(item.sourceNode);
-                            e.relativeCopyNodes.push(item.dragNode);
-                        }
-                    }
-                );
-            }
-
-            if (sourceNode.getAttr(DD_DROPZONE)) {
-                dropzones = window.document.getAll(DROPZONE_BRACKETS);
-                if (dropzones.length>0) {
-                    // create a custom over-event that fires exactly when the mouse is over any dropzone
-                    // we cannot use `hover`, because that event fails when there is an absolute floated element outsize `dropzone`
-                    // lying on top of the dropzone. -> we need to check by coördinates
-                    instance.ddProps.dragOverEv = instance._defineOverEv(e, dropzones);
-
-                }
-            }
-            instance.ddProps.dragDropEv = instance._defineDropEv(e, emitterName, sourceNode, dragNode, dropzoneSpecified, x, y, inlineLeft, inlineTop, ddProps.relatives);
-        },
-
-        /**
-         * Prevented function for the `*:dd-start`-event
-         *
-         * @method _prevFnStart
-         * @param e {Object} eventobject
-         * @private
-         * @since 0.0.1
-         */
-        _prevFnStart: function(e) {
-            console.log(NAME, '_prevFnStart');
-            e.dd.reject();
         },
 
        /**
@@ -7770,15 +7513,15 @@ module.exports = function (window) {
                         tearedDown = true;
                         notransRemoval || (dragNode.removeEventListener && dragNode.removeEventListener(TRANS_END, tearDown, true));
                         if (dropzoneSpecified) {
-                            sourceNode.removeClass(DD_HIDDEN_SOURCE_CLASS).removeClass(DEL_DRAGGABLE);
+                            sourceNode.removeClass([DD_HIDDEN_SOURCE_CLASS, DEL_DRAGGABLE]);
                             dragNode.remove();
                         }
                         else {
-                            dragNode.removeClass(DD_TRANSITION_CLASS).removeClass(HIGH_Z_CLASS).removeClass(DD_DRAGGING_CLASS).removeClass(DEL_DRAGGABLE);
+                            dragNode.removeClass([DD_TRANSITION_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS, DEL_DRAGGABLE]);
                             dragNode.setInlineStyle(LEFT, inlineLeft);
                             dragNode.setInlineStyle(TOP, inlineTop);
                         }
-                        [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTERNAME, DD_HANDLE, DD_EFFECT_ALLOWED].forEach(function(attribute) {
+                        PLUGIN_ATTRS.forEach(function(attribute) {
                             var data = '_del_'+attribute;
                             if (sourceNode.getData(data)) {
                                 sourceNode.removeAttr(attribute);
@@ -7787,9 +7530,7 @@ module.exports = function (window) {
                         });
                     }
                 };
-            dragNode.removeClass(NO_TRANS_CLASS);
-
-            dragNode.removeClass(DD_DRAGGING_CLASS);
+            dragNode.removeClass([NO_TRANS_CLASS, DD_DRAGGING_CLASS]);
             dragNode.setClass(DD_TRANSITION_CLASS);
             // transitions only work with IE10+, and that browser has addEventListener
             // when it doesn't have, it doesn;t harm to leave the transitionclass on: it would work anyway
@@ -7878,6 +7619,600 @@ module.exports = function (window) {
         },
 
       /**
+        * Cleansup the dragover subscriber and fulfills any dropzone-promise.
+        *
+        * @method _teardownOverEvent
+        * @param e {Object} eventobject
+        * @private
+        * @since 0.0.1
+        */
+        _teardownOverEvent: function(e, ddProps) {
+            console.log('_teardownOverEvent');
+            var dragOverEvent = ddProps.dragOverEv,
+                mouseX = e.xMouse,
+                mouseY = e.yMouse,
+                winScrollTop, winScrollLeft;
+            if (dragOverEvent) {
+                dragOverEvent.detach();
+                winScrollTop = window.getScrollTop();
+                winScrollLeft = window.getScrollLeft();
+                ddProps.dragOverList.forEach(function(promise) {
+                    promise.fulfill(e.dropTarget && e.dropTarget.insidePos(mouseX+winScrollLeft, mouseY+winScrollTop));
+                });
+            }
+        },
+
+       /**
+         * Returns true if the dropzone-HtmlElement accepts copy-dragables.
+         * Is determined by the attribute `dd-effect-allowed="copy"` or `dd-effect-allowed="all"`
+         *
+         * @method allowCopy
+         * @param dropzone {HtmlElement} HtmlElement that is checked for its allowed effects
+         * @return {Boolean} if copy-dragables are allowed
+         * @since 0.0.1
+         */
+        allowCopy: function(dropzone) {
+            var allowedEffects = this._allowedEffects(dropzone);
+            console.log('allowCopy --> '+REGEXP_ALL.test(allowedEffects) || REGEXP_COPY.test(allowedEffects));
+            return REGEXP_ALL.test(allowedEffects) || REGEXP_COPY.test(allowedEffects);
+        },
+
+       /**
+         * Returns true if the dragable-HtmlElement allowes to switch between `copy` and `move`.
+         *
+         * @method allowSwitch
+         * @param dragableElement {HtmlElement} HtmlElement that is checked for its allowed effects
+         * @return {Boolean} if copy-dragables are allowed
+         * @since 0.0.1
+         */
+        allowSwitch: function(dragableElement) {
+            console.log('allowSwitch --> '+REGEXP_ALL.test(this._allowedEffects(dragableElement)));
+            return REGEXP_ALL.test(this._allowedEffects(dragableElement));
+        },
+
+       /**
+         * Returns the emitterName that the dropzone accepts.
+         *
+         * @method getDropzoneEmitter
+         * @param dropzone {String} dropzone attribute of the dropzone HtmlElement
+         * @return {String|null} the emitterName that is accepted
+         * @since 0.0.1
+         */
+        getDropzoneEmitter: function(dropzone) {
+            var extract = dropzone.match(REGEXP_EMITTER);
+            console.log('getDropzoneEmitter --> '+(extract && extract[1]));
+            return extract && extract[1];
+        },
+
+       /**
+         * Initializes dragdrop. Needs to be invoked, otherwise DD won't run.
+         *
+         * @method init
+         * @param dragableElement {HtmlElement} HtmlElement that is checked for its allowed effects
+         * @return {Boolean} if copy-dragables are allowed
+         * @since 0.0.1
+         */
+        init: function() {
+            console.log(NAME, 'init');
+            var instance = this;
+            if (!instance.initialised) {
+                // we will initialize `Drag` --> don;t worry if it was initialised before,
+                // Drag.init() will only run once
+                $superInit();
+                instance._setupKeyEv();
+
+                instance.notify(function(e, ddProps) {
+                    var dropzones,
+                        sourceNode = ddProps.sourceNode,
+                        dropzoneSpecified = ddProps.dropzoneSpecified = sourceNode.hasAttr(DD_DROPZONE) || (e.emitterName!==UI),
+                        setupDragnode = function(nodeSource, nodeDrag, shiftX, shiftY) {
+                            (dropEffect===COPY) ? nodeDrag.setClass(DD_OPACITY_CLASS) : nodeSource.setClass(DD_HIDDEN_SOURCE_CLASS);
+                            nodeDrag.setClass(INVISIBLE_CLASS);
+
+                            nodeDrag.setInlineStyle(POSITION, ABSOLUTE);
+                            nodeSource.parentNode.append(nodeDrag, nodeSource);
+
+                            nodeDrag.setXY(ddProps.xMouseLast+shiftX, ddProps.yMouseLast+shiftY, ddProps.constrain, true);
+                            nodeDrag.removeClass(INVISIBLE_CLASS);
+                        };
+                    if (dropzoneSpecified) {
+                        ddProps.dragNode = ddProps.sourceNode.clone(true);
+                        dropEffect = (instance.onlyCopy(sourceNode) || (ctrlPressed && instance.allowCopy(sourceNode))) ? COPY : MOVE;
+                        setupDragnode(sourceNode, ddProps.dragNode, 0, 0);
+                        ddProps.relatives && ddProps.relatives.forEach(
+                            function(item) {
+                                item.dragNode = item.sourceNode.clone(true);
+                                setupDragnode(item.sourceNode, item.dragNode, item.shiftX, item.shiftY);
+                            }
+                        );
+                        dropzones = window.document.getAll(DROPZONE_BRACKETS);
+                        if (dropzones.length>0) {
+                            // create a custom over-event that fires exactly when the mouse is over any dropzone
+                            // we cannot use `hover`, because that event fails when there is an absolute floated element outsize `dropzone`
+                            // lying on top of the dropzone. -> we need to check by coördinates
+                            ddProps.dragOverEv = instance._defineOverEv(e, dropzones);
+
+                        }
+                    }
+                    ddProps.dragDropEv = instance._defineDropEv(e, ddProps);
+                }, instance, true);
+
+                instance.notify(instance._teardownOverEvent, instance);
+
+            }
+            instance.initialised = true;
+        },
+
+       /**
+         * Returns true if the dragable-HtmlElement accepts only copy-dragables (no moveable)
+         * Is determined by the attribute `dd-effect-allowed="copy"`
+         *
+         * @method onlyCopy
+         * @param dragableElement {HtmlElement} HtmlElement that is checked for its allowed effects
+         * @return {Boolean} if only copy-dragables are allowed
+         * @since 0.0.1
+         */
+        onlyCopy: function(dragableElement) {
+            console.log('onlyCopy --> '+REGEXP_COPY.test(this._allowedEffects(dragableElement)));
+            return REGEXP_COPY.test(this._allowedEffects(dragableElement));
+        },
+
+       /**
+         * Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,
+         * so you can choose to do set the draggables back conditionally.
+         *
+         * @method restoreDraggables
+         * @private
+         * @chainable
+         * @since 0.0.1
+         */
+        restoreDraggables: function() {/* NOOP */ return this;}
+
+    };
+
+    NodeDropzone = NodePlugin.subClass(
+        function (config) {
+            var dropzone = TRUE,
+                emitterName;
+            config || (config={});
+            if (config.copy && !config.move) {
+                dropzone = COPY;
+            }
+            else if (!config.copy && config.move) {
+                dropzone = MOVE;
+            }
+            (emitterName=config.emitterName) && (dropzone+=' '+EMITTERNAME+'='+emitterName);
+            this.dropzone = dropzone;
+        }
+    );
+
+    return {
+        DD: DragModule.Drag.merge(DD, true),
+        Plugins: {
+            NodeDD: DragModule.Plugins.NodeDD,
+            NodeDropzone: NodeDropzone
+        }
+    };
+};
+},{"./css/drag-drop.css":16,"dom-ext":11,"drag":19,"event-dom":20,"js-ext":34,"polyfill/polyfill-base.js":55,"utils":57,"window-ext":60}],18:[function(require,module,exports){
+module.exports=require(16)
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],19:[function(require,module,exports){
+"use strict";
+
+/**
+ * Provides `drag and drop` functionality
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @example
+ * Drag = require('drag')(window);
+ * Draf.init();
+ *
+ * @module drag
+ * @class DD
+ * @since 0.0.4
+*/
+
+var NAME = '[drag]: ',
+    DRAG = 'drag',
+    DROP = 'drop',
+    DRAGGABLE = DRAG+'gable',
+    DEL_DRAGGABLE = 'del-'+DRAGGABLE,
+    DD_MINUS = 'dd-',
+    DD_DRAGGING_CLASS = DD_MINUS+DRAG+'ging',
+    DD_MASTER_CLASS = DD_MINUS+'master',
+    DD_HANDLE = DD_MINUS+'handle',
+    DD_DROPZONE_MOVABLE = DD_MINUS+'dropzone-movable',
+    CONSTRAIN_ATTR = 'xy-constrain',
+    PROXY = 'proxy',
+    MOUSE = 'mouse',
+    DATA_KEY = 'dragDrop',
+    DD_EFFECT_ALLOWED = DD_EFFECT_ALLOWED,
+    DROPZONE = 'dropzone',
+    DROPZONE_DROP = DROPZONE+'-'+DROP,
+    DD_DROPZONE = DD_MINUS+DROPZONE,
+    NO_TRANS_CLASS = 'el-notrans', // delivered by `dom-ext`
+    DD_HIDDEN_SOURCE_CLASS = DD_MINUS+'hidden-source',
+    INVISIBLE_CLASS = 'el-invisible', // delivered by `dom-ext`
+    DD_TRANSITION_CLASS = DD_MINUS+'transition',
+    DD_OPACITY_CLASS = DD_MINUS+'opacity',
+    HIGH_Z_CLASS = DD_MINUS+'high-z',
+    DD_DROPACTIVE_CLASS = 'dropactive',
+    REGEXP_MOVE = /\bmove\b/i,
+    REGEXP_COPY = /\bcopy\b/i,
+    REGEXP_NODE_ID = /^#\S+$/,
+    REGEXP_ALL = /\b(all|true)\b/i,
+    REGEXP_COPY = /\bcopy\b/i,
+    EMITTERNAME = 'emittername',
+    REGEXP_EMITTER = /\bemittername=(\w+)\b/,
+    DD_EMITTERNAME = DD_MINUS+EMITTERNAME,
+    PX = 'px',
+    COPY = 'copy',
+    MOVE = 'move',
+    DD_DRAG = DD_MINUS+DRAG,
+    DROPZONE_OUT = DROPZONE+'-out',
+    DD_DROP = DD_MINUS+DROP,
+    UI_DD_START = 'UI:dd',
+    DD_FAKE = DD_MINUS+'fake-',
+    DOWN = 'down',
+    UP = 'up',
+    KEY = 'key',
+    MOUSEUP = MOUSE+UP,
+    MOUSEDOWN = MOUSE+DOWN,
+    MOUSEMOVE = MOUSE+'move',
+    DD_FAKE_MOUSEUP = DD_FAKE+MOUSEUP,
+    DD_FAKE_MOUSEMOVE = DD_FAKE+MOUSEMOVE,
+    UI = 'UI',
+    DROPZONE_BRACKETS = '[' + DROPZONE + ']',
+    DD_EFFECT_ALLOWED = DD_MINUS+'effect-allowed',
+    BORDER = 'border',
+    WIDTH = 'width',
+    BORDER_LEFT_WIDTH = BORDER+'-left-'+WIDTH,
+    BORDER_RIGHT_WIDTH = BORDER+'-right-'+WIDTH,
+    BORDER_TOP_WIDTH = BORDER+'-top-'+WIDTH,
+    BORDER_BOTTOM_WIDTH = BORDER+'-bottom-'+WIDTH,
+    LEFT = 'left',
+    TOP = 'top',
+    WINDOW = 'window',
+    POSITION = 'position',
+    ABSOLUTE = 'absolute',
+    TRANS_END = 'transitionend',
+    TRUE = 'true',
+    DD_MINUSDRAGGABLE = DD_MINUS+DRAGGABLE,
+    PLUGIN_ATTRS = [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTERNAME, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE],
+    LATER = require('utils').later;
+
+require('polyfill/polyfill-base.js');
+require('js-ext');
+require('./css/drag-drop.css');
+
+module.exports = function (window) {
+    var Event = require('event-dom')(window),
+        NodePlugin = require('dom-ext')(window).Plugins.NodePlugin,
+        ctrlPressed = false,
+        initialised = false,
+        dropEffect = MOVE,
+        Drag, NodeDD, NodeDropzone;
+
+    require('window-ext')(window);
+
+    Drag = {
+       ddProps: {},
+
+        /**
+        * Default function for the `*:dd-drag`-event
+        *
+        * @method _defFnDrag
+        * @param e {Object} eventobject
+        * @private
+        * @since 0.0.1
+        */
+        _defFnDrag: function(e) {
+            console.log(NAME, '_defFnDrag: default function dd-drag');
+            var ddProps = this.ddProps,
+                dragNode = ddProps.dragNode,
+                constrainNode = ddProps.constrainNode,
+                winConstrained = ddProps.winConstrained,
+                x, y;
+            // is the drag is finished, there will be no ddProps.defined
+            // return then, to prevent any events that stayed behind
+            if (!ddProps.defined) {
+                return;
+            }
+
+            // caution: the user might have put the mouse out of the screen and released the mousebutton!
+            // If that is the case, the a mouseup-event should be initiated instead of draggin the element
+            if (e.buttons===0) {
+                // no more button pressed
+                /**
+                * Fired when the mouse comes back into the browser-window while dd-drag was busy yet no buttons are pressed.
+                * This is a correction to the fact that the mouseup-event wasn't noticed because the mouse was outside the browser.
+                *
+                * @event dd-fake-mouseup
+                * @private
+                * @since 0.1
+                */
+                Event.emit(dragNode, DD_FAKE_MOUSEUP);
+            }
+            else {
+                console.log(NAME, '_defFnDrag: dragging:');
+                if (constrainNode) {
+                    ddProps.constrain.x = ddProps.constrain.xOrig - constrainNode.getScrollLeft();
+                    ddProps.constrain.y = ddProps.constrain.yOrig - constrainNode.getScrollTop();
+                }
+
+                x = ddProps.x+e.xMouse+(winConstrained ? ddProps.winScrollLeft : window.getScrollLeft())-e.xMouseOrigin;
+                y = ddProps.y+e.yMouse+(winConstrained ? ddProps.winScrollTop : window.getScrollTop())-e.yMouseOrigin;
+
+                dragNode.setXY(x, y, ddProps.constrain, true);
+
+                ddProps.relatives && ddProps.relatives.forEach(
+                    function(item) {
+                        item.dragNode.setXY(x+item.shiftX, y+item.shiftY, null, true);
+                    }
+                );
+
+                ddProps.winConstrained || dragNode.forceIntoView(true);
+                constrainNode && dragNode.forceIntoNodeView(constrainNode);
+            }
+        },
+
+        /**
+         * Default function for the `*:dd-drop`-event
+         *
+         * @method _defFnDrop
+         * @param e {Object} eventobject
+         * @private
+         * @since 0.0.1
+         */
+        _defFnDrop: function(e) {
+            console.log(NAME, '_defFnDrop');
+            var instance = this,
+                dragNode = e.copyTarget,
+                removeClasses = function (node) {
+                    node.removeClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS, DEL_DRAGGABLE]);
+                };
+
+            PLUGIN_ATTRS.forEach(function(attribute) {
+                var data = '_del_'+attribute;
+                if (dragNode.getData(data)) {
+                    dragNode.removeAttr(attribute);
+                    dragNode.removeData(data);
+                }
+            });
+            removeClasses(dragNode);
+            e.relatives && e.relatives.forEach(
+                function(node) {
+                    removeClasses(node);
+                }
+            );
+        },
+
+        /**
+         * Default function for the `UI:dd-start`-event
+         *
+         * @method _defFnDrag
+         * @param e {Object} eventobject
+         * @private
+         * @since 0.0.1
+         */
+        _defFnStart: function(e) {
+            var instance = this,
+                customEvent;
+            e.emitterName = e.emitterName || e.target.getAttr(DD_EMITTERNAME) || UI,
+            customEvent = e.emitterName + ':'+DD_DRAG;
+            console.log(NAME, '_defFnStart: default function UI:dd-start. Defining customEvent '+customEvent);
+            Event.defineEvent(customEvent).defaultFn(instance._defFnDrag.bind(instance));
+            window.document.getAll('.'+DD_MASTER_CLASS).removeClass(DD_MASTER_CLASS);
+            instance._initializeDrag(e);
+        },
+
+      /**
+        * Defines the definition of the `dd-start` event: the first phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)
+        *
+        * @method _defineDDStart
+        * @param e {Object} eventobject
+        * @private
+        * @since 0.0.1
+        */
+        _defineDDStart: function() {
+            console.log(NAME, '_defineDDStart');
+            var instance = this;
+            // by using dd-start before dd-drag, the user can create a `before`-subscriber to dd-start
+            // and define e.emitterName and/or e.relatives before going into `dd-drag`
+            Event.defineEvent(UI_DD_START)
+                .defaultFn(instance._defFnStart.bind(instance))
+                .preventedFn(instance._prevFnStart.bind(instance));
+        },
+
+       /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method _initializeDrag
+         * @param e {Object} eventobject
+         * @private
+         * @since 0.0.1
+         */
+        _initializeDrag: function(e) {
+            console.log(NAME, '_initializeDrag '+e.xMouseOrigin);
+            var instance = this,
+                sourceNode = e.target,
+                constrain = sourceNode.getAttr(CONSTRAIN_ATTR),
+                ddProps = instance.ddProps,
+                emitterName = e.emitterName,
+                moveEv, dragNode, x, y, byExactId, match, constrainNode, winConstrained, winScrollLeft, winScrollTop,
+                inlineLeft, inlineTop, xOrig, yOrig, dropzones;
+
+            // define ddProps --> internal object with data about the draggable instance
+            ddProps.sourceNode = sourceNode;
+            ddProps.dragNode = dragNode = sourceNode;
+            ddProps.x = x = sourceNode.getX();
+            ddProps.y = y = sourceNode.getY();
+            ddProps.inlineLeft = inlineLeft = sourceNode.getInlineStyle(LEFT);
+            ddProps.inlineTop = inlineTop = sourceNode.getInlineStyle(TOP);
+            ddProps.winConstrained = winConstrained = (constrain===WINDOW);
+            ddProps.xMouseLast = x;
+            ddProps.yMouseLast = y;
+
+            e.dragTarget = sourceNode; // equals e.target, but the event dd-drop-zone has e.target set to dragNode, which might be a copy
+            e.copyTarget = dragNode;
+            if (constrain) {
+                if (ddProps.winConstrained) {
+                    ddProps.winScrollLeft = winScrollLeft = window.getScrollLeft();
+                    ddProps.winScrollTop = winScrollTop = window.getScrollTop();
+                    ddProps.constrain = {
+                        x: winScrollLeft,
+                        y: winScrollTop,
+                        w: window.getWidth(),
+                        h: window.getHeight()
+                    };
+                }
+                else {
+                    byExactId = REGEXP_NODE_ID.test(constrain);
+                    constrainNode = sourceNode.parentNode;
+                    while (constrainNode.matchesSelector && !match) {
+                        match = byExactId ? (constrainNode.id===constrain.substr(1)) : constrainNode.matchesSelector(constrain);
+                        // if there is a match, then make sure x and y fall within the region
+                        if (match) {
+                            ddProps.constrainNode = constrainNode;
+                            xOrig = constrainNode.getX() + parseInt(constrainNode.getStyle(BORDER_LEFT_WIDTH), 10);
+                            yOrig = constrainNode.getY() + parseInt(constrainNode.getStyle(BORDER_TOP_WIDTH), 10);
+                            ddProps.constrain = {
+                                xOrig: xOrig,
+                                yOrig: yOrig,
+                                x: xOrig - constrainNode.getScrollLeft(),
+                                y: yOrig - constrainNode.getScrollTop(),
+                                w: constrainNode.scrollWidth,
+                                h: constrainNode.scrollHeight
+                            };
+                        }
+                        else {
+                            constrainNode = constrainNode.parentNode;
+                        }
+                    }
+                }
+            }
+
+            // create listener for `mousemove` and transform it into the `*:dd:drag`-event
+            moveEv = Event.after(MOUSE+MOVE, function(e2) {
+                if (!e2.clientX) {
+                    return;
+                }
+                // move the object
+                e.xMouse = e2.clientX;
+                e.yMouse = e2.clientY;
+                /**
+                * Fired when the checkbox changes its value<br />
+                * Listen for this event instead of 'checkedChange',
+                * because this event is also fired when the checkbox changes its 'disabled'-state
+                * (switching value null/boolean)
+                *
+                * @event valuechange
+                * @param e {EventFacade} Event Facade including:
+                * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
+                * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
+                * @since 0.1
+                */
+                Event.emit(sourceNode, emitterName+':'+DD_DRAG, e);
+                e.dd.callback();
+            });
+
+            // prepare dragNode class for the right CSS:
+            dragNode.setClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS]);
+
+            Event.onceAfter([MOUSE+UP, DD_FAKE_MOUSEUP], function(e3) {
+                moveEv.detach();
+                // set mousepos for the last time:
+                e.xMouse = e3.clientX;
+                e.yMouse = e3.clientY;
+                // invoke all teardown notifiers:
+                instance._notifiers.forEach(
+                    function(notifier) {
+                        notifier.s || notifier.cb.call(notifier.o, e, ddProps);
+                    }
+                );
+                instance.ddProps = {};
+                /**
+                * Fired when the checkbox changes its value<br />
+                * Listen for this event instead of 'checkedChange',
+                * because this event is also fired when the checkbox changes its 'disabled'-state
+                * (switching value null/boolean)
+                *
+                * @event valuechange
+                * @param e {EventFacade} Event Facade including:
+                * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
+                * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
+                * @since 0.1
+                */
+                Event.emit(sourceNode, emitterName+':'+DD_DROP, e);
+                e.dd.fulfill();
+            });
+
+            dragNode.setXY(ddProps.xMouseLast, ddProps.yMouseLast, ddProps.constrain, true);
+
+            if (e.relatives) {
+                // relatives are extra HtmlElements that should be moved aside with the main dragged element
+                // e.relatives is a selector, e.relativeNodes will be an array with nodes
+                e.relativeNodes = [];
+                e.relativeCopyNodes = [];
+                sourceNode.setClass(DD_MASTER_CLASS);
+                dragNode.setClass(DD_MASTER_CLASS);
+                ddProps.relatives = [];
+                e.relatives.forEach(
+                    function(node) {
+                        var item;
+                        if (node !== sourceNode) {
+                            item = {
+                                sourceNode: node,
+                                dragNode: node,
+                                shiftX: node.getX() - x,
+                                shiftY: node.getY() - y,
+                                inlineLeft: node.getInlineStyle(LEFT),
+                                inlineTop: node.getInlineStyle(TOP)
+                            };
+                            item.dragNode.setClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS]);
+                            ddProps.relatives.push(item);
+                            e.relativeNodes.push(item.sourceNode);
+                            e.relativeCopyNodes.push(item.dragNode);
+                        }
+                    }
+                );
+            }
+            // invoke all setup notifiers:
+            instance._notifiers.forEach(
+                function(notifier) {
+                    notifier.s && notifier.cb.call(notifier.o, e, ddProps);
+                }
+            );
+        },
+
+        /**
+         * Internal hash with notifiers to response after each `Drag` event is set up, or teared down.
+         * You can use this to hook in into the drag-eventcycle: the `drop`-module uses it this way.
+         * Is filled by using `notify()`.
+         *
+         * @property _notifiers
+         * @private
+         * @since 0.0.1
+         */
+        _notifiers: [],
+
+        /**
+         * Prevented function for the `*:dd-start`-event
+         *
+         * @method _prevFnStart
+         * @param e {Object} eventobject
+         * @private
+         * @since 0.0.1
+         */
+        _prevFnStart: function(e) {
+            console.log(NAME, '_prevFnStart');
+            e.dd.reject();
+        },
+
+      /**
         * Engine behinf the dragdrop-cycle.
         * Sets up a `mousedown` listener to initiate a drag-drop eventcycle. The eventcycle start whenever
         * one of these events happens on a HtmlElement with the attribute `dd-draggable="true"`.
@@ -7962,7 +8297,7 @@ module.exports = function (window) {
                     foundNode.setClass(DEL_DRAGGABLE);
                     // We must transport the other relevant dd-attributes (and xy-constrain)
                     // which we will remove when finished dragging:
-                    [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTERNAME, DD_HANDLE, DD_EFFECT_ALLOWED].forEach(function(attribute) {
+                    PLUGIN_ATTRS.forEach(function(attribute) {
                         var attr = container.getAttr(attribute);
                         if (attr && !foundNode.hasAttr(attribute)) {
                             foundNode.setData('_del_'+attribute, attr);
@@ -7980,73 +8315,6 @@ module.exports = function (window) {
 
         },
 
-      /**
-        * Cleansup the dragover subscriber and fulfills any dropzone-promise.
-        *
-        * @method _teardownOverEvent
-        * @param e {Object} eventobject
-        * @param mouseX {Number} last x-pos of the mouse
-        * @param mouseY {Number} last y-pos of the mouse
-        * @private
-        * @since 0.0.1
-        */
-        _teardownOverEvent: function(e, mouseX, mouseY) {
-            console.log('_teardownOverEvent');
-            var ddProps = this.ddProps,
-                dragOverEvent = ddProps.dragOverEv,
-                winScrollTop, winScrollLeft;
-            if (dragOverEvent) {
-                dragOverEvent.detach();
-                winScrollTop = window.getScrollTop();
-                winScrollLeft = window.getScrollLeft();
-                ddProps.dragOverList.forEach(function(promise) {
-                    promise.fulfill(e.dropTarget && e.dropTarget.insidePos(mouseX+winScrollLeft, mouseY+winScrollTop));
-                });
-            }
-        },
-
-       /**
-         * Returns true if the dropzone-HtmlElement accepts copy-dragables.
-         * Is determined by the attribute `dd-effect-allowed="copy"` or `dd-effect-allowed="all"`
-         *
-         * @method allowCopy
-         * @param dropzone {HtmlElement} HtmlElement that is checked for its allowed effects
-         * @return {Boolean} if copy-dragables are allowed
-         * @since 0.0.1
-         */
-        allowCopy: function(dropzone) {
-            var allowedEffects = this._allowedEffects(dropzone);
-            console.log('allowCopy --> '+REGEXP_ALL.test(allowedEffects) || REGEXP_COPY.test(allowedEffects));
-            return REGEXP_ALL.test(allowedEffects) || REGEXP_COPY.test(allowedEffects);
-        },
-
-       /**
-         * Returns true if the dragable-HtmlElement allowes to switch between `copy` and `move`.
-         *
-         * @method allowSwitch
-         * @param dragableElement {HtmlElement} HtmlElement that is checked for its allowed effects
-         * @return {Boolean} if copy-dragables are allowed
-         * @since 0.0.1
-         */
-        allowSwitch: function(dragableElement) {
-            console.log('allowSwitch --> '+REGEXP_ALL.test(this._allowedEffects(dragableElement)));
-            return REGEXP_ALL.test(this._allowedEffects(dragableElement));
-        },
-
-       /**
-         * Returns the emitterName that the dropzone accepts.
-         *
-         * @method getDropzoneEmitter
-         * @param dropzone {String} dropzone attribute of the dropzone HtmlElement
-         * @return {String|null} the emitterName that is accepted
-         * @since 0.0.1
-         */
-        getDropzoneEmitter: function(dropzone) {
-            var extract = dropzone.match(REGEXP_EMITTER);
-            console.log('getDropzoneEmitter --> '+(extract && extract[1]));
-            return extract && extract[1];
-        },
-
        /**
          * Initializes dragdrop. Needs to be invoked, otherwise DD won't run.
          *
@@ -8059,49 +8327,55 @@ module.exports = function (window) {
             console.log(NAME, 'init');
             var instance = this;
             if (!instance.initialised) {
-                instance._setupKeyEv();
                 instance._defineDDStart();
                 instance._setupMouseEv(); // engine behind the dragdrop-eventcycle
+                Event.defineEvent('UI:'+DD_DROP)
+                     .defaultFn(instance._defFnDrop.rbind(instance));
             }
             instance.initialised = true;
         },
 
-       /**
-         * Returns true if the dragable-HtmlElement accepts only copy-dragables (no moveable)
-         * Is determined by the attribute `dd-effect-allowed="copy"`
+        /**
+         * Creates a notifier to response after each `Drag` event is set up, or teared down.
+         * You can use this to hook in into the drag-eventcycle: the `drop`-module uses it this way.
          *
-         * @method onlyCopy
-         * @param dragableElement {HtmlElement} HtmlElement that is checked for its allowed effects
-         * @return {Boolean} if only copy-dragables are allowed
+         * @static
+         * @method notify
+         * @param callback {Function} subscriber: will be invoked after every drag-event is set up.
+         *                 Recieves 2 arguments: the `eventobject` and the internal property: `ddProps`
+         * @param context {Object} context of the callback
+         * @param setup {Boolean} wheter the callback should be invoked on setup (true) or teardown (false)
+         * @return {Object} handle with a method `detach()` which you can use to remove it from the `notifier-hash`
          * @since 0.0.1
-         */
-        onlyCopy: function(dragableElement) {
-            console.log('onlyCopy --> '+REGEXP_COPY.test(this._allowedEffects(dragableElement)));
-            return REGEXP_COPY.test(this._allowedEffects(dragableElement));
-        },
-
-       /**
-         * Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,
-         * so you can choose to do set the draggables back conditionally.
-         *
-         * @method restoreDraggables
-         * @private
-         * @chainable
-         * @since 0.0.1
-         */
-        restoreDraggables: function() {/* NOOP */ return this;}
+        */
+        notify: function(callback, context, setup) {
+            console.log(NAME, 'notify');
+            var notifier = {
+                cb: callback,
+                o: context,
+                s: setup
+            };
+            this._notifiers.push(notifier);
+            return {
+                detach: function() {
+                    this._notifiers.remove(notifier);
+                }
+            };
+        }
 
     };
 
     NodeDD = NodePlugin.subClass(
         function (config) {
+            var instance = this;
             config || (config={});
-            this[DD_MINUSDRAGGABLE] = true;
-            this[DD_MINUS+DROPZONE] = config.dropzone;
-            this[CONSTRAIN_ATTR] = config.constrain;
-            this[DD_EMITTERNAME] = config.emitterName;
-            this[DD_HANDLE] = config.handle;
-            this[DD_EFFECT_ALLOWED] = config.effectAllowed;
+            instance[DD_MINUSDRAGGABLE] = true;
+            instance[DD_MINUS+DROPZONE] = config.dropzone;
+            instance[CONSTRAIN_ATTR] = config.constrain;
+            instance[DD_EMITTERNAME] = config.emitterName;
+            instance[DD_HANDLE] = config.handle;
+            instance[DD_EFFECT_ALLOWED] = config.effectAllowed;
+            instance[DD_DROPZONE_MOVABLE] = config.dropzoneMovable;
         }
     );
 
@@ -8122,14 +8396,14 @@ module.exports = function (window) {
     );
 
     return {
-        DD: DD,
+        Drag: Drag,
         Plugins: {
-            NodeDD: NodeDD,
+            NodeDD: Drag.NodeDD,
             NodeDropzone: NodeDropzone
         }
     };
 };
-},{"./css/drag-drop.css":16,"dom-ext":11,"event-dom":18,"js-ext":32,"polyfill/polyfill-base.js":52,"utils":54,"window-ext":57}],18:[function(require,module,exports){
+},{"./css/drag-drop.css":18,"dom-ext":11,"event-dom":20,"js-ext":34,"polyfill/polyfill-base.js":55,"utils":57,"window-ext":60}],20:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8616,7 +8890,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":25,"polyfill/lib/element.matchesselector.js":44,"polyfill/lib/node.contains.js":46,"utils":54}],19:[function(require,module,exports){
+},{"event":27,"polyfill/lib/element.matchesselector.js":47,"polyfill/lib/node.contains.js":49,"utils":57}],21:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8706,7 +8980,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":18}],20:[function(require,module,exports){
+},{"../event-dom.js":20}],22:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8951,7 +9225,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":18,"dom-ext":11,"utils":54}],21:[function(require,module,exports){
+},{"../event-dom.js":20,"dom-ext":11,"utils":57}],23:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9055,7 +9329,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event-dom":18,"hammerjs":2}],22:[function(require,module,exports){
+},{"event-dom":20,"hammerjs":2}],24:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -10355,7 +10629,7 @@ require('js-ext/lib/object.js');
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/lib/function.js":34,"js-ext/lib/object.js":35,"polyfill/polyfill-base.js":52}],23:[function(require,module,exports){
+},{"js-ext/lib/function.js":36,"js-ext/lib/object.js":37,"polyfill/polyfill-base.js":55}],25:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10474,7 +10748,7 @@ Event.Emitter = function(emitterName) {
     Event.defineEmitter(newEmitter, emitterName);
     return newEmitter;
 };
-},{"./index.js":25}],24:[function(require,module,exports){
+},{"./index.js":27}],26:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10621,11 +10895,11 @@ Event.Listener = {
         return Event.onceBefore(customEvent, callback, this, filter, prepend);
     }
 };
-},{"./index.js":25}],25:[function(require,module,exports){
+},{"./index.js":27}],27:[function(require,module,exports){
 module.exports = require('./event-base.js');
 require('./event-emitter.js');
 require('./event-listener.js');
-},{"./event-base.js":22,"./event-emitter.js":23,"./event-listener.js":24}],26:[function(require,module,exports){
+},{"./event-base.js":24,"./event-emitter.js":25,"./event-listener.js":26}],28:[function(require,module,exports){
 
 "use strict";
 
@@ -10743,7 +11017,7 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"../io.js":30,"xmldom":3}],27:[function(require,module,exports){
+},{"../io.js":32,"xmldom":3}],29:[function(require,module,exports){
 "use strict";
 
 var NAME = '[io-stream]: ',
@@ -10861,7 +11135,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":30}],28:[function(require,module,exports){
+},{"../io.js":32}],30:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11289,7 +11563,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":30,"js-ext/lib/string.js":37,"polyfill/lib/json.js":45}],29:[function(require,module,exports){
+},{"../io.js":32,"js-ext/lib/string.js":39,"polyfill/lib/json.js":48}],31:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11432,7 +11706,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":30,"js-ext":32}],30:[function(require,module,exports){
+},{"../io.js":32,"js-ext":34}],32:[function(require,module,exports){
 (function (global){
 /**
  * Provides core IO-functionality.
@@ -11749,7 +12023,7 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":32,"polyfill/polyfill-base.js":52}],31:[function(require,module,exports){
+},{"js-ext":34,"polyfill/polyfill-base.js":55}],33:[function(require,module,exports){
 module.exports = {
     'abstract': true,
     'arguments': true,
@@ -11818,13 +12092,13 @@ module.exports = {
     'with': true,
     'yield': true
 };
-},{}],32:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
 require('./lib/array.js');
 require('./lib/promise.js');
-},{"./lib/array.js":33,"./lib/function.js":34,"./lib/object.js":35,"./lib/promise.js":36,"./lib/string.js":37}],33:[function(require,module,exports){
+},{"./lib/array.js":35,"./lib/function.js":36,"./lib/object.js":37,"./lib/promise.js":38,"./lib/string.js":39}],35:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -11840,14 +12114,53 @@ require('./lib/promise.js');
 
 "use strict";
 
+require('polyfill/lib/array.indexof.js');
+require('polyfill/lib/array.foreach.js');
+
 (function(ArrayPrototype) {
+
+    /**
+     * Checks whether an item is inside the Array.
+     * Alias for (array.indexOf(item) > -1)
+     *
+     * @method inArray
+     * @return {Boolean} whether the item is part of the Array
+     */
+    Array.inArray || (ArrayPrototype.inArray=function(item) {
+        return (this.indexOf(item) > -1);
+    });
+
+    /**
+     * Removes an item from the array
+     *
+     * @method remove
+     * @param item {any|Array} the item (or an hash of items) to be removed
+     * @param [arrayItem=false] {Boolean} whether `item` is an arrayItem that should be treated as a single item to be removed
+     *        You need to set `arrayItem=true` in those cases. Otherwise, all single items from `item` are removed separately.
+     * @chainable
+     */
+    Array.remove || (ArrayPrototype.remove=function(item, arrayItem) {
+        var instance = this,
+            removeItem = function(oneItem) {
+                var index = instance.indexOf(item);
+                (index > -1) && instance.splice(index, 1);
+            };
+        if (!arrayItem && Array.isArray(item)) {
+            item.forEach(removeItem);
+        }
+        else {
+            removeItem(item);
+        }
+        return instance;
+    });
+
     /**
      * Shuffles the items in the Array randomly
      *
      * @method shuffle
      * @chainable
      */
-    Array.shuffle || (ArrayPrototype.shuffle=function () {
+    Array.shuffle || (ArrayPrototype.shuffle=function() {
         var instance = this,
             counter = instance.length,
             temp, index;
@@ -11866,8 +12179,9 @@ require('./lib/promise.js');
         }
         return instance;
     });
+
 }(Array.prototype));
-},{}],34:[function(require,module,exports){
+},{"polyfill/lib/array.foreach.js":42,"polyfill/lib/array.indexof.js":43}],36:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -12088,7 +12402,7 @@ defineProperties(Function.prototype, {
 defineProperty(Object.prototype, 'createClass', function (constructor, prototype) {
 	return Function.prototype.subClass.apply(this, arguments);
 });
-},{"polyfill/polyfill-base.js":52}],35:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":55}],37:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -12374,7 +12688,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"polyfill/polyfill-base.js":52}],36:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":55}],38:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12681,7 +12995,7 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill/lib/promise.js":50,"polyfill/polyfill-base.js":52,"ypromise":6}],37:[function(require,module,exports){
+},{"polyfill/lib/promise.js":53,"polyfill/polyfill-base.js":55,"ypromise":6}],39:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -12882,7 +13196,26 @@ Promise.manage = function (callbackFn) {
 
 }(String.prototype));
 
-},{}],38:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
+(function (global){
+if (!Array.every) {
+    (function (global) {
+        "use strict";
+        Array.prototype.every = function every(callback, scope) {
+            var array = this,
+                length = array.length,
+                index = 0;
+            for (index; index<length; ++index) {
+                if (!callback.call(scope || global, array[index], index, array)) {
+                    break;
+                }
+            }
+            return (index === length);
+        };
+    }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
+}
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],41:[function(require,module,exports){
 (function (global){
 if (!Array.filter) {
     (function (global) {
@@ -12908,7 +13241,7 @@ if (!Array.filter) {
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],39:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 (function (global){
 if (!Array.forEach) {
     (function (global) {
@@ -12916,7 +13249,7 @@ if (!Array.forEach) {
         Array.prototype.forEach = function forEach(callback, scope) {
             var array = this,
                 length = array.length,
-                index = 0;
+                index;
             for (index = 0; index<length; ++index) {
                 callback.call(scope || global, array[index], index, array);
             }
@@ -12927,7 +13260,7 @@ if (!Array.forEach) {
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],40:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 "use strict";
 
 Array.prototype.indexOf || (Array.prototype.indexOf=function indexOf(searchElement) {
@@ -12941,14 +13274,14 @@ Array.prototype.indexOf || (Array.prototype.indexOf=function indexOf(searchEleme
     }
     return -1;
 });
-},{}],41:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 "use strict";
 
 Array.isArray || (Array.isArray = function isArray(array) {
     return array && Object.prototype.toString.call(array) === '[object Array]';
 });
 
-},{}],42:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 (function (global){
 if (!Array.some) {
     (function (global) {
@@ -12956,13 +13289,13 @@ if (!Array.some) {
         Array.prototype.some = function some(callback, scope) {
             var array = this,
                 length = array.length,
-                index = 0;
+                index ;
             for (index = 0; index<length; ++index) {
                 if (callback.call(scope || global, array[index], index, array)) {
-                    break;
+                    return true;
                 }
             }
-            return (index === length);
+            return false;
         };
     }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }
@@ -12970,7 +13303,7 @@ if (!Array.some) {
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],43:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 "use strict";
 
 // based upon https://gist.github.com/amannm/4965459
@@ -12986,7 +13319,7 @@ module.exports = function (window) {
         });
     }(window.CSSStyleDeclaration.prototype));
 };
-},{}],44:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 "use strict";
 
 // based upon https://gist.github.com/jonathantneal/3062955
@@ -13006,7 +13339,7 @@ module.exports = function (window) {
         };
     }(window.Element.prototype));
 };
-},{}],45:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -13359,7 +13692,7 @@ module.exports = function (window) {
 })(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],46:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 "use strict";
 var DOCUMENT_POSITION_CONTAINED_BY = 16;
 module.exports = function (window) {
@@ -13370,7 +13703,7 @@ module.exports = function (window) {
         };
     }(window.Node.prototype));
 };
-},{}],47:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 "use strict";
 
 Object.create || (Object.create = function (o) {
@@ -13378,7 +13711,7 @@ Object.create || (Object.create = function (o) {
     F.prototype = o;
     return new F();
 });
-},{}],48:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 "use strict";
 
 // In Internet Explorer 8 Object.defineProperty only accepts DOM objects
@@ -13412,7 +13745,7 @@ Object.defineProperties || (Object.defineProperties=function defineProperties(ob
     }
     return object;
 });
-},{}],49:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 "use strict";
 
 if (!Object.keys) {
@@ -13448,9 +13781,9 @@ if (!Object.keys) {
         return result;
     };
 }
-},{}],50:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 require('ypromise');
-},{"ypromise":6}],51:[function(require,module,exports){
+},{"ypromise":6}],54:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -13464,8 +13797,9 @@ require('ypromise');
     }
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],52:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 require('./lib/window.console.js');
+require('./lib/array.every.js');
 require('./lib/array.filter.js');
 require('./lib/array.foreach.js');
 require('./lib/array.indexof.js');
@@ -13475,17 +13809,17 @@ require('./lib/object.create.js');
 require('./lib/object.keys.js');
 require('./lib/object.defineproperty.js');
 require('./lib/css.opacity.js');
-},{"./lib/array.filter.js":38,"./lib/array.foreach.js":39,"./lib/array.indexof.js":40,"./lib/array.isarray.js":41,"./lib/array.some.js":42,"./lib/css.opacity.js":43,"./lib/object.create.js":47,"./lib/object.defineproperty.js":48,"./lib/object.keys.js":49,"./lib/window.console.js":51}],53:[function(require,module,exports){
+},{"./lib/array.every.js":40,"./lib/array.filter.js":41,"./lib/array.foreach.js":42,"./lib/array.indexof.js":43,"./lib/array.isarray.js":44,"./lib/array.some.js":45,"./lib/css.opacity.js":46,"./lib/object.create.js":50,"./lib/object.defineproperty.js":51,"./lib/object.keys.js":52,"./lib/window.console.js":54}],56:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/json.js');
 require('./lib/promise.js');
-},{"./lib/json.js":45,"./lib/promise.js":50,"./polyfill-base.js":52}],54:[function(require,module,exports){
+},{"./lib/json.js":48,"./lib/promise.js":53,"./polyfill-base.js":55}],57:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
 	later: require('./lib/timers.js').later,
 	async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":55,"./lib/timers.js":56}],55:[function(require,module,exports){
+},{"./lib/idgenerator.js":58,"./lib/timers.js":59}],58:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -13542,7 +13876,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"polyfill/polyfill-base.js":52}],56:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":55}],59:[function(require,module,exports){
 (function (process,global){
 /**
  * Collection of various utility functions.
@@ -13702,13 +14036,13 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":59,"polyfill/polyfill-base.js":52}],57:[function(require,module,exports){
+},{"_process":62,"polyfill/polyfill-base.js":55}],60:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":58}],58:[function(require,module,exports){
+},{"./lib/sizes.js":61}],61:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
@@ -13800,7 +14134,7 @@ module.exports = function (window) {
     };
 
 };
-},{}],59:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -14036,4 +14370,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"css":9,"dom-ext":11,"drag-drop":17,"event":25,"event-dom/extra/hover.js":19,"event-dom/extra/valuechange.js":20,"event-mobile":21,"io/extra/io-cors-ie9.js":26,"io/extra/io-stream.js":27,"io/extra/io-transfer.js":28,"io/extra/io-xml.js":29,"js-ext":32,"js-ext/extra/reserved-words.js":31,"node-win":undefined,"polyfill":53,"utils":54,"window-ext":57}]},{},[]);
+},{"css":9,"dom-ext":11,"drag-drop":17,"event":27,"event-dom/extra/hover.js":21,"event-dom/extra/valuechange.js":22,"event-mobile":23,"io/extra/io-cors-ie9.js":28,"io/extra/io-stream.js":29,"io/extra/io-transfer.js":30,"io/extra/io-xml.js":31,"js-ext":34,"js-ext/extra/reserved-words.js":33,"node-win":undefined,"polyfill":56,"utils":57,"window-ext":60}]},{},[]);

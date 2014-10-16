@@ -1,5 +1,5 @@
 ---
-module: drag-drop
+module: drag
 maintainer: Marco Asbreuk
 title: Constrained to window
 intro: "Draggable elements can be constrained to the 'window' by setting the attribute <b>xy-constrain=\"window\"</b>, or using javascript by using <b>node.plugin(ITSA.Plugins.NodeConstrain)</b>. The plugin does nothing more than add the right attribute to the draggable Element, and it just works.</b>"
@@ -16,6 +16,9 @@ intro: "Draggable elements can be constrained to the 'window' by setting the att
         display: inline-block;
         *display: inline;
         *zoom: 1;
+    }
+    .body-content.module p.spaced {
+        margin-top: 150px;
     }
 </style>
 
@@ -38,7 +41,7 @@ Drag the 2 rectangles: they will be constrained inside the window. The first is 
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init();
+    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
     document.getElement('#without').plug(ITSA.Plugins.NodeConstrain);
 </script>
 ```
@@ -47,6 +50,6 @@ Drag the 2 rectangles: they will be constrained inside the window. The first is 
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init();
+    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
     document.getElement('#without').plug(ITSA.Plugins.NodeConstrain);
 </script>

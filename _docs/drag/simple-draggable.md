@@ -1,5 +1,5 @@
 ---
-module: drag-drop
+module: drag
 maintainer: Marco Asbreuk
 title: Simple draggable
 intro: "Draggable elements can be setup using the attribute <b>dd-draggable=\"true\"</b>, or using javascript by using <b>node.plugin(ITSA.Plugins.NodeDD)</b>. This example uses plain HTML. Draggable items will force the window to scroll by default when coming outside the visible area.</b>"
@@ -38,12 +38,12 @@ Drag the 2 rectangles. The first is constrained using html, the second is set up
 <script src="itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
-    ITSA.DD.init();
+    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
 </script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
-    ITSA.DD.init();
+    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
 </script>

@@ -21,6 +21,7 @@ YUI.add("yuidoc-meta", function(Y) {
     ],
     "modules": [
         "dom-ext",
+        "drag",
         "drag-drop",
         "event",
         "event-dom",
@@ -52,6 +53,11 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "dom-ext",
             "name": "dom-ext"
+        },
+        {
+            "displayName": "drag",
+            "name": "drag",
+            "description": "Provides `drag and drop` functionality\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "drag-drop",

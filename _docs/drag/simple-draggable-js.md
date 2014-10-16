@@ -1,5 +1,5 @@
 ---
-module: drag-drop
+module: drag
 maintainer: Marco Asbreuk
 title: Simple draggable plugin
 intro: "Draggable elements can be setup using the attribute <b>dd-draggable=\"true\"</b>, or using javascript by using <b>node.plugin(ITSA.Plugins.NodeDD)</b>. This example uses the plugin. The plugin does nothing more than add the right attribute to the draggable Element, and it just works.</b>"
@@ -39,7 +39,7 @@ Drag the 2 rectangles. The first is constrained using html, the second is set up
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init();
+    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
     document.getElement('.container').plug(ITSA.Plugins.NodeDD);
 </script>
 ```
@@ -48,6 +48,6 @@ Drag the 2 rectangles. The first is constrained using html, the second is set up
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init();
+    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
     document.getElement('.container').plug(ITSA.Plugins.NodeDD);
 </script>
