@@ -223,7 +223,7 @@ module.exports = function (window) {
         subscriber = Event.after(&#x27;mouseover&#x27;, function(e) {
             console.log(NAME, &#x27;setupHover: setting up mouseover event&#x27;);
             var node = e.target;
-            e.hover = new Promise(function(fulfill, reject) {
+            e.hover = new Promise(function(fulfill) {
                 Event.onceAfter(
                     &#x27;mouseout&#x27;,
                     function(e) {

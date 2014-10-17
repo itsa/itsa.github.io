@@ -198,10 +198,11 @@ require(&#x27;polyfill/lib/array.foreach.js&#x27;);
      * Checks whether an item is inside the Array.
      * Alias for (array.indexOf(item) &gt; -1)
      *
-     * @method inArray
+     * @method contains
+     * @param item {Any} the item to seek
      * @return {Boolean} whether the item is part of the Array
      */
-    Array.inArray || (ArrayPrototype.inArray=function(item) {
+    Array.contains || (ArrayPrototype.contains=function(item) {
         return (this.indexOf(item) &gt; -1);
     });
 
@@ -217,7 +218,7 @@ require(&#x27;polyfill/lib/array.foreach.js&#x27;);
     Array.remove || (ArrayPrototype.remove=function(item, arrayItem) {
         var instance = this,
             removeItem = function(oneItem) {
-                var index = instance.indexOf(item);
+                var index = instance.indexOf(oneItem);
                 (index &gt; -1) &amp;&amp; instance.splice(index, 1);
             };
         if (!arrayItem &amp;&amp; Array.isArray(item)) {

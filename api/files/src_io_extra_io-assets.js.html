@@ -195,7 +195,7 @@
  * @since 0.0.1
 */
 
-var NAME = &#x27;[io-assets]: &#x27;;
+// var NAME = &#x27;[io-assets]: &#x27;;
 
 module.exports = function (window) {
     var IO = require(&#x27;../io.js&#x27;)(window);
@@ -215,7 +215,7 @@ module.exports = function (window) {
      *     &lt;li&gt;on failure: reason {Error}&lt;/li&gt;
      * &lt;/ul&gt;
     */
-    IO.getCSS = function(url, options) {
+    IO.getCSS = function(/* url, options */) {
     };
 
     /**
@@ -233,7 +233,7 @@ module.exports = function (window) {
      *     &lt;li&gt;on failure: reason {Error}&lt;/li&gt;
      * &lt;/ul&gt;
     */
-    IO.getJS = function(url, options) {
+    IO.getJS = function(/* url, options */) {
     };
 
     return IO;

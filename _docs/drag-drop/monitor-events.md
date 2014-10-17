@@ -12,7 +12,6 @@ intro: "Dragging can be monitored using the dd, dd-drag, dd-over, dd-out, dd-dro
         width: 100px;
         background-color: #990073;
         border: 2px solid #000;
-        cursor: default;
         color: #FFF;
         text-align: center;
         padding-top: 10px;
@@ -31,7 +30,7 @@ intro: "Dragging can be monitored using the dd, dd-drag, dd-over, dd-out, dd-dro
     .monitor-container {
         margin-top: 230px;
         width: 100%;
-        min-height: 100px;
+        min-height: 120px;
         border: solid 1px #000;
         background-color: #ddd;
         padding: 10px 20px;
@@ -45,7 +44,7 @@ intro: "Dragging can be monitored using the dd, dd-drag, dd-over, dd-out, dd-dro
     .body-content.module p.spaced {
         margin-top: 25px;
     }
-    .dropactive[dropzone] {
+    .dropzone-awake[dropzone] {
         border-style: dashed;
     }
 </style>
@@ -62,7 +61,7 @@ Drag the item and watch for the events.
 
 ```css
 <style type="text/css">
-    .dropactive[dropzone] {
+    .dropzone-awake[dropzone] {
         border-style: dashed;
     }
 </style>
@@ -107,16 +106,6 @@ Drag the item and watch for the events.
         }
     });
 
-    ITSA.Event.before('dd-drop', function(e) {
-        var dropId = e.dropTarget && e.dropTarget.getId();
-        if (dropId) {
-            monitorCont.append('before dd-drop --> inside '+dropId+'<br>');
-        }
-        else {
-            monitorCont.append('before dd-drop --> outside any dropzone<br>');
-        }
-    });
-
     ITSA.Event.after('dd-drop', function(e) {
         var dropId = e.dropTarget && e.dropTarget.getId();
         if (dropId) {
@@ -129,9 +118,9 @@ Drag the item and watch for the events.
 
     //=======================================================================
 
-    ITSA.Event.after(['dropzone', 'dropzone-out', 'dropzone-drop'], function(e) {
+    ITSA.Event.after(['dropzone-over', 'dropzone-out', 'dropzone-drop'], function(e) {
         var dropId = e.dropTarget.getId();
-        monitorContDropzone.append(((e.type==='dd-drop') ? 'after ' : '')+e.type+' --> inside '+dropId+'<br>');
+        monitorContDropzone.append(((e.type==='dd-drop') ? 'after ' : '')+e.type+' --> '+dropId+'<br>');
     });
 </script>
 ```
@@ -165,16 +154,6 @@ Drag the item and watch for the events.
         }
     });
 
-    ITSA.Event.before('dd-drop', function(e) {
-        var dropId = e.dropTarget && e.dropTarget.getId();
-        if (dropId) {
-            monitorCont.append('before dd-drop --> inside '+dropId+'<br>');
-        }
-        else {
-            monitorCont.append('before dd-drop --> outside any dropzone<br>');
-        }
-    });
-
     ITSA.Event.after('dd-drop', function(e) {
         var dropId = e.dropTarget && e.dropTarget.getId();
         if (dropId) {
@@ -187,8 +166,7 @@ Drag the item and watch for the events.
 
     //=======================================================================
 
-    ITSA.Event.after(['dropzone', 'dropzone-out', 'dropzone-drop'], function(e) {
-        var dropId = e.dropTarget.getId();
-        monitorContDropzone.append(((e.type==='dd-drop') ? 'after ' : '')+e.type+' --> inside '+dropId+'<br>');
+    ITSA.Event.after(['dropzone-over', 'dropzone-out', 'dropzone-drop'], function(e) {
+        monitorContDropzone.append(((e.type==='dd-drop') ? 'after ' : '')+e.type+' --> '+e.target.getId()+'<br>');
     });
 </script>

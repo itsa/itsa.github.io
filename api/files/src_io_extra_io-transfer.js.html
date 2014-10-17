@@ -206,8 +206,7 @@ var NAME = &#x27;[io-transfer]: &#x27;,
     DELETE = &#x27;delete&#x27;,
     REGEXP_ARRAY = /^( )*\[/,
     REGEXP_OBJECT = /^( )*{/,
-    REGEXP_REMOVE_LAST_COMMA = /^(.*),( )*$/,
-    entendXHR;
+    REGEXP_REMOVE_LAST_COMMA = /^(.*),( )*$/;
 
 module.exports = function (window) {
 
@@ -224,7 +223,7 @@ module.exports = function (window) {
      * @private
     */
     _entendXHR = function(xhr, props, options /*, promise */) {
-        var isarray, isobject, isstring, parialdata, regexpcomma, followingstream;
+        var isarray, isobject, parialdata, regexpcomma, followingstream;
         if ((typeof options.streamback === &#x27;function&#x27;) &amp;&amp; options.headers &amp;&amp; (options.headers.Accept===&#x27;application/json&#x27;)) {
             console.log(NAME, &#x27;entendXHR&#x27;);
             xhr._parseStream = function(streamData) {

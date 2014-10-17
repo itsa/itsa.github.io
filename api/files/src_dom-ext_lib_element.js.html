@@ -201,10 +201,8 @@ module.exports = function (window) {
         BORDERBOX = &#x27;el-borderbox&#x27;,
         NO_TRANS = &#x27;el-notrans&#x27;,
         INVISIBLE = &#x27;el-invisible&#x27;,
-        CONSTRAIN_ATTR = &#x27;xy-constrain&#x27;,
         REGEXP_NODE_ID = /^#\S+$/,
         RESERVED_WORDS = require(&#x27;js-ext/extra/reserved-words.js&#x27;),
-
         APPEND_CHILD = &#x27;appendChild&#x27;,
         INSERT_BEFORE = &#x27;insertBefore&#x27;,
         LEFT = &#x27;left&#x27;,
@@ -217,7 +215,6 @@ module.exports = function (window) {
         BORDER_BOTTOM_WIDTH = BORDER+&#x27;-bottom-&#x27;+WIDTH,
         NUMBER = &#x27;number&#x27;,
         PX = &#x27;px&#x27;,
-
         toCamelCase = function(input) {
             return input.toLowerCase().replace(/-(.)/g, function(match, group) {
                 return group.toUpperCase();
@@ -301,7 +298,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.empty = function(cssSelector) {
+        ElementPrototype.empty = function(/* cssSelector */) {
             return this.setText(&#x27;&#x27;);
         };
 
@@ -313,7 +310,7 @@ module.exports = function (window) {
         * @return {HtmlElement|null}
         * @since 0.0.1
         */
-        ElementPrototype.first = function(cssSelector) {
+        ElementPrototype.first = function(/* cssSelector */) {
             return window.document.first.apply(this, arguments);
         };
 
@@ -445,7 +442,7 @@ module.exports = function (window) {
         * @return {NodeList} NodeList of HtmlElements that match the css-selector
         * @since 0.0.1
         */
-        ElementPrototype.getAll = function(cssSelector) {
+        ElementPrototype.getAll = function(/* cssSelector */) {
             return window.document.getAll.apply(this, arguments);
         };
 
@@ -460,7 +457,7 @@ module.exports = function (window) {
         * @return {String|null} value of the attribute
         * @since 0.0.1
         */
-        ElementPrototype.getAttr = function(attributeName) {
+        ElementPrototype.getAttr = function(/* attributeName */) {
             return this.getAttribute.apply(this, arguments);
         };
 
@@ -498,7 +495,7 @@ module.exports = function (window) {
         * @return {HtmlElement|null} the HtmlElement that was search for
         * @since 0.0.1
         */
-        ElementPrototype.getElement = function(cssSelector) {
+        ElementPrototype.getElement = function(/* cssSelector */) {
             return window.document.getElement.apply(this, arguments);
         };
 
@@ -703,7 +700,7 @@ module.exports = function (window) {
         * @return {Boolean} Whether the HtmlElement has the attribute set.
         * @since 0.0.1
         */
-        ElementPrototype.hasAttr = function(attributeName) {
+        ElementPrototype.hasAttr = function(/* attributeName */) {
             return this.hasAttribute.apply(this, arguments);
         };
 
@@ -755,25 +752,6 @@ module.exports = function (window) {
         };
 
        /**
-         * Checks whether the HtmlElement has its rectangle inside the outboud-Element.
-         * This is no check of the DOM-tree, but purely based upon coordinates.
-         *
-         * @method rectangleInside
-         * @param outboundElement {HtmlElement} the Element where this element should lie inside
-         * @return {Boolean} whether the Element lies inside the outboundElement
-         * @since 0.0.2
-         */
-        ElementPrototype.rectangleInside = function(outboundElement) {
-            var instance = this,
-                outerRect = outboundElement.getBoundingClientRect(),
-                innerRect = instance.getBoundingClientRect();
-            return (outerRect.left&lt;=innerRect.left) &amp;&amp;
-                   (outerRect.top&lt;=innerRect.top) &amp;&amp;
-                   ((outerRect.left+outboundElement.offsetWidth)&gt;=(innerRect.left+instance.offsetWidth)) &amp;&amp;
-                   ((outerRect.top+outboundElement.offsetHeight)&gt;=(innerRect.top+instance.offsetHeight));
-        };
-
-       /**
          * Checks whether the HtmlElement lies within the specified selector (which can be a CSS-selector or a HtmlElement)
          *
          * @method inside
@@ -822,7 +800,7 @@ module.exports = function (window) {
         * @return {HtmlElement|null}
         * @since 0.0.1
         */
-        ElementPrototype.last = function(cssSelector) {
+        ElementPrototype.last = function(/* cssSelector */) {
             return window.document.last.apply(this, arguments);
         };
 
@@ -884,6 +862,25 @@ module.exports = function (window) {
         };
 
        /**
+         * Checks whether the HtmlElement has its rectangle inside the outboud-Element.
+         * This is no check of the DOM-tree, but purely based upon coordinates.
+         *
+         * @method rectangleInside
+         * @param outboundElement {HtmlElement} the Element where this element should lie inside
+         * @return {Boolean} whether the Element lies inside the outboundElement
+         * @since 0.0.2
+         */
+        ElementPrototype.rectangleInside = function(outboundElement) {
+            var instance = this,
+                outerRect = outboundElement.getBoundingClientRect(),
+                innerRect = instance.getBoundingClientRect();
+            return (outerRect.left&lt;=innerRect.left) &amp;&amp;
+                   (outerRect.top&lt;=innerRect.top) &amp;&amp;
+                   ((outerRect.left+outboundElement.offsetWidth)&gt;=(innerRect.left+instance.offsetWidth)) &amp;&amp;
+                   ((outerRect.top+outboundElement.offsetHeight)&gt;=(innerRect.top+instance.offsetHeight));
+        };
+
+       /**
         * Removes the HtmlElement from the DOM.
         *
         * @method remove
@@ -902,10 +899,12 @@ module.exports = function (window) {
         * @method removeAttr
         * @param attributeName {String}
         * @return {Boolean} Whether the HtmlElement has the attribute set.
+        * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.removeAttr = function(attributeName) {
-            return this.removeAttribute.apply(this, arguments);
+        ElementPrototype.removeAttr = function(/* attributeName */) {
+            this.removeAttribute.apply(this, arguments);
+            return this;
         };
 
        /**
@@ -1134,11 +1133,13 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         ElementPrototype.setInlineStyle = function(cssAttribute, value) {
+            var instance = this;
             // cautious: in case of preserved words (fe &#x60;float&#x60;), we need to modify the attributename
             // in order to get it processed. It should be translated into &#x60;cssFloat&#x60; or alike.
             RESERVED_WORDS[cssAttribute] &amp;&amp; (cssAttribute=&#x27;css-&#x27;+cssAttribute); // will be camelCased in the next step
-            this.style[toCamelCase(cssAttribute)] = String(value).replace(/;$/, &#x27;&#x27;);
-            return this;
+            instance.style[toCamelCase(cssAttribute)] = String(value).replace(/;$/, &#x27;&#x27;);
+            (instance.style.length===0) &amp;&amp; instance.removeAttr(&#x27;style&#x27;);
+            return instance;
         };
 
        /**
@@ -1237,7 +1238,7 @@ module.exports = function (window) {
             console.log(NAME, &#x27;setXY &#x27;+x+&#x27;,&#x27;+y);
             var instance = this,
                 position = instance.getStyle(POSITION),
-                dif, start, finalValue, match, constrainNode, byExactId, parent, clone,
+                dif, match, constrainNode, byExactId, parent, clone,
                 containerTop, containerRight, containerLeft, containerBottom, requestedX, requestedY;
 
             // default position to relative
@@ -1371,7 +1372,7 @@ module.exports = function (window) {
         * @return {Boolean} whether or not the node matches the selector
         * @since 0.0.1
         */
-        ElementPrototype.test = function(cssSelector) {
+        ElementPrototype.test = function(/* cssSelector */) {
             return window.document.test.apply(this, arguments);
         };
 
@@ -1379,13 +1380,22 @@ module.exports = function (window) {
         * Toggles the className of the Element.
         *
         * @method toggleClass
-        * @param className {String} the className that should be toggled
+        * @param className {String|Array} className that should be toggled, may be an array of classNames
+        * @param forceState {Boolean} to force toggling into this specific state
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.toggleClass = function(className) {
-            var instance = this;
-            instance.hasClass(className) ? instance.removeClass(className) : instance.setClass(className);
+        ElementPrototype.toggleClass = function(className, forceState) {
+            var instance = this,
+                doToggle = function(cl) {
+                    (((typeof forceState === &#x27;boolean&#x27;) &amp;&amp; !forceState) || instance.hasClass(cl)) ? instance.removeClass(cl) : instance.setClass(cl);
+                };
+            if (typeof className === &#x27;string&#x27;) {
+                doToggle(className);
+            }
+            else if (Array.isArray(className)) {
+                className.forEach(doToggle);
+            }
             return instance;
         };
 

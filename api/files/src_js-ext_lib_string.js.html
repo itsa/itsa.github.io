@@ -212,6 +212,18 @@
         PATTERN_HEX_COLOR = /^[0-9A-F]{3}([0-9A-F]{3})?$/;
 
     /**
+     * Checks whether the substring is part if this String.
+     * Alias for (String.indexOf(substring) &gt; -1)
+     *
+     * @method contains
+     * @param substring {String} the substring to test for
+     * @return {Boolean} whether the substring is found
+     */
+    String.contains || (StringPrototype.contains=function(substring) {
+        return (this.indexOf(substring) &gt; -1);
+    });
+
+    /**
      * Checks if the string ends with the value specified by &#x60;test&#x60;
      *
      * @method endsWith

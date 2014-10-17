@@ -239,8 +239,6 @@ require(&#x27;js-ext/lib/object.js&#x27;);
          * &#x27;:save&#x27;
          */
         REGEXP_EVENTNAME_WITH_SEMICOLON = /:((?:\w|-)+)$/,
-        MSG_HALTED = &#x27;event was halted&#x27;,
-        MSG_PREVENTED = &#x27;event was defaultPrevented&#x27;,
         DEFINE_IMMUTAL_PROPERTY = function (obj, property, value) {
             Object.defineProperty(obj, property, {
                 configurable: false,
@@ -564,7 +562,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
          *        have the syntax: &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used only  for&#x60;eventName&#x60;.
          *        If &#x60;emitterName&#x60; should be defined.
          * @param callback {Function} subscriber: will be invoked when the customEvent is called (before any subscribers.
-         *                 Recieves 3 arguments: the &#x60;subscriber-object&#x60;, &#x60;customEvent&#x60; and the complete subscriptionobject.
+         *                 Recieves 2 arguments: the &#x60;customEvent&#x60; and &#x60;subscriber-object&#x60;.
          * @param context {Object} context of the callback
          * @param [once=false] {Boolean} whether the subscriptions should be removed after the first invokation
          * @chainable
@@ -596,7 +594,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
          *        have the syntax: &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used only  for&#x60;eventName&#x60;.
          *        If &#x60;emitterName&#x60; should be defined.
          * @param callback {Function} subscriber: will be invoked when the customEvent is called (before any subscribers.
-         *                 Recieves 2 arguments: the &#x60;subscriber-object&#x60; and &#x60;customEvent&#x60;.
+         *                 Recieves 1 arguments: the &#x60;customEvent&#x60;.
          * @param context {Object} context of the callback
          * @param [once=false] {Boolean} whether the subscriptions should be removed after the first invokation
          * @chainable
@@ -716,14 +714,14 @@ require(&#x27;js-ext/lib/object.js&#x27;);
             if (emitterName) {
                 pattern = new RegExp(&#x27;^&#x27;+emitterName+&#x27;:&#x27;);
                 instance._ce.each(
-                    function(value, key, object) {
+                    function(value, key) {
                         key.match(pattern) &amp;&amp; (delete instance._ce[key]);
                     }
                 );
             }
             else {
                 instance._ce.each(
-                    function(value, key, object) {
+                    function(value, key) {
                         delete instance._ce[key];
                     }
                 );

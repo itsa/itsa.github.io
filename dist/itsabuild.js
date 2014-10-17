@@ -5089,12 +5089,6 @@ module.exports = function (window) {
         return content.replace(/[&<>"'\/`]/g, function (match) {return HTML_CHARS[match];});
     },
 
-    toCamelCase = function(input) {
-        return input.toLowerCase().replace(/-(.)/g, function(match, group) {
-            return group.toUpperCase();
-        });
-    },
-
    /*
     * Creates a fragment out of a String, so that it can be inserted as a NodeList.
     *
@@ -5370,7 +5364,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.plug = HTMLCollectionPrototype.plug = function(NodePluginClass, options) {
+        NodeListPrototype.plug = HTMLCollectionPrototype.plug = function(/* NodePluginClass, options */) {
             return forEach(this, 'plug', arguments);
         };
 
@@ -5382,7 +5376,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.unplug = HTMLCollectionPrototype.unplug = function(NodePluginClass) {
+        NodeListPrototype.unplug = HTMLCollectionPrototype.unplug = function(/* NodePluginClass */) {
             return forEach(this, 'unplug', arguments);
         };
 
@@ -5448,10 +5442,8 @@ module.exports = function (window) {
         BORDERBOX = 'el-borderbox',
         NO_TRANS = 'el-notrans',
         INVISIBLE = 'el-invisible',
-        CONSTRAIN_ATTR = 'xy-constrain',
         REGEXP_NODE_ID = /^#\S+$/,
         RESERVED_WORDS = require('js-ext/extra/reserved-words.js'),
-
         APPEND_CHILD = 'appendChild',
         INSERT_BEFORE = 'insertBefore',
         LEFT = 'left',
@@ -5464,7 +5456,6 @@ module.exports = function (window) {
         BORDER_BOTTOM_WIDTH = BORDER+'-bottom-'+WIDTH,
         NUMBER = 'number',
         PX = 'px',
-
         toCamelCase = function(input) {
             return input.toLowerCase().replace(/-(.)/g, function(match, group) {
                 return group.toUpperCase();
@@ -5548,7 +5539,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.empty = function(cssSelector) {
+        ElementPrototype.empty = function(/* cssSelector */) {
             return this.setText('');
         };
 
@@ -5560,7 +5551,7 @@ module.exports = function (window) {
         * @return {HtmlElement|null}
         * @since 0.0.1
         */
-        ElementPrototype.first = function(cssSelector) {
+        ElementPrototype.first = function(/* cssSelector */) {
             return window.document.first.apply(this, arguments);
         };
 
@@ -5692,7 +5683,7 @@ module.exports = function (window) {
         * @return {NodeList} NodeList of HtmlElements that match the css-selector
         * @since 0.0.1
         */
-        ElementPrototype.getAll = function(cssSelector) {
+        ElementPrototype.getAll = function(/* cssSelector */) {
             return window.document.getAll.apply(this, arguments);
         };
 
@@ -5707,7 +5698,7 @@ module.exports = function (window) {
         * @return {String|null} value of the attribute
         * @since 0.0.1
         */
-        ElementPrototype.getAttr = function(attributeName) {
+        ElementPrototype.getAttr = function(/* attributeName */) {
             return this.getAttribute.apply(this, arguments);
         };
 
@@ -5745,7 +5736,7 @@ module.exports = function (window) {
         * @return {HtmlElement|null} the HtmlElement that was search for
         * @since 0.0.1
         */
-        ElementPrototype.getElement = function(cssSelector) {
+        ElementPrototype.getElement = function(/* cssSelector */) {
             return window.document.getElement.apply(this, arguments);
         };
 
@@ -5950,7 +5941,7 @@ module.exports = function (window) {
         * @return {Boolean} Whether the HtmlElement has the attribute set.
         * @since 0.0.1
         */
-        ElementPrototype.hasAttr = function(attributeName) {
+        ElementPrototype.hasAttr = function(/* attributeName */) {
             return this.hasAttribute.apply(this, arguments);
         };
 
@@ -6002,25 +5993,6 @@ module.exports = function (window) {
         };
 
        /**
-         * Checks whether the HtmlElement has its rectangle inside the outboud-Element.
-         * This is no check of the DOM-tree, but purely based upon coordinates.
-         *
-         * @method rectangleInside
-         * @param outboundElement {HtmlElement} the Element where this element should lie inside
-         * @return {Boolean} whether the Element lies inside the outboundElement
-         * @since 0.0.2
-         */
-        ElementPrototype.rectangleInside = function(outboundElement) {
-            var instance = this,
-                outerRect = outboundElement.getBoundingClientRect(),
-                innerRect = instance.getBoundingClientRect();
-            return (outerRect.left<=innerRect.left) &&
-                   (outerRect.top<=innerRect.top) &&
-                   ((outerRect.left+outboundElement.offsetWidth)>=(innerRect.left+instance.offsetWidth)) &&
-                   ((outerRect.top+outboundElement.offsetHeight)>=(innerRect.top+instance.offsetHeight));
-        };
-
-       /**
          * Checks whether the HtmlElement lies within the specified selector (which can be a CSS-selector or a HtmlElement)
          *
          * @method inside
@@ -6069,7 +6041,7 @@ module.exports = function (window) {
         * @return {HtmlElement|null}
         * @since 0.0.1
         */
-        ElementPrototype.last = function(cssSelector) {
+        ElementPrototype.last = function(/* cssSelector */) {
             return window.document.last.apply(this, arguments);
         };
 
@@ -6131,6 +6103,25 @@ module.exports = function (window) {
         };
 
        /**
+         * Checks whether the HtmlElement has its rectangle inside the outboud-Element.
+         * This is no check of the DOM-tree, but purely based upon coordinates.
+         *
+         * @method rectangleInside
+         * @param outboundElement {HtmlElement} the Element where this element should lie inside
+         * @return {Boolean} whether the Element lies inside the outboundElement
+         * @since 0.0.2
+         */
+        ElementPrototype.rectangleInside = function(outboundElement) {
+            var instance = this,
+                outerRect = outboundElement.getBoundingClientRect(),
+                innerRect = instance.getBoundingClientRect();
+            return (outerRect.left<=innerRect.left) &&
+                   (outerRect.top<=innerRect.top) &&
+                   ((outerRect.left+outboundElement.offsetWidth)>=(innerRect.left+instance.offsetWidth)) &&
+                   ((outerRect.top+outboundElement.offsetHeight)>=(innerRect.top+instance.offsetHeight));
+        };
+
+       /**
         * Removes the HtmlElement from the DOM.
         *
         * @method remove
@@ -6149,10 +6140,12 @@ module.exports = function (window) {
         * @method removeAttr
         * @param attributeName {String}
         * @return {Boolean} Whether the HtmlElement has the attribute set.
+        * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.removeAttr = function(attributeName) {
-            return this.removeAttribute.apply(this, arguments);
+        ElementPrototype.removeAttr = function(/* attributeName */) {
+            this.removeAttribute.apply(this, arguments);
+            return this;
         };
 
        /**
@@ -6381,11 +6374,13 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         ElementPrototype.setInlineStyle = function(cssAttribute, value) {
+            var instance = this;
             // cautious: in case of preserved words (fe `float`), we need to modify the attributename
             // in order to get it processed. It should be translated into `cssFloat` or alike.
             RESERVED_WORDS[cssAttribute] && (cssAttribute='css-'+cssAttribute); // will be camelCased in the next step
-            this.style[toCamelCase(cssAttribute)] = String(value).replace(/;$/, '');
-            return this;
+            instance.style[toCamelCase(cssAttribute)] = String(value).replace(/;$/, '');
+            (instance.style.length===0) && instance.removeAttr('style');
+            return instance;
         };
 
        /**
@@ -6484,7 +6479,7 @@ module.exports = function (window) {
             console.log(NAME, 'setXY '+x+','+y);
             var instance = this,
                 position = instance.getStyle(POSITION),
-                dif, start, finalValue, match, constrainNode, byExactId, parent, clone,
+                dif, match, constrainNode, byExactId, parent, clone,
                 containerTop, containerRight, containerLeft, containerBottom, requestedX, requestedY;
 
             // default position to relative
@@ -6618,7 +6613,7 @@ module.exports = function (window) {
         * @return {Boolean} whether or not the node matches the selector
         * @since 0.0.1
         */
-        ElementPrototype.test = function(cssSelector) {
+        ElementPrototype.test = function(/* cssSelector */) {
             return window.document.test.apply(this, arguments);
         };
 
@@ -6626,13 +6621,22 @@ module.exports = function (window) {
         * Toggles the className of the Element.
         *
         * @method toggleClass
-        * @param className {String} the className that should be toggled
+        * @param className {String|Array} className that should be toggled, may be an array of classNames
+        * @param forceState {Boolean} to force toggling into this specific state
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.toggleClass = function(className) {
-            var instance = this;
-            instance.hasClass(className) ? instance.removeClass(className) : instance.setClass(className);
+        ElementPrototype.toggleClass = function(className, forceState) {
+            var instance = this,
+                doToggle = function(cl) {
+                    (((typeof forceState === 'boolean') && !forceState) || instance.hasClass(cl)) ? instance.removeClass(cl) : instance.setClass(cl);
+                };
+            if (typeof className === 'string') {
+                doToggle(className);
+            }
+            else if (Array.isArray(className)) {
+                className.forEach(doToggle);
+            }
             return instance;
         };
 
@@ -6692,7 +6696,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.append = HTMLCollectionPrototype.append = function(content, escape) {
+        NodeListPrototype.append = HTMLCollectionPrototype.append = function(/* content, escape */) {
             return forEach(this, 'append', arguments);
         };
 
@@ -6708,7 +6712,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.defineInlineStyle = HTMLCollectionPrototype.defineInlineStyle = function(value) {
+        NodeListPrototype.defineInlineStyle = HTMLCollectionPrototype.defineInlineStyle = function(/* value */) {
             return forEach(this, 'defineInlineStyle', arguments);
         };
 
@@ -6722,7 +6726,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.prepend = HTMLCollectionPrototype.prepend = function(content, escape) {
+        NodeListPrototype.prepend = HTMLCollectionPrototype.prepend = function(/* content, escape */) {
             return forEach(this, 'prepend', arguments);
         };
 
@@ -6733,7 +6737,7 @@ module.exports = function (window) {
         * @method remove
         * @since 0.0.1
         */
-        NodeListPrototype.remove = HTMLCollectionPrototype.remove = function(HtmlElement) {
+        NodeListPrototype.remove = HTMLCollectionPrototype.remove = function(/* HtmlElement */) {
             return forEach(this, 'remove', arguments);
         };
 
@@ -6748,7 +6752,7 @@ module.exports = function (window) {
         * @return {Boolean} Whether the HtmlElement has the attribute set.
         * @since 0.0.1
         */
-        NodeListPrototype.removeAttr = HTMLCollectionPrototype.removeAttr = function(attributeName) {
+        NodeListPrototype.removeAttr = HTMLCollectionPrototype.removeAttr = function(/* attributeName */) {
             return forEach(this, 'removeAttr', arguments);
         };
 
@@ -6761,7 +6765,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.removeClass = HTMLCollectionPrototype.removeClass = function(className) {
+        NodeListPrototype.removeClass = HTMLCollectionPrototype.removeClass = function(/* className */) {
             return forEach(this, 'removeClass', arguments);
         };
 
@@ -6774,7 +6778,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.removeData = HTMLCollectionPrototype.removeData = function(key) {
+        NodeListPrototype.removeData = HTMLCollectionPrototype.removeData = function(/* key */) {
             return forEach(this, 'removeData', arguments);
         };
 
@@ -6787,7 +6791,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.removeInlineStyle = HTMLCollectionPrototype.removeInlineStyle = function(cssAttribute) {
+        NodeListPrototype.removeInlineStyle = HTMLCollectionPrototype.removeInlineStyle = function(/* cssAttribute */) {
             return forEach(this, 'removeInlineStyle', arguments);
         };
 
@@ -6800,7 +6804,7 @@ module.exports = function (window) {
         * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
         * @since 0.0.1
         */
-        NodeListPrototype.replace = HTMLCollectionPrototype.replace = function(newHtmlElement, escape) {
+        NodeListPrototype.replace = HTMLCollectionPrototype.replace = function(/* newHtmlElement, escape */) {
             return forEach(this, 'replace', arguments);
         };
 
@@ -6816,7 +6820,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.replaceClass = HTMLCollectionPrototype.replaceClass = function(prevClassName, newClassName, force) {
+        NodeListPrototype.replaceClass = HTMLCollectionPrototype.replaceClass = function(/* prevClassName, newClassName, force */) {
             return forEach(this, 'replaceClass', arguments);
         };
 
@@ -6832,7 +6836,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
        */
-        NodeListPrototype.setAttr = HTMLCollectionPrototype.setAttr = function(attributeName, value) {
+        NodeListPrototype.setAttr = HTMLCollectionPrototype.setAttr = function(/* attributeName, value */) {
             return forEach(this, 'setAttr', arguments);
         };
 
@@ -6845,7 +6849,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.setClass = HTMLCollectionPrototype.setClass = function(className) {
+        NodeListPrototype.setClass = HTMLCollectionPrototype.setClass = function(/* className */) {
             return forEach(this, 'setClass', arguments);
         };
 
@@ -6858,7 +6862,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.setClassName = HTMLCollectionPrototype.setClassName = function(className) {
+        NodeListPrototype.setClassName = HTMLCollectionPrototype.setClassName = function(/* className */) {
             return forEach(this, 'setClassName', arguments);
         };
 
@@ -6873,7 +6877,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
        */
-        NodeListPrototype.setData = HTMLCollectionPrototype.setData = function(key, value) {
+        NodeListPrototype.setData = HTMLCollectionPrototype.setData = function(/* key, value */) {
             return forEach(this, 'setData', arguments);
         };
 
@@ -6888,7 +6892,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.setHTML = HTMLCollectionPrototype.setHTML = function(content) {
+        NodeListPrototype.setHTML = HTMLCollectionPrototype.setHTML = function(/* content */) {
             return forEach(this, 'setHTML', arguments);
         };
 
@@ -6904,7 +6908,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.setInlineStyle = HTMLCollectionPrototype.setInlineStyle = function(cssAttribute, value) {
+        NodeListPrototype.setInlineStyle = HTMLCollectionPrototype.setInlineStyle = function(/* cssAttribute, value */) {
             return forEach(this, 'setInlineStyle', arguments);
         };
 
@@ -6919,7 +6923,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.setText = HTMLCollectionPrototype.setText = function(content) {
+        NodeListPrototype.setText = HTMLCollectionPrototype.setText = function(/* content */) {
             return forEach(this, 'setText', arguments);
         };
 
@@ -6932,7 +6936,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.toggleClass = HTMLCollectionPrototype.toggleClass = function(className) {
+        NodeListPrototype.toggleClass = HTMLCollectionPrototype.toggleClass = function(/* className */) {
             return forEach(this, 'toggleClass', arguments);
         };
 
@@ -6944,7 +6948,7 @@ var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -khtml-user-select
 "use strict";
 
 /**
- * Provides `drag and drop` functionality
+ * Provides `drag and drop` functionality with dropzones
  *
  *
  * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
@@ -6959,54 +6963,147 @@ var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -khtml-user-select
  * @since 0.0.4
 */
 
-var NAME = '[dragdrop]: ',
-    DRAG = 'drag',
+
+// Redefine the API for the events `dd`, `dd-drag` and `dd-drop`, for they have more properties:
+
+/**
+* Emitted during the drag-cycle of a draggable Element (while it is dragged).
+*
+* @event *:dd-drag (extended by drag-drop)
+* @param e {Object} eventobject including:
+* @param e.target {HtmlElement} the HtmlElement that is being dragged
+* @param e.dragNode {HtmlElement} The HtmlElement that is being dragged (equals e.target)
+* @param [e.sourceNode] {HtmlElement} The original Element. Only when a `copy` is made --> e.dragNode is being moved while
+*        e.sourceNode stand at its place.
+* @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+* @param e.sourceTarget {HtmlElement} the deepest HtmlElement where the mouse lies upon
+* @param [e.dropTarget] {HtmlElement} The dropzone HtmlElement that will be available whenever the draggable gets over a dropzone.
+* @param e.dd {Promise} Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.
+* @param [e.dropzone] {Promise} a Promise that will be available whenever the draggable gets over a dropzone.
+*        The Promise that gets fulfilled as soon as the draggable is dropped, or outside the dropzone
+*        Will fulfill with one argument: `onDropzone` {Boolean} when `true`, the draggable is dropped inside the dropzone, otherwise
+*        the draggable got outside the dropzone without beging dropped.
+* @param e.ctrlKey {Boolean} Whether the Ctrl/cmd key is pressed
+* @param e.isCopied {Boolean} Whether the drag is a copy-drag
+* @param e.xMouse {Number} the current x-position in the window-view
+* @param e.yMouse {Number} the current y-position in the window-view
+* @param e.clientX {Number} the current x-position in the window-view
+* @param e.clientY {Number} the current y-position in the window-view
+* @param e.xMouseOrigin {Number} the original x-position in the document when drag started (incl. scrollOffset)
+* @param e.yMouseOrigin {Number} the original y-position in the document when drag started (incl. scrollOffset)
+* @param [e.relatives] {NodeList} an optional list that the user could set in a `before`-subscriber of the `dd`-event
+*        to inform which nodes are related to the draggable node and should be dragged as well.
+* @param [e.relativeDragNodes] {NodeList} an optional list that holds the HtmlElements that corresponds with
+*        the `e.relative` list, but is a list with draggable Elements.
+
+* @since 0.0.1
+*/
+
+/**
+* Emitted when drag-cycle of a draggable Element is ended.
+*
+* @event *:dd-drop (extended by drag-drop)
+* @param e {Object} eventobject including:
+* @param e.target {HtmlElement} the HtmlElement that is being dragged
+* @param e.dragNode {HtmlElement} The HtmlElement that is being dragged (equals e.target)
+* @param [e.sourceNode] {HtmlElement} The original Element. Only when a `copy` is made --> e.dragNode is being moved while
+*        e.sourceNode stand at its place.
+* @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+* @param e.sourceTarget {HtmlElement} the deepest HtmlElement where the mouse lies upon
+* @param [e.dropTarget] {HtmlElement} The dropzone HtmlElement that will be available whenever the draggable gets over a dropzone.
+* @param e.dd {Promise} Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.
+* @param [e.dropzone] {Promise} a Promise that will be available whenever the draggable gets over a dropzone.
+*        The Promise that gets fulfilled as soon as the draggable is dropped, or outside the dropzone
+*        Will fulfill with one argument: `onDropzone` {Boolean} when `true`, the draggable is dropped inside the dropzone, otherwise
+*        the draggable got outside the dropzone without beging dropped.
+* @param e.ctrlKey {Boolean} Whether the Ctrl/cmd key is pressed
+* @param e.isCopied {Boolean} Whether the drag is a copy-drag
+* @param e.xMouse {Number} the current x-position in the window-view
+* @param e.yMouse {Number} the current y-position in the window-view
+* @param e.clientX {Number} the current x-position in the window-view
+* @param e.clientY {Number} the current y-position in the window-view
+* @param e.xMouseOrigin {Number} the original x-position in the document when drag started (incl. scrollOffset)
+* @param e.yMouseOrigin {Number} the original y-position in the document when drag started (incl. scrollOffset)
+* @param [e.relatives] {NodeList} an optional list that the user could set in a `before`-subscriber of the `dd`-event
+*        to inform which nodes are related to the draggable node and should be dragged as well.
+* @param [e.relativeDragNodes] {NodeList} an optional list that holds the HtmlElements that corresponds with
+*        the `e.relative` list, but is a list with draggable Elements.
+
+* @since 0.0.1
+*/
+
+/**
+* Emitted when a draggable Element's drag-cycle starts. You can use a `before`-subscriber to specify
+* e.relatives, which should be a nodelist with HtmlElements, that should be dragged togehter with the master
+* draggable Element.
+*
+* @event dd (extended by drag-drop)
+* @param e {Object} eventobject including:
+* @param e.target {HtmlElement} the HtmlElement that is being dragged
+* @param e.dragNode {HtmlElement} The HtmlElement that is being dragged (equals e.target)
+* @param [e.sourceNode] {HtmlElement} The original Element. Only when a `copy` is made --> e.dragNode is being moved while
+*        e.sourceNode stand at its place.
+* @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+* @param e.sourceTarget {HtmlElement} the deepest HtmlElement where the mouse lies upon
+* @param e.dd {Promise} Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.
+* @param e.ctrlKey {Boolean} Whether the Ctrl/cmd key is pressed
+* @param e.isCopied {Boolean} Whether the drag is a copy-drag
+* @param e.xMouse {Number} the current x-position in the window-view
+* @param e.yMouse {Number} the current y-position in the window-view
+* @param e.clientX {Number} the current x-position in the window-view
+* @param e.clientY {Number} the current y-position in the window-view
+* @param e.xMouseOrigin {Number} the original x-position in the document when drag started (incl. scrollOffset)
+* @param e.yMouseOrigin {Number} the original y-position in the document when drag started (incl. scrollOffset)
+* @param [e.relatives] {NodeList} an optional list that the user could set in a `before`-subscriber of the `dd`-event
+*        to inform which nodes are related to the draggable node and should be dragged as well.
+* @param [e.relativeDragNodes] {NodeList} an optional list that holds the HtmlElements that corresponds with
+*        the `e.relative` list, but is a list with draggable Elements.
+
+* @since 0.0.1
+*/
+
+var DRAG = 'drag',
     DROP = 'drop',
+    NAME = '['+DRAG+'-'+DROP+']: ',
+    COPY = 'copy',
+    DROPZONE = DROP+'zone',
+    SOURCE = 'source',
     DRAGGABLE = DRAG+'gable',
     DEL_DRAGGABLE = 'del-'+DRAGGABLE,
     DD_MINUS = 'dd-',
     DD_DRAGGING_CLASS = DD_MINUS+DRAG+'ging',
     DD_MASTER_CLASS = DD_MINUS+'master',
     DD_HANDLE = DD_MINUS+'handle',
-    DD_DROPZONE_MOVABLE = DD_MINUS+'dropzone-movable',
+    DD_SOURCE_ISCOPIED_CLASS = DD_MINUS+COPY+SOURCE,
+    DD_COPIED_CLASS = DD_MINUS+COPY,
+    DD_DROPZONE_MOVABLE = DD_MINUS+DROPZONE+'-movable',
     CONSTRAIN_ATTR = 'xy-constrain',
-    PROXY = 'proxy',
     MOUSE = 'mouse',
-    DATA_KEY = 'dragDrop',
-    DD_EFFECT_ALLOWED = DD_EFFECT_ALLOWED,
-    DROPZONE = 'dropzone',
+    DROPZONE_OVER = DROPZONE+'-over',
     DROPZONE_DROP = DROPZONE+'-'+DROP,
     DD_DROPZONE = DD_MINUS+DROPZONE,
     NO_TRANS_CLASS = 'el-notrans', // delivered by `dom-ext`
-    DD_HIDDEN_SOURCE_CLASS = DD_MINUS+'hidden-source',
+    DD_HIDDEN_SOURCE_CLASS = DD_MINUS+'hidden-'+SOURCE,
     INVISIBLE_CLASS = 'el-invisible', // delivered by `dom-ext`
     DD_TRANSITION_CLASS = DD_MINUS+'transition',
     DD_OPACITY_CLASS = DD_MINUS+'opacity',
     HIGH_Z_CLASS = DD_MINUS+'high-z',
-    DD_DROPACTIVE_CLASS = 'dropactive',
+    DD_DROPACTIVE_CLASS = DROPZONE+'-awake',
+    DD_ABOVE_DROPZONE_CLASS = DD_MINUS+'above'+DROPZONE,
     REGEXP_MOVE = /\bmove\b/i,
     REGEXP_COPY = /\bcopy\b/i,
-    REGEXP_NODE_ID = /^#\S+$/,
     REGEXP_ALL = /\b(all|true)\b/i,
-    REGEXP_COPY = /\bcopy\b/i,
-    EMITTERNAME = 'emittername',
-    REGEXP_EMITTER = /\bemittername=(\w+)\b/,
-    DD_EMITTERNAME = DD_MINUS+EMITTERNAME,
-    PX = 'px',
-    COPY = 'copy',
+    EMITTER = 'emitter',
+    REGEXP_EMITTER = /\bemitter=((\w|,)+)\b/,
+    DD_EMITTER = DD_MINUS+EMITTER,
     MOVE = 'move',
-    DD_DRAG = DD_MINUS+DRAG,
     DROPZONE_OUT = DROPZONE+'-out',
     DD_DROP = DD_MINUS+DROP,
-    UI_DD_START = 'UI:dd',
     DD_FAKE = DD_MINUS+'fake-',
     DOWN = 'down',
     UP = 'up',
     KEY = 'key',
-    MOUSEUP = MOUSE+UP,
-    MOUSEDOWN = MOUSE+DOWN,
-    MOUSEMOVE = MOUSE+'move',
-    DD_FAKE_MOUSEUP = DD_FAKE+MOUSEUP,
+    MOUSEMOVE = MOUSE+MOVE,
     DD_FAKE_MOUSEMOVE = DD_FAKE+MOUSEMOVE,
     UI = 'UI',
     DROPZONE_BRACKETS = '[' + DROPZONE + ']',
@@ -7019,13 +7116,12 @@ var NAME = '[dragdrop]: ',
     BORDER_BOTTOM_WIDTH = BORDER+'-bottom-'+WIDTH,
     LEFT = 'left',
     TOP = 'top',
-    WINDOW = 'window',
     POSITION = 'position',
     ABSOLUTE = 'absolute',
     TRANS_END = 'transitionend',
     TRUE = 'true',
     DD_MINUSDRAGGABLE = DD_MINUS+DRAGGABLE,
-    PLUGIN_ATTRS = [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTERNAME, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE],
+    PLUGIN_ATTRS = [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTER, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE],
     LATER = require('utils').later;
 
 require('polyfill/polyfill-base.js');
@@ -7036,11 +7132,10 @@ module.exports = function (window) {
     var Event = require('event-dom')(window),
         NodePlugin = require('dom-ext')(window).Plugins.NodePlugin,
         DragModule = require('drag')(window),
-        $superInit = DragModule.Drag.init(),
+        $superInit = DragModule.DD.init,
         ctrlPressed = false,
-        initialised = false,
         dropEffect = MOVE,
-        DD, NodeDD, NodeDropzone;
+        DD, NodeDropzone;
 
     require('window-ext')(window);
 
@@ -7064,7 +7159,7 @@ module.exports = function (window) {
         /**
          * Default function for the `*:dd-drop`-event. Overrides the definition of the `drag`-module.
          *
-         * @method _defFnDrop
+         * @method _defFnDrop (extended by drag-drop)
          * @param e {Object} eventobject
          * @param sourceNode {HtmlElement} the original HtmlElement
          * @param dragNode {HtmlElement} the dragged HtmlElement (either original or clone)
@@ -7073,23 +7168,21 @@ module.exports = function (window) {
          * @private
          * @since 0.0.1
          */
-        _defFnDrop: function(e, sourceNode, dragNode, dropzoneSpecified, relatives) {
-            console.log(NAME, '_defFnDrop: default function dd-drop. dropzoneSpecified: '+dropzoneSpecified);
+        _defFnDrop: function(e, ddProps) {
+            console.log(NAME, '_defFnDrop: default function dd-drop. dropzoneSpecified: '+ddProps.dropzoneSpecified);
             var instance = this,
-                ddProps = instance.ddProps,
+                sourceNode = ddProps.sourceNode,
+                dragNode = ddProps.dragNode,
+                dropzoneSpecified = ddProps.dropzoneSpecified,
+                relatives = ddProps.relatives,
                 willBeCopied,
                 removeClasses = function (node) {
-                    node.removeClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS, DEL_DRAGGABLE]);
+                    node.removeClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS, DEL_DRAGGABLE, DD_MASTER_CLASS, DD_SOURCE_ISCOPIED_CLASS]);
                 };
 
             willBeCopied =  (e.dropTarget && ((ctrlPressed && instance.allowCopy(dragNode)) || instance.onlyCopy(dragNode)));
-            if (!willBeCopied) {
-                e.copyTarget = null;
-                e.relativeCopyNodes = null;
-            }
-            else {
-                e.isCopied = true;
-            }
+            willBeCopied || (e.relativeDragNodes=null);
+            e.isCopied = willBeCopied;
 
             // handle drop
             if (dropzoneSpecified) {
@@ -7125,22 +7218,44 @@ module.exports = function (window) {
             console.log(NAME, '_defFnOver: default function dropzone');
             var dropzone = e.target;
             dropzone.setClass(DD_DROPACTIVE_CLASS);
+            e.sourceNode.setClass(DD_ABOVE_DROPZONE_CLASS);
+            e.dragNode.setClass(DD_ABOVE_DROPZONE_CLASS);
             e.dropzone.then(
                 function(insideDropTarget) {
                     dropzone.removeClass(DD_DROPACTIVE_CLASS);
+                    e.sourceNode.removeClass(DD_ABOVE_DROPZONE_CLASS);
+                    e.dragNode.removeClass(DD_ABOVE_DROPZONE_CLASS);
                     /**
-                    * Fired when the checkbox changes its value<br />
-                    * Listen for this event instead of 'checkedChange',
-                    * because this event is also fired when the checkbox changes its 'disabled'-state
-                    * (switching value null/boolean)
+                    * Emitted when the draggable gets out of the dropzone.
                     *
-                    * @event valuechange
-                    * @param e {EventFacade} Event Facade including:
-                    * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
-                    * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
+                    * @event *:dropzone-out
+                    * @param e {Object} eventobject including:
+                    * @param e.target {HtmlElement} the dropzone
+                    * @param e.dragNode {HtmlElement} The HtmlElement that is being dragged
+                    * @param e.dropzone {Promise} The Promise that gets fulfilled as soon as the draggable is dropped, or outside the dropzone
+                    *        Will fulfill with one argument: `onDropzone` {Boolean} when `true`, the draggable is dropped inside the dropzone, otherwise
+                    *        the draggable got outside the dropzone without beging dropped.
+                    * @param e.dropTarget {HtmlElement} The dropzone HtmlElement. Equals e.target
+                    * @param e.ctrlKey {Boolean} Whether the Ctrl/cmd key is pressed
+                    * @param e.isCopied {Boolean} Whether the drag is a copy-drag
+                    * @param [e.sourceNode] {HtmlElement} The original Element. Only when a `copy` is made --> e.dragNode is being moved while
+                    *        e.sourceNode stand at its place.
+                    * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating the draggable
+                    * @param e.sourceTarget {HtmlElement} the deepest HtmlElement of the draggable where the mouse lies upon
+                    * @param e.dd {Promise} Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.
+                    * @param e.xMouse {Number} the current x-position in the window-view
+                    * @param e.yMouse {Number} the current y-position in the window-view
+                    * @param e.clientX {Number} the current x-position in the window-view
+                    * @param e.clientY {Number} the current y-position in the window-view
+                    * @param e.xMouseOrigin {Number} the original x-position in the document when drag started (incl. scrollOffset)
+                    * @param e.yMouseOrigin {Number} the original y-position in the document when drag started (incl. scrollOffset)
+                    * @param [e.relatives] {NodeList} an optional list that the user could set in a `before`-subscriber of the `dd`-event
+                    *        to inform which nodes are related to the draggable node and should be dragged as well.
+                    * @param [e.relativeDragNodes] {NodeList} an optional list that holds the HtmlElements that corresponds with
+                    *        the `e.relative` list, but is a list with draggable Elements.
                     * @since 0.1
                     */
-                    insideDropTarget || e._noDDoutEvt || Event.emit(dropzone, e.emitterName+':'+DROPZONE_OUT, e);
+                    insideDropTarget || e._noDDoutEvt || Event.emit(dropzone, e.emitter+':'+DROPZONE_OUT, e);
                 }
             );
         },
@@ -7163,20 +7278,10 @@ module.exports = function (window) {
          */
         _defineDropEv: function(e, ddProps) {
             console.log(NAME, '_defineDropEv '+ddProps.dragNode);
-            var instance = this,
-                emitterName = e.emiterName,
-                sourceNode = ddProps.sourceNode,
-                dragNode = ddProps.dragNode,
-                dropzoneSpecified = ddProps.dropzoneSpecified,
-                x = ddProps.x,
-                y = ddProps.y,
-                inlineLeft = ddProps.inlineLeft,
-                inlineTop = ddProps.inlineTop,
-                relatives = ddProps.relatives;
-
-            instance.restoreDraggables = instance._restoreDraggables.bind(instance, e, sourceNode, dragNode, dropzoneSpecified, x, y, inlineLeft, inlineTop, relatives);
-            Event.defineEvent(emitterName+':'+DD_DROP)
-                .defaultFn(instance._defFnDrop.rbind(instance, sourceNode, dragNode, dropzoneSpecified, relatives))
+            var instance = this;
+            instance.restoreDraggables = instance._restoreDraggables.bind(instance, e, ddProps);
+            Event.defineEvent(e.emitter+':'+DD_DROP)
+                .defaultFn(instance._defFnDrop.rbind(instance, ddProps))
                 .forceAssign(); // need to reassign, because all arguments need to be bound again and we need to override the definition of the `drag`-module
         },
 
@@ -7193,9 +7298,9 @@ module.exports = function (window) {
         _defineOverEv: function(e, dropzones) {
             console.log(NAME, '_defineOverEv');
             var instance = this,
-                emitterName = e.emitterName,
+                emitterName = e.emitter,
                 ddProps = instance.ddProps;
-            Event.defineEvent(emitterName+':'+DROPZONE)
+            Event.defineEvent(emitterName+':'+DROPZONE_OVER)
                  .defaultFn(instance._defFnOver.bind(instance)); // no need to reassign
             return Event.after([MOUSEMOVE, DD_FAKE_MOUSEMOVE], function(e2) {
                 var overDropzone = false;
@@ -7224,9 +7329,15 @@ module.exports = function (window) {
                         yMouseLast = ddProps.yMouseLast;
 
                         if (dropzone.insidePos(xMouseLast, yMouseLast) && ddProps.dragNode.insidePos(xMouseLast, yMouseLast)) {
+console.info('check 1');
                             effectAllowed = (!dropzoneMove && !dropzoneCopy) || (dropzoneCopy && (dropEffect===COPY)) || (dropzoneMove && (dropEffect===MOVE));
+console.info('check 2');
                             dropzoneEmitter = instance.getDropzoneEmitter(dropzoneAccept);
-                            emitterAllowed = !dropzoneEmitter || (dropzoneEmitter===emitterName);
+console.info('dropzoneEmitter: '+dropzoneEmitter);
+
+console.info('emitterName: '+emitterName);
+dropzoneEmitter && console.info('(dropzoneEmitter.contains(emitterName)) '+(dropzoneEmitter.contains(emitterName)));
+                            emitterAllowed = !dropzoneEmitter || (dropzoneEmitter.contains(emitterName));
                             if (effectAllowed && emitterAllowed) {
                                 overDropzone = true;
                                 e.dropTarget = dropzone;
@@ -7235,7 +7346,7 @@ module.exports = function (window) {
                                 e.dropzone = dragOverPromise;
                                 dragOutEvent = Event.after(
                                     [MOUSEMOVE, DD_FAKE_MOUSEMOVE],
-                                    function(e3) {
+                                    function() {
                                         dragOverPromise.fulfill(false);
                                     },
                                     function(e3) {
@@ -7258,18 +7369,36 @@ module.exports = function (window) {
                                 );
                                 ddProps.dragOverList.push(dragOverPromise);
                                 /**
-                                * Fired when the checkbox changes its value<br />
-                                * Listen for this event instead of 'checkedChange',
-                                * because this event is also fired when the checkbox changes its 'disabled'-state
-                                * (switching value null/boolean)
+                                * Emitted when the draggable gets inside a dropzone.
                                 *
-                                * @event valuechange
-                                * @param e {EventFacade} Event Facade including:
-                                * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
-                                * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
+                                * @event *:dropzone-over
+                                * @param e {Object} eventobject including:
+                                * @param e.target {HtmlElement} the dropzone
+                                * @param e.dragNode {HtmlElement} The HtmlElement that is being dragged
+                                * @param e.dropzone {Promise} The Promise that gets fulfilled as soon as the draggable is dropped, or outside the dropzone
+                                *        Will fulfill with one argument: `onDropzone` {Boolean} when `true`, the draggable is dropped inside the dropzone, otherwise
+                                *        the draggable got outside the dropzone without beging dropped.
+                                * @param e.dropTarget {HtmlElement} The dropzone HtmlElement. Equals e.target
+                                * @param e.ctrlKey {Boolean} Whether the Ctrl/cmd key is pressed
+                                * @param e.isCopied {Boolean} Whether the drag is a copy-drag
+                                * @param [e.sourceNode] {HtmlElement} The original Element. Only when a `copy` is made --> e.dragNode is being moved while
+                                *        e.sourceNode stand at its place.
+                                * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating the draggable
+                                * @param e.sourceTarget {HtmlElement} the deepest HtmlElement of the draggable where the mouse lies upon
+                                * @param e.dd {Promise} Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.
+                                * @param e.xMouse {Number} the current x-position in the window-view
+                                * @param e.yMouse {Number} the current y-position in the window-view
+                                * @param e.clientX {Number} the current x-position in the window-view
+                                * @param e.clientY {Number} the current y-position in the window-view
+                                * @param e.xMouseOrigin {Number} the original x-position in the document when drag started (incl. scrollOffset)
+                                * @param e.yMouseOrigin {Number} the original y-position in the document when drag started (incl. scrollOffset)
+                                * @param [e.relatives] {NodeList} an optional list that the user could set in a `before`-subscriber of the `dd`-event
+                                *        to inform which nodes are related to the draggable node and should be dragged as well.
+                                * @param [e.relativeDragNodes] {NodeList} an optional list that holds the HtmlElements that corresponds with
+                                *        the `e.relative` list, but is a list with draggable Elements.
                                 * @since 0.1
                                 */
-                                Event.emit(dropzone, emitterName+':'+DROPZONE, e);
+                                Event.emit(dropzone, emitterName+':'+DROPZONE_OVER, e);
                             }
                         }
                     }
@@ -7294,7 +7423,7 @@ module.exports = function (window) {
             var instance = this,
                 dropzoneNode = e.dropTarget,
                 delegatedDragging = sourceNode.hasClass(DEL_DRAGGABLE),
-                constrainRectangle, borderLeft, borderTop, dragNodeX, dragNodeY, match, copyToDropzone, moveToDropzone,
+                constrainRectangle, borderLeft, borderTop, dragNodeX, dragNodeY, copyToDropzone, moveToDropzone,
                 moveInsideDropzone, isCopied, dropzoneDelegatedDraggable, dropzoneIsDelegated;
             if (dropzoneNode) {
                 dropzoneDelegatedDraggable = dropzoneNode.getAttr(DD_MINUSDRAGGABLE);
@@ -7320,7 +7449,8 @@ module.exports = function (window) {
                         }
                     });
                     dropzoneNode.append(nodeDrag);
-                    nodeDrag.removeClass([DD_OPACITY_CLASS, DD_TRANSITION_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS, NO_TRANS_CLASS]);
+                    nodeDrag.removeClass([DD_OPACITY_CLASS, DD_TRANSITION_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS, NO_TRANS_CLASS, DD_MASTER_CLASS, DD_COPIED_CLASS]);
+                    nodeSource.removeClass(DD_SOURCE_ISCOPIED_CLASS);
                     nodeDrag.setXY(dragNodeX+shiftX, dragNodeY+shiftY, constrainRectangle);
                     // make the new HtmlElement non-copyable: it only can be replaced inside its dropzone
                     dropzoneIsDelegated || nodeDrag.setAttr(DD_EFFECT_ALLOWED, MOVE).setAttr(DD_DROPZONE_MOVABLE, TRUE); // to make moving inside the dropzone possible without return to its startposition
@@ -7388,18 +7518,36 @@ module.exports = function (window) {
 
                 sourceNode.removeClass(DEL_DRAGGABLE);
                 /**
-                * Fired when the checkbox changes its value<br />
-                * Listen for this event instead of 'checkedChange',
-                * because this event is also fired when the checkbox changes its 'disabled'-state
-                * (switching value null/boolean)
+                * Emitted when a draggable gets dropped inside a dropzone.
                 *
-                * @event valuechange
-                * @param e {EventFacade} Event Facade including:
-                * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
-                * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
+                * @event *:dropzone-drop
+                * @param e {Object} eventobject including:
+                * @param e.target {HtmlElement} the dropzone
+                * @param e.dragNode {HtmlElement} The HtmlElement that is being dragged
+                * @param e.dropzone {Promise} The Promise that gets fulfilled as soon as the draggable is dropped, or outside the dropzone
+                *        Will fulfill with one argument: `onDropzone` {Boolean} when `true`, the draggable is dropped inside the dropzone, otherwise
+                *        the draggable got outside the dropzone without beging dropped.
+                * @param e.dropTarget {HtmlElement} The dropzone HtmlElement. Equals e.target
+                * @param e.ctrlKey {Boolean} Whether the Ctrl/cmd key is pressed
+                * @param e.isCopied {Boolean} Whether the drag is a copy-drag
+                * @param [e.sourceNode] {HtmlElement} The original Element. Only when a `copy` is made --> e.dragNode is being moved while
+                *        e.sourceNode stand at its place.
+                * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating the draggable
+                * @param e.sourceTarget {HtmlElement} the deepest HtmlElement of the draggable where the mouse lies upon
+                * @param e.dd {Promise} Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.
+                * @param e.xMouse {Number} the current x-position in the window-view
+                * @param e.yMouse {Number} the current y-position in the window-view
+                * @param e.clientX {Number} the current x-position in the window-view
+                * @param e.clientY {Number} the current y-position in the window-view
+                * @param e.xMouseOrigin {Number} the original x-position in the document when drag started (incl. scrollOffset)
+                * @param e.yMouseOrigin {Number} the original y-position in the document when drag started (incl. scrollOffset)
+                * @param [e.relatives] {NodeList} an optional list that the user could set in a `before`-subscriber of the `dd`-event
+                *        to inform which nodes are related to the draggable node and should be dragged as well.
+                * @param [e.relativeDragNodes] {NodeList} an optional list that holds the HtmlElements that corresponds with
+                *        the `e.relative` list, but is a list with draggable Elements.
                 * @since 0.1
                 */
-                Event.emit(e.copyTarget, e.emitterName+':'+DROPZONE_DROP, e);
+                Event.emit(dropzoneNode, e.emitter+':'+DROPZONE_DROP, e);
             }
             else {
                 (dragNode.hasAttr(DD_DROPZONE_MOVABLE)) && (dropzoneNode=dragNode.inside(DROPZONE_BRACKETS));
@@ -7472,9 +7620,17 @@ module.exports = function (window) {
          * @private
          * @since 0.0.1
          */
-        _restoreDraggables: function(e, sourceNode, dragNode, dropzoneSpecified, x, y, inlineLeft, inlineTop, relatives) {
-            console.log('_restoreDraggables');
-            var instance = this;
+        _restoreDraggables: function(e, ddProps) {
+            console.log(NAME, '_restoreDraggables');
+            var instance = this,
+                sourceNode = ddProps.sourceNode,
+                dragNode = ddProps.dragNode,
+                dropzoneSpecified = ddProps.dropzoneSpecified,
+                x = ddProps.x,
+                y = ddProps.y,
+                inlineLeft = ddProps.inlineLeft,
+                inlineTop = ddProps.inlineTop,
+                relatives = ddProps.relatives;
             instance.restoreDraggables = function() {/* NOOP */ return this;};
             instance._setBack(e, sourceNode, dragNode, dropzoneSpecified, x, y, inlineLeft, inlineTop, e.dropzone);
             relatives && relatives.forEach(
@@ -7513,19 +7669,19 @@ module.exports = function (window) {
                         tearedDown = true;
                         notransRemoval || (dragNode.removeEventListener && dragNode.removeEventListener(TRANS_END, tearDown, true));
                         if (dropzoneSpecified) {
-                            sourceNode.removeClass([DD_HIDDEN_SOURCE_CLASS, DEL_DRAGGABLE]);
+                            sourceNode.removeClass([DD_HIDDEN_SOURCE_CLASS, DEL_DRAGGABLE, DD_MASTER_CLASS, DD_SOURCE_ISCOPIED_CLASS]);
                             dragNode.remove();
                         }
                         else {
-                            dragNode.removeClass([DD_TRANSITION_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS, DEL_DRAGGABLE]);
-                            dragNode.setInlineStyle(LEFT, inlineLeft);
-                            dragNode.setInlineStyle(TOP, inlineTop);
+                            dragNode.removeClass([DD_TRANSITION_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS, DEL_DRAGGABLE, DD_MASTER_CLASS, DD_SOURCE_ISCOPIED_CLASS]);
+                            dragNode.setInlineStyle(LEFT, inlineLeft)
+                                    .setInlineStyle(TOP, inlineTop);
                         }
                         PLUGIN_ATTRS.forEach(function(attribute) {
                             var data = '_del_'+attribute;
                             if (sourceNode.getData(data)) {
-                                sourceNode.removeAttr(attribute);
-                                sourceNode.removeData(data);
+                                sourceNode.removeAttr(attribute)
+                                          .removeData(data);
                             }
                         });
                     }
@@ -7552,7 +7708,7 @@ module.exports = function (window) {
                             if (dropzone.insidePos(x, y) && !dropzone.insidePos(e.xMouse+winScrollLeft, e.yMouse+winScrollTop)) {
                                 e.dropTarget = dropzone;
                                 e._noDDoutEvt = true;
-                                Event.emit(dropzone, e.emitterName+':'+DROPZONE, e);
+                                Event.emit(dropzone, e.emitter+':'+DROPZONE_OVER, e);
                             }
                         }
                     );
@@ -7572,14 +7728,9 @@ module.exports = function (window) {
             console.log(NAME, '_setupKeyEv');
             var instance = this,
                 changeClasses = function(sourceNode, dragNode) {
-                    if (ctrlPressed) {
-                        sourceNode.removeClass(DD_HIDDEN_SOURCE_CLASS);
-                        dragNode.setClass(DD_OPACITY_CLASS);
-                    }
-                    else {
-                        sourceNode.setClass(DD_HIDDEN_SOURCE_CLASS);
-                        dragNode.removeClass(DD_OPACITY_CLASS);
-                    }
+                    sourceNode.toggleClass(DD_HIDDEN_SOURCE_CLASS, !ctrlPressed);
+                    sourceNode.toggleClass(DD_SOURCE_ISCOPIED_CLASS, ctrlPressed);
+                    dragNode.toggleClass([DD_OPACITY_CLASS, DD_COPIED_CLASS], ctrlPressed);
                 };
             Event.after([KEY+DOWN, KEY+UP], function(e) {
                 console.log(NAME, 'event '+e.type);
@@ -7601,15 +7752,10 @@ module.exports = function (window) {
                     // we need to recalculate it for all targets
                     // we do this by emitting a DD_FAKE_MOUSEMOVE event
                     /**
-                    * Fired when the checkbox changes its value<br />
-                    * Listen for this event instead of 'checkedChange',
-                    * because this event is also fired when the checkbox changes its 'disabled'-state
-                    * (switching value null/boolean)
+                    * Fired when the mouse comes back into the browser-window while dd-drag was busy yet no buttons are pressed.
+                    * This is a correction to the fact that the mouseup-event wasn't noticed because the mouse was outside the browser.
                     *
-                    * @event valuechange
-                    * @param e {EventFacade} Event Facade including:
-                    * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
-                    * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
+                    * @event dd-fake-mousemove
                     * @private
                     * @since 0.1
                     */
@@ -7681,13 +7827,13 @@ module.exports = function (window) {
         getDropzoneEmitter: function(dropzone) {
             var extract = dropzone.match(REGEXP_EMITTER);
             console.log('getDropzoneEmitter --> '+(extract && extract[1]));
-            return extract && extract[1];
+            return extract && (','+extract[1]+',');
         },
 
        /**
          * Initializes dragdrop. Needs to be invoked, otherwise DD won't run.
          *
-         * @method init
+         * @method init (extended by drag-drop)
          * @param dragableElement {HtmlElement} HtmlElement that is checked for its allowed effects
          * @return {Boolean} if copy-dragables are allowed
          * @since 0.0.1
@@ -7695,36 +7841,52 @@ module.exports = function (window) {
         init: function() {
             console.log(NAME, 'init');
             var instance = this;
-            if (!instance.initialised) {
+            if (!instance._ddInited) {
                 // we will initialize `Drag` --> don;t worry if it was initialised before,
                 // Drag.init() will only run once
-                $superInit();
+                $superInit.call(instance);
                 instance._setupKeyEv();
 
                 instance.notify(function(e, ddProps) {
-                    var dropzones,
-                        sourceNode = ddProps.sourceNode,
-                        dropzoneSpecified = ddProps.dropzoneSpecified = sourceNode.hasAttr(DD_DROPZONE) || (e.emitterName!==UI),
+                    var dropzones, sourceNode,
+                        dragNode = ddProps.dragNode,
+                        dropzoneSpecified = ddProps.dropzoneSpecified = dragNode.hasAttr(DD_DROPZONE) || (e.emitter!==UI),
                         setupDragnode = function(nodeSource, nodeDrag, shiftX, shiftY) {
-                            (dropEffect===COPY) ? nodeDrag.setClass(DD_OPACITY_CLASS) : nodeSource.setClass(DD_HIDDEN_SOURCE_CLASS);
+                            if (dropEffect===COPY) {
+                                nodeDrag.setClass([DD_OPACITY_CLASS, DD_COPIED_CLASS]);
+                                nodeSource.setClass(DD_SOURCE_ISCOPIED_CLASS);
+                            }
+                            else {
+                                nodeSource.setClass(DD_HIDDEN_SOURCE_CLASS);
+                            }
                             nodeDrag.setClass(INVISIBLE_CLASS);
-
                             nodeDrag.setInlineStyle(POSITION, ABSOLUTE);
                             nodeSource.parentNode.append(nodeDrag, nodeSource);
-
                             nodeDrag.setXY(ddProps.xMouseLast+shiftX, ddProps.yMouseLast+shiftY, ddProps.constrain, true);
                             nodeDrag.removeClass(INVISIBLE_CLASS);
                         };
                     if (dropzoneSpecified) {
-                        ddProps.dragNode = ddProps.sourceNode.clone(true);
-                        dropEffect = (instance.onlyCopy(sourceNode) || (ctrlPressed && instance.allowCopy(sourceNode))) ? COPY : MOVE;
-                        setupDragnode(sourceNode, ddProps.dragNode, 0, 0);
-                        ddProps.relatives && ddProps.relatives.forEach(
-                            function(item) {
-                                item.dragNode = item.sourceNode.clone(true);
-                                setupDragnode(item.sourceNode, item.dragNode, item.shiftX, item.shiftY);
-                            }
-                        );
+                        sourceNode = e.sourceNode = ddProps.sourceNode = ddProps.dragNode;
+                        e.dragNode = ddProps.dragNode = ddProps.sourceNode.clone(true);
+                        // correct sourceNode class: reset CSS set by `drag`:
+                        sourceNode.removeClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS]);
+                        // also correct inline CSS style for `left` and `top` of the sourceNode:
+                        sourceNode.setInlineStyle(LEFT, ddProps.inlineLeft);
+                        sourceNode.setInlineStyle(TOP, ddProps.inlineTop);
+
+                        dropEffect = (instance.onlyCopy(dragNode) || (ctrlPressed && instance.allowCopy(dragNode))) ? COPY : MOVE;
+                        setupDragnode(ddProps.sourceNode, ddProps.dragNode, 0, 0);
+                        if (ddProps.relatives) {
+                            e.relativeDragNodes = [];
+                            ddProps.relatives.forEach(
+                                function(item) {
+                                    item.sourceNode = item.dragNode;
+                                    item.dragNode = item.dragNode.clone(true);
+                                    setupDragnode(item.sourceNode, item.dragNode, item.shiftX, item.shiftY);
+                                    e.relativeDragNodes.push(item.dragNode);
+                                }
+                            );
+                        }
                         dropzones = window.document.getAll(DROPZONE_BRACKETS);
                         if (dropzones.length>0) {
                             // create a custom over-event that fires exactly when the mouse is over any dropzone
@@ -7734,13 +7896,16 @@ module.exports = function (window) {
 
                         }
                     }
+                    else {
+                        e.dragNode = ddProps.dragNode;
+                    }
                     ddProps.dragDropEv = instance._defineDropEv(e, ddProps);
                 }, instance, true);
 
                 instance.notify(instance._teardownOverEvent, instance);
 
             }
-            instance.initialised = true;
+            instance._ddInited = true;
         },
 
        /**
@@ -7773,7 +7938,7 @@ module.exports = function (window) {
     NodeDropzone = NodePlugin.subClass(
         function (config) {
             var dropzone = TRUE,
-                emitterName;
+                emitter;
             config || (config={});
             if (config.copy && !config.move) {
                 dropzone = COPY;
@@ -7781,13 +7946,13 @@ module.exports = function (window) {
             else if (!config.copy && config.move) {
                 dropzone = MOVE;
             }
-            (emitterName=config.emitterName) && (dropzone+=' '+EMITTERNAME+'='+emitterName);
+            (emitter=config.emitter) && (dropzone+=' '+EMITTER+'='+emitter);
             this.dropzone = dropzone;
         }
     );
 
     return {
-        DD: DragModule.Drag.merge(DD, true),
+        DD: DragModule.DD.merge(DD, true),
         Plugins: {
             NodeDD: DragModule.Plugins.NodeDD,
             NodeDropzone: NodeDropzone
@@ -7800,15 +7965,16 @@ module.exports=require(16)
 "use strict";
 
 /**
- * Provides `drag and drop` functionality
+ * Provides `drag and drop` functionality, without dropzones.
+ * For `dropzone`-support, you should use the module: `drag-drop`.
  *
  *
  * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  * @example
- * Drag = require('drag')(window);
- * Draf.init();
+ * DD = require('drag')(window);
+ * DD.init();
  *
  * @module drag
  * @class DD
@@ -7826,79 +7992,49 @@ var NAME = '[drag]: ',
     DD_HANDLE = DD_MINUS+'handle',
     DD_DROPZONE_MOVABLE = DD_MINUS+'dropzone-movable',
     CONSTRAIN_ATTR = 'xy-constrain',
-    PROXY = 'proxy',
     MOUSE = 'mouse',
-    DATA_KEY = 'dragDrop',
-    DD_EFFECT_ALLOWED = DD_EFFECT_ALLOWED,
     DROPZONE = 'dropzone',
-    DROPZONE_DROP = DROPZONE+'-'+DROP,
-    DD_DROPZONE = DD_MINUS+DROPZONE,
     NO_TRANS_CLASS = 'el-notrans', // delivered by `dom-ext`
-    DD_HIDDEN_SOURCE_CLASS = DD_MINUS+'hidden-source',
-    INVISIBLE_CLASS = 'el-invisible', // delivered by `dom-ext`
-    DD_TRANSITION_CLASS = DD_MINUS+'transition',
-    DD_OPACITY_CLASS = DD_MINUS+'opacity',
     HIGH_Z_CLASS = DD_MINUS+'high-z',
-    DD_DROPACTIVE_CLASS = 'dropactive',
-    REGEXP_MOVE = /\bmove\b/i,
-    REGEXP_COPY = /\bcopy\b/i,
     REGEXP_NODE_ID = /^#\S+$/,
-    REGEXP_ALL = /\b(all|true)\b/i,
-    REGEXP_COPY = /\bcopy\b/i,
-    EMITTERNAME = 'emittername',
-    REGEXP_EMITTER = /\bemittername=(\w+)\b/,
-    DD_EMITTERNAME = DD_MINUS+EMITTERNAME,
-    PX = 'px',
-    COPY = 'copy',
-    MOVE = 'move',
+    EMITTER = 'emitter',
+    DD_EMITTER = DD_MINUS+EMITTER,
     DD_DRAG = DD_MINUS+DRAG,
-    DROPZONE_OUT = DROPZONE+'-out',
     DD_DROP = DD_MINUS+DROP,
     UI_DD_START = 'UI:dd',
     DD_FAKE = DD_MINUS+'fake-',
     DOWN = 'down',
     UP = 'up',
-    KEY = 'key',
     MOUSEUP = MOUSE+UP,
     MOUSEDOWN = MOUSE+DOWN,
     MOUSEMOVE = MOUSE+'move',
     DD_FAKE_MOUSEUP = DD_FAKE+MOUSEUP,
-    DD_FAKE_MOUSEMOVE = DD_FAKE+MOUSEMOVE,
     UI = 'UI',
-    DROPZONE_BRACKETS = '[' + DROPZONE + ']',
     DD_EFFECT_ALLOWED = DD_MINUS+'effect-allowed',
     BORDER = 'border',
     WIDTH = 'width',
     BORDER_LEFT_WIDTH = BORDER+'-left-'+WIDTH,
-    BORDER_RIGHT_WIDTH = BORDER+'-right-'+WIDTH,
     BORDER_TOP_WIDTH = BORDER+'-top-'+WIDTH,
-    BORDER_BOTTOM_WIDTH = BORDER+'-bottom-'+WIDTH,
     LEFT = 'left',
     TOP = 'top',
     WINDOW = 'window',
-    POSITION = 'position',
-    ABSOLUTE = 'absolute',
-    TRANS_END = 'transitionend',
     TRUE = 'true',
     DD_MINUSDRAGGABLE = DD_MINUS+DRAGGABLE,
-    PLUGIN_ATTRS = [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTERNAME, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE],
-    LATER = require('utils').later;
+    PLUGIN_ATTRS = [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTER, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE];
 
 require('polyfill/polyfill-base.js');
+require('polyfill/lib/promise.js');
 require('js-ext');
-require('./css/drag-drop.css');
+require('./css/drag.css');
 
 module.exports = function (window) {
     var Event = require('event-dom')(window),
         NodePlugin = require('dom-ext')(window).Plugins.NodePlugin,
-        ctrlPressed = false,
-        initialised = false,
-        dropEffect = MOVE,
-        Drag, NodeDD, NodeDropzone;
+        DD, NodeDD;
 
     require('window-ext')(window);
 
-    Drag = {
+    DD = {
        ddProps: {},
 
         /**
@@ -7969,10 +8105,9 @@ module.exports = function (window) {
          */
         _defFnDrop: function(e) {
             console.log(NAME, '_defFnDrop');
-            var instance = this,
-                dragNode = e.copyTarget,
+            var dragNode = e.target,
                 removeClasses = function (node) {
-                    node.removeClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS, DEL_DRAGGABLE]);
+                    node.removeClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS, DEL_DRAGGABLE, DD_MASTER_CLASS]);
                 };
 
             PLUGIN_ATTRS.forEach(function(attribute) {
@@ -7993,7 +8128,7 @@ module.exports = function (window) {
         /**
          * Default function for the `UI:dd-start`-event
          *
-         * @method _defFnDrag
+         * @method _defFnStart
          * @param e {Object} eventobject
          * @private
          * @since 0.0.1
@@ -8001,16 +8136,17 @@ module.exports = function (window) {
         _defFnStart: function(e) {
             var instance = this,
                 customEvent;
-            e.emitterName = e.emitterName || e.target.getAttr(DD_EMITTERNAME) || UI,
-            customEvent = e.emitterName + ':'+DD_DRAG;
+            e.emitter = (e.emitter!==UI) ? e.emitter : (e.target.getAttr(DD_EMITTER) || UI),
+            customEvent = e.emitter + ':'+DD_DRAG;
             console.log(NAME, '_defFnStart: default function UI:dd-start. Defining customEvent '+customEvent);
             Event.defineEvent(customEvent).defaultFn(instance._defFnDrag.bind(instance));
             window.document.getAll('.'+DD_MASTER_CLASS).removeClass(DD_MASTER_CLASS);
+console.info('check e.emitter: '+e.emitter);
             instance._initializeDrag(e);
         },
 
       /**
-        * Defines the definition of the `dd-start` event: the first phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)
+        * Defines the definition of the `dd` event: the first phase of the drag-eventcycle (dd, *:dd-drag, *:dd-drop)
         *
         * @method _defineDDStart
         * @param e {Object} eventobject
@@ -8020,8 +8156,8 @@ module.exports = function (window) {
         _defineDDStart: function() {
             console.log(NAME, '_defineDDStart');
             var instance = this;
-            // by using dd-start before dd-drag, the user can create a `before`-subscriber to dd-start
-            // and define e.emitterName and/or e.relatives before going into `dd-drag`
+            // by using dd before dd-drag, the user can create a `before`-subscriber to dd
+            // and define e.emitter and/or e.relatives before going into `dd-drag`
             Event.defineEvent(UI_DD_START)
                 .defaultFn(instance._defFnStart.bind(instance))
                 .preventedFn(instance._prevFnStart.bind(instance));
@@ -8038,26 +8174,23 @@ module.exports = function (window) {
         _initializeDrag: function(e) {
             console.log(NAME, '_initializeDrag '+e.xMouseOrigin);
             var instance = this,
-                sourceNode = e.target,
-                constrain = sourceNode.getAttr(CONSTRAIN_ATTR),
+                dragNode = e.target,
+                constrain = dragNode.getAttr(CONSTRAIN_ATTR),
                 ddProps = instance.ddProps,
-                emitterName = e.emitterName,
-                moveEv, dragNode, x, y, byExactId, match, constrainNode, winConstrained, winScrollLeft, winScrollTop,
-                inlineLeft, inlineTop, xOrig, yOrig, dropzones;
+                emitterName = e.emitter,
+                moveEv, x, y, byExactId, match, constrainNode, winConstrained, winScrollLeft, winScrollTop,
+                inlineLeft, inlineTop, xOrig, yOrig;
 
             // define ddProps --> internal object with data about the draggable instance
-            ddProps.sourceNode = sourceNode;
-            ddProps.dragNode = dragNode = sourceNode;
-            ddProps.x = x = sourceNode.getX();
-            ddProps.y = y = sourceNode.getY();
-            ddProps.inlineLeft = inlineLeft = sourceNode.getInlineStyle(LEFT);
-            ddProps.inlineTop = inlineTop = sourceNode.getInlineStyle(TOP);
+            ddProps.dragNode = dragNode;
+            ddProps.x = x = dragNode.getX();
+            ddProps.y = y = dragNode.getY();
+            ddProps.inlineLeft = inlineLeft = dragNode.getInlineStyle(LEFT);
+            ddProps.inlineTop = inlineTop = dragNode.getInlineStyle(TOP);
             ddProps.winConstrained = winConstrained = (constrain===WINDOW);
             ddProps.xMouseLast = x;
             ddProps.yMouseLast = y;
 
-            e.dragTarget = sourceNode; // equals e.target, but the event dd-drop-zone has e.target set to dragNode, which might be a copy
-            e.copyTarget = dragNode;
             if (constrain) {
                 if (ddProps.winConstrained) {
                     ddProps.winScrollLeft = winScrollLeft = window.getScrollLeft();
@@ -8071,7 +8204,7 @@ module.exports = function (window) {
                 }
                 else {
                     byExactId = REGEXP_NODE_ID.test(constrain);
-                    constrainNode = sourceNode.parentNode;
+                    constrainNode = dragNode.parentNode;
                     while (constrainNode.matchesSelector && !match) {
                         match = byExactId ? (constrainNode.id===constrain.substr(1)) : constrainNode.matchesSelector(constrain);
                         // if there is a match, then make sure x and y fall within the region
@@ -8096,7 +8229,7 @@ module.exports = function (window) {
             }
 
             // create listener for `mousemove` and transform it into the `*:dd:drag`-event
-            moveEv = Event.after(MOUSE+MOVE, function(e2) {
+            moveEv = Event.after(MOUSEMOVE, function(e2) {
                 if (!e2.clientX) {
                     return;
                 }
@@ -8104,18 +8237,25 @@ module.exports = function (window) {
                 e.xMouse = e2.clientX;
                 e.yMouse = e2.clientY;
                 /**
-                * Fired when the checkbox changes its value<br />
-                * Listen for this event instead of 'checkedChange',
-                * because this event is also fired when the checkbox changes its 'disabled'-state
-                * (switching value null/boolean)
+                * Emitted during the drag-cycle of a draggable Element (while it is dragged).
                 *
-                * @event valuechange
-                * @param e {EventFacade} Event Facade including:
-                * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
-                * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
+                * @event *:dd-drag
+                * @param e {Object} eventobject including:
+                * @param e.target {HtmlElement} the HtmlElement that is being dragged
+                * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+                * @param e.sourceTarget {HtmlElement} the deepest HtmlElement where the mouse lies upon
+                * @param e.dd {Promise} Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.
+                * @param e.xMouse {Number} the current x-position in the window-view
+                * @param e.yMouse {Number} the current y-position in the window-view
+                * @param e.clientX {Number} the current x-position in the window-view
+                * @param e.clientY {Number} the current y-position in the window-view
+                * @param e.xMouseOrigin {Number} the original x-position in the document when drag started (incl. scrollOffset)
+                * @param e.yMouseOrigin {Number} the original y-position in the document when drag started (incl. scrollOffset)
+                * @param [e.relatives] {NodeList} an optional list that the user could set in a `before`-subscriber of the `dd`-event
+                *        to inform which nodes are related to the draggable node and should be dragged as well.
                 * @since 0.1
                 */
-                Event.emit(sourceNode, emitterName+':'+DD_DRAG, e);
+                Event.emit(dragNode, emitterName+':'+DD_DRAG, e);
                 e.dd.callback();
             });
 
@@ -8135,18 +8275,25 @@ module.exports = function (window) {
                 );
                 instance.ddProps = {};
                 /**
-                * Fired when the checkbox changes its value<br />
-                * Listen for this event instead of 'checkedChange',
-                * because this event is also fired when the checkbox changes its 'disabled'-state
-                * (switching value null/boolean)
+                * Emitted when drag-cycle of a draggable Element is ended.
                 *
-                * @event valuechange
-                * @param e {EventFacade} Event Facade including:
-                * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
-                * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
+                * @event *:dd-drop
+                * @param e {Object} eventobject including:
+                * @param e.target {HtmlElement} the HtmlElement that is being dragged
+                * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+                * @param e.sourceTarget {HtmlElement} the deepest HtmlElement where the mouse lies upon
+                * @param e.dd {Promise} Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.
+                * @param e.xMouse {Number} the current x-position in the window-view
+                * @param e.yMouse {Number} the current y-position in the window-view
+                * @param e.clientX {Number} the current x-position in the window-view
+                * @param e.clientY {Number} the current y-position in the window-view
+                * @param e.xMouseOrigin {Number} the original x-position in the document when drag started (incl. scrollOffset)
+                * @param e.yMouseOrigin {Number} the original y-position in the document when drag started (incl. scrollOffset)
+                * @param [e.relatives] {NodeList} an optional list that the user could set in a `before`-subscriber of the `dd`-event
+                *        to inform which nodes are related to the draggable node and should be dragged as well.
                 * @since 0.1
                 */
-                Event.emit(sourceNode, emitterName+':'+DD_DROP, e);
+                Event.emit(dragNode, emitterName+':'+DD_DROP, e);
                 e.dd.fulfill();
             });
 
@@ -8156,16 +8303,14 @@ module.exports = function (window) {
                 // relatives are extra HtmlElements that should be moved aside with the main dragged element
                 // e.relatives is a selector, e.relativeNodes will be an array with nodes
                 e.relativeNodes = [];
-                e.relativeCopyNodes = [];
-                sourceNode.setClass(DD_MASTER_CLASS);
+                dragNode.setClass(DD_MASTER_CLASS);
                 dragNode.setClass(DD_MASTER_CLASS);
                 ddProps.relatives = [];
                 e.relatives.forEach(
                     function(node) {
                         var item;
-                        if (node !== sourceNode) {
+                        if (node !== dragNode) {
                             item = {
-                                sourceNode: node,
                                 dragNode: node,
                                 shiftX: node.getX() - x,
                                 shiftY: node.getY() - y,
@@ -8174,8 +8319,7 @@ module.exports = function (window) {
                             };
                             item.dragNode.setClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS]);
                             ddProps.relatives.push(item);
-                            e.relativeNodes.push(item.sourceNode);
-                            e.relativeCopyNodes.push(item.dragNode);
+                            e.relativeNodes.push(item.dragNode);
                         }
                     }
                 );
@@ -8213,7 +8357,7 @@ module.exports = function (window) {
         },
 
       /**
-        * Engine behinf the dragdrop-cycle.
+        * Engine behind the drag-drop-cycle.
         * Sets up a `mousedown` listener to initiate a drag-drop eventcycle. The eventcycle start whenever
         * one of these events happens on a HtmlElement with the attribute `dd-draggable="true"`.
         * The drag-drop eventcycle consists of the events: `dd-start`, `emitterName:dd-drag` and `emitterName:dd-drop`
@@ -8266,15 +8410,24 @@ module.exports = function (window) {
                 e.yMouseOrigin = e.clientY + window.getScrollTop();
                 // now we can start the eventcycle by emitting UI:dd:
                 /**
-                * Fired when the checkbox changes its value<br />
-                * Listen for this event instead of 'checkedChange',
-                * because this event is also fired when the checkbox changes its 'disabled'-state
-                * (switching value null/boolean)
+                * Emitted when a draggable Element's drag-cycle starts. You can use a `before`-subscriber to specify
+                * e.relatives, which should be a nodelist with HtmlElements, that should be dragged togehter with the master
+                * draggable Element.
                 *
-                * @event valuechange
-                * @param e {EventFacade} Event Facade including:
-                * @param e.newVal {Boolean|null} New value of the checkbox; will be 'null' when is disabled.
-                * @param e.prevVal {Boolean|null} Previous value of the checkbox; will be 'null' when was disabled.
+                * @event dd
+                * @param e {Object} eventobject including:
+                * @param e.target {HtmlElement} the HtmlElement that is being dragged
+                * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+                * @param e.sourceTarget {HtmlElement} the deepest HtmlElement where the mouse lies upon
+                * @param e.dd {Promise} Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.
+                * @param e.xMouse {Number} the current x-position in the window-view
+                * @param e.yMouse {Number} the current y-position in the window-view
+                * @param e.clientX {Number} the current x-position in the window-view
+                * @param e.clientY {Number} the current y-position in the window-view
+                * @param e.xMouseOrigin {Number} the original x-position in the document when drag started (incl. scrollOffset)
+                * @param e.yMouseOrigin {Number} the original y-position in the document when drag started (incl. scrollOffset)
+                * @param [e.relatives] {NodeList} an optional list that the user could set in a `before`-subscriber of the `dd`-event
+                *        to inform which nodes are related to the draggable node and should be dragged as well.
                 * @since 0.1
                 */
                 Event.emit(e.target, UI_DD_START, e);
@@ -8326,13 +8479,13 @@ module.exports = function (window) {
         init: function() {
             console.log(NAME, 'init');
             var instance = this;
-            if (!instance.initialised) {
+            if (!instance._inited) {
                 instance._defineDDStart();
                 instance._setupMouseEv(); // engine behind the dragdrop-eventcycle
                 Event.defineEvent('UI:'+DD_DROP)
                      .defaultFn(instance._defFnDrop.rbind(instance));
             }
-            instance.initialised = true;
+            instance._inited = true;
         },
 
         /**
@@ -8372,38 +8525,21 @@ module.exports = function (window) {
             instance[DD_MINUSDRAGGABLE] = true;
             instance[DD_MINUS+DROPZONE] = config.dropzone;
             instance[CONSTRAIN_ATTR] = config.constrain;
-            instance[DD_EMITTERNAME] = config.emitterName;
+            instance[DD_EMITTER] = config.emitter;
             instance[DD_HANDLE] = config.handle;
             instance[DD_EFFECT_ALLOWED] = config.effectAllowed;
             instance[DD_DROPZONE_MOVABLE] = config.dropzoneMovable;
         }
     );
 
-    NodeDropzone = NodePlugin.subClass(
-        function (config) {
-            var dropzone = TRUE,
-                emitterName;
-            config || (config={});
-            if (config.copy && !config.move) {
-                dropzone = COPY;
-            }
-            else if (!config.copy && config.move) {
-                dropzone = MOVE;
-            }
-            (emitterName=config.emitterName) && (dropzone+=' '+EMITTERNAME+'='+emitterName);
-            this.dropzone = dropzone;
-        }
-    );
-
     return {
-        Drag: Drag,
+        DD: DD,
         Plugins: {
-            NodeDD: Drag.NodeDD,
-            NodeDropzone: NodeDropzone
+            NodeDD: NodeDD
         }
     };
 };
-},{"./css/drag-drop.css":18,"dom-ext":11,"event-dom":20,"js-ext":34,"polyfill/polyfill-base.js":55,"utils":57,"window-ext":60}],20:[function(require,module,exports){
+},{"./css/drag.css":18,"dom-ext":11,"event-dom":20,"js-ext":34,"polyfill/lib/promise.js":53,"polyfill/polyfill-base.js":55,"window-ext":60}],20:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8428,7 +8564,6 @@ var NAME = '[event-dom]: ',
     Event = require('event'),
     later = require('utils').later,
     OUTSIDE = 'outside',
-    REGEXP_UI = /^UI:/,
     REGEXP_NODE_ID = /^#\S+$/,
     REGEXP_EXTRACT_NODE_ID = /#(\S+)/,
     REGEXP_UI_OUTSIDE = /^.+outside$/,
@@ -8450,12 +8585,16 @@ var NAME = '[event-dom]: ',
     */
     DOMEvents = {};
 
+    require('js-ext/lib/string.js');
+    require('js-ext/lib/array.js');
+    require('js-ext/lib/object.js');
+
 module.exports = function (window) {
     var DOCUMENT = window.document,
         NEW_EVENTSYSTEM = DOCUMENT.addEventListener,
         OLD_EVENTSYSTEM = !NEW_EVENTSYSTEM && DOCUMENT.attachEvent,
-        DOM_Events, _bubbleIE8, _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor,
-        _setupDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc;
+        _bubbleIE8, _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor,
+        _setupDomListener, _teardownDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc;
 
     require('polyfill/lib/element.matchesselector.js')(window);
     require('polyfill/lib/node.contains.js')(window);
@@ -8843,23 +8982,65 @@ module.exports = function (window) {
         return (subscriberOne.t || subscriberOne.n).contains(subscriberTwo.t || subscriberTwo.n) ? 1 : -1;
     };
 
+    /*
+     * Removes DOM-eventsubscribers from document when they are no longer needed.
+     *
+     * @method _teardownDomListener
+     * @param customEvent {String} the customEvent that is transported to the eventsystem
+     * @private
+     * @since 0.0.2
+     */
+    _teardownDomListener = function(customEvent) {
+        var customEventWithoutOutside = customEvent.endsWith(OUTSIDE) ? customEvent.substr(0, customEvent.length-7) : customEvent,
+            eventSplitted = customEventWithoutOutside.split(':'),
+            eventName = eventSplitted[1];
+
+        if (!Event._subs[customEventWithoutOutside] && !Event._subs[customEventWithoutOutside+OUTSIDE]) {
+            console.log(NAME, '_teardownDomListener '+customEvent);
+            // remove eventlistener from `document`
+            if (NEW_EVENTSYSTEM) {
+                // one exeption: windowresize should listen to the window-object
+                if (eventName==='resize') {
+                    window.removeEventListener(eventName, _evCallback);
+                }
+                else {
+                    // important: set the third argument `true` so we listen to the capture-phase.
+                    DOCUMENT.removeEventListener(eventName, _evCallback, true);
+                }
+            }
+            else if (OLD_EVENTSYSTEM) {
+                // one exeption: windowresize should listen to the window-object
+                if (eventName==='resize') {
+                    window.detachEvent('on'+eventName, _evCallback);
+                }
+                else {
+                    DOCUMENT.detachEvent('on'+eventName, _evCallback);
+                }
+            }
+            delete DOMEvents[eventName];
+        }
+    };
+
     // Now a very tricky one:
     // Some browsers do an array.sort down-top instead of top-down.
     // In those cases we need another sortFn, for the position on an equal match should fall
     // behind instead of before (which is the case on top-down sort)
-    [1,2].sort(function(a, b) {
+    [1,2].sort(function(a /*, b */) {
         SORT || (SORT=(a===2) ? _sortFuncReversed : _sortFunc);
     });
 
     // Now we do some initialization in order to make DOM-events work:
 
-    // Notify when someone subscriber to an UI:* event
+    // Notify when someone subscribes to an UI:* event
     // if so: then we might need to define a customEvent for it:
     // alse define the specific DOM-methods that can be called on the eventobject: `stopPropagation` and `stopImmediatePropagation`
     Event.notify('UI:*', _setupDomListener, Event)
          ._setEventObjProperty('stopPropagation', function() {this.status.ok || (this.status.propagationStopped = this.target);})
          ._setEventObjProperty('stopImmediatePropagation', function() {this.status.ok || (this.status.immediatePropagationStopped = this.target);});
 
+    // Notify when someone detaches an UI:* event
+    // if so: then we might need to detach the native listener on `document`
+    Event.notifyDetach('UI:*', _teardownDomListener, Event);
 
     Event._sellist = [_domSelToFunc];
 
@@ -8890,7 +9071,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":27,"polyfill/lib/element.matchesselector.js":47,"polyfill/lib/node.contains.js":49,"utils":57}],21:[function(require,module,exports){
+},{"event":27,"js-ext/lib/array.js":35,"js-ext/lib/object.js":37,"js-ext/lib/string.js":39,"polyfill/lib/element.matchesselector.js":47,"polyfill/lib/node.contains.js":49,"utils":57}],21:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8940,7 +9121,7 @@ module.exports = function (window) {
         subscriber = Event.after('mouseover', function(e) {
             console.log(NAME, 'setupHover: setting up mouseover event');
             var node = e.target;
-            e.hover = new Promise(function(fulfill, reject) {
+            e.hover = new Promise(function(fulfill) {
                 Event.onceAfter(
                     'mouseout',
                     function(e) {
@@ -9062,7 +9243,7 @@ module.exports = function (window) {
     startFocus = function(e) {
         console.log(NAME, 'startFocus');
         var node = e.target,
-            editable, valueChangeData, previousValue;
+            editable, valueChangeData;
 
         if (!editableNode(node)) {
             return;
@@ -9396,8 +9577,6 @@ require('js-ext/lib/object.js');
          * ':save'
          */
         REGEXP_EVENTNAME_WITH_SEMICOLON = /:((?:\w|-)+)$/,
-        MSG_HALTED = 'event was halted',
-        MSG_PREVENTED = 'event was defaultPrevented',
         DEFINE_IMMUTAL_PROPERTY = function (obj, property, value) {
             Object.defineProperty(obj, property, {
                 configurable: false,
@@ -9721,7 +9900,7 @@ require('js-ext/lib/object.js');
          *        have the syntax: `emitterName:eventName`. Wildcard `*` may be used only  for`eventName`.
          *        If `emitterName` should be defined.
          * @param callback {Function} subscriber: will be invoked when the customEvent is called (before any subscribers.
-         *                 Recieves 3 arguments: the `subscriber-object`, `customEvent` and the complete subscriptionobject.
+         *                 Recieves 2 arguments: the `customEvent` and `subscriber-object`.
          * @param context {Object} context of the callback
          * @param [once=false] {Boolean} whether the subscriptions should be removed after the first invokation
          * @chainable
@@ -9753,7 +9932,7 @@ require('js-ext/lib/object.js');
          *        have the syntax: `emitterName:eventName`. Wildcard `*` may be used only  for`eventName`.
          *        If `emitterName` should be defined.
          * @param callback {Function} subscriber: will be invoked when the customEvent is called (before any subscribers.
-         *                 Recieves 2 arguments: the `subscriber-object` and `customEvent`.
+         *                 Recieves 1 arguments: the `customEvent`.
          * @param context {Object} context of the callback
          * @param [once=false] {Boolean} whether the subscriptions should be removed after the first invokation
          * @chainable
@@ -9873,14 +10052,14 @@ require('js-ext/lib/object.js');
             if (emitterName) {
                 pattern = new RegExp('^'+emitterName+':');
                 instance._ce.each(
-                    function(value, key, object) {
+                    function(value, key) {
                         key.match(pattern) && (delete instance._ce[key]);
                     }
                 );
             }
             else {
                 instance._ce.each(
-                    function(value, key, object) {
+                    function(value, key) {
                         delete instance._ce[key];
                     }
                 );
@@ -10771,8 +10950,7 @@ Event.Emitter = function(emitterName) {
  * @since 0.0.1
 */
 
-var NAME = '[event-listener]: ',
-    Event = require('./index.js');
+var Event = require('./index.js');
 
 Event.Listener = {
     /**
@@ -10925,7 +11103,6 @@ require('./event-listener.js');
 var NAME = '[io-cors-ie9]: ',
     XmlDOMParser = require('xmldom').DOMParser,
     UNKNOW_ERROR = 'Unknown XDR-error', // XDR doesn't specify the error
-    REQUEST_TIMEOUT = 'Request-timeout',
     REGEXP_EXTRACT_URL = new RegExp("^((([a-z][a-z0-9-.]*):\/\/)?(([^\/?#:]+)(:(\\d+))?)?)?(\/?[a-z0-9-._~%!$&'()*+,;=@]+(\/[a-z0-9-._~%!$&'()*+,;=:@]+)*\/?|\/)?([#?](.*)|$)", "i"),
     currentDomain,
     BODY_METHODS = {
@@ -10975,7 +11152,7 @@ module.exports = function (window) {
         return xhr;
     },
 
-    readyHandleXDR = function(xhr, promise, headers, method) {
+    readyHandleXDR = function(xhr, promise, headers /*, method */) {
         if (xhr._isXDR) {
             console.log(NAME, 'readyHandleXDR');
             // for XDomainRequest, we need 'onload' instead of 'onreadystatechange'
@@ -11021,9 +11198,7 @@ module.exports = function (window) {
 "use strict";
 
 var NAME = '[io-stream]: ',
-    UNKNOW_ERROR = 'Unknown XDR-error', // XDR doesn't specify the error
-    INVALID_DATA = 'invalid data',
-    REQUEST_TIMEOUT = 'Request-timeout';
+    UNKNOW_ERROR = 'Unknown XDR-error'; // XDR doesn't specify the error
 
 module.exports = function (window) {
 
@@ -11121,7 +11296,7 @@ module.exports = function (window) {
      * @param method {String} the request-method used
      * @private
     */
-    _setStreamHeader = function(xhr, promise, headers, method) {
+    _setStreamHeader = function(xhr /*, promise, headers, method */) {
         if (xhr._isStream && !xhr._isXDR) {
             console.log(NAME, '_setStreamHeader');
             xhr.setRequestHeader('X-Stream', 'true');
@@ -11168,8 +11343,7 @@ var NAME = '[io-transfer]: ',
     DELETE = 'delete',
     REGEXP_ARRAY = /^( )*\[/,
     REGEXP_OBJECT = /^( )*{/,
-    REGEXP_REMOVE_LAST_COMMA = /^(.*),( )*$/,
-    entendXHR;
+    REGEXP_REMOVE_LAST_COMMA = /^(.*),( )*$/;
 
 module.exports = function (window) {
 
@@ -11186,7 +11360,7 @@ module.exports = function (window) {
      * @private
     */
     _entendXHR = function(xhr, props, options /*, promise */) {
-        var isarray, isobject, isstring, parialdata, regexpcomma, followingstream;
+        var isarray, isobject, parialdata, regexpcomma, followingstream;
         if ((typeof options.streamback === 'function') && options.headers && (options.headers.Accept==='application/json')) {
             console.log(NAME, 'entendXHR');
             xhr._parseStream = function(streamData) {
@@ -12123,10 +12297,11 @@ require('polyfill/lib/array.foreach.js');
      * Checks whether an item is inside the Array.
      * Alias for (array.indexOf(item) > -1)
      *
-     * @method inArray
+     * @method contains
+     * @param item {Any} the item to seek
      * @return {Boolean} whether the item is part of the Array
      */
-    Array.inArray || (ArrayPrototype.inArray=function(item) {
+    Array.contains || (ArrayPrototype.contains=function(item) {
         return (this.indexOf(item) > -1);
     });
 
@@ -12142,7 +12317,7 @@ require('polyfill/lib/array.foreach.js');
     Array.remove || (ArrayPrototype.remove=function(item, arrayItem) {
         var instance = this,
             removeItem = function(oneItem) {
-                var index = instance.indexOf(item);
+                var index = instance.indexOf(oneItem);
                 (index > -1) && instance.splice(index, 1);
             };
         if (!arrayItem && Array.isArray(item)) {
@@ -12399,7 +12574,7 @@ defineProperties(Function.prototype, {
  * @param [prototype] {Object} Hash map of prototype members of the new class
  * @return {Function} the new class
 */
-defineProperty(Object.prototype, 'createClass', function (constructor, prototype) {
+defineProperty(Object.prototype, 'createClass', function () {
 	return Function.prototype.subClass.apply(this, arguments);
 });
 },{"polyfill/polyfill-base.js":55}],37:[function(require,module,exports){
@@ -12709,7 +12884,6 @@ require('polyfill/lib/promise.js');
 require('ypromise');
 
 var NAME = '[promise-ext]: ',
-    ARRAY_EXPECTED = ' expects an array of values or promises', // include leading space!
     FUNCTION_EXPECTED = ' expects an array of function-references', // include leading space!
     PROMISE_CHAIN = 'Promise.chain';
 
@@ -12789,7 +12963,7 @@ var NAME = '[promise-ext]: ',
  */
 Promise.finishAll = function (items) {
     console.log(NAME, 'finishAll');
-    return new Promise(function (fulfill, reject) {
+    return new Promise(function (fulfill) {
         // Array.isArray assumes ES5
         Array.isArray(items) || (items=[items]);
 
@@ -13032,6 +13206,18 @@ Promise.manage = function (callbackFn) {
         PATTERN_HEX_COLOR_HASH = /^#[0-9A-F]{3}([0-9A-F]{3})?$/,
         PATTERN_HEX_COLOR_ALPHA = /^[0-9A-F]{4}([0-9A-F]{4})?$/,
         PATTERN_HEX_COLOR = /^[0-9A-F]{3}([0-9A-F]{3})?$/;
+
+    /**
+     * Checks whether the substring is part if this String.
+     * Alias for (String.indexOf(substring) > -1)
+     *
+     * @method contains
+     * @param substring {String} the substring to test for
+     * @return {Boolean} whether the substring is found
+     */
+    String.contains || (StringPrototype.contains=function(substring) {
+        return (this.indexOf(substring) > -1);
+    });
 
     /**
      * Checks if the string ends with the value specified by `test`

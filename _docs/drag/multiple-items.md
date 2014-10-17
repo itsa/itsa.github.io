@@ -20,7 +20,6 @@ intro: "Multiple items can be dragged at once by specifying <b>e.relatives</b> i
         width: 100px;
         background-color: #990073;
         border: 10px solid #000;
-        cursor: default;
         display: inline-block;
         *display: inline;
         *zoom: 1;
@@ -110,7 +109,7 @@ Drag the items to the dropzones. The `movable or copyable` items will be copyabl
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
 

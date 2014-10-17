@@ -2,7 +2,7 @@
 module: drag-drop
 maintainer: Marco Asbreuk
 title: Moving multiple items
-intro: "Multiple items can be dragged at once by specifying <b>e.relatives</b> inside a before-subscriber to the <b>dd-start</b> event."
+intro: "Multiple items can be dragged at once by specifying <b>e.relatives</b> inside a before-subscriber to the <b>dd-start</b> event. This example uses drag-delegation."
 ---
 
 <style type="text/css">
@@ -20,7 +20,6 @@ intro: "Multiple items can be dragged at once by specifying <b>e.relatives</b> i
         width: 100px;
         background-color: #990073;
         border: 10px solid #000;
-        cursor: default;
         display: inline-block;
         *display: inline;
         *zoom: 1;
@@ -38,6 +37,9 @@ intro: "Multiple items can be dragged at once by specifying <b>e.relatives</b> i
         float: left;
         position: relative;
     }
+    .container:not(.dd-dragging) {
+        cursor: default;
+    }
     .drop-container {
         width: 100%;
         height: 300px;
@@ -51,7 +53,7 @@ intro: "Multiple items can be dragged at once by specifying <b>e.relatives</b> i
         font-size: 17px;
         padding-top: 130px;
     }
-    .dropactive[dropzone] {
+    .dropzone-awake[dropzone] {
         border-style: dashed;
     }
     .container.selected {
@@ -75,7 +77,7 @@ Drag the items to the dropzones. The `movable or copyable` items will be copyabl
 
 ```css
 <style type="text/css">
-    .dropactive[dropzone] {
+    .dropzone-awake[dropzone] {
         border-style: dashed;
     }
     .container.selected {
@@ -90,6 +92,9 @@ Drag the items to the dropzones. The `movable or copyable` items will be copyabl
         user-select: none;
         float: left;
         position: relative;
+    }
+    .container:not(.dd-dragging) {
+        cursor: default;
     }
 </style>
 ```

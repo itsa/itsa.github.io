@@ -12,7 +12,6 @@ intro: "Dragging can be monitored using the dd, dd-drag and dd-drop events. <br>
         width: 100px;
         background-color: #990073;
         border: 2px solid #000;
-        cursor: default;
         color: #FFF;
         text-align: center;
         padding-top: 10px;

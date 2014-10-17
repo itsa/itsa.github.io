@@ -177,9 +177,7 @@
 &quot;use strict&quot;;
 
 var NAME = &#x27;[io-stream]: &#x27;,
-    UNKNOW_ERROR = &#x27;Unknown XDR-error&#x27;, // XDR doesn&#x27;t specify the error
-    INVALID_DATA = &#x27;invalid data&#x27;,
-    REQUEST_TIMEOUT = &#x27;Request-timeout&#x27;;
+    UNKNOW_ERROR = &#x27;Unknown XDR-error&#x27;; // XDR doesn&#x27;t specify the error
 
 module.exports = function (window) {
 
@@ -277,7 +275,7 @@ module.exports = function (window) {
      * @param method {String} the request-method used
      * @private
     */
-    _setStreamHeader = function(xhr, promise, headers, method) {
+    _setStreamHeader = function(xhr /*, promise, headers, method */) {
         if (xhr._isStream &amp;&amp; !xhr._isXDR) {
             console.log(NAME, &#x27;_setStreamHeader&#x27;);
             xhr.setRequestHeader(&#x27;X-Stream&#x27;, &#x27;true&#x27;);

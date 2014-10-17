@@ -564,7 +564,6 @@ exports.XMLHttpRequest = function() {
         // Set response var to the response we got back
         // This is so it remains accessable outside this scope
         response = resp;
-        var xmlDOMParser = isXMLRequest() ? new XmlDOMParser() : null;
         // Check for redirect
         // @TODO Prevent looped redirects
         if (response.statusCode === 302 || response.statusCode === 303 || response.statusCode === 307) {
@@ -666,7 +665,6 @@ exports.XMLHttpRequest = function() {
         &quot;req.end();&quot;;
       // Start the other Node Process, executing this string
       var syncProc = spawn(process.argv[0], [&quot;-e&quot;, execString]);
-      var statusText;
 /*jshint noempty:true */
       // Wait while the sync file is empty
       while (fs.existsSync(syncFile)) {}

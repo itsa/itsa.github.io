@@ -20,7 +20,6 @@ intro: "By default, any item dropped inside a dropzone will be visible inside th
         width: 100px;
         background-color: #990073;
         border: 2px solid #000;
-        cursor: default;
         display: inline-block;
         *display: inline;
         *zoom: 1;
@@ -47,7 +46,7 @@ intro: "By default, any item dropped inside a dropzone will be visible inside th
     .body-content.module p.spaced {
         margin-top: 290px;
     }
-    .dropactive[dropzone] {
+    .dropzone-awake[dropzone] {
         border-style: dashed;
     }
 </style>
@@ -69,7 +68,7 @@ Drag the items to the dropzones.
 
 ```css
 <style type="text/css">
-    .dropactive[dropzone] {
+    .dropzone-awake[dropzone] {
         border-style: dashed;
     }
 </style>
@@ -153,7 +152,7 @@ Drag the items to the dropzones.
         // also note that, when dragging multiple draggables, we have to handle e.relatives
         // which is a hash containing all draggable nodes as well as their originals.
         e.target.remove();
-        e.copyTarget.remove();
+        e.dragNode.remove();
         e.dropTarget.append('<br>'+e.target.getText()+' added');
     };
 

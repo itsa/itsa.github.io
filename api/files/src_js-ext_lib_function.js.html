@@ -391,7 +391,7 @@ defineProperties(Function.prototype, {
  * @param [prototype] {Object} Hash map of prototype members of the new class
  * @return {Function} the new class
 */
-defineProperty(Object.prototype, &#x27;createClass&#x27;, function (constructor, prototype) {
+defineProperty(Object.prototype, &#x27;createClass&#x27;, function () {
     return Function.prototype.subClass.apply(this, arguments);
 });
     </pre>

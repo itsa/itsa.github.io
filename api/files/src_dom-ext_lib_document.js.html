@@ -222,12 +222,6 @@ module.exports = function (window) {
         return content.replace(/[&amp;&lt;&gt;&quot;&#x27;\/&#x60;]/g, function (match) {return HTML_CHARS[match];});
     },
 
-    toCamelCase = function(input) {
-        return input.toLowerCase().replace(/-(.)/g, function(match, group) {
-            return group.toUpperCase();
-        });
-    },
-
    /*
     * Creates a fragment out of a String, so that it can be inserted as a NodeList.
     *

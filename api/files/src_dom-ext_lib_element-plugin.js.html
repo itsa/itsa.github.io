@@ -251,7 +251,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.plug = HTMLCollectionPrototype.plug = function(NodePluginClass, options) {
+        NodeListPrototype.plug = HTMLCollectionPrototype.plug = function(/* NodePluginClass, options */) {
             return forEach(this, &#x27;plug&#x27;, arguments);
         };
 
@@ -263,7 +263,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.unplug = HTMLCollectionPrototype.unplug = function(NodePluginClass) {
+        NodeListPrototype.unplug = HTMLCollectionPrototype.unplug = function(/* NodePluginClass */) {
             return forEach(this, &#x27;unplug&#x27;, arguments);
         };
 

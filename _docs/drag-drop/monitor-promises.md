@@ -2,7 +2,7 @@
 module: drag-drop
 maintainer: Marco Asbreuk
 title: Monitoring with Promises
-intro: "Dragging can be monitored by listening to the 'dd' event and use the e.dd Promise. Or for dropzones, listen to 'dropzone' and use the e.dropzone Promise.<br><br><b>Note:</b> it is recomended to use this Promise-way instead of subscribing to every single dd-event."
+intro: "Dragging can be monitored by listening to the 'dd' event and use the e.dd Promise. Or for dropzones, listen to 'dropzone-over' and use the e.dropzone Promise.<br><br><b>Note:</b> it is recomended to use this Promise-way instead of subscribing to every single dd-event."
 ---
 
 <style type="text/css">
@@ -12,7 +12,6 @@ intro: "Dragging can be monitored by listening to the 'dd' event and use the e.d
         width: 100px;
         background-color: #990073;
         border: 2px solid #000;
-        cursor: default;
         color: #FFF;
         text-align: center;
         padding-top: 10px;
@@ -45,7 +44,7 @@ intro: "Dragging can be monitored by listening to the 'dd' event and use the e.d
     .body-content.module p.spaced {
         margin-top: 25px;
     }
-    .dropactive[dropzone] {
+    .dropzone-awake[dropzone] {
         border-style: dashed;
     }
 </style>
@@ -63,7 +62,7 @@ Drag the item and watch for the events.
 
 ```css
 <style type="text/css">
-    .dropactive[dropzone] {
+    .dropzone-awake[dropzone] {
         border-style: dashed;
     }
 </style>
@@ -175,7 +174,7 @@ Drag the item and watch for the events.
     });
 
 
-    ITSA.Event.after('dropzone', function(e) {
+    ITSA.Event.after('dropzone-over', function(e) {
         var dropId = e.dropTarget.getId();
         monitorContOver.setHTML('dropzone --> dragged over dropzone '+dropId);
 

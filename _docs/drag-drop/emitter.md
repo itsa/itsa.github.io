@@ -20,7 +20,6 @@ intro: "Draggable items can be dropped inside dropzones. When these dronzones ar
         width: 100px;
         background-color: #990073;
         border: 2px solid #000;
-        cursor: default;
         display: inline-block;
         *display: inline;
         *zoom: 1;
@@ -43,17 +42,17 @@ intro: "Draggable items can be dropped inside dropzones. When these dronzones ar
         font-size: 17px;
         padding-top: 105px;
     }
-    .container[dd-emittername="blue"] {
+    .container[dd-emitter="blue"] {
         background-color: #00F;
     }
     #without-emitter,
-    .container[dd-emittername="blue"] {
+    .container[dd-emitter="blue"] {
         background-color: #00F;
     }
-    .container[dd-emittername="red"] {
+    .container[dd-emitter="red"] {
         background-color: #F00;
     }
-    .dropactive[dropzone] {
+    .dropzone-awake[dropzone] {
         border-style: dashed;
     }
 </style>
@@ -61,12 +60,12 @@ intro: "Draggable items can be dropped inside dropzones. When these dronzones ar
 Drag the items to the dropzones. The `movable and optional copyable` item will be copyable when the `Ctrl`-key (or `cmd`-key on a Mac) is pressed.
 
 <div id="constr" class="base-container">
-    <div class="container" dd-draggable="true" dd-emittername="blue"></div>
+    <div class="container" dd-draggable="true" dd-emitter="blue"></div>
     <div id="without-emitter" class="container" dd-draggable="true"></div>
     <div id="without" class="container"></div>
 </div>
 
-<div class="drop-container" dropzone="emittername=blue">only blue items</div>
+<div class="drop-container" dropzone="emitter=blue">only blue items</div>
 <div id="dropzone-without" class="drop-container">only red items</div>
 
 
@@ -74,7 +73,7 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
 
 ```css
 <style type="text/css">
-    .dropactive[dropzone] {
+    .dropzone-awake[dropzone] {
         border-style: dashed;
     }
 </style>
@@ -83,12 +82,12 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
 ```html
 <body>
     <div id="constr" class="base-container">
-        <div class="container" dd-draggable="true" dd-emittername="blue"></div>
+        <div class="container" dd-draggable="true" dd-emitter="blue"></div>
         <div id="without-emitter" class="container" dd-draggable="true"></div>
         <div id="without" class="container"></div>
     </div>
 
-    <div class="drop-container" dropzone="emittername=blue">only blue items</div>
+    <div class="drop-container" dropzone="emitter=blue">only blue items</div>
     <div id="dropzone-without" class="drop-container">only red items</div>
 </body>
 ```
@@ -99,26 +98,26 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
     var ITSA = require('itsa');
 
     ITSA.DD.init();
-    document.getElement('#without').plug(ITSA.Plugins.NodeDD, {emitterName: 'red'});
-    document.getElement('#dropzone-without').plug(ITSA.Plugins.NodeDropzone, {emitterName: 'red'});
+    document.getElement('#without').plug(ITSA.Plugins.NodeDD, {emitter: 'red'});
+    document.getElement('#without-emitter').plug(ITSA.Plugins.NodeDD, {emitter: 'blue'});
+    document.getElement('#dropzone-without').plug(ITSA.Plugins.NodeDropzone, {emitter: 'red'});
 
     ITSA.Event.before('dd-start', function(e) {
-        e.emitterName = "blue";
+        e.emitter = "blue";
     }, '#without-emitter');
 </script>
 ```
 
-<script src="../../dist/itsabuild-min.js"></script>
+<script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa');
 
     ITSA.DD.init();
-    document.getElement('#without').plug(ITSA.Plugins.NodeDD, {emitterName: 'red'});
-    document.getElement('#without-emitter').plug(ITSA.Plugins.NodeDD, {emitterName: 'blue'});
-    document.getElement('#dropzone-without').plug(ITSA.Plugins.NodeDropzone, {emitterName: 'red'});
+    document.getElement('#without').plug(ITSA.Plugins.NodeDD, {emitter: 'red'});
+    document.getElement('#without-emitter').plug(ITSA.Plugins.NodeDD, {emitter: 'blue'});
+    document.getElement('#dropzone-without').plug(ITSA.Plugins.NodeDropzone, {emitter: 'red'});
 
     ITSA.Event.before('dd-start', function(e) {
-        e.emitterName = "blue";
+        e.emitter = "blue";
     }, '#without-emitter');
-
 </script>

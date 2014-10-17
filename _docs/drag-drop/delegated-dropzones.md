@@ -26,7 +26,6 @@ intro: "Multiple items can be made draggable by specify <b>draggable=\"css-selec
         width: 100px;
         background-color: #990073;
         border: 10px solid #000;
-        cursor: default;
         display: inline-block;
         *display: inline;
         *zoom: 1;
@@ -44,10 +43,13 @@ intro: "Multiple items can be made draggable by specify <b>draggable=\"css-selec
         float: left;
         position: relative;
     }
+    .base-container div:not(.dd-dragging) {
+        cursor: default;
+    }
     .body-content.module p.spaced {
         margin-top: 690px;
     }
-    .dropactive[dropzone] {
+    .dropzone-awake[dropzone] {
         border-style: dashed;
     }
 </style>
@@ -69,7 +71,7 @@ Drag the items, they are all draggable and can be moved or copied into any dropz
 
 ```css
 <style>
-    .dropactive[dropzone] {
+    .dropzone-awake[dropzone] {
         border-style: dashed;
     }
 
@@ -81,6 +83,9 @@ Drag the items, they are all draggable and can be moved or copied into any dropz
         user-select: none;
         float: left;
         position: relative;
+    }
+    .base-container div:not(.dd-dragging) {
+        cursor: default;
     }
 </style>
 ```

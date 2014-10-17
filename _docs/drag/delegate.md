@@ -20,7 +20,6 @@ intro: "Multiple items can be made draggable by specify <b>draggable=\"css-selec
         width: 100px;
         background-color: #990073;
         border: 10px solid #000;
-        cursor: default;
         display: inline-block;
         *display: inline;
         *zoom: 1;
@@ -37,6 +36,9 @@ intro: "Multiple items can be made draggable by specify <b>draggable=\"css-selec
         user-select: none;
         float: left;
         position: relative;
+    }
+    .base-container div:not(.dd-dragging) {
+        cursor: default;
     }
 </style>
 
@@ -62,6 +64,9 @@ Drag the items, they are all draggable.
         user-select: none;
         float: left;
         position: relative;
+    }
+    .base-container div:not(.dd-dragging) {
+        cursor: default;
     }
 </style>
 ```

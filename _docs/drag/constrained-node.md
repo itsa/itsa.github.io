@@ -19,7 +19,6 @@ intro: "Draggable elements can be constrained by setting the attribute <b>xy-con
         width: 100px;
         background-color: #990073;
         border: 2px solid #000;
-        cursor: default;
         display: inline-block;
         *display: inline;
         *zoom: 1;
@@ -29,7 +28,7 @@ intro: "Draggable elements can be constrained by setting the attribute <b>xy-con
 Drag the 2 rectangles: they will be constrained to their container. The first is constrained using html, the second is set up using javascript.
 
 <div class="base-container">
-    <div id="ohoh" class="container" dd-draggable="true" xy-constrain=".base-container"></div>
+    <div class="container" dd-draggable="true" xy-constrain=".base-container"></div>
     <div id="without" class="container" dd-draggable="true"></div>
 </div>
 

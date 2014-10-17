@@ -227,7 +227,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.append = HTMLCollectionPrototype.append = function(content, escape) {
+        NodeListPrototype.append = HTMLCollectionPrototype.append = function(/* content, escape */) {
             return forEach(this, &#x27;append&#x27;, arguments);
         };
 
@@ -243,7 +243,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.defineInlineStyle = HTMLCollectionPrototype.defineInlineStyle = function(value) {
+        NodeListPrototype.defineInlineStyle = HTMLCollectionPrototype.defineInlineStyle = function(/* value */) {
             return forEach(this, &#x27;defineInlineStyle&#x27;, arguments);
         };
 
@@ -257,7 +257,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.prepend = HTMLCollectionPrototype.prepend = function(content, escape) {
+        NodeListPrototype.prepend = HTMLCollectionPrototype.prepend = function(/* content, escape */) {
             return forEach(this, &#x27;prepend&#x27;, arguments);
         };
 
@@ -268,7 +268,7 @@ module.exports = function (window) {
         * @method remove
         * @since 0.0.1
         */
-        NodeListPrototype.remove = HTMLCollectionPrototype.remove = function(HtmlElement) {
+        NodeListPrototype.remove = HTMLCollectionPrototype.remove = function(/* HtmlElement */) {
             return forEach(this, &#x27;remove&#x27;, arguments);
         };
 
@@ -283,7 +283,7 @@ module.exports = function (window) {
         * @return {Boolean} Whether the HtmlElement has the attribute set.
         * @since 0.0.1
         */
-        NodeListPrototype.removeAttr = HTMLCollectionPrototype.removeAttr = function(attributeName) {
+        NodeListPrototype.removeAttr = HTMLCollectionPrototype.removeAttr = function(/* attributeName */) {
             return forEach(this, &#x27;removeAttr&#x27;, arguments);
         };
 
@@ -296,7 +296,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.removeClass = HTMLCollectionPrototype.removeClass = function(className) {
+        NodeListPrototype.removeClass = HTMLCollectionPrototype.removeClass = function(/* className */) {
             return forEach(this, &#x27;removeClass&#x27;, arguments);
         };
 
@@ -309,7 +309,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.removeData = HTMLCollectionPrototype.removeData = function(key) {
+        NodeListPrototype.removeData = HTMLCollectionPrototype.removeData = function(/* key */) {
             return forEach(this, &#x27;removeData&#x27;, arguments);
         };
 
@@ -322,7 +322,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.removeInlineStyle = HTMLCollectionPrototype.removeInlineStyle = function(cssAttribute) {
+        NodeListPrototype.removeInlineStyle = HTMLCollectionPrototype.removeInlineStyle = function(/* cssAttribute */) {
             return forEach(this, &#x27;removeInlineStyle&#x27;, arguments);
         };
 
@@ -335,7 +335,7 @@ module.exports = function (window) {
         * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
         * @since 0.0.1
         */
-        NodeListPrototype.replace = HTMLCollectionPrototype.replace = function(newHtmlElement, escape) {
+        NodeListPrototype.replace = HTMLCollectionPrototype.replace = function(/* newHtmlElement, escape */) {
             return forEach(this, &#x27;replace&#x27;, arguments);
         };
 
@@ -351,7 +351,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.replaceClass = HTMLCollectionPrototype.replaceClass = function(prevClassName, newClassName, force) {
+        NodeListPrototype.replaceClass = HTMLCollectionPrototype.replaceClass = function(/* prevClassName, newClassName, force */) {
             return forEach(this, &#x27;replaceClass&#x27;, arguments);
         };
 
@@ -367,7 +367,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
        */
-        NodeListPrototype.setAttr = HTMLCollectionPrototype.setAttr = function(attributeName, value) {
+        NodeListPrototype.setAttr = HTMLCollectionPrototype.setAttr = function(/* attributeName, value */) {
             return forEach(this, &#x27;setAttr&#x27;, arguments);
         };
 
@@ -380,7 +380,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.setClass = HTMLCollectionPrototype.setClass = function(className) {
+        NodeListPrototype.setClass = HTMLCollectionPrototype.setClass = function(/* className */) {
             return forEach(this, &#x27;setClass&#x27;, arguments);
         };
 
@@ -393,7 +393,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.setClassName = HTMLCollectionPrototype.setClassName = function(className) {
+        NodeListPrototype.setClassName = HTMLCollectionPrototype.setClassName = function(/* className */) {
             return forEach(this, &#x27;setClassName&#x27;, arguments);
         };
 
@@ -408,7 +408,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
        */
-        NodeListPrototype.setData = HTMLCollectionPrototype.setData = function(key, value) {
+        NodeListPrototype.setData = HTMLCollectionPrototype.setData = function(/* key, value */) {
             return forEach(this, &#x27;setData&#x27;, arguments);
         };
 
@@ -423,7 +423,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.setHTML = HTMLCollectionPrototype.setHTML = function(content) {
+        NodeListPrototype.setHTML = HTMLCollectionPrototype.setHTML = function(/* content */) {
             return forEach(this, &#x27;setHTML&#x27;, arguments);
         };
 
@@ -439,7 +439,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.setInlineStyle = HTMLCollectionPrototype.setInlineStyle = function(cssAttribute, value) {
+        NodeListPrototype.setInlineStyle = HTMLCollectionPrototype.setInlineStyle = function(/* cssAttribute, value */) {
             return forEach(this, &#x27;setInlineStyle&#x27;, arguments);
         };
 
@@ -454,7 +454,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.setText = HTMLCollectionPrototype.setText = function(content) {
+        NodeListPrototype.setText = HTMLCollectionPrototype.setText = function(/* content */) {
             return forEach(this, &#x27;setText&#x27;, arguments);
         };
 
@@ -467,7 +467,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        NodeListPrototype.toggleClass = HTMLCollectionPrototype.toggleClass = function(className) {
+        NodeListPrototype.toggleClass = HTMLCollectionPrototype.toggleClass = function(/* className */) {
             return forEach(this, &#x27;toggleClass&#x27;, arguments);
         };
 

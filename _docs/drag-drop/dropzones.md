@@ -20,7 +20,6 @@ intro: "Draggable items can be dropped inside dropzones. Dronzones are HtmlEleme
         width: 100px;
         background-color: #990073;
         border: 2px solid #000;
-        cursor: default;
         display: inline-block;
         *display: inline;
         *zoom: 1;
@@ -43,7 +42,7 @@ intro: "Draggable items can be dropped inside dropzones. Dronzones are HtmlEleme
         font-size: 17px;
         padding-top: 105px;
     }
-    .dropactive[dropzone] {
+    .dropzone-awake[dropzone] {
         border-style: dashed;
     }
 </style>
@@ -64,7 +63,7 @@ Drag the items to the dropzones.
 
 ```css
 <style type="text/css">
-    .dropactive[dropzone] {
+    .dropzone-awake[dropzone] {
         border-style: dashed;
     }
 </style>

@@ -194,7 +194,6 @@ require(&#x27;polyfill/lib/promise.js&#x27;);
 require(&#x27;ypromise&#x27;);
 
 var NAME = &#x27;[promise-ext]: &#x27;,
-    ARRAY_EXPECTED = &#x27; expects an array of values or promises&#x27;, // include leading space!
     FUNCTION_EXPECTED = &#x27; expects an array of function-references&#x27;, // include leading space!
     PROMISE_CHAIN = &#x27;Promise.chain&#x27;;
 
@@ -274,7 +273,7 @@ var NAME = &#x27;[promise-ext]: &#x27;,
  */
 Promise.finishAll = function (items) {
     console.log(NAME, &#x27;finishAll&#x27;);
-    return new Promise(function (fulfill, reject) {
+    return new Promise(function (fulfill) {
         // Array.isArray assumes ES5
         Array.isArray(items) || (items=[items]);
 

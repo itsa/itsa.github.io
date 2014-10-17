@@ -12,7 +12,6 @@ intro: "Draggable elements can be setup using the attribute <b>dd-draggable=\"tr
         width: 100px;
         background-color: #990073;
         border: 2px solid #000;
-        cursor: default;
         display: inline-block;
         *display: inline;
         *zoom: 1;

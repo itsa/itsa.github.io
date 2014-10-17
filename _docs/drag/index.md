@@ -2,42 +2,37 @@
 module: drag
 itsaclassname: DD
 version: 0.0.1
-modulesize: 4.04
-modulesizecombined: 16.99
+modulesize: 1.99
+modulesizecombined: 15.32
 dependencies: "polyfill/polyfill-base.js, js-ext/lib/function.js, js-ext/lib/object.js, utils, event"
 maintainer: Marco Asbreuk
-title: Drag and Drop
-intro: "Drag and Drop is a module which makes draggable items without any initialisation: <b>just plain HTML</b>. The code that takes care of this is loaded once and uses event-delegation to perform its task. You can set attributes on the HtmlElements and they will act as draggables, or dropzones. Of coarse these functionality can be given afterwards using javascript: you can set attributes yourself, or use Plugin's on the HtmlElements.<br><br>Because HTML defines the drag and drop behaviour, drag-drop is perfectly suited for serverside rendering."
+title: Simple Drag and Drop
+intro: "Drag is a module which makes draggable items without any initialisation: <b>just plain HTML</b>. The code that takes care of this is loaded once and uses event-delegation to perform its task. You can set attributes on the HtmlElements and they will act as draggables. Of coarse these functionality can be given afterwards using javascript: you can set attributes yourself, or use Plugin's on the HtmlElements.<br><br>Because HTML defines the drag-behaviour, this module is <u>perfectly suited for serverside rendering</u>."
 firstpar: get-started-onlywindow
 extracodefirstpar: DD.init();
 ---
 
 #Features#
 
-This module bring Drag and Drop to a higher level:
+This module makes HtmlElement draggable in a very easy way, no clientside rendering:
 
 * Functionalities `based upon HTML`
-* Functionalities can be set both at the Element or at a parent-container
+* Functionalities can be set both at the Element or a container-node
 * Draggable items can be `constrained`
-* `Move` or `Copy` items
-* Define `dropzones` where draggable items can be dropped into
-* Define `emitterNames` for draggable items and specify dropzones to accept specific emitters
 * Listen to only one event and use a `Promise` to be notified when ready
-* Move or Copy `multiple items` at once
+* Move `multiple items` at once
 * Use `handles` where draggable items can be pickes up
-* Nice transition-return when a dropzone is missed
+* Draggable items are marked with `classes`, so dragging is easy to style
 
 
 #The Basics#
 
-Drag and Drop consist of two different parts: `drag` and `drop`. Both parts are related to HtmlElements: `draggable nodes` or `dropzone nodes` that act as a container where the draggable items can be dropped into. Both functionalities are made operational by setting the appropriate `attributes` the the Elements. Once the code:
+Draggable items are HtmlElements. This Functionalities is made operational by setting the appropriate `attributes` the the HtmlElements. Once the code:
 
 ```js
 ITSA.DD.init();
 ```
 is executed, delegated eventlisteners will make sure that any Element act as they should, as long as it has the right attributes. You can even set the attributes later on: it just will work, without any additional code.
-
-##Drag##
 
 HtmlElements are made draggable by defining the attribute `dd-draggable="true"`:
 
@@ -45,108 +40,156 @@ HtmlElements are made draggable by defining the attribute `dd-draggable="true"`:
 <div dd-draggable="true">drag me</div>
 ```
 
-You can also define this behaviour at a parent Element that works like a container. Working this way, you need to specify which **descendants** need to be draggable by setting a css-selector `dd-draggable="css-selector"`:
+When this module gets imported, it returns an object like this:
 
-```html
-<div dd-draggable="div"> <!-- this div is not draggable -->
-    <div>drag me</div> <!-- draggable -->
-    <div>drag me</div> <!-- draggable -->
-    <div>drag me</div> <!-- draggable -->
-    <div>drag me</div> <!-- draggable -->
-    <div>drag me</div> <!-- draggable -->
-</div>
+```js
+{
+    DD: DD,
+    Plugins: {
+        NodeDD: NodeDD
+    }
+}
 ```
+This Object is available at the `ITSA` instance. This means, you need to call `ITSA.DD.init()` to inititalize the dragging features. Also, you have `ITSA.Plugins.NodeDD` as a node-plugin available.
 
+**Note:** ITSA.DD is actually a drag-drop instance, though it could have been a drag-instance, which would mean you had only the drag-functionalities of this module. In reality, ITSA.DD has all features of the [drag-drop module](../drag-drop/index.html), which extends this module.
 
-##Drop##
-
-HtmlElements can act as a `dropzone` where draggable items can be dropped inside. Dropzones are defined with the attribute `dropzone="true | move | copy"`. The type of dropzone determines wheter it accepts only copyable items, movable items, or both. As you can see later on, a dropzone can be limites to accept special emitters as well.
-
-Not only do you need to define dropzones, you also need to tell the draggable items that they should go into a specific dropzone. This should be done by setting the attribute `dd-dropzone="css-selector"` on the draggable item:
-
-```html
-<div dd-draggable="true" dd-dropzone=".drop-container">drag me</div>
-<div class="drop-container" dropzone="true"></div>
-```
 
 
 #Draggable Elements#
 
+Items can be made draggable by plain HTML, or by setting the right attributes with javascript later on. The latter is exactly what the Plugin does.
+
 ##Setting HTML-attributes##
+A fully defined draggable HtmlElement with all features will look like this (note that the `drag-drop`-module offers additional attributes):
+
+```html
+<div dd-draggable="true" dd-constrain=".container" dd-handle="h1">
+    <h1>drag me</h1>
+    <p>Some content</p>
+</div>
+```
 
 ###dd-constrain###
+Should equal `window` or a `css-selector` of an ancestor where the draggable should be constrained within.
 
 ###dd-handle###
-
-###dd-emittername###
-
-##Using Plugins##
-
-###ITSA.Plugins.NodeDD###
-
- NodeDD = NodePlugin.subClass(
-        function (config) {
-            config || (config={});
-            this[DD_MINUS+DRAGGABLE] = true;
-            this[DD_MINUS+DROPZONE] = config.dropzone;
-            this[CONSTRAIN_ATTR] = config.constrain;
-            this[DD_EMITTER_NAME] = config.emitterName;
-            this[DD_HANDLE] = config.handle;
-            this[DD_EFFECT_ALLOWED] = config.effectAllowed;
-        }
-    );
-
-###ITSA.Plugins.NodeConstrain###
-
-Is delivered by the module `dom-ext`.
-
-    NodeConstrain = NodePlugin.subClass(
-        function (config) {
-            this['xy-constrain'] = (config && config.selector) || 'window';
-        }
-    );
-
-
-#Dropzone Elements#
-
-##Setting HTML-attributes##
-
-###dropzone="true"###
-
-###dropzone="copy"###
-
-###dropzone="move"###
-
-###dropzone="emittername"###
+Should equal a `css-selector` of a descendant that should act as a handle where the draggable can be picked up.
 
 ##Using Plugins##
+When this module gets imported, it defines the node-plugin: `ITSA.Plugins.NodeDD`. Define a HtmlElement draggable or remove draggablilty-features can be done using this plugin.
 
-###ITSA.Plugins.NodeDropzone###
+###Define draggable###
+```js
+document.getElement('#someNode').plug(ITSA.Plugins.NodeDD);
+```
 
-    NodeDropzone = NodePlugin.subClass(
-        function (config) {
-            var dropzone = 'true',
-                emitterName;
-            config || (config={});
-            if (config.copy && !config.move) {
-                dropzone = COPY;
-            }
-            else if (!config.copy && config.move) {
-                dropzone = MOVE;
-            }
-            (emitterName=config.emitterName) && (dropzone+=' '+EMITTER_NAME+'='+emitterName);
-            this.dropzone = dropzone;
-        }
-    );
+###Remove draggablity###
+```js
+document.getElement('#someNode').unplug(ITSA.Plugins.NodeDD);
+```
+
+###Define draggable with options###
+```js
+document.getElement('#someNode').plug(
+    ITSA.Plugins.NodeDD,
+    {
+        constrain: '.container',
+        handle: 'h1'
+    }
+);
+```
+
+
+#Delegate dragging#
+
+You can also define draggable behaviour at a container-HtmlElement, so you don't have to define the draggable-attributes on every single HtmlElement. Working this way, you need to specify which **descendants** need to be draggable by setting a css-selector `dd-draggable="css-selector"`:
+
+```html
+<div dd-draggable="div" dd-handle="h1"> <!-- this div is not draggable -->
+    <div><h1>drag me</h1></div> <!-- draggable -->
+    <div><h1>drag me</h1></div> <!-- draggable -->
+    <div><h1>drag me</h1></div> <!-- draggable -->
+    <div><h1>drag me</h1></div> <!-- draggable -->
+    <div><h1>drag me</h1></div> <!-- draggable -->
+</div>
+```
+The container is defined as a `delegate`-container because `dd-draggable` is a `css-selector` instead of `"true"`. The css-selector defines which descendants are made draggable. Additional dragging attributes should be set on the same container-HtmlElement. During dragging, the draggable HtmlElement inherits the draggable attributes from the delegate-container and gets the appropriate draggable classes.
 
 
 #Multiple items simultanious#
 
+You can move multiple HtmlElements at the same time. This is done by defining which Element should go along with the `master`-draggable. This should be defined at the very first phase of the drag-cycle: inside a _before `dd`-event_-subscriber. The definition should be made by specifying `e.relatives` which should be a `NodeList`:
+
+```js
+ITSA.Event.before('dd', function(e) {
+    e.relatives = document.getAll('.selected');
+});
+```
+
+
 #Monitoring#
 
+The drag-cycle can be monitored by subscribing to all separate `events`, or by subscribing to the `dd`-event and make use of `e.dd` which is a `Promise`. If you are familiar with Promises, the latter is highly preferable.
+
 ##Events##
+The drag-cycle comes with 3 events, which all share the same eventobject. This means: changing the eventobject in a specific subscriber, makes it available in later subscribers (of other events) during this specific drag-cycle.
+
+###dd###
+When the drag starts. Emits one time during the eventcycle.
+
+###dd-drag###
+During dragging. Emits several times.
+
+###dd-drop###
+When the drag-cycle ends. Emits one time during the eventcycle.
+
+##The eventobject##
+The eventobject has the following properties:
+
+* **e.target** {HtmlElement} the HtmlElement that is being dragged
+* **e.currentTarget** {HtmlElement} the HtmlElement that is delegating
+* **e.sourceTarget** {HtmlElement} the deepest HtmlElement where the mouse lies upon
+* **e.dd** {Promise} Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.
+* **e.xMouse** {Number} the current x-position in the window-view
+* **e.yMouse** {Number} the current y-position in the window-view
+* **e.clientX** {Number} the current x-position in the window-view
+* **e.clientY** {Number} the current y-position in the window-view
+* **e.xMouseOrigin** {Number} the original x-position in the document when drag started (incl. scrollOffset)
+* **e.yMouseOrigin** {Number} the original y-position in the document when drag started (incl. scrollOffset)
+* **e.relatives** _optional_ {NodeList} an optional list that the user could set in a `before`-subscriber of the `dd`-event to inform which nodes are related to the draggable node and should be dragged as well.
+
 
 ##Promises##
 
+You can also subscribe to only one event: `dd`-event and use `e.dd` (which is a Promise) to monitor further action. This Promise gets resolved when the drag-cycle is finished.
 
-#Change dropbehaviour#
+If you want to get informed during dragging, you can set up a callback to be informed. This can be done by using `e.dd.setCallback(callbackFn)`. This is made possible, because the [Promise is extended](../js-ext/index.html#promise.manage).
+
+```js
+ITSA.Event.after('dd', function(e) {
+
+    e.dd.setCallback(function() {
+        // this code is executed many times during dragging
+    });
+
+    e.dd.then(
+        function() {
+            // this code is executed at the end of the drag-cycle
+        }
+    );
+
+});
+```
+
+#Classes#
+
+Draggable items are marked with `classes`, so dragging is easy to style.
+
+##Classes at draggable items#
+
+###dd-dragging###
+On every HtmlElement during dragging
+
+###dd-master###
+The master Element that is dragged. Will only be available when multiple HtmlElements are beging dragged and only on 1 HtmlElement (the one the mouse is holding).

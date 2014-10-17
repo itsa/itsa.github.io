@@ -6,13 +6,15 @@ intro: "Draggable elements can have handles wher you can drag them. You set this
 ---
 
 <style type="text/css">
+    .container:not(.dd-dragging) h1 {
+        cursor: default;
+    }
     .container {
         margin: 10px;
         height: 100px;
         width: 100px;
         background-color: #990073;
         border: 2px solid #000;
-        cursor: default;
         display: inline-block;
         *display: inline;
         *zoom: 1;
@@ -36,6 +38,14 @@ Drag the 2 rectangles. The first is constrained using html, the second is set up
 <div id="without" class="container"><h1>drag me</h1></div>
 
 <p class="spaced">Code-example:</p>
+
+```css
+<style type="text/css">
+    .container:not(.dd-dragging) h1 {
+        cursor: default;
+    }
+</style>
+```
 
 ```html
 <body>
