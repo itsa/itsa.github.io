@@ -291,6 +291,49 @@
 * @since 0.0.1
 */
 
+/**
+ * Objecthash containing all specific information about the particular drag-cycle.
+ * It has a structure like this:
+ *
+ * ddProps = {
+ *     sourceNode {HtmlElement} original node (defined by drag-drop)
+ *     dragNode {HtmlElement} Element that is dragged
+ *     x {Number} absolute x-position of the draggable inside &#x60;document&#x60; when the drag starts
+ *     y {Number} absolute y-position of the draggable inside &#x60;document&#x60; when the drag starts
+ *     inlineLeft {String} inline css of the property &#x60;left&#x60; when drag starts
+ *     inlineTop {String} inline css of the property &#x60;top&#x60; when drag starts
+ *     winConstrained {Boolean} whether the draggable should be constrained to &#x60;window&#x60;
+ *     xMouseLast {Number} absolute x-position of the mouse inside &#x60;document&#x60; when the drag starts
+ *     yMouseLast {Number} absolute y-position of the draggable inside &#x60;document&#x60; when the drag starts
+ *     winScrollLeft {Number} the left-scroll of window when drag starts
+ *     winScrollTop {Number} the top-scroll of window when drag starts
+ *     constrain = { // constrain-properties when constrained to a HtmlElement
+ *         xOrig {Number} x-position in the document, included with left-border-width
+ *         yOrig {Number} y-position in the document, included with top-border-width
+ *         x {Number} xOrig corrected with scroll-left of the constrained node
+ *         y {Number} yOrig corrected with scroll-top of the constrained node
+ *         w {Number} scrollWidth
+ *         h {Number} scrollHeight
+ *     };
+ *     dropzoneSpecified {Boolean} whether the draggable has a dropzone specified (either by &#x60;dd-dropzone&#x60; or by &#x60;dd-emitter&#x60;) (defined by drag-drop)
+ *     dragOverEv {Object} Eventhandler that watches for &#x60;mousemove&#x60; to detect dropzone-over events (defined by drag-drop)
+ *     relatives[{ // Array with objects that represent all draggables that come along with the master-draggable (in case of multiple items), excluded the master draggable itself
+ *         sourceNode {HtmlElement} original node (defined by drag-drop)
+ *         dragNode {HtmlElement} draggable node
+ *         shiftX {Number} the amount of left-pixels that this HtmlElement differs from the dragged element
+ *         shiftY {Number} the amount of top-pixels that this HtmlElement differs from the dragged element
+ *         inlineLeft {String} inline css of the property &#x60;left&#x60; when drag starts
+ *         inlineTop {String} inline css of the property &#x60;top&#x60; when drag starts
+ *     }]
+ *     relativeDragNodes [HtmlElements] Array with all &#x60;copyied&#x60; Nodes corresponding to &#x60;ddProps.relatives&#x60;. Only in case of copying multiple items (defined by drag-drop)
+ * }
+ *
+ * @property ddProps (extended by drag-drop)
+ * @default {}
+ * @type Object
+ * @since 0.0.1
+*/
+
 var DRAG = &#x27;drag&#x27;,
     DROP = &#x27;drop&#x27;,
     NAME = &#x27;[&#x27;+DRAG+&#x27;-&#x27;+DROP+&#x27;]: &#x27;,
@@ -532,8 +575,13 @@ module.exports = function (window) {
             Event.defineEvent(emitterName+&#x27;:&#x27;+DROPZONE_OVER)
                  .defaultFn(instance._defFnOver.bind(instance)); // no need to reassign
             return Event.after([MOUSEMOVE, DD_FAKE_MOUSEMOVE], function(e2) {
-                var overDropzone = false;
+                var overDropzone = false,
+                    dragNode = ddProps.dragNode;
                 ddProps.mouseOverNode = e.target;
+                if (e2.clientX) {
+                    ddProps.xMouseLast = e2.clientX + window.getScrollLeft();
+                    ddProps.yMouseLast = e2.clientY + window.getScrollTop();
+                }
                 dropzones.forEach(
                     function(dropzone) {
                         // don&#x27;t do double:
@@ -544,12 +592,8 @@ module.exports = function (window) {
                         var dropzoneAccept = dropzone.getAttr(DROPZONE) || &#x27;&#x27;,
                             dropzoneMove = REGEXP_MOVE.test(dropzoneAccept),
                             dropzoneCopy = REGEXP_COPY.test(dropzoneAccept),
-                            dragOverPromise, dragOutEvent, effectAllowed, emitterAllowed, dropzoneEmitter, xMouseLast, yMouseLast;
-
-                        if (e2.clientX) {
-                            ddProps.xMouseLast = e2.clientX + window.getScrollLeft();
-                            ddProps.yMouseLast = e2.clientY + window.getScrollTop();
-                        }
+                            dropzoneDefDraggable = dragNode.getAttr(DD_DROPZONE),
+                            dragOverPromise, dragOutEvent, effectAllowed, emitterAllowed, dropzoneEmitter, xMouseLast, yMouseLast, dropzoneAllowed;
 
                         // check if the mouse is inside the dropzone
                         // also check if the mouse is inside the dragged node: the dragged node might have been constrained
@@ -557,17 +601,12 @@ module.exports = function (window) {
                         xMouseLast = ddProps.xMouseLast;
                         yMouseLast = ddProps.yMouseLast;
 
-                        if (dropzone.insidePos(xMouseLast, yMouseLast) &amp;&amp; ddProps.dragNode.insidePos(xMouseLast, yMouseLast)) {
-console.info(&#x27;check 1&#x27;);
+                        if (dropzone.insidePos(xMouseLast, yMouseLast) &amp;&amp; dragNode.insidePos(xMouseLast, yMouseLast)) {
                             effectAllowed = (!dropzoneMove &amp;&amp; !dropzoneCopy) || (dropzoneCopy &amp;&amp; (dropEffect===COPY)) || (dropzoneMove &amp;&amp; (dropEffect===MOVE));
-console.info(&#x27;check 2&#x27;);
                             dropzoneEmitter = instance.getDropzoneEmitter(dropzoneAccept);
-console.info(&#x27;dropzoneEmitter: &#x27;+dropzoneEmitter);
-
-console.info(&#x27;emitterName: &#x27;+emitterName);
-dropzoneEmitter &amp;&amp; console.info(&#x27;(dropzoneEmitter.contains(emitterName)) &#x27;+(dropzoneEmitter.contains(emitterName)));
                             emitterAllowed = !dropzoneEmitter || (dropzoneEmitter.contains(emitterName));
-                            if (effectAllowed &amp;&amp; emitterAllowed) {
+                            dropzoneAllowed = !dropzoneDefDraggable || ((dropzoneDefDraggable===TRUE) || dropzone.matchesSelector(dropzoneDefDraggable));
+                            if (dropzoneAllowed &amp;&amp; effectAllowed &amp;&amp; emitterAllowed) {
                                 overDropzone = true;
                                 e.dropTarget = dropzone;
                                 // mouse is in area of dropzone
@@ -634,6 +673,48 @@ dropzoneEmitter &amp;&amp; console.info(&#x27;(dropzoneEmitter.contains(emitterN
                 );
                 overDropzone || (e.dropTarget=null);
             });
+        },
+
+       /**
+         * Emits a dropzone-drop event.
+         *
+         * @method _emitDropzoneDrop
+         * @param e {Object} eventobject to pass arround
+         * @private
+         * @since 0.0.1
+         */
+        _emitDropzoneDrop: function(e) {
+            /**
+            * Emitted when a draggable gets dropped inside a dropzone.
+            *
+            * @event *:dropzone-drop
+            * @param e {Object} eventobject including:
+            * @param e.target {HtmlElement} the dropzone
+            * @param e.dragNode {HtmlElement} The HtmlElement that is being dragged
+            * @param e.dropzone {Promise} The Promise that gets fulfilled as soon as the draggable is dropped, or outside the dropzone
+            *        Will fulfill with one argument: &#x60;onDropzone&#x60; {Boolean} when &#x60;true&#x60;, the draggable is dropped inside the dropzone, otherwise
+            *        the draggable got outside the dropzone without beging dropped.
+            * @param e.dropTarget {HtmlElement} The dropzone HtmlElement. Equals e.target
+            * @param e.ctrlKey {Boolean} Whether the Ctrl/cmd key is pressed
+            * @param e.isCopied {Boolean} Whether the drag is a copy-drag
+            * @param [e.sourceNode] {HtmlElement} The original Element. Only when a &#x60;copy&#x60; is made --&gt; e.dragNode is being moved while
+            *        e.sourceNode stand at its place.
+            * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating the draggable
+            * @param e.sourceTarget {HtmlElement} the deepest HtmlElement of the draggable where the mouse lies upon
+            * @param e.dd {Promise} Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.
+            * @param e.xMouse {Number} the current x-position in the window-view
+            * @param e.yMouse {Number} the current y-position in the window-view
+            * @param e.clientX {Number} the current x-position in the window-view
+            * @param e.clientY {Number} the current y-position in the window-view
+            * @param e.xMouseOrigin {Number} the original x-position in the document when drag started (incl. scrollOffset)
+            * @param e.yMouseOrigin {Number} the original y-position in the document when drag started (incl. scrollOffset)
+            * @param [e.relatives] {NodeList} an optional list that the user could set in a &#x60;before&#x60;-subscriber of the &#x60;dd&#x60;-event
+            *        to inform which nodes are related to the draggable node and should be dragged as well.
+            * @param [e.relativeDragNodes] {NodeList} an optional list that holds the HtmlElements that corresponds with
+            *        the &#x60;e.relative&#x60; list, but is a list with draggable Elements.
+            * @since 0.1
+            */
+            Event.emit(e.dropTarget, e.emitter+&#x27;:&#x27;+DROPZONE_DROP, e);
         },
 
       /**
@@ -746,37 +827,7 @@ dropzoneEmitter &amp;&amp; console.info(&#x27;(dropzoneEmitter.contains(emitterN
                 }
 
                 sourceNode.removeClass(DEL_DRAGGABLE);
-                /**
-                * Emitted when a draggable gets dropped inside a dropzone.
-                *
-                * @event *:dropzone-drop
-                * @param e {Object} eventobject including:
-                * @param e.target {HtmlElement} the dropzone
-                * @param e.dragNode {HtmlElement} The HtmlElement that is being dragged
-                * @param e.dropzone {Promise} The Promise that gets fulfilled as soon as the draggable is dropped, or outside the dropzone
-                *        Will fulfill with one argument: &#x60;onDropzone&#x60; {Boolean} when &#x60;true&#x60;, the draggable is dropped inside the dropzone, otherwise
-                *        the draggable got outside the dropzone without beging dropped.
-                * @param e.dropTarget {HtmlElement} The dropzone HtmlElement. Equals e.target
-                * @param e.ctrlKey {Boolean} Whether the Ctrl/cmd key is pressed
-                * @param e.isCopied {Boolean} Whether the drag is a copy-drag
-                * @param [e.sourceNode] {HtmlElement} The original Element. Only when a &#x60;copy&#x60; is made --&gt; e.dragNode is being moved while
-                *        e.sourceNode stand at its place.
-                * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating the draggable
-                * @param e.sourceTarget {HtmlElement} the deepest HtmlElement of the draggable where the mouse lies upon
-                * @param e.dd {Promise} Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.
-                * @param e.xMouse {Number} the current x-position in the window-view
-                * @param e.yMouse {Number} the current y-position in the window-view
-                * @param e.clientX {Number} the current x-position in the window-view
-                * @param e.clientY {Number} the current y-position in the window-view
-                * @param e.xMouseOrigin {Number} the original x-position in the document when drag started (incl. scrollOffset)
-                * @param e.yMouseOrigin {Number} the original y-position in the document when drag started (incl. scrollOffset)
-                * @param [e.relatives] {NodeList} an optional list that the user could set in a &#x60;before&#x60;-subscriber of the &#x60;dd&#x60;-event
-                *        to inform which nodes are related to the draggable node and should be dragged as well.
-                * @param [e.relativeDragNodes] {NodeList} an optional list that holds the HtmlElements that corresponds with
-                *        the &#x60;e.relative&#x60; list, but is a list with draggable Elements.
-                * @since 0.1
-                */
-                Event.emit(dropzoneNode, e.emitter+&#x27;:&#x27;+DROPZONE_DROP, e);
+                instance._emitDropzoneDrop(e);
             }
             else {
                 (dragNode.hasAttr(DD_DROPZONE_MOVABLE)) &amp;&amp; (dropzoneNode=dragNode.inside(DROPZONE_BRACKETS));

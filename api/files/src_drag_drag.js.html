@@ -247,7 +247,58 @@ module.exports = function (window) {
     require(&#x27;window-ext&#x27;)(window);
 
     DD = {
+        /**
+         * Objecthash containing all specific information about the particular drag-cycle.
+         * It has a structure like this:
+         *
+         * ddProps = {
+         *     dragNode {HtmlElement} Element that is dragged
+         *     x {Number} absolute x-position of the draggable inside &#x60;document&#x60; when the drag starts
+         *     y {Number} absolute y-position of the draggable inside &#x60;document&#x60; when the drag starts
+         *     inlineLeft {String} inline css of the property &#x60;left&#x60; when drag starts
+         *     inlineTop {String} inline css of the property &#x60;top&#x60; when drag starts
+         *     winConstrained {Boolean} whether the draggable should be constrained to &#x60;window&#x60;
+         *     xMouseLast {Number} absolute x-position of the mouse inside &#x60;document&#x60; when the drag starts
+         *     yMouseLast {Number} absolute y-position of the draggable inside &#x60;document&#x60; when the drag starts
+         *     winScrollLeft {Number} the left-scroll of window when drag starts
+         *     winScrollTop {Number} the top-scroll of window when drag starts
+         *     constrain = { // constrain-properties when constrained to a HtmlElement
+         *         xOrig {Number} x-position in the document, included with left-border-width
+         *         yOrig {Number} y-position in the document, included with top-border-width
+         *         x {Number} xOrig corrected with scroll-left of the constrained node
+         *         y {Number} yOrig corrected with scroll-top of the constrained node
+         *         w {Number} scrollWidth
+         *         h {Number} scrollHeight
+         *     };
+         *     relatives[{ // Array with objects that represent all draggables that come along with the master-draggable (in case of multiple items), excluded the master draggable itself
+         *         sourceNode {HtmlElement} original node (defined by drag-drop)
+         *         dragNode {HtmlElement} draggable node
+         *         shiftX {Number} the amount of left-pixels that this HtmlElement differs from the dragged element
+         *         shiftY {Number} the amount of top-pixels that this HtmlElement differs from the dragged element
+         *         inlineLeft {String} inline css of the property &#x60;left&#x60; when drag starts
+         *         inlineTop {String} inline css of the property &#x60;top&#x60; when drag starts
+         *     }]
+         * }
+         *
+         * @property ddProps
+         * @default {}
+         * @type Object
+         * @since 0.0.1
+        */
        ddProps: {},
+
+        /**
+         * Internal hash with notifiers to response after each &#x60;Drag&#x60; event is set up, or teared down.
+         * You can use this to hook in into the drag-eventcycle: the &#x60;drop&#x60;-module uses it this way.
+         * Is filled by using &#x60;notify()&#x60;.
+         *
+         * @property _notifiers
+         * @default []
+         * @type Array
+         * @private
+         * @since 0.0.1
+         */
+        _notifiers: [],
 
         /**
         * Default function for the &#x60;*:dd-drag&#x60;-event
@@ -353,7 +404,6 @@ module.exports = function (window) {
             console.log(NAME, &#x27;_defFnStart: default function UI:dd-start. Defining customEvent &#x27;+customEvent);
             Event.defineEvent(customEvent).defaultFn(instance._defFnDrag.bind(instance));
             window.document.getAll(&#x27;.&#x27;+DD_MASTER_CLASS).removeClass(DD_MASTER_CLASS);
-console.info(&#x27;check e.emitter: &#x27;+e.emitter);
             instance._initializeDrag(e);
         },
 
@@ -545,17 +595,6 @@ console.info(&#x27;check e.emitter: &#x27;+e.emitter);
         },
 
         /**
-         * Internal hash with notifiers to response after each &#x60;Drag&#x60; event is set up, or teared down.
-         * You can use this to hook in into the drag-eventcycle: the &#x60;drop&#x60;-module uses it this way.
-         * Is filled by using &#x60;notify()&#x60;.
-         *
-         * @property _notifiers
-         * @private
-         * @since 0.0.1
-         */
-        _notifiers: [],
-
-        /**
          * Prevented function for the &#x60;*:dd-start&#x60;-event
          *
          * @method _prevFnStart
@@ -734,7 +773,7 @@ console.info(&#x27;check e.emitter: &#x27;+e.emitter);
         function (config) {
             var instance = this;
             config || (config={});
-            instance[DD_MINUSDRAGGABLE] = true;
+            instance[DD_MINUSDRAGGABLE] = config.draggable || true;
             instance[DD_MINUS+DROPZONE] = config.dropzone;
             instance[CONSTRAIN_ATTR] = config.constrain;
             instance[DD_EMITTER] = config.emitter;

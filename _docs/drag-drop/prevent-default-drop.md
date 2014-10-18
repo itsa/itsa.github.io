@@ -112,6 +112,7 @@ Drag the items to the dropzones.
         e.target.remove();
         e.copyTarget.remove();
         e.dropTarget.append('<br>'+e.target.getText()+' added');
+        ITSA.DD_emitDropzoneDrop(e); // fire the dropzone-drop event
     };
 
     ITSA.Event.before(
@@ -154,6 +155,7 @@ Drag the items to the dropzones.
         e.target.remove();
         e.dragNode.remove();
         e.dropTarget.append('<br>'+e.target.getText()+' added');
+        ITSA.DD_emitDropzoneDrop(e); // fire the dropzone-drop event
     };
 
     ITSA.Event.before(

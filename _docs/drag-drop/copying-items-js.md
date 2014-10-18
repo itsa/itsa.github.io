@@ -1,7 +1,7 @@
 ---
 module: drag-drop
 maintainer: Marco Asbreuk
-title: Copy items to dropzones
+title: Copy items to dropzones using plugins
 intro: "Draggable items can be dropped inside dropzones. Dronzones are HtmlElements that have the attribute: <b>dropzone=\"true | move | copy\"</b>. The attribute-value determines what will be accepted when dropped. The draggable items on the other hand, need the attribute: <b>dd-effect-allowed=\"all | move | copy\"</b> which marks the Element so it can be inspected by the dropzone if it is accepted.<br><br>Once a draggable item has a dropzone set, it will return to its original place when it is dropped outside the dropzone.<br><br>Copied items are duplicated: once duplicated, they are only movable."
 ---
 
@@ -29,14 +29,6 @@ intro: "Draggable items can be dropped inside dropzones. Dronzones are HtmlEleme
         line-height: 1.2em;
         padding: 20px 8px 0;
     }
-    .container {
-        -moz-user-select: none;
-        -khtml-user-select: none;
-        -webkit-user-select: none;
-        user-select: none;
-        float: left;
-        position: relative;
-    }
     .drop-container {
         width: 250px;
         height: 250px;
@@ -57,29 +49,21 @@ intro: "Draggable items can be dropped inside dropzones. Dronzones are HtmlEleme
 
 Drag the items to the dropzones. The `movable and optional copyable` item will be copyable when the `Ctrl`-key (or `cmd`-key on a Mac) is pressed.
 
-<div class="base-container" dd-draggable=".container" dd-dropzone=".drop-container" >
-    <div class="container" dd-effect-allowed="copy">copyable</div>
-    <div class="container" dd-effect-allowed="move">movable</div>
-    <div class="container" dd-effect-allowed="all">movable and optional copyable</div>
+<div class="base-container">
+    <div class="container">copyable</div>
+    <div class="container">movable</div>
+    <div class="container">movable and optional copyable</div>
 </div>
 
-<div class="drop-container" dropzone="copy">only copied items</div>
-<div class="drop-container" dropzone="move">only moved items</div>
-<div class="drop-container" dropzone="true">copied and moved items</div>
+<div class="drop-container">only copied items</div>
+<div class="drop-container">only moved items</div>
+<div class="drop-container">copied and moved items</div>
 
 
 <p class="spaced">Code-example:</p>
 
 ```css
 <style type="text/css">
-    .container {
-        -moz-user-select: none;
-        -khtml-user-select: none;
-        -webkit-user-select: none;
-        user-select: none;
-        float: left;
-        position: relative;
-    }
     .dropzone-awake[dropzone] {
         border-style: dashed;
     }
@@ -88,15 +72,15 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
 
 ```html
 <body>
-    <div class="base-container" dd-draggable=".container" dd-dropzone=".drop-container" >
-        <div dd-effect-allowed="copy">copyable</div>
-        <div dd-effect-allowed="move">movable</div>
-        <div dd-effect-allowed="all">movable and optional copyable</div>
+    <div class="base-container">
+        <div class="container">copyable</div>
+        <div class="container">movable</div>
+        <div class="container">movable and optional copyable</div>
     </div>
 
-    <div class="drop-container" dropzone="copy">only copied items</div>
-    <div class="drop-container" dropzone="move">only moved items</div>
-    <div class="drop-container" dropzone="true">copied and moved items</div>
+    <div class="drop-container">only copied items</div>
+    <div class="drop-container">only moved items</div>
+    <div class="drop-container">copied and moved items</div>
 </body>
 ```
 
@@ -106,6 +90,31 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
     var ITSA = require('itsa');
 
     ITSA.DD.init();
+
+    document.getAll('.container').forEach(
+        function(node) {
+            var effect;
+            if (node.getText==='copyable') {
+                effect = 'copy';
+            }
+            else if (node.getText==='movable') {
+                effect = 'move';
+            }
+            else {
+                effect = 'all';
+            }
+            node.plug(ITSA.Plugins.NodeDD, {effectAllowed: effect, dropzone: '.drop-container'});
+        }
+    );
+
+    document.getAll('.drop-container').forEach(
+        function(node) {
+            node.plug(ITSA.Plugins.NodeDropzone, {
+                move: (node.getText!=='only copied items'),
+                copy: (node.getText!=='only moved items')
+            });
+        }
+    );
 
     // we will change the text of copied items, so that it is clear they are only movable
     ITSA.Event.after('dropzone-drop', function(e) {
@@ -119,6 +128,33 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
     var ITSA = require('itsa');
 
     ITSA.DD.init();
+
+    document.getAll('.container').forEach(
+        function(node) {
+            var effect,
+                innertext = node.getText();
+            if (innertext==='copyable') {
+                effect = 'copy';
+            }
+            else if (innertext==='movable') {
+                effect = 'move';
+            }
+            else {
+                effect = 'all';
+            }
+            node.plug(ITSA.Plugins.NodeDD, {effectAllowed: effect, dropzone: '.drop-container'});
+        }
+    );
+
+    document.getAll('.drop-container').forEach(
+        function(node) {
+            var innertext = node.getText();
+            node.plug(ITSA.Plugins.NodeDropzone, {
+                move: (innertext!=='only copied items'),
+                copy: (innertext!=='only moved items')
+            });
+        }
+    );
 
     // we will change the text of copied items, so that it is clear they are only movable
     ITSA.Event.after('dropzone-drop', function(e) {

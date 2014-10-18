@@ -9,7 +9,7 @@ maintainer: Marco Asbreuk
 title: Simple Drag and Drop
 intro: "Drag is a module which makes draggable items without any initialisation: <b>just plain HTML</b>. The code that takes care of this is loaded once and uses event-delegation to perform its task. You can set attributes on the HtmlElements and they will act as draggables. Of coarse these functionality can be given afterwards using javascript: you can set attributes yourself, or use Plugin's on the HtmlElements.<br><br>Because HTML defines the drag-behaviour, this module is <u>perfectly suited for serverside rendering</u>."
 firstpar: get-started-onlywindow
-extracodefirstpar: DD.init();
+extracodefirstpar: "DD.init(); // DD is actually delivered by the drag-drop module which extends drag"
 ---
 
 #Features#
@@ -94,6 +94,7 @@ document.getElement('#someNode').unplug(ITSA.Plugins.NodeDD);
 document.getElement('#someNode').plug(
     ITSA.Plugins.NodeDD,
     {
+        draggable: true, //
         constrain: '.container',
         handle: 'h1'
     }
