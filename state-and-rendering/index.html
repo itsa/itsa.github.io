@@ -1,0 +1,72 @@
+---
+layout: "state-and-rendering"
+title: State and rendering
+---
+
+<div class="paragraph">The state of application-data</div>
+
+<p>
+    The state of HtmlElements are always specified by their <code class="prettyprint">attributes</code> (see <a href="#featuring-elements">Featuring HtmlElements</a>). Some HtmlElements have more sophisticated features than standard HtmlElement: the <code class="prettyprint">Custom Elements</code>. Those need to render and use javascript to keep up to date. Yet they still they have their state at the attributes (see <a href="#i-tags">i-tags</a>).
+</p>
+<p>
+    The <code class="prettyprint">state of application-data</code> can be represented with <code class="prettyprint">views</code> (see <a href="#i-views">i-views</a>). Here, the state is to complex to set on the attribute, but the i-view always is a representation of the data.
+</p>
+
+<div id="featuring-elements" class="paragraph">Featuring HtmlElements</div>
+<p>
+    Featuring HtmlElement need no custom rendering. The state is set at the attributes. Modules who can add this extra functionality, do this by setting additional attributes on the HtmlElement. After this is set, the HtmlElement has its extra features, but needs no rendering. All logic is delivered by the module and operates using delegated dom-events.
+</p>
+
+<h3>Example of modules that add functionality to HtmlElements:</h3>
+<ul>
+    <li><code class="prettyprint">itsa/drag</code></li>
+    <li><code class="prettyprint">itsa/drag-drop</code></li>
+</ul>
+
+<h3>Example of modules that deliver featured HtmlElements:</h3>
+<ul>
+    <li><code class="prettyprint">itags/fonts</code></li>
+</ul>
+
+<div id="i-tags" class="paragraph">i-tags</div>
+<p>
+    <code class="prettyprint">i-tags</code> is ITSA's implementation of <code class="prettyprint">Custom Elements</code>. They are new created HtmlElement, that may look like this:
+{% highlight html %}
+    <i-checkbox></i-checkbox>
+{% endhighlight %}
+</p>
+<p>
+    i-tags differ from featured HtmlElements in a way that they <code class="prettyprint">need to render</code> to get their final form. They do hold their <code class="prettyprint">state</code> inside their attributes, meaning that they <u>will re-render when one of their attrubite changes</u>. All logic is delivered by the module and operates using delegated dom-events and monitoring state-change of the element.
+</p>
+
+<p>
+    i-tags are made in a way that they always can be rendered serverside. In order to do so, they never use any clientside specific features that custom elements offer (templates and shadow-dom).
+</p>
+
+<h3>Example of modules that add functionality to HtmlElements:</h3>
+<ul>
+    <li><code class="prettyprint">itags/checkbox</code></li>
+    <li><code class="prettyprint">itags/slider</code></li>
+    <li><code class="prettyprint">itags/form</code></li>
+    <li><code class="prettyprint">itags/scroller</code></li>
+    <li><code class="prettyprint">itags/table</code></li>
+</ul>
+
+<div id="i-views" class="paragraph">i-views</div>
+<p>
+    i-views is ITSA's implementation of MVC. An i-view is a part of the screen (mostly a div-element) which renders its content.
+</p>
+
+<h3>List of features:</h3>
+<ul>
+    <li>The <code class="prettyprint">state</code> of all -or part- of the application-data is represented by the i-view. The state is not set on the attributes.</li>
+    <li>Use <code class="prettyprint">unidirectional flow of data</code>: the screen is a faithful representation of the state of the data in the application. i-views will auto-render on initialisation and with any application state-change.</li>
+    <li>In order to render efficiently, they make use of a <code class="prettyprint">vDOM</code>.</li>
+    <li>Initial state of i-views <code class="prettyprint">can be rendered serverside</code>.</li>
+    <li>State can be bound to <code class="prettyprint">routing</code>, so they will update based upon routing.</li>
+</ul>
+
+<h3>Example of i-view modules:</h3>
+<ul>
+    <li><code class="prettyprint">itsa/iview</code></li>
+</ul>
