@@ -8870,6 +8870,18 @@
         {
             "file": "src/dom-ext/lib/element.js",
             "line": 845,
+            "description": "Gets the serialized HTML fragment describing the element including its descendants.\n\nalias for outerHTML()",
+            "itemtype": "method",
+            "name": "serialize",
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Element",
+            "module": "dom-ext",
+            "submodule": "lib/element.js"
+        },
+        {
+            "file": "src/dom-ext/lib/element.js",
+            "line": 858,
             "description": "Sets the attribute on the HtmlElement with the specified value.\n\nAlias for setAttribute().",
             "itemtype": "method",
             "name": "setAttr",
@@ -8893,7 +8905,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 861,
+            "line": 874,
             "description": "Adds a class to the HtmlElement. If the class already exists it won't be duplicated.",
             "itemtype": "method",
             "name": "setClass",
@@ -8912,7 +8924,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 883,
+            "line": 896,
             "description": "Sets the HtmlElement's class as a whole String. Cleaning up any previous classes.\n\nAlias for this.className = value",
             "itemtype": "method",
             "name": "setClassName",
@@ -8931,7 +8943,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 898,
+            "line": 911,
             "description": "Stores arbitary `data` at the HtmlElement. This has nothing to do with node-attributes whatsoever,\nit is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.",
             "itemtype": "method",
             "name": "setData",
@@ -8955,7 +8967,7 @@
         },
         {
             "file": "src/dom-ext/lib/element.js",
-            "line": 920,
+            "line": 933,
             "description": "Sets the content of the HtmlElement (innerHTML). Careful: only set content like this if you controll the data and\nare sure what is going inside. Otherwise XSS might occur. If you let the user insert, or insert right from a db,\nyou might be better of using setContent().",
             "itemtype": "method",
             "name": "setHTML",
@@ -8966,18 +8978,6 @@
                     "type": "HtmlElement|HtmlElementList|String"
                 }
             ],
-            "chainable": 1,
-            "since": "0.0.1",
-            "class": "Element",
-            "module": "dom-ext",
-            "submodule": "lib/element.js"
-        },
-        {
-            "file": "src/dom-ext/lib/element.js",
-            "line": 935,
-            "description": "Gets the serialized HTML fragment describing the element including its descendants.\n\nalias for outerHTML()",
-            "itemtype": "method",
-            "name": "serialize",
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
@@ -13885,7 +13885,7 @@
         },
         {
             "file": "src/js-ext/lib/string.js",
-            "line": 38,
+            "line": 36,
             "description": "Checks whether the substring is part if this String.\nAlias for (String.indexOf(substring) > -1)",
             "itemtype": "method",
             "name": "contains",
@@ -13906,7 +13906,7 @@
         },
         {
             "file": "src/js-ext/lib/string.js",
-            "line": 50,
+            "line": 48,
             "description": "Checks if the string ends with the value specified by `test`",
             "itemtype": "method",
             "name": "endsWith",
@@ -13934,7 +13934,7 @@
         },
         {
             "file": "src/js-ext/lib/string.js",
-            "line": 62,
+            "line": 60,
             "description": "Checks if the string starts with the value specified by `test`",
             "itemtype": "method",
             "name": "startsWith",
@@ -13962,7 +13962,7 @@
         },
         {
             "file": "src/js-ext/lib/string.js",
-            "line": 74,
+            "line": 72,
             "description": "Performs `{placeholder}` substitution on a string. The object passed\nprovides values to replace the `{placeholder}`s.\n`{placeholder}` token names must match property names of the object.\n\n`{placeholder}` tokens that are undefined on the object map will be removed.",
             "example": [
                 "\nvar greeting = '{message} {who}!';\ngreeting.substitute({message: 'Hello'}); // results into 'Hello !'"
@@ -13986,7 +13986,7 @@
         },
         {
             "file": "src/js-ext/lib/string.js",
-            "line": 95,
+            "line": 93,
             "description": "Returns a ISO-8601 Date-object build by the String's value.\nIf the String-value doesn't match ISO-8601, `null` will be returned.\n\nISO-8601 Date's are generated by JSON.stringify(), so it's very handy to be able to reconvert them.",
             "example": [
                 "\nvar birthday = '2010-02-10T14:45:30.000Z';\nbirthday.toDate(); // --> Wed Feb 10 2010 15:45:30 GMT+0100 (CET)"
@@ -14003,7 +14003,7 @@
         },
         {
             "file": "src/js-ext/lib/string.js",
-            "line": 112,
+            "line": 110,
             "description": "Generated the string without any white-spaces at the start or end.",
             "itemtype": "method",
             "name": "trim",
@@ -14017,7 +14017,7 @@
         },
         {
             "file": "src/js-ext/lib/string.js",
-            "line": 122,
+            "line": 120,
             "description": "Generated the string without any white-spaces at the beginning.",
             "itemtype": "method",
             "name": "trimLeft",
@@ -14031,7 +14031,7 @@
         },
         {
             "file": "src/js-ext/lib/string.js",
-            "line": 132,
+            "line": 130,
             "description": "Generated the string without any white-spaces at the end.",
             "itemtype": "method",
             "name": "trimRight",
@@ -14045,7 +14045,7 @@
         },
         {
             "file": "src/js-ext/lib/string.js",
-            "line": 142,
+            "line": 140,
             "description": "Validates if the String's value represents a valid emailaddress.",
             "itemtype": "method",
             "name": "validateEmail",
@@ -14059,7 +14059,7 @@
         },
         {
             "file": "src/js-ext/lib/string.js",
-            "line": 152,
+            "line": 150,
             "description": "Validates if the String's value represents a valid floated number.",
             "itemtype": "method",
             "name": "validateFloat",
@@ -14081,32 +14081,17 @@
         },
         {
             "file": "src/js-ext/lib/string.js",
-            "line": 163,
+            "line": 161,
             "description": "Validates if the String's value represents a hexadecimal color.",
             "itemtype": "method",
             "name": "validateHexaColor",
             "params": [
                 {
-                    "name": "options",
-                    "description": "",
-                    "type": "Object",
+                    "name": "alpha",
+                    "description": "whether to accept alpha transparancy",
+                    "type": "Boolean",
                     "optional": true,
-                    "props": [
-                        {
-                            "name": "hashtag",
-                            "description": "whether the hashtag should be part of the String",
-                            "type": "Boolean",
-                            "optional": true,
-                            "optdefault": "false"
-                        },
-                        {
-                            "name": "alpha",
-                            "description": "whether to accept alpha transparancy",
-                            "type": "Boolean",
-                            "optional": true,
-                            "optdefault": "false"
-                        }
-                    ]
+                    "optdefault": "false"
                 }
             ],
             "return": {
@@ -14119,7 +14104,7 @@
         },
         {
             "file": "src/js-ext/lib/string.js",
-            "line": 183,
+            "line": 172,
             "description": "Validates if the String's value represents a valid integer number.",
             "itemtype": "method",
             "name": "validateNumber",
@@ -14133,7 +14118,7 @@
         },
         {
             "file": "src/js-ext/lib/string.js",
-            "line": 193,
+            "line": 182,
             "description": "Validates if the String's value represents a valid URL.",
             "itemtype": "method",
             "name": "validateURL",

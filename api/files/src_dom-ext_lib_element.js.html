@@ -229,7 +229,7 @@ module.exports = function (window) {
         require(&#x27;./document.js&#x27;)(window);
         require(&#x27;polyfill/lib/array.isarray.js&#x27;);
         require(&#x27;polyfill/lib/array.every.js&#x27;);
-        require(&#x27;polyfill/lib/element.matchesselector.js&#x27;)(window);
+        require(&#x27;polyfill/lib/element.matchesselector.js&#x27;);
         require(&#x27;window-ext&#x27;)(window);
 
         var documentElement = window.document.documentElement;
@@ -1019,6 +1019,19 @@ module.exports = function (window) {
         };
 
        /**
+        * Gets the serialized HTML fragment describing the element including its descendants.
+        *
+        * alias for outerHTML()
+        *
+        * @method serialize
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.serialize = function() {
+            return this.outerHTML;
+        };
+
+       /**
          * Sets the attribute on the HtmlElement with the specified value.
          *
          * Alias for setAttribute().
@@ -1106,19 +1119,6 @@ module.exports = function (window) {
         ElementPrototype.setHTML = function(content) {
             this.innerHTML = content;
             return this;
-        };
-
-       /**
-        * Gets the serialized HTML fragment describing the element including its descendants.
-        *
-        * alias for outerHTML()
-        *
-        * @method serialize
-        * @chainable
-        * @since 0.0.1
-        */
-        ElementPrototype.serialize = function() {
-            return this.outerHTML;
         };
 
        /**

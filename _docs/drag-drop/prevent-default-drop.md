@@ -152,10 +152,10 @@ Drag the items to the dropzones.
         // as well as the draggable: e.copyTarget.
         // also note that, when dragging multiple draggables, we have to handle e.relatives
         // which is a hash containing all draggable nodes as well as their originals.
-        e.target.remove();
-        e.dragNode.remove();
         e.dropTarget.append('<br>'+e.target.getText()+' added');
-        ITSA.DD_emitDropzoneDrop(e); // fire the dropzone-drop event
+        e.sourceNode.remove();
+        e.dragNode.remove();
+        ITSA.DD._emitDropzoneDrop(e); // fire the dropzone-drop event
     };
 
     ITSA.Event.before(

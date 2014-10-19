@@ -230,8 +230,8 @@ module.exports = function (window) {
         _bubbleIE8, _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor,
         _setupDomListener, _teardownDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc;
 
-    require(&#x27;polyfill/lib/element.matchesselector.js&#x27;)(window);
-    require(&#x27;polyfill/lib/node.contains.js&#x27;)(window);
+    require(&#x27;polyfill/lib/element.matchesselector.js&#x27;);
+    require(&#x27;polyfill/lib/node.contains.js&#x27;);
 
     if (!window._ITSAmodules) {
         Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
