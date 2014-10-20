@@ -50,9 +50,6 @@ document.body.append(el);
 ###createElementFull###
 Creates a full HtmlElement at once. Differs from document.createElement in a way that the latter only accepts the tag-name, where `createElementFull` accepts a full definition. Note that as long as the new Element is not in the DOM, it has not all HtmlElement extended features.
 
-###first###
-Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.
-
 ###getAll###
 Gets a NodeList of HtmlElements, specified by the css-selector.
 
@@ -61,9 +58,6 @@ Gets one HtmlElement, specified by the css-selector. To retrieve a single elemen
 
 ###getFocussed###
 Gets the HtmlElement that currently has the focus.
-
-###last###
-Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.
 
 ###replace###
 Replaces the HtmlElement with a new HtmlElement.
@@ -194,7 +188,7 @@ Returns the next of the HtmlElement's siblings, or the next that matches `cssSel
 ###prepend###
 Prepends a HtmlElement or text at the start of HtmlElement's innerHTML.
 
-###prev###
+###previous###
 Returns the previous of the HtmlElement's siblings, or the previous that matches `cssSelector`.
 
 ###rectangleInside###
@@ -339,6 +333,9 @@ Toggles the className of the Element.
 
 ##HtmlElement##
 
+###isPlugged###
+Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.
+
 ###plug###
 Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.
 
@@ -348,6 +345,9 @@ Unplugs a NodePlugin from the HtmlElement.
 
 ##NodeList##
 For all HtmlElements of the NodeList/HTMLCollection:
+
+###isPlugged###
+Checks whether the plugin is plugged in at ALL the HtmlElements of the NodeList/HTMLCollection. Checks whether all its attributes are set.
 
 ###plug###
 Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.

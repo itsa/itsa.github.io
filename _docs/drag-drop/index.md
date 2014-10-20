@@ -125,21 +125,27 @@ or
 <div dd-draggable="true" dd-emitter="redItem">drag me</div>
 ```
 
-##Additional HTML-attributes##
-Beside the attribute `dd-constrain` and `dd-handle` -which are defined by the drag-module- you can define the next additional attributes on the draggables. Like shown above, at least `dd-dropzone` or `dd-emitter` is required:
+##HTML-attributes##
+Beside the attribute `dd-constrain`, `dd-handle` and `dd-emitter` -which are defined by the drag-module- you can define the next additional attributes on the draggables. Like shown above, at least `dd-dropzone` or `dd-emitter` is required:
 
 ```html
 <div dd-draggable="true" dd-dropzone".container" >drag me</div>
 ```
 
+###dd-constrain###
+Should equal `window` or a `css-selector` of an ancestor where the draggable should be constrained within.
+
+###dd-handle###
+Should equal a `css-selector` of a descendant that should act as a handle where the draggable can be picked up.
+
 ###dd-dropzone###
 Css-selector that specifies the `dropzone` where the draggable HtmlElement could go to.
 
-###dd-emitter###
-Which emitterName the draggable HtmlElement should have (will overrule the `UI`-emitterName).
-
 ###dd-effect-allowed###
 Which effects (`copy` or `move`) is allowed on the draggable HtmlElement.
+
+###dd-emitter###
+Which emitterName the draggable HtmlElement should have (will overrule the `UI`-emitterName). The `emitterName` will be used within the events `emittername:dd-drag` and `emittername:dd-drop`
 
 ###dd-dropzoneMovable###
 Whether the draggable HtmlElement can be moved inside a dropzone (once it gets there)
@@ -222,16 +228,18 @@ In case multiple items are copied, the `eventobject` will have the property `e.r
 Dropzones can be monitored by subscribing to all separate dropzone-`events`, or by subscribing to the `dropzone-over`-event and make use of `e.dropzone` which is a `Promise`. If you are familiar with Promises, the latter is highly preferable.
 
 ##Events##
-The dropzone comes with 3 events, which all share the same eventobject as that was emitted by the `dd`-event. This means: changing the eventobject in a specific subscriber, makes it available in later subscribers (of other events) during this specific drag-cycle.
+The dropzone comes with 3 events, which all share the same eventobject as that was emitted by the `*:dd`-event. This means: changing the eventobject in a specific subscriber, makes it available in later subscribers (of other events) during this specific drag-cycle.
 
-###dropzone-over###
-When a draggable HtmlElement comes over a dropzone. The event will only be emitted if the draggable has the rights to be dropped in the specific dropzone.
+Note that the attribute `dd-emitter` (on the draggable HtmlElement) determines the `emitterName`. When not set, all events have the `UI` emitterName and could be listened to without the emitter-prefix.
 
-###dropzone-out###
-When a draggable HtmlElement leaves a valid dropzone.
+###*:dropzone-over###
+When a draggable HtmlElement comes over a dropzone. The event will only be emitted if the draggable has the rights to be dropped in the specific dropzone. In case the attribute `dd-emitter` <u>is not set</u> on the draggable HtmlElement, this event has the `UI` emitterName (and could be listened to by just listening to the `dropzone-over`-event).
 
-###dropzone-drop###
-When a draggable item is dropped inside a dropzone (where it has the rights to be dropped)
+###*:dropzone-out###
+When a draggable HtmlElement leaves a valid dropzone. In case the attribute `dd-emitter` <u>is not set</u> on the draggable HtmlElement, this event has the `UI` emitterName (and could be listened to by just listening to the `dropzone-out`-event).
+
+###*:dropzone-drop###
+When a draggable item is dropped inside a dropzone (where it has the rights to be dropped). In case the attribute `dd-emitter` <u>is not set</u> on the draggable HtmlElement, this event has the `UI` emitterName (and could be listened to by just listening to the `dropzone-drop`-event).
 
 ##The eventobject##
 The eventobject has the following properties:

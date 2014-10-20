@@ -76,6 +76,9 @@ Should equal `window` or a `css-selector` of an ancestor where the draggable sho
 ###dd-handle###
 Should equal a `css-selector` of a descendant that should act as a handle where the draggable can be picked up.
 
+###dd-emitter###
+Which emitterName the draggable HtmlElement should have (will overrule the `UI`-emitterName). The `emitterName` will be used within the events `emittername:dd-drag` and `emittername:dd-drop`
+
 ##Using Plugins##
 When this module gets imported, it defines the node-plugin: `ITSA.Plugins.NodeDD`. Define a HtmlElement draggable or remove draggablilty-features can be done using this plugin.
 
@@ -96,6 +99,7 @@ document.getElement('#someNode').plug(
     {
         draggable: true, //
         constrain: '.container',
+        emitter: 'redItem'
         handle: 'h1'
     }
 );
@@ -131,19 +135,21 @@ ITSA.Event.before('dd', function(e) {
 
 #Monitoring#
 
-The drag-cycle can be monitored by subscribing to all separate `events`, or by subscribing to the `dd`-event and make use of `e.dd` which is a `Promise`. If you are familiar with Promises, the latter is highly preferable.
+The drag-cycle can be monitored by subscribing to all separate `events`, or by subscribing to the `*:dd`-event and make use of `e.dd` which is a `Promise`. If you are familiar with Promises, the latter is highly preferable.
 
 ##Events##
 The drag-cycle comes with 3 events, which all share the same eventobject. This means: changing the eventobject in a specific subscriber, makes it available in later subscribers (of other events) during this specific drag-cycle.
 
-###dd###
-When the drag starts. Emits one time during the eventcycle.
+Note that the attribute `dd-emitter` (on the draggable HtmlElement) determines the `emitterName`. When not set, all events have the `UI` emitterName and could be listened to without the emitter-prefix.
 
-###dd-drag###
-During dragging. Emits several times.
+###*:dd###
+When the drag starts. Emits one time during the eventcycle. In case the attribute `dd-emitter` <u>is not set</u> on the draggable HtmlElement, this event has the `UI` emitterName (and could be listened to by just listening to the `dd`-event).
 
-###dd-drop###
-When the drag-cycle ends. Emits one time during the eventcycle.
+###*:dd-drag###
+During dragging. Emits several times. In case the attribute `dd-emitter` <u>is not set</u> on the draggable HtmlElement, this event has the `UI` emitterName (and could be listened to by just listening to the `dd-drag`-event).
+
+###*:dd-drop###
+When the drag-cycle ends. Emits one time during the eventcycle. In case the attribute `dd-emitter` <u>is not set</u> on the draggable HtmlElement, this event has the `UI` emitterName (and could be listened to by just listening to the `dd-drop`-event).
 
 ##The eventobject##
 The eventobject has the following properties:
