@@ -104,6 +104,9 @@ Empties the content of the HtmlElement. Alias for setText('');
 ###first###
 Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.
 
+###firstChild###
+Returns the first HtmlElement child.
+
 ###forceIntoView###
 Forces the HtmlElement to be inside the window-view. Differs from `scrollIntoView()` in a way that `forceIntoView()` doesn't change the position when it's inside the view, whereas `scrollIntoView()` sets it on top of the view.
 
@@ -164,6 +167,9 @@ Gets the y-position (in the document) of the element in pixels. Document-related
 ###hasAttr###
 Whether the HtmlElement has the attribute set. Alias for hasAttribute().
 
+###hasChildren###
+Checks if the HtmlElement has childNodes
+
 ###hasClass###
 Checks whether the className is present on the Element.
 
@@ -181,6 +187,9 @@ Checks whether a point specified with x,y is within the HtmlElement's region.
 
 ###last###
 Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.
+
+###lastChild###
+Returns the last HtmlElement child.
 
 ###next###
 Returns the next of the HtmlElement's siblings, or the next that matches `cssSelector`.
