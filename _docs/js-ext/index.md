@@ -78,6 +78,15 @@ console.log({a: 15, b: 25}.size());
 // prints 2
 ```
 
+### toArray
+
+Transforms the object into an array with  'key/value' objects
+
+```js
+console.log({country: 'USA', Continent: 'North America'}.toArray());
+// prints [{key: 'country', value: 'USA'}, {key: 'Continent', value: 'North America'}]
+```
+
 ### values
 
 Returns an array with the values of the properties.
