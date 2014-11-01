@@ -80,13 +80,13 @@ Current Element's parent HtmlElement in the DOM-tree. The tree itselfs goes up t
 ##Native Methods##
 
 ###firstChild###
-Returns the first Node child, which may be a TextNode, CommentNode or Element. It is not suggested to use this, for it might not return a HtmlElement. Use `firstOfChildren()` instead.
+Returns the first Node child, which may be a TextNode, CommentNode or Element. It is not suggested to use this, for it might not return a HtmlElement. Use `firstOfVChildren()` instead.
 
 ###focus###
 Set the focus to the node
 
 ###lastChild###
-Returns the last Node child, which may be a TextNode, CommentNode or Element. It is not suggested to use this, for it might not return a HtmlElement. Use `lastOfChildren()` instead.
+Returns the last Node child, which may be a TextNode, CommentNode or Element. It is not suggested to use this, for it might not return a HtmlElement. Use `lastOfVChildren()` instead.
 
 ###scrollIntoView###
 Scrolls the HtmlElement into the current view.
@@ -110,7 +110,7 @@ Empties the content of the HtmlElement. Alias for setText('');
 ###first###
 Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.
 
-###firstOfChildren###
+###firstOfVChildren###
 Returns the first HtmlElement child that matches the cssSelector.
 
 ###forceIntoView###
@@ -194,7 +194,7 @@ Checks whether a point specified with x,y is within the HtmlElement's region.
 ###last###
 Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.
 
-###lastOfChildren###
+###lastOfVChildren###
 Returns the last HtmlElement child that matches the cssSelector.
 
 ###next###
