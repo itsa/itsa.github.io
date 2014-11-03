@@ -2426,9 +2426,9 @@ if (typeof define == TYPE_FUNCTION && define.amd) {
 },{}],3:[function(require,module,exports){
 function DOMParser(options){
 	this.options = options ||{locator:{}};
-	
+
 }
-DOMParser.prototype.parseFromString = function(source,mimeType){	
+DOMParser.prototype.parseFromString = function(source,mimeType){
 	var options = this.options;
 	var sax =  new XMLReader();
 	var domBuilder = options.domBuilder || new DOMHandler();//contentHandler and LexicalHandler
@@ -2439,7 +2439,7 @@ DOMParser.prototype.parseFromString = function(source,mimeType){
 	if(locator){
 		domBuilder.setDocumentLocator(locator)
 	}
-	
+
 	sax.errorHandler = buildErrorHandler(errorHandler,domBuilder,locator);
 	sax.domBuilder = options.domBuilder || domBuilder;
 	if(/\/x?html?$/.test(mimeType)){
@@ -2490,8 +2490,8 @@ function buildErrorHandler(errorImpl,domBuilder,locator){
 /**
  * +ContentHandler+ErrorHandler
  * +LexicalHandler+EntityResolver2
- * -DeclHandler-DTDHandler 
- * 
+ * -DeclHandler-DTDHandler
+ *
  * DefaultHandler:EntityResolver, DTDHandler, ContentHandler, ErrorHandler
  * DefaultHandler2:DefaultHandler,LexicalHandler, DeclHandler, EntityResolver2
  * @link http://www.saxproject.org/apidoc/org/xml/sax/helpers/DefaultHandler.html
@@ -2506,7 +2506,7 @@ function position(locator,node){
 /**
  * @see org.xml.sax.ContentHandler#startDocument
  * @link http://www.saxproject.org/apidoc/org/xml/sax/ContentHandler.html
- */ 
+ */
 DOMHandler.prototype = {
 	startDocument : function() {
     	this.document = new DOMImplementation().createDocument(null, null, null);
@@ -2520,7 +2520,7 @@ DOMHandler.prototype = {
 	    var len = attrs.length;
 	    appendElement(this, el);
 	    this.currentElement = el;
-	    
+
 		this.locator && position(this.locator,el)
 	    for (var i = 0 ; i < len; i++) {
 	        var namespaceURI = attrs.getURI(i);
@@ -2581,7 +2581,7 @@ DOMHandler.prototype = {
 	    this.locator && position(this.locator,comm)
 	    appendElement(this, comm);
 	},
-	
+
 	startCDATA:function() {
 	    //used in characters() methods
 	    this.cdata = true;
@@ -2589,7 +2589,7 @@ DOMHandler.prototype = {
 	endCDATA:function() {
 	    this.cdata = false;
 	},
-	
+
 	startDTD:function(name, publicId, systemId) {
 		var impl = this.document.implementation;
 	    if (impl && impl.createDocumentType) {
@@ -2781,14 +2781,14 @@ NodeList.prototype = {
 	 * The number of nodes in the list. The range of valid child node indices is 0 to length-1 inclusive.
 	 * @standard level1
 	 */
-	length:0, 
+	length:0,
 	/**
 	 * Returns the indexth item in the collection. If index is greater than or equal to the number of nodes in the list, this returns null.
 	 * @standard level1
-	 * @param index  unsigned long 
+	 * @param index  unsigned long
 	 *   Index into the collection.
 	 * @return Node
-	 * 	The node at the indexth position in the NodeList, or null if that is not a valid index. 
+	 * 	The node at the indexth position in the NodeList, or null if that is not a valid index.
 	 */
 	item: function(index) {
 		return this[index] || null;
@@ -2816,10 +2816,10 @@ LiveNodeList.prototype.item = function(i){
 
 _extends(LiveNodeList,NodeList);
 /**
- * 
+ *
  * Objects implementing the NamedNodeMap interface are used to represent collections of nodes that can be accessed by name. Note that NamedNodeMap does not inherit from NodeList; NamedNodeMaps are not maintained in any particular order. Objects contained in an object implementing NamedNodeMap may also be accessed by an ordinal index, but this is simply to allow convenient enumeration of the contents of a NamedNodeMap, and does not imply that the DOM specifies an order to these Nodes.
  * NamedNodeMap objects in the DOM are live.
- * used for attributes or DocumentType entities 
+ * used for attributes or DocumentType entities
  */
 function NamedNodeMap() {
 };
@@ -2905,10 +2905,10 @@ NamedNodeMap.prototype = {
 		var attr = this.getNamedItem(key);
 		_removeNamedNode(this._ownerElement,this,attr);
 		return attr;
-		
-		
+
+
 	},// raises: NOT_FOUND_ERR,NO_MODIFICATION_ALLOWED_ERR
-	
+
 	//for level2
 	removeNamedItemNS:function(namespaceURI,localName){
 		var attr = this.getNamedItemNS(namespaceURI,localName);
@@ -2971,7 +2971,7 @@ DOMImplementation.prototype = {
 		node.systemId = systemId;
 		// Introduced in DOM Level 2:
 		//readonly attribute DOMString        internalSubset;
-		
+
 		//TODO:..
 		//  readonly attribute NamedNodeMap     entities;
 		//  readonly attribute NamedNodeMap     notations;
@@ -3001,10 +3001,10 @@ Node.prototype = {
 	prefix : null,
 	localName : null,
 	// Modified in DOM Level 2:
-	insertBefore:function(newChild, refChild){//raises 
+	insertBefore:function(newChild, refChild){//raises
 		return _insertBefore(this,newChild,refChild);
 	},
-	replaceChild:function(newChild, oldChild){//raises 
+	replaceChild:function(newChild, oldChild){//raises
 		this.insertBefore(newChild,oldChild);
 		if(oldChild){
 			this.removeChild(oldChild);
@@ -3153,7 +3153,7 @@ function _onUpdateChild(doc,el,newChild){
 /**
  * attributes;
  * children;
- * 
+ *
  * writeable properties:
  * nodeValue,Attr:value,CharacterData:data
  * prefix
@@ -3195,8 +3195,8 @@ function _insertBefore(parentNode,newChild,nextChild){
 
 	newFirst.previousSibling = pre;
 	newLast.nextSibling = nextChild;
-	
-	
+
+
 	if(pre){
 		pre.nextSibling = newFirst;
 	}else{
@@ -3245,8 +3245,8 @@ Document.prototype = {
 	doctype :  null,
 	documentElement :  null,
 	_inc : 1,
-	
-	insertBefore :  function(newChild, refChild){//raises 
+
+	insertBefore :  function(newChild, refChild){//raises
 		if(newChild.nodeType == DOCUMENT_FRAGMENT_NODE){
 			var child = newChild.firstChild;
 			while(child){
@@ -3259,7 +3259,7 @@ Document.prototype = {
 		if(this.documentElement == null && newChild.nodeType == 1){
 			this.documentElement = newChild;
 		}
-		
+
 		return _insertBefore(this,newChild,refChild),(newChild.ownerDocument = this),newChild;
 	},
 	removeChild :  function(oldChild){
@@ -3285,7 +3285,7 @@ Document.prototype = {
 		})
 		return rtv;
 	},
-	
+
 	//document factory method:
 	createElement :	function(tagName){
 		var node = new Element();
@@ -3409,7 +3409,7 @@ Element.prototype = {
 		var attr = this.getAttributeNode(name)
 		attr && this.removeAttributeNode(attr);
 	},
-	
+
 	//four real opeartion method
 	appendChild:function(newChild){
 		if(newChild.nodeType === DOCUMENT_FRAGMENT_NODE){
@@ -3432,7 +3432,7 @@ Element.prototype = {
 		var old = this.getAttributeNodeNS(namespaceURI, localName);
 		old && this.removeAttributeNode(old);
 	},
-	
+
 	hasAttributeNS : function(namespaceURI, localName){
 		return this.getAttributeNodeNS(namespaceURI, localName)!=null;
 	},
@@ -3448,7 +3448,7 @@ Element.prototype = {
 	getAttributeNodeNS : function(namespaceURI, localName){
 		return this.attributes.getNamedItemNS(namespaceURI, localName);
 	},
-	
+
 	getElementsByTagName : function(tagName){
 		return new LiveNodeList(this,function(base){
 			var ls = [];
@@ -3497,7 +3497,7 @@ CharacterData.prototype = {
 	},
 	insertData: function(offset,text) {
 		this.replaceData(offset,0,text);
-	
+
 	},
 	appendChild:function(newChild){
 		//if(!(newChild instanceof CharacterData)){
@@ -3789,7 +3789,7 @@ try{
 				}
 			}
 		})
-		
+
 		function getTextContent(node){
 			switch(node.nodeType){
 			case 1:
@@ -4715,7 +4715,7 @@ http://yuilibrary.com/license/
                 reject(new TypeError('Promise.race expects an array of values or promises'));
                 return;
             }
-            
+
             // just go through the list and resolve and reject at the first change
             // This abuses the fact that calling resolve/reject multiple times
             // doesn't change the state of the returned promise
@@ -5586,8 +5586,8 @@ module.exports = function (window) {
                 height = instance.offsetHeight;
                 top = instance.getY();
                 bottom = top + height;
-                scrollLeft = parentOverflowNode.getScrollLeft();
-                scrollTop = parentOverflowNode.getScrollTop();
+                scrollLeft = parentOverflowNode.scrollLeft;
+                scrollTop = parentOverflowNode.scrollTop;
                 parentOverflowNodeX = parentOverflowNode.getX();
                 parentOverflowNodeY = parentOverflowNode.getY();
                 parentOverflowNodeStartTop = parentOverflowNodeY+parseInt(parentOverflowNode.getStyle(BORDER_TOP_WIDTH), 10);
@@ -5650,8 +5650,8 @@ module.exports = function (window) {
                 windowBottom = rectangle.h;
             }
             else {
-                windowLeft = window.getScrollLeft();
-                windowTop = window.getScrollTop();
+                windowLeft = window.scrollLeft;
+                windowTop = window.scrollTop;
                 windowRight = windowLeft + window.getWidth();
                 windowBottom = windowTop + window.getHeight();
             }
@@ -5916,7 +5916,7 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         ElementPrototype.getX = function() {
-            return this.getBoundingClientRect().left + window.getScrollLeft();
+            return this.getBoundingClientRect().left + window.scrollLeft;
         };
 
        /**
@@ -5928,7 +5928,7 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         ElementPrototype.getY = function() {
-            return this.getBoundingClientRect().top + window.getScrollTop();
+            return this.getBoundingClientRect().top + window.scrollTop;
         };
 
        /**
@@ -6491,8 +6491,8 @@ module.exports = function (window) {
             (instance.getInlineStyle('display')==='none') && instance.setClass(BLOCK);
             if (constrain) {
                 if (constrain==='window') {
-                    containerLeft = window.getScrollLeft();
-                    containerTop = window.getScrollTop();
+                    containerLeft = window.scrollLeft;
+                    containerTop = window.scrollTop;
                     containerRight = containerLeft + window.getWidth();
                     containerBottom = containerTop + window.getHeight();
                 }
@@ -7350,8 +7350,8 @@ module.exports = function (window) {
                     dragNode = ddProps.dragNode;
                 ddProps.mouseOverNode = e.target;
                 if (e2.clientX) {
-                    ddProps.xMouseLast = e2.clientX + window.getScrollLeft();
-                    ddProps.yMouseLast = e2.clientY + window.getScrollTop();
+                    ddProps.xMouseLast = e2.clientX + window.scrollLeft;
+                    ddProps.yMouseLast = e2.clientY + window.scrollTop;
                 }
                 dropzones.forEach(
                     function(dropzone) {
@@ -7397,7 +7397,7 @@ module.exports = function (window) {
                                             effectAllowed = (!dropzoneMove && !dropzoneCopy) || (dropzoneCopy && (dropEffect===COPY)) || (dropzoneMove && (dropEffect===MOVE));
                                             return !effectAllowed;
                                         }
-                                        return !dropzone.insidePos((e3.clientX || e3.center.x)+window.getScrollLeft(), (e3.clientY || e3.center.y)+window.getScrollTop());
+                                        return !dropzone.insidePos((e3.clientX || e3.center.x)+window.scrollLeft, (e3.clientY || e3.center.y)+window.scrollTop);
                                     }
                                 );
                                 dragOverPromise.finally(
@@ -7752,8 +7752,8 @@ module.exports = function (window) {
             if (emitDropzoneEvent) {
                 dropzones = window.document.getAll(DROPZONE_BRACKETS);
                 if (dropzones) {
-                    winScrollTop = window.getScrollTop();
-                    winScrollLeft = window.getScrollLeft();
+                    winScrollTop = window.scrollTop;
+                    winScrollLeft = window.scrollLeft;
                     dropzones.forEach(
                         function(dropzone) {
                             if (dropzone.insidePos(x, y) && !dropzone.insidePos(e.xMouse+winScrollLeft, e.yMouse+winScrollTop)) {
@@ -7831,8 +7831,8 @@ module.exports = function (window) {
                 winScrollTop, winScrollLeft;
             if (dragOverEvent) {
                 dragOverEvent.detach();
-                winScrollTop = window.getScrollTop();
-                winScrollLeft = window.getScrollLeft();
+                winScrollTop = window.scrollTop;
+                winScrollLeft = window.scrollLeft;
                 ddProps.dragOverList.forEach(function(promise) {
                     promise.fulfill(e.dropTarget && e.dropTarget.insidePos(mouseX+winScrollLeft, mouseY+winScrollTop));
                 });
@@ -8177,12 +8177,12 @@ module.exports = function (window) {
             else {
                 console.log(NAME, '_defFnDrag: dragging:');
                 if (constrainNode) {
-                    ddProps.constrain.x = ddProps.constrain.xOrig - constrainNode.getScrollLeft();
-                    ddProps.constrain.y = ddProps.constrain.yOrig - constrainNode.getScrollTop();
+                    ddProps.constrain.x = ddProps.constrain.xOrig - constrainNode.scrollLeft;
+                    ddProps.constrain.y = ddProps.constrain.yOrig - constrainNode.scrollTop;
                 }
 
-                x = ddProps.x+e.xMouse+(winConstrained ? ddProps.winScrollLeft : window.getScrollLeft())-e.xMouseOrigin;
-                y = ddProps.y+e.yMouse+(winConstrained ? ddProps.winScrollTop : window.getScrollTop())-e.yMouseOrigin;
+                x = ddProps.x+e.xMouse+(winConstrained ? ddProps.winScrollLeft : window.scrollLeft)-e.xMouseOrigin;
+                y = ddProps.y+e.yMouse+(winConstrained ? ddProps.winScrollTop : window.scrollTop)-e.yMouseOrigin;
 
                 dragNode.setXY(x, y, ddProps.constrain, true);
 
@@ -8294,8 +8294,8 @@ module.exports = function (window) {
 
             if (constrain) {
                 if (ddProps.winConstrained) {
-                    ddProps.winScrollLeft = winScrollLeft = window.getScrollLeft();
-                    ddProps.winScrollTop = winScrollTop = window.getScrollTop();
+                    ddProps.winScrollLeft = winScrollLeft = window.scrollLeft;
+                    ddProps.winScrollTop = winScrollTop = window.scrollTop;
                     ddProps.constrain = {
                         x: winScrollLeft,
                         y: winScrollTop,
@@ -8316,8 +8316,8 @@ module.exports = function (window) {
                             ddProps.constrain = {
                                 xOrig: xOrig,
                                 yOrig: yOrig,
-                                x: xOrig - constrainNode.getScrollLeft(),
-                                y: yOrig - constrainNode.getScrollTop(),
+                                x: xOrig - constrainNode.scrollLeft,
+                                y: yOrig - constrainNode.scrollTop,
                                 w: constrainNode.scrollWidth,
                                 h: constrainNode.scrollHeight
                             };
@@ -8496,8 +8496,8 @@ module.exports = function (window) {
                     e.dd.setCallback(callbackFn);
                 };
                 // store the orriginal mouseposition:
-                e.xMouseOrigin = e.clientX + window.getScrollLeft();
-                e.yMouseOrigin = e.clientY + window.getScrollTop();
+                e.xMouseOrigin = e.clientX + window.scrollLeft;
+                e.yMouseOrigin = e.clientY + window.scrollTop;
                 // now we can start the eventcycle by emitting UI:dd:
                 /**
                 * Emitted when a draggable Element's drag-cycle starts. You can use a `before`-subscriber to specify

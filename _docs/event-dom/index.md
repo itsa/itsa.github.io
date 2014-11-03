@@ -58,7 +58,7 @@ There are some differences between DOM-events v.s. Custom created Events that yo
 * DOM-events propagate through the dom-tree. This propagation can be stopped either by [e.stopPropagation() or e.stopImmediatePropagation()](#stoppropagation-and-stopimmediatepropagation).
 
 
-**Note1:** Because DOM-events should be listened through delegation, never directly on a DOM-node, you <u>cannot use code like _DOMnode.on('event', callback)_</u>. Not being able to do so, leads into a better usage, for you'll never run into issues with creating listener on objects that don't exist.
+**Note1:** Because DOM-events should be listened through delegation, never directly on a DOM-node, you <u>cannot use code like domNode.on('event', callback)_</u>. Not being able to do so, leads into a better usage, for you'll never run into issues with creating listener on objects that don't exist.
 
 **Note2:** Mobile-events are part of the system as well, by integrating [Hammer.js](http://hammerjs.github.io).
 
