@@ -176,7 +176,7 @@ By installing it globally, you have the command-line commands available. `cssify
 Final step is to create two build files. One just browserified with all comments and not minified, the second will be minified. You can choose any name you want for these files. Notice that you have to use browserify with the option `-g cssify` to build with css-files. Also notice that we have set specific options to uglify so that the compressed file works with <code class="prettyprint">ITSA</code>'s code.
 {% highlight js %}
 browserify -g cssify index.js > build.js
-uglifyjs build.js -b ascii_only=true,beautify=false -c drop_debugger,drop_console,warnings=false,pure_funcs=['function_couter_get','function_couter_set'] -m > build-min.js
+uglifyjs build.js -b ascii_only=true,beautify=false -c drop_debugger,drop_console,warnings=false -m > build-min.js
 {% endhighlight %}
 </p>
 
