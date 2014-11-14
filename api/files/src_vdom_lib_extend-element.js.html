@@ -1,0 +1,2650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/vdom/lib/extend-element.js - Itsa</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title="Itsa"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/Array.html">Array</a></li>
+            
+                <li><a href="../classes/DD.html">DD</a></li>
+            
+                <li><a href="../classes/document.html">document</a></li>
+            
+                <li><a href="../classes/Element.html">Element</a></li>
+            
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
+            
+                <li><a href="../classes/Event.html">Event</a></li>
+            
+                <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
+            
+                <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
+            
+                <li><a href="../classes/Function.html">Function</a></li>
+            
+                <li><a href="../classes/IO.html">IO</a></li>
+            
+                <li><a href="../classes/ITSA.html">ITSA</a></li>
+            
+                <li><a href="../classes/Node.html">Node</a></li>
+            
+                <li><a href="../classes/NodeList.html">NodeList</a></li>
+            
+                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
+            
+                <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Promise.html">Promise</a></li>
+            
+                <li><a href="../classes/String.html">String</a></li>
+            
+                <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
+            
+                <li><a href="../classes/xElement.html">xElement</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+            
+                <li><a href="../modules/drag.html">drag</a></li>
+            
+                <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/event.html">event</a></li>
+            
+                <li><a href="../modules/event-dom.html">event-dom</a></li>
+            
+                <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-hover.html">event-hover</a></li>
+            
+                <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
+            
+                <li><a href="../modules/io.html">io</a></li>
+            
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
+            
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/js-ext.html">js-ext</a></li>
+            
+                <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
+            
+                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
+            
+                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
+            
+                <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
+            
+                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
+            
+                <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
+            
+                <li><a href="../modules/lib_promise.s.html">lib/promise.s</a></li>
+            
+                <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
+            
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
+            
+                <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/vdom/lib/extend-element.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+
+/**
+ * Provides several methods that override native Element-methods to work with the vdom.
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * &lt;br&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module vnode
+ * @submodule extend-element
+ * @class Element
+ * @since 0.0.1
+*/
+
+
+require(&#x27;../css/element.css&#x27;);
+require(&#x27;js-ext/lib/object.js&#x27;);
+require(&#x27;js-ext/lib/string.js&#x27;);
+require(&#x27;polyfill/lib/window.console.js&#x27;);
+require(&#x27;polyfill/lib/weakmap.js&#x27;);
+require(&#x27;polyfill/lib/mutationobserver.js&#x27;); // needs weakmap
+
+var ElementArray = require(&#x27;./element-array.js&#x27;);
+
+module.exports = function (window) {
+
+    var NAME = &#x27;[extend-element]: &#x27;,
+        domNodeToVNode = require(&#x27;./node-parser.js&#x27;)(window),
+        htmlToVNodes = require(&#x27;./html-parser.js&#x27;)(window),
+        NS = require(&#x27;./vdom-ns.js&#x27;)(window),
+        DOCUMENT = window.document,
+        nodeids = NS.nodeids,
+        arrayIndexOf = Array.prototype.indexOf,
+        POSITION = &#x27;position&#x27;,
+        EL_ = &#x27;el-&#x27;,
+        BLOCK = EL_+&#x27;block&#x27;,
+        BORDERBOX = EL_+&#x27;borderbox&#x27;,
+        NO_TRANS = EL_+&#x27;notrans&#x27;,
+        INVISIBLE = EL_+&#x27;invisible&#x27;,
+        HIDDEN = EL_+&#x27;hidden&#x27;,
+        REGEXP_NODE_ID = /^#\S+$/,
+        LEFT = &#x27;left&#x27;,
+        TOP = &#x27;top&#x27;,
+        BORDER = &#x27;border&#x27;,
+        WIDTH = &#x27;width&#x27;,
+        HEIGHT = &#x27;height&#x27;,
+        STRING = &#x27;string&#x27;,
+        CLASS = &#x27;class&#x27;,
+        STYLE = &#x27;style&#x27;,
+        BORDER_LEFT_WIDTH = BORDER+&#x27;-left-&#x27;+WIDTH,
+        BORDER_RIGHT_WIDTH = BORDER+&#x27;-right-&#x27;+WIDTH,
+        BORDER_TOP_WIDTH = BORDER+&#x27;-top-&#x27;+WIDTH,
+        BORDER_BOTTOM_WIDTH = BORDER+&#x27;-bottom-&#x27;+WIDTH,
+        NUMBER = &#x27;number&#x27;,
+        PX = &#x27;px&#x27;,
+        setupObserver,
+        htmlToVFragments = function(html) {
+            return {
+                isFragment: true,
+                cVhildNodes: htmlToVNodes(html)
+            };
+        },
+        toCamelCase = function(input) {
+            return input.toLowerCase().replace(/-(.)/g, function(match, group) {
+                return group.toUpperCase();
+            });
+        },
+        fromCamelCase = function(input) {
+            return input.replace(/[a-z]([A-Z])/g, function(match, group) {
+                return match[0]+&#x27;-&#x27;+group.toLowerCase();
+            });
+        },
+        classListProto = {
+            add: function(className) {
+                // we do not use the property className, but setAttribute, because setAttribute can be hacked by other modules like &#x60;vdom&#x60;
+                // note: &#x60;this&#x60; is the returned object which is NOT the Elementinstance
+                var thisobject = this,
+                    element = thisobject.element,
+                    doSet = function(cl) {
+                        var clName = element.vnode.attrs[CLASS] || &#x27;&#x27;;
+                        // we do not use the property className, but setAttribute, because setAttribute can be hacked by other modules like &#x60;vdom&#x60;
+                        thisobject.contains(cl) || (element.setAttribute(CLASS, clName+((clName.length&gt;0) ? &#x27; &#x27; : &#x27;&#x27;) + cl));
+                    };
+                if (typeof className === STRING) {
+                    doSet(className);
+                }
+                else if (Array.isArray(className)) {
+                    className.forEach(doSet);
+                }
+            },
+            remove: function(className) {
+                var element = this.element,
+                    doRemove = function(cl) {
+                        var clName = element.vnode.attrs[CLASS] || &#x27;&#x27;,
+                            regexp = new RegExp(&#x27;(?:^|\\s+)&#x27; + cl + &#x27;(?:\\s+|$)&#x27;, &#x27;g&#x27;);
+                        // we do not use the property className, but setAttribute, because setAttribute can be hacked by other modules like &#x60;vdom&#x60;
+                        // note: &#x60;this&#x60; is the returned object which is NOT the Elementinstance
+                        element.setAttribute(CLASS, clName.replace(regexp, &#x27; &#x27;).trim());
+                    };
+                if (typeof className === STRING) {
+                    doRemove(className);
+                }
+                else if (Array.isArray(className)) {
+                    className.forEach(doRemove);
+                }
+                (element.vnode.attrs[CLASS]===&#x27;&#x27;) &amp;&amp; element.removeAttr(CLASS);
+            },
+            toggle: function(className, forceState) {
+                // we do not use the property className, but setAttribute, because setAttribute can be hacked by other modules like &#x60;vdom&#x60;
+                // note: &#x60;this&#x60; is the returned object which is NOT the Elementinstance
+                var thisobject = this,
+                    doToggle = function(cl) {
+                        (((typeof forceState === &#x27;boolean&#x27;) &amp;&amp; !forceState) || thisobject.contains(cl)) ? thisobject.remove(cl) : thisobject.add(cl);
+                    };
+                if (typeof className === STRING) {
+                    doToggle(className);
+                }
+                else if (Array.isArray(className)) {
+                    className.forEach(doToggle);
+                }
+            },
+            contains: function(className) {
+                // we do not use the property className, but setAttribute, because setAttribute can be hacked by other modules like &#x60;vdom&#x60;
+                // note: &#x60;this&#x60; is the returned object which is NOT the Elementinstance.
+                // May be an Array of classNames, which all needs to be present.
+                return this.element.vnode.hasClass(className);
+            },
+            item: function(index) {
+                var items = this.element.vnode.attrs[&#x27;class&#x27;].split(&#x27; &#x27;);
+                return items[index];
+            },
+            _init: function(element) {
+                this.element = element;
+            }
+        },
+        treeWalkerProto = {
+            _init: function(element, whatToShow, filter) {
+                var instance = this;
+                if (typeof filter !== &#x27;function&#x27;) {
+                    // check if it is a NodeFilter-object
+                    filter.acceptNode &amp;&amp; (filter=filter.acceptNode);
+                }
+                (typeof filter===&#x27;function&#x27;) || (filter=null);
+                instance.vNodePointer = element.vnode.vFirstChild;
+                instance._root = element;
+                instance._whatToShow = whatToShow; // making it accessable for the getter &#x60;whatToShow&#x60;
+                instance._filter = filter; // making it accessable for the getter &#x60;filter&#x60;
+            },
+            _match: function(vnode, forcedVisible) {
+                var whatToShow = this._whatToShow,
+                    filter = this._filter,
+                    showElement = ((whatToShow &amp; 1)!==0),
+                    showComment = ((whatToShow &amp; 128)!==0),
+                    showText = ((whatToShow &amp; 4)!==0),
+                    typeMatch = (showElement &amp;&amp; (vnode.nodeType===1)) || (showComment &amp;&amp; (vnode.nodeType===8)) || (showText &amp;&amp; (vnode.nodeType===3)),
+                    visibleMatch = !forcedVisible || (window.getComputedStyle(vnode.domNode).display!==&#x27;none&#x27;),
+                    funcMatch = filter ? filter(vnode.domNode) : true;
+                return typeMatch &amp;&amp; visibleMatch &amp;&amp; funcMatch;
+            },
+            firstChild: function() {
+                var instance = this,
+                    foundVNode = instance.vNodePointer.vFirstChild;
+                while (foundVNode &amp;&amp; !instance._match(foundVNode)) {
+                    foundVNode = foundVNode.vNext;
+                }
+                foundVNode &amp;&amp; (instance.vNodePointer=foundVNode);
+                return foundVNode &amp;&amp; foundVNode.domNode;
+            },
+            lastChild: function() {
+                var instance = this,
+                    foundVNode = instance.vNodePointer.vLastChild;
+                while (foundVNode &amp;&amp; !instance._match(foundVNode)) {
+                    foundVNode = foundVNode.vPrevious;
+                }
+                foundVNode &amp;&amp; (instance.vNodePointer=foundVNode);
+                return foundVNode &amp;&amp; foundVNode.domNode;
+            },
+            nextNode: function() {
+                var instance = this,
+                    foundVNode = instance.vNodePointer.vNext;
+                while (foundVNode &amp;&amp; !instance._match(foundVNode, true)) {
+                    foundVNode = foundVNode.vNext();
+                }
+                foundVNode &amp;&amp; (instance.vNodePointer=foundVNode);
+                return foundVNode &amp;&amp; foundVNode.domNode;
+            },
+            nextSibling: function() {
+                var instance = this,
+                    foundVNode = instance.vNodePointer.vNext;
+                while (foundVNode &amp;&amp; !instance._match(foundVNode)) {
+                    foundVNode = foundVNode.vNext();
+                }
+                foundVNode &amp;&amp; (instance.vNodePointer=foundVNode);
+                return foundVNode &amp;&amp; foundVNode.domNode;
+            },
+            parentNode: function() {
+                var instance = this,
+                    foundVNode = instance.vNodePointer.vParent;
+                (foundVNode!==instance._root) &amp;&amp; (instance.vNodePointer=foundVNode);
+                return foundVNode &amp;&amp; foundVNode.domNode;
+            },
+            previousNode: function() {
+                var instance = this,
+                    foundVNode = instance.vNodePointer.vPrevious;
+                while (foundVNode &amp;&amp; !instance._match(foundVNode, true)) {
+                    foundVNode = foundVNode.vPrevious();
+                }
+                foundVNode &amp;&amp; (instance.vNodePointer=foundVNode);
+                return foundVNode &amp;&amp; foundVNode.domNode;
+            },
+            previousSibling: function() {
+                var instance = this,
+                    foundVNode = instance.vNodePointer.vPrevious;
+                while (foundVNode &amp;&amp; !instance._match(foundVNode)) {
+                    foundVNode = foundVNode.vPrevious();
+                }
+                foundVNode &amp;&amp; (instance.vNodePointer=foundVNode);
+                return foundVNode &amp;&amp; foundVNode.domNode;
+            }
+        };
+
+    require(&#x27;./nodelist.js&#x27;)(window);
+    require(&#x27;window-ext&#x27;)(window);
+
+    Object.defineProperties(treeWalkerProto, {
+        &#x27;currentNode&#x27;: {
+            get: function() {
+                return this.vNodePointer.domNode;
+            }
+        },
+        &#x27;filter&#x27;: {
+            get: function() {
+                return this._filter;
+            }
+        },
+        &#x27;root&#x27;: {
+            get: function() {
+                return this._root;
+            }
+        },
+        &#x27;whatToShow&#x27;: {
+            get: function() {
+                return this._whatToShow;
+            }
+        }
+    });
+
+    // NOTE: &#x60;vnode&#x60; should be a property of Node, NOT Element
+    /**
+     * Reference to the vnode-object that represents the Node
+     *
+     * (will autogenerate a vnode, should it not exists)
+     *
+     * @for Node
+     * @property vnode
+     * @type vnode
+     * @since 0.0.1
+     */
+    Object.defineProperty(window.Node.prototype, &#x27;vnode&#x27;, {
+       get: function() {
+            var instance = this,
+                vnode = instance._vnode,
+                parentNode, parentVNode, index;
+            if (!vnode) {
+                vnode = instance._vnode = domNodeToVNode(instance);
+                parentNode = instance.parentNode;
+                 // parentNode.vnode will be an existing vnode, because it runs through the same getter
+                // it will only be &#x60;null&#x60; if &#x60;html&#x60; is not virtualised
+                parentVNode = parentNode &amp;&amp; parentNode.vnode;
+                if (parentVNode) {
+                    // set the vnode at the right position of its children:
+                    index = arrayIndexOf.call(parentNode.childNodes, instance);
+                    vnode._moveToParent(parentVNode, index);
+                }
+            }
+            return vnode;
+        },
+        set: function() {} // NOOP but needs to be there, otherwise we could clone any domNodes
+    });
+
+    (function(ElementPrototype) {
+       /**
+        * Appends an Element or an Element&#x27;s string-representation at the end of Element&#x27;s innerHTML, or before the &#x60;refElement&#x60;.
+        *
+        * @for Element
+        * @method append
+        * @param content {Element|ElementArray|String} content to append
+        * @param [refElement] {Element} reference Element where the content should be appended
+        * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
+        * @return {Element} the created Element (or the last when multiple)
+        * @since 0.0.1
+        */
+        ElementPrototype.append = function(content, refElement, escape) {
+            var instance = this,
+                i, len, item, createdElement,
+            doAppend = function(oneItem) {
+                var vChildNodes, i, len, fragment;
+                if (escape) {
+                    if (oneItem.isFragment) {
+                        vChildNodes = oneItem.vChildNodes;
+                        len = vChildNodes.length;
+                        for (i=1; i&lt;len; i++) {
+                            fragment = vChildNodes[i];
+                            fragment.textContent = fragment.innerHTML;
+                        }
+                    }
+                    else {
+                        oneItem.vTextContent = oneItem.vInnerHTML;
+                    }
+                }
+                createdElement = refElement ? instance.insertBefore(oneItem, refElement) : instance.appendChild(oneItem);
+            };
+            refElement &amp;&amp; (instance.children.indexOf(refElement)!==-1) &amp;&amp; (refElement=refElement.next());
+            (typeof content===STRING) &amp;&amp; (content=htmlToVFragments(content));
+            if (Array.isArray(content)) {
+                len = content.length;
+                for (i=0; i&lt;len; i++) {
+                    item = content[i];
+                    doAppend(item);
+                }
+            }
+            else {
+                doAppend(content);
+            }
+            return createdElement;
+        };
+
+       /**
+        * Returns a duplicate of the node. Use cloneNode(true) for a &#x60;deep&#x60; clone.
+        *
+        * @method cloneNode
+        * @param [deep] {Boolean} whether to perform a &#x60;deep&#x60; clone: with all descendants
+        * @return {Element} a clone of this Element
+        * @since 0.0.1
+        */
+        ElementPrototype._cloneNode = ElementPrototype.cloneNode;
+        ElementPrototype.cloneNode = function(deep) {
+            var instance = this,
+                cloned = instance._cloneNode(deep);
+            cloned.vnode = domNodeToVNode(cloned);
+            if (instance.vnode._data) {
+                Object.defineProperty(cloned.vnode, &#x27;_data&#x27;, {
+                    configurable: false,
+                    enumerable: false,
+                    writable: false,
+                    value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {}&#x27;s properties itself
+                });
+                cloned.vnode._data.merge(instance.vnode._data);
+            }
+            return cloned;
+        };
+
+        /**
+         * Compares the position of the current node against another node in any other document.
+         *
+         * Returnvalues are a composition of the following bitwise values:
+         * &lt;ul&gt;
+         *     &lt;li&gt;Node.DOCUMENT_POSITION_DISCONNECTED  (one of the Elements is not part of the dom)&lt;/li&gt;
+         *     &lt;li&gt;Node.DOCUMENT_POSITION_PRECEDING  (this Element comes before otherElement)&lt;/li&gt;
+         *     &lt;li&gt;Node.DOCUMENT_POSITION_FOLLOWING  (this Element comes after otherElement)&lt;/li&gt;
+         *     &lt;li&gt;Node.DOCUMENT_POSITION_CONTAINS  (otherElement trully contains -not equals- this Element)&lt;/li&gt;
+         *     &lt;li&gt;Node.DOCUMENT_POSITION_CONTAINED_BY  (Element trully contains -not equals- otherElement)&lt;/li&gt;
+         * &lt;/ul&gt;
+         *
+         * @method compareDocumentPosition
+         * @param otherElement {Element}
+         * @return {Number} A bitmask, use it this way: if (thisNode.compareDocumentPosition(otherNode) &amp; Node.DOCUMENT_POSITION_FOLLOWING) {// otherNode is following thisNode}
+         */
+        ElementPrototype.compareDocumentPosition = function(otherElement) {
+            // see http://ejohn.org/blog/comparing-document-position/
+            var instance = this,
+                parent, index1, index2;
+            if (instance===otherElement) {
+                return 0;
+            }
+            if (!DOCUMENT.contains(instance) || !DOCUMENT.contains(otherElement)) {
+                return 1;
+            }
+            else if (instance.contains(otherElement)) {
+                return 20;
+            }
+            else if (otherElement.contains(instance)) {
+                return 10;
+            }
+            parent = instance.getParent();
+            index1 = parent.vChildNodes.indexOf(instance.vnode);
+            index2 = parent.vChildNodes.indexOf(otherElement.vnode);
+            if (index1&lt;index2) {
+                return 4;
+            }
+            else {
+                return 2;
+            }
+        };
+
+        /**
+         * Indicating whether this Element contains OR equals otherElement.
+         *
+         * @method contains
+         * @param otherElement {Element}
+         * @return {Boolean} whether this Element contains OR equals otherElement.
+         */
+        ElementPrototype.contains = function(otherElement) {
+            if (otherElement===this) {
+                return true;
+            }
+            return this.vnode.contains(otherElement.vnode);
+        };
+
+        /**
+         * Returns a newly created TreeWalker object with this Element as root.
+         *
+         * The TreeWalker is life presentation of the dom. It gets updated when the dom changes.
+         *
+         * @method createTreeWalker
+         * @param root {Element} The root node at which to begin the NodeIterator&#x27;s traversal.
+         * @param [whatToShow] {Number} Filter specification constants from the NodeFilter DOM interface, indicating which nodes to iterate over.
+         * You can use or sum one of the next properties:
+         * &lt;ul&gt;
+         *   &lt;li&gt;window.NodeFilter.SHOW_ELEMENT&lt;/li&gt;
+         *   &lt;li&gt;window.NodeFilter.SHOW_COMMENT&lt;/li&gt;
+         *   &lt;li&gt;window.NodeFilter.SHOW_TEXT&lt;/li&gt;
+         * &lt;/ul&gt;
+         * @param [filter] {NodeFilter|function} An object implementing the NodeFilter interface or a function. See https://developer.mozilla.org/en-US/docs/Web/API/NodeFilter
+         * @return {TreeWalker}
+         * @since 0.0.1
+         */
+        ElementPrototype.createTreeWalker = function(whatToShow, filter) {
+            var treeWalker = Object.create(treeWalkerProto);
+            treeWalker._init(this, whatToShow, filter);
+            return treeWalker;
+        };
+
+       /**
+        * Sets the inline-style of the Element exactly to the specified &#x60;value&#x60;, overruling previous values.
+        * Making the Element&#x27;s inline-style look like: style=&quot;value&quot;.
+        *
+        * This is meant for a quick one-time setup. For individually inline style-properties to be set, you can use &#x60;setInlineStyle()&#x60;.
+        *
+        * @method defineInlineStyle
+        * @param value {String} the style string to be set
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.defineInlineStyle = function(value) {
+            return this.setAttr(STYLE, value);
+        };
+
+       /**
+        * Empties the content of the Element.
+        * Alias for thisNode.vTextContent = &#x27;&#x27;;
+        *
+        * @method empty
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.empty = function() {
+            this.setText(&#x27;&#x27;);
+        };
+
+        /**
+         * Reference to the first of sibbling vNode&#x27;s, where the related dom-node is an Element(nodeType===1).
+         *
+         * @method first
+         * @param [cssSelector] {String} to return the first Element that matches the css-selector
+         * @return {Element}
+         * @since 0.0.1
+         */
+        ElementPrototype.first = function(cssSelector) {
+            return this.vnode.vParent.firstOfVChildren(cssSelector).domNode;
+        };
+
+        /**
+         * Reference to the first child-Element, where the related dom-node an Element (nodeType===1).
+         *
+         * @method firstOfChildren
+         * @param [cssSelector] {String} to return the first Element that matches the css-selector
+         * @return {Element}
+         * @since 0.0.1
+         */
+        ElementPrototype.firstOfChildren = function(cssSelector) {
+            return this.vnode.firstOfVChildren(cssSelector).domNode;
+        };
+
+       /**
+        * Forces the Element to be inside an ancestor-Element that has the &#x60;overfow=&quot;scroll&quot; set.
+        *
+        * @method forceIntoNodeView
+        * @param [ancestor] {Element} the Element where it should be forced into its view.
+        *        Only use this when you know the ancestor and this ancestor has an &#x60;overflow=&quot;scroll&quot;&#x60; property
+        *        when not set, this method will seek through the doc-tree upwards for the first Element that does match this criteria.
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.forceIntoNodeView = function(ancestor) {
+            console.log(NAME, &#x27;forceIntoNodeView&#x27;);
+            var instance = this,
+                parentOverflowNode = this.getParent(),
+                match, left, width, right, height, top, bottom, scrollLeft, scrollTop, parentOverflowNodeX, parentOverflowNodeY,
+                parentOverflowNodeStartTop, parentOverflowNodeStartLeft, parentOverflowNodeStopRight, parentOverflowNodeStopBottom, newX, newY;
+            if (ancestor) {
+                parentOverflowNode = ancestor;
+            }
+            else {
+                while ((parentOverflowNode!==DOCUMENT) &amp;&amp; !(match=(parentOverflowNode.getStyle(&#x27;overflow&#x27;)===&#x27;scroll&#x27;))) {
+                    parentOverflowNode = parentOverflowNode.getParent();
+                }
+            }
+            if (parentOverflowNode!==DOCUMENT) {
+                left = instance.left;
+                width = instance.offsetWidth;
+                right = left + width;
+                height = instance.offsetHeight;
+                top = instance.top;
+                bottom = top + height;
+                scrollLeft = parentOverflowNode.scrollLeft;
+                scrollTop = parentOverflowNode.scrollTop;
+                parentOverflowNodeX = parentOverflowNode.left;
+                parentOverflowNodeY = parentOverflowNode.top;
+                parentOverflowNodeStartTop = parentOverflowNodeY+parseInt(parentOverflowNode.getStyle(BORDER_TOP_WIDTH), 10);
+                parentOverflowNodeStartLeft = parentOverflowNodeX+parseInt(parentOverflowNode.getStyle(BORDER_LEFT_WIDTH), 10);
+                parentOverflowNodeStopRight = parentOverflowNodeX+parentOverflowNode.offsetWidth-parseInt(parentOverflowNode.getStyle(BORDER_RIGHT_WIDTH), 10);
+                parentOverflowNodeStopBottom = parentOverflowNodeY+parentOverflowNode.offsetHeight-parseInt(parentOverflowNode.getStyle(BORDER_BOTTOM_WIDTH), 10);
+
+                if (left&lt;parentOverflowNodeStartLeft) {
+                    newX = Math.max(0, scrollLeft+left-parentOverflowNodeStartLeft);
+                }
+                else if (right&gt;parentOverflowNodeStopRight) {
+                    newX = scrollLeft + right - parentOverflowNodeStopRight;
+                }
+
+                if (top&lt;parentOverflowNodeStartTop) {
+                    newY = Math.max(0, scrollTop+top-parentOverflowNodeStartTop);
+                }
+                else if (bottom&gt;parentOverflowNodeStopBottom) {
+                    newY = scrollTop + bottom - parentOverflowNodeStopBottom;
+                }
+
+                if ((newX!==undefined) || (newY!==undefined)) {
+                    parentOverflowNode.scrollTo((newX!==undefined) ? newX : scrollLeft,(newY!==undefined) ? newY : scrollTop);
+                }
+            }
+            return instance;
+        };
+
+       /**
+        * Forces the Element to be inside the window-view. Differs from &#x60;scrollIntoView()&#x60; in a way
+        * that &#x60;forceIntoView()&#x60; doesn&#x27;t change the position when it&#x27;s inside the view, whereas
+        * &#x60;scrollIntoView()&#x60; sets it on top of the view.
+        *
+        * @method forceIntoView
+        * @param [notransition=false] {Boolean} set true if you are sure positioning is without transition.
+        *        this isn&#x27;t required, but it speeds up positioning. Only use when no transition is used:
+        *        when there is a transition, setting this argument &#x60;true&#x60; would miscalculate the position.
+        * @param [rectangle] {Object} Set this if you have already calculated the window-rectangle (used for preformance within drag-drop)
+        * @param [rectangle.x] {Number} scrollLeft of window
+        * @param [rectangle.y] {Number} scrollTop of window
+        * @param [rectangle.w] {Number} width of window
+        * @param [rectangle.h] {Number} height of window
+        * @chainable
+        * @since 0.0.2
+        */
+        ElementPrototype.forceIntoView = function(notransition, rectangle) {
+            console.log(NAME, &#x27;forceIntoView&#x27;);
+            var instance = this,
+                left = instance.left,
+                width = instance.offsetWidth,
+                right = left + width,
+                height = instance.offsetHeight,
+                top = instance.top,
+                bottom = top + height,
+                windowLeft, windowTop, windowRight, windowBottom, newX, newY;
+            if (rectangle) {
+                windowLeft = rectangle.x;
+                windowTop = rectangle.y;
+                windowRight = rectangle.w;
+                windowBottom = rectangle.h;
+            }
+            else {
+                windowLeft = window.getScrollLeft();
+                windowTop = window.getScrollTop();
+                windowRight = windowLeft + window.getWidth();
+                windowBottom = windowTop + window.getHeight();
+            }
+
+            if (left&lt;windowLeft) {
+                newX = Math.max(0, left);
+            }
+            else if (right&gt;windowRight) {
+                newX = windowLeft + right - windowRight;
+            }
+            if (top&lt;windowTop) {
+                newY = Math.max(0, top);
+            }
+            else if (bottom&gt;windowBottom) {
+                newY = windowTop + bottom - windowBottom;
+            }
+
+            if ((newX!==undefined) || (newY!==undefined)) {
+                window.scrollTo((newX!==undefined) ? newX : windowLeft, (newY!==undefined) ? newY : windowTop);
+            }
+            return instance;
+        };
+
+        /**
+         * Gets an ElementArray of vElements that lie within this Element and match the css-selector.
+         *
+         * @method getAll
+         * @param cssSelector {String} css-selector to match
+         * @return {ElementArray} ElementArray of vElements that match the css-selector
+         * @since 0.0.1
+         */
+        ElementPrototype.getAll = function(cssSelector) {
+            return this.querySelectorAll(cssSelector);
+        };
+
+       /**
+        * Gets an attribute of the Element.
+        *
+        * Alias for getAttribute().
+        *
+        * @method getAttr
+        * @param attributeName {String}
+        * @return {String|null} value of the attribute
+        * @since 0.0.1
+        */
+        ElementPrototype.getAttr = function(attributeName) {
+            return this.vnode.attrs[attributeName] || null;
+        };
+
+        /**
+         * Returns all attributes as defined as an key/value object.
+         *
+         * @method getAttrs
+         * @param attributeName {String}
+         * @return {Object} all attributes as on Object
+         * @since 0.0.1
+         */
+        ElementPrototype.getAttrs = function() {
+            return this.vnode.attrs;
+        };
+
+       /**
+        * Gets an attribute of the Element.
+        *
+        * Same as getAttr().
+        *
+        * @method getAttribute
+        * @param attributeName {String}
+        * @return {String|null} value of the attribute
+        * @since 0.0.1
+        */
+        ElementPrototype._getAttribute = ElementPrototype.getAttribute;
+        ElementPrototype.getAttribute = function(attributeName) {
+            return this.vnode.attrs[attributeName] || null;
+        };
+
+        /**
+         * Returns a live collection of the Element-childNodes.
+         *
+         * @method getChildren
+         * @return {ElementArray}
+         * @since 0.0.1
+         */
+        ElementPrototype.getChildren = function() {
+            return this.vnode.children;
+        };
+
+        /**
+         * Returns a token list of the class attribute of the element.
+         * See: https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList
+         *
+         * @method getClassList
+         * @return DOMTokenList
+         * @since 0.0.1
+         */
+        ElementPrototype.getClassList = function() {
+            var instance = this,
+                vnode = instance.vnode;
+            if (!vnode._classList) {
+                vnode._classList = Object.create(classListProto);
+                vnode._classList._init(instance);
+            }
+            return vnode._classList;
+        };
+
+       /**
+        * Returns data set specified by &#x60;key&#x60;. If not set, &#x60;undefined&#x60; will be returned.
+        * The data is efficiently stored on the vnode.
+        *
+        * @method getData
+        * @param key {string} name of the key
+        * @return {Any|undefined} data set specified by &#x60;key&#x60;
+        * @since 0.0.1
+        */
+        ElementPrototype.getData = function(key) {
+            var vnode = this.vnode;
+            return vnode._data &amp;&amp; vnode._data[key];
+        };
+
+       /**
+        * Gets one Element, specified by the css-selector. To retrieve a single element by id,
+        * you need to prepend the id-name with a &#x60;#&#x60;. When multiple Element&#x27;s match, the first is returned.
+        *
+        * @method getElement
+        * @param cssSelector {String} css-selector to match
+        * @return {Element|null} the Element that was search for
+        * @since 0.0.1
+        */
+        ElementPrototype.getElement = function(cssSelector) {
+            return ((cssSelector[0]===&#x27;#&#x27;) &amp;&amp; (cssSelector.indexOf(&#x27; &#x27;)===-1)) ? this.getElementById(cssSelector.substr(1)) : this.querySelector(cssSelector);
+        };
+
+        /**
+         * Returns the Element matching the specified id, which should should be a descendant of this Element.
+         *
+         * @method getElementById
+         * @param id {String} id of the Element
+         * @return {Element|null}
+         *
+         */
+        ElementPrototype.getElementById = function(id) {
+            var element = nodeids[id];
+            if (element &amp;&amp; !this.contains(element)) {
+                // outside itself
+                return null;
+            }
+            return element || null;
+        };
+
+       /**
+        * Returns the Elments &#x60;id&#x60;
+        *
+        * @method getId
+        * @return {String|undefined} Elements &#x60;id&#x60;
+        * @since 0.0.1
+        */
+        ElementPrototype.getId = function() {
+            return this.vnode.id;
+        };
+
+       /**
+        * Returns inline style of the specified property. &#x60;Inline&#x60; means: what is set directly on the Element,
+        * this doesn&#x27;t mean necesairy how it is looked like: when no css is set inline, the Element might still have
+        * an appearance because of other CSS-rules.
+        *
+        * In most cases, you would be interesting in using &#x60;getStyle()&#x60; instead.
+        *
+        * Note: no need to camelCase cssProperty: both &#x60;margin-left&#x60; as well as &#x60;marginLeft&#x60; are fine
+        *
+        * @method getInlineStyle
+        * @param cssProperty {String} the css-property to look for
+        * @param [pseudo] {String} to look inside a pseudo-style
+        * @return {String|undefined} css-style
+        * @since 0.0.1
+        */
+        ElementPrototype.getInlineStyle = function(cssProperty, pseudo) {
+            var styles = this.vnode.styles,
+                groupStyle = styles &amp;&amp; styles[pseudo || &#x27;element&#x27;];
+            return groupStyle &amp;&amp; groupStyle[fromCamelCase(cssProperty)];
+        };
+
+        /**
+         * Gets innerHTML of the dom-node.
+         * Goes through the vdom, so it&#x27;s superfast.
+         *
+         * Use this method instead of &#x60;innerHTML&#x60;
+         *
+         * @method getInnerHTML
+         * @return {String}
+         * @since 0.0.1
+         */
+        ElementPrototype.getInnerHTML = function() {
+            return this.vnode.innerHTML;
+        };
+
+        /**
+         * Gets the outerHTML of the dom-node.
+         * Goes through the vdom, so it&#x27;s superfast.
+         *
+         * Use this method instead of &#x60;outerHTML&#x60;
+         *
+         * @method getOuterHTML
+         * @return {String}
+         * @since 0.0.1
+         */
+        ElementPrototype.getOuterHTML = function() {
+            return this.vnode.outerHTML;
+        };
+
+        /**
+         * Returns the Element&#x27;s parent Element.
+         *
+         * @method getParent
+         * @return {Element}
+         */
+        ElementPrototype.getParent = function() {
+            var vParent = this.vnode.vParent;
+            return vParent &amp;&amp; vParent.domNode;
+        };
+
+       /**
+        * Returns cascaded style of the specified property. &#x60;Cascaded&#x60; means: the actual present style,
+        * the way it is visible (calculated through the DOM-tree).
+        *
+        * Note1: values are absolute: percentages and points are converted to absolute values, sizes are in pixels, colors in rgb/rgba-format.
+        * Note2: you cannot query shotcut-properties: use &#x60;margin-left&#x60; instead of &#x60;margin&#x60;.
+        * Note3: no need to camelCase cssProperty: both &#x60;margin-left&#x60; as well as &#x60;marginLeft&#x60; are fine.
+        *
+        * @method getCascadeStyle
+        * @param cssProperty {String} property that is queried
+        * @param [pseudo] {String} to query pseudo-element, fe: &#x60;:before&#x60; or &#x60;:first-line&#x60;
+        * @return {String} value for the css-property
+        * @since 0.0.1
+        */
+        ElementPrototype.getStyle = function(cssProperty, pseudo) {
+            return window.getComputedStyle(this, pseudo)[toCamelCase(cssProperty)];
+        };
+
+       /**
+        * Elements tag-name in uppercase (same as nodeName).
+        *
+        * @method getTagName
+        * @return {String}
+        * @since 0.0.1
+        */
+        ElementPrototype.getTagName = function() {
+            return this.vnode.tag;
+        };
+
+        /**
+         * Gets the innerContent of the Element as plain text.
+         * Goes through the vdom, so it&#x27;s superfast.
+         *
+         * Use this method instead of &#x60;textContent&#x60;
+         *
+         * @method getText
+         * @return String
+         * @since 0.0.1
+         */
+        ElementPrototype.getText = function() {
+            return this.vnode.textContent;
+        };
+
+       /**
+        * Gets the value of the following vElements:
+        *
+        * &lt;ul&gt;
+        *     &lt;li&gt;input&lt;/li&gt;
+        *     &lt;li&gt;textarea&lt;/li&gt;
+        *     &lt;li&gt;select&lt;/li&gt;
+        *     &lt;li&gt;any container that is &#x60;contenteditable&#x60;&lt;/li&gt;
+        * &lt;/ul&gt;
+        *
+        * @method getValue
+        * @return {String}
+        * @since 0.0.1
+        */
+        ElementPrototype.getValue = function() {
+            // cautious: input and textarea must be accessed by their propertyname:
+            // input.getAttribute(&#x27;value&#x27;) would return the default-value instead of actual
+            // and textarea.getAttribute(&#x27;value&#x27;) doesn&#x27;t exist
+            var instance = this,
+                editable = ((editable=instance.vnode.attrs.contenteditable) &amp;&amp; (editable!==&#x27;false&#x27;));
+            return editable ? instance.getHTML() : instance.value;
+        };
+
+       /**
+        * Whether the Element has the attribute set.
+        *
+        * Alias for hasAttribute().
+        *
+        * @method hasAttr
+        * @param attributeName {String}
+        * @return {Boolean} Whether the Element has the attribute set.
+        * @since 0.0.1
+        */
+        ElementPrototype.hasAttr = function(attributeName) {
+            return !!this.vnode.attrs[attributeName];
+        };
+
+       /**
+        * Whether the Element has the attribute set.
+        *
+        * Same as hasAttr().
+        *
+        * @method hasAttribute
+        * @param attributeName {String}
+        * @return {Boolean} Whether the Element has the attribute set.
+        * @since 0.0.1
+        */
+        ElementPrototype.hasAttribute = function(attributeName) {
+            return !!this.vnode.attrs[attributeName];
+        };
+
+        /**
+         * Indicating if the current element has any attributes or not.
+         *
+         * @method hasAttributes
+         * @return {Boolean} Whether the current element has any attributes or not.
+         */
+        ElementPrototype.hasAttributes = function() {
+            return !!this.vnode.attrs &amp;&amp; (this.vnode.attrs.length &gt; 0);
+        };
+
+       /**
+        * Indicating if the Element has any children (childNodes with nodeType of 1).
+        *
+        * @method hasChildren
+        * @return {Boolean} whether the Element has children
+        * @since 0.0.1
+        */
+        ElementPrototype.hasChildren = function() {
+            return this.vnode.hasVChildren();
+        };
+
+       /**
+        * Checks whether the className is present on the Element.
+        *
+        * @method hasClass
+        * @param className {String|Array} the className to check for. May be an Array of classNames, which all needs to be present.
+        * @return {Boolean} whether the className (or classNames) is present on the Element
+        * @since 0.0.1
+        */
+        ElementPrototype.hasClass = function(className) {
+            return this.getClassList().contains(className);
+        };
+
+       /**
+        * If the Element has data set specified by &#x60;key&#x60;. The data could be set with &#x60;setData()&#x60;.
+        *
+        * @method hasData
+        * @param key {string} name of the key
+        * @return {Boolean}
+        * @since 0.0.1
+        */
+        ElementPrototype.hasData = function(key) {
+            var vnode = this.vnode;
+            return !!(vnode._data &amp;&amp; vnode._data[key]);
+        };
+
+       /**
+        * Indicates whether Element currently has the focus.
+        *
+        * @method hasFocus
+        * @return {Boolean}
+        * @since 0.0.1
+        */
+        ElementPrototype.hasFocus = function() {
+            return (DOCUMENT.activeElement===this);
+        };
+
+       /**
+         * Checks whether the Element lies within the specified selector (which can be a CSS-selector or a Element)
+         *
+         * @example
+         * var divnode = childnode.inside(&#x27;div.red&#x27;);
+         *
+         * @example
+         * var divnode = childnode.inside(containerNode);
+         *
+         * @method inside
+         * @param selector {Element|String} the selector, specified by a Element or a css-selector
+         * @return {Element|null} the nearest Element that matches the selector, or &#x60;null&#x60; when not found
+         * @since 0.0.1
+         */
+        ElementPrototype.inside = function(selector) {
+            var instance = this,
+                vParent;
+            if (typeof selector===STRING) {
+                vParent = instance.vnode.vParent;
+                while (vParent &amp;&amp; !vParent.matchesSelector(selector)) {
+                    vParent = vParent.vParent;
+                }
+                return vParent ? vParent.domNode : null;
+            }
+            else {
+                // selector should be an Element
+                return ((selector!==instance) &amp;&amp; selector.contains(instance)) ? selector : null;
+            }
+        };
+
+       /**
+         * Checks whether a point specified with x,y is within the Element&#x27;s region.
+         *
+         * @method insidePos
+         * @param x {Number} x-value for new position (coordinates are page-based)
+         * @param y {Number} y-value for new position (coordinates are page-based)
+         * @return {Boolean} whether there is a match
+         * @since 0.0.1
+         */
+        ElementPrototype.insidePos = function(x, y) {
+            var instance = this,
+                left = instance.left,
+                top = instance.top,
+                right = left + instance.offsetWidth,
+                bottom = top + instance.offsetHeight;
+            return (x&gt;=left) &amp;&amp; (x&lt;=right) &amp;&amp; (y&gt;=top) &amp;&amp; (y&lt;=bottom);
+        };
+
+        /**
+         * Reference to the last of sibbling vNode&#x27;s, where the related dom-node is an Element(nodeType===1).
+         *
+         * @method last
+         * @param [cssSelector] {String} to return the last Element that matches the css-selector
+         * @return {Element}
+         * @since 0.0.1
+         */
+        ElementPrototype.last = function(cssSelector) {
+            var vParent = this.vnode.vParent;
+            return vParent &amp;&amp; vParent.lastOfVChildren(cssSelector).domNode;
+        };
+
+        /**
+         * Reference to the last child-Element, where the related dom-node an Element (nodeType===1).
+         *
+         * @method lastOfChildren
+         * @param [cssSelector] {String} to return the last Element that matches the css-selector
+         * @return {Element}
+         * @since 0.0.1
+         */
+        ElementPrototype.lastOfChildren = function(cssSelector) {
+            return this.vnode.lastOfVChildren(cssSelector).domNode;
+        };
+
+        /**
+         * Indicates if the element would be selected by the specified selector string.
+         * Alias for matchesSelector()
+         *
+         * @method matches
+         * @param [cssSelector] {String} the css-selector to check for
+         * @return {Boolean}
+         * @since 0.0.1
+         */
+        ElementPrototype.matches = function(selectors) {
+            return this.vnode.matchesSelector(selectors);
+        };
+
+        /**
+         * Indicates if the element would be selected by the specified selector string.
+         * Alias for matches()
+         *
+         * @method matchesSelector
+         * @param [cssSelector] {String} the css-selector to check for
+         * @return {Boolean}
+         * @since 0.0.1
+         */
+        ElementPrototype.matchesSelector = function(selectors) {
+            return this.vnode.matchesSelector(selectors);
+        };
+
+        /**
+         * Reference to the next of sibbling Element, where the related dom-node is an Element(nodeType===1).
+         *
+         * @method next
+         * @param [cssSelector] {String} css-selector to be used as a filter
+         * @return {Element|null}
+         * @type Element
+         * @since 0.0.1
+         */
+        ElementPrototype.next = function(cssSelector) {
+            var vnode = this.vnode,
+                found, vNextElement;
+            if (!cssSelector) {
+                return vnode.vNextElement.domNode;
+            }
+            vNextElement = vnode;
+            do {
+                vNextElement = vNextElement.vNextElement;
+                found = vNextElement &amp;&amp; vNextElement.matchesSelector(cssSelector);
+            } while(vNextElement &amp;&amp; !found);
+            return found ? vNextElement.domNode : null;
+        };
+
+
+       /**
+        * Prepends a Element or text at the start of Element&#x27;s innerHTML, or before the &#x60;refElement&#x60;.
+        *
+        * @method prepend
+        * @param content {Element|Element|ElementArray|String} content to prepend
+        * @param [refElement] {Element} reference Element where the content should be prepended
+        * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
+        * @return {Element} the created Element (or the last when multiple)
+        * @since 0.0.1
+        */
+        ElementPrototype.prepend = function(content, refElement, escape) {
+            var instance = this,
+                i, len, item, createdElement,
+            doPrepend = function(oneItem) {
+                var vChildNodes, i, len, fragment;
+                if (escape) {
+                    if (oneItem.isFragment) {
+                        vChildNodes = oneItem.vChildNodes;
+                        len = vChildNodes.length;
+                        for (i=1; i&lt;len; i++) {
+                            fragment = vChildNodes[i];
+                            fragment.textContent = fragment.innerHTML;
+                        }
+                    }
+                    else {
+                        oneItem.vTextContent = oneItem.vInnerHTML;
+                    }
+                }
+                createdElement = refElement ? instance.insertBefore(oneItem, refElement) : instance.appendChild(oneItem);
+            };
+            refElement || (refElement=instance.firstChild);
+            (typeof content===STRING) &amp;&amp; (content=htmlToVFragments(content));
+            if (Array.isArray(content)) {
+                len = content.length;
+                for (i=0; i&lt;len; i++) {
+                    item = content[i];
+                    doPrepend(item);
+                }
+            }
+            else {
+                doPrepend(content);
+            }
+            return createdElement;
+        };
+
+        /**
+         * Reference to the previous of sibbling Element, where the related dom-node is an Element(nodeType===1).
+         *
+         * @method previous
+         * @param [cssSelector] {String} css-selector to be used as a filter
+         * @return {Element|null}
+         * @type Element
+         * @since 0.0.1
+         */
+        ElementPrototype.previous = function(cssSelector) {
+            var vnode = this.vnode,
+                found, vPreviousElement;
+            if (!cssSelector) {
+                return vnode.vPreviousElement.domNode;
+            }
+            vPreviousElement = vnode;
+            do {
+                vPreviousElement = vPreviousElement.vPreviousElement;
+                found = vPreviousElement &amp;&amp; vPreviousElement.matchesSelector(cssSelector);
+            } while(vPreviousElement &amp;&amp; !found);
+            return found ? vPreviousElement.domNode : null;
+        };
+
+        /**
+         * Returns the first Element within the Element, that matches the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,
+         * they need to be separated by a &#x60;comma&#x60;.
+         *
+         * @method querySelector
+         * @param selectors {String} CSS-selector(s) that should match
+         * @return {Element}
+         */
+        ElementPrototype.querySelector = function(selectors) {
+            var found,
+                inspectChildren = function(vnode) {
+                    var vChildNodes = vnode.vChildNodes,
+                        len = vChildNodes.length,
+                        i, vChildNode;
+                    for (i=0; (i&lt;len) &amp;&amp; !found; i++) {
+                        vChildNode = vChildNodes[i];
+                        vChildNode.matchesSelector(selectors) &amp;&amp; (found=vChildNode.domNode);
+                        found || inspectChildren(vChildNode);
+                    }
+                };
+            inspectChildren(this.vnode);
+            return found;
+        };
+
+        /**
+         * Returns an ElementArray of all vElements within the Element, that match the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,
+         * they need to be separated by a &#x60;comma&#x60;.
+         *
+         * querySelectorAll is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.
+         *
+         * @method querySelectorAll
+         * @param selectors {String} CSS-selector(s) that should match
+         * @return {ElementArray} non-life Array (snapshot) with vElements
+         */
+        ElementPrototype.querySelectorAll = function(selectors) {
+            var found = ElementArray.createArray(),
+                inspectChildren = function(vnode) {
+                    var vChildNodes = vnode.vChildNodes,
+                        len = vChildNodes.length,
+                        i, vChildNode;
+                    for (i=0; i&lt;len; i++) {
+                        vChildNode = vChildNodes[i];
+                        vChildNode.matchesSelector(selectors) &amp;&amp; (found[found.length]=vChildNode.domNode);
+                        inspectChildren(vChildNode);
+                    }
+                };
+            inspectChildren(this.vnode);
+            return found;
+        };
+
+       /**
+         * Checks whether the Element has its rectangle inside the outboud-Element.
+         * This is no check of the DOM-tree, but purely based upon coordinates.
+         *
+         * @method rectangleInside
+         * @param outboundElement {Element} the Element where this element should lie inside
+         * @return {Boolean} whether the Element lies inside the outboundElement
+         * @since 0.0.1
+         */
+        ElementPrototype.rectangleInside = function(outboundElement) {
+            var instance = this,
+                outerRect = outboundElement.getBoundingClientRect(),
+                innerRect = instance.getBoundingClientRect();
+            return (outerRect.left&lt;=innerRect.left) &amp;&amp;
+                   (outerRect.top&lt;=innerRect.top) &amp;&amp;
+                   ((outerRect.left+outboundElement.offsetWidth)&gt;=(innerRect.left+instance.offsetWidth)) &amp;&amp;
+                   ((outerRect.top+outboundElement.offsetHeight)&gt;=(innerRect.top+instance.offsetHeight));
+        };
+
+       /**
+        * Removes the Element from the DOM.
+        * Alias for thisNode.parentNode.removeChild(thisNode);
+        *
+        * @method remove
+        * @since 0.0.1
+        */
+        ElementPrototype.remove = function() {
+            var vnode = this.vnode;
+            vnode._noSync();
+            vnode.vParent.domNode.removeChild(vnode.domNode);
+            vnode._remove();
+        };
+
+       /**
+        * Removes the attribute from the Element.
+        *
+        * Alias for removeAttribute() BUT is chainable instead (removeAttribute is not).
+        *
+        * @method removeAttr
+        * @param attributeName {String}
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.removeAttr = function(/* attributeName */) {
+            this.removeAttribute.apply(this, arguments);
+            return this;
+        };
+
+       /**
+        * Removes the attribute from the Element.
+        *
+        * Use removeAttr() to be able to chain.
+        *
+        * @method removeAttr
+        * @param attributeName {String}
+        * @since 0.0.1
+        */
+        ElementPrototype._removeAttribute = ElementPrototype.removeAttribute;
+        ElementPrototype.removeAttribute = function(attributeName) {
+            var instance = this,
+                vnode = this.vnode;
+            instance._removeAttribute.apply(instance, arguments);
+            delete vnode.attrs[attributeName];
+            // in case of STYLE attribute --&gt; special treatment
+            (attributeName===STYLE) &amp;&amp; (vnode.styles={});
+            // in case of CLASS attribute --&gt; special treatment
+            (attributeName===CLASS) &amp;&amp; (vnode.classNames={});
+        };
+
+       /**
+        * Removes a className from the Element.
+        *
+        * @method removeClass
+        * @param className {String|Array} the className that should be removed. May be an Array of classNames.
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.removeClass = function(className) {
+            var instance = this;
+            instance.getClassList().remove(className);
+            return instance;
+        };
+
+       /**
+        * Removes data specified by &#x60;key&#x60; that was set by using &#x60;setData()&#x60;.
+        * When no arguments are passed, all node-data (key-value pairs) will be removed.
+        *
+        * @method removeData
+        * @param key {string} name of the key
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.removeData = function(key) {
+            var vnode = this.vnode;
+            if (vnode._data) {
+                if (key) {
+                    delete vnode._data[key];
+                }
+                else {
+                    // we cannot just redefine _data, for it is set as readonly
+                    vnode._data.each(
+                        function(value, key) {
+                            delete vnode._data[key];
+                        }
+                    );
+                }
+            }
+            return this;
+        };
+
+       /**
+        * Removes a css-property (inline) out of the Element.
+        * No need to use camelCase.
+        *
+        * @method removeInlineStyle
+        * @param cssProperty {String} the css-property to remove
+        * @param [pseudo] {String} to look inside a pseudo-style
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.removeInlineStyle = function(cssProperty, pseudo) {
+            var instance = this,
+                vnode = instance.vnode,
+                styles = vnode.styles[pseudo || &#x27;element&#x27;],
+                prop;
+            if (styles) {
+                prop = fromCamelCase(cssProperty);
+                if (styles[prop]) {
+                    delete styles[prop];
+                    (styles.size()===0) &amp;&amp; (delete vnode.styles[pseudo || &#x27;element&#x27;]);
+                    instance.setAttr(&#x27;style&#x27;, vnode.serializeStyles());
+                }
+            }
+            return instance;
+        };
+
+       /**
+        * Replaces the Element with a new Element.
+        *
+        * @method replace
+        * @param content {Element|Element|ElementArray|String} content to replace
+        * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
+        * @return {Element} the created Element (or the last when multiple)
+        * @since 0.0.1
+        */
+        ElementPrototype.replace = function(newElement, escape) {
+            var instance = this,
+                createdElement;
+            instance.setClass(HIDDEN);
+            createdElement = instance.getParent().prepend(newElement, instance, escape);
+            instance.remove();
+            return createdElement;
+        };
+
+       /**
+        * Replaces the className of the Element with a new className.
+        * If the previous className is not available, the new className is set nevertheless.
+        *
+        * @method replaceClass
+        * @param prevClassName {String} the className to be replaced
+        * @param newClassName {String} the className to be set
+        * @param [force ] {Boolean} whether the new className should be set, even is the previous className isn&#x27;t there
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.replaceClass = function(prevClassName, newClassName, force) {
+            var instance = this;
+            if (force || instance.hasClass(prevClassName)) {
+                instance.removeClass(prevClassName).setClass(newClassName);
+            }
+            return instance;
+        };
+
+        /**
+         * Scrolls the content of the Element into the specified scrollposition.
+         * Only available when the Element has overflow.
+         *
+         * @method scrollTo
+         * @param x {Number} left-offset in pixels
+         * @param y {Number} top-offset in pixels
+         * @chainable
+         * @since 0.0.1
+        */
+        ElementPrototype.scrollTo = function(x, y) {
+            var instance = this;
+            instance.scrollLeft = x;
+            instance.scrollTop = y;
+            return instance;
+        };
+
+       /**
+         * Sets the attribute on the Element with the specified value.
+         *
+         * Alias for setAttribute(), BUT differs in a way that setAttr is chainable, setAttribute is not.
+         *
+         * @method setAttr
+         * @param attributeName {String}
+         * @param value {Any} the value that belongs to &#x60;key&#x60;
+         * @chainable
+         * @since 0.0.1
+        */
+        ElementPrototype.setAttr = function(/* attributeName, value */) {
+            var instance = this;
+            instance.setAttribute.apply(instance, arguments);
+            return instance;
+        };
+
+       /**
+         * Sets the attribute on the Element with the specified value.
+         *
+         * Alias for setAttr(), BUT differs in a way that setAttr is chainable, setAttribute is not.
+         *
+         * @method setAttribute
+         * @param attributeName {String}
+         * @param value {Any} the value that belongs to &#x60;key&#x60;
+        */
+        ElementPrototype._setAttribute = ElementPrototype.setAttribute;
+        ElementPrototype.setAttribute = function(attributeName, value) {
+            var instance = this,
+                vnode = instance.vnode;
+            (value===&#x27;&#x27;) &amp;&amp; (value=null);
+            if (value) {
+                instance._setAttribute.apply(instance, arguments);
+                vnode.attrs[attributeName] = value;
+                if ((attributeName===CLASS) || (attributeName===STYLE)) {
+                    vnode.reloadAttr(attributeName);
+                }
+            }
+            else {
+                instance.removeAttribute(attributeName);
+            }
+        };
+
+       /**
+        * Adds a class to the Element. If the class already exists it won&#x27;t be duplicated.
+        *
+        * @method setClass
+        * @param className {String|Array} className to be added, may be an array of classNames
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.setClass = function(className) {
+            var instance = this;
+            instance.getClassList().add(className);
+            return instance;
+        };
+
+        /**
+         * Stores arbitary &#x60;data&#x60; at the Element (actually at vnode). This has nothing to do with node-attributes whatsoever,
+         * it is just a way to bind any data to the specific Element so it can be retrieved later on with &#x60;getData()&#x60;.
+         *
+         * @method setData
+         * @param key {string} name of the key
+         * @param value {Any} the value that belongs to &#x60;key&#x60;
+         * @chainable
+         * @since 0.0.1
+        */
+        ElementPrototype.setData = function(key, value) {
+            var vnode = this.vnode;
+            vnode._data ||  Object.defineProperty(vnode, &#x27;_data&#x27;, {
+                configurable: false,
+                enumerable: false,
+                writable: false,
+                value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {}&#x27;s properties itself
+            });
+            vnode._data[key] = value;
+            return this;
+        };
+
+       /**
+        * Sets the Elments &#x60;id&#x60;
+        *
+        * @method setId
+        * @param val {String} Elements new &#x60;id&#x60;
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.setId = function(val) {
+            return this.setAttr(&#x27;id&#x27;, val);
+        };
+
+       /**
+        * Sets a css-property (inline) for the Element.
+        *
+        * Note: no need to camelCase cssProperty: both &#x60;margin-left&#x60; as well as &#x60;marginLeft&#x60; are fine
+        *
+        * @method setStyle
+        * @param cssProperty {String} the css-property to be set
+        * @param value {String} the css-value
+        * @param [pseudo] {String} to look inside a pseudo-style
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.setInlineStyle = function(cssProperty, value, pseudo) {
+            var instance = this,
+                vnode = instance.vnode,
+                styles, group;
+            value || (value=&#x27;&#x27;);
+            cssProperty = fromCamelCase(cssProperty);
+            if (value===&#x27;&#x27;) {
+                return instance.removeInlineStyle(cssProperty, pseudo);
+            }
+            vnode.styles || (vnode.styles={});
+            group = pseudo || &#x27;element&#x27;;
+            vnode.styles[group] || (vnode.styles[group]={});
+            styles = vnode.styles[group];
+            styles[cssProperty] = value;
+            instance.setAttr(&#x27;style&#x27;, vnode.serializeStyles());
+            return instance;
+        };
+
+        /**
+         * Sets the innerHTML of both the vnode as well as the representing dom-node.
+         * Goes through the vdom, so it&#x27;s superfast.
+         *
+         * Use this method instead of &#x60;innerHTML&#x60;
+         *
+         * Syncs with the DOM.
+         *
+         * @method setInnerHTML
+         * @param val {String} the new value to be set
+         * @chainable
+         * @since 0.0.1
+         */
+        ElementPrototype.setInnerHTML = function(val) {
+            this.vnode.innerHTML = val;
+            return this;
+        };
+
+        /**
+         * Gets or sets the outerHTML of both the Element as well as the representing dom-node.
+         * Goes through the vdom, so it&#x27;s superfast.
+         *
+         * Use this property instead of &#x60;outerHTML&#x60;
+         *
+         * Syncs with the DOM.
+         *
+         * @method setOuterHTML
+         * @param val {String} the new value to be set
+         * @chainable
+         * @since 0.0.1
+         */
+        ElementPrototype.setOuterHTML = function(val) {
+            this.vnode.outerHTML = val;
+            return this;
+        };
+
+        /**
+         * Sets the innerContent of the Element as plain text.
+         * Goes through the vdom, so it&#x27;s superfast.
+         *
+         * Use this method instead of &#x60;textContent&#x60;
+         *
+         * Syncs with the DOM.
+         *
+         * @method setText
+         * @param val {String} the textContent to be set
+         * @chainable
+         * @since 0.0.1
+         */
+        ElementPrototype.setText = function(val) {
+            this.vnode.textContent = val;
+            return this;
+        };
+
+       /**
+        * Sets the value of the following vElements:
+        *
+        * &lt;ul&gt;
+        *     &lt;li&gt;input&lt;/li&gt;
+        *     &lt;li&gt;textarea&lt;/li&gt;
+        *     &lt;li&gt;select&lt;/li&gt;
+        *     &lt;li&gt;any container that is &#x60;contenteditable&#x60;&lt;/li&gt;
+        * &lt;/ul&gt;
+        *
+        * Will emit a &#x60;valuechange&#x60;-event when a new value is set and ITSA&#x27;s &#x60;event&#x60;-module is active.
+        *
+        * @method setValue
+        * @param val {String} thenew value to be set
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.setValue = function(val) {
+            var instance = this,
+                prevVal = instance.value,
+            // cautious: input and textarea must be accessed by their propertyname:
+            // input.getAttribute(&#x27;value&#x27;) would return the defualt-value instead of actusl
+            // and textarea.getAttribute(&#x27;value&#x27;) doesn&#x27;t exist
+                editable = ((editable=instance.vnode.attrs.contenteditable) &amp;&amp; (editable!==&#x27;false&#x27;));
+            if (editable) {
+                instance.setHTML(val);
+            }
+            else {
+                instance.value = val;
+            }
+            // if &#x60;document._emitVC&#x60; is available, then invoke it to emit the &#x60;valuechange&#x60;-event
+            /**
+            * @event valuechange
+            * @param e.value {String} new value
+            * @param e.sourceTarget {Element} Element whare the valuechange occured
+            */
+            DOCUMENT._emitVC &amp;&amp; (prevVal!==val) &amp;&amp; DOCUMENT._emitVC(instance, val);
+            return instance;
+        };
+
+       /**
+         * Set the position of an html element in page coordinates.
+         * The element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
+         *
+         * If the Element has the attribute &#x60;xy-constrian&#x60; set, then its position cannot exceed any matching container it lies within.
+         *
+         * @method setXY
+         * @param x {Number} x-value for new position (coordinates are page-based)
+         * @param y {Number} y-value for new position (coordinates are page-based)
+         * @param [constrain] {&#x27;window&#x27;, Element, Object, String}
+         * &lt;ul&gt;
+         *     &lt;li&gt;&lt;b&gt;&#x27;window&#x27;&lt;/b&gt; to constrain to the visible window&lt;/li&gt;
+         *     &lt;li&gt;&lt;b&gt;Element&lt;/b&gt; to constrain to a specified Element&lt;/li&gt;
+         *     &lt;li&gt;&lt;b&gt;Object&lt;/b&gt; to constrain to an object with the properties: {x, y, w, h} where x and y are absolute pixels of the document
+         *            (like calculated with getX() and getY()).&lt;/li&gt;
+         *     &lt;li&gt;&lt;b&gt;String&lt;/b&gt; to constrain to a specified css-selector, which should be an ancestor&lt;/li&gt;
+         * &lt;/ul&gt;
+         * @param [notransition=false] {Boolean} set true if you are sure positioning is without transition.
+         *        this isn&#x27;t required, but it speeds up positioning. Only use when no transition is used:
+         *        when there is a transition, setting this argument &#x60;true&#x60; would miscalculate the position.
+         * @chainable
+         * @since 0.0.1
+         */
+        ElementPrototype.setXY = function(x, y, constrain, notransition) {
+            console.log(NAME, &#x27;setXY &#x27;+x+&#x27;,&#x27;+y);
+            var instance = this,
+                position = instance.getStyle(POSITION),
+                dif, match, constrainNode, byExactId, parent, clone,
+                containerTop, containerRight, containerLeft, containerBottom, requestedX, requestedY;
+
+            // default position to relative
+            if (position===&#x27;static&#x27;) {
+                instance.setInlineStyle(POSITION, &#x27;relative&#x27;);
+            }
+            // make sure it has sizes and can be positioned
+            instance.setClass(INVISIBLE).setClass(BORDERBOX);
+            (instance.getInlineStyle(&#x27;display&#x27;)===&#x27;none&#x27;) &amp;&amp; instance.setClass(BLOCK);
+            if (constrain) {
+                if (constrain===&#x27;window&#x27;) {
+                    containerLeft = window.getScrollLeft();
+                    containerTop = window.getScrollTop();
+                    containerRight = containerLeft + window.getWidth();
+                    containerBottom = containerTop + window.getHeight();
+                }
+                else {
+                    if (typeof constrain === STRING) {
+                        match = false;
+                        constrainNode = instance.getParent();
+                        byExactId = REGEXP_NODE_ID.test(constrain);
+                        while (constrainNode.matchesSelector &amp;&amp; !match) {
+                            match = byExactId ? (constrainNode.id===constrain.substr(1)) : constrainNode.matchesSelector(constrain);
+                            // if there is a match, then make sure x and y fall within the region
+                            match || (constrainNode=constrainNode.getParent());
+                        }
+                        // if Element found, then bound it to &#x60;constrain&#x60; as if the argument &#x60;constrain&#x60; was an Element
+                        match &amp;&amp; (constrain=constrainNode);
+                    }
+                    if (constrain.matchesSelector) {
+                        // Element --&gt; we need to search the rectangle
+                        containerLeft = constrain.left + parseInt(constrain.getStyle(BORDER_LEFT_WIDTH), 10);
+                        containerTop = constrain.top + parseInt(constrain.getStyle(BORDER_TOP_WIDTH), 10);
+                        containerRight = containerLeft + constrain.scrollWidth;
+                        containerBottom = containerTop + constrain.scrollHeight;
+                    }
+                    else {
+                        containerLeft = constrain.x;
+                        containerTop = constrain.y;
+                        containerRight = constrain.x + constrain.w;
+                        containerBottom = constrain.y + constrain.h;
+                    }
+                }
+                if (typeof containerLeft === NUMBER) {
+                    // found constrain, always redefine x and y
+                    x = requestedX = (typeof x===NUMBER) ? x : instance.left;
+                    if (requestedX&lt;containerLeft) {
+                        x = containerLeft;
+                    }
+                    else {
+                        if ((requestedX+instance.offsetWidth)&gt;containerRight) {
+                            x = requestedX = containerRight - instance.offsetWidth;
+                        }
+                        // now we might need to reset to the left again:
+                        (requestedX&lt;containerLeft) &amp;&amp; (x=containerLeft);
+                    }
+                    y = requestedY = (typeof y===NUMBER) ? y : instance.top;
+                    if (requestedY&lt;containerTop) {
+                        y = containerTop;
+                    }
+                    else {
+                        if ((requestedY+instance.offsetHeight)&gt;containerBottom) {
+                            y = requestedY = containerBottom - instance.offsetHeight;
+                        }
+                        // now we might need to reset to the top again:
+                        (requestedY&lt;containerTop) &amp;&amp; (y=containerTop);
+                    }
+                }
+            }
+            if (typeof x === NUMBER) {
+                // check if there is a transition:
+                if (notransition) {
+                    instance.setClass(INVISIBLE);
+                    instance.setInlineStyle(LEFT, x + PX);
+                    dif = (instance.left-x);
+                    (dif!==0) &amp;&amp; (instance.setInlineStyle(LEFT, (x - dif) + PX));
+                    instance.removeClass(INVISIBLE);
+                }
+                else {
+                    // we will clone the node, make it invisible and without transitions and look what its correction should be
+                    clone = instance.cloneNode();
+                    clone.setClass(NO_TRANS).setClass(INVISIBLE);
+                    parent = instance.getParent() || DOCUMENT.body;
+                    parent.append(clone);
+                    clone.setInlineStyle(LEFT, x+PX);
+                    dif = (clone.left-x);
+                    parent.removeChild(clone);
+                    instance.setInlineStyle(LEFT, (x - dif) + PX);
+                }
+            }
+            if (typeof y === NUMBER) {
+                if (notransition) {
+                    instance.setClass(INVISIBLE);
+                    instance.setInlineStyle(TOP, y + PX);
+                    dif = (instance.top-y);
+                    (dif!==0) &amp;&amp; (instance.setInlineStyle(TOP, (y - dif) + PX));
+                    instance.removeClass(INVISIBLE);
+                }
+                else {
+                    // we will clone the node, make it invisible and without transitions and look what its correction should be
+                    clone = instance.cloneNode();
+                    clone.setClass(NO_TRANS).setClass(INVISIBLE);
+                    parent = instance.getParent() || DOCUMENT.body;
+                    parent.append(clone);
+                    clone.setInlineStyle(TOP, y+PX);
+                    dif = (clone.top-y);
+                    parent.removeChild(clone);
+                    instance.setInlineStyle(TOP, (y - dif) + PX);
+                }
+            }
+            return instance.removeClass(BLOCK).removeClass(BORDERBOX).removeClass(INVISIBLE);
+        };
+
+       /**
+        * Toggles the className of the Element.
+        *
+        * @method toggleClass
+        * @param className {String|Array} className that should be toggled, may be an array of classNames
+        * @param forceState {Boolean} to force toggling into this specific state
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.toggleClass = function(className, forceState) {
+            var instance = this;
+            instance.getClassList().toggle(className, forceState);
+            return instance;
+        };
+
+        Object.defineProperties(ElementPrototype, {
+
+           /**
+            * Gets or set the height of the element in pixels. Included are padding and border, not any margins.
+            * By setting the argument &#x60;overflow&#x60; you get the total height, included the invisible overflow.
+            *
+            * The getter is calculating through &#x60;offsetHeight&#x60;, the setter will set inline css-style for the height.
+            *
+            * Values are numbers without unity.
+            *
+            * @property height
+            * @type {Number}
+            * @since 0.0.1
+            */
+            height: {
+                get: function() {
+                    return this.offsetHeight;
+                },
+                set: function(val) {
+                    var instance = this,
+                        dif;
+                    instance.setClass(INVISIBLE);
+                    instance.setInlineStyle(HEIGHT, val + PX);
+                    dif = (instance.offsetHeight-val);
+                    (dif!==0) &amp;&amp; (instance.setInlineStyle(HEIGHT, (val - dif) + PX));
+                    instance.removeClass(INVISIBLE);
+                }
+            },
+
+           /**
+            * Gets the x-position (in the DOCUMENT) of the element in pixels.
+            * DOCUMENT-related: regardless of the window&#x27;s scroll-position.
+            *
+            * @property left
+            * @since 0.0.1
+            */
+            left: {
+                get: function() {
+                    return Math.round(this.getBoundingClientRect().left + window.getScrollLeft());
+                },
+                set: function(pixelsLeft) {
+                    return this.setXY(pixelsLeft, null, null, true);
+                }
+            },
+
+           /**
+            * Gets the y-position (in the DOCUMENT) of the element in pixels.
+            * DOCUMENT-related: regardless of the window&#x27;s scroll-position.
+            *
+            * @property top
+            * @since 0.0.1
+            */
+            top: {
+                get: function() {
+                    return Math.round(this.getBoundingClientRect().top + window.getScrollTop());
+                },
+                set: function(pixelsTop) {
+                    return this.setXY(null, pixelsTop, null, true);
+                }
+            },
+
+           /**
+            * Gets or set the width of the element in pixels. Included are padding and border, not any margins.
+            * By setting the argument &#x60;overflow&#x60; you get the total width, included the invisible overflow.
+            *
+            * The getter is calculating through &#x60;offsetHeight&#x60;, the setter will set inline css-style for the width.
+            *
+            * Values are numbers without unity.
+            *
+            * @property width
+            * @type {Number}
+            * @since 0.0.1
+            */
+            width: {
+                get: function() {
+                    return this.offsetWidth;
+                },
+                set: function(val) {
+                    var instance = this,
+                        dif;
+                    instance.setClass(INVISIBLE);
+                    instance.setInlineStyle(WIDTH, val + PX);
+                    dif = (instance.offsetWidth-val);
+                    (dif!==0) &amp;&amp; (instance.setInlineStyle(WIDTH, (val - dif) + PX));
+                    instance.removeClass(INVISIBLE);
+                }
+            }
+
+        });
+
+    }(window.Element.prototype));
+
+    setupObserver = function() {
+        // configuration of the observer:
+        var observerConfig = {
+                attributes: true,
+                subtree: true,
+                characterData: true,
+                childList : true
+            };
+        (new window.MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+
+                var node = mutation.target,
+                    vnode = node.vnode,
+                    attribute = mutation.attributeName,
+                    addedChildNodes = mutation.addedNodes,
+                    removedChildNodes = mutation.removedNodes,
+                    i, len, childDomNode, childVNode, index;
+                if (vnode &amp;&amp; !vnode._nosync) {
+                    if (attribute) {
+                        vnode.reloadAttr(attribute);
+                    }
+                    else {
+                        // remove the childNodes that are no longer there:
+                        len = removedChildNodes.length;
+                        for (i=len-1; i&gt;=0; i--) {
+                            childVNode = removedChildNodes[i].vnode;
+                            childVNode &amp;&amp; childVNode._remove();
+                        }
+                       // add the new childNodes:
+                        len = addedChildNodes.length;
+                        for (i=0; i&lt;len; i++) {
+                            childDomNode = addedChildNodes[i];
+                            index = node.childNodes.indexOf(childDomNode);
+                            domNodeToVNode(childDomNode)._moveToParent(vnode, index);
+                        }
+                    }
+                }
+            });
+        })).observe(DOCUMENT, observerConfig);
+    };
+
+    setupObserver();
+
+};
+
+//--- definition API of unmodified &#x60;Element&#x60;-methods ------
+
+/**
+ * Adds a node to the end of the list of children of a specified parent node.
+ *
+ * @method appendChild
+ * @param element {Element} content to append
+ * @return {Element} the Element that was appended
+ */
+
+/**
+ * Returns the specified attribute of the specified element, as an Attr node.
+ *
+ * @method getAttributeNode
+ * @return {attributeNode}
+ */
+
+/**
+ * Returns a text rectangle object that encloses a group of text rectangles. The returned value is
+ * a TextRectangle object which is the union of the rectangles returned by getClientRects() for the element,
+ * i.e., the CSS border-boxes associated with the element.
+ *
+ * The returned value is a TextRectangle object, which contains read-only left, top, right and bottom properties
+ * describing the border-box in pixels. top and left are relative to the top-left of the viewport.
+ *
+ * @method getBoundingClientRect
+ * @return {attributeNode} Therectangle object that encloses a group of text rectangles.
+ */
+
+/**
+ * Returns a collection of rectangles that indicate the bounding rectangles for each box in a client.
+ *
+ * The returned value is a collection of ClientRect objects, one for each CSS border box associated with the element.
+ * Each ClientRect object contains read-only left, top, right and bottom properties describing the border box, in pixels,
+ * with the top-left relative to the top-left of the viewport. For tables with captions,
+ * the caption is included even though it&#x27;s outside the border box of the table.
+ *
+ * @method getClientRects
+ * @return {Collection}
+ */
+
+/**
+ * Returns a new NodeIterator object with this Element as root.
+ *
+ * The NodeIterator is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.
+ *
+ * @method createNodeIterator
+ * @param [whatToShow] {Number} Filter specification constants from the NodeFilter DOM interface, indicating which nodes to iterate over.
+ * You can use or sum one of the next properties:
+ * &lt;ul&gt;
+ *   &lt;li&gt;window.NodeFilter.SHOW_ELEMENT&lt;/li&gt;
+ *   &lt;li&gt;window.NodeFilter.SHOW_COMMENT&lt;/li&gt;
+ *   &lt;li&gt;window.NodeFilter.SHOW_TEXT&lt;/li&gt;
+ * &lt;/ul&gt;
+ * @param [filter] {NodeFilter|function} An object implementing the NodeFilter interface or a function. See https://developer.mozilla.org/en-US/docs/Web/API/NodeFilter
+ * @return {NodeIterator}
+ * @since 0.0.1
+*/
+
+/**
+ * Returns an HTMLCollection of all vElements within this Element, that match their classes with the supplied &#x60;classNames&#x60; argument.
+ * To match multiple different classes, separate them with a &#x60;comma&#x60;.
+ *
+ * getElementsByClassName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * NOTE: it is highly recomended to use &#x60;document.getAll&#x60; because that method takes advantage of the vdom.
+ *
+ * @method getElementsByClassName
+ * @param classNames {String} the classes to search for
+ * @return {HTMLCollection} life Array with vElements
+ */
+
+/**
+ * Returns an HTMLCollection of all vElements within this Element, that match their &#x60;name&#x60;-attribute with the supplied &#x60;name&#x60; argument.
+ *
+ * getElementsByName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * NOTE: it is highly recomended to use &#x60;document.getAll&#x60; because that method takes advantage of the vdom.
+ *
+ * @method getElementsByName
+ * @param name {String} the property of name-attribute to search for
+ * @return {HTMLCollection} life Array with vElements
+ */
+
+
+/**
+ * Returns an HTMLCollection of all vElements within this Element, that match their &#x60;name&#x60;-attribute with the supplied &#x60;name&#x60; argument.
+ *
+ * getElementsByTagName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * NOTE: it is highly recomended to use &#x60;document.getAll&#x60; because that method takes advantage of the vdom.
+ *
+ * @method getElementsByTagName
+ * @param tagNames {String} the tags to search for
+ * @return {HTMLCollection} life Array with vElements
+ */
+
+/**
+* Inserts the Element into the DOM tree at a specified position.
+*
+* @method insertAdjacentElement
+* @param position {String}
+* &lt;ul&gt;
+*     &lt;li&gt;&#x27;beforebegin&#x27; Before the element itself&lt;/li&gt;
+*     &lt;li&gt;&#x27;afterbegin&#x27; Just inside the element, before its first child&lt;/li&gt;
+*     &lt;li&gt;&#x27;beforeend&#x27; Just inside the element, after its last child&lt;/li&gt;
+*     &lt;li&gt;&#x27;afterend&#x27; After the element itself&lt;/li&gt;
+* &lt;ul&gt;
+* @param element {Element}
+*/
+
+/**
+* Parses the specified text as HTML and inserts the resulting nodes into the DOM tree at a specified position.
+*
+* @method insertAdjacentHTML
+* @param position {String}
+* &lt;ul&gt;
+*     &lt;li&gt;&#x27;beforebegin&#x27; Before the element itself&lt;/li&gt;
+*     &lt;li&gt;&#x27;afterbegin&#x27; Just inside the element, before its first child&lt;/li&gt;
+*     &lt;li&gt;&#x27;beforeend&#x27; Just inside the element, after its last child&lt;/li&gt;
+*     &lt;li&gt;&#x27;afterend&#x27; After the element itself&lt;/li&gt;
+* &lt;ul&gt;
+* @param element {Element}
+*/
+
+/**
+* Inserts the text into the DOM tree as a TextNode at a specified position.
+*
+* @method insertAdjacentText
+* @param position {String}
+* &lt;ul&gt;
+*     &lt;li&gt;&#x27;beforebegin&#x27; Before the element itself&lt;/li&gt;
+*     &lt;li&gt;&#x27;afterbegin&#x27; Just inside the element, before its first child&lt;/li&gt;
+*     &lt;li&gt;&#x27;beforeend&#x27; Just inside the element, after its last child&lt;/li&gt;
+*     &lt;li&gt;&#x27;afterend&#x27; After the element itself&lt;/li&gt;
+* &lt;ul&gt;
+* @param element {Element}
+*/
+
+/**
+ * Inserts &#x60;newElement&#x60; before &#x60;referenceElement&#x60;.
+ *
+ * @method insertBefore
+ * @param newElement {Element} The newElement to insert
+ * @param referenceElement {Element} The Element before which newElement is inserted.
+ * @return {Element} the Element being inserted (equals newElement)
+ */
+
+/**
+* Removes the attribute specified by an attributeNode from the Element.
+*
+* @method removeAttributeNode
+* @param attributeNode {attributeNode}
+* @since 0.0.1
+*/
+
+/**
+* Removes the Element&#x27;s child-Element from the DOM.
+*
+* @method removeChild
+* @param childVElement {Element} the child-Element to remove
+* @since 0.0.1
+*/
+
+/**
+* Replaces the Element&#x27;s child-Element with a new Element.
+*
+* @method replaceChild
+* @param newElement {Element} the new Element
+* @param oldVChild {Element} the Element to be replaced
+* @return {Element} the Element that was removed (equals oldVChild)
+* @since 0.0.1
+*/
+
+/**
+ * Scrolls the element into view.
+ *
+ * @method scrollIntoView
+ */
+
+/**
+ * Sets the attribute on the Element specified by &#x60;attributeNode&#x60;
+ *
+ * @method setAttributeNode
+ * @param attributeNode {attributeNode}
+*/
+
+//------ events --------
+
+/**
+ * Fired when a static &#x60;script&#x60; element  finishes executing its script. Does not fire if the element is added dynamically, eg with appendChild().
+ *
+ * @event afterscriptexecute
+ */
+
+
+/**
+ * Fired when the code in a &#x60;script&#x60; element declared in an HTML document is about to start executing. Does not fire if the element is added dynamically, eg with appendChild().
+ *
+ * @event beforescriptexecute
+ */
+
+//------- properties --------
+
+/**
+ * sets or returns an accesskey for an element. An accesskey specifies a shortcut key to activate/focus an element.
+ * Note: The way of accessing the shortcut key is varying in different browsers: http://www.w3schools.com/jsref/prop_html_accesskey.asp
+ *
+ * @property accessKey
+ * @type String
+ */
+
+
+/**
+ * Returns a live collection of all attribute nodes registered to the specified node.
+ * It is a NamedNodeMap, not an Array, so it has no Array methods and the Attr nodes&#x27; indexes may differ among browsers.
+ * To be more specific, attributes is a key/value pair of strings that represents any information regarding that attribute.
+ *
+ * Prefer to use &#x60;getAttrs()&#x60; which is much quicker, but doesn&#x27;t return a life-list.
+ *
+ * @property attributes
+ * @type NamedNodeMap
+ */
+
+/**
+ * The absolute base URL of a node.
+ *
+ * @property baseURI
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * Returns the number of children (child vElements)
+ *
+ * @property childElementCount
+ * @type Number
+ * @readOnly
+ */
+
+/**
+ * Returns a live collection of childNodes of the given element, either Element, TextNode or CommentNode
+ *
+ * @property childNodes
+ * @type NodeList
+ * @readOnly
+ */
+
+/**
+ * Returns a live collection of child Element&#x27;s of the given element.
+ *
+ * @property children
+ * @type NodeList
+ * @readOnly
+ */
+
+/**
+ * Gets and sets the value of the class attribute of the specified element.
+ *
+ * @property className
+ * @type String
+ */
+
+/**
+ * Returns the inner height of an element in pixels, including padding but not the horizontal scrollbar height, border, or margin.
+ *
+ * @property clientHeight
+ * @type Number
+ * @readOnly
+ */
+
+/**
+ * The width of the left border of an element in pixels. It includes the width of the vertical scrollbar if the text direction of the element is right–to–left
+ * and if there is an overflow causing a left vertical scrollbar to be rendered. clientLeft does not include the left margin or the left padding.
+ *
+ * @property clientLeft
+ * @type Number
+ * @readOnly
+ */
+
+/**
+ * The width of the top border of an element in pixels. It does not include the top margin or padding.
+ *
+ * @property clientTop
+ * @type Number
+ * @readOnly
+ */
+
+/**
+ * Returns the inner width of an element in pixels, including padding but not the vertical scrollbar height, border, or margin.
+ *
+ * @property clientWidth
+ * @type Number
+ * @readOnly
+ */
+
+/**
+ * Reference to the first childNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).
+ *
+ * Better work with Elements only:  use &#x60;firstElementChild&#x60; instead, which returns the first Element-child.
+ *
+ * @property firstChild
+ * @type Node
+ * @readOnly
+ * @deprecated
+ */
+
+/**
+ * Reference to the first Element-child, which is an Element (nodeType===1).
+ *
+ * @property firstElementChild
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Gets or sets the element&#x27;s attribute &#x60;href&#x60;. Only applies for the &#x60;a&#x60;-element.
+ *
+ * @property href
+ * @type String
+ */
+
+/**
+ * Gets or sets the element&#x27;s identifier (attribute id).
+ *
+ * @property id
+ * @type String
+ */
+
+/**
+ * Reference to the last childNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).
+ *
+ * Better use &#x60;lastElementChild&#x60; instead, which returns the last Element-child.
+ *
+ * @property lastChild
+ * @type Node
+ * @readOnly
+ * @deprecated
+ */
+
+/**
+ * Reference to the last Element-child, where the related dom-node is an Element (nodeType===1).
+ *
+ * @property lastElementChild
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Gets or sets the &#x60;name&#x60; property of a Element; it only applies to the following elements:
+ * &#x60;a&#x60;, &#x60;applet&#x60;, &#x60;button&#x60;, &#x60;form&#x60;, &#x60;frame&#x60;, &#x60;iframe&#x60;, &#x60;img&#x60;, &#x60;input&#x60;, &#x60;map&#x60;, &#x60;meta&#x60;, &#x60;object&#x60;, &#x60;param&#x60;, &#x60;select&#x60;, and &#x60;textarea&#x60;.
+ *
+ * @property name
+ * @type String
+ */
+
+/**
+ * Returns the Element immediately following the specified one in its parent&#x27;s childNodes list, or null if the specified node is the last node in that list.
+ * Is an Element (nodeType===1).
+ *
+ * @property nextElementSibling
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Returns the Element immediately following the specified one in its parent&#x27;s childNodes list, or null if the specified node is the last node in that list.
+ * Is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).
+ *
+ * Do not use this, but use &#x60;lastElementChild&#x60; instead, which returns the next Element-child.
+ *
+ * @property nextElementSibling
+ * @type Node
+ * @deprecated
+ * @readOnly
+ */
+
+/**
+ * Elements tag-name
+ *
+ * @property nodeName
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * Elements nodetype: 1==Element, 3==TextNode, 8===CommentNode
+ *
+ * @property nodeType
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * Value/text for non-Element Nodes
+ *
+ * @property nodeValue
+ * @type String
+ * @since 0.0.1
+ */
+
+/**
+ * The exact width of the Element on the screen.
+ * Included borders and padding (no margin).
+ *
+ * Returns a number without unity.
+ *
+ * Better use &#x60;width&#x60; --&gt; it&#x27;s an alias, but has a setter as well
+ *
+ * @property offsetWidth
+ * @type Number
+ * @readOnly
+ * @since 0.0.1
+ */
+
+/**
+ * The exact height of the Element on the screen.
+ * Included borders and padding (no margin).
+ *
+ * Returns a number without unity.
+ *
+ * Better use &#x60;height&#x60; --&gt; it&#x27;s an alias, but has a setter as well
+ *
+ * @property offsetHeight
+ * @type Number
+ * @since 0.0.1
+ */
+
+/**
+ * Returns the Element&#x27;s parent Element.
+ *
+ * Same as &#x60;parentNode&#x60;
+ *
+ * @property parentElement
+ * @type Element
+ */
+
+/**
+ * Returns the Element&#x27;s parent Element.
+ *
+ * Same as &#x60;parentElement&#x60;
+ *
+ * @property parentNode
+ * @type Element
+ */
+
+/**
+ * Returns the Element immediately preceding the specified one in its parent&#x27;s childNodes list, or null if the specified node is the last node in that list.
+ * Is an Element (nodeType===1).
+ *
+ * @property previousElementSibling
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Returns the Element immediately preceding the specified one in its parent&#x27;s childNodes list, or null if the specified node is the last node in that list.
+ * Is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).
+ *
+ * Do not use this, but use &#x60;previousElementSibling&#x60; instead, which returns the previous Element-child.
+ *
+ * @property previousSibling
+ * @deprecated
+ * @type Node
+ * @readOnly
+ */
+
+
+/**
+ * A measurement of the height of an element&#x27;s content, including content not visible on the screen due to overflow.
+ * The scrollHeight value is equal to the minimum clientHeight the element would require in order to fit all the content in the viewpoint
+ * without using a vertical scrollbar. It includes the element padding but not its margin.
+ *
+ * Returns a number without unity.
+ *
+ * @property scrollHeight
+ * @type Number
+ * @readOnly
+ */
+
+/**
+ * Gets or sets the number of pixels that an element&#x27;s content is scrolled to the left.
+ *
+ * @property scrollLeft
+ * @type Number
+ */
+
+/**
+ * Gets or sets the number of pixels that the content of an element is scrolled upward. An element&#x27;s scrollTop is a measurement
+ * of the distance of an element&#x27;s top to its topmost visible content. When an element content does not generate a vertical scrollbar,
+ * then its scrollTop value defaults to 0.
+ *
+ * @property scrollTop
+ * @type Number
+ */
+
+/**
+ * Returns either the width in pixels of the content of an element or the width of the element itself, whichever is greater.
+ * If the element is wider than its content area (for example, if there are scroll bars for scrolling through the content),
+ * the scrollWidth is larger than the clientWidth.
+ *
+ * Returns a number without unity.
+ *
+ * @property scrollWidth
+ * @type Number
+ * @readOnly
+ */
+
+/**
+ * Gets or sets the element&#x27;s attribute &#x60;type&#x60;. Only applies for the &#x60;script&#x60;, &#x60;img&#x60; and &#x60;style&#x60;-elements.
+ *
+ * @property src
+ * @type String
+ */
+
+/**
+ * Gets or sets the element&#x27;s attribute &#x60;style&#x60;.
+ *
+ * @property style
+ * @type String
+ */
+
+/**
+ * Gets or sets the element&#x27;s attribute &#x60;type&#x60;. Only applies for the &#x60;input&#x60;-element.
+ *
+ * @property type
+ * @type String
+ */
+
+/**
+* Gets or sets the value of an input or select Element.
+*
+* Note it is highly preferable to use getValue() and setValue().
+*
+* @property value
+* @type String
+* @since 0.0.1
+*/
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

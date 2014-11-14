@@ -4,12 +4,15 @@ YUI.add("yuidoc-meta", function(Y) {
         "Array",
         "DD",
         "Element",
+        "ElementArray",
         "Event",
         "Event.Emitter",
         "Event.Listener",
         "Function",
         "IO",
         "ITSA",
+        "NS-vdom",
+        "Node",
         "NodeList",
         "NodePlugin",
         "Object",
@@ -17,18 +20,24 @@ YUI.add("yuidoc-meta", function(Y) {
         "String",
         "Utils",
         "document",
-        "window"
+        "vnode",
+        "window",
+        "xElement"
     ],
     "modules": [
         "dom-ext",
         "drag",
         "drag-drop",
+        "element-array",
         "event",
         "event-dom",
         "event-emitter",
         "event-hover",
         "event-listener",
         "event-mobile",
+        "extend-document",
+        "extend-element",
+        "html-parser",
         "io",
         "io-assets",
         "io-cors",
@@ -38,7 +47,6 @@ YUI.add("yuidoc-meta", function(Y) {
         "itsa.build",
         "js-ext",
         "lib/array.js",
-        "lib/document.js",
         "lib/element-plugin.js",
         "lib/element.js",
         "lib/function.js",
@@ -46,8 +54,12 @@ YUI.add("yuidoc-meta", function(Y) {
         "lib/object.js",
         "lib/promise.s",
         "lib/string.js",
+        "node-parser",
         "node-win",
-        "utils"
+        "utils",
+        "vdom",
+        "vdom-ns",
+        "vnode"
     ],
     "allModules": [
         {
@@ -63,6 +75,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "drag-drop",
             "name": "drag-drop",
             "description": "Provides `drag and drop` functionality with dropzones\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "element-array",
+            "name": "element-array",
+            "description": "Extends Array into an array with special utility-methods that can be applied upon its members.\nThe membres should be vElement's\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "event",
@@ -93,6 +110,21 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "event-mobile",
             "name": "event-mobile",
             "description": "Integrates mobile-events to event-dom. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "extend-document",
+            "name": "extend-document",
+            "description": "Provides several methods that override native document-methods to work with the vdom.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "extend-element",
+            "name": "extend-element",
+            "description": "Provides several methods that override native Element-methods to work with the vdom.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "html-parser",
+            "name": "html-parser",
+            "description": "Exports `htmlToVNodes` which transforms html-text into vnodes.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "io",
@@ -139,11 +171,6 @@ YUI.add("yuidoc-meta", function(Y) {
             "description": "Pollyfils for often used functionality for Arrays\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
-            "displayName": "lib/document.js",
-            "name": "lib_document.js",
-            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        {
             "displayName": "lib/element-plugin.js",
             "name": "lib_element-plugin.js",
             "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
@@ -179,6 +206,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "description": "Pollyfils for often used functionality for Strings\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
+            "displayName": "node-parser",
+            "name": "node-parser",
+            "description": "Exports `domNodeToVNode` which transforms dom-nodes into vnodes.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i><br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
             "displayName": "node-win",
             "name": "node-win",
             "description": "Emulation of browser `window` and `dom`. Just enough to make ITSA work.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
@@ -187,6 +219,20 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "utils",
             "name": "utils",
             "description": "Collection of various utility functions.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "vdom",
+            "name": "vdom"
+        },
+        {
+            "displayName": "vdom-ns",
+            "name": "vdom-ns",
+            "description": "Creates a Namespace that can be used accros multiple vdom-modules to share information.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "vnode",
+            "name": "vnode",
+            "description": "Delivers the `vnode` prototype object, which is a virtualisation of an `Element` inside the Dom.\nThese Elements work smoothless with the vdom (see ...).\n\nvnodes are much quicker to access and walk through than native dom-nodes. However, this is a module you don't need\nby itself: `Element`-types use these features under the hood.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         }
     ]
 } };

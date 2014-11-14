@@ -2426,9 +2426,9 @@ if (typeof define == TYPE_FUNCTION && define.amd) {
 },{}],3:[function(require,module,exports){
 function DOMParser(options){
 	this.options = options ||{locator:{}};
-
+	
 }
-DOMParser.prototype.parseFromString = function(source,mimeType){
+DOMParser.prototype.parseFromString = function(source,mimeType){	
 	var options = this.options;
 	var sax =  new XMLReader();
 	var domBuilder = options.domBuilder || new DOMHandler();//contentHandler and LexicalHandler
@@ -2439,7 +2439,7 @@ DOMParser.prototype.parseFromString = function(source,mimeType){
 	if(locator){
 		domBuilder.setDocumentLocator(locator)
 	}
-
+	
 	sax.errorHandler = buildErrorHandler(errorHandler,domBuilder,locator);
 	sax.domBuilder = options.domBuilder || domBuilder;
 	if(/\/x?html?$/.test(mimeType)){
@@ -2490,8 +2490,8 @@ function buildErrorHandler(errorImpl,domBuilder,locator){
 /**
  * +ContentHandler+ErrorHandler
  * +LexicalHandler+EntityResolver2
- * -DeclHandler-DTDHandler
- *
+ * -DeclHandler-DTDHandler 
+ * 
  * DefaultHandler:EntityResolver, DTDHandler, ContentHandler, ErrorHandler
  * DefaultHandler2:DefaultHandler,LexicalHandler, DeclHandler, EntityResolver2
  * @link http://www.saxproject.org/apidoc/org/xml/sax/helpers/DefaultHandler.html
@@ -2506,7 +2506,7 @@ function position(locator,node){
 /**
  * @see org.xml.sax.ContentHandler#startDocument
  * @link http://www.saxproject.org/apidoc/org/xml/sax/ContentHandler.html
- */
+ */ 
 DOMHandler.prototype = {
 	startDocument : function() {
     	this.document = new DOMImplementation().createDocument(null, null, null);
@@ -2520,7 +2520,7 @@ DOMHandler.prototype = {
 	    var len = attrs.length;
 	    appendElement(this, el);
 	    this.currentElement = el;
-
+	    
 		this.locator && position(this.locator,el)
 	    for (var i = 0 ; i < len; i++) {
 	        var namespaceURI = attrs.getURI(i);
@@ -2581,7 +2581,7 @@ DOMHandler.prototype = {
 	    this.locator && position(this.locator,comm)
 	    appendElement(this, comm);
 	},
-
+	
 	startCDATA:function() {
 	    //used in characters() methods
 	    this.cdata = true;
@@ -2589,7 +2589,7 @@ DOMHandler.prototype = {
 	endCDATA:function() {
 	    this.cdata = false;
 	},
-
+	
 	startDTD:function(name, publicId, systemId) {
 		var impl = this.document.implementation;
 	    if (impl && impl.createDocumentType) {
@@ -2781,14 +2781,14 @@ NodeList.prototype = {
 	 * The number of nodes in the list. The range of valid child node indices is 0 to length-1 inclusive.
 	 * @standard level1
 	 */
-	length:0,
+	length:0, 
 	/**
 	 * Returns the indexth item in the collection. If index is greater than or equal to the number of nodes in the list, this returns null.
 	 * @standard level1
-	 * @param index  unsigned long
+	 * @param index  unsigned long 
 	 *   Index into the collection.
 	 * @return Node
-	 * 	The node at the indexth position in the NodeList, or null if that is not a valid index.
+	 * 	The node at the indexth position in the NodeList, or null if that is not a valid index. 
 	 */
 	item: function(index) {
 		return this[index] || null;
@@ -2816,10 +2816,10 @@ LiveNodeList.prototype.item = function(i){
 
 _extends(LiveNodeList,NodeList);
 /**
- *
+ * 
  * Objects implementing the NamedNodeMap interface are used to represent collections of nodes that can be accessed by name. Note that NamedNodeMap does not inherit from NodeList; NamedNodeMaps are not maintained in any particular order. Objects contained in an object implementing NamedNodeMap may also be accessed by an ordinal index, but this is simply to allow convenient enumeration of the contents of a NamedNodeMap, and does not imply that the DOM specifies an order to these Nodes.
  * NamedNodeMap objects in the DOM are live.
- * used for attributes or DocumentType entities
+ * used for attributes or DocumentType entities 
  */
 function NamedNodeMap() {
 };
@@ -2905,10 +2905,10 @@ NamedNodeMap.prototype = {
 		var attr = this.getNamedItem(key);
 		_removeNamedNode(this._ownerElement,this,attr);
 		return attr;
-
-
+		
+		
 	},// raises: NOT_FOUND_ERR,NO_MODIFICATION_ALLOWED_ERR
-
+	
 	//for level2
 	removeNamedItemNS:function(namespaceURI,localName){
 		var attr = this.getNamedItemNS(namespaceURI,localName);
@@ -2971,7 +2971,7 @@ DOMImplementation.prototype = {
 		node.systemId = systemId;
 		// Introduced in DOM Level 2:
 		//readonly attribute DOMString        internalSubset;
-
+		
 		//TODO:..
 		//  readonly attribute NamedNodeMap     entities;
 		//  readonly attribute NamedNodeMap     notations;
@@ -3001,10 +3001,10 @@ Node.prototype = {
 	prefix : null,
 	localName : null,
 	// Modified in DOM Level 2:
-	insertBefore:function(newChild, refChild){//raises
+	insertBefore:function(newChild, refChild){//raises 
 		return _insertBefore(this,newChild,refChild);
 	},
-	replaceChild:function(newChild, oldChild){//raises
+	replaceChild:function(newChild, oldChild){//raises 
 		this.insertBefore(newChild,oldChild);
 		if(oldChild){
 			this.removeChild(oldChild);
@@ -3153,7 +3153,7 @@ function _onUpdateChild(doc,el,newChild){
 /**
  * attributes;
  * children;
- *
+ * 
  * writeable properties:
  * nodeValue,Attr:value,CharacterData:data
  * prefix
@@ -3195,8 +3195,8 @@ function _insertBefore(parentNode,newChild,nextChild){
 
 	newFirst.previousSibling = pre;
 	newLast.nextSibling = nextChild;
-
-
+	
+	
 	if(pre){
 		pre.nextSibling = newFirst;
 	}else{
@@ -3245,8 +3245,8 @@ Document.prototype = {
 	doctype :  null,
 	documentElement :  null,
 	_inc : 1,
-
-	insertBefore :  function(newChild, refChild){//raises
+	
+	insertBefore :  function(newChild, refChild){//raises 
 		if(newChild.nodeType == DOCUMENT_FRAGMENT_NODE){
 			var child = newChild.firstChild;
 			while(child){
@@ -3259,7 +3259,7 @@ Document.prototype = {
 		if(this.documentElement == null && newChild.nodeType == 1){
 			this.documentElement = newChild;
 		}
-
+		
 		return _insertBefore(this,newChild,refChild),(newChild.ownerDocument = this),newChild;
 	},
 	removeChild :  function(oldChild){
@@ -3285,7 +3285,7 @@ Document.prototype = {
 		})
 		return rtv;
 	},
-
+	
 	//document factory method:
 	createElement :	function(tagName){
 		var node = new Element();
@@ -3409,7 +3409,7 @@ Element.prototype = {
 		var attr = this.getAttributeNode(name)
 		attr && this.removeAttributeNode(attr);
 	},
-
+	
 	//four real opeartion method
 	appendChild:function(newChild){
 		if(newChild.nodeType === DOCUMENT_FRAGMENT_NODE){
@@ -3432,7 +3432,7 @@ Element.prototype = {
 		var old = this.getAttributeNodeNS(namespaceURI, localName);
 		old && this.removeAttributeNode(old);
 	},
-
+	
 	hasAttributeNS : function(namespaceURI, localName){
 		return this.getAttributeNodeNS(namespaceURI, localName)!=null;
 	},
@@ -3448,7 +3448,7 @@ Element.prototype = {
 	getAttributeNodeNS : function(namespaceURI, localName){
 		return this.attributes.getNamedItemNS(namespaceURI, localName);
 	},
-
+	
 	getElementsByTagName : function(tagName){
 		return new LiveNodeList(this,function(base){
 			var ls = [];
@@ -3497,7 +3497,7 @@ CharacterData.prototype = {
 	},
 	insertData: function(offset,text) {
 		this.replaceData(offset,0,text);
-
+	
 	},
 	appendChild:function(newChild){
 		//if(!(newChild instanceof CharacterData)){
@@ -3789,7 +3789,7 @@ try{
 				}
 			}
 		})
-
+		
 		function getTextContent(node){
 			switch(node.nodeType){
 			case 1:
@@ -4407,631 +4407,15 @@ if(typeof require == 'function'){
 
 
 },{}],6:[function(require,module,exports){
-(function (process,global){
-/*
-Copyright 2013 Yahoo! Inc. All rights reserved.
-Licensed under the BSD License.
-http://yuilibrary.com/license/
-*/
-
-/*jslint expr: true */
-/*global define */
-
-(function (global, factory) {
-    var built = factory();
-    /* istanbul ignore else */
-    if (typeof module === 'object' && module) {
-        module.exports = built;
-    }
-    /* istanbul ignore next */
-    if (typeof define === 'function' && define.amd) {
-        define(factory);
-    }
-    global.PromisePolyfill = built;
-    global.Promise || (global.Promise = built);
-}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this, function () {
-
-    function isArray(obj) {
-        return Object.prototype.toString.call(obj) === '[object Array]';
-    }
-
-    function assign(obj, props) {
-        for (var prop in props) {
-            /* istanbul ignore else */
-            if (props.hasOwnProperty(prop)) {
-                obj[prop] = props[prop];
-            }
-        }
-    }
-
-    /**
-    A promise represents a value that may not yet be available. Promises allow
-    you to chain asynchronous operations, write synchronous looking code and
-    handle errors throughout the process.
-
-    This constructor takes a function as a parameter where you can insert the logic
-    that fulfills or rejects this promise. The fulfillment value and the rejection
-    reason can be any JavaScript value. It's encouraged that rejection reasons be
-    error objects
-
-    <pre><code>
-    var fulfilled = new Promise(function (resolve) {
-        resolve('I am a fulfilled promise');
-    });
-
-    var rejected = new Promise(function (resolve, reject) {
-        reject(new Error('I am a rejected promise'));
-    });
-    </code></pre>
-
-    @class Promise
-    @constructor
-    @param {Function} fn A function where to insert the logic that resolves this
-            promise. Receives `resolve` and `reject` functions as parameters.
-            This function is called synchronously.
-    **/
-    function Promise(fn) {
-        if (!(this instanceof Promise)) {
-            Promise._log('Promises should always be created with new Promise(). This will throw an error in the future', 'error');
-            return new Promise(fn);
-        }
-
-        var resolver = new Promise.Resolver(this);
-
-        /**
-        A reference to the resolver object that handles this promise
-
-        @property _resolver
-        @type Object
-        @private
-        */
-        this._resolver = resolver;
-
-        try {
-            fn(function (value) {
-                resolver.resolve(value);
-            }, function (reason) {
-                resolver.reject(reason);
-            });
-        } catch (e) {
-            resolver.reject(e);
-        }
-    }
-
-    assign(Promise.prototype, {
-        /**
-        Schedule execution of a callback to either or both of "fulfill" and
-        "reject" resolutions for this promise. The callbacks are wrapped in a new
-        promise and that promise is returned.  This allows operation chaining ala
-        `functionA().then(functionB).then(functionC)` where `functionA` returns
-        a promise, and `functionB` and `functionC` _may_ return promises.
-
-        Asynchronicity of the callbacks is guaranteed.
-
-        @method then
-        @param {Function} [callback] function to execute if the promise
-                    resolves successfully
-        @param {Function} [errback] function to execute if the promise
-                    resolves unsuccessfully
-        @return {Promise} A promise wrapping the resolution of either "resolve" or
-                    "reject" callback
-        **/
-        then: function (callback, errback) {
-            // using this.constructor allows for customized promises to be
-            // returned instead of plain ones
-            var resolve, reject,
-                promise = new this.constructor(function (res, rej) {
-                    resolve = res;
-                    reject = rej;
-                });
-
-            this._resolver._addCallbacks(
-                typeof callback === 'function' ?
-                    Promise._makeCallback(promise, resolve, reject, callback) : resolve,
-                typeof errback === 'function' ?
-                    Promise._makeCallback(promise, resolve, reject, errback) : reject
-            );
-
-            return promise;
-        },
-
-        /*
-        A shorthand for `promise.then(undefined, callback)`.
-
-        Returns a new promise and the error callback gets the same treatment as in
-        `then`: errors get caught and turned into rejections, and the return value
-        of the callback becomes the fulfilled value of the returned promise.
-
-        @method catch
-        @param [Function] errback Callback to be called in case this promise is
-                            rejected
-        @return {Promise} A new promise modified by the behavior of the error
-                            callback
-        */
-        'catch': function (errback) {
-            return this.then(undefined, errback);
-        }
-    });
-
-    /**
-    Wraps the callback in another function to catch exceptions and turn them
-    into rejections.
-
-    @method _makeCallback
-    @param {Promise} promise Promise that will be affected by this callback
-    @param {Function} fn Callback to wrap
-    @return {Function}
-    @static
-    @private
-    **/
-    Promise._makeCallback = function (promise, resolve, reject, fn) {
-        // callbacks and errbacks only get one argument
-        return function (valueOrReason) {
-            var result;
-
-            // Promises model exception handling through callbacks
-            // making both synchronous and asynchronous errors behave
-            // the same way
-            try {
-                // Use the argument coming in to the callback/errback from the
-                // resolution of the parent promise.
-                // The function must be called as a normal function, with no
-                // special value for |this|, as per Promises A+
-                result = fn(valueOrReason);
-            } catch (e) {
-                // calling return only to stop here
-                reject(e);
-                return;
-            }
-
-            if (result === promise) {
-                reject(new TypeError('Cannot resolve a promise with itself'));
-                return;
-            }
-
-            resolve(result);
-        };
-    };
-
-    /**
-    Logs a message. This method is designed to be overwritten with  YUI's `log`
-    function.
-
-    @method _log
-    @param {String} msg Message to log
-    @param {String} type Log level. One of 'error', 'warn', 'info'.
-    @static
-    @private
-    **/
-    Promise._log = function (msg, type) { /* istanbul ignore else */ if (typeof console !== 'undefined') { console[type](msg); } };
-
-    /*
-    Ensures that a certain value is a promise. If it is not a promise, it wraps it
-    in one.
-
-    This method can be copied or inherited in subclasses. In that case it will
-    check that the value passed to it is an instance of the correct class.
-    This means that `PromiseSubclass.resolve()` will always return instances of
-    `PromiseSubclass`.
-
-    @method resolve
-    @param {Any} Any object that may or may not be a promise
-    @return {Promise}
-    @static
-    */
-    Promise.resolve = function (value) {
-        if (value && value.constructor === this) {
-            return value;
-        }
-        /*jshint newcap: false */
-        return new this(function (resolve) {
-        /*jshint newcap: true */
-            resolve(value);
-        });
-    };
-
-    /*
-    A shorthand for creating a rejected promise.
-
-    @method reject
-    @param {Any} reason Reason for the rejection of this promise. Usually an Error
-        Object
-    @return {Promise} A rejected promise
-    @static
-    */
-    Promise.reject = function (reason) {
-        /*jshint newcap: false */
-        var promise = new this(function () {});
-       /*jshint newcap: true */
-
-       // Do not go through resolver.reject() because an immediately rejected promise
-       // always has no callbacks which would trigger an unnecessary warnihg
-       promise._resolver._result = reason;
-       promise._resolver._status = 'rejected';
-
-       return promise;
-    };
-
-    /*
-    Returns a promise that is resolved or rejected when all values are resolved or
-    any is rejected. This is useful for waiting for the resolution of multiple
-    promises, such as reading multiple files in Node.js or making multiple XHR
-    requests in the browser.
-
-    @method all
-    @param {Any[]} values An array of any kind of values, promises or not. If a value is not
-    @return [Promise] A promise for an array of all the fulfillment values
-    @static
-    */
-    Promise.all = function (values) {
-        var Promise = this;
-        return new Promise(function (resolve, reject) {
-            if (!isArray(values)) {
-                reject(new TypeError('Promise.all expects an array of values or promises'));
-                return;
-            }
-
-            var remaining = values.length,
-                i         = 0,
-                length    = values.length,
-                results   = [];
-
-            function oneDone(index) {
-                return function (value) {
-                    results[index] = value;
-
-                    remaining--;
-
-                    if (!remaining) {
-                        resolve(results);
-                    }
-                };
-            }
-
-            if (length < 1) {
-                return resolve(results);
-            }
-
-            for (; i < length; i++) {
-                Promise.resolve(values[i]).then(oneDone(i), reject);
-            }
-        });
-    };
-
-    /*
-    Returns a promise that is resolved or rejected when any of values is either
-    resolved or rejected. Can be used for providing early feedback in the UI
-    while other operations are still pending.
-
-    @method race
-    @param {Any[]} values An array of values or promises
-    @return {Promise}
-    @static
-    */
-    Promise.race = function (values) {
-        var Promise = this;
-        return new Promise(function (resolve, reject) {
-            if (!isArray(values)) {
-                reject(new TypeError('Promise.race expects an array of values or promises'));
-                return;
-            }
-
-            // just go through the list and resolve and reject at the first change
-            // This abuses the fact that calling resolve/reject multiple times
-            // doesn't change the state of the returned promise
-            for (var i = 0, count = values.length; i < count; i++) {
-                Promise.resolve(values[i]).then(resolve, reject);
-            }
-        });
-    };
-
-    /**
-    Forces a function to be run asynchronously, but as fast as possible. In Node.js
-    this is achieved using `setImmediate` or `process.nextTick`. In YUI this is
-    replaced with `Y.soon`.
-
-    @method async
-    @param {Function} callback The function to call asynchronously
-    @static
-    **/
-    /* istanbul ignore next */
-    Promise.async = typeof setImmediate !== 'undefined' ?
-                        function (fn) {setImmediate(fn);} :
-                    typeof process !== 'undefined' && process.nextTick ?
-                        process.nextTick :
-                    function (fn) {setTimeout(fn, 0);};
-
-    /**
-    Represents an asynchronous operation. Provides a
-    standard API for subscribing to the moment that the operation completes either
-    successfully (`fulfill()`) or unsuccessfully (`reject()`).
-
-    @class Promise.Resolver
-    @constructor
-    @param {Promise} promise The promise instance this resolver will be handling
-    **/
-    function Resolver(promise) {
-        /**
-        List of success callbacks
-
-        @property _callbacks
-        @type Array
-        @private
-        **/
-        this._callbacks = [];
-
-        /**
-        List of failure callbacks
-
-        @property _errbacks
-        @type Array
-        @private
-        **/
-        this._errbacks = [];
-
-        /**
-        The promise for this Resolver.
-
-        @property promise
-        @type Promise
-        @deprecated
-        **/
-        this.promise = promise;
-
-        /**
-        The status of the operation. This property may take only one of the following
-        values: 'pending', 'fulfilled' or 'rejected'.
-
-        @property _status
-        @type String
-        @default 'pending'
-        @private
-        **/
-        this._status = 'pending';
-
-        /**
-        This value that this promise represents.
-
-        @property _result
-        @type Any
-        @private
-        **/
-        this._result = null;
-    }
-
-    assign(Resolver.prototype, {
-        /**
-        Resolves the promise, signaling successful completion of the
-        represented operation. All "onFulfilled" subscriptions are executed and passed
-        the value provided to this method. After calling `fulfill()`, `reject()` and
-        `notify()` are disabled.
-
-        @method fulfill
-        @param {Any} value Value to pass along to the "onFulfilled" subscribers
-        **/
-        fulfill: function (value) {
-            var status = this._status;
-
-            if (status === 'pending' || status === 'accepted') {
-                this._result = value;
-                this._status = 'fulfilled';
-            }
-
-            if (this._status === 'fulfilled') {
-                this._notify(this._callbacks, this._result);
-
-                // Reset the callback list so that future calls to fulfill()
-                // won't call the same callbacks again. Promises keep a list
-                // of callbacks, they're not the same as events. In practice,
-                // calls to fulfill() after the first one should not be made by
-                // the user but by then()
-                this._callbacks = [];
-
-                // Once a promise gets fulfilled it can't be rejected, so
-                // there is no point in keeping the list. Remove it to help
-                // garbage collection
-                this._errbacks = null;
-            }
-        },
-
-        /**
-        Resolves the promise, signaling *un*successful completion of the
-        represented operation. All "onRejected" subscriptions are executed with
-        the value provided to this method. After calling `reject()`, `resolve()`
-        and `notify()` are disabled.
-
-        @method reject
-        @param {Any} value Value to pass along to the "reject" subscribers
-        **/
-        reject: function (reason) {
-            var status = this._status;
-
-            if (status === 'pending' || status === 'accepted') {
-                this._result = reason;
-                this._status = 'rejected';
-                if (!this._errbacks.length) {Promise._log('Promise rejected but no error handlers were registered to it', 'info');}
-            }
-
-            if (this._status === 'rejected') {
-                this._notify(this._errbacks, this._result);
-
-                // See fulfill()
-                this._callbacks = null;
-                this._errbacks = [];
-            }
-        },
-
-        /*
-        Given a certain value A passed as a parameter, this method resolves the
-        promise to the value A.
-
-        If A is a promise, `resolve` will cause the resolver to adopt the state of A
-        and once A is resolved, it will resolve the resolver's promise as well.
-        This behavior "flattens" A by calling `then` recursively and essentially
-        disallows promises-for-promises.
-
-        This is the default algorithm used when using the function passed as the
-        first argument to the promise initialization function. This means that
-        the following code returns a promise for the value 'hello world':
-
-            var promise1 = new Promise(function (resolve) {
-                resolve('hello world');
-            });
-            var promise2 = new Promise(function (resolve) {
-                resolve(promise1);
-            });
-            promise2.then(function (value) {
-                assert(value === 'hello world'); // true
-            });
-
-        @method resolve
-        @param [Any] value A regular JS value or a promise
-        */
-        resolve: function (value) {
-            if (this._status === 'pending') {
-                this._status = 'accepted';
-                this._value = value;
-
-                if ((this._callbacks && this._callbacks.length) ||
-                    (this._errbacks && this._errbacks.length)) {
-                    this._unwrap(this._value);
-                }
-            }
-        },
-
-        /**
-        If `value` is a promise or a thenable, it will be unwrapped by
-        recursively calling its `then` method. If not, the resolver will be
-        fulfilled with `value`.
-
-        This method is called when the promise's `then` method is called and
-        not in `resolve` to allow for lazy promises to be accepted and not
-        resolved immediately.
-
-        @method _unwrap
-        @param {Any} value A promise, thenable or regular value
-        @private
-        **/
-        _unwrap: function (value) {
-            var self = this, unwrapped = false, then;
-
-            if (!value || (typeof value !== 'object' &&
-                typeof value !== 'function')) {
-                self.fulfill(value);
-                return;
-            }
-
-            try {
-                then = value.then;
-
-                if (typeof then === 'function') {
-                    then.call(value, function (value) {
-                        if (!unwrapped) {
-                            unwrapped = true;
-                            self._unwrap(value);
-                        }
-                    }, function (reason) {
-                        if (!unwrapped) {
-                            unwrapped = true;
-                            self.reject(reason);
-                        }
-                    });
-                } else {
-                    self.fulfill(value);
-                }
-            } catch (e) {
-                if (!unwrapped) {
-                    self.reject(e);
-                }
-            }
-        },
-
-        /**
-        Schedule execution of a callback to either or both of "resolve" and
-        "reject" resolutions of this resolver. If the resolver is not pending,
-        the correct callback gets called automatically.
-
-        @method _addCallbacks
-        @param {Function} [callback] function to execute if the Resolver
-                    resolves successfully
-        @param {Function} [errback] function to execute if the Resolver
-                    resolves unsuccessfully
-        **/
-        _addCallbacks: function (callback, errback) {
-            var callbackList = this._callbacks,
-                errbackList  = this._errbacks;
-
-            // Because the callback and errback are represented by a Resolver, it
-            // must be fulfilled or rejected to propagate through the then() chain.
-            // The same logic applies to resolve() and reject() for fulfillment.
-            if (callbackList) {
-                callbackList.push(callback);
-            }
-            if (errbackList) {
-                errbackList.push(errback);
-            }
-
-            switch (this._status) {
-                case 'accepted':
-                    this._unwrap(this._value);
-                    break;
-                case 'fulfilled':
-                    this.fulfill(this._result);
-                    break;
-                case 'rejected':
-                    this.reject(this._result);
-                    break;
-            }
-        },
-
-        /**
-        Executes an array of callbacks from a specified context, passing a set of
-        arguments.
-
-        @method _notify
-        @param {Function[]} subs The array of subscriber callbacks
-        @param {Any} result Value to pass the callbacks
-        @protected
-        **/
-        _notify: function (subs, result) {
-            // Since callback lists are reset synchronously, the subs list never
-            // changes after _notify() receives it. Avoid calling Y.soon() for
-            // an empty list
-            if (subs.length) {
-                // Calling all callbacks after Promise.async to guarantee
-                // asynchronicity. Because setTimeout can cause unnecessary
-                // delays that *can* become noticeable in some situations
-                // (especially in Node.js)
-                Promise.async(function () {
-                    var i, len;
-
-                    for (i = 0, len = subs.length; i < len; ++i) {
-                        subs[i](result);
-                    }
-                });
-            }
-        }
-
-    });
-
-    Promise.Resolver = Resolver;
-
-    return Promise;
-
-}));
-
-
-}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":63}],7:[function(require,module,exports){
 var css = "a:focus {\n    outline: 0;\n}\n\na[target=\"_blank\"]:focus {\n    outline: 1px solid #129fea;\n}\n\n/* because we think the padding and margin should always be part of the size,\n   we define \"box-sizing: border-box\" for all elements */\n\n* {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],8:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],7:[function(require,module,exports){
 var css = "/*!\nPure v0.5.0\nCopyright 2014 Yahoo! Inc. All rights reserved.\nLicensed under the BSD License.\nhttps://github.com/yahoo/pure/blob/master/LICENSE.md\n*/\n/*!\nnormalize.css v^3.0 | MIT License | git.io/normalize\nCopyright (c) Nicolas Gallagher and Jonathan Neal\n*/\n/*! normalize.css v3.0.2 | MIT License | git.io/normalize */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS text size adjust after orientation change, without disabling\n *    user zoom.\n */\n\nhtml {\n  font-family: sans-serif; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * Improve readability when focused and also mouse hovered in all browsers.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  -moz-box-sizing: content-box;\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit; /* 1 */\n  font: inherit; /* 2 */\n  margin: 0; /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n  cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome\n *    (include `-moz` to future-proof).\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  -moz-box-sizing: content-box;\n  -webkit-box-sizing: content-box; /* 2 */\n  box-sizing: content-box;\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}\n\n/*csslint important:false*/\n\n/* ==========================================================================\n   Pure Base Extras\n   ========================================================================== */\n\n/**\n * Extra rules that Pure adds on top of Normalize.css\n */\n\n/**\n * Always hide an element when it has the `hidden` HTML attribute.\n */\n\n[hidden] {\n    display: none !important;\n}\n\n/**\n * Add this class to an image to make it fit within it's fluid parent wrapper while maintaining\n * aspect ratio.\n */\n.pure-img {\n    max-width: 100%;\n    height: auto;\n    display: block;\n}\n\n/*csslint regex-selectors:false, known-properties:false, duplicate-properties:false*/\n\n.pure-g {\n    letter-spacing: -0.31em; /* Webkit: collapse white-space between units */\n    *letter-spacing: normal; /* reset IE < 8 */\n    *word-spacing: -0.43em; /* IE < 8: collapse white-space between units */\n    text-rendering: optimizespeed; /* Webkit: fixes text-rendering: optimizeLegibility */\n\n    /*\n    Sets the font stack to fonts known to work properly with the above letter\n    and word spacings. See: https://github.com/yahoo/pure/issues/41/\n\n    The following font stack makes Pure Grids work on all known environments.\n\n    * FreeSans: Ships with many Linux distros, including Ubuntu\n\n    * Arimo: Ships with Chrome OS. Arimo has to be defined before Helvetica and\n      Arial to get picked up by the browser, even though neither is available\n      in Chrome OS.\n\n    * Droid Sans: Ships with all versions of Android.\n\n    * Helvetica, Arial, sans-serif: Common font stack on OS X and Windows.\n    */\n    font-family: FreeSans, Arimo, \"Droid Sans\", Helvetica, Arial, sans-serif;\n\n    /*\n    Use flexbox when possible to avoid `letter-spacing` side-effects.\n\n    NOTE: Firefox (as of 25) does not currently support flex-wrap, so the\n    `-moz-` prefix version is omitted.\n    */\n\n    display: -webkit-flex;\n    -webkit-flex-flow: row wrap;\n\n    /* IE10 uses display: flexbox */\n    display: -ms-flexbox;\n    -ms-flex-flow: row wrap;\n}\n\n/* Opera as of 12 on Windows needs word-spacing.\n   The \".opera-only\" selector is used to prevent actual prefocus styling\n   and is not required in markup.\n*/\n.opera-only :-o-prefocus,\n.pure-g {\n    word-spacing: -0.43em;\n}\n\n.pure-u {\n    display: inline-block;\n    *display: inline; /* IE < 8: fake inline-block */\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n/*\nResets the font family back to the OS/browser's default sans-serif font,\nthis the same font stack that Normalize.css sets for the `body`.\n*/\n.pure-g [class *= \"pure-u\"] {\n    font-family: sans-serif;\n}\n\n.pure-u-1,\n.pure-u-1-1,\n.pure-u-1-2,\n.pure-u-1-3,\n.pure-u-2-3,\n.pure-u-1-4,\n.pure-u-3-4,\n.pure-u-1-5,\n.pure-u-2-5,\n.pure-u-3-5,\n.pure-u-4-5,\n.pure-u-5-5,\n.pure-u-1-6,\n.pure-u-5-6,\n.pure-u-1-8,\n.pure-u-3-8,\n.pure-u-5-8,\n.pure-u-7-8,\n.pure-u-1-12,\n.pure-u-5-12,\n.pure-u-7-12,\n.pure-u-11-12,\n.pure-u-1-24,\n.pure-u-2-24,\n.pure-u-3-24,\n.pure-u-4-24,\n.pure-u-5-24,\n.pure-u-6-24,\n.pure-u-7-24,\n.pure-u-8-24,\n.pure-u-9-24,\n.pure-u-10-24,\n.pure-u-11-24,\n.pure-u-12-24,\n.pure-u-13-24,\n.pure-u-14-24,\n.pure-u-15-24,\n.pure-u-16-24,\n.pure-u-17-24,\n.pure-u-18-24,\n.pure-u-19-24,\n.pure-u-20-24,\n.pure-u-21-24,\n.pure-u-22-24,\n.pure-u-23-24,\n.pure-u-24-24 {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n.pure-u-1-24 {\n    width: 4.1667%;\n    *width: 4.1357%;\n}\n\n.pure-u-1-12,\n.pure-u-2-24 {\n    width: 8.3333%;\n    *width: 8.3023%;\n}\n\n.pure-u-1-8,\n.pure-u-3-24 {\n    width: 12.5000%;\n    *width: 12.4690%;\n}\n\n.pure-u-1-6,\n.pure-u-4-24 {\n    width: 16.6667%;\n    *width: 16.6357%;\n}\n\n.pure-u-1-5 {\n    width: 20%;\n    *width: 19.9690%;\n}\n\n.pure-u-5-24 {\n    width: 20.8333%;\n    *width: 20.8023%;\n}\n\n.pure-u-1-4,\n.pure-u-6-24 {\n    width: 25%;\n    *width: 24.9690%;\n}\n\n.pure-u-7-24 {\n    width: 29.1667%;\n    *width: 29.1357%;\n}\n\n.pure-u-1-3,\n.pure-u-8-24 {\n    width: 33.3333%;\n    *width: 33.3023%;\n}\n\n.pure-u-3-8,\n.pure-u-9-24 {\n    width: 37.5000%;\n    *width: 37.4690%;\n}\n\n.pure-u-2-5 {\n    width: 40%;\n    *width: 39.9690%;\n}\n\n.pure-u-5-12,\n.pure-u-10-24 {\n    width: 41.6667%;\n    *width: 41.6357%;\n}\n\n.pure-u-11-24 {\n    width: 45.8333%;\n    *width: 45.8023%;\n}\n\n.pure-u-1-2,\n.pure-u-12-24 {\n    width: 50%;\n    *width: 49.9690%;\n}\n\n.pure-u-13-24 {\n    width: 54.1667%;\n    *width: 54.1357%;\n}\n\n.pure-u-7-12,\n.pure-u-14-24 {\n    width: 58.3333%;\n    *width: 58.3023%;\n}\n\n.pure-u-3-5 {\n    width: 60%;\n    *width: 59.9690%;\n}\n\n.pure-u-5-8,\n.pure-u-15-24 {\n    width: 62.5000%;\n    *width: 62.4690%;\n}\n\n.pure-u-2-3,\n.pure-u-16-24 {\n    width: 66.6667%;\n    *width: 66.6357%;\n}\n\n.pure-u-17-24 {\n    width: 70.8333%;\n    *width: 70.8023%;\n}\n\n.pure-u-3-4,\n.pure-u-18-24 {\n    width: 75%;\n    *width: 74.9690%;\n}\n\n.pure-u-19-24 {\n    width: 79.1667%;\n    *width: 79.1357%;\n}\n\n.pure-u-4-5 {\n    width: 80%;\n    *width: 79.9690%;\n}\n\n.pure-u-5-6,\n.pure-u-20-24 {\n    width: 83.3333%;\n    *width: 83.3023%;\n}\n\n.pure-u-7-8,\n.pure-u-21-24 {\n    width: 87.5000%;\n    *width: 87.4690%;\n}\n\n.pure-u-11-12,\n.pure-u-22-24 {\n    width: 91.6667%;\n    *width: 91.6357%;\n}\n\n.pure-u-23-24 {\n    width: 95.8333%;\n    *width: 95.8023%;\n}\n\n.pure-u-1,\n.pure-u-1-1,\n.pure-u-5-5,\n.pure-u-24-24 {\n    width: 100%;\n}\n.pure-button {\n    /* Structure */\n    display: inline-block;\n    *display: inline; /*IE 6/7*/\n    zoom: 1;\n    line-height: normal;\n    white-space: nowrap;\n    vertical-align: baseline;\n    text-align: center;\n    cursor: pointer;\n    -webkit-user-drag: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n}\n\n/* Firefox: Get rid of the inner focus border */\n.pure-button::-moz-focus-inner {\n    padding: 0;\n    border: 0;\n}\n\n/*csslint outline-none:false*/\n\n.pure-button {\n    font-family: inherit;\n    font-size: 100%;\n    *font-size: 90%; /*IE 6/7 - To reduce IE's oversized button text*/\n    *overflow: visible; /*IE 6/7 - Because of IE's overly large left/right padding on buttons */\n    padding: 0.5em 1em;\n    color: #444; /* rgba not supported (IE 8) */\n    color: rgba(0, 0, 0, 0.80); /* rgba supported */\n    *color: #444; /* IE 6 & 7 */\n    border: 1px solid #999;  /*IE 6/7/8*/\n    border: none rgba(0, 0, 0, 0);  /*IE9 + everything else*/\n    background-color: #E6E6E6;\n    text-decoration: none;\n    border-radius: 2px;\n}\n\n.pure-button-hover,\n.pure-button:hover,\n.pure-button:focus {\n    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000',GradientType=0);\n    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), color-stop(40%, rgba(0,0,0, 0.05)), to(rgba(0,0,0, 0.10)));\n    background-image: -webkit-linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n    background-image: -moz-linear-gradient(top, rgba(0,0,0, 0.05) 0%, rgba(0,0,0, 0.10));\n    background-image: -o-linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n    background-image: linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n}\n.pure-button:focus {\n    outline: 0;\n}\n.pure-button-active,\n.pure-button:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset, 0 0 6px rgba(0,0,0, 0.20) inset;\n}\n\n.pure-button[disabled],\n.pure-button-disabled,\n.pure-button-disabled:hover,\n.pure-button-disabled:focus,\n.pure-button-disabled:active {\n    border: none;\n    background-image: none;\n    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);\n    filter: alpha(opacity=40);\n    -khtml-opacity: 0.40;\n    -moz-opacity: 0.40;\n    opacity: 0.40;\n    cursor: not-allowed;\n    box-shadow: none;\n}\n\n.pure-button-hidden {\n    display: none;\n}\n\n/* Firefox: Get rid of the inner focus border */\n.pure-button::-moz-focus-inner{\n    padding: 0;\n    border: 0;\n}\n\n.pure-button-primary,\n.pure-button-selected,\na.pure-button-primary,\na.pure-button-selected {\n    background-color: rgb(0, 120, 231);\n    color: #fff;\n}\n\n.pure-form input[type=\"text\"],\n.pure-form input[type=\"password\"],\n.pure-form input[type=\"email\"],\n.pure-form input[type=\"url\"],\n.pure-form input[type=\"date\"],\n.pure-form input[type=\"month\"],\n.pure-form input[type=\"time\"],\n.pure-form input[type=\"datetime\"],\n.pure-form input[type=\"datetime-local\"],\n.pure-form input[type=\"week\"],\n.pure-form input[type=\"number\"],\n.pure-form input[type=\"search\"],\n.pure-form input[type=\"tel\"],\n.pure-form input[type=\"color\"],\n.pure-form select,\n.pure-form textarea {\n    padding: 0.5em 0.6em;\n    display: inline-block;\n    border: 1px solid #ccc;\n    box-shadow: inset 0 1px 3px #ddd;\n    border-radius: 4px;\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type]) {\n    padding: 0.5em 0.6em;\n    display: inline-block;\n    border: 1px solid #ccc;\n    box-shadow: inset 0 1px 3px #ddd;\n    border-radius: 4px;\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n\n/* Chrome (as of v.32/34 on OS X) needs additional room for color to display. */\n/* May be able to remove this tweak as color inputs become more standardized across browsers. */\n.pure-form input[type=\"color\"] {\n    padding: 0.2em 0.5em;\n}\n\n\n.pure-form input[type=\"text\"]:focus,\n.pure-form input[type=\"password\"]:focus,\n.pure-form input[type=\"email\"]:focus,\n.pure-form input[type=\"url\"]:focus,\n.pure-form input[type=\"date\"]:focus,\n.pure-form input[type=\"month\"]:focus,\n.pure-form input[type=\"time\"]:focus,\n.pure-form input[type=\"datetime\"]:focus,\n.pure-form input[type=\"datetime-local\"]:focus,\n.pure-form input[type=\"week\"]:focus,\n.pure-form input[type=\"number\"]:focus,\n.pure-form input[type=\"search\"]:focus,\n.pure-form input[type=\"tel\"]:focus,\n.pure-form input[type=\"color\"]:focus,\n.pure-form select:focus,\n.pure-form textarea:focus {\n    outline: 0;\n    outline: thin dotted \\9; /* IE6-9 */\n    border-color: #129FEA;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type]):focus {\n    outline: 0;\n    outline: thin dotted \\9; /* IE6-9 */\n    border-color: #129FEA;\n}\n\n.pure-form input[type=\"file\"]:focus,\n.pure-form input[type=\"radio\"]:focus,\n.pure-form input[type=\"checkbox\"]:focus {\n    outline: thin dotted #333;\n    outline: 1px auto #129FEA;\n}\n.pure-form .pure-checkbox,\n.pure-form .pure-radio {\n    margin: 0.5em 0;\n    display: block;\n}\n\n.pure-form input[type=\"text\"][disabled],\n.pure-form input[type=\"password\"][disabled],\n.pure-form input[type=\"email\"][disabled],\n.pure-form input[type=\"url\"][disabled],\n.pure-form input[type=\"date\"][disabled],\n.pure-form input[type=\"month\"][disabled],\n.pure-form input[type=\"time\"][disabled],\n.pure-form input[type=\"datetime\"][disabled],\n.pure-form input[type=\"datetime-local\"][disabled],\n.pure-form input[type=\"week\"][disabled],\n.pure-form input[type=\"number\"][disabled],\n.pure-form input[type=\"search\"][disabled],\n.pure-form input[type=\"tel\"][disabled],\n.pure-form input[type=\"color\"][disabled],\n.pure-form select[disabled],\n.pure-form textarea[disabled] {\n    cursor: not-allowed;\n    background-color: #eaeded;\n    color: #cad2d3;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type])[disabled] {\n    cursor: not-allowed;\n    background-color: #eaeded;\n    color: #cad2d3;\n}\n.pure-form input[readonly],\n.pure-form select[readonly],\n.pure-form textarea[readonly] {\n    background: #eee; /* menu hover bg color */\n    color: #777; /* menu text color */\n    border-color: #ccc;\n}\n\n.pure-form input:focus:invalid,\n.pure-form textarea:focus:invalid,\n.pure-form select:focus:invalid {\n    color: #b94a48;\n    border-color: #ee5f5b;\n}\n.pure-form input:focus:invalid:focus,\n.pure-form textarea:focus:invalid:focus,\n.pure-form select:focus:invalid:focus {\n    border-color: #e9322d;\n}\n.pure-form input[type=\"file\"]:focus:invalid:focus,\n.pure-form input[type=\"radio\"]:focus:invalid:focus,\n.pure-form input[type=\"checkbox\"]:focus:invalid:focus {\n    outline-color: #e9322d;\n}\n.pure-form select {\n    border: 1px solid #ccc;\n    background-color: white;\n}\n.pure-form select[multiple] {\n    height: auto;\n}\n.pure-form label {\n    margin: 0.5em 0 0.2em;\n}\n.pure-form fieldset {\n    margin: 0;\n    padding: 0.35em 0 0.75em;\n    border: 0;\n}\n.pure-form legend {\n    display: block;\n    width: 100%;\n    padding: 0.3em 0;\n    margin-bottom: 0.3em;\n    color: #333;\n    border-bottom: 1px solid #e5e5e5;\n}\n\n.pure-form-stacked input[type=\"text\"],\n.pure-form-stacked input[type=\"password\"],\n.pure-form-stacked input[type=\"email\"],\n.pure-form-stacked input[type=\"url\"],\n.pure-form-stacked input[type=\"date\"],\n.pure-form-stacked input[type=\"month\"],\n.pure-form-stacked input[type=\"time\"],\n.pure-form-stacked input[type=\"datetime\"],\n.pure-form-stacked input[type=\"datetime-local\"],\n.pure-form-stacked input[type=\"week\"],\n.pure-form-stacked input[type=\"number\"],\n.pure-form-stacked input[type=\"search\"],\n.pure-form-stacked input[type=\"tel\"],\n.pure-form-stacked input[type=\"color\"],\n.pure-form-stacked select,\n.pure-form-stacked label,\n.pure-form-stacked textarea {\n    display: block;\n    margin: 0.25em 0;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form-stacked input:not([type]) {\n    display: block;\n    margin: 0.25em 0;\n}\n.pure-form-aligned input,\n.pure-form-aligned textarea,\n.pure-form-aligned select,\n/* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n.pure-form-aligned .pure-help-inline,\n.pure-form-message-inline {\n    display: inline-block;\n    *display: inline;\n    *zoom: 1;\n    vertical-align: middle;\n}\n.pure-form-aligned textarea {\n    vertical-align: top;\n}\n\n/* Aligned Forms */\n.pure-form-aligned .pure-control-group {\n    margin-bottom: 0.5em;\n}\n.pure-form-aligned .pure-control-group label {\n    text-align: right;\n    display: inline-block;\n    vertical-align: middle;\n    width: 10em;\n    margin: 0 1em 0 0;\n}\n.pure-form-aligned .pure-controls {\n    margin: 1.5em 0 0 10em;\n}\n\n/* Rounded Inputs */\n.pure-form input.pure-input-rounded,\n.pure-form .pure-input-rounded {\n    border-radius: 2em;\n    padding: 0.5em 1em;\n}\n\n/* Grouped Inputs */\n.pure-form .pure-group fieldset {\n    margin-bottom: 10px;\n}\n.pure-form .pure-group input {\n    display: block;\n    padding: 10px;\n    margin: 0;\n    border-radius: 0;\n    position: relative;\n    top: -1px;\n}\n.pure-form .pure-group input:focus {\n    z-index: 2;\n}\n.pure-form .pure-group input:first-child {\n    top: 1px;\n    border-radius: 4px 4px 0 0;\n}\n.pure-form .pure-group input:last-child {\n    top: -2px;\n    border-radius: 0 0 4px 4px;\n}\n.pure-form .pure-group button {\n    margin: 0.35em 0;\n}\n\n.pure-form .pure-input-1 {\n    width: 100%;\n}\n.pure-form .pure-input-2-3 {\n    width: 66%;\n}\n.pure-form .pure-input-1-2 {\n    width: 50%;\n}\n.pure-form .pure-input-1-3 {\n    width: 33%;\n}\n.pure-form .pure-input-1-4 {\n    width: 25%;\n}\n\n/* Inline help for forms */\n/* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n.pure-form .pure-help-inline,\n.pure-form-message-inline {\n    display: inline-block;\n    padding-left: 0.3em;\n    color: #666;\n    vertical-align: middle;\n    font-size: 0.875em;\n}\n\n/* Block help for forms */\n.pure-form-message {\n    display: block;\n    color: #666;\n    font-size: 0.875em;\n}\n\n@media only screen and (max-width : 480px) {\n    .pure-form button[type=\"submit\"] {\n        margin: 0.7em 0 0;\n    }\n\n    .pure-form input:not([type]),\n    .pure-form input[type=\"text\"],\n    .pure-form input[type=\"password\"],\n    .pure-form input[type=\"email\"],\n    .pure-form input[type=\"url\"],\n    .pure-form input[type=\"date\"],\n    .pure-form input[type=\"month\"],\n    .pure-form input[type=\"time\"],\n    .pure-form input[type=\"datetime\"],\n    .pure-form input[type=\"datetime-local\"],\n    .pure-form input[type=\"week\"],\n    .pure-form input[type=\"number\"],\n    .pure-form input[type=\"search\"],\n    .pure-form input[type=\"tel\"],\n    .pure-form input[type=\"color\"],\n    .pure-form label {\n        margin-bottom: 0.3em;\n        display: block;\n    }\n\n    .pure-group input:not([type]),\n    .pure-group input[type=\"text\"],\n    .pure-group input[type=\"password\"],\n    .pure-group input[type=\"email\"],\n    .pure-group input[type=\"url\"],\n    .pure-group input[type=\"date\"],\n    .pure-group input[type=\"month\"],\n    .pure-group input[type=\"time\"],\n    .pure-group input[type=\"datetime\"],\n    .pure-group input[type=\"datetime-local\"],\n    .pure-group input[type=\"week\"],\n    .pure-group input[type=\"number\"],\n    .pure-group input[type=\"search\"],\n    .pure-group input[type=\"tel\"],\n    .pure-group input[type=\"color\"] {\n        margin-bottom: 0;\n    }\n\n    .pure-form-aligned .pure-control-group label {\n        margin-bottom: 0.3em;\n        text-align: left;\n        display: block;\n        width: 100%;\n    }\n\n    .pure-form-aligned .pure-controls {\n        margin: 1.5em 0 0 0;\n    }\n\n    /* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n    .pure-form .pure-help-inline,\n    .pure-form-message-inline,\n    .pure-form-message {\n        display: block;\n        font-size: 0.75em;\n        /* Increased bottom padding to make it group with its related input element. */\n        padding: 0.2em 0 0.8em;\n    }\n}\n\n/*csslint adjoining-classes:false, outline-none:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n.pure-menu ul {\n    position: absolute;\n    visibility: hidden;\n}\n\n.pure-menu.pure-menu-open {\n    visibility: visible;\n    z-index: 2;\n    width: 100%;\n}\n\n.pure-menu ul {\n    left: -10000px;\n    list-style: none;\n    margin: 0;\n    padding: 0;\n    top: -10000px;\n    z-index: 1;\n}\n\n.pure-menu > ul { position: relative; }\n\n.pure-menu-open > ul {\n    left: 0;\n    top: 0;\n    visibility: visible;\n}\n\n.pure-menu-open > ul:focus {\n    outline: 0;\n}\n\n.pure-menu li { position: relative; }\n\n.pure-menu a,\n.pure-menu .pure-menu-heading {\n    display: block;\n    color: inherit;\n    line-height: 1.5em;\n    padding: 5px 20px;\n    text-decoration: none;\n    white-space: nowrap;\n}\n\n.pure-menu.pure-menu-horizontal > .pure-menu-heading {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    margin: 0;\n    vertical-align: middle;\n}\n.pure-menu.pure-menu-horizontal > ul {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    vertical-align: middle;\n}\n\n.pure-menu li a { padding: 5px 20px; }\n\n.pure-menu-can-have-children > .pure-menu-label:after {\n    content: '\\25B8';\n    float: right;\n    /* These specific fonts have the Unicode char we need. */\n    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'DejaVu Sans', sans-serif;\n    margin-right: -20px;\n    margin-top: -1px;\n}\n\n.pure-menu-can-have-children > .pure-menu-label {\n    padding-right: 30px;\n}\n\n.pure-menu-separator {\n    background-color: #dfdfdf;\n    display: block;\n    height: 1px;\n    font-size: 0;\n    margin: 7px 2px;\n    overflow: hidden;\n}\n\n.pure-menu-hidden {\n    display: none;\n}\n\n/* FIXED MENU */\n.pure-menu-fixed {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n}\n\n\n/* HORIZONTAL MENU CODE */\n\n/* Initial menus should be inline-block so that they are horizontal */\n.pure-menu-horizontal li {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    vertical-align: middle;\n}\n\n/* Submenus should still be display: block; */\n.pure-menu-horizontal li li {\n    display: block;\n}\n\n/* Content after should be down arrow */\n.pure-menu-horizontal > .pure-menu-children > .pure-menu-can-have-children > .pure-menu-label:after {\n    content: \"\\25BE\";\n}\n/*Add extra padding to elements that have the arrow so that the hover looks nice */\n.pure-menu-horizontal > .pure-menu-children > .pure-menu-can-have-children > .pure-menu-label {\n    padding-right: 30px;\n}\n\n/* Adjusting separator for vertical menus */\n.pure-menu-horizontal li.pure-menu-separator {\n    height: 50%;\n    width: 1px;\n    margin: 0 7px;\n}\n\n/* Submenus should be horizontal separator again */\n.pure-menu-horizontal li li.pure-menu-separator {\n    height: 1px;\n    width: auto;\n    margin: 7px 2px;\n}\n\n\n/*csslint adjoining-classes:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n/* MAIN MENU STYLING */\n\n.pure-menu.pure-menu-open,\n.pure-menu.pure-menu-horizontal li .pure-menu-children {\n    background: #fff; /* Old browsers */\n    border: 1px solid #b7b7b7;\n}\n\n/* remove borders for horizontal menus */\n.pure-menu.pure-menu-horizontal,\n.pure-menu.pure-menu-horizontal .pure-menu-heading {\n    border: none;\n}\n\n\n/* LINK STYLES */\n\n.pure-menu a {\n    border: 1px solid transparent;\n    border-left: none;\n    border-right: none;\n\n}\n\n.pure-menu a,\n.pure-menu .pure-menu-can-have-children > li:after {\n    color: #777;\n}\n\n.pure-menu .pure-menu-can-have-children > li:hover:after {\n    color: #fff;\n}\n\n/* Focus style for a dropdown menu-item when the parent has been opened */\n.pure-menu .pure-menu-open {\n    background: #dedede;\n}\n\n\n.pure-menu li a:hover,\n.pure-menu li a:focus {\n    background: #eee;\n}\n\n/* DISABLED STATES */\n.pure-menu li.pure-menu-disabled a:hover,\n.pure-menu li.pure-menu-disabled a:focus {\n    background: #fff;\n    color: #bfbfbf;\n}\n\n.pure-menu .pure-menu-disabled > a {\n    background-image: none;\n    border-color: transparent;\n    cursor: default;\n}\n\n.pure-menu .pure-menu-disabled > a,\n.pure-menu .pure-menu-can-have-children.pure-menu-disabled > a:after {\n    color: #bfbfbf;\n}\n\n/* HEADINGS */\n.pure-menu .pure-menu-heading {\n    color: #565d64;\n    text-transform: uppercase;\n    font-size: 90%;\n    margin-top: 0.5em;\n    border-bottom-width: 1px;\n    border-bottom-style: solid;\n    border-bottom-color: #dfdfdf;\n}\n\n/* ACTIVE MENU ITEM */\n.pure-menu .pure-menu-selected a {\n    color: #000;\n}\n\n/* FIXED MENU */\n.pure-menu.pure-menu-open.pure-menu-fixed {\n    border: none;\n    border-bottom: 1px solid #b7b7b7;\n}\n\n/*csslint box-model:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n\n.pure-paginator {\n\n    /* `pure-g` Grid styles */\n    letter-spacing: -0.31em; /* Webkit: collapse white-space between units */\n    *letter-spacing: normal; /* reset IE < 8 */\n    *word-spacing: -0.43em; /* IE < 8: collapse white-space between units */\n    text-rendering: optimizespeed; /* Webkit: fixes text-rendering: optimizeLegibility */\n\n    /* `pure-paginator` Specific styles */\n    list-style: none;\n    margin: 0;\n    padding: 0;\n}\n.opera-only :-o-prefocus,\n.pure-paginator {\n    word-spacing: -0.43em;\n}\n\n/* `pure-u` Grid styles */\n.pure-paginator li {\n    display: inline-block;\n    *display: inline; /* IE < 8: fake inline-block */\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n\n.pure-paginator .pure-button {\n    border-radius: 0;\n    padding: 0.8em 1.4em;\n    vertical-align: top;\n    height: 1.1em;\n}\n.pure-paginator .pure-button:focus,\n.pure-paginator .pure-button:active {\n    outline-style: none;\n}\n.pure-paginator .prev,\n.pure-paginator .next {\n    color: #C0C1C3;\n    text-shadow: 0 -1px 0 rgba(0,0,0, 0.45);\n}\n.pure-paginator .prev {\n    border-radius: 2px 0 0 2px;\n}\n.pure-paginator .next {\n    border-radius: 0 2px 2px 0;\n}\n\n@media (max-width: 480px) {\n    .pure-menu-horizontal {\n        width: 100%;\n    }\n\n    .pure-menu-children li {\n        display: block;\n        border-bottom: 1px solid black;\n    }\n}\n\n.pure-table {\n    /* Remove spacing between table cells (from Normalize.css) */\n    border-collapse: collapse;\n    border-spacing: 0;\n    empty-cells: show;\n    border: 1px solid #cbcbcb;\n}\n\n.pure-table caption {\n    color: #000;\n    font: italic 85%/1 arial, sans-serif;\n    padding: 1em 0;\n    text-align: center;\n}\n\n.pure-table td,\n.pure-table th {\n    border-left: 1px solid #cbcbcb;/*  inner column border */\n    border-width: 0 0 0 1px;\n    font-size: inherit;\n    margin: 0;\n    overflow: visible; /*to make ths where the title is really long work*/\n    padding: 0.5em 1em; /* cell padding */\n}\n.pure-table td:first-child,\n.pure-table th:first-child {\n    border-left-width: 0;\n}\n\n.pure-table thead {\n    background: #e0e0e0;\n    color: #000;\n    text-align: left;\n    vertical-align: bottom;\n}\n\n/*\nstriping:\n   even - #fff (white)\n   odd  - #f2f2f2 (light gray)\n*/\n.pure-table td {\n    background-color: transparent;\n}\n.pure-table-odd td {\n    background-color: #f2f2f2;\n}\n\n/* nth-child selector for modern browsers */\n.pure-table-striped tr:nth-child(2n-1) td {\n    background-color: #f2f2f2;\n}\n\n/* BORDERED TABLES */\n.pure-table-bordered td {\n    border-bottom: 1px solid #cbcbcb;\n}\n.pure-table-bordered tbody > tr:last-child > td {\n    border-bottom-width: 0;\n}\n\n\n/* HORIZONTAL BORDERED TABLES */\n\n.pure-table-horizontal td,\n.pure-table-horizontal th {\n    border-width: 0 0 1px 0;\n    border-bottom: 1px solid #cbcbcb;\n}\n.pure-table-horizontal tbody > tr:last-child > td {\n    border-bottom-width: 0;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],9:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],8:[function(require,module,exports){
 require('./css/default.css');
 require('./css/purecss-0.5.0.css');
-},{"./css/default.css":7,"./css/purecss-0.5.0.css":8}],10:[function(require,module,exports){
+},{"./css/default.css":6,"./css/purecss-0.5.0.css":7}],9:[function(require,module,exports){
 var css = ".el-notrans {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: top 0s ease-out, left 0s ease-out !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.el-invisible {\n    visibility: hidden !important;\n}\n\n.el-hidden {\n    visibility: hidden !important;\n    position: absolute !important;\n    left: -9999px;\n    top: -9999px;\n}\n\n.el-block {\n    display: block !important;\n}\n\n.el-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],11:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],10:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
@@ -5040,31 +4424,13 @@ module.exports = function (window) {
     require('./lib/element.js')(window);
     return require('./lib/element-plugin.js')(window);
 };
-},{"./lib/document.js":12,"./lib/element-plugin.js":13,"./lib/element.js":14,"./lib/nodelist.js":15}],12:[function(require,module,exports){
+},{"./lib/document.js":11,"./lib/element-plugin.js":12,"./lib/element.js":13,"./lib/nodelist.js":14}],11:[function(require,module,exports){
 "use strict";
 
-/**
- * Integrates DOM-events to event. more about DOM-events:
- * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * @example
- * require('dom-ext/lib/document.js')(window);
- *
- * @module dom-ext
- * @submodule lib/document.js
- * @class document
- * @since 0.0.1
-*/
 
 module.exports = function (window) {
-    require('polyfill/lib/array.some.js');
-    require('polyfill/lib/array.isarray.js');
+    require('polyfill/polyfill-base.js');
     require('./nodelist.js')(window);
-    require('polyfill/lib/element.matchesselector.js');
 
     var HTML_CHARS = {
         '&': '&amp;',
@@ -5173,27 +4539,6 @@ module.exports = function (window) {
     };
 
    /**
-    * Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.
-    *
-    * @method first
-    * @param [cssSelector] {String} css-selector to be used as a filter
-    * @return {HtmlElement|null}
-    * @since 0.0.1
-    */
-    DOCUMENT.first = function(cssSelector) {
-        var parent = this.parentHtmlElement || window.document, // not `this` because the context might change
-            found;
-        if (!cssSelector) {
-            return parent.firstElementChild;
-        }
-        Array.prototype.some.call(parent.children, function(element) {
-            element.matchesSelector(cssSelector) && (found=element);
-            return found;
-        });
-        return found;
-    };
-
-   /**
     * Gets a NodeList of HtmlElements, specified by the css-selector.
     *
     * @method getAll
@@ -5236,26 +4581,6 @@ module.exports = function (window) {
     };
 
    /**
-    * Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.
-    *
-    * @method last
-    * @param [cssSelector] {String} css-selector to be used as a filter
-    * @return {HtmlElement|null}
-    * @since 0.0.1
-    */
-    DOCUMENT.last = function(cssSelector) {
-        var parent = this.parentHtmlElement || window.document, // not `this` because the context might change
-            found, i;
-        if (!cssSelector) {
-            return parent.lastElementChild;
-        }
-        for (i=parent.children-1; !found && (i>0); i--) {
-            parent.children[i].matchesSelector(cssSelector) && (found=parent.children[i]);
-        }
-        return found;
-    };
-
-   /**
     * Replaces the HtmlElement with a new HtmlElement.
     *
     * @method replace
@@ -5286,7 +4611,7 @@ module.exports = function (window) {
     };
 
 };
-},{"./nodelist.js":15,"polyfill/lib/array.isarray.js":44,"polyfill/lib/array.some.js":45,"polyfill/lib/element.matchesselector.js":47}],13:[function(require,module,exports){
+},{"./nodelist.js":14,"polyfill/polyfill-base.js":42}],12:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5315,6 +4640,19 @@ module.exports = function (window) {
 
     // also extend window.Element:
     window.Element && (function(ElementPrototype) {
+       /**
+        * Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.
+        *
+        * @method isPlugged
+        * @param pluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
+        * @return {Boolean} whether the plugin is plugged in
+        * @since 0.0.1
+        */
+        ElementPrototype.isPlugged = function(NodePluginClass) {
+            var plugin = new NodePluginClass();
+            return plugin.validate(this);
+        };
+
        /**
         * Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.
         *
@@ -5353,6 +4691,21 @@ module.exports = function (window) {
                 });
                 return instance;
             };
+
+       /**
+        * Checks whether the plugin is plugged in at ALL the HtmlElements of the NodeList/HTMLCollection.
+        * Checks whether all its attributes are set.
+        *
+        * @method isPlugged
+        * @param pluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
+        * @return {Boolean} whether the plugin is plugged in
+        * @since 0.0.1
+        */
+        NodeListPrototype.isPlugged = HTMLCollectionPrototype.isPlugged = function(NodePluginClass) {
+            return this.every(function(element) {
+                return element.isPlugged(NodePluginClass);
+            });
+        };
 
        /**
         * For all HtmlElements of the NodeList/HTMLCollection:
@@ -5397,6 +4750,14 @@ module.exports = function (window) {
                     hostElement.removeAttr(key);
                 }
             );
+        },
+        validate: function(hostElement) {
+            return this.some(
+                function(value, key) {
+                    var has = hostElement.hasAttr(key);
+                    return !has;
+                }
+            );
         }
     });
 
@@ -5414,7 +4775,7 @@ module.exports = function (window) {
     };
 
 };
-},{"./nodelist.js":15,"js-ext/lib/function.js":36,"js-ext/lib/object.js":37}],14:[function(require,module,exports){
+},{"./nodelist.js":14,"js-ext/lib/function.js":35,"js-ext/lib/object.js":36}],13:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5430,7 +4791,7 @@ module.exports = function (window) {
  *
  * @module dom-ext
  * @submodule lib/element.js
- * @class Element
+ * @class xElement
  * @since 0.0.1
 */
 
@@ -5450,6 +4811,8 @@ module.exports = function (window) {
         TOP = 'top',
         BORDER = 'border',
         WIDTH = 'width',
+        STRING = 'string',
+        CLASS = 'class',
         BORDER_LEFT_WIDTH = BORDER+'-left-'+WIDTH,
         BORDER_RIGHT_WIDTH = BORDER+'-right-'+WIDTH,
         BORDER_TOP_WIDTH = BORDER+'-top-'+WIDTH,
@@ -5468,12 +4831,8 @@ module.exports = function (window) {
         require('js-ext/lib/string.js');
         require('js-ext/lib/object.js');
         require('./document.js')(window);
-        require('polyfill/lib/array.isarray.js');
-        require('polyfill/lib/array.every.js');
-        require('polyfill/lib/element.matchesselector.js');
+        require('polyfill/polyfill-base.js');
         require('window-ext')(window);
-
-        var documentElement = window.document.documentElement;
 
        /**
         * Appends a HtmlElement or text at the end of HtmlElement's innerHTML, or before the `refElement`.
@@ -5485,10 +4844,10 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.append = function(content, refElement, escape) {
+        ElementPrototype.append || (ElementPrototype.append = function(content, refElement, escape) {
             refElement && (this.children.indexOf(refElement)!==-1) && (refElement=refElement.next());
             return window.document._insert(this, refElement ? INSERT_BEFORE : APPEND_CHILD, content, refElement, escape);
-        };
+        });
 
        /**
         * Returns a duplicate of the node. Use cloneNode(true) for a `deep` clone.
@@ -5500,7 +4859,7 @@ module.exports = function (window) {
         * @return {HtmlElement} a clone of this HtmlElement
         * @since 0.0.1
         */
-        ElementPrototype.clone = function(deep) {
+        ElementPrototype.clone || (ElementPrototype.clone = function(deep) {
             var instance = this,
                 cloned = instance.cloneNode(deep);
             if (instance._data) {
@@ -5513,7 +4872,7 @@ module.exports = function (window) {
                 cloned._data.merge(instance._data);
             }
             return cloned;
-        };
+        });
 
        /**
         * Sets the inline-style of the HtmlElement exactly to the specified `value`, overruling previous values.
@@ -5526,10 +4885,10 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.defineInlineStyle = function(value) {
+        ElementPrototype.defineInlineStyle || (ElementPrototype.defineInlineStyle = function(value) {
             this.style.cssText = value;
             return this;
-        };
+        });
 
        /**
         * Empties the content of the HtmlElement.
@@ -5539,9 +4898,16 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.empty = function(/* cssSelector */) {
-            return this.setText('');
-        };
+        ElementPrototype.empty || (ElementPrototype.empty = function(/* cssSelector */) {
+            // first empty node. By far, the fastest way is this: (http://jsperf.com/cached-firstchild-check)
+            // even quicker than textContent='' (which is about 40%slower)
+            var firstChild;
+/*jshint boss:true */
+            while (firstChild=this.firstChild) {
+/*jshint boss:false */
+                this.removeChild(firstChild);
+            }
+        });
 
        /**
         * Returns the first of the HtmlElement's siblings, or the first that matches `cssSelector`.
@@ -5551,9 +4917,31 @@ module.exports = function (window) {
         * @return {HtmlElement|null}
         * @since 0.0.1
         */
-        ElementPrototype.first = function(/* cssSelector */) {
-            return window.document.first.apply(this, arguments);
-        };
+        ElementPrototype.first || (ElementPrototype.first = function(cssSelector) {
+            var parentNode;
+            return (parentNode=this.parentNode) && parentNode.firstOfVChildren(cssSelector);
+        });
+
+       /**
+        * Returns the first HtmlElement child that matches the cssSelector.
+        *
+        * @method firstOfChildren
+        * @return {HtmlElement || null} the last child-Element that matches the selector
+        * @since 0.0.2
+        */
+        ElementPrototype.firstOfChildren || (ElementPrototype.firstOfChildren = function(cssSelector) {
+            var found, i, len, children, element;
+            if (!cssSelector) {
+                return this.firstElementChild;
+            }
+            children = this.children;
+            len = children.length;
+            for (i=0; !found && (i<len); i++) {
+                element = children[i];
+                element.matchesSelector(cssSelector) && (found=element);
+            }
+            return found;
+        });
 
        /**
         * Forces the HtmlElement to be inside an ancestor-HtmlElement that has the `overfow="scroll" set.
@@ -5565,7 +4953,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.2
         */
-        ElementPrototype.forceIntoNodeView = function(ancestor) {
+        ElementPrototype.forceIntoNodeView || (ElementPrototype.forceIntoNodeView = function(ancestor) {
             console.log(NAME, 'forceIntoNodeView');
             var instance = this,
                 parentOverflowNode = this.parentNode,
@@ -5614,7 +5002,7 @@ module.exports = function (window) {
                 }
             }
             return instance;
-        };
+        });
 
        /**
         * Forces the HtmlElement to be inside the window-view. Differs from `scrollIntoView()` in a way
@@ -5633,7 +5021,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.2
         */
-        ElementPrototype.forceIntoView = function(notransition, rectangle) {
+        ElementPrototype.forceIntoView || (ElementPrototype.forceIntoView = function(notransition, rectangle) {
             console.log(NAME, 'forceIntoView');
             var instance = this,
                 left = instance.getX(),
@@ -5673,7 +5061,7 @@ module.exports = function (window) {
                 window.scrollTo((newX!==undefined) ? newX : windowLeft, (newY!==undefined) ? newY : windowTop);
             }
             return instance;
-        };
+        });
 
        /**
         * Gets a NodeList of HtmlElements, specified by the css-selector.
@@ -5683,9 +5071,9 @@ module.exports = function (window) {
         * @return {NodeList} NodeList of HtmlElements that match the css-selector
         * @since 0.0.1
         */
-        ElementPrototype.getAll = function(/* cssSelector */) {
+        ElementPrototype.getAll || (ElementPrototype.getAll = function(/* cssSelector */) {
             return window.document.getAll.apply(this, arguments);
-        };
+        });
 
        /**
         * Gets an attribute of the HtmlElement.
@@ -5698,9 +5086,9 @@ module.exports = function (window) {
         * @return {String|null} value of the attribute
         * @since 0.0.1
         */
-        ElementPrototype.getAttr = function(/* attributeName */) {
+        ElementPrototype.getAttr || (ElementPrototype.getAttr = function(/* attributeName */) {
             return this.getAttribute.apply(this, arguments);
-        };
+        });
 
        /**
         * Gets the HtmlElement's class as a whole String.
@@ -5711,9 +5099,9 @@ module.exports = function (window) {
         * @return {String} The complete class of the HtmlElement as a String
         * @since 0.0.1
         */
-        ElementPrototype.getClass = function() {
+        ElementPrototype.getClass || (ElementPrototype.getClass = function() {
             return this.className;
-        };
+        });
 
        /**
         * Returns data set specified by `key`. If not set, `undefined` will be returned.
@@ -5723,9 +5111,9 @@ module.exports = function (window) {
         * @return {Any|undefined} data set specified by `key`
         * @since 0.0.1
         */
-        ElementPrototype.getData = function(key) {
+        ElementPrototype.getData || (ElementPrototype.getData = function(key) {
             return this._data && this._data[key];
-        };
+        });
 
        /**
         * Gets one HtmlElement, specified by the css-selector. To retrieve a single element by id,
@@ -5736,9 +5124,9 @@ module.exports = function (window) {
         * @return {HtmlElement|null} the HtmlElement that was search for
         * @since 0.0.1
         */
-        ElementPrototype.getElement = function(/* cssSelector */) {
+        ElementPrototype.getElement || (ElementPrototype.getElement = function(/* cssSelector */) {
             return window.document.getElement.apply(this, arguments);
-        };
+        });
 
        /**
         * Gets the height of the element in pixels. Included are padding and border, not any margins.
@@ -5749,9 +5137,9 @@ module.exports = function (window) {
         * @return {Number} width in pixels
         * @since 0.0.1
         */
-        ElementPrototype.getHeight = function(overflow) {
+        ElementPrototype.getHeight || (ElementPrototype.getHeight = function(overflow) {
             return overflow ? this.scrollHeight : this.offsetHeight;
-        };
+        });
 
        /**
         * Returns the innerContent of the HtmlElement as a string with HTML entities.
@@ -5762,9 +5150,9 @@ module.exports = function (window) {
         * @return {String} content as a string with HTML entities
         * @since 0.0.1
         */
-        ElementPrototype.getHtml = function() {
+        ElementPrototype.getHtml || (ElementPrototype.getHtml = function() {
             return this.innerHTML;
-        };
+        });
 
        /**
         * Gets the HtmlElement's id.
@@ -5775,9 +5163,9 @@ module.exports = function (window) {
         * @return {String} The id of the HtmlElement (=== '') when undefined
         * @since 0.0.1
         */
-        ElementPrototype.getId = function() {
+        ElementPrototype.getId || (ElementPrototype.getId = function() {
             return this.id;
-        };
+        });
 
        /**
         * Returns inline style of the specified property. `Inline` means: what is set directly on the HtmlElement,
@@ -5792,9 +5180,9 @@ module.exports = function (window) {
         * @return {String} content as a string with HTML entities
         * @since 0.0.1
         */
-        ElementPrototype.getInlineStyle = function(cssProperty) {
+        ElementPrototype.getInlineStyle || (ElementPrototype.getInlineStyle = function(cssProperty) {
             return this.style[toCamelCase(cssProperty)];
-        };
+        });
 
         /**
          * Gets the left-scroll offset of the content of the HtmlElement.
@@ -5804,9 +5192,9 @@ module.exports = function (window) {
          * @return {Number} left-offset in pixels
          * @since 0.0.1
         */
-        ElementPrototype.getScrollLeft = function() {
+        ElementPrototype.getScrollLeft || (ElementPrototype.getScrollLeft = function() {
             return this.scrollLeft;
-        };
+        });
 
         /**
          * Gets the top-scroll offset of the content of the HtmlElement.
@@ -5816,9 +5204,9 @@ module.exports = function (window) {
          * @return {Number} top-offset in pixels
          * @since 0.0.1
         */
-        ElementPrototype.getScrollTop = function() {
+        ElementPrototype.getScrollTop || (ElementPrototype.getScrollTop = function() {
             return this.scrollTop;
-        };
+        });
 
        /**
         * Returns cascaded style of the specified property. `Cascaded` means: the actual present style,
@@ -5834,9 +5222,9 @@ module.exports = function (window) {
         * @return {String} value for the css-property
         * @since 0.0.1
         */
-        ElementPrototype.getStyle = function(cssProperty, pseudo) {
+        ElementPrototype.getStyle || (ElementPrototype.getStyle = function(cssProperty, pseudo) {
             return window.getComputedStyle(this, pseudo)[toCamelCase(cssProperty)];
-        };
+        });
 
        /**
         * Gets the HtmlElement's tagname. Always uppercased.
@@ -5847,9 +5235,9 @@ module.exports = function (window) {
         * @return {String} The tag-name of the HtmlElement in uppercase
         * @since 0.0.1
         */
-        ElementPrototype.getTag = function() {
+        ElementPrototype.getTag || (ElementPrototype.getTag = function() {
             return this.nodeName;
-        };
+        });
 
        /**
         * Gets the text content of the HtmlElement and its descendants.
@@ -5861,17 +5249,11 @@ module.exports = function (window) {
         * @return {String} content of the HtmlElement as text
         * @since 0.0.1
         */
-        ElementPrototype.getText = function() {
-            var instance = this;
-            if (documentElement.textContent) {
-                return instance.textContent;
-            }
-            // now we are in IE8-, but it might not return the same as textContent
+        ElementPrototype.getText || (ElementPrototype.getText = function() {
+            // not compatable with IE8-
             // (see https://developer.mozilla.org/en-US/docs/Web/API/Node.textContent)
-            // We accept this for it will be an edgecase we might never run into
-            // and we prefer to keep the code lightweight
-            return instance.innerText;
-        };
+            return this.textContent;
+        });
 
        /**
         * Gets the width of the element in pixels. Included are padding and border, not any margins.
@@ -5882,9 +5264,9 @@ module.exports = function (window) {
         * @return {Number} width in pixels
         * @since 0.0.1
         */
-        ElementPrototype.getWidth = function(overflow) {
+        ElementPrototype.getWidth || (ElementPrototype.getWidth = function(overflow) {
             return overflow ? this.scrollWidth : this.offsetWidth;
-        };
+        });
 
        /**
         * Gets the value of the following HtmlElements:
@@ -5899,13 +5281,13 @@ module.exports = function (window) {
         * @return {String|null} value of the attribute
         * @since 0.0.1
         */
-        ElementPrototype.getValue = function() {
+        ElementPrototype.getValue || (ElementPrototype.getValue = function() {
             // cautious: input and textarea must be accessed by their propertyname:
             // input.getAttribute('value') would return the defualt-value instead of actusl
             // and textarea.getAttribute('value') doesn't exist
             var editable = ((editable=this.getAttr('contenteditable')) && (editable!=='false'));
             return editable ? this.innerHTML : this.value;
-        };
+        });
 
        /**
         * Gets the x-position (in the window.document) of the element in pixels.
@@ -5915,9 +5297,9 @@ module.exports = function (window) {
         * @return {Number} x-position in pixels
         * @since 0.0.1
         */
-        ElementPrototype.getX = function() {
+        ElementPrototype.getX || (ElementPrototype.getX = function() {
             return this.getBoundingClientRect().left + window.scrollLeft;
-        };
+        });
 
        /**
         * Gets the y-position (in the window.document) of the element in pixels.
@@ -5927,9 +5309,9 @@ module.exports = function (window) {
         * @return {Number} y-position in pixels
         * @since 0.0.1
         */
-        ElementPrototype.getY = function() {
+        ElementPrototype.getY || (ElementPrototype.getY = function() {
             return this.getBoundingClientRect().top + window.scrollTop;
-        };
+        });
 
        /**
         * Whether the HtmlElement has the attribute set.
@@ -5941,32 +5323,43 @@ module.exports = function (window) {
         * @return {Boolean} Whether the HtmlElement has the attribute set.
         * @since 0.0.1
         */
-        ElementPrototype.hasAttr = function(/* attributeName */) {
+        ElementPrototype.hasAttr || (ElementPrototype.hasAttr = function(/* attributeName */) {
             return this.hasAttribute.apply(this, arguments);
-        };
+        });
+
+       /**
+        * Checks if the HtmlElement has any children (childNodes with nodeType of 1).
+        *
+        * @method hasChildren
+        * @return {Boolean} whether the HtmlElement has childNodes
+        * @since 0.0.2
+        */
+        ElementPrototype.hasChildren || (ElementPrototype.hasChildren = function() {
+            return this.children && (this.children.length>0);
+        });
 
        /**
         * Checks whether the className is present on the Element.
         *
         * @method hasClass
-        * @param className {String|Array} the className to check for. May be an Array of classNames.
+        * @param className {String|Array} the className to check for. May be an Array of classNames, which all needs to be present.
         * @return {Boolean} whether the className (or classNames) is present on the Element
         * @since 0.0.1
         */
-        ElementPrototype.hasClass = function(className) {
+        ElementPrototype.hasClass || (ElementPrototype.hasClass = function(className) {
             var instance = this,
                 check = function(cl) {
                     var regexp = new RegExp('\\b' + cl + '\\b');
                     return regexp.test(instance.className);
                 };
-            if (typeof className === 'string') {
+            if (typeof className === STRING) {
                 return check(className);
             }
             else if (Array.isArray(className)) {
                 return className.every(check);
             }
             return false;
-        };
+        });
 
        /**
         * If the Element has data set specified by `key`.
@@ -5976,9 +5369,9 @@ module.exports = function (window) {
         * @return {Boolean}
         * @since 0.0.1
         */
-        ElementPrototype.hasData = function(key) {
+        ElementPrototype.hasData || (ElementPrototype.hasData = function(key) {
             return !!this._data && !!this._data[key];
-        };
+        });
 
        /**
         * Checks whether HtmlElement currently has the focus.
@@ -5988,9 +5381,9 @@ module.exports = function (window) {
         * @return {Boolean} whether the className is present on the Element
         * @since 0.0.1
         */
-        ElementPrototype.hasFocus = function() {
+        ElementPrototype.hasFocus || (ElementPrototype.hasFocus = function() {
             return (window.document.activeElement===this);
-        };
+        });
 
        /**
          * Checks whether the HtmlElement lies within the specified selector (which can be a CSS-selector or a HtmlElement)
@@ -6000,10 +5393,10 @@ module.exports = function (window) {
          * @return {HtmlElement|null} the nearest HtmlElement that matches the selector, or `null` when not found
          * @since 0.0.2
          */
-        ElementPrototype.inside = function(selector) {
+        ElementPrototype.inside || (ElementPrototype.inside = function(selector) {
             var instance = this,
                 parentNode;
-            if (typeof selector==='string') {
+            if (typeof selector===STRING) {
                 parentNode = instance.parentNode;
                 while ((parentNode!==window.document) && !parentNode.matchesSelector(selector)) {
                     parentNode = parentNode.parentNode;
@@ -6014,7 +5407,7 @@ module.exports = function (window) {
                 // selector should be an HtmlElement
                 return ((selector!==instance) && selector.contains(instance)) ? selector : null;
             }
-        };
+        });
 
        /**
          * Checks whether a point specified with x,y is within the HtmlElement's region.
@@ -6024,14 +5417,14 @@ module.exports = function (window) {
          * @param y {Number} y-value for new position (coordinates are page-based)
          * @since 0.0.2
          */
-        ElementPrototype.insidePos = function(x, y) {
+        ElementPrototype.insidePos || (ElementPrototype.insidePos = function(x, y) {
             var instance = this,
                 left = instance.getX(),
                 top = instance.getY(),
                 right = left + instance.offsetWidth,
                 bottom = top + instance.offsetHeight;
             return (x>=left) && (x<=right) && (y>=top) && (y<=bottom);
-        };
+        });
 
        /**
         * Returns the last of the HtmlElement's siblings, or the last that matches `cssSelector`.
@@ -6041,9 +5434,31 @@ module.exports = function (window) {
         * @return {HtmlElement|null}
         * @since 0.0.1
         */
-        ElementPrototype.last = function(/* cssSelector */) {
-            return window.document.last.apply(this, arguments);
-        };
+        ElementPrototype.last || (ElementPrototype.last = function(cssSelector) {
+            var parentNode;
+            return (parentNode=this.parentNode) && parentNode.lastOfVChildren(cssSelector);
+        });
+
+       /**
+        * Returns the last HtmlElement child that matches the cssSelector.
+        *
+        * @method lastOfChildren
+        * @return {HtmlElement || null} the last child-Element that matches the selector
+        * @since 0.0.2
+        */
+        ElementPrototype.lastOfChildren || (ElementPrototype.lastOfChildren = function(cssSelector) {
+            var children = this.children,
+                found, i;
+            if (children) {
+                if (!cssSelector) {
+                    return this.lastElementChild;
+                }
+                for (i=children.length-1; !found && (i>0); i--) {
+                    children[i].matchesSelector(cssSelector) && (found=children[i]);
+                }
+            }
+            return found;
+        });
 
        /**
         * Returns the next of the HtmlElement's siblings, or the next that matches `cssSelector`.
@@ -6053,16 +5468,18 @@ module.exports = function (window) {
         * @return {HtmlElement|null}
         * @since 0.0.1
         */
-        ElementPrototype.next = function(cssSelector) {
+        ElementPrototype.next || (ElementPrototype.next = function(cssSelector) {
             var found, nextElement;
             if (!cssSelector) {
                 return this.nextElementSibling;
             }
-/*jshint noempty:true */
-            while ((nextElement=this.nextElementSibling) && (found=nextElement.matchesSelector(cssSelector))) {}
-/*jshint noempty:false */
+            nextElement = this;
+            do {
+                nextElement = nextElement.nextElementSibling;
+                found = nextElement && nextElement.matchesSelector(cssSelector);
+            } while(nextElement && !found);
             return found && nextElement;
-        };
+        });
 
        /**
         * Prepends a HtmlElement or text at the start of HtmlElement's innerHTML, or before the `refElement`.
@@ -6074,33 +5491,35 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.prepend = function(content, refElement, escape) {
+        ElementPrototype.prepend || (ElementPrototype.prepend = function(content, refElement, escape) {
             var instance = this,
                 children = instance.children;
             if (children.length===0) {
                 return instance.window.document._insert(instance, APPEND_CHILD, content, null, escape);
             }
             return instance.window.document._insert(instance, INSERT_BEFORE, content, (refElement && (children.indexOf(refElement)!==-1)) ? refElement : children[0], escape);
-        };
+        });
 
        /**
         * Returns the previous of the HtmlElement's siblings, or the previous that matches `cssSelector`.
         *
-        * @method prev
+        * @method previous
         * @param [cssSelector] {String} css-selector to be used as a filter
         * @return {HtmlElement|null}
         * @since 0.0.1
         */
-        ElementPrototype.prev = function(cssSelector) {
+        ElementPrototype.previous || (ElementPrototype.previous = function(cssSelector) {
             var found, previousElement;
             if (!cssSelector) {
                 return this.previousElementSibling;
             }
-/*jshint noempty:true */
-            while ((previousElement=this.previousElementSibling) && (found=previousElement.matchesSelector(cssSelector))) {}
-/*jshint noempty:false */
+            previousElement = this;
+            do {
+                previousElement = previousElement.previousElementSibling;
+                found = previousElement && previousElement.matchesSelector(cssSelector);
+            } while(previousElement && !found);
             return found && previousElement;
-        };
+        });
 
        /**
          * Checks whether the HtmlElement has its rectangle inside the outboud-Element.
@@ -6111,7 +5530,7 @@ module.exports = function (window) {
          * @return {Boolean} whether the Element lies inside the outboundElement
          * @since 0.0.2
          */
-        ElementPrototype.rectangleInside = function(outboundElement) {
+        ElementPrototype.rectangleInside || (ElementPrototype.rectangleInside = function(outboundElement) {
             var instance = this,
                 outerRect = outboundElement.getBoundingClientRect(),
                 innerRect = instance.getBoundingClientRect();
@@ -6119,7 +5538,7 @@ module.exports = function (window) {
                    (outerRect.top<=innerRect.top) &&
                    ((outerRect.left+outboundElement.offsetWidth)>=(innerRect.left+instance.offsetWidth)) &&
                    ((outerRect.top+outboundElement.offsetHeight)>=(innerRect.top+instance.offsetHeight));
-        };
+        });
 
        /**
         * Removes the HtmlElement from the DOM.
@@ -6127,10 +5546,10 @@ module.exports = function (window) {
         * @method remove
         * @since 0.0.1
         */
-        ElementPrototype.remove = function() {
+        ElementPrototype.remove || (ElementPrototype.remove = function() {
             var parent = this.parentNode;
             parent && parent.removeChild(this);
-        };
+        });
 
        /**
         * Removes the attribute from the HtmlElement.
@@ -6143,10 +5562,10 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.removeAttr = function(/* attributeName */) {
+        ElementPrototype.removeAttr || (ElementPrototype.removeAttr = function(/* attributeName */) {
             this.removeAttribute.apply(this, arguments);
             return this;
-        };
+        });
 
        /**
         * Removes a className from the HtmlElement.
@@ -6156,21 +5575,22 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.removeClass = function(className) {
+        ElementPrototype.removeClass || (ElementPrototype.removeClass = function(className) {
             var instance = this,
                 doRemove = function(cl) {
                     var regexp = new RegExp('(?:^|\\s+)' + cl + '(?:\\s+|$)', 'g');
-                    instance.className = instance.className.replace(regexp, ' ').trim();
+                    // we do not use the property className, but setAttribute, because setAttribute can be hacked by other modules like `vdom`
+                    instance.setAttribute(CLASS, instance.className.replace(regexp, ' ').trim());
                 };
-            if (typeof className === 'string') {
+            if (typeof className === STRING) {
                 doRemove(className);
             }
             else if (Array.isArray(className)) {
                 className.forEach(doRemove);
             }
-            (instance.className==='') && instance.removeAttr('class');
+            (instance.className==='') && instance.removeAttr(CLASS);
             return instance;
-        };
+        });
 
        /**
         * Removes data specified by `key`. When no arguments are passed, all node-data (key-value pairs) will be removed.
@@ -6180,7 +5600,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.removeData = function(key) {
+        ElementPrototype.removeData || (ElementPrototype.removeData = function(key) {
             var instance = this;
             if (instance._data) {
                 if (key) {
@@ -6196,7 +5616,7 @@ module.exports = function (window) {
                 }
             }
             return instance;
-        };
+        });
 
        /**
         * Removes a css-property (inline) out of the HtmlElement. Use camelCase.
@@ -6206,10 +5626,10 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.removeInlineStyle = function(cssAttribute) {
+        ElementPrototype.removeInlineStyle || (ElementPrototype.removeInlineStyle = function(cssAttribute) {
             this.setInlineStyle(cssAttribute, '');
             return this;
-        };
+        });
 
        /**
         * Replaces the HtmlElement with a new HtmlElement.
@@ -6219,9 +5639,9 @@ module.exports = function (window) {
         * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
         * @since 0.0.1
         */
-        ElementPrototype.replace = function(newHtmlElement, escape) {
+        ElementPrototype.replace || (ElementPrototype.replace = function(newHtmlElement, escape) {
             window.document.replace(this, newHtmlElement, escape);
-        };
+        });
 
        /**
         * Replaces the className of the HtmlElement with a new className.
@@ -6234,13 +5654,13 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.replaceClass = function(prevClassName, newClassName, force) {
+        ElementPrototype.replaceClass || (ElementPrototype.replaceClass = function(prevClassName, newClassName, force) {
             var instance = this;
             if (force || instance.hasClass(prevClassName)) {
                 instance.removeClass(prevClassName).setClass(newClassName);
             }
             return instance;
-        };
+        });
 
         /**
          * Scrolls the content of the HtmlElement into the specified scrollposition.
@@ -6252,12 +5672,12 @@ module.exports = function (window) {
          * @chainable
          * @since 0.0.1
         */
-        ElementPrototype.scrollTo = function(x, y) {
+        ElementPrototype.scrollTo || (ElementPrototype.scrollTo = function(x, y) {
             var instance = this;
             instance.scrollLeft = x;
             instance.scrollTop = y;
             return instance;
-        };
+        });
 
        /**
         * Gets the serialized HTML fragment describing the element including its descendants.
@@ -6268,9 +5688,9 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.serialize = function() {
+        ElementPrototype.serialize || (ElementPrototype.serialize = function() {
             return this.outerHTML;
-        };
+        });
 
        /**
          * Sets the attribute on the HtmlElement with the specified value.
@@ -6283,10 +5703,10 @@ module.exports = function (window) {
          * @chainable
          * @since 0.0.1
         */
-        ElementPrototype.setAttr = function(attributeName, value) {
+        ElementPrototype.setAttr || (ElementPrototype.setAttr = function(attributeName, value) {
             this.setAttribute.call(this, attributeName, value || '');
             return this;
-        };
+        });
 
        /**
         * Adds a class to the HtmlElement. If the class already exists it won't be duplicated.
@@ -6296,19 +5716,20 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.setClass = function(className) {
+        ElementPrototype.setClass || (ElementPrototype.setClass = function(className) {
             var instance = this,
                 doSet = function(cl) {
-                    instance.hasClass(cl) || (instance.className += ((instance.className.length>0) ? ' ' : '') + cl);
+                    // we do not use the property className, but setAttribute, because setAttribute can be hacked by other modules like `vdom`
+                    instance.hasClass(cl) || (instance.setAttribute(CLASS, instance.className+((instance.className.length>0) ? ' ' : '') + cl));
                 };
-            if (typeof className === 'string') {
+            if (typeof className === STRING) {
                 doSet(className);
             }
             else if (Array.isArray(className)) {
                 className.forEach(doSet);
             }
             return instance;
-        };
+        });
 
        /**
         * Sets the HtmlElement's class as a whole String. Cleaning up any previous classes.
@@ -6320,10 +5741,11 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.setClassName = function(value) {
-            this.className = value;
+        ElementPrototype.setClassName || (ElementPrototype.setClassName = function(value) {
+            // we do not use the property className, but setAttribute, because setAttribute can be hacked by other modules like `vdom`
+            this.setAttribute(CLASS, value);
             return this;
-        };
+        });
 
         /**
          * Stores arbitary `data` at the HtmlElement. This has nothing to do with node-attributes whatsoever,
@@ -6335,7 +5757,7 @@ module.exports = function (window) {
          * @chainable
          * @since 0.0.1
         */
-        ElementPrototype.setData = function(key, value) {
+        ElementPrototype.setData || (ElementPrototype.setData = function(key, value) {
             var instance = this;
             instance._data ||  Object.defineProperty(instance, '_data', {
                 configurable: false,
@@ -6345,7 +5767,7 @@ module.exports = function (window) {
             });
             instance._data[key] = value;
             return instance;
-        };
+        });
 
        /**
         * Sets the content of the HtmlElement (innerHTML). Careful: only set content like this if you controll the data and
@@ -6357,10 +5779,10 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.setHTML = function(content) {
+        ElementPrototype.setHTML || (ElementPrototype.setHTML = function(content) {
             this.innerHTML = content;
             return this;
-        };
+        });
 
        /**
         * Sets a css-property (inline) out of the HtmlElement. Use camelCase.
@@ -6373,7 +5795,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.setInlineStyle = function(cssAttribute, value) {
+        ElementPrototype.setInlineStyle || (ElementPrototype.setInlineStyle = function(cssAttribute, value) {
             var instance = this;
             // cautious: in case of preserved words (fe `float`), we need to modify the attributename
             // in order to get it processed. It should be translated into `cssFloat` or alike.
@@ -6381,7 +5803,7 @@ module.exports = function (window) {
             instance.style[toCamelCase(cssAttribute)] = String(value).replace(/;$/, '');
             (instance.style.length===0) && instance.removeAttr('style');
             return instance;
-        };
+        });
 
        /**
         * Sets the content of the HtmlElement. This is a safe way to set the content, because HTML is not parsed.
@@ -6393,17 +5815,12 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.setText = function(content) {
-            var instance = this;
-            // IE8- do not have `textContent`, but they do have `innerText`
-            if (documentElement.textContent) {
-                instance.textContent = content;
-            }
-            else {
-                instance.innerText = content;
-            }
-            return instance;
-        };
+        ElementPrototype.setText || (ElementPrototype.setText = function(content) {
+            // not compatable with IE8-
+            // (see https://developer.mozilla.org/en-US/docs/Web/API/Node.textContent)
+            this.textContent = content;
+            return this;
+        });
 
        /**
         * Sets the value of the following HtmlElements:
@@ -6424,7 +5841,7 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.setValue = function(value) {
+        ElementPrototype.setValue || (ElementPrototype.setValue = function(value) {
             var instance = this;
             // cautious: input and textarea must be accessed by their propertyname:
             // input.getAttribute('value') would return the defualt-value instead of actusl
@@ -6439,7 +5856,7 @@ module.exports = function (window) {
             // if `document._emitVC` is available, then invoke it to emit the `valuechange`-event
             window.document._emitVC && window.document._emitVC(instance, value);
             return instance;
-        };
+        });
 
         /**
          * Set the X position of an html element in page coordinates, regardless of how the element is positioned.
@@ -6448,9 +5865,9 @@ module.exports = function (window) {
          * @param element The target element
          * @param {Number} x The X values for new position (coordinates are page-based)
          */
-        ElementPrototype.setX = function(node, x) {
+        ElementPrototype.setX || (ElementPrototype.setX = function(node, x) {
             return this.setXY(x);
-        };
+        });
 
        /**
          * Set the position of an html element in page coordinates.
@@ -6475,7 +5892,7 @@ module.exports = function (window) {
          * @chainable
          * @since 0.0.2
          */
-        ElementPrototype.setXY = function(x, y, constrain, notransition) {
+        ElementPrototype.setXY || (ElementPrototype.setXY = function(x, y, constrain, notransition) {
             console.log(NAME, 'setXY '+x+','+y);
             var instance = this,
                 position = instance.getStyle(POSITION),
@@ -6497,7 +5914,7 @@ module.exports = function (window) {
                     containerBottom = containerTop + window.getHeight();
                 }
                 else {
-                    if (typeof constrain === 'string') {
+                    if (typeof constrain === STRING) {
                         match = false;
                         constrainNode = instance.parentNode;
                         byExactId = REGEXP_NODE_ID.test(constrain);
@@ -6591,7 +6008,7 @@ module.exports = function (window) {
                 }
             }
             return instance.removeClass(BLOCK).removeClass(BORDERBOX).removeClass(INVISIBLE);
-        };
+        });
 
         /**
          * Set the Y position of an html element in page coordinates, regardless of how the element is positioned.
@@ -6600,9 +6017,9 @@ module.exports = function (window) {
          * @param element The target element
          * @param {Number} y The Y values for new position (coordinates are page-based)
          */
-        ElementPrototype.setY = function(node, y) {
+        ElementPrototype.setY || (ElementPrototype.setY = function(node, y) {
             return this.setXY(null, y);
-        };
+        });
 
        /**
         * Tests if the HtmlElement would be selected by the specified cssSelector.
@@ -6613,9 +6030,9 @@ module.exports = function (window) {
         * @return {Boolean} whether or not the node matches the selector
         * @since 0.0.1
         */
-        ElementPrototype.test = function(/* cssSelector */) {
+        ElementPrototype.test || (ElementPrototype.test = function(/* cssSelector */) {
             return window.document.test.apply(this, arguments);
-        };
+        });
 
        /**
         * Toggles the className of the Element.
@@ -6626,23 +6043,23 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.toggleClass = function(className, forceState) {
+        ElementPrototype.toggleClass || (ElementPrototype.toggleClass = function(className, forceState) {
             var instance = this,
                 doToggle = function(cl) {
                     (((typeof forceState === 'boolean') && !forceState) || instance.hasClass(cl)) ? instance.removeClass(cl) : instance.setClass(cl);
                 };
-            if (typeof className === 'string') {
+            if (typeof className === STRING) {
                 doToggle(className);
             }
             else if (Array.isArray(className)) {
                 className.forEach(doToggle);
             }
             return instance;
-        };
+        });
 
     }(window.Element.prototype));
 };
-},{"../css/element.css":10,"./document.js":12,"js-ext/extra/reserved-words.js":33,"js-ext/lib/object.js":37,"js-ext/lib/string.js":39,"polyfill/lib/array.every.js":40,"polyfill/lib/array.isarray.js":44,"polyfill/lib/element.matchesselector.js":47,"window-ext":61}],15:[function(require,module,exports){
+},{"../css/element.css":9,"./document.js":11,"js-ext/extra/reserved-words.js":32,"js-ext/lib/object.js":36,"js-ext/lib/string.js":38,"polyfill/polyfill-base.js":42,"window-ext":57}],14:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6942,9 +6359,9 @@ module.exports = function (window) {
 
     }(window.NodeList.prototype, window.HTMLCollection.prototype));
 };
-},{"polyfill/polyfill-base.js":56}],16:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":42}],15:[function(require,module,exports){
 var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 999 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],17:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],16:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7568,16 +6985,16 @@ module.exports = function (window) {
                 borderLeft = parseInt(dropzoneNode.getStyle(BORDER_LEFT_WIDTH), 10);
                 borderTop = parseInt(dropzoneNode.getStyle(BORDER_TOP_WIDTH), 10);
                 constrainRectangle = {
-                    x: dropzoneNode.getX() + borderLeft,
-                    y: dropzoneNode.getY() + borderTop,
+                    x: dropzoneNode.left + borderLeft,
+                    y: dropzoneNode.top + borderTop,
                     w: dropzoneNode.offsetWidth - borderLeft - parseInt(dropzoneNode.getStyle(BORDER_RIGHT_WIDTH), 10),
                     h: dropzoneNode.offsetHeight - borderTop - parseInt(dropzoneNode.getStyle(BORDER_BOTTOM_WIDTH), 10)
                 };
                 isCopied = (ctrlPressed && instance.allowCopy(dragNode)) || instance.onlyCopy(dragNode);
                 if (isCopied) {
                     // backup x,y before move it into dropzone (which leads to new x,y)
-                    dragNodeX = dragNode.getX();
-                    dragNodeY = dragNode.getY();
+                    dragNodeX = dragNode.left;
+                    dragNodeY = dragNode.top;
                     // now move the dragNode into dropzone
                     relatives && relatives.forEach(
                         function(item) {
@@ -7587,8 +7004,8 @@ module.exports = function (window) {
                     copyToDropzone(sourceNode, dragNode, 0 ,0);
                 }
                 else {
-                    dragNodeX = dragNode.getX();
-                    dragNodeY = dragNode.getY();
+                    dragNodeX = dragNode.left;
+                    dragNodeY = dragNode.top;
                     relatives && relatives.forEach(
                         function(item) {
                            (dragNode!==item.dragNode) && moveToDropzone(item.sourceNode, item.dragNode, item.shiftX, item.shiftY);
@@ -7632,13 +7049,13 @@ module.exports = function (window) {
                     borderLeft = parseInt(dropzoneNode.getStyle(BORDER_LEFT_WIDTH), 10);
                     borderTop = parseInt(dropzoneNode.getStyle(BORDER_TOP_WIDTH), 10);
                     constrainRectangle = {
-                        x: dropzoneNode.getX() + borderLeft,
-                        y: dropzoneNode.getY() + borderTop,
+                        x: dropzoneNode.left + borderLeft,
+                        y: dropzoneNode.top + borderTop,
                         w: dropzoneNode.offsetWidth - borderLeft - parseInt(dropzoneNode.getStyle(BORDER_RIGHT_WIDTH), 10),
                         h: dropzoneNode.offsetHeight - borderTop - parseInt(dropzoneNode.getStyle(BORDER_BOTTOM_WIDTH), 10)
                     };
-                    dragNodeX = dragNode.getX();
-                    dragNodeY = dragNode.getY();
+                    dragNodeX = dragNode.left;
+                    dragNodeY = dragNode.top;
                     relatives && relatives.forEach(
                         function(item) {
                             (sourceNode!==item.sourceNode) && moveInsideDropzone(dropzoneNode, item.sourceNode, item.dragNode, item.shiftX, item.shiftY);
@@ -8010,9 +7427,9 @@ module.exports = function (window) {
         }
     };
 };
-},{"./css/drag-drop.css":16,"dom-ext":11,"drag":19,"event-dom":20,"js-ext":34,"polyfill/polyfill-base.js":56,"utils":58,"window-ext":61}],18:[function(require,module,exports){
-module.exports=require(16)
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],19:[function(require,module,exports){
+},{"./css/drag-drop.css":15,"dom-ext":10,"drag":18,"event-dom":19,"js-ext":33,"polyfill/polyfill-base.js":42,"utils":43,"window-ext":57}],17:[function(require,module,exports){
+module.exports=require(15)
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],18:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8073,8 +7490,7 @@ var NAME = '[drag]: ',
     DD_MINUSDRAGGABLE = DD_MINUS+DRAGGABLE,
     PLUGIN_ATTRS = [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTER, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE];
 
-require('polyfill/polyfill-base.js');
-require('polyfill/lib/promise.js');
+require('polyfill');
 require('js-ext');
 require('./css/drag.css');
 
@@ -8238,7 +7654,6 @@ module.exports = function (window) {
         _defFnStart: function(e) {
             var instance = this,
                 customEvent;
-            e.emitter = (e.emitter!==UI) ? e.emitter : (e.target.getAttr(DD_EMITTER) || UI),
             customEvent = e.emitter + ':'+DD_DRAG;
             console.log(NAME, '_defFnStart: default function UI:dd-start. Defining customEvent '+customEvent);
             Event.defineEvent(customEvent).defaultFn(instance._defFnDrag.bind(instance));
@@ -8284,8 +7699,8 @@ module.exports = function (window) {
 
             // define ddProps --> internal object with data about the draggable instance
             ddProps.dragNode = dragNode;
-            ddProps.x = x = dragNode.getX();
-            ddProps.y = y = dragNode.getY();
+            ddProps.x = x = dragNode.left;
+            ddProps.y = y = dragNode.top;
             ddProps.inlineLeft = inlineLeft = dragNode.getInlineStyle(LEFT);
             ddProps.inlineTop = inlineTop = dragNode.getInlineStyle(TOP);
             ddProps.winConstrained = winConstrained = (constrain===WINDOW);
@@ -8311,8 +7726,8 @@ module.exports = function (window) {
                         // if there is a match, then make sure x and y fall within the region
                         if (match) {
                             ddProps.constrainNode = constrainNode;
-                            xOrig = constrainNode.getX() + parseInt(constrainNode.getStyle(BORDER_LEFT_WIDTH), 10);
-                            yOrig = constrainNode.getY() + parseInt(constrainNode.getStyle(BORDER_TOP_WIDTH), 10);
+                            xOrig = constrainNode.left + parseInt(constrainNode.getStyle(BORDER_LEFT_WIDTH), 10);
+                            yOrig = constrainNode.top + parseInt(constrainNode.getStyle(BORDER_TOP_WIDTH), 10);
                             ddProps.constrain = {
                                 xOrig: xOrig,
                                 yOrig: yOrig,
@@ -8413,8 +7828,8 @@ module.exports = function (window) {
                         if (node !== dragNode) {
                             item = {
                                 dragNode: node,
-                                shiftX: node.getX() - x,
-                                shiftY: node.getY() - y,
+                                shiftX: node.left - x,
+                                shiftY: node.top - y,
                                 inlineLeft: node.getInlineStyle(LEFT),
                                 inlineTop: node.getInlineStyle(TOP)
                             };
@@ -8498,13 +7913,17 @@ module.exports = function (window) {
                 // store the orriginal mouseposition:
                 e.xMouseOrigin = e.clientX + window.scrollLeft;
                 e.yMouseOrigin = e.clientY + window.scrollTop;
+
+                //set the emitterName:
+                e.emitter = e.target.getAttr(DD_EMITTER) || UI,
+
                 // now we can start the eventcycle by emitting UI:dd:
                 /**
                 * Emitted when a draggable Element's drag-cycle starts. You can use a `before`-subscriber to specify
                 * e.relatives, which should be a nodelist with HtmlElements, that should be dragged togehter with the master
                 * draggable Element.
                 *
-                * @event dd
+                * @event *:dd
                 * @param e {Object} eventobject including:
                 * @param e.target {HtmlElement} the HtmlElement that is being dragged
                 * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
@@ -8629,7 +8048,7 @@ module.exports = function (window) {
         }
     };
 };
-},{"./css/drag.css":18,"dom-ext":11,"event-dom":20,"js-ext":34,"polyfill/lib/promise.js":53,"polyfill/polyfill-base.js":56,"window-ext":61}],20:[function(require,module,exports){
+},{"./css/drag.css":17,"dom-ext":10,"event-dom":19,"js-ext":33,"polyfill":42,"window-ext":57}],19:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8675,19 +8094,16 @@ var NAME = '[event-dom]: ',
     */
     DOMEvents = {};
 
+    require('vdom');
     require('js-ext/lib/string.js');
     require('js-ext/lib/array.js');
     require('js-ext/lib/object.js');
+    require('polyfill/polyfill-base.js');
 
 module.exports = function (window) {
     var DOCUMENT = window.document,
-        NEW_EVENTSYSTEM = DOCUMENT.addEventListener,
-        OLD_EVENTSYSTEM = !NEW_EVENTSYSTEM && DOCUMENT.attachEvent,
-        _bubbleIE8, _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor,
+        _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor,
         _setupDomListener, _teardownDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc;
-
-    require('polyfill/lib/element.matchesselector.js');
-    require('polyfill/lib/node.contains.js');
 
     if (!window._ITSAmodules) {
         Object.defineProperty(window, '_ITSAmodules', {
@@ -8701,42 +8117,6 @@ module.exports = function (window) {
     if (window._ITSAmodules.EventDom) {
         return Event; // Event was already extended
     }
-
-    /*
-     * Polyfill for bubbling the `focus` and `blur` events in IE8.
-     *
-     * IE>8 we can use delegating on ALL events, because we use the capture-phase.
-     * Unfortunatly this cannot be done with IE<9. But we can simulate focus and blur
-     * delegation bu monitoring the focussed node.
-     *
-     * This means the IE<9 will miss the events: 'error', 'load', 'resize' and 'scroll'
-     * However, if you need one of these to work in IE8, then you can `activate` this event on the
-     * single node that you want to minotor. You activate it and then you use the eventsystem
-     * like like you are used to. (delegated). Only activated nodes will bubble their non-bubbling events up
-     * Activation is not done manually, but automaticly: whenever there is a subscriber on a node (or an id-selector)
-     * and IE<9 is the environment, then a listener for that node is set up.
-     * Side-effect is that we cannot controll when the listener isn't needed anymore. This might lead to memory-leak - but its IE<9...
-     *
-     * @method _bubbleIE8
-     * @private
-     * @since 0.0.1
-     */
-    _bubbleIE8 = function() {
-        console.log(NAME, '_bubbleIE8');
-        // we wil emulate focus and blur by subscribing to the keyup and mouseup events:
-        // when they happen, we'll ask for the current focussed Node --> if there is a
-        // change compared to the previous, then we fire both a blur and a focus-event
-        Event._focussedNode = DOCUMENT.activeElement;
-        Event.after(['keyup', 'mouseup'], function(e) {
-            var newFocussed = DOCUMENT.activeElement,
-                prevFocussed = Event._focussedNode;
-            if (prevFocussed !== newFocussed) {
-                Event._focussedNode = newFocussed;
-                Event.emit(prevFocussed, 'UI:blur', e);
-                Event.emit(newFocussed, 'UI:focus', e);
-            }
-        });
-    };
 
     /*
      * Transfprms the selector to a valid function
@@ -8921,10 +8301,15 @@ module.exports = function (window) {
         saveConcat(named_wildcard_subs);
         saveConcat(wildcard_wildcard_subs);
         if (subscribers.length>0) {
-            subscribers = subscribers.filter(function(subscriber) {
-                console.log(NAME, 'filtercheck for subscriber');
-                return (!subscriber.f || subscriber.f.call(subscriber.o, e));
-            });
+            subscribers = function(array, testFunc) {
+                // quickest way to filter an array: see http://jsperf.com/array-filter-performance/4
+                var filtered = array.slice(0), i;
+                for (i=array.length-1; i>=0; i--) {
+                    console.log(NAME, 'filtercheck for subscriber');
+                    testFunc(array[i]) || filtered.splice(i, 1);
+                }
+                return filtered;
+            }(subscribers, function(subscriber) {return (!subscriber.f || subscriber.f.call(subscriber.o, e));});
             if (subscribers.length>0) {
                 _findCurrentTargets(subscribers);
                 // sorting, based upon the sortFn
@@ -9025,24 +8410,13 @@ module.exports = function (window) {
             return;
         }
 
-        if (NEW_EVENTSYSTEM) {
-            // one exeption: windowresize should listen to the window-object
-            if (eventName==='resize') {
-                window.addEventListener(eventName, _evCallback);
-            }
-            else {
-                // important: set the third argument `true` so we listen to the capture-phase.
-                DOCUMENT.addEventListener(eventName, _evCallback, true);
-            }
+        // one exeption: windowresize should listen to the window-object
+        if (eventName==='resize') {
+            window.addEventListener(eventName, _evCallback);
         }
-        else if (OLD_EVENTSYSTEM) {
-            // one exeption: windowresize should listen to the window-object
-            if (eventName==='resize') {
-                window.attachEvent('on'+eventName, _evCallback);
-            }
-            else {
-                DOCUMENT.attachEvent('on'+eventName, _evCallback);
-            }
+        else {
+            // important: set the third argument `true` so we listen to the capture-phase.
+            DOCUMENT.addEventListener(eventName, _evCallback, true);
         }
         DOMEvents[eventName] = true;
         outsideEvent && (DOMEvents[eventName+OUTSIDE]=true);
@@ -9088,24 +8462,13 @@ module.exports = function (window) {
         if (!Event._subs[customEventWithoutOutside] && !Event._subs[customEventWithoutOutside+OUTSIDE]) {
             console.log(NAME, '_teardownDomListener '+customEvent);
             // remove eventlistener from `document`
-            if (NEW_EVENTSYSTEM) {
-                // one exeption: windowresize should listen to the window-object
-                if (eventName==='resize') {
-                    window.removeEventListener(eventName, _evCallback);
-                }
-                else {
-                    // important: set the third argument `true` so we listen to the capture-phase.
-                    DOCUMENT.removeEventListener(eventName, _evCallback, true);
-                }
+            // one exeption: windowresize should listen to the window-object
+            if (eventName==='resize') {
+                window.removeEventListener(eventName, _evCallback);
             }
-            else if (OLD_EVENTSYSTEM) {
-                // one exeption: windowresize should listen to the window-object
-                if (eventName==='resize') {
-                    window.detachEvent('on'+eventName, _evCallback);
-                }
-                else {
-                    DOCUMENT.detachEvent('on'+eventName, _evCallback);
-                }
+            else {
+                // important: set the third argument `true` so we listen to the capture-phase.
+                DOCUMENT.removeEventListener(eventName, _evCallback, true);
             }
             delete DOMEvents[eventName];
         }
@@ -9153,15 +8516,12 @@ module.exports = function (window) {
         _evCallback(e);
     };
 
-    // next: bubble-polyfill for IE8:
-    OLD_EVENTSYSTEM && _bubbleIE8();
-
     // store module:
     window._ITSAmodules.EventDom = Event;
     return Event;
 };
 
-},{"event":27,"js-ext/lib/array.js":35,"js-ext/lib/object.js":37,"js-ext/lib/string.js":39,"polyfill/lib/element.matchesselector.js":47,"polyfill/lib/node.contains.js":49,"utils":58}],21:[function(require,module,exports){
+},{"event":26,"js-ext/lib/array.js":34,"js-ext/lib/object.js":36,"js-ext/lib/string.js":38,"polyfill/polyfill-base.js":42,"utils":43,"vdom":56}],20:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9251,7 +8611,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":20}],22:[function(require,module,exports){
+},{"../event-dom.js":19}],21:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9490,13 +8850,18 @@ module.exports = function (window) {
             currentTarget: window.document,
             sourceTarget: node
         };
+        /**
+        * @event valuechange
+        * @param e.value {String} new value
+        * @param e.sourceTarget {Element} Element whare the valuechange occured
+        */
         Event.emit(node, 'UI:valuechange', e);
     };
 
     return Event;
 };
 
-},{"../event-dom.js":20,"dom-ext":11,"utils":58}],23:[function(require,module,exports){
+},{"../event-dom.js":19,"dom-ext":10,"utils":43}],22:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9600,7 +8965,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event-dom":20,"hammerjs":2}],24:[function(require,module,exports){
+},{"event-dom":19,"hammerjs":2}],23:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -10898,7 +10263,7 @@ require('js-ext/lib/object.js');
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/lib/function.js":36,"js-ext/lib/object.js":37,"polyfill/polyfill-base.js":56}],25:[function(require,module,exports){
+},{"js-ext/lib/function.js":35,"js-ext/lib/object.js":36,"polyfill/polyfill-base.js":42}],24:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11017,7 +10382,7 @@ Event.Emitter = function(emitterName) {
     Event.defineEmitter(newEmitter, emitterName);
     return newEmitter;
 };
-},{"./index.js":27}],26:[function(require,module,exports){
+},{"./index.js":26}],25:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11163,11 +10528,11 @@ Event.Listener = {
         return Event.onceBefore(customEvent, callback, this, filter, prepend);
     }
 };
-},{"./index.js":27}],27:[function(require,module,exports){
+},{"./index.js":26}],26:[function(require,module,exports){
 module.exports = require('./event-base.js');
 require('./event-emitter.js');
 require('./event-listener.js');
-},{"./event-base.js":24,"./event-emitter.js":25,"./event-listener.js":26}],28:[function(require,module,exports){
+},{"./event-base.js":23,"./event-emitter.js":24,"./event-listener.js":25}],27:[function(require,module,exports){
 
 "use strict";
 
@@ -11284,7 +10649,7 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"../io.js":32,"xmldom":3}],29:[function(require,module,exports){
+},{"../io.js":31,"xmldom":3}],28:[function(require,module,exports){
 "use strict";
 
 var NAME = '[io-stream]: ',
@@ -11400,7 +10765,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":32}],30:[function(require,module,exports){
+},{"../io.js":31}],29:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11421,8 +10786,8 @@ module.exports = function (window) {
  * @since 0.0.1
 */
 
-require('polyfill/lib/json.js');
 require('js-ext/lib/string.js');
+require('polyfill/polyfill-base.js');
 
 var NAME = '[io-transfer]: ',
     REVIVER = function(key, value) {
@@ -11827,7 +11192,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":32,"js-ext/lib/string.js":39,"polyfill/lib/json.js":48}],31:[function(require,module,exports){
+},{"../io.js":31,"js-ext/lib/string.js":38,"polyfill/polyfill-base.js":42}],30:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11970,7 +11335,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":32,"js-ext":34}],32:[function(require,module,exports){
+},{"../io.js":31,"js-ext":33}],31:[function(require,module,exports){
 (function (global){
 /**
  * Provides core IO-functionality.
@@ -12287,7 +11652,7 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":34,"polyfill/polyfill-base.js":56}],33:[function(require,module,exports){
+},{"js-ext":33,"polyfill/polyfill-base.js":42}],32:[function(require,module,exports){
 module.exports = {
     'abstract': true,
     'arguments': true,
@@ -12356,13 +11721,13 @@ module.exports = {
     'with': true,
     'yield': true
 };
-},{}],34:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
 require('./lib/array.js');
 require('./lib/promise.js');
-},{"./lib/array.js":35,"./lib/function.js":36,"./lib/object.js":37,"./lib/promise.js":38,"./lib/string.js":39}],35:[function(require,module,exports){
+},{"./lib/array.js":34,"./lib/function.js":35,"./lib/object.js":36,"./lib/promise.js":37,"./lib/string.js":38}],34:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -12378,8 +11743,7 @@ require('./lib/promise.js');
 
 "use strict";
 
-require('polyfill/lib/array.indexof.js');
-require('polyfill/lib/array.foreach.js');
+require('polyfill/polyfill-base.js');
 
 (function(ArrayPrototype) {
 
@@ -12420,6 +11784,34 @@ require('polyfill/lib/array.foreach.js');
     });
 
     /**
+     * Replaces an item in the array. If the previous item is not part of the array, the new item is appended.
+     *
+     * @method replace
+     * @param prevItem {any} the item to be replaced
+     * @param newItem {any} the item to be added
+     * @chainable
+     */
+    Array.replace || (ArrayPrototype.replace=function(prevItem, newItem) {
+        var instance = this,
+            index = instance.indexOf(prevItem);
+        (index!==-1) ? instance.splice(index, 1, newItem) : instance.push(newItem);
+        return instance;
+    });
+
+    /**
+     * Inserts an item in the array at the specified position. If index is larger than array.length, the new item(s) will be appended.
+     *
+     * @method insertAt
+     * @param item {any|Array} the item to be replaced, may be an Array of items
+     * @param index {Number} the position where to add the item(s). When larger than Array.length, the item(s) will be appended.
+     * @chainable
+     */
+    Array.insertAt || (ArrayPrototype.insertAt=function(item, index) {
+        this.splice(index, 0, item);
+        return this;
+    });
+
+    /**
      * Shuffles the items in the Array randomly
      *
      * @method shuffle
@@ -12446,7 +11838,7 @@ require('polyfill/lib/array.foreach.js');
     });
 
 }(Array.prototype));
-},{"polyfill/lib/array.foreach.js":42,"polyfill/lib/array.indexof.js":43}],36:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":42}],35:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -12667,7 +12059,7 @@ defineProperties(Function.prototype, {
 defineProperty(Object.prototype, 'createClass', function () {
 	return Function.prototype.subClass.apply(this, arguments);
 });
-},{"polyfill/polyfill-base.js":56}],37:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":42}],36:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -12897,6 +12289,31 @@ defineProperties(Object.prototype, {
     },
 
     /**
+     * Transforms the object into an array with  'key/value' objects
+     *
+     * @example
+     * {country: 'USA', Continent: 'North America'} --> [{key: 'country', value: 'USA'}, {key: 'Continent', value: 'North America'}]
+     *
+     * @method toArray
+     * @param [options] {Object}
+     * @param [options.key] {String} to overrule the default `key`-property-name
+     * @param [options.value] {String} to overrule the default `value`-property-name
+     * @return {Array} the transformed Array-representation of the object
+     */
+    toArray: function(options) {
+        var newArray = [],
+            keyIdentifier = (options && options.key) || 'key',
+            valueIdentifier = (options && options.value) || 'value';
+        this.each(function(value, key) {
+            var obj = {};
+            obj[keyIdentifier] = key;
+            obj[valueIdentifier] = value;
+            newArray[newArray.length] = obj;
+        });
+        return newArray;
+    },
+
+    /**
      * Merges into this object the properties of the given object.
      * If the second argument is true, the properties on the source object will be overwritten
      * by those of the second object of the same name, otherwise, they are preserved.
@@ -12953,7 +12370,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"polyfill/polyfill-base.js":56}],38:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":42}],37:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12969,9 +12386,7 @@ Object.merge = function () {
  * @class Promise
 */
 
-require('polyfill/polyfill-base.js');
-require('polyfill/lib/promise.js');
-require('ypromise');
+require('polyfill');
 
 var NAME = '[promise-ext]: ',
     FUNCTION_EXPECTED = ' expects an array of function-references', // include leading space!
@@ -13259,7 +12674,7 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill/lib/promise.js":53,"polyfill/polyfill-base.js":56,"ypromise":6}],39:[function(require,module,exports){
+},{"polyfill":42}],38:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -13301,10 +12716,11 @@ Promise.manage = function (callbackFn) {
      *
      * @method contains
      * @param substring {String} the substring to test for
+     * @param [caseInsensitive=false] {Boolean} whether to ignore case-sensivity
      * @return {Boolean} whether the substring is found
      */
-    String.contains || (StringPrototype.contains=function(substring) {
-        return (this.indexOf(substring) > -1);
+    String.contains || (StringPrototype.contains=function(substring, caseInsensitive) {
+        return caseInsensitive ? (this.toLowerCase().indexOf(substring.toLowerCase()) > -1) : (this.indexOf(substring) > -1);
     });
 
     /**
@@ -13442,6 +12858,22 @@ Promise.manage = function (callbackFn) {
     };
 
     /**
+     * Validates if the String's value represents a valid boolean.
+     *
+     * @method validateNumber
+     * @return {Boolean} whether the String's value is a valid integer number.
+     */
+    StringPrototype.validateBoolean = function() {
+        var length = this.length,
+            check;
+        if ((length<4) || (length>5)) {
+            return false;
+        }
+        check = this.toUpperCase();
+        return ((check==='TRUE') || (check==='FALSE'));
+    };
+
+    /**
      * Validates if the String's value represents a valid URL.
      *
      * @method validateURL
@@ -13461,606 +12893,702 @@ Promise.manage = function (callbackFn) {
 
 }(String.prototype));
 
+},{}],39:[function(require,module,exports){
+(function (global){
+/*
+ * Copyright 2012 The Polymer Authors. All rights reserved.
+ * Use of this source code is goverened by a BSD-style
+ * license that can be found in the LICENSE file.
+ */
+
+(function(global) {
+  "use strict";
+
+  var registrationsTable = new WeakMap(),
+      uidCounter = 0,
+      currentRecord, recordWithOldValue,
+      setImmediate, setImmediateQueue, sentinel, queue, isScheduled, scheduledObservers;
+
+  // As much as we would like to use the native implementation, IE
+  // (all versions) suffers a rather annoying bug where it will drop or defer
+  // callbacks when heavy DOM operations are being performed concurrently.
+  //
+  // For a thorough discussion on this, see:
+  // http://codeforhire.com/2013/09/21/setimmediate-and-messagechannel-broken-on-internet-explorer-10/
+  if (/Trident/.test(global.navigator.userAgent)) {
+      // Sadly, this bug also affects postMessage and MessageQueues.
+      //
+      // We would like to use the onreadystatechange hack for IE <= 10, but it is
+      // dangerous in the polyfilled environment due to requiring that the
+      // observed script element be in the document.
+      setImmediate = setTimeout;
+
+  // If some other browser ever implements it, let's prefer their native
+  // implementation:
+  } else if (global.setImmediate) {
+      setImmediate = global.setImmediate;
+  } else {
+      // Otherwise, we fall back to postMessage as a means of emulating the next
+      // task semantics of setImmediate.
+      setImmediateQueue = [];
+      sentinel = String(Math.random());
+      global.addEventListener('message', function(e) {
+          if (e.data === sentinel) {
+              queue = setImmediateQueue;
+              setImmediateQueue = [];
+              queue.forEach(function(func) {
+                 func();
+              });
+          }
+      });
+      setImmediate = function(func) {
+          setImmediateQueue.push(func);
+          global.postMessage(sentinel, '*');
+      };
+  }
+
+  // This is used to ensure that we never schedule 2 callas to setImmediate
+  isScheduled = false;
+
+  // Keep track of observers that needs to be notified next time.
+  scheduledObservers = [];
+
+  /**
+   * Schedules |dispatchCallback| to be called in the future.
+   * @param {MutationObserver} observer
+   */
+  function scheduleCallback(observer) {
+      scheduledObservers.push(observer);
+      if (!isScheduled) {
+          isScheduled = true;
+          setImmediate(dispatchCallbacks);
+      }
+  }
+
+  function wrapIfNeeded(node) {
+      return (global.ShadowDOMPolyfill && global.ShadowDOMPolyfill.wrapIfNeeded(node)) || node;
+  }
+
+  function dispatchCallbacks() {
+      // http://dom.spec.whatwg.org/#mutation-observers
+
+      var observers = scheduledObservers,
+          anyNonEmpty = false;
+
+      isScheduled = false; // Used to allow a new setImmediate call above.
+
+      scheduledObservers = [];
+      // Sort observers based on their creation UID (incremental).
+      observers.sort(function(o1, o2) {
+          return o1.uid_ - o2.uid_;
+      });
+
+      observers.forEach(function(observer) {
+          // 2.1, 2.2
+          var queue = observer.takeRecords();
+          // 2.3. Remove all transient registered observers whose observer is mo.
+          removeTransientObserversFor(observer);
+
+          // 2.4
+          if (queue.length) {
+              observer.callback_(queue, observer);
+              anyNonEmpty = true;
+          }
+      });
+
+      // 3.
+      if (anyNonEmpty) {
+          dispatchCallbacks();
+      }
+  }
+
+  function removeTransientObserversFor(observer) {
+      observer.nodes_.forEach(function(node) {
+          var registrations = registrationsTable.get(node);
+          if (!registrations) {
+              return;
+          }
+          registrations.forEach(function(registration) {
+              if (registration.observer === observer) {
+                  registration.removeTransientObservers();
+              }
+          });
+      });
+  }
+
+  /**
+   * This function is used for the "For each registered observer observer (with
+   * observer's options as options) in target's list of registered observers,
+   * run these substeps:" and the "For each ancestor ancestor of target, and for
+   * each registered observer observer (with options options) in ancestor's list
+   * of registered observers, run these substeps:" part of the algorithms. The
+   * |options.subtree| is checked to ensure that the callback is called
+   * correctly.
+   *
+   * @param {Node} target
+   * @param {function(MutationObserverInit):MutationRecord} callback
+   */
+  function forEachAncestorAndObserverEnqueueRecord(target, callback) {
+      var node, registration, registrations, j, options, record;
+      for (node = target; node; node = node.parentNode) {
+          registrations = registrationsTable.get(node);
+
+          if (registrations) {
+              for (j = 0; j < registrations.length; j++) {
+                  registration = registrations[j];
+                  options = registration.options;
+
+                  // Only target ignores subtree.
+                  if ((node !== target) && !options.subtree) {
+                      continue;
+                  }
+
+                  record = callback(options);
+                  if (record) {
+                      registration.enqueue(record);
+                  }
+              }
+          }
+        }
+  }
+
+  /**
+   * The class that maps to the DOM MutationObserver interface.
+   * @param {Function} callback.
+   * @constructor
+   */
+  function JsMutationObserver(callback) {
+      var instance = this;
+      instance.callback_ = callback;
+      instance.nodes_ = [];
+      instance.records_ = [];
+      instance.uid_ = ++uidCounter;
+  }
+
+  JsMutationObserver.prototype = {
+      observe: function(target, options) {
+          var registrations, registration, i;
+          target = wrapIfNeeded(target);
+
+          if (
+              // 1.1
+              (!options.childList && !options.attributes && !options.characterData) ||
+
+              // 1.2
+              (options.attributeOldValue && !options.attributes) ||
+
+              // 1.3
+              (options.attributeFilter && options.attributeFilter.length && !options.attributes) ||
+
+              // 1.4
+              (options.characterDataOldValue && !options.characterData)) {
+
+              throw new SyntaxError();
+          }
+
+          registrations = registrationsTable.get(target);
+          if (!registrations) {
+              registrationsTable.set(target, registrations = []);
+          }
+
+          // 2
+          // If target's list of registered observers already includes a registered
+          // observer associated with the context object, replace that registered
+          // observer's options with options.
+          for (i = 0; i < registrations.length; i++) {
+              if (registrations[i].observer === this) {
+                  registration = registrations[i];
+                  registration.removeListeners();
+                  registration.options = options;
+                  break;
+              }
+          }
+
+          // 3.
+          // Otherwise, add a new registered observer to target's list of registered
+          // observers with the context object as the observer and options as the
+          // options, and add target to context object's list of nodes on which it
+          // is registered.
+          if (!registration) {
+              registration = new Registration(this, target, options);
+              registrations.push(registration);
+              this.nodes_.push(target);
+          }
+
+          registration.addListeners();
+      },
+
+      disconnect: function() {
+          var instance = this,
+              len = instance.nodes_.length,
+              i, k, node, registrations, registration;
+          for (k=0; k<len; k++) {
+              node = instance.nodes_[k];
+              registrations = registrationsTable.get(node);
+              for (i = 0; i < registrations.length; i++) {
+                  registration = registrations[i];
+                  if (registration.observer === instance) {
+                      registration.removeListeners();
+                      registrations.splice(i, 1);
+                      // Each node can only have one registered observer associated with
+                      // this observer.
+                      break;
+                  }
+              }
+          }
+          instance.records_ = [];
+      },
+
+      takeRecords: function() {
+          var copyOfRecords = this.records_;
+          this.records_ = [];
+          return copyOfRecords;
+      }
+  };
+
+  /**
+   * @param {string} type
+   * @param {Node} target
+   * @constructor
+   */
+  function MutationRecord(type, target) {
+      var instance = this;
+      instance.type = type;
+      instance.target = target;
+      instance.addedNodes = [];
+      instance.removedNodes = [];
+      instance.previousSibling = null;
+      instance.nextSibling = null;
+      instance.attributeName = null;
+      instance.attributeNamespace = null;
+      instance.oldValue = null;
+  }
+
+  function copyMutationRecord(original) {
+      var record = new MutationRecord(original.type, original.target);
+      record.addedNodes = original.addedNodes.slice();
+      record.removedNodes = original.removedNodes.slice();
+      record.previousSibling = original.previousSibling;
+      record.nextSibling = original.nextSibling;
+      record.attributeName = original.attributeName;
+      record.attributeNamespace = original.attributeNamespace;
+      record.oldValue = original.oldValue;
+      return record;
+  }
+
+  // We keep track of the two (possibly one) records used in a single mutation.
+
+  /**
+   * Creates a record without |oldValue| and caches it as |currentRecord| for
+   * later use.
+   * @param {string} oldValue
+   * @return {MutationRecord}
+   */
+  function getRecord(type, target) {
+      currentRecord = new MutationRecord(type, target);
+      return currentRecord;
+  }
+
+  /**
+   * Gets or creates a record with |oldValue| based in the |currentRecord|
+   * @param {string} oldValue
+   * @return {MutationRecord}
+   */
+  function getRecordWithOldValue(oldValue) {
+      if (recordWithOldValue) {
+          return recordWithOldValue;
+      }
+      recordWithOldValue = copyMutationRecord(currentRecord);
+      recordWithOldValue.oldValue = oldValue;
+      return recordWithOldValue;
+  }
+
+  function clearRecords() {
+      currentRecord = recordWithOldValue = undefined;
+  }
+
+  /**
+   * @param {MutationRecord} record
+   * @return {boolean} Whether the record represents a record from the current
+   * mutation event.
+   */
+  function recordRepresentsCurrentMutation(record) {
+      return (record === recordWithOldValue) || (record === currentRecord);
+  }
+
+  /**
+   * Selects which record, if any, to replace the last record in the queue.
+   * This returns |null| if no record should be replaced.
+   *
+   * @param {MutationRecord} lastRecord
+   * @param {MutationRecord} newRecord
+   * @param {MutationRecord}
+   */
+  function selectRecord(lastRecord, newRecord) {
+      if (lastRecord === newRecord) {
+          return lastRecord;
+      }
+
+      // Check if the the record we are adding represents the same record. If
+      // so, we keep the one with the oldValue in it.
+      if (recordWithOldValue && recordRepresentsCurrentMutation(lastRecord)) {
+          return recordWithOldValue;
+      }
+
+      return null;
+  }
+
+  /**
+   * Class used to represent a registered observer.
+   * @param {MutationObserver} observer
+   * @param {Node} target
+   * @param {MutationObserverInit} options
+   * @constructor
+   */
+  function Registration(observer, target, options) {
+      var instance = this;
+      instance.observer = observer;
+      instance.target = target;
+      instance.options = options;
+      instance.transientObservedNodes = [];
+  }
+
+  Registration.prototype = {
+      enqueue: function(record) {
+          var records = this.observer.records_,
+              length = records.length,
+              lastRecord, recordToReplaceLast;
+
+          // There are cases where we replace the last record with the new record.
+          // For example if the record represents the same mutation we need to use
+          // the one with the oldValue. If we get same record (this can happen as we
+          // walk up the tree) we ignore the new record.
+          if (records.length > 0) {
+              lastRecord = records[length - 1];
+              recordToReplaceLast = selectRecord(lastRecord, record);
+              if (recordToReplaceLast) {
+                  records[length - 1] = recordToReplaceLast;
+                  return;
+              }
+          } else {
+              scheduleCallback(this.observer);
+          }
+
+          records[length] = record;
+      },
+
+      changeListeners_: function(node, remove) {
+          var instance = this,
+              options = instance.options;
+          if (options.attributes) {
+              remove ? node.removeEventListener('DOMAttrModified', instance, true) : node.addEventListener('DOMAttrModified', instance, true);
+          }
+
+          if (options.characterData) {
+              remove ? node.removeEventListener('DOMCharacterDataModified', instance, true) : node.addEventListener('DOMCharacterDataModified', instance, true);
+          }
+
+          if (options.childList) {
+              remove ? node.removeEventListener('DOMNodeInserted', instance, true) : node.addEventListener('DOMNodeInserted', instance, true);
+          }
+
+          if (options.childList || options.subtree) {
+              remove ? node.removeEventListener('DOMNodeRemoved', instance, true) : node.addEventListener('DOMNodeRemoved', instance, true);
+          }
+      },
+
+      addListeners: function() {
+          this.changeListeners_(this.target);
+      },
+
+      removeListeners: function() {
+          this.changeListeners_(this.target, true);
+      },
+
+      /**
+       * Adds a transient observer on node. The transient observer gets removed
+       * next time we deliver the change records.
+       * @param {Node} node
+       */
+      addTransientObserver: function(node) {
+          var instance = this,
+              registrations;
+          // Don't add transient observers on the target itself. We already have all
+          // the required listeners set up on the target.
+          if (node === instance.target) {
+              return;
+          }
+
+          instance.changeListeners_(node);
+          instance.transientObservedNodes.push(node);
+          registrations = registrationsTable.get(node);
+          if (!registrations) {
+              registrationsTable.set(node, registrations = []);
+          }
+
+          // We know that registrations does not contain this because we already
+          // checked if node === this.target.
+          registrations.push(instance);
+      },
+
+      removeTransientObservers: function() {
+          var instance = this,
+              transientObservedNodes = instance.transientObservedNodes,
+              len = transientObservedNodes.length,
+              registrations, i, k, node;
+          instance.transientObservedNodes = [];
+
+          for (k=0; k<len; k++) {
+              node = transientObservedNodes[k];
+              // Transient observers are never added to the target.
+              instance.changeListeners_(node, true);
+
+              registrations = registrationsTable.get(node);
+              for (i = 0; i < registrations.length; i++) {
+                  if (registrations[i] === instance) {
+                      registrations.splice(i, 1);
+                      // Each node can only have one registered observer associated with
+                      // this observer.
+                      break;
+                  }
+              }
+          }
+      },
+
+      handleEvent: function(e) {
+          var name, namespace, target, record, changedNode, addedNodes, removedNodes, previousSibling, nextSibling, oldValue;
+          // Stop propagation since we are managing the propagation manually.
+          // This means that other mutation events on the page will not work
+          // correctly but that is by design.
+          e.stopImmediatePropagation();
+
+          switch (e.type) {
+              case 'DOMAttrModified':
+                  // http://dom.spec.whatwg.org/#concept-mo-queue-attributes
+
+                  name = e.attrName;
+                  namespace = e.relatedNode.namespaceURI;
+                  target = e.target;
+
+                  // 1.
+                  record = getRecord('attributes', target);
+                  record.attributeName = name;
+                  record.attributeNamespace = namespace;
+
+                  // 2.
+                  oldValue = (e.attrChange === global.MutationEvent.ADDITION) ? null : e.prevValue;
+
+                  forEachAncestorAndObserverEnqueueRecord(target, function(options) {
+                      // 3.1, 4.2
+                      if (!options.attributes) {
+                          return;
+                      }
+
+                      // 3.2, 4.3
+                      if (options.attributeFilter && options.attributeFilter.length &&
+                          (options.attributeFilter.indexOf(name) === -1) &&
+                          (options.attributeFilter.indexOf(namespace) === -1)) {
+                          return;
+                      }
+                      // 3.3, 4.4
+                      if (options.attributeOldValue) {
+                          return getRecordWithOldValue(oldValue);
+                      }
+
+                      // 3.4, 4.5
+                      return record;
+                  });
+
+                  break;
+
+              case 'DOMCharacterDataModified':
+                  // http://dom.spec.whatwg.org/#concept-mo-queue-characterdata
+                  target = e.target;
+
+                  // 1.
+                  record = getRecord('characterData', target);
+
+                  // 2.
+                  oldValue = e.prevValue;
+
+                  forEachAncestorAndObserverEnqueueRecord(target, function(options) {
+                      // 3.1, 4.2
+                      if (!options.characterData) {
+                          return;
+                      }
+
+                      // 3.2, 4.3
+                      if (options.characterDataOldValue) {
+                          return getRecordWithOldValue(oldValue);
+                      }
+
+                      // 3.3, 4.4
+                      return record;
+                  });
+
+                  break;
+
+              case 'DOMNodeRemoved':
+                  this.addTransientObserver(e.target);
+                  // Fall through.
+                  /* falls through */
+              case 'DOMNodeInserted':
+                  // http://dom.spec.whatwg.org/#concept-mo-queue-childlist
+                  target = e.relatedNode;
+                  changedNode = e.target;
+                  if (e.type === 'DOMNodeInserted') {
+                      addedNodes = [changedNode];
+                      removedNodes = [];
+                  } else {
+
+                      addedNodes = [];
+                      removedNodes = [changedNode];
+                  }
+                  previousSibling = changedNode.previousSibling;
+                  nextSibling = changedNode.nextSibling;
+
+                  // 1.
+                  record = getRecord('childList', target);
+                  record.addedNodes = addedNodes;
+                  record.removedNodes = removedNodes;
+                  record.previousSibling = previousSibling;
+                  record.nextSibling = nextSibling;
+
+                  forEachAncestorAndObserverEnqueueRecord(target, function(options) {
+                      // 2.1, 3.2
+                      if (!options.childList) {
+                         return;
+                      }
+
+                      // 2.2, 3.3
+                      return record;
+                  });
+
+          }
+
+          clearRecords();
+      }
+  };
+
+  global.JsMutationObserver = JsMutationObserver;
+
+  if (!global.MutationObserver) {
+      global.MutationObserver = JsMutationObserver;
+  }
+
+
+}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],40:[function(require,module,exports){
 (function (global){
-if (!Array.every) {
-    (function (global) {
-        "use strict";
-        Array.prototype.every = function every(callback, scope) {
-            var array = this,
-                length = array.length,
-                index = 0;
-            for (index; index<length; ++index) {
-                if (!callback.call(scope || global, array[index], index, array)) {
-                    break;
-                }
-            }
-            return (index === length);
+// based upon https://gist.github.com/Gozala/1269991
+
+(function (global) {
+    "use strict";
+    var defineNamespace, Name, guard;
+
+    if (!global.WeakMap) {
+        defineNamespace = function(object, namespace) {
+            /**
+            Utility function takes `object` and `namespace` and overrides `valueOf`
+            method of `object`, so that when called with a `namespace` argument,
+            `private` object associated with this `namespace` is returned. If argument
+            is different, `valueOf` falls back to original `valueOf` property.
+            **/
+
+            // Private inherits from `object`, so that `this.foo` will refer to the
+            // `object.foo`. Also, original `valueOf` is saved in order to be able to
+            // delegate to it when necessary.
+            var privates = Object.create(object),
+                base = object.valueOf;
+            Object.defineProperty(object, 'valueOf', {
+                value: function valueOf(value) {
+                    // If `this` or `namespace` is not associated with a `privates` being
+                    // stored we fallback to original `valueOf`, otherwise we return privates.
+                    return ((value !== namespace) || (this !== object)) ? base.apply(this, arguments) : privates;
+                },
+                configurable: true
+            });
+            return privates;
         };
-    }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
-}
+
+        Name = function() {
+          /**
+          Desugared implementation of private names proposal. API is different as
+          it's not possible to implement API proposed for harmony with in ES5. In
+          terms of provided functionality it supposed to be same.
+          http://wiki.ecmascript.org/doku.php?id=strawman:private_names
+          **/
+
+          var namespace = {};
+          return function name(object) {
+              var privates = object.valueOf(namespace);
+              return (privates !== object) ? privates : defineNamespace(object, namespace);
+          };
+        };
+
+        guard = function(key) {
+            /**
+            Utility function to guard WeakMap methods from keys that are not
+            a non-null objects.
+            **/
+
+            if (key !== Object(key)) {
+                throw new TypeError("value is not a non-null object");
+            }
+            return key;
+        };
+
+        global.WeakMap = function() {
+            /**
+            Implementation of harmony `WeakMaps`, in ES5. This implementation will
+            work only with keys that have configurable `valueOf` property (which is
+            a default for all non-frozen objects).
+            http://wiki.ecmascript.org/doku.php?id=harmony:weak_maps
+            **/
+
+            var privates = new Name();
+
+            return Object.freeze(Object.create(WeakMap.prototype, {
+                has: {
+                    value: function has(object) {
+                        return 'value' in privates(object);
+                    },
+                    configurable: true,
+                    enumerable: false,
+                    writable: true
+                },
+                get: {
+                    value: function get(key, fallback) {
+                        return privates(guard(key)).value || fallback;
+                    },
+                    configurable: true,
+                    enumerable: false,
+                    writable: true
+                },
+                set: {
+                    value: function set(key, value) {
+                        privates(guard(key)).value = value;
+                    },
+                    configurable: true,
+                    enumerable: false,
+                    writable: true
+                },
+                'delete': {
+                    value: function set(key) {
+                        return delete privates(guard(key)).value;
+                    },
+                    configurable: true,
+                    enumerable: false,
+                    writable: true
+                }
+            }));
+        };
+    }
+
+}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],41:[function(require,module,exports){
-(function (global){
-if (!Array.filter) {
-    (function (global) {
-        "use strict";
-        Array.prototype.filter = function filter(callback, scope) {
-            var array = this,
-                arrayB = [],
-                length = array.length,
-                element, index;
-
-            for (index = 0; index<length; ++index) {
-                element = array[index];
-                if (callback.call(scope || global, element, index, array)) {
-                    arrayB.push(element);
-                }
-            }
-
-            return arrayB;
-        };
-    }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
-}
-
-
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],42:[function(require,module,exports){
-(function (global){
-if (!Array.forEach) {
-    (function (global) {
-        "use strict";
-        Array.prototype.forEach = function forEach(callback, scope) {
-            var array = this,
-                length = array.length,
-                index;
-            for (index = 0; index<length; ++index) {
-                callback.call(scope || global, array[index], index, array);
-            }
-        };
-    }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
-}
-
-
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],43:[function(require,module,exports){
-"use strict";
-
-Array.prototype.indexOf || (Array.prototype.indexOf=function indexOf(searchElement) {
-    var array = this,
-        length = array.length,
-        index = 0;
-    for (index = 0; index < length; ++index) {
-        if (array[index] === searchElement) {
-            return index;
-        }
-    }
-    return -1;
-});
-},{}],44:[function(require,module,exports){
-"use strict";
-
-Array.isArray || (Array.isArray = function isArray(array) {
-    return array && Object.prototype.toString.call(array) === '[object Array]';
-});
-
-},{}],45:[function(require,module,exports){
-(function (global){
-if (!Array.some) {
-    (function (global) {
-        "use strict";
-        Array.prototype.some = function some(callback, scope) {
-            var array = this,
-                length = array.length,
-                index ;
-            for (index = 0; index<length; ++index) {
-                if (callback.call(scope || global, array[index], index, array)) {
-                    return true;
-                }
-            }
-            return false;
-        };
-    }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
-}
-
-
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],46:[function(require,module,exports){
-(function (global){
-// based upon https://gist.github.com/amannm/4965459
-
-(function (global) {
-"use strict";
-
-    global.CSSStyleDeclaration && (function(CSSStyleDeclarationPrototype) {
-        CSSStyleDeclarationPrototype.opacity || Object.defineProperty(CSSStyleDeclarationPrototype, 'opacity', {
-            get: function() {
-                return '' + (parseFloat(((this.filter).substring(48)).replace(')', '')) / 100);
-            },
-            set: function(value) {
-                this.filter = 'progid:DXImageTransform.Microsoft.Alpha(opacity=' + Math.round(100 * value) + ')';
-            }
-        });
-    }(global.CSSStyleDeclaration.prototype));
-
-}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],47:[function(require,module,exports){
-(function (global){
-// based upon https://gist.github.com/jonathantneal/3062955
-(function (global) {
-    "use strict";
-
-    global.Element && (function(ElementPrototype) {
-        ElementPrototype.matchesSelector = ElementPrototype.matchesSelector ||
-        ElementPrototype.mozMatchesSelector ||
-        ElementPrototype.msMatchesSelector ||
-        ElementPrototype.oMatchesSelector ||
-        ElementPrototype.webkitMatchesSelector ||
-        function (selector) {
-            var node = this,
-                nodes = (node.parentNode || global.document).querySelectorAll(selector),
-                i = -1;
-            while (nodes[++i] && (nodes[i] !== node));
-            return !!nodes[i];
-        };
-    }(global.Element.prototype));
-
-}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],48:[function(require,module,exports){
-(function (global){
-(function (global) {
-    "use strict";
-
-    if (!global.JSON) {
-        (function() {
-            var toString = Object.prototype.toString,
-                hasOwnProperty = Object.prototype.hasOwnProperty,
-                LEFT_CURLY = '{',
-                RIGHT_CURLY = '}',
-                COLON = ':',
-                LEFT_BRACE = '[',
-                RIGHT_BRACE = ']',
-                COMMA = ',',
-                tokenType = {
-                    PUNCTUATOR: 1,
-                    STRING: 2,
-                    NUMBER: 3,
-                    BOOLEAN: 4,
-                    NULL: 5
-                },
-                tokenMap = {
-                    '{': 1, '}': 1, '[': 1, ']': 1, ',': 1, ':': 1,
-                    '"': 2,
-                    't': 4, 'f': 4,
-                    'n': 5
-                },
-                escChars = {
-                    'b': '\b',
-                    'f': '\f',
-                    'n': '\n',
-                    'r': '\r',
-                    't': '\t',
-                    '"': '"',
-                    '\\': '\\',
-                    '/': '/'
-                },
-                tokenizer = /^(?:[{}:,\[\]]|true|false|null|"(?:[^"\\\u0000-\u001F]|\\["\\\/bfnrt]|\\u[0-9A-F]{4})*"|-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?)/,
-                whiteSpace = /^[\t ]+/,
-                lineTerminator = /^\r?\n/;
-
-            function JSONLexer(JSONStr) {
-                this.line = 1;
-                this.col = 1;
-                this._tokLen = 0;
-                this._str = JSONStr;
-            }
-
-            JSONLexer.prototype = {
-                getNextToken: function () {
-                    var
-                    str = this._str,
-                    token, type;
-
-                    this.col += this._tokLen;
-
-                    if (!str.length) {
-                        return 'END';
-                    }
-
-                    token = tokenizer.exec(str);
-
-                    if (token) {
-                        type = tokenMap[token[0].charAt(0)] || tokenType.NUMBER;
-                    } else if ((token = whiteSpace.exec(str))) {
-                        this._tokLen = token[0].length;
-                        this._str = str.slice(this._tokLen);
-                        return this.getNextToken();
-                    } else if ((token = lineTerminator.exec(str))) {
-                        this._tokLen = 0;
-                        this._str = str.slice(token[0].length);
-                        this.line++;
-                        this.col = 1;
-                        return this.getNextToken();
-                    } else {
-                        this.error('Invalid token');
-                    }
-
-                    this._tokLen = token[0].length;
-                    this._str = str.slice(this._tokLen);
-
-                    return {
-                        type: type,
-                        value: token[0]
-                    };
-                },
-
-                error: function (message, line, col) {
-                    var err = new SyntaxError(message);
-
-                    err.line = line || this.line;
-                    err.col = col || this.col;
-
-                    throw err;
-                }
-            };
-
-            function JSONParser(lexer) {
-                this.lex = lexer;
-            }
-
-            JSONParser.prototype = {
-                parse: function () {
-                    var lex = this.lex, jsValue = this.getValue();
-
-                    if (lex.getNextToken() !== 'END') {
-                        lex.error('Illegal token');
-                    }
-
-                    return jsValue;
-                },
-                getObject: function () {
-                    var
-                    jsObj = {},
-                    lex = this.lex,
-                    token, tval, prop,
-                    line, col,
-                    pairs = false;
-
-                    while (true) {
-                        token = lex.getNextToken();
-                        tval = token.value;
-
-                        if (tval === RIGHT_CURLY) {
-                            return jsObj;
-                        }
-
-                        if (pairs) {
-                            if (tval === COMMA) {
-                                line = lex.line;
-                                col = lex.col - 1;
-                                token = lex.getNextToken();
-                                tval = token.value;
-                                if (tval === RIGHT_CURLY) {
-                                    lex.error('Invalid trailing comma', line, col);
-                                }
-                            }
-                            else {
-                                lex.error('Illegal token where expect comma or right curly bracket');
-                            }
-                        }
-                        else if (tval === COMMA) {
-                            lex.error('Invalid leading comma');
-                        }
-
-                        if (token.type != tokenType.STRING) {
-                            lex.error('Illegal token where expect string property name');
-                        }
-
-                        prop = this.getString(tval);
-
-                        token = lex.getNextToken();
-                        tval = token.value;
-
-                        if (tval != COLON) {
-                            lex.error('Illegal token where expect colon');
-                        }
-
-                        jsObj[prop] = this.getValue();
-                        pairs = true;
-                    }
-                },
-                getArray: function () {
-                    var
-                    jsArr = [],
-                    lex = this.lex,
-                    token, tval,
-                    line, col,
-                    values = false;
-
-                    while (true) {
-                        token = lex.getNextToken();
-                        tval = token.value;
-
-                        if (tval === RIGHT_BRACE) {
-                            return jsArr;
-                        }
-
-                        if (values) {
-                            if (tval === COMMA) {
-                                line = lex.line;
-                                col = lex.col - 1;
-                                token = lex.getNextToken();
-                                tval = token.value;
-
-                                if (tval === RIGHT_BRACE) {
-                                    lex.error('Invalid trailing comma', line, col);
-                                }
-                            } else {
-                                lex.error('Illegal token where expect comma or right square bracket');
-                            }
-                        } else if (tval === COMMA) {
-                            lex.error('Invalid leading comma');
-                        }
-
-                        jsArr.push(this.getValue(token));
-                        values = true;
-                    }
-                },
-                getString: function (strVal) {
-                    return strVal.slice(1, -1).replace(/\\u?([0-9A-F]{4}|["\\\/bfnrt])/g, function (match, escVal) {
-                        return escChars[escVal] || String.fromCharCode(parseInt(escVal, 16));
-                    });
-                },
-                getValue: function(fromToken) {
-                    var lex = this.lex,
-                        token = fromToken || lex.getNextToken(),
-                        tval = token.value;
-                    switch (token.type) {
-                        case tokenType.PUNCTUATOR:
-                            if (tval === LEFT_CURLY) {
-                                return this.getObject();
-                            } else if (tval === LEFT_BRACE) {
-                                return this.getArray();
-                            }
-
-                            lex.error('Illegal punctoator');
-
-                            break;
-                        case tokenType.STRING:
-                            return this.getString(tval);
-                        case tokenType.NUMBER:
-                            return Number(tval);
-                        case tokenType.BOOLEAN:
-                            return tval === 'true';
-                        case tokenType.NULL:
-                            return null;
-                        default:
-                            lex.error('Invalid value');
-                    }
-                }
-            };
-
-            function filter(base, prop, value) {
-                if (typeof value === 'undefined') {
-                    delete base[prop];
-                    return;
-                }
-                base[prop] = value;
-            }
-
-            function walk(holder, name, rev) {
-                var val = holder[name], i, len;
-
-                if (toString.call(val).slice(8, -1) === 'Array') {
-                    for (i = 0, len = val.length; i < len; i++) {
-                        filter(val, i, walk(val, i, rev));
-                    }
-                } else if (typeof val === 'object') {
-                    for (i in val) {
-                        if (hasOwnProperty.call(val, i)) {
-                            filter(val, i, walk(val, i, rev));
-                        }
-                    }
-                }
-
-                return rev.call(holder, name, val);
-            }
-
-            function pad(value, length) {
-                value = String(value);
-
-                return value.length >= length ? value : new Array(length - value.length + 1).join('0') + value;
-            }
-
-            global.prototype.JSON = {
-                parse: function (JSONStr, reviver) {
-                    var jsVal = new JSONParser(new JSONLexer(JSONStr)).parse();
-
-                    if (typeof reviver === 'function') {
-                        return walk({
-                            '': jsVal
-                        }, '', reviver);
-                    }
-
-                    return jsVal;
-                },
-                stringify: function () {
-                    var
-                    value = arguments[0],
-                    replacer = typeof arguments[1] === 'function' ? arguments[1] : null,
-                    space = arguments[2] || '',
-                    spaceSpace = space ? ' ' : '',
-                    spaceReturn = space ? '\n' : '',
-                    className = toString.call(value).slice(8, -1),
-                    array, key, hasKey, index, length, eachValue;
-
-                    if (value === null || className === 'Boolean' || className === 'Number') {
-                        return value;
-                    }
-
-                    if (className === 'Array') {
-                        array = [];
-
-                        for (length = value.length, index = 0, eachValue; index < length; ++index) {
-                            eachValue = replacer ? replacer(index, value[index]) : value[index];
-                            eachValue = this.stringify(eachValue, replacer, space);
-
-                            if (eachValue === undefined || eachValue === null) {
-                                eachValue = 'null';
-                            }
-
-                            array.push(eachValue);
-                        }
-
-                        return '[' + spaceReturn + array.join(',' + spaceReturn).replace(/^/mg, space) + spaceReturn + ']';
-                    }
-
-                    if (className === 'Date') {
-                        return '"' + value.getUTCFullYear() + '-' +
-                        pad(value.getUTCMonth() + 1, 2)     + '-' +
-                        pad(value.getUTCDate(), 2)          + 'T' +
-                        pad(value.getUTCHours(), 2)         + ':' +
-                        pad(value.getUTCMinutes(), 2)       + ':' +
-                        pad(value.getUTCSeconds(), 2)       + '.' +
-                        pad(value.getUTCMilliseconds(), 3)  + 'Z' + '"';
-                    }
-
-                    if (className === 'String') {
-                        return '"' + value.replace(/"/g, '\\"') + '"';
-                    }
-
-                    if (typeof value === 'object') {
-                        array = [];
-                        hasKey = false;
-
-                        for (key in value) {
-                            if (hasOwnProperty.call(value, key)) {
-                                eachValue = replacer ? replacer(key, value[key]) : value[key];
-                                eachValue = this.stringify(eachValue, replacer, space);
-
-                                if (eachValue !== undefined) {
-                                    hasKey = true;
-
-                                    array.push('"' + key + '":' + spaceSpace + eachValue);
-                                }
-                            }
-                        }
-
-                        if (!hasKey) {
-                            return '{}';
-                        } else {
-                            return '{' + spaceReturn + array.join(',' + spaceReturn).replace(/^/mg, space) + spaceReturn + '}';
-                        }
-                    }
-                }
-            };
-        }());
-    }
-})(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this);
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],49:[function(require,module,exports){
-(function (global){
-(function (global) {
-    "use strict";
-
-    var DOCUMENT_POSITION_CONTAINED_BY = 16;
-    global.Node && !global.Node.prototype.contains && (function(NodePrototype) {
-        NodePrototype.contains = function(child) {
-            var comparison = this.compareDocumentPosition(child);
-            return !!((comparison===0) || (comparison & DOCUMENT_POSITION_CONTAINED_BY));
-        };
-    }(global.Node.prototype));
-
-}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],50:[function(require,module,exports){
-"use strict";
-
-Object.create || (Object.create = function (o) {
-    function F() {}
-    F.prototype = o;
-    return new F();
-});
-},{}],51:[function(require,module,exports){
-"use strict";
-
-// In Internet Explorer 8 Object.defineProperty only accepts DOM objects
-// otherwise it throws an error
-
-try {
-    Object.defineProperty({}, 'a', {value: 0});
-}
-catch(err) {
-    // failed: so we're in IE8
-    (function() {
-        var defineProperty = Object.defineProperty;
-        Object.defineProperty = function (object, property, descriptor) {
-            delete descriptor.configurable;
-            delete descriptor.enumerable;
-            delete descriptor.writable;
-            try {
-                return defineProperty(object, property, descriptor);
-            }
-            catch(err) {
-                object[property] = descriptor.value;
-            }
-        };
-    }());
-}
-
-Object.defineProperties || (Object.defineProperties=function defineProperties(object, descriptors) {
-    var property;
-    for (property in descriptors) {
-        Object.defineProperty(object, property, descriptors[property]);
-    }
-    return object;
-});
-},{}],52:[function(require,module,exports){
-"use strict";
-
-if (!Object.keys) {
-    var hasOwnProp = Object.prototype.hasOwnProperty,
-        hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
-        dontEnums = [
-          'toString',
-          'toLocaleString',
-          'valueOf',
-          'hasOwnProperty',
-          'isPrototypeOf',
-          'propertyIsEnumerable',
-          'constructor'
-        ],
-        dontEnumsLength = dontEnums.length;
-
-    Object.keys = function(obj) {
-        var result = [], prop, i;
-
-        for (prop in obj) {
-            if (hasOwnProp.call(obj, prop)) {
-                result.push(prop);
-            }
-        }
-
-        if (hasDontEnumBug) {
-            for (i = 0; i < dontEnumsLength; i++) {
-                if (hasOwnProp.call(obj, dontEnums[i])) {
-                    result.push(dontEnums[i]);
-                }
-            }
-        }
-        return result;
-    };
-}
-},{}],53:[function(require,module,exports){
-require('ypromise');
-},{"ypromise":6}],54:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -14079,167 +13607,15 @@ require('ypromise');
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],55:[function(require,module,exports){
-(function (global){
-// IE8 must be polyfilled: see https://github.com/jonathantneal/polyfill
-
-// Window.prototype.getComputedStyle
-(function (global) {
-    "use strict";
-
-    var getComputedStyle;
-
-    function getComputedStylePixel(element, property, fontSize) {
-        element.document; // Internet Explorer sometimes struggles to read currentStyle until the element's document is accessed.
-
-        var
-        value = element.currentStyle[property].match(/([\d\.]+)(%|cm|em|in|mm|pc|pt|)/) || [0, 0, ''],
-        size = value[1],
-        suffix = value[2],
-        rootSize;
-
-        fontSize = !fontSize ? fontSize : /%|em/.test(suffix) && element.parentElement ? getComputedStylePixel(element.parentElement, 'fontSize', null) : 16;
-        rootSize = property == 'fontSize' ? fontSize : /width/i.test(property) ? element.clientWidth : element.clientHeight;
-
-        return suffix == '%' ? size / 100 * rootSize :
-               suffix == 'cm' ? size * 0.3937 * 96 :
-               suffix == 'em' ? size * fontSize :
-               suffix == 'in' ? size * 96 :
-               suffix == 'mm' ? size * 0.3937 * 96 / 10 :
-               suffix == 'pc' ? size * 12 * 96 / 72 :
-               suffix == 'pt' ? size * 96 / 72 :
-               size;
-    }
-
-    function setShortStyleProperty(style, property) {
-        var
-        borderSuffix = property == 'border' ? 'Width' : '',
-        t = property + 'Top' + borderSuffix,
-        r = property + 'Right' + borderSuffix,
-        b = property + 'Bottom' + borderSuffix,
-        l = property + 'Left' + borderSuffix;
-
-        style[property] = (style[t] == style[r] && style[t] == style[b] && style[t] == style[l] ? [ style[t] ] :
-                           style[t] == style[b] && style[l] == style[r] ? [ style[t], style[r] ] :
-                           style[l] == style[r] ? [ style[t], style[r], style[b] ] :
-                           [ style[t], style[r], style[b], style[l] ]).join(' ');
-    }
-
-    // <CSSStyleDeclaration>
-    function CSSStyleDeclaration(element) {
-        var
-        style = this,
-        currentStyle = element.currentStyle,
-        fontSize = getComputedStylePixel(element, 'fontSize'),
-        unCamelCase = function (match) {
-            return '-' + match.toLowerCase();
-        },
-        property;
-
-        for (property in currentStyle) {
-            Array.prototype.push.call(style, property == 'styleFloat' ? 'float' : property.replace(/[A-Z]/, unCamelCase));
-
-            if (property == 'width') {
-                style[property] = element.offsetWidth + 'px';
-            } else if (property == 'height') {
-                style[property] = element.offsetHeight + 'px';
-            } else if (property == 'styleFloat') {
-                style.float = currentStyle[property];
-            } else if (/margin.|padding.|border.+W/.test(property) && style[property] != 'auto') {
-                style[property] = Math.round(getComputedStylePixel(element, property, fontSize)) + 'px';
-            } else if (/^outline/.test(property)) {
-                // errors on checking outline
-                try {
-                    style[property] = currentStyle[property];
-                } catch (error) {
-                    style.outlineColor = currentStyle.color;
-                    style.outlineStyle = style.outlineStyle || 'none';
-                    style.outlineWidth = style.outlineWidth || '0px';
-                    style.outline = [style.outlineColor, style.outlineWidth, style.outlineStyle].join(' ');
-                }
-            } else {
-                style[property] = currentStyle[property];
-            }
-        }
-
-        setShortStyleProperty(style, 'margin');
-        setShortStyleProperty(style, 'padding');
-        setShortStyleProperty(style, 'border');
-
-        style.fontSize = Math.round(fontSize) + 'px';
-    }
-
-    CSSStyleDeclaration.prototype = {
-        constructor: CSSStyleDeclaration,
-        // <CSSStyleDeclaration>.getPropertyPriority
-        getPropertyPriority: function () {
-            throw new Error('NotSupportedError: DOM Exception 9');
-        },
-        // <CSSStyleDeclaration>.getPropertyValue
-        getPropertyValue: function (property) {
-            return this[property.replace(/-\w/g, function (match) {
-                return match[1].toUpperCase();
-            })];
-        },
-        // <CSSStyleDeclaration>.item
-        item: function (index) {
-            return this[index];
-        },
-        // <CSSStyleDeclaration>.removeProperty
-        removeProperty: function () {
-            throw new Error('NoModificationAllowedError: DOM Exception 7');
-        },
-        // <CSSStyleDeclaration>.setProperty
-        setProperty: function () {
-            throw new Error('NoModificationAllowedError: DOM Exception 7');
-        },
-        // <CSSStyleDeclaration>.getPropertyCSSValue
-        getPropertyCSSValue: function () {
-            throw new Error('NotSupportedError: DOM Exception 9');
-        }
-    };
-
-    // <window>.getComputedStyle
-    getComputedStyle = function (element) {
-        return new CSSStyleDeclaration(element);
-    };
-
-
-    global.getComputedStyle || (function(GlobalPrototype) {
-        (GlobalPrototype || global).getComputedStyle = getComputedStyle;
-    }(global.prototype));
-
-    module.exports = getComputedStyle;
-
-}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],56:[function(require,module,exports){
-require('./lib/array.every.js');
-require('./lib/array.filter.js');
-require('./lib/array.foreach.js');
-require('./lib/array.indexof.js');
-require('./lib/array.isarray.js');
-require('./lib/array.some.js');
-require('./lib/css.opacity.js');
-require('./lib/element.matchesselector.js');
-require('./lib/node.contains.js');
-require('./lib/object.create.js');
-require('./lib/object.keys.js');
-require('./lib/object.defineproperty.js');
+},{}],42:[function(require,module,exports){
 require('./lib/window.console.js');
-require('./lib/window.getcomputedstyle.js');
-
-},{"./lib/array.every.js":40,"./lib/array.filter.js":41,"./lib/array.foreach.js":42,"./lib/array.indexof.js":43,"./lib/array.isarray.js":44,"./lib/array.some.js":45,"./lib/css.opacity.js":46,"./lib/element.matchesselector.js":47,"./lib/node.contains.js":49,"./lib/object.create.js":50,"./lib/object.defineproperty.js":51,"./lib/object.keys.js":52,"./lib/window.console.js":54,"./lib/window.getcomputedstyle.js":55}],57:[function(require,module,exports){
-require('./polyfill-base.js');
-require('./lib/json.js');
-require('./lib/promise.js');
-},{"./lib/json.js":48,"./lib/promise.js":53,"./polyfill-base.js":56}],58:[function(require,module,exports){
+},{"./lib/window.console.js":41}],43:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
 	later: require('./lib/timers.js').later,
 	async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":59,"./lib/timers.js":60}],59:[function(require,module,exports){
+},{"./lib/idgenerator.js":44,"./lib/timers.js":45}],44:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -14296,7 +13672,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"polyfill/polyfill-base.js":56}],60:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":42}],45:[function(require,module,exports){
 (function (process,global){
 /**
  * Collection of various utility functions.
@@ -14456,13 +13832,6313 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":63,"polyfill/polyfill-base.js":56}],61:[function(require,module,exports){
+},{"_process":59,"polyfill/polyfill-base.js":42}],46:[function(require,module,exports){
+module.exports=require(9)
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],47:[function(require,module,exports){
+"use strict";
+
+/**
+ * Exports `htmlToVNodes` which transforms html-text into vnodes.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * <br>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module vdom
+ * @submodule html-parser
+ * @since 0.0.1
+*/
+
+require('js-ext/lib/string.js');
+require('js-ext/lib/object.js');
+
+var END_OF_VALUE = {
+        ';': true,
+        '}': true
+    };
+
+module.exports = {
+
+    extractClass: function(classes) {
+        var attrClass = '',
+            classNames = {},
+            oneclass, len, i, character;
+        if (classes) {
+            oneclass = '';
+            len = classes.length;
+            for (i=0; i<len; i++) {
+                character = classes[i];
+                if (character===' ') {
+                    if (oneclass!=='') {
+                        classNames[oneclass] = true;
+                        attrClass += ' '+oneclass;
+                        oneclass = '';
+                    }
+                }
+                else {
+                    oneclass += character;
+                }
+            }
+            if (oneclass!=='') {
+                classNames[oneclass] = true;
+                attrClass += ' '+oneclass;
+            }
+        }
+        return {
+            attrClass: (attrClass==='') ? undefined : attrClass.substr(1),
+            classNames: classNames
+        };
+    },
+
+    extractStyle: function(styles) {
+    /*  be aware you can encounter inline style like this:
+
+        style="{color: blue; background: white}
+        :visited {color: green}
+        :hover {background: yellow}
+        :visited:hover {color: purple}
+
+        OR
+
+        style="color: blue; background: white"
+    */
+        var newStyles = {},
+            i, onlyElement, len, character, groupKey, key, value, insideValue, insideKey, hasValue, group;
+        if (styles) {
+            i = -1;
+            len = styles.length;
+
+            // first eliminate leading spaces
+/*jshint noempty:true */
+            while ((++i<len) && (character=styles[i]) && (character===' ')) {}
+/*jshint noempty:false */
+
+            // preview next character
+            character = styles[i];
+            onlyElement = (character && (character!=='{') && (character!==':'));
+            if (onlyElement) {
+                newStyles.element = {};
+                group = newStyles.element;
+                groupKey = 'element';
+                insideKey = true;
+            }
+            else {
+                groupKey = '';
+            }
+
+            // now process
+            key = '';
+            insideValue = false;
+            i--;
+            while ((++i<len) && (character=styles[i])) {
+                if (insideValue) {
+                    if (END_OF_VALUE[character]) {
+                        group[key] = value.trim();
+                        key = '';
+                        insideValue = false;
+                        insideKey = (character===';');
+                        insideKey || (groupKey='');
+                        hasValue = true;
+                    }
+                    else {
+                        value += character;
+                    }
+                }
+                else if (insideKey) {
+                    if (character===':'){
+                        insideKey = false;
+                        insideValue = true;
+                        key = key.trim();
+                        value = '';
+                    }
+                    else if (character==='}') {
+                        insideKey = false;
+                        groupKey = '';
+                    }
+                    else {
+                        key += character;
+                    }
+                }
+                else {
+                    if (character==='{') {
+                        groupKey = groupKey.trim();
+                        (groupKey==='') && (groupKey='element');
+                        group = newStyles[groupKey] = {};
+                        insideKey = true;
+                        key = '';
+                    }
+                    else {
+                        groupKey += character;
+                    }
+                }
+            }
+            insideValue && (group[key]=value.trim());
+        }
+        return {
+            attrStyle: hasValue && this.serializeStyles(newStyles),
+            styles: newStyles
+        };
+    },
+
+    serializeStyles: function(styles) {
+        var serialized = '',
+            onlyElementStyle = ((styles.size()===1) && styles.element);
+        if (onlyElementStyle) {
+            styles.element.each(function(value, key) {
+                serialized += ' '+ key + ': ' + value + ';';
+            });
+        }
+        else {
+            styles.each(function(groupValue, groupKey) {
+                (groupKey==='element') || (serialized += ' '+groupKey+' ');
+                serialized += '{';
+                groupValue.each(function(value, key) {
+                    serialized += key + ': ' + value + '; ';
+                });
+                serialized += '}';
+            });
+        }
+        return (serialized[0]===' ') ? serialized.substr(1) : serialized;
+    }
+
+};
+},{"js-ext/lib/object.js":36,"js-ext/lib/string.js":38}],48:[function(require,module,exports){
+"use strict";
+
+/**
+ * Extends Array into an array with special utility-methods that can be applied upon its members.
+ * The membres should be vElement's
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * <br>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module vdom
+ * @submodule element-array
+ * @class ElementArray
+ * @since 0.0.1
+*/
+
+require('js-ext/lib/object.js');
+
+var forEach = function(list, method, args) {
+        var len = list.length,
+            i, element;
+        for (i=0; i<len; i++) {
+            element = list[i];
+            element[method].apply(element, args);
+        }
+        return list;
+    },
+
+    forEachSetProp = function(list, prop, value) {
+        var len = list.length,
+            i, element;
+        for (i=0; i<len; i++) {
+            element = list[i];
+            element[prop] = value;
+        }
+        return list;
+    },
+
+    ElementArrayMethods = {
+       /**
+        * For all vElements of the ElementArray:
+        * Appends a HtmlElement or text at the end of HtmlElement's innerHTML.
+        *
+        * @method append
+        * @param content {HtmlElement|HtmlElementList|String} content to append
+        * @param escape {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @chainable
+        * @since 0.0.1
+        */
+        append: function(/* content, escape */) {
+            return forEach(this, 'append', arguments);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Sets the inline-style of the HtmlElement exactly to the specified `value`, overruling previous values.
+        * Making the HtmlElement's inline-style look like: style="value".
+        *
+        * This is meant for a quick one-time setup. For individually inline style-properties to be set, you can use `setInlineStyle()`.
+        *
+        * @method defineInlineStyle
+        * @param value {String} the style string to be set
+        * @chainable
+        * @since 0.0.1
+        */
+        defineInlineStyle: function(/* value */) {
+            return forEach(this, 'defineInlineStyle', arguments);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Prepends a HtmlElement or text at the start of HtmlElement's innerHTML.
+        *
+        * @method prepend
+        * @param content {HtmlElement|HtmlElementList|String} content to prepend
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @chainable
+        * @since 0.0.1
+        */
+        prepend: function(/* content, escape */) {
+            return forEach(this, 'prepend', arguments);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Removes the HtmlElement from the DOM.
+        *
+        * @method remove
+        * @since 0.0.1
+        */
+        remove: function(/* HtmlElement */) {
+            return forEach(this, 'remove', arguments);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Removes the attribute from the HtmlElement.
+        *
+        * Alias for removeAttribute().
+        *
+        * @method removeAttr
+        * @param attributeName {String}
+        * @return {Boolean} Whether the HtmlElement has the attribute set.
+        * @since 0.0.1
+        */
+        removeAttr: function(/* attributeName */) {
+            return forEach(this, 'removeAttr', arguments);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Removes a className from the HtmlElement.
+        *
+        * @method removeClass
+        * @param className {String} the className that should be removed.
+        * @chainable
+        * @since 0.0.1
+        */
+        removeClass: function(/* className */) {
+            return forEach(this, 'removeClass', arguments);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Removes data specified by `key`. When no arguments are passed, all node-data (key-value pairs) will be removed.
+        *
+        * @method removeData
+        * @param key {string} name of the key
+        * @chainable
+        * @since 0.0.1
+        */
+        removeData: function(/* key */) {
+            return forEach(this, 'removeData', arguments);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Removes a css-property (inline) out of the HtmlElement. Use camelCase.
+        *
+        * @method removeInlineStyle
+        * @param cssAttribute {String} the css-property to be removed
+        * @chainable
+        * @since 0.0.1
+        */
+        removeInlineStyle: function(/* cssAttribute */) {
+            return forEach(this, 'removeInlineStyle', arguments);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Replaces the HtmlElement with a new HtmlElement.
+        *
+        * @method replace
+        * @param newHtmlElement {HtmlElement|String} the new HtmlElement
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @since 0.0.1
+        */
+        replace: function(/* newHtmlElement, escape */) {
+            return forEach(this, 'replace', arguments);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Replaces the className of the HtmlElement with a new className.
+        * If the previous className is not available, the new className is set nevertheless.
+        *
+        * @method replaceClass
+        * @param prevClassName {String} the className to be replaced
+        * @param newClassName {String} the className to be set
+        * @param [force ] {Boolean} whether the new className should be set, even is the previous className isn't there
+        * @chainable
+        * @since 0.0.1
+        */
+        replaceClass: function(/* prevClassName, newClassName, force */) {
+            return forEach(this, 'replaceClass', arguments);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Sets the attribute on the HtmlElement with the specified value.
+        *
+        * Alias for setAttribute().
+        *
+        * @method setAttr
+        * @param attributeName {String}
+        * @param value {Any} the value that belongs to `key`
+        * @chainable
+        * @since 0.0.1
+       */
+        setAttr: function(/* attributeName, value */) {
+            return forEach(this, 'setAttr', arguments);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Adds a class to the HtmlElement. If the class already exists it won't be duplicated.
+        *
+        * @method setClass
+        * @param className {String} className to be added
+        * @chainable
+        * @since 0.0.1
+        */
+        setClass: function(/* className */) {
+            return forEach(this, 'setClass', arguments);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Sets the class to the HtmlElement. Cleaning up any previous classes.
+        *
+        * @method setClassName
+        * @param value {Any} the value that belongs to `key`
+        * @chainable
+        * @since 0.0.1
+        */
+        setClassName: function(/* className */) {
+            return forEach(this, 'setClassName', arguments);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Stores arbitary `data` at the HtmlElement. This has nothing to do with node-attributes whatsoever,
+        * it is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.
+        *
+        * @method setData
+        * @param key {string} name of the key
+        * @param value {Any} the value that belongs to `key`
+        * @chainable
+        * @since 0.0.1
+       */
+        setData: function(/* key, value */) {
+            return forEach(this, 'setData', arguments);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Sets the content of the HtmlElement (innerHTML). Careful: only set content like this if you controll the data and
+        * are sure what is going inside. Otherwise XSS might occur. If you let the user insert, or insert right from a db,
+        * you might be better of using setContent().
+        *
+        * @method setHTML
+        * @param content {HtmlElement|HtmlElementList|String} content to append
+        * @chainable
+        * @since 0.0.1
+        */
+        setHTML: function(content) {
+            return forEachSetProp(this, 'innerHTML', content);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Sets a css-property (inline) out of the HtmlElement. Use camelCase.
+        *
+        * Note: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine
+        *
+        * @method setStyle
+        * @param cssAttribute {String} the css-property to be set
+        * @param value {String} the css-value
+        * @chainable
+        * @since 0.0.1
+        */
+        setInlineStyle: function(/* cssAttribute, value */) {
+            return forEach(this, 'setInlineStyle', arguments);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Sets the content of the HtmlElement. This is a safe way to set the content, because HTML is not parsed.
+        * If you do need to set HTML inside the node, use setHTML().
+        *
+        * @method setText
+        * @param content {HtmlElement|HtmlElementList|String} content to append. In case of HTML, it will be escaped.
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @chainable
+        * @since 0.0.1
+        */
+        setText: function(content) {
+            return forEachSetProp(this, 'textContent', content);
+        },
+
+       /**
+        * For all vElements of the ElementArray:
+        * Toggles the className of the Element.
+        *
+        * @method toggleClass
+        * @param className {String} the className that should be toggled
+        * @chainable
+        * @since 0.0.1
+        */
+        toggleClass: function(/* className */) {
+            return forEach(this, 'toggleClass', arguments);
+        }
+    };
+
+
+module.exports = {
+    // unfortunatly, Object.create(Array.prototype) or Object.create([]) don't work as expected -->
+    // the bracket-notation isn't fucntional anymore:
+    // see http://www.bennadel.com/blog/2292-extending-javascript-arrays-while-keeping-native-bracket-notation-functionality.htm
+    createArray: function() {
+        var newArray = [];
+        newArray.merge(ElementArrayMethods);
+        return newArray;
+    }
+};
+},{"js-ext/lib/object.js":36}],49:[function(require,module,exports){
+"use strict";
+
+/**
+ * Provides several methods that override native document-methods to work with the vdom.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * <br>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module vdom
+ * @submodule extend-document
+ * @class document
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+
+    var NS = require('./vdom-ns.js')(window),
+        nodeids = NS.nodeids,
+        DOCUMENT = window.document;
+
+    // Note: window.document has no prototype
+
+    /**
+     * Returns a newly created TreeWalker object.
+     *
+     * The TreeWalker is life presentation of the dom. It gets updated when the dom changes.
+     *
+     * @method createTreeWalker
+     * @param root {Element} The root node at which to begin the NodeIterator's traversal.
+     * @param [whatToShow] {Number} Filter specification constants from the NodeFilter DOM interface, indicating which nodes to iterate over.
+     * You can use or sum one of the next properties:
+     * <ul>
+     *   <li>window.NodeFilter.SHOW_ELEMENT</li>
+     *   <li>window.NodeFilter.SHOW_COMMENT</li>
+     *   <li>window.NodeFilter.SHOW_TEXT</li>
+     * </ul>
+     * @param [filter] {NodeFilter|function} An object implementing the NodeFilter interface or a function. See https://developer.mozilla.org/en-US/docs/Web/API/NodeFilter
+     * @return {TreeWalker}
+     */
+    DOCUMENT.createTreeWalker = function(root, whatToShow, filter) {
+        return DOCUMENT.documentElement.createTreeWalker(whatToShow, filter);
+    };
+
+    /**
+     * Indicating whether an Element is inside the DOM.
+     *
+     * @method contains
+     * @param otherElement {Element}
+     * @return {Boolean} whether the Element is inside the dom.
+     * @since 0.0.1
+     */
+    DOCUMENT.contains = function(otherElement) {
+        return DOCUMENT.documentElement.contains(otherElement);
+    };
+
+    /**
+     * Gets an ElementArray of Elements, specified by the css-selector.
+     *
+     * @method getAll
+     * @param cssSelector {String} css-selector to match
+     * @return {ElementArray} ElementArray of Elements that match the css-selector
+     * @since 0.0.1
+     */
+    DOCUMENT.getAll = function(cssSelector) {
+        return this.querySelectorAll(cssSelector);
+    };
+
+    /**
+     * Gets one Element, specified by the css-selector. To retrieve a single element by id,
+     * you need to prepend the id-name with a `#`. When multiple Element's match, the first is returned.
+     *
+     * @method getElement
+     * @param cssSelector {String} css-selector to match
+     * @return {Element|null} the Element that was search for
+     * @since 0.0.1
+     */
+    DOCUMENT.getElement = function(cssSelector) {
+        return ((cssSelector[0]==='#') && (cssSelector.indexOf(' ')===-1)) ? this.getElementById(cssSelector.substr(1)) : this.querySelector(cssSelector);
+    };
+
+    /**
+     * Returns the Element matching the specified id.
+     *
+     * @method getElementById
+     * @param id {String} id of the Element
+     * @return {Element|null}
+     *
+     */
+    DOCUMENT.getElementById = function(id) {
+        return nodeids[id] || null; // force `null` instead of `undefined` to be compatible with native getElementById.
+    };
+
+    /**
+     * Returns the first Element that matches the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,
+     * they need to be separated by a `comma`.
+     *
+     * @method querySelector
+     * @param selectors {String} CSS-selector(s) that should match
+     * @return {Element}
+     */
+    DOCUMENT.querySelector = function(selectors) {
+        var docElement = DOCUMENT.documentElement;
+        if (docElement.matchesSelector(selectors)) {
+            return docElement;
+        }
+        return docElement.querySelector(selectors);
+    };
+
+    /**
+     * Returns an ElementArray of all Elements that match the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,
+     * they need to be separated by a `comma`.
+     *
+     * querySelectorAll is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.
+     *
+     * @method querySelectorAll
+     * @param selectors {String} CSS-selector(s) that should match
+     * @return {ElementArray} non-life Array (snapshot) with Elements
+     */
+    DOCUMENT.querySelectorAll = function(selectors) {
+        var docElement = DOCUMENT.documentElement,
+            elements = docElement.querySelectorAll(selectors);
+        docElement.matchesSelector(selectors) && elements.shift(docElement);
+        return elements;
+    };
+
+    /**
+     * Replaces the Element with a new Element.
+     *
+     * @method replace
+     * @param newHtmlElement {Element|String} the new element
+     * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only the element having a TextNode as a child.
+     * @chainable
+     * @since 0.0.1
+     */
+    DOCUMENT.replace = function(oldHtmlElement, newHtmlElement, escape) {
+        return oldHtmlElement.replace(newHtmlElement, escape);
+    };
+
+   /**
+    * Tests if an Element would be selected by the specified cssSelector.
+    * Alias for `matchesSelector()`
+    *
+    * @method test
+    * @param element {Element} The Element to test
+    * @param cssSelector {String} the css-selector to test against
+    * @return {Boolean} whether or not the node matches the selector
+    * @since 0.0.1
+    */
+    DOCUMENT.test = function(element, cssSelector) {
+        return element.matches(cssSelector);
+    };
+
+};
+
+//--- declaration of properties ---------------------------
+
+/**
+ * Returns the currently focused element, that is, the element that will get keystroke events if the user types any.
+ *
+ * @property activeElement
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the `anchors` in the document that have a `name` specified (a[name]).
+ * For reasons of backwards compatibility, the returned set of anchors only contains those anchors created with the `name` attribute.
+ *
+ * `anchors` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property anchors
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the `applets` in the document.
+ *
+ * `applets` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property applets
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Returns the `body` or `frameset` Element of the current document, or null if no such element exists.
+ *
+ * @property body
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Returns the `script`-Element whose script is currently being processed.
+ *
+ *
+ * @property currentScript
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Returns the root-element (===`html`-Element) of the current document
+ *
+ * @property documentElement
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the `embed`-elements in the document.
+ *
+ * `embeds` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property embeds
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Returns the firstChild element (===`html`-Element) of the current document
+ *
+ * @property firstChild
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the `form`-elements in the document.
+ *
+ * `forms` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property forms
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the images in the document.
+ *
+ * `images` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property images
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Returns the lastChild element (===`html`-Element) of the current document
+ *
+ * @property lastChild
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the  of all `area`-Elements and `a`-Elements in a document with a value for the href attribute.
+ *
+ * `links` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property links
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the plugins (`object`- or `embed`-elements) in the document.
+ *
+ * `plugins` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property plugins
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the script-elements in the document.
+ *
+ * `scripts` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property scripts
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the style-elements in the document.
+ *
+ * `styleSheets` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property styleSheets
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Gets or sets the `title` of the document. That is, the `title`-Element within the `head`-Element
+ *
+ * @property title
+ * @type String
+ */
+
+
+//--- definition API of unmodified `document`-events ------
+
+/**
+* "online" event is fired on the <body> of each page when the browser switches between online and offline mode.
+* The event is non-cancellable (you can't prevent the user from coming online, or going offline).
+*
+* @event online
+*/
+
+/**
+* "offline" event is fired on the <body> of each page when the browser switches between online and offline mode.
+* The event is non-cancellable (you can't prevent the user from coming online, or going offline).
+*
+* @event offline
+*/
+
+//--- definition API of unmodified `document`-methods ------
+
+/**
+ * Adopts a node from an external document. The node and its subtree is removed from the document it's in (if any),
+ * and its ownerDocument is changed to the current document. The node can then be inserted into the current document.
+ *
+ * @method adoptNode
+ * @param externalNode {Node} The node from another document to be adopted.
+ * @return {Node} is the adopted node that can be used in the current document.
+ * The new node's parentNode is null, since it has not yet been inserted into the document tree.
+ */
+
+/**
+ * Adds a HtmlElement or DocumentFragment to the end of the `html`-element
+ *
+ * @method appendChild
+ * @param element {Element|DocumentFragment} the item to be appended
+ * @return {Element} the appended child.
+ */
+
+/**
+ * Creates a new attribute-node, and returns it.
+ *
+ * @method createAttribute
+ * @param name {String} The name of the attribute
+ * @return {AttributeNode}
+ */
+
+/**
+ * Creates a new Comment-node, and returns it.
+ *
+ * @method createComment
+ * @param data {String} The data to be added to the Comment.
+ * @return {CommentNode}
+ */
+
+/**
+ * Creates a new HtmlElement, and returns it.
+ *
+ * Don't use qualified names (like "html:a") with this method.
+ *
+ * @method createElement
+ * @param tagName {String}  is a string that specifies the type of element to be created.
+ *        The nodeName of the created element is initialized with the value of tagName.
+ * @return {HtmlElement}
+ */
+
+/**
+ * Returns a new NodeIterator object.
+ *
+ * The NodeIterator is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.
+ *
+ * @method createNodeIterator
+ * @param root {Element} The root node at which to begin the NodeIterator's traversal.
+ * @param [whatToShow] {Number} Filter specification constants from the NodeFilter DOM interface, indicating which nodes to iterate over.
+ * You can use or sum one of the next properties:
+ * <ul>
+ *   <li>window.NodeFilter.SHOW_ELEMENT</li>
+ *   <li>window.NodeFilter.SHOW_COMMENT</li>
+ *   <li>window.NodeFilter.SHOW_TEXT</li>
+ * </ul>
+ * @param [filter] {NodeFilter|function} An object implementing the NodeFilter interface or a function. See https://developer.mozilla.org/en-US/docs/Web/API/NodeFilter
+ * @return {NodeIterator}
+ */
+
+/**
+ * Returns a new Range object. See https://developer.mozilla.org/en-US/docs/Web/API/Range
+ *
+ * @method createRange
+ * @return {Range}
+ */
+
+/**
+ * Creates a new Text-node, and returns it.
+ *
+ * @method createTextNode
+ * @param data {String} The data to be added to the Text-node.
+ * @return {TextNode}
+ */
+
+/**
+ * Returns the Element from the document whose `elementFromPoint`-method is being called which is the topmost
+ * dom-Element which lies under the given point. To get a Element, specify the point via coordinates, in CSS pixels,
+ * relative to the upper-left-most point in the window or frame containing the document.
+ *
+ * @method elementFromPoint
+ * @param x {Number} x-coordinate to check, in CSS pixels relative to the upper-left corner of the document
+ * @param y {Number} y-coordinate to check, in CSS pixels relative to the upper-left corner of the document
+ * @return {Element} the matching Element
+ */
+
+/**
+ * Enables the style sheets matching the specified name in the current style sheet set,
+ * and disables all other style sheets (except those without a title, which are always enabled).
+ *
+ * @method enableStyleSheetsForSet
+ * @param name {String} The name of the style sheets to enable. All style sheets with a title that match this name will be enabled,
+ *        while all others that have a title will be disabled. Specify an empty string for the name parameter
+ *        to disable all alternate and preferred style sheets (but not the persistent style sheets; that is, those with no title attribute).
+ */
+
+/**
+ * Returns an ElementArray of all Elements that match their classes with the supplied `classNames` argument.
+ * To match multiple different classes, separate them with a `comma`.
+ *
+ * getElementsByClassName is life presentation of the dom. The returned ElementArray gets updated when the dom changes.
+ *
+ * NOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.
+ *
+ *
+ * @method getElementsByClassName
+ * @param classNames {String} the classes to search for
+ * @return {ElementArray} life Array with Elements
+ */
+
+/**
+ * Returns an ElementArray of all Elements that match their `name`-attribute with the supplied `name` argument.
+ *
+ * getElementsByName is life presentation of the dom. The returned ElementArray gets updated when the dom changes.
+ *
+ * NOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.
+ *
+ * @method getElementsByName
+ * @param name {String} the property of name-attribute to search for
+ * @return {ElementArray} life Array with Elements
+ */
+
+/**
+ * Returns an ElementArray of all Elements that match their `name`-attribute with the supplied `name` argument.
+ *
+ * getElementsByTagName is life presentation of the dom. The returned ElementArray gets updated when the dom changes.
+ *
+ * NOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.
+ *
+ * @method getElementsByTagName
+ * @param tagNames {String} the tags to search for
+ * @return {ElementArray} life Array with Elements
+ */
+
+/**
+ * Returns a selection object representing the range of text selected by the user.
+ *
+ * Is also available on the `window`-object.
+ *
+ * @method getSelection
+ * @return {Selection} A Selection object. When cast to string, either by adding empty quotes "" or using .toString, this object is the text selected.
+ */
+
+/**
+ * Returns a Boolean value indicating whether the document or any element inside the document has focus.
+ *
+ * @method hasFocus
+ * @return {Boolean} whether the document or any element inside the document has focus.
+ */
+
+/**
+ * Creates a copy of a node from an external document that can be inserted into the current document.
+ *
+ * @method importNode
+ * @param externalNode {Node} The node from another document to be adopted.
+ * @param deep {Boolean} Whether the descendants of the imported node need to be imported.
+ * @return {Node} The new node that is imported into the document.
+ * The new node's parentNode is null, since it has not yet been inserted into the document tree.
+ */
+
+/**
+ * Inserts `newElement` before `referenceElement`.
+ *
+ * @method insertBefore
+ * @param newElement {Element} The newElement to insert
+ * @param referenceElement {Element} The Element before which newElement is inserted.
+ * @return {Element} the Element being inserted (equals newElement)
+ */
+
+/**
+ * Removes a child node from the DOM.
+ *
+ * @method removeChild
+ * @param child {Element} the Element to be removed from the DOM
+ * @return {Element} a reference to the removed child node
+ */
+
+/**
+ * Replaces one child-element of its parent element with a new child-element.
+ *
+ * @method replaceChild
+ * @param newChild {Element} the new element to replace oldChild. If it already exists in the DOM, it is first removed.
+ * @param oldChild {Element} The existing child to be replaced.
+ * @return {Element} is the replaced node. This is the same Element as oldChild.
+ */
+
+//--- definition API of unmodified `document`-properties ------
+
+/**
+ * Returns the character encoding of the current document.
+ *
+ * @property characterSet
+ * @readOnly
+ */
+
+/**
+ * Indicates whether the document is rendered in Quirks mode or Standards mode. Its value is either:
+ * <ul>
+ *     <li>`BackCompat` if the document is in quirks mode</li>
+ *     <li>`CSS1Compat` if the document is in no-quirks (also known as `standards`) mode or limited-quirks (also known as `almost standards`) mode.</li>
+ * </ul>
+ *
+ * @property compatMode
+ * @readOnly
+ */
+
+/**
+ * Returns the MIME type that the document is being rendered as.  This may come from HTTP headers or other sources of MIME information,
+ * and might be affected by automatic type conversions performed by either the browser or extensions.
+ *
+ * @property contentType
+ * @readOnly
+ */
+
+/**
+ * Returns the Document Type Declaration (DTD) associated with current document. The returned object implements the DocumentType interface.
+ * Use DOMImplementation.createDocumentType() to create a DocumentType.
+ *
+ * @property doctype
+ * @readOnly
+ */
+
+/**
+ * Returns string URI of the HTML document. Same as `document.URL`.
+ *
+ * Note: HTML documents have a document.URL property which returns the same value. Unlike URL, documentURI is available on all types of documents.
+ *
+ * @property documentURI
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * Controls whether the entire document is editable. Its value should be either "off" or "on".
+ *
+ * @property designMode
+ * @type String
+ * @default "off"
+ */
+
+/**
+ * Gets the domain portion of the origin of the current document.
+ *
+ * Setter will fail, because the same origin policy needs to persist.
+ *
+ * @property domain
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * Returns a DOMImplementation object associated with the current document.
+ *
+ * @property implementation
+ * @type DOMImplementation
+ * @readOnly
+ */
+
+/**
+ * Returns a string containing the date and time on which the current document was last modified.
+ * If you want a Date-object, you need to transform lastModified into a Date object: `modifyDate = new Date(document.lastModified);`
+ *
+ * @property lastModified
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * Returns the last enabled style sheet set; this property's value changes whenever the document.selectedStyleSheetSet property is changed.
+ *
+ * @property lastStyleSheetSet
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * returns a Location object, which contains information about the URL of the document and provides methods for changing that URL and loading another URL.
+ *
+ * Though Document.location is a read-only Location object, you can also assign a DOMString to it. This means that you can work with document.location
+ * as if it were a string in most cases: document.location = 'http://www.example.com' is a synonym of document.location.href = 'http://www.example.com'.
+ *
+ * To retrieve just the URL as a string, the read-only document.URL property can also be used.
+ *
+ * See more about the `Location` object: https://developer.mozilla.org/en-US/docs/Web/API/Location
+ *
+ * @property location
+ * @type Location
+ * @readOnly
+ */
+
+/**
+ * Returns the preferred style sheet set as set by the page author. This is determined from the order of style sheet declarations and the Default-Style HTTP header.
+ *
+ * @property preferredStyleSheetSet
+ * @type String
+ */
+
+/**
+ * Returns "loading" while the document is loading, "interactive" once it is finished parsing but still loading sub-resources,
+ * and "complete" once it has loaded.
+ *
+ * @property readyState
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * Returns the URI of the page that linked to this page.
+ *
+ * @property referrer
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * Indicates the name of the style sheet set that's currently in use. See more about Stylesheets: https://developer.mozilla.org/en-US/docs/Web/API/Stylesheet
+ * Setting the value of this property is equivalent to calling document.enableStyleSheetsForSet() with the value of currentStyleSheetSet,
+ * then setting the value of lastStyleSheetSet to that value as well.
+ *
+ * @property selectedStyleSheetSet
+ * @type String
+ */
+
+/**
+ * Returns string URL of the HTML document. Same as `document.documentURI`
+ *
+ * Note: HTML documents have a document.URL property which returns the same value. Unlike URL, documentURI is available on all types of documents.
+ *
+ * @property URL
+ * @type String
+ * @readOnly
+ */
+
+
+
+},{"./vdom-ns.js":54}],50:[function(require,module,exports){
+"use strict";
+
+/**
+ * Provides several methods that override native Element-methods to work with the vdom.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * <br>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module vnode
+ * @submodule extend-element
+ * @class Element
+ * @since 0.0.1
+*/
+
+
+require('../css/element.css');
+require('js-ext/lib/object.js');
+require('js-ext/lib/string.js');
+require('polyfill/lib/window.console.js');
+require('polyfill/lib/weakmap.js');
+require('polyfill/lib/mutationobserver.js'); // needs weakmap
+
+var ElementArray = require('./element-array.js');
+
+module.exports = function (window) {
+
+    var NAME = '[extend-element]: ',
+        domNodeToVNode = require('./node-parser.js')(window),
+        htmlToVNodes = require('./html-parser.js')(window),
+        NS = require('./vdom-ns.js')(window),
+        DOCUMENT = window.document,
+        nodeids = NS.nodeids,
+        arrayIndexOf = Array.prototype.indexOf,
+        POSITION = 'position',
+        EL_ = 'el-',
+        BLOCK = EL_+'block',
+        BORDERBOX = EL_+'borderbox',
+        NO_TRANS = EL_+'notrans',
+        INVISIBLE = EL_+'invisible',
+        HIDDEN = EL_+'hidden',
+        REGEXP_NODE_ID = /^#\S+$/,
+        LEFT = 'left',
+        TOP = 'top',
+        BORDER = 'border',
+        WIDTH = 'width',
+        HEIGHT = 'height',
+        STRING = 'string',
+        CLASS = 'class',
+        STYLE = 'style',
+        BORDER_LEFT_WIDTH = BORDER+'-left-'+WIDTH,
+        BORDER_RIGHT_WIDTH = BORDER+'-right-'+WIDTH,
+        BORDER_TOP_WIDTH = BORDER+'-top-'+WIDTH,
+        BORDER_BOTTOM_WIDTH = BORDER+'-bottom-'+WIDTH,
+        NUMBER = 'number',
+        PX = 'px',
+        setupObserver,
+        htmlToVFragments = function(html) {
+            return {
+                isFragment: true,
+                cVhildNodes: htmlToVNodes(html)
+            };
+        },
+        toCamelCase = function(input) {
+            return input.toLowerCase().replace(/-(.)/g, function(match, group) {
+                return group.toUpperCase();
+            });
+        },
+        fromCamelCase = function(input) {
+            return input.replace(/[a-z]([A-Z])/g, function(match, group) {
+                return match[0]+'-'+group.toLowerCase();
+            });
+        },
+        classListProto = {
+            add: function(className) {
+                // we do not use the property className, but setAttribute, because setAttribute can be hacked by other modules like `vdom`
+                // note: `this` is the returned object which is NOT the Elementinstance
+                var thisobject = this,
+                    element = thisobject.element,
+                    doSet = function(cl) {
+                        var clName = element.vnode.attrs[CLASS] || '';
+                        // we do not use the property className, but setAttribute, because setAttribute can be hacked by other modules like `vdom`
+                        thisobject.contains(cl) || (element.setAttribute(CLASS, clName+((clName.length>0) ? ' ' : '') + cl));
+                    };
+                if (typeof className === STRING) {
+                    doSet(className);
+                }
+                else if (Array.isArray(className)) {
+                    className.forEach(doSet);
+                }
+            },
+            remove: function(className) {
+                var element = this.element,
+                    doRemove = function(cl) {
+                        var clName = element.vnode.attrs[CLASS] || '',
+                            regexp = new RegExp('(?:^|\\s+)' + cl + '(?:\\s+|$)', 'g');
+                        // we do not use the property className, but setAttribute, because setAttribute can be hacked by other modules like `vdom`
+                        // note: `this` is the returned object which is NOT the Elementinstance
+                        element.setAttribute(CLASS, clName.replace(regexp, ' ').trim());
+                    };
+                if (typeof className === STRING) {
+                    doRemove(className);
+                }
+                else if (Array.isArray(className)) {
+                    className.forEach(doRemove);
+                }
+                (element.vnode.attrs[CLASS]==='') && element.removeAttr(CLASS);
+            },
+            toggle: function(className, forceState) {
+                // we do not use the property className, but setAttribute, because setAttribute can be hacked by other modules like `vdom`
+                // note: `this` is the returned object which is NOT the Elementinstance
+                var thisobject = this,
+                    doToggle = function(cl) {
+                        (((typeof forceState === 'boolean') && !forceState) || thisobject.contains(cl)) ? thisobject.remove(cl) : thisobject.add(cl);
+                    };
+                if (typeof className === STRING) {
+                    doToggle(className);
+                }
+                else if (Array.isArray(className)) {
+                    className.forEach(doToggle);
+                }
+            },
+            contains: function(className) {
+                // we do not use the property className, but setAttribute, because setAttribute can be hacked by other modules like `vdom`
+                // note: `this` is the returned object which is NOT the Elementinstance.
+                // May be an Array of classNames, which all needs to be present.
+                return this.element.vnode.hasClass(className);
+            },
+            item: function(index) {
+                var items = this.element.vnode.attrs['class'].split(' ');
+                return items[index];
+            },
+            _init: function(element) {
+                this.element = element;
+            }
+        },
+        treeWalkerProto = {
+            _init: function(element, whatToShow, filter) {
+                var instance = this;
+                if (typeof filter !== 'function') {
+                    // check if it is a NodeFilter-object
+                    filter.acceptNode && (filter=filter.acceptNode);
+                }
+                (typeof filter==='function') || (filter=null);
+                instance.vNodePointer = element.vnode.vFirstChild;
+                instance._root = element;
+                instance._whatToShow = whatToShow; // making it accessable for the getter `whatToShow`
+                instance._filter = filter; // making it accessable for the getter `filter`
+            },
+            _match: function(vnode, forcedVisible) {
+                var whatToShow = this._whatToShow,
+                    filter = this._filter,
+                    showElement = ((whatToShow & 1)!==0),
+                    showComment = ((whatToShow & 128)!==0),
+                    showText = ((whatToShow & 4)!==0),
+                    typeMatch = (showElement && (vnode.nodeType===1)) || (showComment && (vnode.nodeType===8)) || (showText && (vnode.nodeType===3)),
+                    visibleMatch = !forcedVisible || (window.getComputedStyle(vnode.domNode).display!=='none'),
+                    funcMatch = filter ? filter(vnode.domNode) : true;
+                return typeMatch && visibleMatch && funcMatch;
+            },
+            firstChild: function() {
+                var instance = this,
+                    foundVNode = instance.vNodePointer.vFirstChild;
+                while (foundVNode && !instance._match(foundVNode)) {
+                    foundVNode = foundVNode.vNext;
+                }
+                foundVNode && (instance.vNodePointer=foundVNode);
+                return foundVNode && foundVNode.domNode;
+            },
+            lastChild: function() {
+                var instance = this,
+                    foundVNode = instance.vNodePointer.vLastChild;
+                while (foundVNode && !instance._match(foundVNode)) {
+                    foundVNode = foundVNode.vPrevious;
+                }
+                foundVNode && (instance.vNodePointer=foundVNode);
+                return foundVNode && foundVNode.domNode;
+            },
+            nextNode: function() {
+                var instance = this,
+                    foundVNode = instance.vNodePointer.vNext;
+                while (foundVNode && !instance._match(foundVNode, true)) {
+                    foundVNode = foundVNode.vNext();
+                }
+                foundVNode && (instance.vNodePointer=foundVNode);
+                return foundVNode && foundVNode.domNode;
+            },
+            nextSibling: function() {
+                var instance = this,
+                    foundVNode = instance.vNodePointer.vNext;
+                while (foundVNode && !instance._match(foundVNode)) {
+                    foundVNode = foundVNode.vNext();
+                }
+                foundVNode && (instance.vNodePointer=foundVNode);
+                return foundVNode && foundVNode.domNode;
+            },
+            parentNode: function() {
+                var instance = this,
+                    foundVNode = instance.vNodePointer.vParent;
+                (foundVNode!==instance._root) && (instance.vNodePointer=foundVNode);
+                return foundVNode && foundVNode.domNode;
+            },
+            previousNode: function() {
+                var instance = this,
+                    foundVNode = instance.vNodePointer.vPrevious;
+                while (foundVNode && !instance._match(foundVNode, true)) {
+                    foundVNode = foundVNode.vPrevious();
+                }
+                foundVNode && (instance.vNodePointer=foundVNode);
+                return foundVNode && foundVNode.domNode;
+            },
+            previousSibling: function() {
+                var instance = this,
+                    foundVNode = instance.vNodePointer.vPrevious;
+                while (foundVNode && !instance._match(foundVNode)) {
+                    foundVNode = foundVNode.vPrevious();
+                }
+                foundVNode && (instance.vNodePointer=foundVNode);
+                return foundVNode && foundVNode.domNode;
+            }
+        };
+
+    require('./nodelist.js')(window);
+    require('window-ext')(window);
+
+    Object.defineProperties(treeWalkerProto, {
+        'currentNode': {
+            get: function() {
+                return this.vNodePointer.domNode;
+            }
+        },
+        'filter': {
+            get: function() {
+                return this._filter;
+            }
+        },
+        'root': {
+            get: function() {
+                return this._root;
+            }
+        },
+        'whatToShow': {
+            get: function() {
+                return this._whatToShow;
+            }
+        }
+    });
+
+    // NOTE: `vnode` should be a property of Node, NOT Element
+    /**
+     * Reference to the vnode-object that represents the Node
+     *
+     * (will autogenerate a vnode, should it not exists)
+     *
+     * @for Node
+     * @property vnode
+     * @type vnode
+     * @since 0.0.1
+     */
+    Object.defineProperty(window.Node.prototype, 'vnode', {
+       get: function() {
+            var instance = this,
+                vnode = instance._vnode,
+                parentNode, parentVNode, index;
+            if (!vnode) {
+                vnode = instance._vnode = domNodeToVNode(instance);
+                parentNode = instance.parentNode;
+                 // parentNode.vnode will be an existing vnode, because it runs through the same getter
+                // it will only be `null` if `html` is not virtualised
+                parentVNode = parentNode && parentNode.vnode;
+                if (parentVNode) {
+                    // set the vnode at the right position of its children:
+                    index = arrayIndexOf.call(parentNode.childNodes, instance);
+                    vnode._moveToParent(parentVNode, index);
+                }
+            }
+            return vnode;
+        },
+        set: function() {} // NOOP but needs to be there, otherwise we could clone any domNodes
+    });
+
+    (function(ElementPrototype) {
+       /**
+        * Appends an Element or an Element's string-representation at the end of Element's innerHTML, or before the `refElement`.
+        *
+        * @for Element
+        * @method append
+        * @param content {Element|ElementArray|String} content to append
+        * @param [refElement] {Element} reference Element where the content should be appended
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @return {Element} the created Element (or the last when multiple)
+        * @since 0.0.1
+        */
+        ElementPrototype.append = function(content, refElement, escape) {
+            var instance = this,
+                i, len, item, createdElement,
+            doAppend = function(oneItem) {
+                var vChildNodes, i, len, fragment;
+                if (escape) {
+                    if (oneItem.isFragment) {
+                        vChildNodes = oneItem.vChildNodes;
+                        len = vChildNodes.length;
+                        for (i=1; i<len; i++) {
+                            fragment = vChildNodes[i];
+                            fragment.textContent = fragment.innerHTML;
+                        }
+                    }
+                    else {
+                        oneItem.vTextContent = oneItem.vInnerHTML;
+                    }
+                }
+                createdElement = refElement ? instance.insertBefore(oneItem, refElement) : instance.appendChild(oneItem);
+            };
+            refElement && (instance.children.indexOf(refElement)!==-1) && (refElement=refElement.next());
+            (typeof content===STRING) && (content=htmlToVFragments(content));
+            if (Array.isArray(content)) {
+                len = content.length;
+                for (i=0; i<len; i++) {
+                    item = content[i];
+                    doAppend(item);
+                }
+            }
+            else {
+                doAppend(content);
+            }
+            return createdElement;
+        };
+
+       /**
+        * Returns a duplicate of the node. Use cloneNode(true) for a `deep` clone.
+        *
+        * @method cloneNode
+        * @param [deep] {Boolean} whether to perform a `deep` clone: with all descendants
+        * @return {Element} a clone of this Element
+        * @since 0.0.1
+        */
+        ElementPrototype._cloneNode = ElementPrototype.cloneNode;
+        ElementPrototype.cloneNode = function(deep) {
+            var instance = this,
+                cloned = instance._cloneNode(deep);
+            cloned.vnode = domNodeToVNode(cloned);
+            if (instance.vnode._data) {
+                Object.defineProperty(cloned.vnode, '_data', {
+                    configurable: false,
+                    enumerable: false,
+                    writable: false,
+                    value: {} // `writable` is false means we cannot chance the value-reference, but we can change {}'s properties itself
+                });
+                cloned.vnode._data.merge(instance.vnode._data);
+            }
+            return cloned;
+        };
+
+        /**
+         * Compares the position of the current node against another node in any other document.
+         *
+         * Returnvalues are a composition of the following bitwise values:
+         * <ul>
+         *     <li>Node.DOCUMENT_POSITION_DISCONNECTED  (one of the Elements is not part of the dom)</li>
+         *     <li>Node.DOCUMENT_POSITION_PRECEDING  (this Element comes before otherElement)</li>
+         *     <li>Node.DOCUMENT_POSITION_FOLLOWING  (this Element comes after otherElement)</li>
+         *     <li>Node.DOCUMENT_POSITION_CONTAINS  (otherElement trully contains -not equals- this Element)</li>
+         *     <li>Node.DOCUMENT_POSITION_CONTAINED_BY  (Element trully contains -not equals- otherElement)</li>
+         * </ul>
+         *
+         * @method compareDocumentPosition
+         * @param otherElement {Element}
+         * @return {Number} A bitmask, use it this way: if (thisNode.compareDocumentPosition(otherNode) & Node.DOCUMENT_POSITION_FOLLOWING) {// otherNode is following thisNode}
+         */
+        ElementPrototype.compareDocumentPosition = function(otherElement) {
+            // see http://ejohn.org/blog/comparing-document-position/
+            var instance = this,
+                parent, index1, index2;
+            if (instance===otherElement) {
+                return 0;
+            }
+            if (!DOCUMENT.contains(instance) || !DOCUMENT.contains(otherElement)) {
+                return 1;
+            }
+            else if (instance.contains(otherElement)) {
+                return 20;
+            }
+            else if (otherElement.contains(instance)) {
+                return 10;
+            }
+            parent = instance.getParent();
+            index1 = parent.vChildNodes.indexOf(instance.vnode);
+            index2 = parent.vChildNodes.indexOf(otherElement.vnode);
+            if (index1<index2) {
+                return 4;
+            }
+            else {
+                return 2;
+            }
+        };
+
+        /**
+         * Indicating whether this Element contains OR equals otherElement.
+         *
+         * @method contains
+         * @param otherElement {Element}
+         * @return {Boolean} whether this Element contains OR equals otherElement.
+         */
+        ElementPrototype.contains = function(otherElement) {
+            if (otherElement===this) {
+                return true;
+            }
+            return this.vnode.contains(otherElement.vnode);
+        };
+
+        /**
+         * Returns a newly created TreeWalker object with this Element as root.
+         *
+         * The TreeWalker is life presentation of the dom. It gets updated when the dom changes.
+         *
+         * @method createTreeWalker
+         * @param root {Element} The root node at which to begin the NodeIterator's traversal.
+         * @param [whatToShow] {Number} Filter specification constants from the NodeFilter DOM interface, indicating which nodes to iterate over.
+         * You can use or sum one of the next properties:
+         * <ul>
+         *   <li>window.NodeFilter.SHOW_ELEMENT</li>
+         *   <li>window.NodeFilter.SHOW_COMMENT</li>
+         *   <li>window.NodeFilter.SHOW_TEXT</li>
+         * </ul>
+         * @param [filter] {NodeFilter|function} An object implementing the NodeFilter interface or a function. See https://developer.mozilla.org/en-US/docs/Web/API/NodeFilter
+         * @return {TreeWalker}
+         * @since 0.0.1
+         */
+        ElementPrototype.createTreeWalker = function(whatToShow, filter) {
+            var treeWalker = Object.create(treeWalkerProto);
+            treeWalker._init(this, whatToShow, filter);
+            return treeWalker;
+        };
+
+       /**
+        * Sets the inline-style of the Element exactly to the specified `value`, overruling previous values.
+        * Making the Element's inline-style look like: style="value".
+        *
+        * This is meant for a quick one-time setup. For individually inline style-properties to be set, you can use `setInlineStyle()`.
+        *
+        * @method defineInlineStyle
+        * @param value {String} the style string to be set
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.defineInlineStyle = function(value) {
+            return this.setAttr(STYLE, value);
+        };
+
+       /**
+        * Empties the content of the Element.
+        * Alias for thisNode.vTextContent = '';
+        *
+        * @method empty
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.empty = function() {
+            this.setText('');
+        };
+
+        /**
+         * Reference to the first of sibbling vNode's, where the related dom-node is an Element(nodeType===1).
+         *
+         * @method first
+         * @param [cssSelector] {String} to return the first Element that matches the css-selector
+         * @return {Element}
+         * @since 0.0.1
+         */
+        ElementPrototype.first = function(cssSelector) {
+            return this.vnode.vParent.firstOfVChildren(cssSelector).domNode;
+        };
+
+        /**
+         * Reference to the first child-Element, where the related dom-node an Element (nodeType===1).
+         *
+         * @method firstOfChildren
+         * @param [cssSelector] {String} to return the first Element that matches the css-selector
+         * @return {Element}
+         * @since 0.0.1
+         */
+        ElementPrototype.firstOfChildren = function(cssSelector) {
+            return this.vnode.firstOfVChildren(cssSelector).domNode;
+        };
+
+       /**
+        * Forces the Element to be inside an ancestor-Element that has the `overfow="scroll" set.
+        *
+        * @method forceIntoNodeView
+        * @param [ancestor] {Element} the Element where it should be forced into its view.
+        *        Only use this when you know the ancestor and this ancestor has an `overflow="scroll"` property
+        *        when not set, this method will seek through the doc-tree upwards for the first Element that does match this criteria.
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.forceIntoNodeView = function(ancestor) {
+            console.log(NAME, 'forceIntoNodeView');
+            var instance = this,
+                parentOverflowNode = this.getParent(),
+                match, left, width, right, height, top, bottom, scrollLeft, scrollTop, parentOverflowNodeX, parentOverflowNodeY,
+                parentOverflowNodeStartTop, parentOverflowNodeStartLeft, parentOverflowNodeStopRight, parentOverflowNodeStopBottom, newX, newY;
+            if (ancestor) {
+                parentOverflowNode = ancestor;
+            }
+            else {
+                while ((parentOverflowNode!==DOCUMENT) && !(match=(parentOverflowNode.getStyle('overflow')==='scroll'))) {
+                    parentOverflowNode = parentOverflowNode.getParent();
+                }
+            }
+            if (parentOverflowNode!==DOCUMENT) {
+                left = instance.left;
+                width = instance.offsetWidth;
+                right = left + width;
+                height = instance.offsetHeight;
+                top = instance.top;
+                bottom = top + height;
+                scrollLeft = parentOverflowNode.scrollLeft;
+                scrollTop = parentOverflowNode.scrollTop;
+                parentOverflowNodeX = parentOverflowNode.left;
+                parentOverflowNodeY = parentOverflowNode.top;
+                parentOverflowNodeStartTop = parentOverflowNodeY+parseInt(parentOverflowNode.getStyle(BORDER_TOP_WIDTH), 10);
+                parentOverflowNodeStartLeft = parentOverflowNodeX+parseInt(parentOverflowNode.getStyle(BORDER_LEFT_WIDTH), 10);
+                parentOverflowNodeStopRight = parentOverflowNodeX+parentOverflowNode.offsetWidth-parseInt(parentOverflowNode.getStyle(BORDER_RIGHT_WIDTH), 10);
+                parentOverflowNodeStopBottom = parentOverflowNodeY+parentOverflowNode.offsetHeight-parseInt(parentOverflowNode.getStyle(BORDER_BOTTOM_WIDTH), 10);
+
+                if (left<parentOverflowNodeStartLeft) {
+                    newX = Math.max(0, scrollLeft+left-parentOverflowNodeStartLeft);
+                }
+                else if (right>parentOverflowNodeStopRight) {
+                    newX = scrollLeft + right - parentOverflowNodeStopRight;
+                }
+
+                if (top<parentOverflowNodeStartTop) {
+                    newY = Math.max(0, scrollTop+top-parentOverflowNodeStartTop);
+                }
+                else if (bottom>parentOverflowNodeStopBottom) {
+                    newY = scrollTop + bottom - parentOverflowNodeStopBottom;
+                }
+
+                if ((newX!==undefined) || (newY!==undefined)) {
+                    parentOverflowNode.scrollTo((newX!==undefined) ? newX : scrollLeft,(newY!==undefined) ? newY : scrollTop);
+                }
+            }
+            return instance;
+        };
+
+       /**
+        * Forces the Element to be inside the window-view. Differs from `scrollIntoView()` in a way
+        * that `forceIntoView()` doesn't change the position when it's inside the view, whereas
+        * `scrollIntoView()` sets it on top of the view.
+        *
+        * @method forceIntoView
+        * @param [notransition=false] {Boolean} set true if you are sure positioning is without transition.
+        *        this isn't required, but it speeds up positioning. Only use when no transition is used:
+        *        when there is a transition, setting this argument `true` would miscalculate the position.
+        * @param [rectangle] {Object} Set this if you have already calculated the window-rectangle (used for preformance within drag-drop)
+        * @param [rectangle.x] {Number} scrollLeft of window
+        * @param [rectangle.y] {Number} scrollTop of window
+        * @param [rectangle.w] {Number} width of window
+        * @param [rectangle.h] {Number} height of window
+        * @chainable
+        * @since 0.0.2
+        */
+        ElementPrototype.forceIntoView = function(notransition, rectangle) {
+            console.log(NAME, 'forceIntoView');
+            var instance = this,
+                left = instance.left,
+                width = instance.offsetWidth,
+                right = left + width,
+                height = instance.offsetHeight,
+                top = instance.top,
+                bottom = top + height,
+                windowLeft, windowTop, windowRight, windowBottom, newX, newY;
+            if (rectangle) {
+                windowLeft = rectangle.x;
+                windowTop = rectangle.y;
+                windowRight = rectangle.w;
+                windowBottom = rectangle.h;
+            }
+            else {
+                windowLeft = window.getScrollLeft();
+                windowTop = window.getScrollTop();
+                windowRight = windowLeft + window.getWidth();
+                windowBottom = windowTop + window.getHeight();
+            }
+
+            if (left<windowLeft) {
+                newX = Math.max(0, left);
+            }
+            else if (right>windowRight) {
+                newX = windowLeft + right - windowRight;
+            }
+            if (top<windowTop) {
+                newY = Math.max(0, top);
+            }
+            else if (bottom>windowBottom) {
+                newY = windowTop + bottom - windowBottom;
+            }
+
+            if ((newX!==undefined) || (newY!==undefined)) {
+                window.scrollTo((newX!==undefined) ? newX : windowLeft, (newY!==undefined) ? newY : windowTop);
+            }
+            return instance;
+        };
+
+        /**
+         * Gets an ElementArray of vElements that lie within this Element and match the css-selector.
+         *
+         * @method getAll
+         * @param cssSelector {String} css-selector to match
+         * @return {ElementArray} ElementArray of vElements that match the css-selector
+         * @since 0.0.1
+         */
+        ElementPrototype.getAll = function(cssSelector) {
+            return this.querySelectorAll(cssSelector);
+        };
+
+       /**
+        * Gets an attribute of the Element.
+        *
+        * Alias for getAttribute().
+        *
+        * @method getAttr
+        * @param attributeName {String}
+        * @return {String|null} value of the attribute
+        * @since 0.0.1
+        */
+        ElementPrototype.getAttr = function(attributeName) {
+            return this.vnode.attrs[attributeName] || null;
+        };
+
+        /**
+         * Returns all attributes as defined as an key/value object.
+         *
+         * @method getAttrs
+         * @param attributeName {String}
+         * @return {Object} all attributes as on Object
+         * @since 0.0.1
+         */
+        ElementPrototype.getAttrs = function() {
+            return this.vnode.attrs;
+        };
+
+       /**
+        * Gets an attribute of the Element.
+        *
+        * Same as getAttr().
+        *
+        * @method getAttribute
+        * @param attributeName {String}
+        * @return {String|null} value of the attribute
+        * @since 0.0.1
+        */
+        ElementPrototype._getAttribute = ElementPrototype.getAttribute;
+        ElementPrototype.getAttribute = function(attributeName) {
+            return this.vnode.attrs[attributeName] || null;
+        };
+
+        /**
+         * Returns a live collection of the Element-childNodes.
+         *
+         * @method getChildren
+         * @return {ElementArray}
+         * @since 0.0.1
+         */
+        ElementPrototype.getChildren = function() {
+            return this.vnode.children;
+        };
+
+        /**
+         * Returns a token list of the class attribute of the element.
+         * See: https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList
+         *
+         * @method getClassList
+         * @return DOMTokenList
+         * @since 0.0.1
+         */
+        ElementPrototype.getClassList = function() {
+            var instance = this,
+                vnode = instance.vnode;
+            if (!vnode._classList) {
+                vnode._classList = Object.create(classListProto);
+                vnode._classList._init(instance);
+            }
+            return vnode._classList;
+        };
+
+       /**
+        * Returns data set specified by `key`. If not set, `undefined` will be returned.
+        * The data is efficiently stored on the vnode.
+        *
+        * @method getData
+        * @param key {string} name of the key
+        * @return {Any|undefined} data set specified by `key`
+        * @since 0.0.1
+        */
+        ElementPrototype.getData = function(key) {
+            var vnode = this.vnode;
+            return vnode._data && vnode._data[key];
+        };
+
+       /**
+        * Gets one Element, specified by the css-selector. To retrieve a single element by id,
+        * you need to prepend the id-name with a `#`. When multiple Element's match, the first is returned.
+        *
+        * @method getElement
+        * @param cssSelector {String} css-selector to match
+        * @return {Element|null} the Element that was search for
+        * @since 0.0.1
+        */
+        ElementPrototype.getElement = function(cssSelector) {
+            return ((cssSelector[0]==='#') && (cssSelector.indexOf(' ')===-1)) ? this.getElementById(cssSelector.substr(1)) : this.querySelector(cssSelector);
+        };
+
+        /**
+         * Returns the Element matching the specified id, which should should be a descendant of this Element.
+         *
+         * @method getElementById
+         * @param id {String} id of the Element
+         * @return {Element|null}
+         *
+         */
+        ElementPrototype.getElementById = function(id) {
+            var element = nodeids[id];
+            if (element && !this.contains(element)) {
+                // outside itself
+                return null;
+            }
+            return element || null;
+        };
+
+       /**
+        * Returns the Elments `id`
+        *
+        * @method getId
+        * @return {String|undefined} Elements `id`
+        * @since 0.0.1
+        */
+        ElementPrototype.getId = function() {
+            return this.vnode.id;
+        };
+
+       /**
+        * Returns inline style of the specified property. `Inline` means: what is set directly on the Element,
+        * this doesn't mean necesairy how it is looked like: when no css is set inline, the Element might still have
+        * an appearance because of other CSS-rules.
+        *
+        * In most cases, you would be interesting in using `getStyle()` instead.
+        *
+        * Note: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine
+        *
+        * @method getInlineStyle
+        * @param cssProperty {String} the css-property to look for
+        * @param [pseudo] {String} to look inside a pseudo-style
+        * @return {String|undefined} css-style
+        * @since 0.0.1
+        */
+        ElementPrototype.getInlineStyle = function(cssProperty, pseudo) {
+            var styles = this.vnode.styles,
+                groupStyle = styles && styles[pseudo || 'element'];
+            return groupStyle && groupStyle[fromCamelCase(cssProperty)];
+        };
+
+        /**
+         * Gets innerHTML of the dom-node.
+         * Goes through the vdom, so it's superfast.
+         *
+         * Use this method instead of `innerHTML`
+         *
+         * @method getInnerHTML
+         * @return {String}
+         * @since 0.0.1
+         */
+        ElementPrototype.getInnerHTML = function() {
+            return this.vnode.innerHTML;
+        };
+
+        /**
+         * Gets the outerHTML of the dom-node.
+         * Goes through the vdom, so it's superfast.
+         *
+         * Use this method instead of `outerHTML`
+         *
+         * @method getOuterHTML
+         * @return {String}
+         * @since 0.0.1
+         */
+        ElementPrototype.getOuterHTML = function() {
+            return this.vnode.outerHTML;
+        };
+
+        /**
+         * Returns the Element's parent Element.
+         *
+         * @method getParent
+         * @return {Element}
+         */
+        ElementPrototype.getParent = function() {
+            var vParent = this.vnode.vParent;
+            return vParent && vParent.domNode;
+        };
+
+       /**
+        * Returns cascaded style of the specified property. `Cascaded` means: the actual present style,
+        * the way it is visible (calculated through the DOM-tree).
+        *
+        * Note1: values are absolute: percentages and points are converted to absolute values, sizes are in pixels, colors in rgb/rgba-format.
+        * Note2: you cannot query shotcut-properties: use `margin-left` instead of `margin`.
+        * Note3: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine.
+        *
+        * @method getCascadeStyle
+        * @param cssProperty {String} property that is queried
+        * @param [pseudo] {String} to query pseudo-element, fe: `:before` or `:first-line`
+        * @return {String} value for the css-property
+        * @since 0.0.1
+        */
+        ElementPrototype.getStyle = function(cssProperty, pseudo) {
+            return window.getComputedStyle(this, pseudo)[toCamelCase(cssProperty)];
+        };
+
+       /**
+        * Elements tag-name in uppercase (same as nodeName).
+        *
+        * @method getTagName
+        * @return {String}
+        * @since 0.0.1
+        */
+        ElementPrototype.getTagName = function() {
+            return this.vnode.tag;
+        };
+
+        /**
+         * Gets the innerContent of the Element as plain text.
+         * Goes through the vdom, so it's superfast.
+         *
+         * Use this method instead of `textContent`
+         *
+         * @method getText
+         * @return String
+         * @since 0.0.1
+         */
+        ElementPrototype.getText = function() {
+            return this.vnode.textContent;
+        };
+
+       /**
+        * Gets the value of the following vElements:
+        *
+        * <ul>
+        *     <li>input</li>
+        *     <li>textarea</li>
+        *     <li>select</li>
+        *     <li>any container that is `contenteditable`</li>
+        * </ul>
+        *
+        * @method getValue
+        * @return {String}
+        * @since 0.0.1
+        */
+        ElementPrototype.getValue = function() {
+            // cautious: input and textarea must be accessed by their propertyname:
+            // input.getAttribute('value') would return the default-value instead of actual
+            // and textarea.getAttribute('value') doesn't exist
+            var instance = this,
+                editable = ((editable=instance.vnode.attrs.contenteditable) && (editable!=='false'));
+            return editable ? instance.getHTML() : instance.value;
+        };
+
+       /**
+        * Whether the Element has the attribute set.
+        *
+        * Alias for hasAttribute().
+        *
+        * @method hasAttr
+        * @param attributeName {String}
+        * @return {Boolean} Whether the Element has the attribute set.
+        * @since 0.0.1
+        */
+        ElementPrototype.hasAttr = function(attributeName) {
+            return !!this.vnode.attrs[attributeName];
+        };
+
+       /**
+        * Whether the Element has the attribute set.
+        *
+        * Same as hasAttr().
+        *
+        * @method hasAttribute
+        * @param attributeName {String}
+        * @return {Boolean} Whether the Element has the attribute set.
+        * @since 0.0.1
+        */
+        ElementPrototype.hasAttribute = function(attributeName) {
+            return !!this.vnode.attrs[attributeName];
+        };
+
+        /**
+         * Indicating if the current element has any attributes or not.
+         *
+         * @method hasAttributes
+         * @return {Boolean} Whether the current element has any attributes or not.
+         */
+        ElementPrototype.hasAttributes = function() {
+            return !!this.vnode.attrs && (this.vnode.attrs.length > 0);
+        };
+
+       /**
+        * Indicating if the Element has any children (childNodes with nodeType of 1).
+        *
+        * @method hasChildren
+        * @return {Boolean} whether the Element has children
+        * @since 0.0.1
+        */
+        ElementPrototype.hasChildren = function() {
+            return this.vnode.hasVChildren();
+        };
+
+       /**
+        * Checks whether the className is present on the Element.
+        *
+        * @method hasClass
+        * @param className {String|Array} the className to check for. May be an Array of classNames, which all needs to be present.
+        * @return {Boolean} whether the className (or classNames) is present on the Element
+        * @since 0.0.1
+        */
+        ElementPrototype.hasClass = function(className) {
+            return this.getClassList().contains(className);
+        };
+
+       /**
+        * If the Element has data set specified by `key`. The data could be set with `setData()`.
+        *
+        * @method hasData
+        * @param key {string} name of the key
+        * @return {Boolean}
+        * @since 0.0.1
+        */
+        ElementPrototype.hasData = function(key) {
+            var vnode = this.vnode;
+            return !!(vnode._data && vnode._data[key]);
+        };
+
+       /**
+        * Indicates whether Element currently has the focus.
+        *
+        * @method hasFocus
+        * @return {Boolean}
+        * @since 0.0.1
+        */
+        ElementPrototype.hasFocus = function() {
+            return (DOCUMENT.activeElement===this);
+        };
+
+       /**
+         * Checks whether the Element lies within the specified selector (which can be a CSS-selector or a Element)
+         *
+         * @example
+         * var divnode = childnode.inside('div.red');
+         *
+         * @example
+         * var divnode = childnode.inside(containerNode);
+         *
+         * @method inside
+         * @param selector {Element|String} the selector, specified by a Element or a css-selector
+         * @return {Element|null} the nearest Element that matches the selector, or `null` when not found
+         * @since 0.0.1
+         */
+        ElementPrototype.inside = function(selector) {
+            var instance = this,
+                vParent;
+            if (typeof selector===STRING) {
+                vParent = instance.vnode.vParent;
+                while (vParent && !vParent.matchesSelector(selector)) {
+                    vParent = vParent.vParent;
+                }
+                return vParent ? vParent.domNode : null;
+            }
+            else {
+                // selector should be an Element
+                return ((selector!==instance) && selector.contains(instance)) ? selector : null;
+            }
+        };
+
+       /**
+         * Checks whether a point specified with x,y is within the Element's region.
+         *
+         * @method insidePos
+         * @param x {Number} x-value for new position (coordinates are page-based)
+         * @param y {Number} y-value for new position (coordinates are page-based)
+         * @return {Boolean} whether there is a match
+         * @since 0.0.1
+         */
+        ElementPrototype.insidePos = function(x, y) {
+            var instance = this,
+                left = instance.left,
+                top = instance.top,
+                right = left + instance.offsetWidth,
+                bottom = top + instance.offsetHeight;
+            return (x>=left) && (x<=right) && (y>=top) && (y<=bottom);
+        };
+
+        /**
+         * Reference to the last of sibbling vNode's, where the related dom-node is an Element(nodeType===1).
+         *
+         * @method last
+         * @param [cssSelector] {String} to return the last Element that matches the css-selector
+         * @return {Element}
+         * @since 0.0.1
+         */
+        ElementPrototype.last = function(cssSelector) {
+            var vParent = this.vnode.vParent;
+            return vParent && vParent.lastOfVChildren(cssSelector).domNode;
+        };
+
+        /**
+         * Reference to the last child-Element, where the related dom-node an Element (nodeType===1).
+         *
+         * @method lastOfChildren
+         * @param [cssSelector] {String} to return the last Element that matches the css-selector
+         * @return {Element}
+         * @since 0.0.1
+         */
+        ElementPrototype.lastOfChildren = function(cssSelector) {
+            return this.vnode.lastOfVChildren(cssSelector).domNode;
+        };
+
+        /**
+         * Indicates if the element would be selected by the specified selector string.
+         * Alias for matchesSelector()
+         *
+         * @method matches
+         * @param [cssSelector] {String} the css-selector to check for
+         * @return {Boolean}
+         * @since 0.0.1
+         */
+        ElementPrototype.matches = function(selectors) {
+            return this.vnode.matchesSelector(selectors);
+        };
+
+        /**
+         * Indicates if the element would be selected by the specified selector string.
+         * Alias for matches()
+         *
+         * @method matchesSelector
+         * @param [cssSelector] {String} the css-selector to check for
+         * @return {Boolean}
+         * @since 0.0.1
+         */
+        ElementPrototype.matchesSelector = function(selectors) {
+            return this.vnode.matchesSelector(selectors);
+        };
+
+        /**
+         * Reference to the next of sibbling Element, where the related dom-node is an Element(nodeType===1).
+         *
+         * @method next
+         * @param [cssSelector] {String} css-selector to be used as a filter
+         * @return {Element|null}
+         * @type Element
+         * @since 0.0.1
+         */
+        ElementPrototype.next = function(cssSelector) {
+            var vnode = this.vnode,
+                found, vNextElement;
+            if (!cssSelector) {
+                return vnode.vNextElement.domNode;
+            }
+            vNextElement = vnode;
+            do {
+                vNextElement = vNextElement.vNextElement;
+                found = vNextElement && vNextElement.matchesSelector(cssSelector);
+            } while(vNextElement && !found);
+            return found ? vNextElement.domNode : null;
+        };
+
+
+       /**
+        * Prepends a Element or text at the start of Element's innerHTML, or before the `refElement`.
+        *
+        * @method prepend
+        * @param content {Element|Element|ElementArray|String} content to prepend
+        * @param [refElement] {Element} reference Element where the content should be prepended
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @return {Element} the created Element (or the last when multiple)
+        * @since 0.0.1
+        */
+        ElementPrototype.prepend = function(content, refElement, escape) {
+            var instance = this,
+                i, len, item, createdElement,
+            doPrepend = function(oneItem) {
+                var vChildNodes, i, len, fragment;
+                if (escape) {
+                    if (oneItem.isFragment) {
+                        vChildNodes = oneItem.vChildNodes;
+                        len = vChildNodes.length;
+                        for (i=1; i<len; i++) {
+                            fragment = vChildNodes[i];
+                            fragment.textContent = fragment.innerHTML;
+                        }
+                    }
+                    else {
+                        oneItem.vTextContent = oneItem.vInnerHTML;
+                    }
+                }
+                createdElement = refElement ? instance.insertBefore(oneItem, refElement) : instance.appendChild(oneItem);
+            };
+            refElement || (refElement=instance.firstChild);
+            (typeof content===STRING) && (content=htmlToVFragments(content));
+            if (Array.isArray(content)) {
+                len = content.length;
+                for (i=0; i<len; i++) {
+                    item = content[i];
+                    doPrepend(item);
+                }
+            }
+            else {
+                doPrepend(content);
+            }
+            return createdElement;
+        };
+
+        /**
+         * Reference to the previous of sibbling Element, where the related dom-node is an Element(nodeType===1).
+         *
+         * @method previous
+         * @param [cssSelector] {String} css-selector to be used as a filter
+         * @return {Element|null}
+         * @type Element
+         * @since 0.0.1
+         */
+        ElementPrototype.previous = function(cssSelector) {
+            var vnode = this.vnode,
+                found, vPreviousElement;
+            if (!cssSelector) {
+                return vnode.vPreviousElement.domNode;
+            }
+            vPreviousElement = vnode;
+            do {
+                vPreviousElement = vPreviousElement.vPreviousElement;
+                found = vPreviousElement && vPreviousElement.matchesSelector(cssSelector);
+            } while(vPreviousElement && !found);
+            return found ? vPreviousElement.domNode : null;
+        };
+
+        /**
+         * Returns the first Element within the Element, that matches the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,
+         * they need to be separated by a `comma`.
+         *
+         * @method querySelector
+         * @param selectors {String} CSS-selector(s) that should match
+         * @return {Element}
+         */
+        ElementPrototype.querySelector = function(selectors) {
+            var found,
+                inspectChildren = function(vnode) {
+                    var vChildNodes = vnode.vChildNodes,
+                        len = vChildNodes.length,
+                        i, vChildNode;
+                    for (i=0; (i<len) && !found; i++) {
+                        vChildNode = vChildNodes[i];
+                        vChildNode.matchesSelector(selectors) && (found=vChildNode.domNode);
+                        found || inspectChildren(vChildNode);
+                    }
+                };
+            inspectChildren(this.vnode);
+            return found;
+        };
+
+        /**
+         * Returns an ElementArray of all vElements within the Element, that match the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,
+         * they need to be separated by a `comma`.
+         *
+         * querySelectorAll is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.
+         *
+         * @method querySelectorAll
+         * @param selectors {String} CSS-selector(s) that should match
+         * @return {ElementArray} non-life Array (snapshot) with vElements
+         */
+        ElementPrototype.querySelectorAll = function(selectors) {
+            var found = ElementArray.createArray(),
+                inspectChildren = function(vnode) {
+                    var vChildNodes = vnode.vChildNodes,
+                        len = vChildNodes.length,
+                        i, vChildNode;
+                    for (i=0; i<len; i++) {
+                        vChildNode = vChildNodes[i];
+                        vChildNode.matchesSelector(selectors) && (found[found.length]=vChildNode.domNode);
+                        inspectChildren(vChildNode);
+                    }
+                };
+            inspectChildren(this.vnode);
+            return found;
+        };
+
+       /**
+         * Checks whether the Element has its rectangle inside the outboud-Element.
+         * This is no check of the DOM-tree, but purely based upon coordinates.
+         *
+         * @method rectangleInside
+         * @param outboundElement {Element} the Element where this element should lie inside
+         * @return {Boolean} whether the Element lies inside the outboundElement
+         * @since 0.0.1
+         */
+        ElementPrototype.rectangleInside = function(outboundElement) {
+            var instance = this,
+                outerRect = outboundElement.getBoundingClientRect(),
+                innerRect = instance.getBoundingClientRect();
+            return (outerRect.left<=innerRect.left) &&
+                   (outerRect.top<=innerRect.top) &&
+                   ((outerRect.left+outboundElement.offsetWidth)>=(innerRect.left+instance.offsetWidth)) &&
+                   ((outerRect.top+outboundElement.offsetHeight)>=(innerRect.top+instance.offsetHeight));
+        };
+
+       /**
+        * Removes the Element from the DOM.
+        * Alias for thisNode.parentNode.removeChild(thisNode);
+        *
+        * @method remove
+        * @since 0.0.1
+        */
+        ElementPrototype.remove = function() {
+            var vnode = this.vnode;
+            vnode._noSync();
+            vnode.vParent.domNode.removeChild(vnode.domNode);
+            vnode._remove();
+        };
+
+       /**
+        * Removes the attribute from the Element.
+        *
+        * Alias for removeAttribute() BUT is chainable instead (removeAttribute is not).
+        *
+        * @method removeAttr
+        * @param attributeName {String}
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.removeAttr = function(/* attributeName */) {
+            this.removeAttribute.apply(this, arguments);
+            return this;
+        };
+
+       /**
+        * Removes the attribute from the Element.
+        *
+        * Use removeAttr() to be able to chain.
+        *
+        * @method removeAttr
+        * @param attributeName {String}
+        * @since 0.0.1
+        */
+        ElementPrototype._removeAttribute = ElementPrototype.removeAttribute;
+        ElementPrototype.removeAttribute = function(attributeName) {
+            var instance = this,
+                vnode = this.vnode;
+            instance._removeAttribute.apply(instance, arguments);
+            delete vnode.attrs[attributeName];
+            // in case of STYLE attribute --> special treatment
+            (attributeName===STYLE) && (vnode.styles={});
+            // in case of CLASS attribute --> special treatment
+            (attributeName===CLASS) && (vnode.classNames={});
+        };
+
+       /**
+        * Removes a className from the Element.
+        *
+        * @method removeClass
+        * @param className {String|Array} the className that should be removed. May be an Array of classNames.
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.removeClass = function(className) {
+            var instance = this;
+            instance.getClassList().remove(className);
+            return instance;
+        };
+
+       /**
+        * Removes data specified by `key` that was set by using `setData()`.
+        * When no arguments are passed, all node-data (key-value pairs) will be removed.
+        *
+        * @method removeData
+        * @param key {string} name of the key
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.removeData = function(key) {
+            var vnode = this.vnode;
+            if (vnode._data) {
+                if (key) {
+                    delete vnode._data[key];
+                }
+                else {
+                    // we cannot just redefine _data, for it is set as readonly
+                    vnode._data.each(
+                        function(value, key) {
+                            delete vnode._data[key];
+                        }
+                    );
+                }
+            }
+            return this;
+        };
+
+       /**
+        * Removes a css-property (inline) out of the Element.
+        * No need to use camelCase.
+        *
+        * @method removeInlineStyle
+        * @param cssProperty {String} the css-property to remove
+        * @param [pseudo] {String} to look inside a pseudo-style
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.removeInlineStyle = function(cssProperty, pseudo) {
+            var instance = this,
+                vnode = instance.vnode,
+                styles = vnode.styles[pseudo || 'element'],
+                prop;
+            if (styles) {
+                prop = fromCamelCase(cssProperty);
+                if (styles[prop]) {
+                    delete styles[prop];
+                    (styles.size()===0) && (delete vnode.styles[pseudo || 'element']);
+                    instance.setAttr('style', vnode.serializeStyles());
+                }
+            }
+            return instance;
+        };
+
+       /**
+        * Replaces the Element with a new Element.
+        *
+        * @method replace
+        * @param content {Element|Element|ElementArray|String} content to replace
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @return {Element} the created Element (or the last when multiple)
+        * @since 0.0.1
+        */
+        ElementPrototype.replace = function(newElement, escape) {
+            var instance = this,
+                createdElement;
+            instance.setClass(HIDDEN);
+            createdElement = instance.getParent().prepend(newElement, instance, escape);
+            instance.remove();
+            return createdElement;
+        };
+
+       /**
+        * Replaces the className of the Element with a new className.
+        * If the previous className is not available, the new className is set nevertheless.
+        *
+        * @method replaceClass
+        * @param prevClassName {String} the className to be replaced
+        * @param newClassName {String} the className to be set
+        * @param [force ] {Boolean} whether the new className should be set, even is the previous className isn't there
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.replaceClass = function(prevClassName, newClassName, force) {
+            var instance = this;
+            if (force || instance.hasClass(prevClassName)) {
+                instance.removeClass(prevClassName).setClass(newClassName);
+            }
+            return instance;
+        };
+
+        /**
+         * Scrolls the content of the Element into the specified scrollposition.
+         * Only available when the Element has overflow.
+         *
+         * @method scrollTo
+         * @param x {Number} left-offset in pixels
+         * @param y {Number} top-offset in pixels
+         * @chainable
+         * @since 0.0.1
+        */
+        ElementPrototype.scrollTo = function(x, y) {
+            var instance = this;
+            instance.scrollLeft = x;
+            instance.scrollTop = y;
+            return instance;
+        };
+
+       /**
+         * Sets the attribute on the Element with the specified value.
+         *
+         * Alias for setAttribute(), BUT differs in a way that setAttr is chainable, setAttribute is not.
+         *
+         * @method setAttr
+         * @param attributeName {String}
+         * @param value {Any} the value that belongs to `key`
+         * @chainable
+         * @since 0.0.1
+        */
+        ElementPrototype.setAttr = function(/* attributeName, value */) {
+            var instance = this;
+            instance.setAttribute.apply(instance, arguments);
+            return instance;
+        };
+
+       /**
+         * Sets the attribute on the Element with the specified value.
+         *
+         * Alias for setAttr(), BUT differs in a way that setAttr is chainable, setAttribute is not.
+         *
+         * @method setAttribute
+         * @param attributeName {String}
+         * @param value {Any} the value that belongs to `key`
+        */
+        ElementPrototype._setAttribute = ElementPrototype.setAttribute;
+        ElementPrototype.setAttribute = function(attributeName, value) {
+            var instance = this,
+                vnode = instance.vnode;
+            (value==='') && (value=null);
+            if (value) {
+                instance._setAttribute.apply(instance, arguments);
+                vnode.attrs[attributeName] = value;
+                if ((attributeName===CLASS) || (attributeName===STYLE)) {
+                    vnode.reloadAttr(attributeName);
+                }
+            }
+            else {
+                instance.removeAttribute(attributeName);
+            }
+        };
+
+       /**
+        * Adds a class to the Element. If the class already exists it won't be duplicated.
+        *
+        * @method setClass
+        * @param className {String|Array} className to be added, may be an array of classNames
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.setClass = function(className) {
+            var instance = this;
+            instance.getClassList().add(className);
+            return instance;
+        };
+
+        /**
+         * Stores arbitary `data` at the Element (actually at vnode). This has nothing to do with node-attributes whatsoever,
+         * it is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.
+         *
+         * @method setData
+         * @param key {string} name of the key
+         * @param value {Any} the value that belongs to `key`
+         * @chainable
+         * @since 0.0.1
+        */
+        ElementPrototype.setData = function(key, value) {
+            var vnode = this.vnode;
+            vnode._data ||  Object.defineProperty(vnode, '_data', {
+                configurable: false,
+                enumerable: false,
+                writable: false,
+                value: {} // `writable` is false means we cannot chance the value-reference, but we can change {}'s properties itself
+            });
+            vnode._data[key] = value;
+            return this;
+        };
+
+       /**
+        * Sets the Elments `id`
+        *
+        * @method setId
+        * @param val {String} Elements new `id`
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.setId = function(val) {
+            return this.setAttr('id', val);
+        };
+
+       /**
+        * Sets a css-property (inline) for the Element.
+        *
+        * Note: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine
+        *
+        * @method setStyle
+        * @param cssProperty {String} the css-property to be set
+        * @param value {String} the css-value
+        * @param [pseudo] {String} to look inside a pseudo-style
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.setInlineStyle = function(cssProperty, value, pseudo) {
+            var instance = this,
+                vnode = instance.vnode,
+                styles, group;
+            value || (value='');
+            cssProperty = fromCamelCase(cssProperty);
+            if (value==='') {
+                return instance.removeInlineStyle(cssProperty, pseudo);
+            }
+            vnode.styles || (vnode.styles={});
+            group = pseudo || 'element';
+            vnode.styles[group] || (vnode.styles[group]={});
+            styles = vnode.styles[group];
+            styles[cssProperty] = value;
+            instance.setAttr('style', vnode.serializeStyles());
+            return instance;
+        };
+
+        /**
+         * Sets the innerHTML of both the vnode as well as the representing dom-node.
+         * Goes through the vdom, so it's superfast.
+         *
+         * Use this method instead of `innerHTML`
+         *
+         * Syncs with the DOM.
+         *
+         * @method setInnerHTML
+         * @param val {String} the new value to be set
+         * @chainable
+         * @since 0.0.1
+         */
+        ElementPrototype.setInnerHTML = function(val) {
+            this.vnode.innerHTML = val;
+            return this;
+        };
+
+        /**
+         * Gets or sets the outerHTML of both the Element as well as the representing dom-node.
+         * Goes through the vdom, so it's superfast.
+         *
+         * Use this property instead of `outerHTML`
+         *
+         * Syncs with the DOM.
+         *
+         * @method setOuterHTML
+         * @param val {String} the new value to be set
+         * @chainable
+         * @since 0.0.1
+         */
+        ElementPrototype.setOuterHTML = function(val) {
+            this.vnode.outerHTML = val;
+            return this;
+        };
+
+        /**
+         * Sets the innerContent of the Element as plain text.
+         * Goes through the vdom, so it's superfast.
+         *
+         * Use this method instead of `textContent`
+         *
+         * Syncs with the DOM.
+         *
+         * @method setText
+         * @param val {String} the textContent to be set
+         * @chainable
+         * @since 0.0.1
+         */
+        ElementPrototype.setText = function(val) {
+            this.vnode.textContent = val;
+            return this;
+        };
+
+       /**
+        * Sets the value of the following vElements:
+        *
+        * <ul>
+        *     <li>input</li>
+        *     <li>textarea</li>
+        *     <li>select</li>
+        *     <li>any container that is `contenteditable`</li>
+        * </ul>
+        *
+        * Will emit a `valuechange`-event when a new value is set and ITSA's `event`-module is active.
+        *
+        * @method setValue
+        * @param val {String} thenew value to be set
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.setValue = function(val) {
+            var instance = this,
+                prevVal = instance.value,
+            // cautious: input and textarea must be accessed by their propertyname:
+            // input.getAttribute('value') would return the defualt-value instead of actusl
+            // and textarea.getAttribute('value') doesn't exist
+                editable = ((editable=instance.vnode.attrs.contenteditable) && (editable!=='false'));
+            if (editable) {
+                instance.setHTML(val);
+            }
+            else {
+                instance.value = val;
+            }
+            // if `document._emitVC` is available, then invoke it to emit the `valuechange`-event
+            /**
+            * @event valuechange
+            * @param e.value {String} new value
+            * @param e.sourceTarget {Element} Element whare the valuechange occured
+            */
+            DOCUMENT._emitVC && (prevVal!==val) && DOCUMENT._emitVC(instance, val);
+            return instance;
+        };
+
+       /**
+         * Set the position of an html element in page coordinates.
+         * The element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
+         *
+         * If the Element has the attribute `xy-constrian` set, then its position cannot exceed any matching container it lies within.
+         *
+         * @method setXY
+         * @param x {Number} x-value for new position (coordinates are page-based)
+         * @param y {Number} y-value for new position (coordinates are page-based)
+         * @param [constrain] {'window', Element, Object, String}
+         * <ul>
+         *     <li><b>'window'</b> to constrain to the visible window</li>
+         *     <li><b>Element</b> to constrain to a specified Element</li>
+         *     <li><b>Object</b> to constrain to an object with the properties: {x, y, w, h} where x and y are absolute pixels of the document
+         *            (like calculated with getX() and getY()).</li>
+         *     <li><b>String</b> to constrain to a specified css-selector, which should be an ancestor</li>
+         * </ul>
+         * @param [notransition=false] {Boolean} set true if you are sure positioning is without transition.
+         *        this isn't required, but it speeds up positioning. Only use when no transition is used:
+         *        when there is a transition, setting this argument `true` would miscalculate the position.
+         * @chainable
+         * @since 0.0.1
+         */
+        ElementPrototype.setXY = function(x, y, constrain, notransition) {
+            console.log(NAME, 'setXY '+x+','+y);
+            var instance = this,
+                position = instance.getStyle(POSITION),
+                dif, match, constrainNode, byExactId, parent, clone,
+                containerTop, containerRight, containerLeft, containerBottom, requestedX, requestedY;
+
+            // default position to relative
+            if (position==='static') {
+                instance.setInlineStyle(POSITION, 'relative');
+            }
+            // make sure it has sizes and can be positioned
+            instance.setClass(INVISIBLE).setClass(BORDERBOX);
+            (instance.getInlineStyle('display')==='none') && instance.setClass(BLOCK);
+            if (constrain) {
+                if (constrain==='window') {
+                    containerLeft = window.getScrollLeft();
+                    containerTop = window.getScrollTop();
+                    containerRight = containerLeft + window.getWidth();
+                    containerBottom = containerTop + window.getHeight();
+                }
+                else {
+                    if (typeof constrain === STRING) {
+                        match = false;
+                        constrainNode = instance.getParent();
+                        byExactId = REGEXP_NODE_ID.test(constrain);
+                        while (constrainNode.matchesSelector && !match) {
+                            match = byExactId ? (constrainNode.id===constrain.substr(1)) : constrainNode.matchesSelector(constrain);
+                            // if there is a match, then make sure x and y fall within the region
+                            match || (constrainNode=constrainNode.getParent());
+                        }
+                        // if Element found, then bound it to `constrain` as if the argument `constrain` was an Element
+                        match && (constrain=constrainNode);
+                    }
+                    if (constrain.matchesSelector) {
+                        // Element --> we need to search the rectangle
+                        containerLeft = constrain.left + parseInt(constrain.getStyle(BORDER_LEFT_WIDTH), 10);
+                        containerTop = constrain.top + parseInt(constrain.getStyle(BORDER_TOP_WIDTH), 10);
+                        containerRight = containerLeft + constrain.scrollWidth;
+                        containerBottom = containerTop + constrain.scrollHeight;
+                    }
+                    else {
+                        containerLeft = constrain.x;
+                        containerTop = constrain.y;
+                        containerRight = constrain.x + constrain.w;
+                        containerBottom = constrain.y + constrain.h;
+                    }
+                }
+                if (typeof containerLeft === NUMBER) {
+                    // found constrain, always redefine x and y
+                    x = requestedX = (typeof x===NUMBER) ? x : instance.left;
+                    if (requestedX<containerLeft) {
+                        x = containerLeft;
+                    }
+                    else {
+                        if ((requestedX+instance.offsetWidth)>containerRight) {
+                            x = requestedX = containerRight - instance.offsetWidth;
+                        }
+                        // now we might need to reset to the left again:
+                        (requestedX<containerLeft) && (x=containerLeft);
+                    }
+                    y = requestedY = (typeof y===NUMBER) ? y : instance.top;
+                    if (requestedY<containerTop) {
+                        y = containerTop;
+                    }
+                    else {
+                        if ((requestedY+instance.offsetHeight)>containerBottom) {
+                            y = requestedY = containerBottom - instance.offsetHeight;
+                        }
+                        // now we might need to reset to the top again:
+                        (requestedY<containerTop) && (y=containerTop);
+                    }
+                }
+            }
+            if (typeof x === NUMBER) {
+                // check if there is a transition:
+                if (notransition) {
+                    instance.setClass(INVISIBLE);
+                    instance.setInlineStyle(LEFT, x + PX);
+                    dif = (instance.left-x);
+                    (dif!==0) && (instance.setInlineStyle(LEFT, (x - dif) + PX));
+                    instance.removeClass(INVISIBLE);
+                }
+                else {
+                    // we will clone the node, make it invisible and without transitions and look what its correction should be
+                    clone = instance.cloneNode();
+                    clone.setClass(NO_TRANS).setClass(INVISIBLE);
+                    parent = instance.getParent() || DOCUMENT.body;
+                    parent.append(clone);
+                    clone.setInlineStyle(LEFT, x+PX);
+                    dif = (clone.left-x);
+                    parent.removeChild(clone);
+                    instance.setInlineStyle(LEFT, (x - dif) + PX);
+                }
+            }
+            if (typeof y === NUMBER) {
+                if (notransition) {
+                    instance.setClass(INVISIBLE);
+                    instance.setInlineStyle(TOP, y + PX);
+                    dif = (instance.top-y);
+                    (dif!==0) && (instance.setInlineStyle(TOP, (y - dif) + PX));
+                    instance.removeClass(INVISIBLE);
+                }
+                else {
+                    // we will clone the node, make it invisible and without transitions and look what its correction should be
+                    clone = instance.cloneNode();
+                    clone.setClass(NO_TRANS).setClass(INVISIBLE);
+                    parent = instance.getParent() || DOCUMENT.body;
+                    parent.append(clone);
+                    clone.setInlineStyle(TOP, y+PX);
+                    dif = (clone.top-y);
+                    parent.removeChild(clone);
+                    instance.setInlineStyle(TOP, (y - dif) + PX);
+                }
+            }
+            return instance.removeClass(BLOCK).removeClass(BORDERBOX).removeClass(INVISIBLE);
+        };
+
+       /**
+        * Toggles the className of the Element.
+        *
+        * @method toggleClass
+        * @param className {String|Array} className that should be toggled, may be an array of classNames
+        * @param forceState {Boolean} to force toggling into this specific state
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.toggleClass = function(className, forceState) {
+            var instance = this;
+            instance.getClassList().toggle(className, forceState);
+            return instance;
+        };
+
+        Object.defineProperties(ElementPrototype, {
+
+           /**
+            * Gets or set the height of the element in pixels. Included are padding and border, not any margins.
+            * By setting the argument `overflow` you get the total height, included the invisible overflow.
+            *
+            * The getter is calculating through `offsetHeight`, the setter will set inline css-style for the height.
+            *
+            * Values are numbers without unity.
+            *
+            * @property height
+            * @type {Number}
+            * @since 0.0.1
+            */
+            height: {
+                get: function() {
+                    return this.offsetHeight;
+                },
+                set: function(val) {
+                    var instance = this,
+                        dif;
+                    instance.setClass(INVISIBLE);
+                    instance.setInlineStyle(HEIGHT, val + PX);
+                    dif = (instance.offsetHeight-val);
+                    (dif!==0) && (instance.setInlineStyle(HEIGHT, (val - dif) + PX));
+                    instance.removeClass(INVISIBLE);
+                }
+            },
+
+           /**
+            * Gets the x-position (in the DOCUMENT) of the element in pixels.
+            * DOCUMENT-related: regardless of the window's scroll-position.
+            *
+            * @property left
+            * @since 0.0.1
+            */
+            left: {
+                get: function() {
+                    return Math.round(this.getBoundingClientRect().left + window.getScrollLeft());
+                },
+                set: function(pixelsLeft) {
+                    return this.setXY(pixelsLeft, null, null, true);
+                }
+            },
+
+           /**
+            * Gets the y-position (in the DOCUMENT) of the element in pixels.
+            * DOCUMENT-related: regardless of the window's scroll-position.
+            *
+            * @property top
+            * @since 0.0.1
+            */
+            top: {
+                get: function() {
+                    return Math.round(this.getBoundingClientRect().top + window.getScrollTop());
+                },
+                set: function(pixelsTop) {
+                    return this.setXY(null, pixelsTop, null, true);
+                }
+            },
+
+           /**
+            * Gets or set the width of the element in pixels. Included are padding and border, not any margins.
+            * By setting the argument `overflow` you get the total width, included the invisible overflow.
+            *
+            * The getter is calculating through `offsetHeight`, the setter will set inline css-style for the width.
+            *
+            * Values are numbers without unity.
+            *
+            * @property width
+            * @type {Number}
+            * @since 0.0.1
+            */
+            width: {
+                get: function() {
+                    return this.offsetWidth;
+                },
+                set: function(val) {
+                    var instance = this,
+                        dif;
+                    instance.setClass(INVISIBLE);
+                    instance.setInlineStyle(WIDTH, val + PX);
+                    dif = (instance.offsetWidth-val);
+                    (dif!==0) && (instance.setInlineStyle(WIDTH, (val - dif) + PX));
+                    instance.removeClass(INVISIBLE);
+                }
+            }
+
+        });
+
+    }(window.Element.prototype));
+
+    setupObserver = function() {
+        // configuration of the observer:
+        var observerConfig = {
+                attributes: true,
+                subtree: true,
+                characterData: true,
+                childList : true
+            };
+        (new window.MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+
+                var node = mutation.target,
+                    vnode = node.vnode,
+                    attribute = mutation.attributeName,
+                    addedChildNodes = mutation.addedNodes,
+                    removedChildNodes = mutation.removedNodes,
+                    i, len, childDomNode, childVNode, index;
+                if (vnode && !vnode._nosync) {
+                    if (attribute) {
+                        vnode.reloadAttr(attribute);
+                    }
+                    else {
+                        // remove the childNodes that are no longer there:
+                        len = removedChildNodes.length;
+                        for (i=len-1; i>=0; i--) {
+                            childVNode = removedChildNodes[i].vnode;
+                            childVNode && childVNode._remove();
+                        }
+                       // add the new childNodes:
+                        len = addedChildNodes.length;
+                        for (i=0; i<len; i++) {
+                            childDomNode = addedChildNodes[i];
+                            index = node.childNodes.indexOf(childDomNode);
+                            domNodeToVNode(childDomNode)._moveToParent(vnode, index);
+                        }
+                    }
+                }
+            });
+        })).observe(DOCUMENT, observerConfig);
+    };
+
+    setupObserver();
+
+};
+
+//--- definition API of unmodified `Element`-methods ------
+
+/**
+ * Adds a node to the end of the list of children of a specified parent node.
+ *
+ * @method appendChild
+ * @param element {Element} content to append
+ * @return {Element} the Element that was appended
+ */
+
+/**
+ * Returns the specified attribute of the specified element, as an Attr node.
+ *
+ * @method getAttributeNode
+ * @return {attributeNode}
+ */
+
+/**
+ * Returns a text rectangle object that encloses a group of text rectangles. The returned value is
+ * a TextRectangle object which is the union of the rectangles returned by getClientRects() for the element,
+ * i.e., the CSS border-boxes associated with the element.
+ *
+ * The returned value is a TextRectangle object, which contains read-only left, top, right and bottom properties
+ * describing the border-box in pixels. top and left are relative to the top-left of the viewport.
+ *
+ * @method getBoundingClientRect
+ * @return {attributeNode} Therectangle object that encloses a group of text rectangles.
+ */
+
+/**
+ * Returns a collection of rectangles that indicate the bounding rectangles for each box in a client.
+ *
+ * The returned value is a collection of ClientRect objects, one for each CSS border box associated with the element.
+ * Each ClientRect object contains read-only left, top, right and bottom properties describing the border box, in pixels,
+ * with the top-left relative to the top-left of the viewport. For tables with captions,
+ * the caption is included even though it's outside the border box of the table.
+ *
+ * @method getClientRects
+ * @return {Collection}
+ */
+
+/**
+ * Returns a new NodeIterator object with this Element as root.
+ *
+ * The NodeIterator is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.
+ *
+ * @method createNodeIterator
+ * @param [whatToShow] {Number} Filter specification constants from the NodeFilter DOM interface, indicating which nodes to iterate over.
+ * You can use or sum one of the next properties:
+ * <ul>
+ *   <li>window.NodeFilter.SHOW_ELEMENT</li>
+ *   <li>window.NodeFilter.SHOW_COMMENT</li>
+ *   <li>window.NodeFilter.SHOW_TEXT</li>
+ * </ul>
+ * @param [filter] {NodeFilter|function} An object implementing the NodeFilter interface or a function. See https://developer.mozilla.org/en-US/docs/Web/API/NodeFilter
+ * @return {NodeIterator}
+ * @since 0.0.1
+*/
+
+/**
+ * Returns an HTMLCollection of all vElements within this Element, that match their classes with the supplied `classNames` argument.
+ * To match multiple different classes, separate them with a `comma`.
+ *
+ * getElementsByClassName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * NOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.
+ *
+ * @method getElementsByClassName
+ * @param classNames {String} the classes to search for
+ * @return {HTMLCollection} life Array with vElements
+ */
+
+/**
+ * Returns an HTMLCollection of all vElements within this Element, that match their `name`-attribute with the supplied `name` argument.
+ *
+ * getElementsByName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * NOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.
+ *
+ * @method getElementsByName
+ * @param name {String} the property of name-attribute to search for
+ * @return {HTMLCollection} life Array with vElements
+ */
+
+
+/**
+ * Returns an HTMLCollection of all vElements within this Element, that match their `name`-attribute with the supplied `name` argument.
+ *
+ * getElementsByTagName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * NOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.
+ *
+ * @method getElementsByTagName
+ * @param tagNames {String} the tags to search for
+ * @return {HTMLCollection} life Array with vElements
+ */
+
+/**
+* Inserts the Element into the DOM tree at a specified position.
+*
+* @method insertAdjacentElement
+* @param position {String}
+* <ul>
+*     <li>'beforebegin' Before the element itself</li>
+*     <li>'afterbegin' Just inside the element, before its first child</li>
+*     <li>'beforeend' Just inside the element, after its last child</li>
+*     <li>'afterend' After the element itself</li>
+* <ul>
+* @param element {Element}
+*/
+
+/**
+* Parses the specified text as HTML and inserts the resulting nodes into the DOM tree at a specified position.
+*
+* @method insertAdjacentHTML
+* @param position {String}
+* <ul>
+*     <li>'beforebegin' Before the element itself</li>
+*     <li>'afterbegin' Just inside the element, before its first child</li>
+*     <li>'beforeend' Just inside the element, after its last child</li>
+*     <li>'afterend' After the element itself</li>
+* <ul>
+* @param element {Element}
+*/
+
+/**
+* Inserts the text into the DOM tree as a TextNode at a specified position.
+*
+* @method insertAdjacentText
+* @param position {String}
+* <ul>
+*     <li>'beforebegin' Before the element itself</li>
+*     <li>'afterbegin' Just inside the element, before its first child</li>
+*     <li>'beforeend' Just inside the element, after its last child</li>
+*     <li>'afterend' After the element itself</li>
+* <ul>
+* @param element {Element}
+*/
+
+/**
+ * Inserts `newElement` before `referenceElement`.
+ *
+ * @method insertBefore
+ * @param newElement {Element} The newElement to insert
+ * @param referenceElement {Element} The Element before which newElement is inserted.
+ * @return {Element} the Element being inserted (equals newElement)
+ */
+
+/**
+* Removes the attribute specified by an attributeNode from the Element.
+*
+* @method removeAttributeNode
+* @param attributeNode {attributeNode}
+* @since 0.0.1
+*/
+
+/**
+* Removes the Element's child-Element from the DOM.
+*
+* @method removeChild
+* @param childVElement {Element} the child-Element to remove
+* @since 0.0.1
+*/
+
+/**
+* Replaces the Element's child-Element with a new Element.
+*
+* @method replaceChild
+* @param newElement {Element} the new Element
+* @param oldVChild {Element} the Element to be replaced
+* @return {Element} the Element that was removed (equals oldVChild)
+* @since 0.0.1
+*/
+
+/**
+ * Scrolls the element into view.
+ *
+ * @method scrollIntoView
+ */
+
+/**
+ * Sets the attribute on the Element specified by `attributeNode`
+ *
+ * @method setAttributeNode
+ * @param attributeNode {attributeNode}
+*/
+
+//------ events --------
+
+/**
+ * Fired when a static `script` element  finishes executing its script. Does not fire if the element is added dynamically, eg with appendChild().
+ *
+ * @event afterscriptexecute
+ */
+
+
+/**
+ * Fired when the code in a `script` element declared in an HTML document is about to start executing. Does not fire if the element is added dynamically, eg with appendChild().
+ *
+ * @event beforescriptexecute
+ */
+
+//------- properties --------
+
+/**
+ * sets or returns an accesskey for an element. An accesskey specifies a shortcut key to activate/focus an element.
+ * Note: The way of accessing the shortcut key is varying in different browsers: http://www.w3schools.com/jsref/prop_html_accesskey.asp
+ *
+ * @property accessKey
+ * @type String
+ */
+
+
+/**
+ * Returns a live collection of all attribute nodes registered to the specified node.
+ * It is a NamedNodeMap, not an Array, so it has no Array methods and the Attr nodes' indexes may differ among browsers.
+ * To be more specific, attributes is a key/value pair of strings that represents any information regarding that attribute.
+ *
+ * Prefer to use `getAttrs()` which is much quicker, but doesn't return a life-list.
+ *
+ * @property attributes
+ * @type NamedNodeMap
+ */
+
+/**
+ * The absolute base URL of a node.
+ *
+ * @property baseURI
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * Returns the number of children (child vElements)
+ *
+ * @property childElementCount
+ * @type Number
+ * @readOnly
+ */
+
+/**
+ * Returns a live collection of childNodes of the given element, either Element, TextNode or CommentNode
+ *
+ * @property childNodes
+ * @type NodeList
+ * @readOnly
+ */
+
+/**
+ * Returns a live collection of child Element's of the given element.
+ *
+ * @property children
+ * @type NodeList
+ * @readOnly
+ */
+
+/**
+ * Gets and sets the value of the class attribute of the specified element.
+ *
+ * @property className
+ * @type String
+ */
+
+/**
+ * Returns the inner height of an element in pixels, including padding but not the horizontal scrollbar height, border, or margin.
+ *
+ * @property clientHeight
+ * @type Number
+ * @readOnly
+ */
+
+/**
+ * The width of the left border of an element in pixels. It includes the width of the vertical scrollbar if the text direction of the element is right–to–left
+ * and if there is an overflow causing a left vertical scrollbar to be rendered. clientLeft does not include the left margin or the left padding.
+ *
+ * @property clientLeft
+ * @type Number
+ * @readOnly
+ */
+
+/**
+ * The width of the top border of an element in pixels. It does not include the top margin or padding.
+ *
+ * @property clientTop
+ * @type Number
+ * @readOnly
+ */
+
+/**
+ * Returns the inner width of an element in pixels, including padding but not the vertical scrollbar height, border, or margin.
+ *
+ * @property clientWidth
+ * @type Number
+ * @readOnly
+ */
+
+/**
+ * Reference to the first childNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).
+ *
+ * Better work with Elements only:  use `firstElementChild` instead, which returns the first Element-child.
+ *
+ * @property firstChild
+ * @type Node
+ * @readOnly
+ * @deprecated
+ */
+
+/**
+ * Reference to the first Element-child, which is an Element (nodeType===1).
+ *
+ * @property firstElementChild
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Gets or sets the element's attribute `href`. Only applies for the `a`-element.
+ *
+ * @property href
+ * @type String
+ */
+
+/**
+ * Gets or sets the element's identifier (attribute id).
+ *
+ * @property id
+ * @type String
+ */
+
+/**
+ * Reference to the last childNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).
+ *
+ * Better use `lastElementChild` instead, which returns the last Element-child.
+ *
+ * @property lastChild
+ * @type Node
+ * @readOnly
+ * @deprecated
+ */
+
+/**
+ * Reference to the last Element-child, where the related dom-node is an Element (nodeType===1).
+ *
+ * @property lastElementChild
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Gets or sets the `name` property of a Element; it only applies to the following elements:
+ * `a`, `applet`, `button`, `form`, `frame`, `iframe`, `img`, `input`, `map`, `meta`, `object`, `param`, `select`, and `textarea`.
+ *
+ * @property name
+ * @type String
+ */
+
+/**
+ * Returns the Element immediately following the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.
+ * Is an Element (nodeType===1).
+ *
+ * @property nextElementSibling
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Returns the Element immediately following the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.
+ * Is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).
+ *
+ * Do not use this, but use `lastElementChild` instead, which returns the next Element-child.
+ *
+ * @property nextElementSibling
+ * @type Node
+ * @deprecated
+ * @readOnly
+ */
+
+/**
+ * Elements tag-name
+ *
+ * @property nodeName
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * Elements nodetype: 1==Element, 3==TextNode, 8===CommentNode
+ *
+ * @property nodeType
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * Value/text for non-Element Nodes
+ *
+ * @property nodeValue
+ * @type String
+ * @since 0.0.1
+ */
+
+/**
+ * The exact width of the Element on the screen.
+ * Included borders and padding (no margin).
+ *
+ * Returns a number without unity.
+ *
+ * Better use `width` --> it's an alias, but has a setter as well
+ *
+ * @property offsetWidth
+ * @type Number
+ * @readOnly
+ * @since 0.0.1
+ */
+
+/**
+ * The exact height of the Element on the screen.
+ * Included borders and padding (no margin).
+ *
+ * Returns a number without unity.
+ *
+ * Better use `height` --> it's an alias, but has a setter as well
+ *
+ * @property offsetHeight
+ * @type Number
+ * @since 0.0.1
+ */
+
+/**
+ * Returns the Element's parent Element.
+ *
+ * Same as `parentNode`
+ *
+ * @property parentElement
+ * @type Element
+ */
+
+/**
+ * Returns the Element's parent Element.
+ *
+ * Same as `parentElement`
+ *
+ * @property parentNode
+ * @type Element
+ */
+
+/**
+ * Returns the Element immediately preceding the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.
+ * Is an Element (nodeType===1).
+ *
+ * @property previousElementSibling
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Returns the Element immediately preceding the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.
+ * Is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).
+ *
+ * Do not use this, but use `previousElementSibling` instead, which returns the previous Element-child.
+ *
+ * @property previousSibling
+ * @deprecated
+ * @type Node
+ * @readOnly
+ */
+
+
+/**
+ * A measurement of the height of an element's content, including content not visible on the screen due to overflow.
+ * The scrollHeight value is equal to the minimum clientHeight the element would require in order to fit all the content in the viewpoint
+ * without using a vertical scrollbar. It includes the element padding but not its margin.
+ *
+ * Returns a number without unity.
+ *
+ * @property scrollHeight
+ * @type Number
+ * @readOnly
+ */
+
+/**
+ * Gets or sets the number of pixels that an element's content is scrolled to the left.
+ *
+ * @property scrollLeft
+ * @type Number
+ */
+
+/**
+ * Gets or sets the number of pixels that the content of an element is scrolled upward. An element's scrollTop is a measurement
+ * of the distance of an element's top to its topmost visible content. When an element content does not generate a vertical scrollbar,
+ * then its scrollTop value defaults to 0.
+ *
+ * @property scrollTop
+ * @type Number
+ */
+
+/**
+ * Returns either the width in pixels of the content of an element or the width of the element itself, whichever is greater.
+ * If the element is wider than its content area (for example, if there are scroll bars for scrolling through the content),
+ * the scrollWidth is larger than the clientWidth.
+ *
+ * Returns a number without unity.
+ *
+ * @property scrollWidth
+ * @type Number
+ * @readOnly
+ */
+
+/**
+ * Gets or sets the element's attribute `type`. Only applies for the `script`, `img` and `style`-elements.
+ *
+ * @property src
+ * @type String
+ */
+
+/**
+ * Gets or sets the element's attribute `style`.
+ *
+ * @property style
+ * @type String
+ */
+
+/**
+ * Gets or sets the element's attribute `type`. Only applies for the `input`-element.
+ *
+ * @property type
+ * @type String
+ */
+
+/**
+* Gets or sets the value of an input or select Element.
+*
+* Note it is highly preferable to use getValue() and setValue().
+*
+* @property value
+* @type String
+* @since 0.0.1
+*/
+},{"../css/element.css":46,"./element-array.js":48,"./html-parser.js":51,"./node-parser.js":52,"./nodelist.js":53,"./vdom-ns.js":54,"js-ext/lib/object.js":36,"js-ext/lib/string.js":38,"polyfill/lib/mutationobserver.js":39,"polyfill/lib/weakmap.js":40,"polyfill/lib/window.console.js":41,"window-ext":57}],51:[function(require,module,exports){
+"use strict";
+
+/**
+ * Exports `htmlToVNodes` which transforms html-text into vnodes.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * <br>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module vdom
+ * @submodule html-parser
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+
+    var NS = require('./vdom-ns.js')(window),
+        extractor = require('./attribute-extractor.js'),
+        DOCUMENT = window.document,
+        voidElements = NS.voidElements,
+        nonVoidElements = NS.nonVoidElements,
+
+        TAG_OR_ATTR_START_CHARACTERS = {
+            a: true,
+            b: true,
+            c: true,
+            d: true,
+            e: true,
+            f: true,
+            g: true,
+            h: true,
+            i: true,
+            j: true,
+            k: true,
+            l: true,
+            m: true,
+            n: true,
+            o: true,
+            p: true,
+            q: true,
+            r: true,
+            s: true,
+            t: true,
+            u: true,
+            v: true,
+            w: true,
+            x: true,
+            y: true,
+            z: true,
+            A: true,
+            B: true,
+            C: true,
+            D: true,
+            E: true,
+            F: true,
+            G: true,
+            H: true,
+            I: true,
+            J: true,
+            K: true,
+            L: true,
+            M: true,
+            N: true,
+            O: true,
+            P: true,
+            Q: true,
+            R: true,
+            S: true,
+            T: true,
+            U: true,
+            V: true,
+            W: true,
+            X: true,
+            Y: true,
+            Z: true
+        },
+        STARTTAG_OR_ATTR_VALUE_ENDS_CHARACTERS = {
+            ' ': true,
+            '>': true
+        },
+        ATTRUBUTE_NAME_ENDS_CHARACTER = {
+            ' ': true,
+            '=': true,
+            '>': true
+        },
+
+        /**
+         * Transforms html-text into a vnodes-Array.
+         *
+         * @method htmlToVNodes
+         * @param htmlString {String} plain html as string
+         * @return {Array} array with `vnodes`
+         * @since 0.0.1
+         */
+        htmlToVNodes = function(htmlString, vNodeProto) {
+            var i = 0,
+                len = htmlString.length,
+                vnodes = [],
+                parentVNode = arguments[2], // private pass through-argument, only available when internal looped
+                insideTagDefinition, insideComment, innerText, endTagCount, stringMarker, attributeisString, attribute, attributeValue,
+                j, character, character2, vnode, isBoolean, checkBoolean, tag, isBeginTag, isEndTag, scriptVNode, extractClass, extractStyle;
+            while (i<len) {
+                character = htmlString[i];
+                character2 = htmlString[i+1];
+                if (insideTagDefinition) {
+
+                    vnode.attrs = {};
+                    if (character!=='>') {
+                        // fill attributes until tagdefinition is over:
+                        // NOTE: we need to DOUBLE check for "(character!=='>')" because the loop might set the position to '>' where an i++ would miss it!
+                        while ((character!=='>') && (++i<len) && (character=htmlString[i]) && (character!=='>')) {
+                            // when starting to read an attribute, finish reading until it is completely ready.
+                            // this is, because attributes can have a '>' which shouldn't be noticed as an end-of-tag definition
+                            if (TAG_OR_ATTR_START_CHARACTERS[character]) {
+                                attribute = character;
+                                while ((++i<len) && (character=htmlString[i]) && !ATTRUBUTE_NAME_ENDS_CHARACTER[character]) {
+                                    attribute += character;
+                                }
+                                if (character==='=') {
+                                    stringMarker = htmlString[i+1];
+                                    attributeisString = (stringMarker==='"') || (stringMarker==="'");
+
+                                    attributeValue = '';
+                                    if (attributeisString) {
+                                        i++;
+                                        while ((character!=='\\') && (++i<len) && (character=htmlString[i]) && (character!==stringMarker)) {
+                                            attributeValue += character;
+                                        }
+                                    }
+                                    else {
+                                        while ((++i<len) && (character=htmlString[i]) && !STARTTAG_OR_ATTR_VALUE_ENDS_CHARACTERS[character]) {
+                                            attributeValue += character;
+                                        }
+                                        // need to set the position one step behind --> the attributeloop will increase it and would otherwise miss a character
+                                        i--;
+                                        isBoolean = ((attributeValue.length>3) && (attributeValue.length<6) && (checkBoolean=attributeValue.toUpperCase()) && ((checkBoolean==='FALSE') || (checkBoolean==='TRUE')));
+                                        // typecast the value to either Boolean or Number:
+                                        attributeValue = isBoolean ? (checkBoolean==='TRUE') : parseFloat(attributeValue);
+                                    }
+                                }
+                                else {
+                                    attributeValue = "";
+                                }
+                                vnode.attrs[attribute] = attributeValue;
+                            }
+                        }
+                        vnode.id = vnode.attrs.id;
+
+                        extractClass = extractor.extractClass(vnode.attrs['class']);
+                        extractClass.attrClass && (vnode.attrs['class']=extractClass.attrClass);
+                        vnode.classNames = extractClass.classNames;
+
+                        extractStyle = extractor.extractStyle(vnode.attrs.style);
+                        extractStyle.attrStyle && (vnode.attrs.style=extractStyle.attrStyle);
+                        vnode.styles = extractClass.styles;
+
+                    }
+
+                    if (!vnode.isVoid) {
+                        innerText = '';
+                        endTagCount = 1;
+                        // fill innerText until end-tagdefinition:
+                        while ((endTagCount>0) && (++i<len) && (character=htmlString[i])) {
+                            if (character==='<') {
+                                if ((character2=htmlString[i+1]) && (character2==='/')) {
+                                    // possible end-tag
+                                    j = i+1;
+                                    isEndTag = true;
+                                    while (isEndTag && (++j<len) && (htmlString[j]!=='>')) {
+                                        if (htmlString[j].toUpperCase()!==tag[j-i-2]) {
+                                            isEndTag = false;
+                                        }
+                                    }
+                                    isEndTag && (endTagCount--);
+                                }
+                                else {
+                                    // possible begin-tag of the same tag (an innertag with the same tagname)
+                                    j = i;
+                                    isBeginTag = true;
+                                    while (isBeginTag && (++j<len) && (character2=htmlString[j]) && (character2!=='>') && (character2!==' ')) {
+                                        if (htmlString[j].toUpperCase()!==tag[j-i-1]) {
+                                            isBeginTag = false;
+                                        }
+                                    }
+                                    isBeginTag && (endTagCount++);
+                                }
+                            }
+                            if (endTagCount>0) {
+                                innerText += character;
+                            }
+                        }
+                        (endTagCount===0) && (i=i+tag.length+3);
+                        // in case of 'SCRIPT' or 'STYLE' tags --> just use the innertext, all other tags need to be extracted
+
+                        if (NS.SCRIPT_OR_STYLE_TAG[vnode.tag]) {
+                            // CREATE INNER TEXTNODE
+                            scriptVNode = Object.create(vNodeProto);
+                            scriptVNode.nodeType = 3;
+                            scriptVNode.domNode = DOCUMENT.createTextNode(innerText);
+                            // create circular reference:
+                            scriptVNode.domNode._vnode = scriptVNode;
+                            scriptVNode.text = innerText;
+                            scriptVNode.vParent = vnode;
+                            vnode.vChildNodes = [scriptVNode];
+                        }
+                        else {
+                            vnode.vChildNodes = (innerText!=='') ? htmlToVNodes(innerText, vNodeProto, vnode) : [];
+                        }
+                    }
+                    else {
+                        i++; // compensate for the '>'
+                    }
+                    vnodes[vnodes.length] = vnode;
+                    // reset vnode to force create a new one
+                    vnode = null;
+                    insideTagDefinition = false;
+                }
+
+                else if (insideComment) {
+                    if (character+character2+htmlString[i+2]==='-->') {
+                        // close vnode
+                        // move index to last character of comment
+                        i = i+2;
+                        vnode.domNode = DOCUMENT.createComment('');
+                        // create circular reference:
+                        vnode.domNode._vnode = vnode;
+                        vnodes[vnodes.length] = vnode;
+                        // reset vnode to force create a new one
+                        vnode = null;
+                        insideComment = false;
+                    }
+                    else {
+                        vnode.text += character;
+                    }
+                    i++;
+                }
+
+                else {
+                    // inside TextNode which could go over into an Element or CommentNode
+                    if ((character==='<') && TAG_OR_ATTR_START_CHARACTERS[character2] && (htmlString.lastIndexOf('>')>i)) {
+                        // begin of opening Element
+                        // first: store current vnode:
+                        if (vnode) {
+                            vnode.domNode = DOCUMENT.createTextNode('');
+                            // create circular reference:
+                            vnode.domNode._vnode = vnode;
+                            vnodes[vnodes.length] = vnode;
+                        }
+                        vnode = Object.create(vNodeProto);
+                        vnode.nodeType = 1;
+                        vnode.vParent = parentVNode;
+                        vnode.tag = '';
+                        vnode.classNames ={};
+
+                        // find tagname:
+                        while ((++i<len) && (character=htmlString[i]) && (!STARTTAG_OR_ATTR_VALUE_ENDS_CHARACTERS[character])) {
+                            vnode.tag += character.toUpperCase();
+                        }
+
+                        tag = vnode.tag;
+                        vnode.domNode = DOCUMENT.createElement(tag);
+                        // create circular reference:
+                        vnode.domNode._vnode = vnode;
+                        // check if it is a void-tag, but only need to do the regexp once per tag-element:
+                        if (voidElements[tag]) {
+                            vnode.isVoid = true;
+                        }
+                        else if (nonVoidElements[tag]) {
+                            vnode.isVoid = false;
+                        }
+                        else {
+                            (vnode.isVoid=!(new RegExp('</'+tag+'>$', 'i')).test(htmlString)) ? (voidElements[tag]=true) : (nonVoidElements[tag]=true);
+                        }
+                        insideTagDefinition = true;
+                    }
+                    else if (character+character2+htmlString[i+2]+htmlString[i+3]==='<!--') {
+                        // begin of CommentNode
+                        if (vnode) {
+                            vnode.domNode = DOCUMENT.createTextNode('');
+                            // create circular reference:
+                            vnode.domNode._vnode = vnode;
+                            vnodes[vnodes.length] = vnode;
+                        }
+                        vnode = Object.create(vNodeProto);
+                        vnode.nodeType = 8;
+                        vnode.text = '';
+                        vnode.vParent = parentVNode;
+                        // move index to first character of comment
+                        i = i+4;
+                        insideComment = true;
+                    }
+                    else {
+                        if (!vnode) {
+                            // no current vnode --> create a TextNode:
+                            vnode = Object.create(vNodeProto);
+                            vnode.nodeType = 3;
+                            vnode.text = '';
+                            vnode.vParent = parentVNode;
+                        }
+                        vnode.text += character;
+                        i++;
+                    }
+                }
+            }
+
+            if (vnode) {
+                vnode.domNode = DOCUMENT.createTextNode('');
+                // create circular reference:
+                vnode.domNode._vnode = vnode;
+                vnodes[vnodes.length] = vnode;
+            }
+            return vnodes;
+        };
+
+    return htmlToVNodes;
+
+};
+},{"./attribute-extractor.js":47,"./vdom-ns.js":54}],52:[function(require,module,exports){
+"use strict";
+
+/**
+ * Exports `domNodeToVNode` which transforms dom-nodes into vnodes.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i><br>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module vdom
+ * @submodule node-parser
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+
+    var NS = require('./vdom-ns.js')(window),
+        extractor = require('./attribute-extractor.js'),
+        voidElements = NS.voidElements,
+        nonVoidElements = NS.nonVoidElements,
+        vNodeProto = require('./vnode.js')(window),
+        /**
+         * Transforms a dom-node into a vnode.
+         *
+         * @method domNodeToVNode
+         * @param domNode {Node} The dom-node to be transformed
+         * @param [parentVNode] {vnode} the parent-vnode that belongs to the dom-node
+         * @return {vnode} the vnode-representation of the dom-node
+         * @since 0.0.1
+         */
+        domNodeToVNode = function(domNode, parentVNode) {
+            var nodeType = domNode.nodeType,
+                vnode, attributes, attr, i, len, childNodes, domChildNode, vChildNodes, tag, childVNode, extractClass, extractStyle;
+            if (!NS.VALID_NODE_TYPES[nodeType]) {
+                // only process ElementNodes, TextNodes and CommentNodes
+                return;
+            }
+            vnode = Object.create(vNodeProto);
+
+            // set properties:
+            vnode.domNode = domNode;
+            // create circular reference:
+            vnode.domNode._vnode = vnode;
+
+            vnode.nodeType = nodeType;
+
+            if (nodeType===1) {
+                // ElementNode
+                tag = vnode.tag = domNode.nodeName; // is always uppercase
+
+                vnode.attrs = {};
+                vnode.vParent = parentVNode;
+
+                attributes = domNode.attributes;
+                len = attributes.length;
+                for (i=0; i<len; i++) {
+                    attr = attributes[i];
+                    vnode.attrs[attr.name] = attr.value;
+                }
+
+                vnode.id = vnode.attrs.id;
+
+                extractClass = extractor.extractClass(vnode.attrs['class']);
+                extractClass.attrClass && (vnode.attrs['class']=extractClass.attrClass);
+                vnode.classNames = extractClass.classNames;
+
+                extractStyle = extractor.extractStyle(vnode.attrs.style);
+                extractStyle.attrStyle && (vnode.attrs.style=extractStyle.attrStyle);
+                vnode.styles = extractStyle.styles;
+
+                if (voidElements[tag]) {
+                    vnode.isVoid = true;
+                }
+                else if (nonVoidElements[tag]) {
+                    vnode.isVoid = false;
+                }
+                else {
+                    (vnode.isVoid=!(new RegExp('</'+tag+'>$', 'i')).test(domNode.outerHTML)) ? (voidElements[tag]=true) : (nonVoidElements[tag]=true);
+                }
+
+                if (!vnode.isVoid) {
+                    // in case of 'SCRIPT' or 'STYLE' tags --> just use the innertext, all other tags need to be extracted
+                    if (NS.SCRIPT_OR_STYLE_TAG[tag]) {
+                        vnode.text = domNode.textContent;
+                    }
+                    else {
+                        vChildNodes = vnode.vChildNodes = [];
+                        childNodes = domNode.childNodes;
+                        len = childNodes.length;
+                        for (i=0; i<len; i++) {
+                            domChildNode = childNodes[i];
+                            childVNode = domNodeToVNode(domChildNode, vnode);
+                            vChildNodes[vChildNodes.length] = childVNode;
+                        }
+                    }
+                }
+            }
+            else {
+                // TextNode or CommentNode
+                vnode.vParent = parentVNode;
+                vnode.text = domNode.nodeValue;
+            }
+            // store vnode's id:
+            vnode.storeId();
+            return vnode;
+        };
+
+    return domNodeToVNode;
+
+};
+},{"./attribute-extractor.js":47,"./vdom-ns.js":54,"./vnode.js":55}],53:[function(require,module,exports){
+"use strict";
+
+/**
+ * Integrates DOM-events to event. more about DOM-events:
+ * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @example
+ * require('dom-ext/lib/nodelist.js')(window);
+ *
+ * @module dom-ext
+ * @submodule lib/nodelist.js
+ * @class NodeList
+ * @since 0.0.1
+*/
+
+require('polyfill/polyfill-base.js');
+
+module.exports = function (window) {
+    window.NodeList && window.HTMLCollection && (function(NodeListPrototype, HTMLCollectionPrototype) {
+        var arrayMethods = Object.getOwnPropertyNames(Array.prototype),
+            forEach = function(instance, method, args) {
+                instance.forEach(function(element) {
+                    element[method].apply(element, args);
+                });
+                return instance;
+            };
+
+        // adding Array.prototype methods to NodeList.prototype
+        // Note: this might be buggy in IE8 and below: https://developer.mozilla.org/en-US/docs/Web/API/NodeList#Workarounds
+        arrayMethods.forEach(function(methodName) {
+            try {
+                NodeListPrototype && (NodeListPrototype[methodName] || (NodeListPrototype[methodName]=Array.prototype[methodName]));
+                HTMLCollectionPrototype && (HTMLCollectionPrototype[methodName] || (HTMLCollectionPrototype[methodName]=Array.prototype[methodName]));
+            }
+            catch(err) {
+                // some properties have only getters and cannot (and don't need) to be set
+            }
+        });
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Appends a HtmlElement or text at the end of HtmlElement's innerHTML.
+        *
+        * @method append
+        * @param content {HtmlElement|HtmlElementList|String} content to append
+        * @param escape {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.append = HTMLCollectionPrototype.append = function(/* content, escape */) {
+            return forEach(this, 'append', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Sets the inline-style of the HtmlElement exactly to the specified `value`, overruling previous values.
+        * Making the HtmlElement's inline-style look like: style="value".
+        *
+        * This is meant for a quick one-time setup. For individually inline style-properties to be set, you can use `setInlineStyle()`.
+        *
+        * @method defineInlineStyle
+        * @param value {String} the style string to be set
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.defineInlineStyle = HTMLCollectionPrototype.defineInlineStyle = function(/* value */) {
+            return forEach(this, 'defineInlineStyle', arguments);
+        };
+
+       /**
+        * Returns the index of the searched Element.
+        *
+        * @method indexOf
+        * @param searchElement {Element} Element to search for
+        * @return {Number} the index of the Element in the list (-1 when nto available)
+        * @since 0.0.1
+        */
+        NodeListPrototype.indexOf = HTMLCollectionPrototype.indexOf = function(searchElement) {
+            var array = this,
+                length = array.length,
+                index = 0;
+            for (index = 0; index < length; ++index) {
+                if (array[index] === searchElement) {
+                    return index;
+                }
+            }
+            return -1;
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Prepends a HtmlElement or text at the start of HtmlElement's innerHTML.
+        *
+        * @method prepend
+        * @param content {HtmlElement|HtmlElementList|String} content to prepend
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.prepend = HTMLCollectionPrototype.prepend = function(/* content, escape */) {
+            return forEach(this, 'prepend', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Removes the HtmlElement from the DOM.
+        *
+        * @method remove
+        * @since 0.0.1
+        */
+        NodeListPrototype.remove = HTMLCollectionPrototype.remove = function(/* HtmlElement */) {
+            return forEach(this, 'remove', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Removes the attribute from the HtmlElement.
+        *
+        * Alias for removeAttribute().
+        *
+        * @method removeAttr
+        * @param attributeName {String}
+        * @return {Boolean} Whether the HtmlElement has the attribute set.
+        * @since 0.0.1
+        */
+        NodeListPrototype.removeAttr = HTMLCollectionPrototype.removeAttr = function(/* attributeName */) {
+            return forEach(this, 'removeAttr', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Removes a className from the HtmlElement.
+        *
+        * @method removeClass
+        * @param className {String} the className that should be removed.
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.removeClass = HTMLCollectionPrototype.removeClass = function(/* className */) {
+            return forEach(this, 'removeClass', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Removes data specified by `key`. When no arguments are passed, all node-data (key-value pairs) will be removed.
+        *
+        * @method removeData
+        * @param key {string} name of the key
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.removeData = HTMLCollectionPrototype.removeData = function(/* key */) {
+            return forEach(this, 'removeData', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Removes a css-property (inline) out of the HtmlElement. Use camelCase.
+        *
+        * @method removeInlineStyle
+        * @param cssAttribute {String} the css-property to be removed
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.removeInlineStyle = HTMLCollectionPrototype.removeInlineStyle = function(/* cssAttribute */) {
+            return forEach(this, 'removeInlineStyle', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Replaces the HtmlElement with a new HtmlElement.
+        *
+        * @method replace
+        * @param newHtmlElement {HtmlElement|String} the new HtmlElement
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @since 0.0.1
+        */
+        NodeListPrototype.replace = HTMLCollectionPrototype.replace = function(/* newHtmlElement, escape */) {
+            return forEach(this, 'replace', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Replaces the className of the HtmlElement with a new className.
+        * If the previous className is not available, the new className is set nevertheless.
+        *
+        * @method replaceClass
+        * @param prevClassName {String} the className to be replaced
+        * @param newClassName {String} the className to be set
+        * @param [force ] {Boolean} whether the new className should be set, even is the previous className isn't there
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.replaceClass = HTMLCollectionPrototype.replaceClass = function(/* prevClassName, newClassName, force */) {
+            return forEach(this, 'replaceClass', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Sets the attribute on the HtmlElement with the specified value.
+        *
+        * Alias for setAttribute().
+        *
+        * @method setAttr
+        * @param attributeName {String}
+        * @param value {Any} the value that belongs to `key`
+        * @chainable
+        * @since 0.0.1
+       */
+        NodeListPrototype.setAttr = HTMLCollectionPrototype.setAttr = function(/* attributeName, value */) {
+            return forEach(this, 'setAttr', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Adds a class to the HtmlElement. If the class already exists it won't be duplicated.
+        *
+        * @method setClass
+        * @param className {String} className to be added
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.setClass = HTMLCollectionPrototype.setClass = function(/* className */) {
+            return forEach(this, 'setClass', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Sets the class to the HtmlElement. Cleaning up any previous classes.
+        *
+        * @method setClassName
+        * @param value {Any} the value that belongs to `key`
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.setClassName = HTMLCollectionPrototype.setClassName = function(/* className */) {
+            return forEach(this, 'setClassName', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Stores arbitary `data` at the HtmlElement. This has nothing to do with node-attributes whatsoever,
+        * it is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.
+        *
+        * @method setData
+        * @param key {string} name of the key
+        * @param value {Any} the value that belongs to `key`
+        * @chainable
+        * @since 0.0.1
+       */
+        NodeListPrototype.setData = HTMLCollectionPrototype.setData = function(/* key, value */) {
+            return forEach(this, 'setData', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Sets the content of the HtmlElement (innerHTML). Careful: only set content like this if you controll the data and
+        * are sure what is going inside. Otherwise XSS might occur. If you let the user insert, or insert right from a db,
+        * you might be better of using setContent().
+        *
+        * @method setHTML
+        * @param content {HtmlElement|HtmlElementList|String} content to append
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.setHTML = HTMLCollectionPrototype.setHTML = function(/* content */) {
+            return forEach(this, 'setHTML', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Sets a css-property (inline) out of the HtmlElement. Use camelCase.
+        *
+        * Note: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine
+        *
+        * @method setStyle
+        * @param cssAttribute {String} the css-property to be set
+        * @param value {String} the css-value
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.setInlineStyle = HTMLCollectionPrototype.setInlineStyle = function(/* cssAttribute, value */) {
+            return forEach(this, 'setInlineStyle', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Sets the content of the HtmlElement. This is a safe way to set the content, because HTML is not parsed.
+        * If you do need to set HTML inside the node, use setHTML().
+        *
+        * @method setText
+        * @param content {HtmlElement|HtmlElementList|String} content to append. In case of HTML, it will be escaped.
+        * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.setText = HTMLCollectionPrototype.setText = function(/* content */) {
+            return forEach(this, 'setText', arguments);
+        };
+
+       /**
+        * For all HtmlElements of the NodeList/HTMLCollection:
+        * Toggles the className of the Element.
+        *
+        * @method toggleClass
+        * @param className {String} the className that should be toggled
+        * @chainable
+        * @since 0.0.1
+        */
+        NodeListPrototype.toggleClass = HTMLCollectionPrototype.toggleClass = function(/* className */) {
+            return forEach(this, 'toggleClass', arguments);
+        };
+
+    }(window.NodeList.prototype, window.HTMLCollection.prototype));
+};
+},{"polyfill/polyfill-base.js":42}],54:[function(require,module,exports){
+/**
+ * Creates a Namespace that can be used accros multiple vdom-modules to share information.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * <br>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module vdom
+ * @submodule vdom-ns
+ * @class NS-vdom
+ * @since 0.0.1
+*/
+
+"use strict";
+
+require('js-ext/lib/object.js');
+
+module.exports = function (window) {
+    var NS;
+
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, '_ITSAmodules', {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
+
+    NS = window._ITSAmodules.VDOM || (window._ITSAmodules.VDOM={});
+
+    /**
+     * Reference to the VElement of document.body (gets its value as soon as it gets refered to)
+     *
+     * @property body
+     * @default null
+     * @type VElement
+     * @since 0.0.1
+     */
+     NS.body = null;
+
+
+    /**
+     * A hash with all node'ids (of all the domnodes that have an id). The value is a reference to an VElement.
+     *
+     * @property nodeids
+     * @default {}
+     * @type Object
+     * @since 0.0.1
+     */
+    NS.nodeids || (NS.nodeids={});
+
+    /**
+     * A hash with all encountered non-void Elements
+     *
+     * @property nonVoidElements
+     * @default {}
+     * @type Object
+     * @since 0.0.1
+     */
+    NS.nonVoidElements || (NS.nonVoidElements={});
+
+    /**
+     * A hash to identify what tagNames are equal to `SCRIPT` or `STYLE`.
+     *
+     * @property SCRIPT_OR_STYLE_TAG
+     * @default {SCRIPT: true, STYLE: true}
+     * @type Object
+     * @since 0.0.1
+     */
+    NS.SCRIPT_OR_STYLE_TAG = {
+        SCRIPT: true,
+        STYLE: true
+    };
+
+    /**
+     * A hash with all nodeTypes that should be captured by the vDOM.
+     *
+     * @property VALID_NODE_TYPES
+     * @default {1: true, 3: true, 8: true}
+     * @type Object
+     * @since 0.0.1
+     */
+    NS.VALID_NODE_TYPES = {
+        1: true,
+        3: true,
+        8: true
+    };
+
+    /**
+     * A hash with all encountered void Elements
+     *
+     * @property voidElements
+     * @default {}
+     * @type Object
+     * @since 0.0.1
+     */
+    NS.voidElements || (NS.voidElements={});
+
+    return NS;
+};
+},{"js-ext/lib/object.js":36}],55:[function(require,module,exports){
+"use strict";
+
+/**
+ * Delivers the `vnode` prototype object, which is a virtualisation of an `Element` inside the Dom.
+ * These Elements work smoothless with the vdom (see ...).
+ *
+ * vnodes are much quicker to access and walk through than native dom-nodes. However, this is a module you don't need
+ * by itself: `Element`-types use these features under the hood.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * <br>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module vdom
+ * @submodule vnode
+ * @class vnode
+ * @since 0.0.1
+*/
+
+require('js-ext/lib/array.js');
+require('js-ext/lib/object.js');
+require('js-ext/lib/string.js');
+require('./element-array');
+
+module.exports = function (window) {
+
+    var NS = require('./vdom-ns.js')(window),
+        extractor = require('./attribute-extractor.js'),
+        DOCUMENT = window.document,
+        nodeids = NS.nodeids,
+        htmlToVNodes = require('./html-parser.js')(window),
+        ElementArray = require('./element-array.js'),
+        async = require('utils/lib/timers.js').async,
+        NTH_CHILD_REGEXP = /(?:(\d*)[n|N])?([+|-])?(\d*)/, // an+b
+        STRING = 'string',
+        CLASS = 'class',
+        STYLE = 'style',
+        SPLIT_CHARACTER = {
+            ' ': true,
+            '>': true,
+            '+': true,
+            '~': true
+        },
+        STORABLE_SPLIT_CHARACTER = {
+            '>': true,
+            '+': true,
+            '~': true
+        },
+        SIBLING_MATCH_CHARACTER = {
+            '+': true,
+            '~': true
+        },
+        ATTR_DETAIL_SPECIFIERS = {
+            '^': true, // “begins with” selector
+            '$': true, // “ends with” selector
+            '*': true, // “contains” selector (might be a substring)
+            '~': true, // “contains” selector as a separate word, separated by spaces
+            '|': true // “contains” selector as a separate word, separated by `|`
+        },
+        /**
+         * Object to gain quick access to attribute-name end-tokens.
+         *
+         * @property END_ATTRIBUTENAME
+         * @default {
+         *      '=': true,
+         *      ']': true
+         *  }
+         * @type Object
+         * @protected
+         * @since 0.0.1
+         */
+        END_ATTRIBUTENAME = {
+            '=': true,
+            ']': true,
+            '^': true, // “begins with” selector
+            '$': true, // “ends with” selector
+            '*': true, // “contains” selector (might be a substring)
+            '~': true, // “contains” selector as a separate word, separated by spaces
+            '|': true // “contains” selector as a separate word, separated by `|`
+        },
+        /**
+         * Object to gain quick access to different changes of Element nodeType changes.
+         *
+         * @property NODESWITCH
+         * @default {
+         *      1: {
+         *          1: 1,
+         *          3: 2,
+         *          8: 3
+         *      },
+         *      3: {
+         *          1: 4,
+         *          3: 5,
+         *          8: 6
+         *      },
+         *      8: {
+         *          1: 7,
+         *          3: 8,
+         *          8: 9
+         *      }
+         *  }
+         * @type Object
+         * @protected
+         * @since 0.0.1
+         */
+        NODESWITCH = {
+            1: {
+                1: 1, // oldNodeType==Element, newNodeType==Element
+                3: 2, // oldNodeType==Element, newNodeType==TextNode
+                8: 3  // oldNodeType==Element, newNodeType==Comment
+            },
+            3: {
+                1: 4, // oldNodeType==TextNode, newNodeType==Element
+                3: 5, // oldNodeType==TextNode, newNodeType==TextNode
+                8: 6  // oldNodeType==TextNode, newNodeType==Comment
+            },
+            8: {
+                1: 7, // oldNodeType==Comment, newNodeType==Element
+                3: 8, // oldNodeType==Comment, newNodeType==TextNode
+                8: 9  // oldNodeType==Comment, newNodeType==Comment
+            }
+        },
+        /**
+         * Object to gain quick access to selector start-tokens.
+         *
+         * @property SELECTOR_IDENTIFIERS
+         * @default {
+         *      '#': 1,
+         *      '.': 2,
+         *      '[': 3
+         *  }
+         * @type Object
+         * @protected
+         * @since 0.0.1
+         */
+        SELECTOR_IDENTIFIERS = {
+            '#': 1,
+            '.': 2,
+            '[': 3,
+            ':': 4
+        },
+        PSEUDO_FIRST_CHILD = ':first-child',
+        PSEUDO_FIRST_OF_TYPE = ':first-of-type',
+        PSEUDO_LAST_CHILD = ':last-child',
+        PSEUDO_LAST_OF_TYPE = ':last-of-type',
+        PSEUDO_NTH_CHILD = ':nth-child',
+        PSEUDO_NTH_LAST_CHILD = ':nth-last-child',
+        PSEUDO_NTH_LAST_OF_TYPE = ':nth-last-of-type',
+        PSEUDO_NTH_OF_TYPE = ':nth-of-type',
+        PSEUDO_ONLY_OF_TYPE = ':only-of-type',
+        PSEUDO_ONLY_CHILD = ':only-child',
+        /**
+         * Object to gain quick access to the selectors that required children
+         *
+         * @property PSEUDO_REQUIRED_CHILDREN
+         * @default {
+         *     ':first-child': true,
+         *     ':first-of-type': true,
+         *     ':last-child': true,
+         *     ':last-of-type': true,
+         *     ':nth-child': true,
+         *     ':nth-last-child': true,
+         *     ':nth-last-of-type': true,
+         *     ':nth-of-type': true,
+         *     ':only-of-type': true,
+         *     ':only-child': true
+         *  }
+         * @type Object
+         * @protected
+         * @since 0.0.1
+         */
+        PSEUDO_REQUIRED_CHILDREN = {},
+        _matchesSelectorItem, _matchesOneSelector, _findElementSibling, vNodeProto,
+        _splitSelector, _findNodeSibling, _matchNthChild;
+
+        PSEUDO_REQUIRED_CHILDREN[PSEUDO_FIRST_CHILD] = true;
+        PSEUDO_REQUIRED_CHILDREN[PSEUDO_FIRST_OF_TYPE] = true;
+        PSEUDO_REQUIRED_CHILDREN[PSEUDO_LAST_CHILD] = true;
+        PSEUDO_REQUIRED_CHILDREN[PSEUDO_LAST_OF_TYPE] = true;
+        PSEUDO_REQUIRED_CHILDREN[PSEUDO_NTH_CHILD] = true;
+        PSEUDO_REQUIRED_CHILDREN[PSEUDO_NTH_LAST_CHILD] = true;
+        PSEUDO_REQUIRED_CHILDREN[PSEUDO_NTH_LAST_OF_TYPE] = true;
+        PSEUDO_REQUIRED_CHILDREN[PSEUDO_NTH_OF_TYPE] = true;
+        PSEUDO_REQUIRED_CHILDREN[PSEUDO_ONLY_OF_TYPE] = true;
+        PSEUDO_REQUIRED_CHILDREN[PSEUDO_ONLY_CHILD] = true;
+
+   /**
+    * Searches for the next -or previous- node-sibling (nodeType of 1, 3 or 8).
+    *
+    * @method _findNodeSibling
+    * @param vnode {Object} the vnode to inspect
+    * @param [next] {Boolean} whether to search for the next, or previous match.
+    * @return {Object|undefined} the vnode that matches the search
+    * @protected
+    * @private
+    * @since 0.0.1
+    */
+    _findNodeSibling = function(vnode, next) {
+        var vParent = vnode.vParent,
+            index;
+        if (!vParent || !vParent.vChildNodes) {
+            return null;
+        }
+        index = vParent.vChildNodes.indexOf(vnode) + (next ? 1 : -1);
+        return vParent.vChildNodes[index];
+    };
+
+   /**
+    * Searches for the next -or previous- Element-sibling (nodeType of 1).
+    *
+    * @method _findElementSibling
+    * @param vnode {Object} the vnode to inspect
+    * @param [next] {Boolean} whether to search for the next, or previous match.
+    * @return {Object|undefined} the vnode that matches the search
+    * @protected
+    * @private
+    * @since 0.0.1
+    */
+    _findElementSibling = function(vnode, next) {
+        var vParent = vnode.vParent,
+            index;
+        if (!vParent || !vParent.vChildNodes) {
+            return null;
+        }
+        if (vnode.nodeType===1) {
+            index = vParent.vChildren.indexOf(vnode) + (next ? 1 : -1);
+            return vParent.vChildren[index];
+        }
+        else {
+/*jshint noempty:true */
+            while ((vnode=_findNodeSibling(vnode, next)) && (vnode.nodeType!==1)) {}
+/*jshint noempty:false */
+            return vnode;
+        }
+    };
+
+   /**
+    * Check whether the vnode matches a "nth-child" test, which is used for css pseudoselectors like `nth-child`, `nth-of-type` etc.
+    *
+    * @method _matchNthChild
+    * @param pseudoArg {String} the argument for nth-child
+    * @param index {Number} the index of the inspected vnode
+    * @return {Boolean} whether the vnode matches the nthChild test
+    * @protected
+    * @private
+    * @since 0.0.1
+    */
+    _matchNthChild = function(pseudoArg, index) {
+        var match, k, a, b, nodeOk, nthIndex, sign;
+        (pseudoArg==='even') && (pseudoArg='2n');
+        (pseudoArg==='odd') && (pseudoArg='2n+1');
+
+        match = pseudoArg.match(NTH_CHILD_REGEXP);
+        if (!match) {
+            return false;
+        }
+        // pseudoArg follows the pattern: `an+b`
+        a = match[1];
+        sign = match[2];
+        b = match[3];
+        (b==='') && (b=0);
+        if (!a) {
+            // only fixed index to match
+            return (sign==='-') ? false : (parseInt(b, 10)===index);
+        }
+        else {
+            // we need to iterate
+            nodeOk = false;
+            b = window.Number(b);
+            for (k=0; !nodeOk; k++) {
+                nthIndex = (sign==='-') ? (a*k) - b : (a*k) + b;
+                if (nthIndex===index) {
+                    nodeOk = true;
+                }
+                else if (nthIndex>index) {
+                    // beyond index --> will never become a fix anymore
+                    return false;
+                }
+            }
+            return nodeOk;
+        }
+    };
+
+   /**
+    * Check whether the vnode matches the css-selector. the css-selector should be a single selector,
+    * not multiple, so it shouldn't contain a `comma`.
+    *
+    * @method _matchesOneSelector
+    * @param vnode {Object} the vnode to inspect
+    * @param selector {String} the selector-item to check the match for
+    * @return {Boolean} whether the vnode matches the css-selector
+    * @protected
+    * @private
+    * @since 0.0.1
+    */
+    _matchesOneSelector = function(vnode, selector) {
+        var selList = _splitSelector(selector),
+            size = selList.length,
+            i, selectorItem, selMatch, directMatch;
+
+        if (size===0) {
+            return false;
+        }
+
+        selectorItem = selList[size-1];
+        selMatch = _matchesSelectorItem(vnode, selectorItem);
+        for (i=size-2; (selMatch && (i>=0)); i--) {
+            selectorItem = selList[i];
+            if (SIBLING_MATCH_CHARACTER[selectorItem]) {
+                // need to search through the same level
+                if (--i>=0) {
+                    directMatch = (selectorItem==='+');
+                    selectorItem = selList[i];
+                    // need to search the previous siblings
+                    vnode = vnode.vPreviousElement;
+                    if (!vnode) {
+                        return false;
+                    }
+                    if (directMatch) {
+                        // should be immediate match
+                        selMatch = _matchesSelectorItem(vnode, selectorItem);
+                    }
+                    else {
+                        while (vnode && !(selMatch=_matchesSelectorItem(vnode, selectorItem))) {
+                            vnode = vnode.vPreviousElement;
+                        }
+                    }
+                }
+            }
+            else {
+                // need to search up the tree
+                vnode = vnode.vParent;
+                if (!vnode) {
+                    return false;
+                }
+                if ((selectorItem==='>') && (--i>=0)) {
+                    selectorItem = selList[i];
+                    // should be immediate match
+                    selMatch = _matchesSelectorItem(vnode, selectorItem);
+                }
+                else {
+                    while (vnode && !(selMatch=_matchesSelectorItem(vnode, selectorItem))) {
+                        vnode = vnode.vParent;
+                    }
+                }
+            }
+        }
+        return selMatch;
+    };
+
+   /**
+    * Check whether the vnode matches one specific selector-item. Suppose the css-selector: "#mynode li.red .blue"
+    * then there are 3 selector-items: "#mynode",  "li.red" and ".blue"
+    *
+    * This method also can handle the new selectors:
+    * <ul>
+    *     <li>[att^=val] –-> the “begins with” selector</li>
+    *     <li>[att$=val] –-> the “ends with” selector</li>
+    *     <li>[att*=val] –-> the “contains” selector (might be a substring)</li>
+    *     <li>[att~=val] –-> the “contains” selector as a separate word, separated by spaces</li>
+    *     <li>[att|=val] –-> the “contains” selector as a separate word, separated by `|`</li>
+    *     <li>+ --> (same level)</li>
+    *     <li>~ --> (same level)</li>
+    * </ul>
+    *
+    * @method _matchesSelectorItem
+    * @param vnode {Object} the vnode to inspect
+    * @param selectorItem {String} the selector-item to check the match for
+    * @return {Boolean} whether the vnode matches the selector-item
+    * @protected
+    * @private
+    * @since 0.0.1
+    */
+    _matchesSelectorItem = function (vnode, selectorItem) {
+        var i = 0,
+            len = selectorItem.length,
+            character = selectorItem[0],
+            tagName, id, className, attributeName, attributeValue, stringMarker, attributeisString, isBoolean, insideAttributeValue, insideAttribute,
+            vParent, checkBoolean, treatment, k, min, max, value, len2, index, found, pseudo, pseudoArg, arglevel, count, vParentVChildren;
+        if (selectorItem==='*') {
+            return true;
+        }
+        if (!SELECTOR_IDENTIFIERS[character]) {
+            // starts with tagName
+            tagName = '';
+            // reposition i to continue in the right way:
+            i--;
+            while ((++i<len) && (character=selectorItem[i]) && !SELECTOR_IDENTIFIERS[character]) {
+                tagName += character;
+            }
+            if (tagName.toUpperCase()!==vnode.tag) {
+                return false;
+            }
+        }
+        while (i<len) {
+            switch (character) {
+                case '#':
+                    id = '';
+                    while ((++i<len) && (character=selectorItem[i]) && !SELECTOR_IDENTIFIERS[character]) {
+                        id += character;
+                    }
+                    if (id!==vnode.id) {
+                        return false;
+                    }
+                    break;
+                case '.':
+                    className = '';
+                    while ((++i<len) && (character=selectorItem[i]) && !SELECTOR_IDENTIFIERS[character]) {
+                        className += character;
+                    }
+
+                    if (!vnode.hasClass(className)) {
+                        return false;
+                    }
+                    break;
+                case '[':
+                    attributeName = '';
+                    while ((++i<len) && (character=selectorItem[i]) && !END_ATTRIBUTENAME[character]) {
+                        attributeName += character;
+                    }
+                    // if character===']' then we have an attribute without a value-definition
+                    if (!vnode.attrs[attributeName] || ((character===']') && (vnode.attrs[attributeName]!==''))) {
+                        return false;
+                    }
+                    // now we read the value of the attribute
+                    // however, it could be that the selector has a special `detailed` identifier set (defined by: ATTR_DETAIL_SPECIFIERS)
+                    if (ATTR_DETAIL_SPECIFIERS[character]) {
+                        treatment = character; // store the character to know how the attributedata should be treaded
+                        i++; // character should be a "=" by now
+                    }
+                    else {
+                        treatment = null;
+                    }
+                    attributeValue = '';
+                    stringMarker = selectorItem[i+1];
+                    attributeisString = (stringMarker==='"') || (stringMarker==="'");
+                    attributeisString && (i++);
+
+                    // end of attributaValue = (character===']') && (!attributeisString || (selectorItem[i-1]===stringMarker))
+                    while ((++i<len) && (character=selectorItem[i]) && !((character===']') && (!attributeisString || (selectorItem[i-1]===stringMarker)))) {
+                        attributeValue += character;
+                    }
+
+                    if (attributeisString) {
+                        // if attribute is string, then we need to _remove to last stringmarker
+                        attributeValue = attributeValue.substr(0, attributeValue.length-1);
+                    }
+                    else {
+                        // if attribute is no string, then we need to typecast its value
+                        isBoolean = ((attributeValue.length>3) && (attributeValue.length<6) &&
+                                     (checkBoolean=attributeValue.toUpperCase()) &&
+                                     ((checkBoolean==='FALSE') || (checkBoolean==='TRUE')));
+                        // typecast the value to either Boolean or Number:
+                        attributeValue = isBoolean ? (checkBoolean==='TRUE') : parseFloat(attributeValue);
+                    }
+
+                    // depending upon how the attributedata should be treated:
+                    if (treatment) {
+                        switch (treatment) {
+                            case '^': // “begins with” selector
+                                if (!vnode.attrs[attributeName].startsWith(attributeValue)) {
+                                    return false;
+                                }
+                                break;
+                            case '$': // “ends with” selector
+                                if (!vnode.attrs[attributeName].endsWith(attributeValue)) {
+                                    return false;
+                                }
+                                break;
+                            case '*': // “contains” selector (might be a substring)
+                                if (!vnode.attrs[attributeName].contains(attributeValue)) {
+                                    return false;
+                                }
+                                break;
+                            case '~': // “contains” selector as a separate word, separated by spaces
+                                if (!(' '+vnode.attrs[attributeName]+' ').contains(' '+attributeValue+' ')) {
+                                    return false;
+                                }
+                                break;
+                            case '|': // “contains” selector as a separate word, separated by `|`
+                                if (!('|'+vnode.attrs[attributeName]+'|').contains('|'+attributeValue+'|')) {
+                                    return false;
+                                }
+                                break;
+                        }
+                    }
+                    else if (vnode.attrs[attributeName]!==attributeValue) {
+                        return false;
+                    }
+
+                    // we still need to increase one position:
+                    (++i<len) && (character=selectorItem[i]);
+                    break;
+                case ':':
+                    // we have a pseudo-selector
+                    // first, find out which one
+                    // because '::' is a valid start (though without any selection), we start to back the next character as well:
+                    pseudo = ':'+selectorItem[++i];
+                    pseudoArg = '';
+                    vParent = vnode.vParent;
+                    vParentVChildren = vParent && vParent.vChildren;
+                    // pseudo-selectors might have an argument passed in, like `:nth-child(2n+1)` or `:not([type="checkbox"])` --> we
+                    // store this argument inside `pseudoArg`
+                    // also note that combinations are possible with `:not` --> `:not(:nth-child(2n+1))`
+                    // also note that we cannot "just" look for a closing character when running into the usage of attributes:
+                    // for example --> `:not([data-x="some data :)"])`
+                    // that's why -once we are inside attribute-data- we need to continue until the attribute-data ends
+                    while ((++i<len) && (character=selectorItem[i]) && !SELECTOR_IDENTIFIERS[character]) {
+                        if (character==='(') {
+                            // starting arguments
+                            arglevel = 1;
+                            insideAttribute = false;
+                            insideAttributeValue = false;
+                            while ((++i<len) && (character=selectorItem[i]) && (arglevel>0)) {
+                                if (!insideAttribute) {
+                                    if (character==='(') {
+                                        arglevel++;
+                                    }
+                                    else if (character===')') {
+                                        arglevel--;
+                                    }
+                                    else if (character==='[') {
+                                        insideAttribute = true;
+                                    }
+                                }
+                                else {
+                                    // inside attribute
+                                    if (!insideAttributeValue) {
+                                        if ((character==='"') || (character==="'")) {
+                                            insideAttributeValue = true;
+                                            stringMarker = character;
+                                        }
+                                        else if (character===']') {
+                                            insideAttribute = false;
+                                        }
+                                    }
+                                    else if ((character===stringMarker) && (selectorItem[i+1]===']')) {
+                                        insideAttributeValue = false;
+                                    }
+                                }
+                                (arglevel>0) && (pseudoArg+=character);
+                            }
+                        }
+                        else {
+                            pseudo += character;
+                        }
+                    }
+                    // now, `pseudo` is known as well as its possible pseudoArg
+                    if (!vParentVChildren && PSEUDO_REQUIRED_CHILDREN[pseudo]) {
+                        return false;
+                    }
+                    switch (pseudo) {
+                        case ':checked': // input:checked   Selects every checked <input> element
+                            if (!vnode.attrs.checked) {
+                                return false;
+                            }
+                            break;
+                        case ':disabled': // input:disabled  Selects every disabled <input> element
+                            if (!vnode.attrs.disabled) {
+                                return false;
+                            }
+                            break;
+                        case ':empty': // p:empty Selects every <p> element that has no children (including text nodes)
+                            if (vnode.vChildNodes && (vnode.vChildNodes.length>0)) {
+                                return false;
+                            }
+                            break;
+                        case ':enabled': // input:enabled   Selects every enabled <input> element
+                            if (vnode.attrs.disabled) {
+                                return false;
+                            }
+                            break;
+                        case PSEUDO_FIRST_CHILD: // p:first-child   Selects every <p> element that is the first child of its parent
+                            if (vParentVChildren[0]!==vnode) {
+                                return false;
+                            }
+                            break;
+                        case PSEUDO_FIRST_OF_TYPE: // p:first-of-type Selects every <p> element that is the first <p> element of its parent
+                            for (k=vParentVChildren.indexOf(vnode)-1; k>=0; k--) {
+                                if (vParentVChildren[k].tag===vnode.tag) {
+                                    return false;
+                                }
+                            }
+                            break;
+                        case ':focus': // input:focus Selects the input element which has focus
+                            if (vnode.domNode!==DOCUMENT.activeElement) {
+                                return false;
+                            }
+                            break;
+                        case ':in-range': // input:in-range  Selects input elements with a value within a specified range
+                            if ((vnode.tag!=='INPUT') || ((vnode.attrs.type || '').toLowerCase()!=='number')) {
+                                return false;
+                            }
+                            min = parseInt(vnode.attrs.min, 10);
+                            max = parseInt(vnode.attrs.max, 10);
+                            value = parseInt(vnode.domNode.value, 10);
+                            if (!value || !min || !max || (value<min) || (value>max)) {
+                                return false;
+                            }
+                            break;
+                        case ':lang': // p:lang(it)  Selects every <p> element with a lang attribute equal to "it" (Italian)
+                            if (vnode.attrs.lang!==pseudoArg) {
+                                return false;
+                            }
+                            break;
+                        case PSEUDO_LAST_CHILD: // p:last-child    Selects every <p> element that is the last child of its parent
+                            if (vParentVChildren[vParentVChildren.length-1]!==vnode) {
+                                return false;
+                            }
+                            break;
+                        case PSEUDO_LAST_OF_TYPE: // p:last-of-type  Selects every <p> element that is the last <p> element of its parent
+                            len2 = vParentVChildren.length;
+                            for (k=vParentVChildren.indexOf(vnode)+1; k<len2; k++) {
+                                if (vParentVChildren[k].tag===vnode.tag) {
+                                    return false;
+                                }
+                            }
+                            break;
+                        case ':not': // :not(p) Selects every element that is not a <p> element
+                            if (vnode.matchesSelector(pseudoArg)) {
+                                return false;
+                            }
+                            break;
+                        case PSEUDO_NTH_CHILD: // p:nth-child(2)  Selects every <p> element that is the second child of its parent
+                            // NOTE: css `nth` starts with 1 instead of 0 !!!
+                            index = vParentVChildren.indexOf(vnode)+1;
+                            if (!_matchNthChild(pseudoArg, index)) {
+                                return false;
+                            }
+                            break;
+                        case PSEUDO_NTH_LAST_CHILD: // p:nth-last-child(2) Selects every <p> element that is the second child of its parent, counting from the last child
+                            // NOTE: css `nth` starts with 1 instead of 0 !!!
+                            // Also, nth-last-child counts from bottom up
+                            index = vParentVChildren.length - vParentVChildren.indexOf(vnode);
+                            if (!_matchNthChild(pseudoArg, index)) {
+                                return false;
+                            }
+                            break;
+                        case PSEUDO_NTH_LAST_OF_TYPE: // p:nth-last-of-type(2)   Selects every <p> element that is the second <p> element of its parent, counting from the last child
+                            // NOTE: css `nth` starts with 1 instead of 0 !!!
+                            // Also, nth-last-child counts from bottom up
+                            index = vParentVChildren.length - vParentVChildren.indexOf(vnode);
+                            // NOTE: css `nth` starts with 1 instead of 0 !!!
+                            found = false;
+                            index = 0;
+                            for (k=vParentVChildren.length-1; (k>=0) && !found; k--) {
+                                (vParentVChildren[k].tag===vnode.tag) && index++;
+                                (vParentVChildren[k]===vnode) && (found=true);
+                            }
+                            if (!found || !_matchNthChild(pseudoArg, index)) {
+                                return false;
+                            }
+                            break;
+                        case PSEUDO_NTH_OF_TYPE: // p:nth-of-type(2)    Selects every <p> element that is the second <p> element of its parent
+                            // NOTE: css `nth` starts with 1 instead of 0 !!!
+                            found = false;
+                            len2 = vParentVChildren.length;
+                            index = 0;
+                            for (k=0; (k<len2) && !found; k++) {
+                                (vParentVChildren[k].tag===vnode.tag) && index++;
+                                (vParentVChildren[k]===vnode) && (found=true);
+                            }
+                            if (!found || !_matchNthChild(pseudoArg, index)) {
+                                return false;
+                            }
+                            break;
+                        case PSEUDO_ONLY_OF_TYPE: // p:only-of-type  Selects every <p> element that is the only <p> element of its parent
+                            len2 = vParentVChildren.length;
+                            count = 0;
+                            for (k=0; (k<len2) && (count<=1); k++) {
+                                (vParentVChildren[k].tag===vnode.tag) && count++;
+                            }
+                            if (count!==1) {
+                                return false;
+                            }
+                            break;
+                        case PSEUDO_ONLY_CHILD: // p:only-child    Selects every <p> element that is the only child of its parent
+                            if (vParentVChildren.length!==1) {
+                                return false;
+                            }
+                            break;
+                        case ':optional': // input:optional  Selects input elements with no "required" attribute
+                            if (vnode.attrs.required) {
+                                return false;
+                            }
+                            break;
+                        case ':out-of-range': // input:out-of-range  Selects input elements with a value outside a specified range
+                            if ((vnode.tag!=='INPUT') || ((vnode.attrs.type || '').toLowerCase()!=='number')) {
+                                return false;
+                            }
+                            min = parseInt(vnode.attrs.min, 10);
+                            max = parseInt(vnode.attrs.max, 10);
+                            value = parseInt(vnode.domNode.value, 10);
+                            if (!value || !min || !max || ((value>=min) && (value<=max))) {
+                                return false;
+                            }
+                            break;
+                        case ':read-only': // input:read-only Selects input elements with the "readonly" attribute specified
+                            if (!vnode.attrs.readonly) {
+                                return false;
+                            }
+                            break;
+                        case ':read-write': // input:read-write    Selects input elements with the "readonly" attribute NOT specified
+                            if (vnode.attrs.readonly) {
+                                return false;
+                            }
+                            break;
+                        case ':required': // input:required  Selects input elements with the "required" attribute specified
+                            if (!vnode.attrs.required) {
+                                return false;
+                            }
+                            break;
+                        case ':root': // Selects the document's root element
+                            if (vnode.domNode!==DOCUMENT.documentElement) {
+                                return false;
+                            }
+                            break;
+                    }
+            }
+        }
+        return true;
+    };
+
+    /**
+     * Splits the selector into separate subselector-items that should match different elements through the tree.
+     * Special characters '>' and '+' are added as separate items in the hash.
+     *
+     * @method _splitSelector
+     * @param selector {String} the selector-item to check the match for
+     * @return {Array} splitted selectors
+     * @protected
+     * @private
+     * @since 0.0.1
+     */
+    _splitSelector = function(selector) {
+        var list = [],
+            len = selector.length,
+            sel = '',
+            i, character, insideDataAttr;
+
+        for (i=0; i<len; i++) {
+            character = selector[i];
+            if (character==='[') {
+                sel += character;
+                insideDataAttr = true;
+            }
+            else if (character===']') {
+                sel += character;
+                insideDataAttr = false;
+            }
+            else if (insideDataAttr || !SPLIT_CHARACTER[character]) {
+                sel += character;
+            }
+            else {
+                // unique selectoritem is found, add it to the list
+                if (sel.length>0) {
+                    list[list.length] = sel;
+                    sel = '';
+                }
+                // in case the last character was '>', '+' or '~', we need to add it as a separate item
+                STORABLE_SPLIT_CHARACTER[character] && (list[list.length]=character);
+            }
+        }
+        // add the last item
+        if (sel.length>0) {
+            list[list.length] = sel;
+            sel = '';
+        }
+        return list;
+    };
+
+    vNodeProto = {
+       /**
+        * Check whether the vnode's domNode is equal, or contains the specified Element.
+        *
+        * @method contains
+        * @return {Boolean} whether the vnode's domNode is equal, or contains the specified Element.
+        * @since 0.0.1
+        */
+        contains: function(otherVNode) {
+            while (otherVNode && (otherVNode!==this)) {
+                otherVNode = otherVNode.vParent;
+            }
+            return (otherVNode===this);
+        },
+
+       /**
+        * Returns the first child-vnode (if any). The child represents an Element (nodeType===1).
+        *
+        * @method firstOfVChildren
+        * @param cssSelector {String} one or more css-selectors
+        * @return {Object|null} the first child-vnode or null when not present
+        * @since 0.0.1
+        */
+        firstOfVChildren: function(cssSelector) {
+            var instance = this,
+                found, i, len, vChildren, element;
+            if (!cssSelector) {
+                return instance.vFirstElementChild;
+            }
+            vChildren = instance.vChildren;
+            len = vChildren.length;
+            for (i=0; !found && (i<len); i++) {
+                element = vChildren[i];
+                element.matchesSelector(cssSelector) && (found=element);
+            }
+            return found || null;
+        },
+
+       /**
+        * Checks whether the vnode has any vChildNodes (nodeType of 1, 3 or 8).
+        *
+        * @method hasVChildNodes
+        * @return {Boolean} whether the vnode has any vChildNodes.
+        * @since 0.0.1
+        */
+        hasVChildNodes: function() {
+            return this.vChildNodes ? (this.vChildNodes.length>0) : false;
+        },
+
+       /**
+        * Checks whether the vnode has any vChildren (vChildNodes with nodeType of 1).
+        *
+        * @method hasVChildren
+        * @return {Boolean} whether the vnode has any vChildren.
+        * @since 0.0.1
+        */
+        hasVChildren: function() {
+            return this.vChildNodes ? (this.vChildren.length>0) : false;
+        },
+
+       /**
+        * Checks whether the className is present on the vnode.
+        *
+        * @method hasClass
+        * @param className {String|Array} the className to check for. May be an Array of classNames, which all needs to be present.
+        * @return {Boolean} whether the className (or classNames) is present on the vnode
+        * @since 0.0.1
+        */
+        hasClass: function(className) {
+            var instance = this,
+                check = function(cl) {
+                    return !!instance.classNames[cl];
+                };
+            if (!instance.classNames) {
+                return false;
+            }
+            if (typeof className === STRING) {
+                return check(className);
+            }
+            else if (Array.isArray(className)) {
+                return className.every(check);
+            }
+            return false;
+        },
+
+       /**
+        * Returns the last child-vnode (if any). The child represents an Element (nodeType===1).
+        *
+        * @method lastOfVChildren
+        * @param cssSelector {String} one or more css-selectors
+        * @return {Object|null} the last child-vnode or null when not present
+        * @since 0.0.1
+        */
+        lastOfVChildren: function(cssSelector) {
+            var vChildren = this.vChildren,
+                found, i, element;
+            if (vChildren) {
+                if (!cssSelector) {
+                    return this.vLastElementChild;
+                }
+                for (i=vChildren.length-1; !found && (i>=0); i--) {
+                    element = vChildren[i];
+                    element.matchesSelector(cssSelector) && (found=element);
+                }
+            }
+            return found || null;
+        },
+
+       /**
+        * Checks whether the vnode matches one of the specified selectors. `selectors` can be one, or multiple css-selectors,
+        * separated by a `comma`. For example: "#myid li.red blue" is one selector, "div.red, div.blue, div.green" are three selectors.
+        *
+        * @method matchesSelector
+        * @param selectors {String} one or more css-selectors
+        * @return {Boolean} whether the vnode matches one of the selectors
+        * @since 0.0.1
+        */
+        matchesSelector: function(selectors) {
+            var instance = this;
+            if (instance.nodeType!==1) {
+                return false;
+            }
+            selectors = selectors.split(',');
+            // we can use Array.some, because there won't be many separated selectoritems,
+            // so the final invocation won't be delayed much compared to looping
+            return selectors.some(function(selector) {
+                return _matchesOneSelector(instance, selector);
+            });
+        },
+
+        reloadAttr: function(attribute) {
+            var instance = this,
+                attributeValue = this.domNode._getAttribute(attribute),
+                attrs = instance.attrs,
+                extractStyle, extractClass;
+            attributeValue || (attributeValue='');
+            if (attributeValue==='') {
+                delete attrs[attribute];
+                // in case of STYLE attribute --> special treatment
+                (attribute===STYLE) && (instance.styles={});
+                // in case of CLASS attribute --> special treatment
+                (attribute===CLASS) && (instance.classNames={});
+            }
+            else {
+                attrs[attribute] = attributeValue;
+                // in case of STYLE attribute --> special treatment
+                if (attribute===STYLE) {
+                    extractStyle = extractor.extractStyle(attributeValue);
+                    attributeValue = extractStyle.attrStyle;
+                    if (attributeValue) {
+                        attrs.style = attributeValue;
+                    }
+                    else {
+                        delete attrs.style;
+                    }
+                    instance.styles = extractStyle.styles;
+                }
+                else if (attribute===CLASS) {
+                    // in case of CLASS attribute --> special treatment
+                    extractClass = extractor.extractClass(attributeValue);
+                    attributeValue = extractClass.attrClass;
+                    if (attributeValue) {
+                        attrs[CLASS] = attributeValue;
+                    }
+                    else {
+                        delete attrs[CLASS];
+                    }
+                    instance.classNames = extractClass.classNames;
+                }
+            }
+        },
+
+        serializeStyles: function() {
+            return extractor.serializeStyles(this.styles);
+        },
+
+       /**
+        * Syncs the vnode's nodeid (if available) inside `NS-vdom.nodeids`.
+        *
+        * Does NOT sync with the dom. Can be invoked multiple times without issues.
+        *
+        * @method storeId
+        * @chainable
+        * @since 0.0.1
+        */
+        storeId: function() {
+            // store node/vnode inside WeakMap:
+            var instance = this;
+            instance.id ? (nodeids[instance.id]=instance.domNode) : (delete nodeids[instance.id]);
+            return instance;
+        },
+
+        //---- private ------------------------------------------------------------------
+
+       /**
+        * Removes the vnode from its parent vChildNodes- and vChildren-list.
+        *
+        * Does NOT sync with the dom.
+        *
+        * @method _deleteFromParent
+        * @private
+        * @chainable
+        * @since 0.0.1
+        */
+        _deleteFromParent: function() {
+            var instance = this,
+                vParent = instance.vParent;
+            if (vParent && vParent.vChildNodes) {
+                vParent.vChildNodes.remove(instance);
+                // force to recalculate the vChildren on a next call:
+                (instance.nodeType===1) && (vParent._vChildren=null);
+            }
+            return instance;
+        },
+
+       /**
+        * Moves the vnode from its current parent.vChildNodes list towards a new parent vnode at the specified position.
+        *
+        * Does NOT sync with the dom.
+        *
+        * @method _moveToParent
+        * @private
+        * @chainable
+        * @since 0.0.1
+        */
+        _moveToParent: function(parentVNode, index) {
+            var instance = this,
+                vParent = instance.vParent;
+            instance._deleteFromParent();
+            instance.vParent = parentVNode;
+            parentVNode.vChildNodes || (parentVNode.vChildNodes=[]);
+            parentVNode.vChildNodes.insertAt(instance, index);
+            // force to recalculate the vChildren on a next call:
+            if (vParent && (instance.nodeType===1)) {
+                vParent._vChildren = null;
+                parentVNode._vChildren = null;
+            }
+            return instance;
+        },
+
+       /**
+        * Removes empty TextNodes and merges following TextNodes inside the vnode.
+        *
+        * Syncs with the dom.
+        *
+        * @method _normalize
+        * @private
+        * @chainable
+        * @since 0.0.1
+        */
+        _normalize: function() {
+            var instance = this,
+                domNode = instance.domNode,
+                vChildNodes = instance.vChildNodes,
+                i, preChildNode, vChildNode;
+            if (vChildNodes) {
+                for (i=vChildNodes.length-1; i>=0; i--) {
+                    vChildNode = vChildNodes[i];
+                    preChildNode = vChildNodes[i-1]; // i will get the value `-1` eventually, which leads into undefined preChildNode
+                    if (vChildNode.nodetype===3) {
+                        if (vChildNode.text==='') {
+                            domNode.removeChild(vChildNode.domNode);
+                            vChildNode._remove();
+                        }
+                        else if (preChildNode.nodetype===3) {
+                            preChildNode.text += vChildNode.text;
+                            preChildNode.domNode.nodeValue = preChildNode.text;
+                            domNode.removeChild(vChildNode.domNode);
+                            vChildNode._remove();
+                        }
+                    }
+                }
+            }
+            return instance;
+        },
+
+       /**
+        * Prevents MutationObserver from making the dom sync with the vnode.
+        * Should be used when manipulating the dom from within the vnode itself (to preventing looping)
+        *
+        * @method _noSync
+        * @private
+        * @since 0.0.1
+        */
+        _noSync: function() {
+            var instance = this;
+            if (!instance._nosync) {
+                instance._nosync = true;
+                async(function() {
+                    // instance._nosync = false;
+                });
+            }
+        },
+
+       /**
+        * Removes the vnode and all its vnode-vChildNodes from its definitions inside `NS-vdom.nodeids`.
+        *
+        * Does NOT sync with the dom.
+        *
+        * @method _remove
+        * @private
+        * @chainable
+        * @since 0.0.1
+        */
+        _remove: function() {
+            var instance = this,
+                vChildNodes = instance.vChildNodes,
+                len, i, vChildNode;
+            // first: _remove all its vChildNodes
+            if ((instance.nodeType===1) && vChildNodes) {
+                len = vChildNodes.length;
+                for (i=0; i < len; i++) {
+                    vChildNode = vChildNodes[i];
+                    vChildNode._remove();
+                }
+            }
+            instance._vChildren = null;
+            // explicitely set instance.domNode._vnode and instance.domNode to null in order to prevent problems with the GC (we break the circular reference)
+            instance.domNode._vnode = null;
+            instance.domNode = null;
+            // if valid id, then _remove the DOMnodeRef from internal hash
+            instance.id && delete nodeids[instance.id];
+            instance._deleteFromParent();
+            return instance;
+        },
+
+       /**
+        * Replaces the current vnode by the one that is specified at the parent.vChildNode list.
+        *
+        * Does NOT sync with the dom.
+        *
+        * @method _replaceAtParent
+        * @param newVNode {Object} the new vnode which should take over the place of the current vnode
+        * @private
+        * @chainable
+        * @since 0.0.1
+        */
+        _replaceAtParent: function(newVNode) {
+            var instance = this,
+                vParent = instance.vParent,
+                vChildNodes, index;
+            if (vParent && (vChildNodes=vParent.vChildNodes)) {
+                index = vChildNodes.indexOf(instance);
+                // force to recalculate the vChildren on a next call:
+                ((instance.nodeType===1) || (newVNode.nodeType===1)) && (instance.vParent._vChildren=null);
+                vChildNodes[index] = newVNode;
+            }
+            return instance._remove();
+        },
+
+       /**
+        * Redefines the attributes of both the vnode as well as its related dom-node. The new
+        * definition replaces any previous attributes (without touching unmodified attributes).
+        *
+        * Syncs the new vnode's attributes with the dom.
+        *
+        * @method _setAttrs
+        * @param newAttrs {Object|Array} the new attributes to be set
+        * @private
+        * @chainable
+        * @since 0.0.1
+        */
+        _setAttrs: function(newAttrs) {
+            // does sync the DOM
+            var instance = this,
+                attrsObj, domNode, attr, attrs, id, i, key, keys, len, value, extractClass, extractStyle;
+            if (instance.nodeType!==1) {
+                return;
+            }
+            instance._noSync();
+            domNode = instance.domNode;
+            attrs = instance.attrs;
+            attrs.id && (delete nodeids[attrs.id]);
+
+            if (Object.isObject(newAttrs)) {
+                attrsObj = newAttrs;
+            }
+            else {
+                attrsObj = {};
+                len = newAttrs.length;
+                for (i=0; i<len; i++) {
+                    attr = newAttrs[i];
+                    attrsObj[attr.name] = attr.value;
+                }
+            }
+
+            // first _remove the attributes that are no longer needed.
+            // quickest way for object iteration: http://jsperf.com/object-keys-iteration/20
+            keys = Object.keys(attrs);
+            len = keys.length;
+            for (i = 0; i < len; i++) {
+                key = keys[i];
+                if (!attrsObj[key]) {
+                    // attribute not in the new definition
+                    domNode._removeAttribute(key);
+                    delete attrs[key];
+                    // in case of STYLE attribute --> special treatment
+                    (key===STYLE) && (instance.styles={});
+                    // in case of CLASS attribute --> special treatment
+                    (key===CLASS) && (instance.classNames={});
+                }
+            }
+
+            // next: every attribute that differs: redefine
+            keys = Object.keys(attrsObj);
+            len = keys.length;
+            for (i = 0; i < len; i++) {
+                key = keys[i];
+                value = attrsObj[key];
+                if (attrs[key]!==value) {
+                    // different: redefine
+                    // in case of STYLE attribute --> special treatment
+                    if (key===STYLE) {
+                        extractStyle = extractor.extractStyle(value);
+                        value = extractStyle.attrStyle;
+                        if (value) {
+                            newAttrs.style = value;
+                        }
+                        else {
+                            delete newAttrs.style;
+                        }
+                        instance.styles = extractStyle.styles;
+                    }
+                    else if (key===CLASS) {
+                        // in case of CLASS attribute --> special treatment
+                        extractClass = extractor.extractClass(value);
+                        value = extractClass.attrClass;
+                        if (value) {
+                            newAttrs[CLASS] = value;
+                        }
+                        else {
+                            delete newAttrs[CLASS];
+                        }
+                        instance.classNames = extractClass.classNames;
+                    }
+                    domNode._setAttribute(key, value);
+                }
+            }
+
+            // set node's id:
+            id = instance.id = newAttrs.id;
+            // if valid id, then store the DOMnodeRef inside internal hash
+            id && (nodeids[id]=instance.domNode);
+
+            instance.attrs = newAttrs;
+            return instance;
+        },
+
+       /**
+        * Redefines the childNodes of both the vnode as well as its related dom-node. The new
+        * definition replaces any previous nodes. (without touching unmodified nodes).
+        *
+        * Syncs the new vnode's childNodes with the dom.
+        *
+        * @method _setChildNodes
+        * @param newVChildNodes {Array} array with vnodes which represent the new childNodes
+        * @private
+        * @chainable
+        * @since 0.0.1
+        */
+        _setChildNodes: function(newVChildNodes) {
+            // does sync the DOM
+            var instance = this,
+                vChildNodes = instance.vChildNodes || [],
+                domNode = instance.domNode,
+                forRemoval = [],
+                i, oldChild, newChild, newLength, len, len2, childDomNode, nodeswitch, bkpAttrs, bkpChildNodes;
+
+            instance._noSync();
+            // first: reset ._vChildren --> by making it empty, its getter will refresh its list on a next call
+            instance._vChildren = null;
+            // if newVChildNodes is undefined, then we assume it to be empty --> an empty array
+            newVChildNodes || (newVChildNodes=[]);
+            // quickest way to loop through array is by using for loops: http://jsperf.com/array-foreach-vs-for-loop/5
+            len = vChildNodes.length;
+            newLength = newVChildNodes.length;
+            for (i=0; i<len; i++) {
+                oldChild = vChildNodes[i];
+                childDomNode = oldChild.domNode;
+                if (i < newLength) {
+                    newChild = newVChildNodes[i];
+/*jshint boss:true */
+                    switch (nodeswitch=NODESWITCH[oldChild.nodeType][newChild.nodeType]) {
+/*jshint boss:false */
+                        case 1: // oldNodeType==Element, newNodeType==Element
+                            if ((oldChild.tag!==newChild.tag) || ((oldChild.tag==='SCRIPT') && (oldChild.text!==newChild.text))) {
+                                // new tag --> completely replace
+                                bkpAttrs = newChild.attrs;
+                                bkpChildNodes = newChild.vChildNodes;
+                                oldChild.attrs.id && (delete nodeids[oldChild.attrs.id]);
+                                newChild.attrs = {}; // reset to force defined by `_setAttrs`
+                                newChild.vChildNodes = []; // reset , to force defined by `_setAttrs`
+                                domNode.replaceChild(newChild.domNode, childDomNode);
+                                newChild.vParent = instance;
+                                newChild._setAttrs(bkpAttrs);
+                                newChild._setChildNodes(bkpChildNodes);
+                                newChild.id && (nodeids[newChild.id]=newChild.domNode);
+                                oldChild._replaceAtParent(newChild);
+                            }
+                            else {
+                                // same tag --> only update what is needed
+                                oldChild.attrs = newChild.attrs;
+                                oldChild._setAttrs(newChild.attrs);
+                                // next: sync the vChildNodes:
+                                oldChild._setChildNodes(newChild.vChildNodes);
+                            }
+                            break;
+                        case 2: // oldNodeType==Element, newNodeType==TextNode
+                                // case2 and case3 should be treated the same
+                        case 3: // oldNodeType==Element, newNodeType==Comment
+                            oldChild.attrs.id && (delete nodeids[oldChild.attrs.id]);
+                            newChild.domNode.nodeValue = newChild.text;
+                            domNode.replaceChild(newChild.domNode, childDomNode);
+                            newChild.vParent = instance;
+                            oldChild._replaceAtParent(newChild);
+                            break;
+                        case 4: // oldNodeType==TextNode, newNodeType==Element
+                                // case4 and case7 should be treated the same
+                        case 7: // oldNodeType==Comment, newNodeType==Element
+                                newChild._setAttrs(newChild.attrs);
+
+                                domNode.replaceChild(newChild.domNode, childDomNode);
+                                newChild._setChildNodes(newChild.vChildNodes);
+
+                                newChild.id && (nodeids[newChild.id]=newChild.domNode);
+
+                                oldChild.isVoid = newChild.isVoid;
+                                delete oldChild.text;
+                            break;
+
+                        case 5: // oldNodeType==TextNode, newNodeType==TextNode
+                                // case5 and case8 should be treated the same
+                        case 8: // oldNodeType==Comment, newNodeType==TextNode
+                            if (oldChild.text !== newChild.text) {
+                                newChild.domNode.nodeValue = newChild.text;
+                                domNode.replaceChild(newChild.domNode, childDomNode);
+                                oldChild.text = newChild.text;
+                            }
+                            break;
+                        case 6: // oldNodeType==TextNode, newNodeType==Comment
+                                // case6 and case9 should be treated the same
+                        case 9: // oldNodeType==Comment, newNodeType==Comment
+                            if (oldChild.text !== newChild.text) {
+                                newChild.domNode.nodeValue = newChild.text;
+                                domNode.replaceChild(newChild.domNode, childDomNode);
+                                oldChild.text = newChild.text;
+                            }
+                    }
+                    if ((nodeswitch===2) || (nodeswitch===5) || (nodeswitch===8)) {
+                        instance._normalize();
+                    }
+                }
+                else {
+                    // _remove previous definition
+                    domNode.removeChild(oldChild.domNode);
+                    // the oldChild needs to be removed, however, this canoot be done right now, for it would effect the loop
+                    // so we store it inside a hash to remove it later
+                    forRemoval[forRemoval.length] = oldChild;
+                }
+            }
+            // now definitely remove marked childNodes:
+            len2 = forRemoval.length;
+            for (i=0; i<len2; i++) {
+                forRemoval[i]._remove();
+            }
+            // now we add all new vChildNodes that go beyond `len`:
+            for (i = len; i < newLength; i++) {
+                newChild = newVChildNodes[i];
+                newChild.vParent = instance;
+                switch (newChild.nodeType) {
+                    case 1: // Element
+                        bkpAttrs = newChild.attrs;
+                        bkpChildNodes = newChild.vChildNodes;
+                        newChild.attrs = {}; // reset, to force defined by `_setAttrs`
+                        newChild.vChildNodes = []; // reset to current state, to force defined by `_setAttrs`
+                        domNode.appendChild(newChild.domNode);
+                        newChild._setAttrs(bkpAttrs);
+                        newChild._setChildNodes(bkpChildNodes);
+                        break;
+                    default: // TextNode or CommentNode
+                        newChild.domNode.nodeValue = newChild.text;
+                        domNode.appendChild(newChild.domNode);
+                }
+                newChild.storeId();
+            }
+            instance.vChildNodes = newVChildNodes;
+            return instance;
+        }
+
+    };
+
+
+    //---- properties ------------------------------------------------------------------
+
+    /**
+     * A hash of all the `attributes` of the vnode's representing dom-node.
+     *
+     * @property attrs
+     * @type Object
+     * @since 0.0.1
+     */
+
+    /**
+     * Hash with all the classes of the vnode. Every class represents a key, all values are set `true`.
+     *
+     * @property classNames
+     * @type Object
+     * @since 0.0.1
+     */
+
+    /**
+     * The `id` of the vnode's representing dom-node (if any).
+     *
+     * @property id
+     * @type String
+     * @since 0.0.1
+     */
+
+    /**
+     * Tells whether tag is a void Element. Examples are: `br`, `img` and `input`. Non-void Elements are f.e. `div` and `table`.
+     * For TextNodes and CommentNodes, this property is `undefined`.
+     *
+     * @property isVoid
+     * @type Boolean
+     * @since 0.0.1
+     */
+
+    /**
+     * The `nodeType` of the vnode's representing dom-node (1===ElementNode, 3===TextNode, 8===CommentNode).
+     *
+     * @property nodeType
+     * @type Number
+     * @since 0.0.1
+     */
+
+    /**
+     * The `tag` of the vnode's representing dom-node (allways uppercase).
+     *
+     * @property tag
+     * @type String
+     * @since 0.0.1
+     */
+
+    /**
+     * The `content` of the vnode's representing dom-node, in case it is a TextNode or CommentNode.
+     * Equals dom-node.nodeValue.
+     *
+     * Is `undefined` for ElementNodes.
+     *
+     * @property text
+     * @type String
+     * @since 0.0.1
+     */
+
+    /**
+     * Hash with all the childNodes (vnodes). vChildNodes are any kind of vnodes (nodeType===1, 3 or 8)
+     *
+     * @property vChildNodes
+     * @type Array
+     * @since 0.0.1
+     */
+
+    /**
+     * The underlying `dom-node` that the vnode represents.
+     *
+     * @property domNode
+     * @type domNode
+     * @since 0.0.1
+     */
+
+    /**
+     * vnode's parentNode (defined as a vnode itself).
+     *
+     * @property vParent
+     * @type vnode
+     * @since 0.0.1
+     */
+
+    Object.defineProperties(vNodeProto, {
+        /**
+         * Gets or sets the innerHTML of both the vnode as well as the representing dom-node.
+         *
+         * The setter syncs with the DOM.
+         *
+         * @property innerHTML
+         * @type String
+         * @since 0.0.1
+         */
+        innerHTML: {
+            get: function() {
+                var instance = this,
+                    html, vChildNodes, len, i, vChildNode;
+                if (instance.nodeType===1) {
+                    html = '';
+                    vChildNodes = instance.vChildNodes;
+                    len = vChildNodes ? vChildNodes.length : 0;
+                    for (i=0; i<len; i++) {
+                        vChildNode = vChildNodes[i];
+                        switch (vChildNode.nodeType) {
+                            case 1:
+                                html += vChildNode.outerHTML;
+                                break;
+                            case 3:
+                                html += vChildNode.text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                                break;
+                            case 8:
+                                html += '<!--' + vChildNode.text.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '-->';
+                        }
+                    }
+                }
+                return html;
+            },
+            set: function(v) {
+                this._setChildNodes(htmlToVNodes(v, vNodeProto));
+            }
+        },
+
+        /**
+         * Gets or sets the innerHTML of both the vnode as well as the representing dom-node.
+         *
+         * The setter syncs with the DOM.
+         *
+         * @property nodeValue
+         * @type String
+         * @since 0.0.1
+         */
+        nodeValue: {
+            get: function() {
+                var instance = this;
+                return ((instance.nodeType===3) || (instance.nodeType===8)) ? instance.text : null;
+            },
+            set: function(v) {
+                var instance = this;
+                if ((instance.nodeType===3) || (instance.nodeType===8)) {
+                    instance.domNode.textContent = v;
+                    // set .text AFTER the dom-node is updated --> the content might be escaped!
+                    instance.text = instance.domNode.textContent;
+                }
+            }
+        },
+
+        /**
+         * Gets or sets the outerHTML of both the vnode as well as the representing dom-node.
+         *
+         * The setter syncs with the DOM.
+         *
+         * @property outerHTML
+         * @type String
+         * @since 0.0.1
+         */
+        outerHTML: {
+            get: function() {
+                var instance = this,
+                    html,
+                    attrs = instance.attrs;
+                if (instance.nodeType===1) {
+                    if (instance.nodeType!==1) {
+                        return instance.textContent;
+                    }
+                    html = '<' + instance.tag.toLowerCase();
+                    attrs.each(function(value, key) {
+                        html += ' '+key+'="'+value+'"';
+                    });
+                    html += '>';
+                    if (!instance.isVoid) {
+                        html += instance.innerHTML + '</' + instance.tag.toLowerCase() + '>';
+                    }
+                }
+                return html;
+            },
+            set: function(v) {
+                var instance = this,
+                    vParent = instance.vParent,
+                    id = instance.attrs.id,
+                    vnode, vnodes, bkpAttrs, bkpChildNodes, i, len, vChildNodes, isLastChildNode, index, refDomNode;
+                if ((instance.nodeType!==1) || !vParent) {
+                    return;
+                }
+                vChildNodes = vParent.vChildNodes;
+                index = vChildNodes.indexOf(instance);
+                isLastChildNode = (index===(vChildNodes.length-1));
+                isLastChildNode || (refDomNode=vChildNodes[index+1].domNode);
+                vnodes = htmlToVNodes(v, vNodeProto, vParent);
+                len = vnodes.length;
+                if (len>0) {
+                    // the first vnode will replace the current instance:
+                    vnode = vnodes[0];
+                    if (vnode.nodeType===1) {
+                        if (vnode.tag!==instance.tag) {
+                            // new tag --> completely replace
+                            bkpAttrs = vnode.attrs;
+                            bkpChildNodes = vnode.vChildNodes;
+                            id && (delete nodeids[id]);
+                            vnode.attrs = {}; // reset to force defined by `_setAttrs`
+                            vnode.vChildNodes = []; // reset , to force defined by `_setAttrs`
+                            vParent.domNode.replaceChild(vnode.domNode, instance.domNode);
+                            vnode._setAttrs(bkpAttrs);
+                            vnode._setChildNodes(bkpChildNodes);
+                            // vnode.attrs = bkpAttrs;
+                            // vnode.vChildNodes = bkpChildNodes;
+                            vnode.id && (nodeids[vnode.id]=vnode.domNode);
+                            instance._replaceAtParent(vnode);
+                        }
+                        else {
+                            instance._setAttrs(vnode.attrs);
+                            instance._setChildNodes(vnode.vChildNodes);
+                        }
+                    }
+                    else {
+                        id && (delete nodeids[id]);
+                        vnode.domNode.nodeValue = vnode.text;
+                        vParent.domNode.replaceChild(vnode.domNode, instance.domNode);
+                        instance._replaceAtParent(vnode);
+                    }
+                }
+                for (i=1; i<len; i++) {
+                    vnode = vnodes[i];
+                    switch (vnode.nodeType) {
+                        case 1: // Element
+                            bkpAttrs = vnode.attrs;
+                            bkpChildNodes = vnode.vChildNodes;
+                            vnode.attrs = {}; // reset, to force defined by `_setAttrs`
+                            vnode.vChildNodes = []; // reset to current state, to force defined by `_setAttrs`
+                            isLastChildNode ? vParent.domNode.appendChild(vnode.domNode) : vParent.domNode.insertBefore(vnode.domNode, refDomNode);
+                            vnode._setAttrs(bkpAttrs);
+                            vnode._setChildNodes(bkpChildNodes);
+                            break;
+                        default: // TextNode or CommentNode
+                            vnode.domNode.nodeValue = vnode.text;
+                            isLastChildNode ? vParent.domNode.appendChild(vnode.domNode) : vParent.domNode.appendChild(vnode.domNode, refDomNode);
+                    }
+                    vnode.storeId();
+                    vnode._moveToParent(vParent, index+i);
+                }
+            }
+        },
+
+        /**
+         * Gets or sets the innerContent of the Node as plain text.
+         *
+         * The setter syncs with the DOM.
+         *
+         * @property textContent
+         * @type String
+         * @since 0.0.1
+         */
+        textContent: {
+            get: function() {
+                var instance = this,
+                    text = '',
+                    vChildNodes = instance.vChildNodes,
+                    len, i, vChildNode;
+                if (instance.nodeType===1) {
+                    vChildNodes = instance.vChildNodes;
+                    len = vChildNodes ? vChildNodes.length : 0;
+                    for (i=0; i<len; i++) {
+                        vChildNode = vChildNodes[i];
+                        text += (vChildNode.nodeType===3) ? vChildNode.text : ((vChildNode.nodeType===1) ? vChildNode.textContent : '');
+                    }
+                }
+                else {
+                    text = instance.text;
+                }
+                return text;
+            },
+            set: function(v) {
+                var vnode = Object.create(vNodeProto);
+                vnode.domNode = DOCUMENT.createTextNode(v);
+                // create circular reference:
+                vnode.domNode._vnode = vnode;
+                vnode.nodeType = 3;
+                vnode.text = vnode.domNode.textContent;
+                this._setChildNodes([vnode]);
+            }
+        },
+
+        /**
+         * Hash with all the children (vnodes). vChildren are vnodes that have a representing dom-node that is an HtmlElement (nodeType===1)
+         *
+         * @property vChildren
+         * @type Array
+         * @since 0.0.1
+         */
+        vChildren: {
+            get: function() {
+                var instance = this,
+                    children = instance._vChildren,
+                    vChildNode, vChildNodes, i, len;
+                vChildNodes = instance.vChildNodes;
+                if (vChildNodes && !children) {
+                    children = instance._vChildren = ElementArray.createArray();
+                    len = vChildNodes.length;
+                    for (i=0; i<len; i++) {
+                        vChildNode = vChildNodes[i];
+                        (vChildNode.nodeType===1) && (children[children.length]=vChildNode);
+                    }
+                }
+                return children;
+            }
+        },
+
+        /**
+         * Reference to the first of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).
+         *
+         * @property vFirst
+         * @type vnode
+         * @since 0.0.1
+         */
+        vFirst: {
+            get: function() {
+                var vParent = this.vParent;
+                if (!vParent) {
+                    return null;
+                }
+                return vParent.vFirstChild;
+            }
+        },
+
+        /**
+         * Reference to the first vChildNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).
+         *
+         * @property vFirstChild
+         * @type vnode
+         * @since 0.0.1
+         */
+        vFirstChild: {
+            get: function() {
+                return (this.vChildNodes && this.vChildNodes[0]) || null;
+            }
+        },
+
+        /**
+         * Reference to the first of sibbling vNode's, where the related dom-node is an Element(nodeType===1).
+         *
+         * @property vFirstElement
+         * @type vnode
+         * @since 0.0.1
+         */
+        vFirstElement: {
+            get: function() {
+                var vParent = this.vParent;
+                if (!vParent) {
+                    return null;
+                }
+                return vParent.vFirstElementChild;
+            }
+        },
+
+        /**
+         * Reference to the first vChild, where the related dom-node an Element (nodeType===1).
+         *
+         * @property vFirstElementChild
+         * @type vnode
+         * @since 0.0.1
+         */
+        vFirstElementChild: {
+            get: function() {
+                return this.vChildren[0] || null;
+            }
+        },
+
+        /**
+         * Reference to the last of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).
+         *
+         * @property vLast
+         * @type vnode
+         * @since 0.0.1
+         */
+        vLast: {
+            get: function() {
+                var vParent = this.vParent;
+                if (!vParent) {
+                    return null;
+                }
+                return vParent.vLastChild;
+            }
+        },
+
+        /**
+         * Reference to the last vChildNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).
+         *
+         * @property vLastChild
+         * @type vnode
+         * @since 0.0.1
+         */
+        vLastChild: {
+            get: function() {
+                var vChildNodes = this.vChildNodes;
+                return (vChildNodes && vChildNodes[vChildNodes.length-1]) || null;
+            }
+        },
+
+        /**
+         * Reference to the last of sibbling vNode's, where the related dom-node is an Element(nodeType===1).
+         *
+         * @property vLastElement
+         * @type vnode
+         * @since 0.0.1
+         */
+        vLastElement: {
+            get: function() {
+                var vParent = this.vParent;
+                if (!vParent) {
+                    return null;
+                }
+                return vParent.vLastElementChild;
+            }
+        },
+
+        /**
+         * Reference to the last vChild, where the related dom-node an Element (nodeType===1).
+         *
+         * @property vLastElementChild
+         * @type vnode
+         * @since 0.0.1
+         */
+        vLastElementChild: {
+            get: function() {
+                var vChildren = this.vChildren;
+                return vChildren[vChildren.length-1] || null;
+            }
+        },
+
+        /**
+         * the Parent vnode
+         *
+         * @property vParent
+         * @type vnode
+         * @since 0.0.1
+         */
+
+        /**
+         * Reference to the next of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).
+         *
+         * @property vNext
+         * @type vnode
+         * @since 0.0.1
+         */
+        vNext: {
+            get: function() {
+                return _findNodeSibling(this, true);
+            }
+        },
+
+        /**
+         * Reference to the next of sibbling vNode's, where the related dom-node is an Element(nodeType===1).
+         *
+         * @property vNextElement
+         * @type vnode
+         * @since 0.0.1
+         */
+        vNextElement: {
+            get: function() {
+                return _findElementSibling(this, true);
+            }
+        },
+
+        /**
+         * Reference to the previous of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).
+         *
+         * @property vPrevious
+         * @type vnode
+         * @since 0.0.1
+         */
+        vPrevious: {
+            get: function() {
+                return _findNodeSibling(this);
+            }
+        },
+
+        /**
+         * Reference to the previous of sibbling vNode's, where the related dom-node is an Element(nodeType===1).
+         *
+         * @property vPreviousElement
+         * @type vnode
+         * @since 0.0.1
+         */
+        vPreviousElement: {
+            get: function() {
+                return _findElementSibling(this);
+            }
+        }
+    });
+
+    return vNodeProto;
+
+};
+},{"./attribute-extractor.js":47,"./element-array":48,"./element-array.js":48,"./html-parser.js":51,"./vdom-ns.js":54,"js-ext/lib/array.js":34,"js-ext/lib/object.js":36,"js-ext/lib/string.js":38,"utils/lib/timers.js":45}],56:[function(require,module,exports){
+"use strict";
+
+module.exports = function (window) {
+    var DOCUMENT = window.document;
+    if (DOCUMENT.doctype.name==='html') {
+        require('./lib/extend-element.js')(window);
+        require('./lib/extend-document.js')(window);
+        // now parsing and virtualize the complete DOM:
+        require('./lib/node-parser.js')(window)(DOCUMENT.documentElement);
+    }
+};
+},{"./lib/extend-document.js":49,"./lib/extend-element.js":50,"./lib/node-parser.js":52}],57:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":62}],62:[function(require,module,exports){
+},{"./lib/sizes.js":58}],58:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
@@ -14554,7 +20230,7 @@ module.exports = function (window) {
     };
 
 };
-},{}],63:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -14790,4 +20466,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"css":9,"dom-ext":11,"drag-drop":17,"event":27,"event-dom/extra/hover.js":21,"event-dom/extra/valuechange.js":22,"event-mobile":23,"io/extra/io-cors-ie9.js":28,"io/extra/io-stream.js":29,"io/extra/io-transfer.js":30,"io/extra/io-xml.js":31,"js-ext":34,"js-ext/extra/reserved-words.js":33,"node-win":undefined,"polyfill":57,"utils":58,"window-ext":61}]},{},[]);
+},{"css":8,"dom-ext":10,"drag-drop":16,"event":26,"event-dom/extra/hover.js":20,"event-dom/extra/valuechange.js":21,"event-mobile":22,"io/extra/io-cors-ie9.js":27,"io/extra/io-stream.js":28,"io/extra/io-transfer.js":29,"io/extra/io-xml.js":30,"js-ext":33,"js-ext/extra/reserved-words.js":32,"node-win":undefined,"polyfill":42,"utils":43,"window-ext":57}]},{},[]);

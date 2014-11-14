@@ -49,6 +49,8 @@
             
                 <li><a href="../classes/Element.html">Element</a></li>
             
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
+            
                 <li><a href="../classes/Event.html">Event</a></li>
             
                 <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
@@ -61,9 +63,13 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
+                <li><a href="../classes/Node.html">Node</a></li>
+            
                 <li><a href="../classes/NodeList.html">NodeList</a></li>
             
                 <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
             
@@ -73,7 +79,11 @@
             
                 <li><a href="../classes/Utils.html">Utils</a></li>
             
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
+            
+                <li><a href="../classes/xElement.html">xElement</a></li>
             
             </ul>
 
@@ -84,6 +94,8 @@
                 <li><a href="../modules/drag.html">drag</a></li>
             
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -96,6 +108,12 @@
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
             
                 <li><a href="../modules/io.html">io</a></li>
             
@@ -115,8 +133,6 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
-            
                 <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
             
                 <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
@@ -131,9 +147,17 @@
             
                 <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
             
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
                 <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
             
             </ul>
         </div>
@@ -188,293 +212,56 @@
  * @static
 */
 
+require(&#x27;js-ext/lib/array.js&#x27;);
 
 var xmlhttprequest = require(&#x27;./lib/XMLHttpRequest.js&#x27;).XMLHttpRequest,
     xmlDOMParser = require(&#x27;xmldom&#x27;).DOMParser,
-    Url = require(&#x27;url&#x27;);
+    Url = require(&#x27;url&#x27;),
+    used = {},
+    vNodeParser = /(?:(^|#|\.)([^#\.\[\]]+))|(\[.+?\])/g,
+    count, doc, win, getHTML, reset;
+    EventTypes = {
+        MouseEvents: function () {
+            this.initMouseEvent = function (type, bubbles, cancelable, view, detail,
+                    screenX, screenY, clientX, clientY,
+                    ctrlKey, altKey, shiftKey, metaKey,
+                    button, relatedTarget) {
+                count(&#x27;initMouseEvent&#x27;);
+                this.ev = {
+                    type:type,
+                    bubbles:bubbles,
+                    cancelable:cancelable,
+                    view:view,
+                    detail:detail,
+                    screenX:screenX,
+                    screenY:screenY,
+                    clientX:clientX,
+                    clientY:clientY,
+                    ctrlKey:ctrlKey,
+                    altKey:altKey,
+                    shiftKey:shiftKey,
+                    metaKey:metaKey,
+                    button:button,
+                    relatedTarget:relatedTarget
+                };
+            };
+        }
+    };
 
-var used = {};
-
-var count = function (method) {
+count = function (method) {
     if (!used[method]) {
         used[method] = 1;
     } else {
         used[method] += 1;
     }
 };
-var vNodeParser = /(?:(^|#|\.)([^#\.\[\]]+))|(\[.+?\])/g;
 
-
-var window = {},
-    doc = window.document = {};
-
-doc.childNodes = [];
-doc.createElement = function(tag) {
-    count(&#x27;createElement&#x27;);
-    return {
-        style: {},
-        childNodes: [],
-        nodeName: tag.toUpperCase(),
-        appendChild: doc.appendChild,
-        removeChild: doc.removeChild,
-        replaceChild: doc.replaceChild,
-        insertBefore: function(node, reference) {
-            count(&#x27;insertBefore&#x27;);
-            node.parentNode = this;
-            var referenceIndex = this.childNodes.indexOf(reference);
-            if (referenceIndex &lt; 0) {
-                this.childNodes.push(node);
-            } else {
-                var index = this.childNodes.indexOf(node);
-                this.childNodes.splice(referenceIndex, index &lt; 0 ? 0 : 1, node);
-            }
-        },
-        insertAdjacentHTML: function(position, html) {
-            count(&#x27;insertAdjacentHTML&#x27;);
-
-            //todo: accept markup
-            if (position == &quot;beforebegin&quot;) {
-                this.parentNode.insertBefore(doc.createTextNode(html), this);
-            } else if (position == &quot;beforeend&quot;) {
-                this.appendChild(doc.createTextNode(html));
-            }
-        },
-        setAttribute: function(name, value) {
-            count(&#x27;setAttribute&#x27;);
-            this[name] = value.toString();
-            if (name == &#x27;href&#x27;) {
-                var url = Url.parse(value);
-                this.pathname = url.pathname;
-                if (url.search) this.search = url.search;
-            }
-        },
-        setAttributeNS: function(namespace, name, value) {
-            count(&#x27;setAttributeNS&#x27;);
-            this.namespaceURI = namespace;
-            this[name] = value.toString();
-        },
-        getAttribute: function(name) {
-            count(&#x27;getAttribute&#x27;);
-            return this[name];
-        },
-        addEventListener: doc.addEventListener,
-        removeEventListener: doc.removeEventListener,
-        dispatchEvent: doc.dispatchEvent,
-        // matchesSelector should match nested selectors like: &quot;#someid .somedivclass button.someclass&quot;
-        matchesSelector: function (selector) {
-            var selList = selector.replace(/( )+/g, &#x27; &#x27;).split(&#x27; &#x27;),
-                size = selList.length,
-                matches, i, selectorItem, node, selMatch;
-            matches = function (checkNode, sel) {
-                count(&#x27;matchesSelector&#x27;);
-                // don&#x27;t forget to reset the found position of the previous search:
-                vNodeParser.lastIndex = 0;
-                var match,
-                    found = false,
-                    classes = checkNode.className &amp;&amp; checkNode.className.split(&#x27; &#x27;);
-                /*jshint boss:true*/
-                while (match = vNodeParser.exec(sel)) {
-                    /*jshint boss:false*/
-                    switch (match[1]) {
-                        case &quot;&quot;:
-                            if (checkNode.nodeName !== match[2].toUpperCase()) return false;
-                            found = true;
-                            break;
-                        case &quot;#&quot;:
-                            if (checkNode.id !== match[2]) return false;
-                            found = true;
-                            break;
-                        case &quot;.&quot;:
-
-                            if (!classes || classes.indexOf(match[2]) === -1) return false;
-                            found = true;
-                            break;
-                    }
-                }
-                return found;
-            };
-            if (size===0) {
-                return false;
-            }
-            node = this;
-            selectorItem = selList[size-1];
-            selMatch = matches(node, selectorItem);
-            for (i=size-2; (selMatch &amp;&amp; (i&gt;=0)); i--) {
-                selectorItem = selList[i];
-                node = node.parentNode;
-                while (node &amp;&amp; !(selMatch=matches(node, selectorItem))) {
-                    node = node.parentNode;
-                }
-            }
-            return selMatch;
-        },
-        getElementById: doc.getElementById,
-        contains: doc.contains
-    };
-};
-doc.createElementNS = function(namespace, tag) {
-    count(&#x27;createElementNS&#x27;);
-    var element = doc.createElement(tag);
-    element.namespaceURI = namespace;
-    return element;
-};
-doc.createTextNode = function(text) {
-    count(&#x27;createTextNode&#x27;);
-    return {nodeValue: text.toString()};
-};
-doc.documentElement = doc.createElement(&quot;html&quot;);
-doc.replaceChild = function(newChild, oldChild) {
-    count(&#x27;replaceChild&#x27;);
-    var index = this.childNodes.indexOf(oldChild);
-    if (index &gt; -1) this.childNodes.splice(index, 1, newChild);
-    else this.childNodes.push(newChild);
-    newChild.parentNode = this;
-    oldChild.parentNode = null;
-};
-doc.appendChild = function(child) {
-    count(&#x27;appendChild&#x27;);
-    var index = this.childNodes.indexOf(child);
-    if (index &gt; -1) this.childNodes.splice(index, 1);
-    this.childNodes.push(child);
-    child.parentNode = this;
-};
-doc.removeChild = function(child) {
-    count(&#x27;removeChild&#x27;);
-    var index = this.childNodes.indexOf(child);
-    this.childNodes.splice(index, 1);
-    child.parentNode = null;
-};
-doc.addEventListener = function (type, cb, capture) {
-    count(&#x27;addEventListener&#x27;);
-    if (!this.$on) this.$on = {};
-    this.$on[type] = {
-        cb: cb,
-        capture: capture
-    };
-};
-doc.removeEventListener = function (type) {
-    count(&#x27;removeEventListener&#x27;);
-    if (this.$on &amp;&amp; this.$on[type]) {
-        delete this.$on[type];
-    }
-};
-var EventTypes = {
-    MouseEvents: function () {
-        this.initMouseEvent = function (type, bubbles, cancelable, view, detail,
-                screenX, screenY, clientX, clientY,
-                ctrlKey, altKey, shiftKey, metaKey,
-                button, relatedTarget) {
-            count(&#x27;initMouseEvent&#x27;);
-            this.ev = {
-                type:type,
-                bubbles:bubbles,
-                cancelable:cancelable,
-                view:view,
-                detail:detail,
-                screenX:screenX,
-                screenY:screenY,
-                clientX:clientX,
-                clientY:clientY,
-                ctrlKey:ctrlKey,
-                altKey:altKey,
-                shiftKey:shiftKey,
-                metaKey:metaKey,
-                button:button,
-                relatedTarget:relatedTarget
-            };
-        };
-    }
-};
-doc.createEvent = function (type) {
-    count(&#x27;createEvent&#x27;);
-    return new EventTypes[type]();
-};
-doc.dispatchEvent = function (event) {
-    count(&#x27;dispatchEvent&#x27;);
-    var branch = [],
-        el = this,
-        type = event.ev.type,
-        cb,
-        ev = event.ev;
-    ev.target = this;
-
-    while(el) {
-        if (el.$on &amp;&amp; el.$on[type] &amp;&amp; el.$on[type].capture) {
-            branch.push(el);
-            branch.push(el.$on[type].cb);
-        }
-        el = el.parentNode;
-    }
-    while ((cb =  branch.pop())) {
-        ev.currentTarget = branch.pop();
-        cb.call(this, ev);
-    }
-    el = this;
-    while (el) {
-        if (el.$on &amp;&amp; el.$on[type] &amp;&amp; el.$on[type].capture === false) {
-            ev.currentTarget = el;
-            el.$on[type].cb.call(this, ev);
-        }
-        if (el[&#x27;on&#x27; + type]) {
-            ev.currentTarget = el;
-            el[&#x27;on&#x27; + type].call(this, ev);
-        }
-        el = el.parentNode;
-    }
-};
-
-
-doc.getElementById = function (id) {
-    count(&#x27;getElementById&#x27;);
-    var found = null,
-        find = function (el) {
-            if (el.id === id) {
-                found = el;
-                return true;
-            }
-            if (el.childNodes) {
-                return el.childNodes.some(find);
-            }
-        };
-    find(doc);
-    return found;
-};
-
-
-doc.contains = function (node) {
-    count(&#x27;contains&#x27;);
-    while (node &amp;&amp; node !== this) node = node.parentNode;
-    return node === this;
-};
-
-window.performance = new function () {
-    var timestamp = 50;
-    this.$elapse = function(amount) {
-        timestamp += amount;
-    };
-    this.now = function() {
-        return timestamp;
-    };
-};
-window.cancelAnimationFrame = function() {};
-window.requestAnimationFrame = function(callback) {
-    window.requestAnimationFrame.$callback = callback;
-};
-window.requestAnimationFrame.$resolve = function() {
-    if (window.requestAnimationFrame.$callback) window.requestAnimationFrame.$callback();
-    window.requestAnimationFrame.$callback = null;
-    window.performance.$elapse(20);
-};
-window.location = {};
-window.XMLHttpRequest = xmlhttprequest;
-window.DOMParser = xmlDOMParser;
-
-var getHTML = function (node) {
+getHTML = function (node) {
     var prop, val,
         style, styles = [],
         html = &#x27;&#x27;;
 
-    if (!node.nodeName &amp;&amp; node.nodeValue !== undefined) {
+    if (!node.nodeName &amp;&amp; node.nodeValue) {
         // For text nodes, I return the uppercase text
         // so that you can tell the parts generated at the server
         // from the normal lowercase of the actual app when run on the client
@@ -509,7 +296,9 @@ var getHTML = function (node) {
                         styles.push(style + &#x27;: &#x27; + val[style]);
                     }
                 }
-                if (!styles.length) continue;
+                if (!styles.length) {
+                    continue;
+                }
                 val = styles.join(&#x27;;&#x27;);
             }
             break;
@@ -521,7 +310,8 @@ var getHTML = function (node) {
         html += &#x27;&gt;&#x27; + node.childNodes.reduce(function (prev, node) {
             return prev + getHTML(node);
         }, &#x27;&#x27;) + &#x27;&lt;/&#x27; + node.nodeName + &#x27;&gt;&#x27;;
-    } else {
+    }
+    else {
         // I don&#x27;t know why Mithril assigns the content of textareas
         // to its value attribute instead of the innerHTML property.
         // Since it doesn&#x27;t have children, the closing tag has to be forced.
@@ -533,55 +323,92 @@ var getHTML = function (node) {
     }
     return html;
 };
-var reset = function () {
-    window.location.search = &quot;?/&quot;;
-    window.location.pathname = &quot;/&quot;;
-    window.location.hash = &quot;&quot;;
-    window.history = {};
-    window.history.pushState = function(data, title, url) {
-        window.location.pathname = window.location.search = window.location.hash = url;
+
+
+win = {
+    cancelAnimationFrame: function() {
+
     },
-    window.history.replaceState = function(data, title, url) {
-        window.location.pathname = window.location.search = window.location.hash = url;
-    };
-    var _body = doc.createElement(&#x27;body&#x27;);
-    doc.appendChild(_body);
-    doc.body = _body;
-};
-reset();
 
-window.NodeList = Array;
-window.HTMLCollection = Array;
-window.CSSStyleDeclaration = {};
+    console: require(&#x27;polyfill/lib/window.console.js&#x27;),
 
-window.console = require(&#x27;polyfill/lib/window.console.js&#x27;);
-// window.getComputedStyle = require(&#x27;polyfill/lib/window.getcomputedstyle.js&#x27;);
+    CSSStyleDeclaration: {},
 
-window.navigator = {
+    document: doc,
 
-    userAgent: &#x27;fake&#x27;,
-    stats: {
-        clear: function () {
-            used = {};
+    DOMParser: xmlDOMParser,
+
+    HTMLCollection: Array,
+
+    location: {},
+
+    navigator: {
+        userAgent: &#x27;fake&#x27;,
+        stats: {
+            clear: function () {
+                used = {};
+            },
+            get: function () {
+                return used;
+            }
         },
-        get: function () {
-            return used;
+        reset: reset,
+        getHTML: function () {
+            return getHTML(doc.body);
+        },
+        navigate: function (url) {
+            var u = Url.parse(url, false, true);
+            window.location.search = u.search || &#x27;&#x27;;
+            window.location.pathname = u.pathname || &#x27;&#x27;;
+            window.location.hash = u.hash || &#x27;&#x27;;
         }
     },
-    reset: reset,
-    getHTML: function () {
-        return getHTML(doc.body);
+
+    NodeList: Array,
+
+    performance: function () {
+        var timestamp = 50;
+        this.$elapse = function(amount) {
+            timestamp += amount;
+        };
+        this.now = function() {
+            return timestamp;
+        };
     },
-    navigate: function (url) {
-        var u = Url.parse(url, false, true);
-        window.location.search = u.search || &#x27;&#x27;;
-        window.location.pathname = u.pathname || &#x27;&#x27;;
-        window.location.hash = u.hash || &#x27;&#x27;;
-    }
+
+    requestAnimationFrame: function(callback) {
+        var instance = this;
+        instance.requestAnimationFrame.$callback = callback;
+        instance.requestAnimationFrame.$resolve = function() {
+            instance.requestAnimationFrame.$callback &amp;&amp; instance.requestAnimationFrame.$callback();
+            instance.requestAnimationFrame.$callback = null;
+            instance.performance.$elapse(20);
+        };
+    },
+
+    XMLHttpRequest: xmlhttprequest
+
 };
 
-module.exports = window;
+reset = function () {
+    var body = doc.createElement(&#x27;body&#x27;);
+    win.location.search = &quot;?/&quot;;
+    win.location.pathname = &quot;/&quot;;
+    win.location.hash = &quot;&quot;;
+    win.history = {};
+    win.history.pushState = function(data, title, url) {
+        win.location.pathname = win.location.search = win.location.hash = url;
+    },
+    win.history.replaceState = function(data, title, url) {
+        win.location.pathname = win.location.search = win.location.hash = url;
+    };
+    doc.appendChild(body);
+    doc.body = body;
+};
 
+reset();
+
+module.exports = win;
     </pre>
 </div>
 

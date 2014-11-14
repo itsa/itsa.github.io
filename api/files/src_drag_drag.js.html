@@ -14,9 +14,9 @@
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-
+            
                 <h1><img src="../assets/css/logo.png" title="Itsa"></h1>
-
+            
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: 0.0.1</em>
@@ -40,101 +40,125 @@
 
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
-
+            
                 <li><a href="../classes/Array.html">Array</a></li>
-
+            
                 <li><a href="../classes/DD.html">DD</a></li>
-
+            
                 <li><a href="../classes/document.html">document</a></li>
-
+            
                 <li><a href="../classes/Element.html">Element</a></li>
-
+            
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
+            
                 <li><a href="../classes/Event.html">Event</a></li>
-
+            
                 <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
-
+            
                 <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
-
+            
                 <li><a href="../classes/Function.html">Function</a></li>
-
+            
                 <li><a href="../classes/IO.html">IO</a></li>
-
+            
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
-
+            
+                <li><a href="../classes/Node.html">Node</a></li>
+            
                 <li><a href="../classes/NodeList.html">NodeList</a></li>
-
+            
                 <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
-
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
+            
                 <li><a href="../classes/Object.html">Object</a></li>
-
+            
                 <li><a href="../classes/Promise.html">Promise</a></li>
-
+            
                 <li><a href="../classes/String.html">String</a></li>
-
+            
                 <li><a href="../classes/Utils.html">Utils</a></li>
-
+            
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
-
+            
+                <li><a href="../classes/xElement.html">xElement</a></li>
+            
             </ul>
 
             <ul id="api-modules" class="apis modules">
-
+            
                 <li><a href="../modules/dom-ext.html">dom-ext</a></li>
-
+            
                 <li><a href="../modules/drag.html">drag</a></li>
-
+            
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
-
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
+            
                 <li><a href="../modules/event.html">event</a></li>
-
+            
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
-
+            
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
-
+            
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
-
+            
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
-
+            
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
-
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
+            
                 <li><a href="../modules/io.html">io</a></li>
-
+            
                 <li><a href="../modules/io-assets.html">io-assets</a></li>
-
+            
                 <li><a href="../modules/io-cors.html">io-cors</a></li>
-
+            
                 <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
-
+            
                 <li><a href="../modules/io-transfer.html">io-transfer</a></li>
-
+            
                 <li><a href="../modules/io-xml.html">io-xml</a></li>
-
+            
                 <li><a href="../modules/itsa.build.html">itsa.build</a></li>
-
+            
                 <li><a href="../modules/js-ext.html">js-ext</a></li>
-
+            
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
-
-                <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
-
+            
                 <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
-
+            
                 <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-
+            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-
+            
                 <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
-
+            
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
-
+            
                 <li><a href="../modules/lib_promise.s.html">lib/promise.s</a></li>
-
+            
                 <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
-
+            
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
                 <li><a href="../modules/node-win.html">node-win</a></li>
-
+            
                 <li><a href="../modules/utils.html">utils</a></li>
-
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
+            
             </ul>
         </div>
     </div>
@@ -234,8 +258,7 @@ var NAME = &#x27;[drag]: &#x27;,
     DD_MINUSDRAGGABLE = DD_MINUS+DRAGGABLE,
     PLUGIN_ATTRS = [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTER, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE];
 
-require(&#x27;polyfill/polyfill-base.js&#x27;);
-require(&#x27;polyfill/lib/promise.js&#x27;);
+require(&#x27;polyfill&#x27;);
 require(&#x27;js-ext&#x27;);
 require(&#x27;./css/drag.css&#x27;);
 
@@ -399,7 +422,6 @@ module.exports = function (window) {
         _defFnStart: function(e) {
             var instance = this,
                 customEvent;
-            e.emitter = (e.emitter!==UI) ? e.emitter : (e.target.getAttr(DD_EMITTER) || UI),
             customEvent = e.emitter + &#x27;:&#x27;+DD_DRAG;
             console.log(NAME, &#x27;_defFnStart: default function UI:dd-start. Defining customEvent &#x27;+customEvent);
             Event.defineEvent(customEvent).defaultFn(instance._defFnDrag.bind(instance));
@@ -445,8 +467,8 @@ module.exports = function (window) {
 
             // define ddProps --&gt; internal object with data about the draggable instance
             ddProps.dragNode = dragNode;
-            ddProps.x = x = dragNode.getX();
-            ddProps.y = y = dragNode.getY();
+            ddProps.x = x = dragNode.left;
+            ddProps.y = y = dragNode.top;
             ddProps.inlineLeft = inlineLeft = dragNode.getInlineStyle(LEFT);
             ddProps.inlineTop = inlineTop = dragNode.getInlineStyle(TOP);
             ddProps.winConstrained = winConstrained = (constrain===WINDOW);
@@ -472,8 +494,8 @@ module.exports = function (window) {
                         // if there is a match, then make sure x and y fall within the region
                         if (match) {
                             ddProps.constrainNode = constrainNode;
-                            xOrig = constrainNode.getX() + parseInt(constrainNode.getStyle(BORDER_LEFT_WIDTH), 10);
-                            yOrig = constrainNode.getY() + parseInt(constrainNode.getStyle(BORDER_TOP_WIDTH), 10);
+                            xOrig = constrainNode.left + parseInt(constrainNode.getStyle(BORDER_LEFT_WIDTH), 10);
+                            yOrig = constrainNode.top + parseInt(constrainNode.getStyle(BORDER_TOP_WIDTH), 10);
                             ddProps.constrain = {
                                 xOrig: xOrig,
                                 yOrig: yOrig,
@@ -574,8 +596,8 @@ module.exports = function (window) {
                         if (node !== dragNode) {
                             item = {
                                 dragNode: node,
-                                shiftX: node.getX() - x,
-                                shiftY: node.getY() - y,
+                                shiftX: node.left - x,
+                                shiftY: node.top - y,
                                 inlineLeft: node.getInlineStyle(LEFT),
                                 inlineTop: node.getInlineStyle(TOP)
                             };
@@ -659,13 +681,17 @@ module.exports = function (window) {
                 // store the orriginal mouseposition:
                 e.xMouseOrigin = e.clientX + window.scrollLeft;
                 e.yMouseOrigin = e.clientY + window.scrollTop;
+
+                //set the emitterName:
+                e.emitter = e.target.getAttr(DD_EMITTER) || UI,
+
                 // now we can start the eventcycle by emitting UI:dd:
                 /**
                 * Emitted when a draggable Element&#x27;s drag-cycle starts. You can use a &#x60;before&#x60;-subscriber to specify
                 * e.relatives, which should be a nodelist with HtmlElements, that should be dragged togehter with the master
                 * draggable Element.
                 *
-                * @event dd
+                * @event *:dd
                 * @param e {Object} eventobject including:
                 * @param e.target {HtmlElement} the HtmlElement that is being dragged
                 * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating

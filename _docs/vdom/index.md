@@ -46,3 +46,7 @@ mynode.innerHTML = 'What a lovely day <b>it was yesterday</b> don\'t you think?'
 The previous example just updated the bolded-Node with the content "it was yesterday". The text "What a lovely day " and " don\'t you think?" are untouched.
 
 This simple example isn't that impressive. But a huge table would benefit a lot from the diffing-rendering, as well as an input-element that remains untouched.
+
+
+CAUTIOUS:
+You can use native propertysetter (like node.className), and they will update the vdom. But because this happens asynchr. (node.mutationobserver), the vdom isn't updated within its own eventcycle. Better use the added Element-methods which update the vdom right away

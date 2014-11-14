@@ -49,6 +49,8 @@
             
                 <li><a href="../classes/Element.html">Element</a></li>
             
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
+            
                 <li><a href="../classes/Event.html">Event</a></li>
             
                 <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
@@ -61,9 +63,13 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
+                <li><a href="../classes/Node.html">Node</a></li>
+            
                 <li><a href="../classes/NodeList.html">NodeList</a></li>
             
                 <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
             
@@ -73,7 +79,11 @@
             
                 <li><a href="../classes/Utils.html">Utils</a></li>
             
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
+            
+                <li><a href="../classes/xElement.html">xElement</a></li>
             
             </ul>
 
@@ -84,6 +94,8 @@
                 <li><a href="../modules/drag.html">drag</a></li>
             
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -96,6 +108,12 @@
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
             
                 <li><a href="../modules/io.html">io</a></li>
             
@@ -115,8 +133,6 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
-            
                 <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
             
                 <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
@@ -131,9 +147,17 @@
             
                 <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
             
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
                 <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
             
             </ul>
         </div>
@@ -527,6 +551,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item event">
                                 <a href="#event_ParcelaEvent:eventmobile">ParcelaEvent:eventmobile</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_valuechange">valuechange</a>
 
                                 
                                 
@@ -1078,7 +1109,7 @@ If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
             
         
         
-        <a href="../files/src_event-dom_event-dom.js.html#l510"><code>src&#x2F;event-dom&#x2F;event-dom.js:510</code></a>
+        <a href="../files/src_event-dom_event-dom.js.html#l454"><code>src&#x2F;event-dom&#x2F;event-dom.js:454</code></a>
         
         </p>
 
@@ -5028,6 +5059,91 @@ will catch it and process it through the dom-event cycle.</p>
 
                     <div class="param-description">
                         <p>eventobject</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_valuechange" class="events item">
+    <h3 class="name"><code>valuechange</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/event-hover.html">event-hover</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_event-dom_extra_valuechange.js.html#l239"><code>src&#x2F;event-dom&#x2F;extra&#x2F;valuechange.js:239</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">e.value</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>new value</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">e.sourceTarget</code>
+                        <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Element whare the valuechange occured</p>
 
                     </div>
 

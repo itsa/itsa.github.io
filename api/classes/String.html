@@ -49,6 +49,8 @@
             
                 <li><a href="../classes/Element.html">Element</a></li>
             
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
+            
                 <li><a href="../classes/Event.html">Event</a></li>
             
                 <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
@@ -61,9 +63,13 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
+                <li><a href="../classes/Node.html">Node</a></li>
+            
                 <li><a href="../classes/NodeList.html">NodeList</a></li>
             
                 <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
             
@@ -73,7 +79,11 @@
             
                 <li><a href="../classes/Utils.html">Utils</a></li>
             
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
+            
+                <li><a href="../classes/xElement.html">xElement</a></li>
             
             </ul>
 
@@ -84,6 +94,8 @@
                 <li><a href="../modules/drag.html">drag</a></li>
             
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -96,6 +108,12 @@
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
             
                 <li><a href="../modules/io.html">io</a></li>
             
@@ -115,8 +133,6 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
-            
                 <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
             
                 <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
@@ -131,9 +147,17 @@
             
                 <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
             
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
                 <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
             
             </ul>
         </div>
@@ -310,6 +334,13 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_validateNumber">validateNumber</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_validateURL">validateURL</a>
 
                                 
@@ -342,6 +373,12 @@
                 <li class="arg">
                     
                         <code>substring</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[caseInsensitive=false]</code>
                     
                 </li>
             
@@ -410,6 +447,23 @@ Alias for (String.indexOf(substring) &gt; -1)</p>
 
                     <div class="param-description">
                         <p>the substring to test for</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[caseInsensitive=false]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>whether to ignore case-sensivity</p>
 
                     </div>
 
@@ -492,7 +546,7 @@ Alias for (String.indexOf(substring) &gt; -1)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l48"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:48</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l49"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:49</code></a>
         
         </p>
 
@@ -622,7 +676,7 @@ Alias for (String.indexOf(substring) &gt; -1)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l60"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:60</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l61"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:61</code></a>
         
         </p>
 
@@ -746,7 +800,7 @@ Alias for (String.indexOf(substring) &gt; -1)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l72"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:72</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l73"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:73</code></a>
         
         </p>
 
@@ -856,7 +910,7 @@ greeting.substitute({message: &#39;Hello&#39;}); // results into &#39;Hello !&#3
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l93"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:93</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l94"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:94</code></a>
         
         </p>
 
@@ -941,7 +995,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l110"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:110</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l111"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:111</code></a>
         
         </p>
 
@@ -1014,7 +1068,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l120"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:120</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l121"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:121</code></a>
         
         </p>
 
@@ -1087,7 +1141,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l130"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:130</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l131"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:131</code></a>
         
         </p>
 
@@ -1160,7 +1214,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l140"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:140</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l141"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:141</code></a>
         
         </p>
 
@@ -1243,7 +1297,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l150"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:150</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l151"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:151</code></a>
         
         </p>
 
@@ -1351,7 +1405,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l161"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:161</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l162"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:162</code></a>
         
         </p>
 
@@ -1449,7 +1503,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l172"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:172</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l173"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:173</code></a>
         
         </p>
 
@@ -1461,6 +1515,79 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
 
     <div class="description">
         <p>Validates if the String&#39;s value represents a valid integer number.</p>
+
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+                    
+                    <p>whether the String&#39;s value is a valid integer number.</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_validateNumber" class="method item">
+    <h3 class="name"><code>validateNumber</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js-ext_lib_string.js.html#l183"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:183</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Validates if the String&#39;s value represents a valid boolean.</p>
 
     </div>
 
@@ -1532,7 +1659,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l182"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:182</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l199"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:199</code></a>
         
         </p>
 

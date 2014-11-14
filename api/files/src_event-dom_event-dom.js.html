@@ -49,6 +49,8 @@
             
                 <li><a href="../classes/Element.html">Element</a></li>
             
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
+            
                 <li><a href="../classes/Event.html">Event</a></li>
             
                 <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
@@ -61,9 +63,13 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
+                <li><a href="../classes/Node.html">Node</a></li>
+            
                 <li><a href="../classes/NodeList.html">NodeList</a></li>
             
                 <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
             
@@ -73,7 +79,11 @@
             
                 <li><a href="../classes/Utils.html">Utils</a></li>
             
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
+            
+                <li><a href="../classes/xElement.html">xElement</a></li>
             
             </ul>
 
@@ -84,6 +94,8 @@
                 <li><a href="../modules/drag.html">drag</a></li>
             
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -96,6 +108,12 @@
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
             
                 <li><a href="../modules/io.html">io</a></li>
             
@@ -115,8 +133,6 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
-            
                 <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
             
                 <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
@@ -131,9 +147,17 @@
             
                 <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
             
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
                 <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
             
             </ul>
         </div>
@@ -219,19 +243,16 @@ var NAME = &#x27;[event-dom]: &#x27;,
     */
     DOMEvents = {};
 
+    require(&#x27;vdom&#x27;);
     require(&#x27;js-ext/lib/string.js&#x27;);
     require(&#x27;js-ext/lib/array.js&#x27;);
     require(&#x27;js-ext/lib/object.js&#x27;);
+    require(&#x27;polyfill/polyfill-base.js&#x27;);
 
 module.exports = function (window) {
     var DOCUMENT = window.document,
-        NEW_EVENTSYSTEM = DOCUMENT.addEventListener,
-        OLD_EVENTSYSTEM = !NEW_EVENTSYSTEM &amp;&amp; DOCUMENT.attachEvent,
-        _bubbleIE8, _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor,
+        _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor,
         _setupDomListener, _teardownDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc;
-
-    require(&#x27;polyfill/lib/element.matchesselector.js&#x27;);
-    require(&#x27;polyfill/lib/node.contains.js&#x27;);
 
     if (!window._ITSAmodules) {
         Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
@@ -245,42 +266,6 @@ module.exports = function (window) {
     if (window._ITSAmodules.EventDom) {
         return Event; // Event was already extended
     }
-
-    /*
-     * Polyfill for bubbling the &#x60;focus&#x60; and &#x60;blur&#x60; events in IE8.
-     *
-     * IE&gt;8 we can use delegating on ALL events, because we use the capture-phase.
-     * Unfortunatly this cannot be done with IE&lt;9. But we can simulate focus and blur
-     * delegation bu monitoring the focussed node.
-     *
-     * This means the IE&lt;9 will miss the events: &#x27;error&#x27;, &#x27;load&#x27;, &#x27;resize&#x27; and &#x27;scroll&#x27;
-     * However, if you need one of these to work in IE8, then you can &#x60;activate&#x60; this event on the
-     * single node that you want to minotor. You activate it and then you use the eventsystem
-     * like like you are used to. (delegated). Only activated nodes will bubble their non-bubbling events up
-     * Activation is not done manually, but automaticly: whenever there is a subscriber on a node (or an id-selector)
-     * and IE&lt;9 is the environment, then a listener for that node is set up.
-     * Side-effect is that we cannot controll when the listener isn&#x27;t needed anymore. This might lead to memory-leak - but its IE&lt;9...
-     *
-     * @method _bubbleIE8
-     * @private
-     * @since 0.0.1
-     */
-    _bubbleIE8 = function() {
-        console.log(NAME, &#x27;_bubbleIE8&#x27;);
-        // we wil emulate focus and blur by subscribing to the keyup and mouseup events:
-        // when they happen, we&#x27;ll ask for the current focussed Node --&gt; if there is a
-        // change compared to the previous, then we fire both a blur and a focus-event
-        Event._focussedNode = DOCUMENT.activeElement;
-        Event.after([&#x27;keyup&#x27;, &#x27;mouseup&#x27;], function(e) {
-            var newFocussed = DOCUMENT.activeElement,
-                prevFocussed = Event._focussedNode;
-            if (prevFocussed !== newFocussed) {
-                Event._focussedNode = newFocussed;
-                Event.emit(prevFocussed, &#x27;UI:blur&#x27;, e);
-                Event.emit(newFocussed, &#x27;UI:focus&#x27;, e);
-            }
-        });
-    };
 
     /*
      * Transfprms the selector to a valid function
@@ -465,10 +450,15 @@ module.exports = function (window) {
         saveConcat(named_wildcard_subs);
         saveConcat(wildcard_wildcard_subs);
         if (subscribers.length&gt;0) {
-            subscribers = subscribers.filter(function(subscriber) {
-                console.log(NAME, &#x27;filtercheck for subscriber&#x27;);
-                return (!subscriber.f || subscriber.f.call(subscriber.o, e));
-            });
+            subscribers = function(array, testFunc) {
+                // quickest way to filter an array: see http://jsperf.com/array-filter-performance/4
+                var filtered = array.slice(0), i;
+                for (i=array.length-1; i&gt;=0; i--) {
+                    console.log(NAME, &#x27;filtercheck for subscriber&#x27;);
+                    testFunc(array[i]) || filtered.splice(i, 1);
+                }
+                return filtered;
+            }(subscribers, function(subscriber) {return (!subscriber.f || subscriber.f.call(subscriber.o, e));});
             if (subscribers.length&gt;0) {
                 _findCurrentTargets(subscribers);
                 // sorting, based upon the sortFn
@@ -569,24 +559,13 @@ module.exports = function (window) {
             return;
         }
 
-        if (NEW_EVENTSYSTEM) {
-            // one exeption: windowresize should listen to the window-object
-            if (eventName===&#x27;resize&#x27;) {
-                window.addEventListener(eventName, _evCallback);
-            }
-            else {
-                // important: set the third argument &#x60;true&#x60; so we listen to the capture-phase.
-                DOCUMENT.addEventListener(eventName, _evCallback, true);
-            }
+        // one exeption: windowresize should listen to the window-object
+        if (eventName===&#x27;resize&#x27;) {
+            window.addEventListener(eventName, _evCallback);
         }
-        else if (OLD_EVENTSYSTEM) {
-            // one exeption: windowresize should listen to the window-object
-            if (eventName===&#x27;resize&#x27;) {
-                window.attachEvent(&#x27;on&#x27;+eventName, _evCallback);
-            }
-            else {
-                DOCUMENT.attachEvent(&#x27;on&#x27;+eventName, _evCallback);
-            }
+        else {
+            // important: set the third argument &#x60;true&#x60; so we listen to the capture-phase.
+            DOCUMENT.addEventListener(eventName, _evCallback, true);
         }
         DOMEvents[eventName] = true;
         outsideEvent &amp;&amp; (DOMEvents[eventName+OUTSIDE]=true);
@@ -632,24 +611,13 @@ module.exports = function (window) {
         if (!Event._subs[customEventWithoutOutside] &amp;&amp; !Event._subs[customEventWithoutOutside+OUTSIDE]) {
             console.log(NAME, &#x27;_teardownDomListener &#x27;+customEvent);
             // remove eventlistener from &#x60;document&#x60;
-            if (NEW_EVENTSYSTEM) {
-                // one exeption: windowresize should listen to the window-object
-                if (eventName===&#x27;resize&#x27;) {
-                    window.removeEventListener(eventName, _evCallback);
-                }
-                else {
-                    // important: set the third argument &#x60;true&#x60; so we listen to the capture-phase.
-                    DOCUMENT.removeEventListener(eventName, _evCallback, true);
-                }
+            // one exeption: windowresize should listen to the window-object
+            if (eventName===&#x27;resize&#x27;) {
+                window.removeEventListener(eventName, _evCallback);
             }
-            else if (OLD_EVENTSYSTEM) {
-                // one exeption: windowresize should listen to the window-object
-                if (eventName===&#x27;resize&#x27;) {
-                    window.detachEvent(&#x27;on&#x27;+eventName, _evCallback);
-                }
-                else {
-                    DOCUMENT.detachEvent(&#x27;on&#x27;+eventName, _evCallback);
-                }
+            else {
+                // important: set the third argument &#x60;true&#x60; so we listen to the capture-phase.
+                DOCUMENT.removeEventListener(eventName, _evCallback, true);
             }
             delete DOMEvents[eventName];
         }
@@ -696,9 +664,6 @@ module.exports = function (window) {
     Event._domCallback = function(e) {
         _evCallback(e);
     };
-
-    // next: bubble-polyfill for IE8:
-    OLD_EVENTSYSTEM &amp;&amp; _bubbleIE8();
 
     // store module:
     window._ITSAmodules.EventDom = Event;

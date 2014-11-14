@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/vdom/lib/extend-document.js - Itsa</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title="Itsa"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/Array.html">Array</a></li>
+            
+                <li><a href="../classes/DD.html">DD</a></li>
+            
+                <li><a href="../classes/document.html">document</a></li>
+            
+                <li><a href="../classes/Element.html">Element</a></li>
+            
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
+            
+                <li><a href="../classes/Event.html">Event</a></li>
+            
+                <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
+            
+                <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
+            
+                <li><a href="../classes/Function.html">Function</a></li>
+            
+                <li><a href="../classes/IO.html">IO</a></li>
+            
+                <li><a href="../classes/ITSA.html">ITSA</a></li>
+            
+                <li><a href="../classes/Node.html">Node</a></li>
+            
+                <li><a href="../classes/NodeList.html">NodeList</a></li>
+            
+                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
+            
+                <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Promise.html">Promise</a></li>
+            
+                <li><a href="../classes/String.html">String</a></li>
+            
+                <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
+            
+                <li><a href="../classes/xElement.html">xElement</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+            
+                <li><a href="../modules/drag.html">drag</a></li>
+            
+                <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/event.html">event</a></li>
+            
+                <li><a href="../modules/event-dom.html">event-dom</a></li>
+            
+                <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-hover.html">event-hover</a></li>
+            
+                <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
+            
+                <li><a href="../modules/io.html">io</a></li>
+            
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
+            
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/js-ext.html">js-ext</a></li>
+            
+                <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
+            
+                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
+            
+                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
+            
+                <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
+            
+                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
+            
+                <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
+            
+                <li><a href="../modules/lib_promise.s.html">lib/promise.s</a></li>
+            
+                <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
+            
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
+            
+                <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/vdom/lib/extend-document.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+
+/**
+ * Provides several methods that override native document-methods to work with the vdom.
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * &lt;br&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module vdom
+ * @submodule extend-document
+ * @class document
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+
+    var NS = require(&#x27;./vdom-ns.js&#x27;)(window),
+        nodeids = NS.nodeids,
+        DOCUMENT = window.document;
+
+    // Note: window.document has no prototype
+
+    /**
+     * Returns a newly created TreeWalker object.
+     *
+     * The TreeWalker is life presentation of the dom. It gets updated when the dom changes.
+     *
+     * @method createTreeWalker
+     * @param root {Element} The root node at which to begin the NodeIterator&#x27;s traversal.
+     * @param [whatToShow] {Number} Filter specification constants from the NodeFilter DOM interface, indicating which nodes to iterate over.
+     * You can use or sum one of the next properties:
+     * &lt;ul&gt;
+     *   &lt;li&gt;window.NodeFilter.SHOW_ELEMENT&lt;/li&gt;
+     *   &lt;li&gt;window.NodeFilter.SHOW_COMMENT&lt;/li&gt;
+     *   &lt;li&gt;window.NodeFilter.SHOW_TEXT&lt;/li&gt;
+     * &lt;/ul&gt;
+     * @param [filter] {NodeFilter|function} An object implementing the NodeFilter interface or a function. See https://developer.mozilla.org/en-US/docs/Web/API/NodeFilter
+     * @return {TreeWalker}
+     */
+    DOCUMENT.createTreeWalker = function(root, whatToShow, filter) {
+        return DOCUMENT.documentElement.createTreeWalker(whatToShow, filter);
+    };
+
+    /**
+     * Indicating whether an Element is inside the DOM.
+     *
+     * @method contains
+     * @param otherElement {Element}
+     * @return {Boolean} whether the Element is inside the dom.
+     * @since 0.0.1
+     */
+    DOCUMENT.contains = function(otherElement) {
+        return DOCUMENT.documentElement.contains(otherElement);
+    };
+
+    /**
+     * Gets an ElementArray of Elements, specified by the css-selector.
+     *
+     * @method getAll
+     * @param cssSelector {String} css-selector to match
+     * @return {ElementArray} ElementArray of Elements that match the css-selector
+     * @since 0.0.1
+     */
+    DOCUMENT.getAll = function(cssSelector) {
+        return this.querySelectorAll(cssSelector);
+    };
+
+    /**
+     * Gets one Element, specified by the css-selector. To retrieve a single element by id,
+     * you need to prepend the id-name with a &#x60;#&#x60;. When multiple Element&#x27;s match, the first is returned.
+     *
+     * @method getElement
+     * @param cssSelector {String} css-selector to match
+     * @return {Element|null} the Element that was search for
+     * @since 0.0.1
+     */
+    DOCUMENT.getElement = function(cssSelector) {
+        return ((cssSelector[0]===&#x27;#&#x27;) &amp;&amp; (cssSelector.indexOf(&#x27; &#x27;)===-1)) ? this.getElementById(cssSelector.substr(1)) : this.querySelector(cssSelector);
+    };
+
+    /**
+     * Returns the Element matching the specified id.
+     *
+     * @method getElementById
+     * @param id {String} id of the Element
+     * @return {Element|null}
+     *
+     */
+    DOCUMENT.getElementById = function(id) {
+        return nodeids[id] || null; // force &#x60;null&#x60; instead of &#x60;undefined&#x60; to be compatible with native getElementById.
+    };
+
+    /**
+     * Returns the first Element that matches the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,
+     * they need to be separated by a &#x60;comma&#x60;.
+     *
+     * @method querySelector
+     * @param selectors {String} CSS-selector(s) that should match
+     * @return {Element}
+     */
+    DOCUMENT.querySelector = function(selectors) {
+        var docElement = DOCUMENT.documentElement;
+        if (docElement.matchesSelector(selectors)) {
+            return docElement;
+        }
+        return docElement.querySelector(selectors);
+    };
+
+    /**
+     * Returns an ElementArray of all Elements that match the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,
+     * they need to be separated by a &#x60;comma&#x60;.
+     *
+     * querySelectorAll is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.
+     *
+     * @method querySelectorAll
+     * @param selectors {String} CSS-selector(s) that should match
+     * @return {ElementArray} non-life Array (snapshot) with Elements
+     */
+    DOCUMENT.querySelectorAll = function(selectors) {
+        var docElement = DOCUMENT.documentElement,
+            elements = docElement.querySelectorAll(selectors);
+        docElement.matchesSelector(selectors) &amp;&amp; elements.shift(docElement);
+        return elements;
+    };
+
+    /**
+     * Replaces the Element with a new Element.
+     *
+     * @method replace
+     * @param newHtmlElement {Element|String} the new element
+     * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only the element having a TextNode as a child.
+     * @chainable
+     * @since 0.0.1
+     */
+    DOCUMENT.replace = function(oldHtmlElement, newHtmlElement, escape) {
+        return oldHtmlElement.replace(newHtmlElement, escape);
+    };
+
+   /**
+    * Tests if an Element would be selected by the specified cssSelector.
+    * Alias for &#x60;matchesSelector()&#x60;
+    *
+    * @method test
+    * @param element {Element} The Element to test
+    * @param cssSelector {String} the css-selector to test against
+    * @return {Boolean} whether or not the node matches the selector
+    * @since 0.0.1
+    */
+    DOCUMENT.test = function(element, cssSelector) {
+        return element.matches(cssSelector);
+    };
+
+};
+
+//--- declaration of properties ---------------------------
+
+/**
+ * Returns the currently focused element, that is, the element that will get keystroke events if the user types any.
+ *
+ * @property activeElement
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the &#x60;anchors&#x60; in the document that have a &#x60;name&#x60; specified (a[name]).
+ * For reasons of backwards compatibility, the returned set of anchors only contains those anchors created with the &#x60;name&#x60; attribute.
+ *
+ * &#x60;anchors&#x60; is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property anchors
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the &#x60;applets&#x60; in the document.
+ *
+ * &#x60;applets&#x60; is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property applets
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Returns the &#x60;body&#x60; or &#x60;frameset&#x60; Element of the current document, or null if no such element exists.
+ *
+ * @property body
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Returns the &#x60;script&#x60;-Element whose script is currently being processed.
+ *
+ *
+ * @property currentScript
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Returns the root-element (===&#x60;html&#x60;-Element) of the current document
+ *
+ * @property documentElement
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the &#x60;embed&#x60;-elements in the document.
+ *
+ * &#x60;embeds&#x60; is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property embeds
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Returns the firstChild element (===&#x60;html&#x60;-Element) of the current document
+ *
+ * @property firstChild
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the &#x60;form&#x60;-elements in the document.
+ *
+ * &#x60;forms&#x60; is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property forms
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the images in the document.
+ *
+ * &#x60;images&#x60; is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property images
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Returns the lastChild element (===&#x60;html&#x60;-Element) of the current document
+ *
+ * @property lastChild
+ * @type Element
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the  of all &#x60;area&#x60;-Elements and &#x60;a&#x60;-Elements in a document with a value for the href attribute.
+ *
+ * &#x60;links&#x60; is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property links
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the plugins (&#x60;object&#x60;- or &#x60;embed&#x60;-elements) in the document.
+ *
+ * &#x60;plugins&#x60; is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property plugins
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the script-elements in the document.
+ *
+ * &#x60;scripts&#x60; is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property scripts
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Returns an HTMLCollection with Elements of all of the style-elements in the document.
+ *
+ * &#x60;styleSheets&#x60; is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
+ *
+ * @property styleSheets
+ * @type HTMLCollection
+ * @readOnly
+ */
+
+/**
+ * Gets or sets the &#x60;title&#x60; of the document. That is, the &#x60;title&#x60;-Element within the &#x60;head&#x60;-Element
+ *
+ * @property title
+ * @type String
+ */
+
+
+//--- definition API of unmodified &#x60;document&#x60;-events ------
+
+/**
+* &quot;online&quot; event is fired on the &lt;body&gt; of each page when the browser switches between online and offline mode.
+* The event is non-cancellable (you can&#x27;t prevent the user from coming online, or going offline).
+*
+* @event online
+*/
+
+/**
+* &quot;offline&quot; event is fired on the &lt;body&gt; of each page when the browser switches between online and offline mode.
+* The event is non-cancellable (you can&#x27;t prevent the user from coming online, or going offline).
+*
+* @event offline
+*/
+
+//--- definition API of unmodified &#x60;document&#x60;-methods ------
+
+/**
+ * Adopts a node from an external document. The node and its subtree is removed from the document it&#x27;s in (if any),
+ * and its ownerDocument is changed to the current document. The node can then be inserted into the current document.
+ *
+ * @method adoptNode
+ * @param externalNode {Node} The node from another document to be adopted.
+ * @return {Node} is the adopted node that can be used in the current document.
+ * The new node&#x27;s parentNode is null, since it has not yet been inserted into the document tree.
+ */
+
+/**
+ * Adds a HtmlElement or DocumentFragment to the end of the &#x60;html&#x60;-element
+ *
+ * @method appendChild
+ * @param element {Element|DocumentFragment} the item to be appended
+ * @return {Element} the appended child.
+ */
+
+/**
+ * Creates a new attribute-node, and returns it.
+ *
+ * @method createAttribute
+ * @param name {String} The name of the attribute
+ * @return {AttributeNode}
+ */
+
+/**
+ * Creates a new Comment-node, and returns it.
+ *
+ * @method createComment
+ * @param data {String} The data to be added to the Comment.
+ * @return {CommentNode}
+ */
+
+/**
+ * Creates a new HtmlElement, and returns it.
+ *
+ * Don&#x27;t use qualified names (like &quot;html:a&quot;) with this method.
+ *
+ * @method createElement
+ * @param tagName {String}  is a string that specifies the type of element to be created.
+ *        The nodeName of the created element is initialized with the value of tagName.
+ * @return {HtmlElement}
+ */
+
+/**
+ * Returns a new NodeIterator object.
+ *
+ * The NodeIterator is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.
+ *
+ * @method createNodeIterator
+ * @param root {Element} The root node at which to begin the NodeIterator&#x27;s traversal.
+ * @param [whatToShow] {Number} Filter specification constants from the NodeFilter DOM interface, indicating which nodes to iterate over.
+ * You can use or sum one of the next properties:
+ * &lt;ul&gt;
+ *   &lt;li&gt;window.NodeFilter.SHOW_ELEMENT&lt;/li&gt;
+ *   &lt;li&gt;window.NodeFilter.SHOW_COMMENT&lt;/li&gt;
+ *   &lt;li&gt;window.NodeFilter.SHOW_TEXT&lt;/li&gt;
+ * &lt;/ul&gt;
+ * @param [filter] {NodeFilter|function} An object implementing the NodeFilter interface or a function. See https://developer.mozilla.org/en-US/docs/Web/API/NodeFilter
+ * @return {NodeIterator}
+ */
+
+/**
+ * Returns a new Range object. See https://developer.mozilla.org/en-US/docs/Web/API/Range
+ *
+ * @method createRange
+ * @return {Range}
+ */
+
+/**
+ * Creates a new Text-node, and returns it.
+ *
+ * @method createTextNode
+ * @param data {String} The data to be added to the Text-node.
+ * @return {TextNode}
+ */
+
+/**
+ * Returns the Element from the document whose &#x60;elementFromPoint&#x60;-method is being called which is the topmost
+ * dom-Element which lies under the given point. To get a Element, specify the point via coordinates, in CSS pixels,
+ * relative to the upper-left-most point in the window or frame containing the document.
+ *
+ * @method elementFromPoint
+ * @param x {Number} x-coordinate to check, in CSS pixels relative to the upper-left corner of the document
+ * @param y {Number} y-coordinate to check, in CSS pixels relative to the upper-left corner of the document
+ * @return {Element} the matching Element
+ */
+
+/**
+ * Enables the style sheets matching the specified name in the current style sheet set,
+ * and disables all other style sheets (except those without a title, which are always enabled).
+ *
+ * @method enableStyleSheetsForSet
+ * @param name {String} The name of the style sheets to enable. All style sheets with a title that match this name will be enabled,
+ *        while all others that have a title will be disabled. Specify an empty string for the name parameter
+ *        to disable all alternate and preferred style sheets (but not the persistent style sheets; that is, those with no title attribute).
+ */
+
+/**
+ * Returns an ElementArray of all Elements that match their classes with the supplied &#x60;classNames&#x60; argument.
+ * To match multiple different classes, separate them with a &#x60;comma&#x60;.
+ *
+ * getElementsByClassName is life presentation of the dom. The returned ElementArray gets updated when the dom changes.
+ *
+ * NOTE: it is highly recomended to use &#x60;document.getAll&#x60; because that method takes advantage of the vdom.
+ *
+ *
+ * @method getElementsByClassName
+ * @param classNames {String} the classes to search for
+ * @return {ElementArray} life Array with Elements
+ */
+
+/**
+ * Returns an ElementArray of all Elements that match their &#x60;name&#x60;-attribute with the supplied &#x60;name&#x60; argument.
+ *
+ * getElementsByName is life presentation of the dom. The returned ElementArray gets updated when the dom changes.
+ *
+ * NOTE: it is highly recomended to use &#x60;document.getAll&#x60; because that method takes advantage of the vdom.
+ *
+ * @method getElementsByName
+ * @param name {String} the property of name-attribute to search for
+ * @return {ElementArray} life Array with Elements
+ */
+
+/**
+ * Returns an ElementArray of all Elements that match their &#x60;name&#x60;-attribute with the supplied &#x60;name&#x60; argument.
+ *
+ * getElementsByTagName is life presentation of the dom. The returned ElementArray gets updated when the dom changes.
+ *
+ * NOTE: it is highly recomended to use &#x60;document.getAll&#x60; because that method takes advantage of the vdom.
+ *
+ * @method getElementsByTagName
+ * @param tagNames {String} the tags to search for
+ * @return {ElementArray} life Array with Elements
+ */
+
+/**
+ * Returns a selection object representing the range of text selected by the user.
+ *
+ * Is also available on the &#x60;window&#x60;-object.
+ *
+ * @method getSelection
+ * @return {Selection} A Selection object. When cast to string, either by adding empty quotes &quot;&quot; or using .toString, this object is the text selected.
+ */
+
+/**
+ * Returns a Boolean value indicating whether the document or any element inside the document has focus.
+ *
+ * @method hasFocus
+ * @return {Boolean} whether the document or any element inside the document has focus.
+ */
+
+/**
+ * Creates a copy of a node from an external document that can be inserted into the current document.
+ *
+ * @method importNode
+ * @param externalNode {Node} The node from another document to be adopted.
+ * @param deep {Boolean} Whether the descendants of the imported node need to be imported.
+ * @return {Node} The new node that is imported into the document.
+ * The new node&#x27;s parentNode is null, since it has not yet been inserted into the document tree.
+ */
+
+/**
+ * Inserts &#x60;newElement&#x60; before &#x60;referenceElement&#x60;.
+ *
+ * @method insertBefore
+ * @param newElement {Element} The newElement to insert
+ * @param referenceElement {Element} The Element before which newElement is inserted.
+ * @return {Element} the Element being inserted (equals newElement)
+ */
+
+/**
+ * Removes a child node from the DOM.
+ *
+ * @method removeChild
+ * @param child {Element} the Element to be removed from the DOM
+ * @return {Element} a reference to the removed child node
+ */
+
+/**
+ * Replaces one child-element of its parent element with a new child-element.
+ *
+ * @method replaceChild
+ * @param newChild {Element} the new element to replace oldChild. If it already exists in the DOM, it is first removed.
+ * @param oldChild {Element} The existing child to be replaced.
+ * @return {Element} is the replaced node. This is the same Element as oldChild.
+ */
+
+//--- definition API of unmodified &#x60;document&#x60;-properties ------
+
+/**
+ * Returns the character encoding of the current document.
+ *
+ * @property characterSet
+ * @readOnly
+ */
+
+/**
+ * Indicates whether the document is rendered in Quirks mode or Standards mode. Its value is either:
+ * &lt;ul&gt;
+ *     &lt;li&gt;&#x60;BackCompat&#x60; if the document is in quirks mode&lt;/li&gt;
+ *     &lt;li&gt;&#x60;CSS1Compat&#x60; if the document is in no-quirks (also known as &#x60;standards&#x60;) mode or limited-quirks (also known as &#x60;almost standards&#x60;) mode.&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * @property compatMode
+ * @readOnly
+ */
+
+/**
+ * Returns the MIME type that the document is being rendered as.  This may come from HTTP headers or other sources of MIME information,
+ * and might be affected by automatic type conversions performed by either the browser or extensions.
+ *
+ * @property contentType
+ * @readOnly
+ */
+
+/**
+ * Returns the Document Type Declaration (DTD) associated with current document. The returned object implements the DocumentType interface.
+ * Use DOMImplementation.createDocumentType() to create a DocumentType.
+ *
+ * @property doctype
+ * @readOnly
+ */
+
+/**
+ * Returns string URI of the HTML document. Same as &#x60;document.URL&#x60;.
+ *
+ * Note: HTML documents have a document.URL property which returns the same value. Unlike URL, documentURI is available on all types of documents.
+ *
+ * @property documentURI
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * Controls whether the entire document is editable. Its value should be either &quot;off&quot; or &quot;on&quot;.
+ *
+ * @property designMode
+ * @type String
+ * @default &quot;off&quot;
+ */
+
+/**
+ * Gets the domain portion of the origin of the current document.
+ *
+ * Setter will fail, because the same origin policy needs to persist.
+ *
+ * @property domain
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * Returns a DOMImplementation object associated with the current document.
+ *
+ * @property implementation
+ * @type DOMImplementation
+ * @readOnly
+ */
+
+/**
+ * Returns a string containing the date and time on which the current document was last modified.
+ * If you want a Date-object, you need to transform lastModified into a Date object: &#x60;modifyDate = new Date(document.lastModified);&#x60;
+ *
+ * @property lastModified
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * Returns the last enabled style sheet set; this property&#x27;s value changes whenever the document.selectedStyleSheetSet property is changed.
+ *
+ * @property lastStyleSheetSet
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * returns a Location object, which contains information about the URL of the document and provides methods for changing that URL and loading another URL.
+ *
+ * Though Document.location is a read-only Location object, you can also assign a DOMString to it. This means that you can work with document.location
+ * as if it were a string in most cases: document.location = &#x27;http://www.example.com&#x27; is a synonym of document.location.href = &#x27;http://www.example.com&#x27;.
+ *
+ * To retrieve just the URL as a string, the read-only document.URL property can also be used.
+ *
+ * See more about the &#x60;Location&#x60; object: https://developer.mozilla.org/en-US/docs/Web/API/Location
+ *
+ * @property location
+ * @type Location
+ * @readOnly
+ */
+
+/**
+ * Returns the preferred style sheet set as set by the page author. This is determined from the order of style sheet declarations and the Default-Style HTTP header.
+ *
+ * @property preferredStyleSheetSet
+ * @type String
+ */
+
+/**
+ * Returns &quot;loading&quot; while the document is loading, &quot;interactive&quot; once it is finished parsing but still loading sub-resources,
+ * and &quot;complete&quot; once it has loaded.
+ *
+ * @property readyState
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * Returns the URI of the page that linked to this page.
+ *
+ * @property referrer
+ * @type String
+ * @readOnly
+ */
+
+/**
+ * Indicates the name of the style sheet set that&#x27;s currently in use. See more about Stylesheets: https://developer.mozilla.org/en-US/docs/Web/API/Stylesheet
+ * Setting the value of this property is equivalent to calling document.enableStyleSheetsForSet() with the value of currentStyleSheetSet,
+ * then setting the value of lastStyleSheetSet to that value as well.
+ *
+ * @property selectedStyleSheetSet
+ * @type String
+ */
+
+/**
+ * Returns string URL of the HTML document. Same as &#x60;document.documentURI&#x60;
+ *
+ * Note: HTML documents have a document.URL property which returns the same value. Unlike URL, documentURI is available on all types of documents.
+ *
+ * @property URL
+ * @type String
+ * @readOnly
+ */
+
+
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
