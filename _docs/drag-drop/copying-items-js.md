@@ -119,6 +119,9 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
     // we will change the text of copied items, so that it is clear they are only movable
     ITSA.Event.after('dropzone-drop', function(e) {
         e.dragNode.setText('movable');
+        if (!e.isCopied) {
+            e.sourceNode.setText('movable');
+        }
     });
 </script>
 ```
@@ -159,5 +162,8 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
     // we will change the text of copied items, so that it is clear they are only movable
     ITSA.Event.after('dropzone-drop', function(e) {
         e.dragNode.setText('movable');
+        if (!e.isCopied) {
+            e.sourceNode.setText('movable');
+        }
     });
 </script>

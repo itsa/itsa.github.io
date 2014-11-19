@@ -65,13 +65,11 @@
             
                 <li><a href="../classes/Node.html">Node</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
-            
-                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
-            
                 <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -83,19 +81,19 @@
             
                 <li><a href="../classes/window.html">window</a></li>
             
-                <li><a href="../classes/xElement.html">xElement</a></li>
-            
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
             
                 <li><a href="../modules/drag.html">drag</a></li>
             
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
             
                 <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -133,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -224,7 +216,7 @@
  * @class Event
  * @since 0.0.2
 */
-require(&#x27;dom-ext&#x27;);
+require(&#x27;vdom&#x27;);
 
 var NAME = &#x27;[event-valuechange]: &#x27;,
     VALUE = &#x27;value&#x27;,
@@ -245,7 +237,21 @@ var NAME = &#x27;[event-valuechange]: &#x27;,
 
 module.exports = function (window) {
 
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
+
+    if (window._ITSAmodules.EventValueChange) {
+        return window._ITSAmodules.EventValueChange; // EventValueChange was already created
+    }
+
     var Event = require(&#x27;../event-dom.js&#x27;)(window),
+    DOCUMENT = window.document,
     subscriberBlur,
     subscriberFocus,
 
@@ -260,11 +266,11 @@ module.exports = function (window) {
      */
     editableNode = function(node) {
         var editable;
-        if (node===window.document) {
+        if (node===DOCUMENT) {
             return false;
         }
-        console.log(NAME, &#x27;editableNodes &#x27;+node.test(&#x27;input, textarea, select&#x27;) || ((editable=node.getAttr(&#x27;contenteditable&#x27;)) &amp;&amp; (editable!==&#x27;false&#x27;)));
-        return node.test(&#x27;input, textarea, select&#x27;) || ((editable=node.getAttr(&#x27;contenteditable&#x27;)) &amp;&amp; (editable!==&#x27;false&#x27;));
+        console.log(NAME, &#x27;editableNodes &#x27;+DOCUMENT.test(node, &#x27;input, textarea, select&#x27;) || ((editable=node.getAttr(&#x27;contenteditable&#x27;)) &amp;&amp; (editable!==&#x27;false&#x27;)));
+        return DOCUMENT.test(node, &#x27;input, textarea, select&#x27;) || ((editable=node.getAttr(&#x27;contenteditable&#x27;)) &amp;&amp; (editable!==&#x27;false&#x27;));
     },
 
 
@@ -324,7 +330,7 @@ module.exports = function (window) {
         // create only after subscribing to the &#x60;hover&#x60;-event
         subscriberBlur = Event.after(&#x27;blur&#x27;, endFocus);
         subscriberFocus = Event.after(&#x27;focus&#x27;, startFocus);
-        startFocus({target: window.document.activeElement});
+        startFocus({target: DOCUMENT.activeElement});
     },
 
 
@@ -382,7 +388,7 @@ module.exports = function (window) {
         console.log(NAME, &#x27;checkChanged&#x27;);
         var node = e.target;
         // because of delegating all matched HtmlElements come along: only check the node that has focus:
-        if (window.document.activeElement!==node) {
+        if (DOCUMENT.activeElement!==node) {
             return;
         }
         var prevData = node.getData(DATA_KEY),
@@ -390,7 +396,7 @@ module.exports = function (window) {
             currentData = editable ? node.innerHTML : node[VALUE];
         if (currentData!==prevData.prevVal) {
             console.log(NAME, &#x27;checkChanged --&gt; value has been changed&#x27;);
-            window.document._emitVC(node, currentData);
+            DOCUMENT._emitVC(node, currentData);
             prevData.prevVal = currentData;
         }
     },
@@ -411,7 +417,7 @@ module.exports = function (window) {
             subscriberBlur.detach();
             subscriberFocus.detach();
             // also stop any possible action/listeners to a current element:
-            endFocus({target: window.document.activeElement});
+            endFocus({target: DOCUMENT.activeElement});
             // reinit notifier, because it is a one-time notifier:
             Event.notify(&#x27;UI:valuechange&#x27;, setupValueChange, Event, true);
         }
@@ -429,11 +435,11 @@ module.exports = function (window) {
      * @private
      * @since 0.0.1
      */
-    window.document._emitVC = function(node, value) {
+    DOCUMENT._emitVC = function(node, value) {
         console.log(NAME, &#x27;document._emitVC&#x27;);
         var e = {
             value: value,
-            currentTarget: window.document,
+            currentTarget: DOCUMENT,
             sourceTarget: node
         };
         /**
@@ -443,6 +449,8 @@ module.exports = function (window) {
         */
         Event.emit(node, &#x27;UI:valuechange&#x27;, e);
     };
+
+    window._ITSAmodules.EventValueChange = Event;
 
     return Event;
 };

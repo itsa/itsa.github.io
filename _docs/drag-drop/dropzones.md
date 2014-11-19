@@ -47,11 +47,11 @@ intro: "Draggable items can be dropped inside dropzones. Dronzones are HtmlEleme
     }
 </style>
 
-Drag the items to the dropzones.
+Drag the items to the dropzones. The items can be copied by pressing the `Ctrl`- or `Cmd`-key
 
 <div id="constr" class="base-container">
     <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="move">drag me</div>
-    <div id="without" class="container">drag me</div>
+    <div id="without" class="container">drag me (copyable)</div>
 </div>
 
 <div class="drop-container" dropzone="copy">only copied items</div>
@@ -73,7 +73,7 @@ Drag the items to the dropzones.
 <body>
     <div id="constr" class="base-container">
         <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="move">drag me</div>
-        <div id="without" class="container">drag me</div>
+        <div id="without" class="container">drag me (copyable)</div>
     </div>
 
     <div class="drop-container" dropzone="copy">only copied items</div>
@@ -92,9 +92,13 @@ Drag the items to the dropzones.
     document.getElement('#dropzone-without').plug(ITSA.Plugins.NodeDropzone);
 
     // we will change the text of copied items, so that it is clear they are only movable
-    ITSA.Event.after('dd-dropzone', function(e) {
-        e.target.setText('movable');
+    ITSA.Event.after('dropzone-drop', function(e) {
+        e.dragNode.setText('drag me');
+        if (!e.isCopied) {
+            e.sourceNode.setText('drag me');
+        }
     });
+
 </script>
 ```
 
@@ -105,5 +109,13 @@ Drag the items to the dropzones.
     ITSA.DD.init();
     document.getElement('#without').plug(ITSA.Plugins.NodeDD, {effectAllowed: 'all', dropzone: '.drop-container'});
     document.getElement('#dropzone-without').plug(ITSA.Plugins.NodeDropzone);
+
+    // we will change the text of copied items, so that it is clear they are only movable
+    ITSA.Event.after('dropzone-drop', function(e) {
+        e.dragNode.setText('drag me');
+        if (!e.isCopied) {
+            e.sourceNode.setText('drag me');
+        }
+    });
 
 </script>

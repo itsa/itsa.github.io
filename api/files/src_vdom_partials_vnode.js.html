@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/vdom/lib/vnode.js - Itsa</title>
+    <title>src/vdom/partials/vnode.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -65,13 +65,11 @@
             
                 <li><a href="../classes/Node.html">Node</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
-            
-                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
-            
                 <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -83,19 +81,19 @@
             
                 <li><a href="../classes/window.html">window</a></li>
             
-                <li><a href="../classes/xElement.html">xElement</a></li>
-            
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
             
                 <li><a href="../modules/drag.html">drag</a></li>
             
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
             
                 <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -133,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -194,7 +186,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/vdom/lib/vnode.js</h1>
+                        <h1 class="file-heading">File: src/vdom/partials/vnode.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -222,26 +214,38 @@
 require(&#x27;js-ext/lib/array.js&#x27;);
 require(&#x27;js-ext/lib/object.js&#x27;);
 require(&#x27;js-ext/lib/string.js&#x27;);
-require(&#x27;./element-array&#x27;);
 
 module.exports = function (window) {
+
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
+
+    if (window._ITSAmodules.VNode) {
+        return window._ITSAmodules.VNode; // VNODE was already created
+    }
 
     var NS = require(&#x27;./vdom-ns.js&#x27;)(window),
         extractor = require(&#x27;./attribute-extractor.js&#x27;),
         DOCUMENT = window.document,
         nodeids = NS.nodeids,
         htmlToVNodes = require(&#x27;./html-parser.js&#x27;)(window),
-        ElementArray = require(&#x27;./element-array.js&#x27;),
         async = require(&#x27;utils/lib/timers.js&#x27;).async,
         NTH_CHILD_REGEXP = /(?:(\d*)[n|N])?([+|-])?(\d*)/, // an+b
         STRING = &#x27;string&#x27;,
         CLASS = &#x27;class&#x27;,
         STYLE = &#x27;style&#x27;,
+        ID = &#x27;id&#x27;,
         SPLIT_CHARACTER = {
             &#x27; &#x27;: true,
             &#x27;&gt;&#x27;: true,
-            &#x27;+&#x27;: true,
-            &#x27;~&#x27;: true
+            &#x27;+&#x27;: true, // only select the element when it is immediately preceded by the former element
+            &#x27;~&#x27;: true  // only the element when it has the former element as a sibling. (just like &#x60;+&#x60;, but less strict)
         },
         STORABLE_SPLIT_CHARACTER = {
             &#x27;&gt;&#x27;: true,
@@ -401,7 +405,7 @@ module.exports = function (window) {
         var vParent = vnode.vParent,
             index;
         if (!vParent || !vParent.vChildNodes) {
-            return null;
+            return;
         }
         index = vParent.vChildNodes.indexOf(vnode) + (next ? 1 : -1);
         return vParent.vChildNodes[index];
@@ -422,7 +426,7 @@ module.exports = function (window) {
         var vParent = vnode.vParent,
             index;
         if (!vParent || !vParent.vChildNodes) {
-            return null;
+            return;
         }
         if (vnode.nodeType===1) {
             index = vParent.vChildren.indexOf(vnode) + (next ? 1 : -1);
@@ -488,17 +492,21 @@ module.exports = function (window) {
     * not multiple, so it shouldn&#x27;t contain a &#x60;comma&#x60;.
     *
     * @method _matchesOneSelector
-    * @param vnode {Object} the vnode to inspect
+    * @param vnode {vnode} the vnode to inspect
     * @param selector {String} the selector-item to check the match for
+    * @param [relatedVNode] {vnode} a related vnode where to selectors starting with &#x60;&gt;&#x60;, &#x60;~&#x60; or &#x60;+&#x60; should be compared.
+    *        If not specified, any of these three starting selector-characters will be ignored (leading to matching this first character).
     * @return {Boolean} whether the vnode matches the css-selector
     * @protected
     * @private
     * @since 0.0.1
     */
-    _matchesOneSelector = function(vnode, selector) {
+    _matchesOneSelector = function(vnode, selector, relatedVNode) {
         var selList = _splitSelector(selector),
             size = selList.length,
-            i, selectorItem, selMatch, directMatch;
+            originalVNode = vnode,
+            firstSelectorChar = selector[0],
+            i, selectorItem, selMatch, directMatch, vParentvChildren, indexRelated;
 
         if (size===0) {
             return false;
@@ -532,19 +540,40 @@ module.exports = function (window) {
             else {
                 // need to search up the tree
                 vnode = vnode.vParent;
-                if (!vnode) {
+                if (!vnode || ((vnode===relatedVNode) &amp;&amp; (selectorItem!==&#x27;&gt;&#x27;))) {
                     return false;
                 }
-                if ((selectorItem===&#x27;&gt;&#x27;) &amp;&amp; (--i&gt;=0)) {
-                    selectorItem = selList[i];
-                    // should be immediate match
-                    selMatch = _matchesSelectorItem(vnode, selectorItem);
-                }
-                else {
-                    while (vnode &amp;&amp; !(selMatch=_matchesSelectorItem(vnode, selectorItem))) {
-                        vnode = vnode.vParent;
+                if (selectorItem===&#x27;&gt;&#x27;) {
+                    if (--i&gt;=0) {
+                        selectorItem = selList[i];
+                       // should be immediate match
+                        selMatch = _matchesSelectorItem(vnode, selectorItem);
                     }
                 }
+                else {
+                    while (!(selMatch=_matchesSelectorItem(vnode, selectorItem))) {
+                        vnode = vnode.vParent;
+                        if (!vnode || (vnode===relatedVNode)) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        if (selMatch &amp;&amp; relatedVNode &amp;&amp; STORABLE_SPLIT_CHARACTER[firstSelectorChar]) {
+            // when &#x60;selector&#x60; starts with &#x60;&gt;&#x60;, &#x60;~&#x60; or &#x60;+&#x60;, then
+            // there should also be a match comparing a related node!
+            switch (firstSelectorChar) {
+                case &#x27;&gt;&#x27;:
+                    selMatch = (relatedVNode.vChildren.indexOf(originalVNode)!==-1);
+                break;
+                case &#x27;~&#x27;:
+                    vParentvChildren = originalVNode.vParent.vChildren;
+                    indexRelated = vParentvChildren.indexOf(relatedVNode);
+                    selMatch = (indexRelated!==-1) &amp;&amp; (indexRelated&lt;vParentvChildren.indexOf(originalVNode));
+                break;
+                case &#x27;+&#x27;:
+                    selMatch = (originalVNode.vPreviousElement === relatedVNode);
             }
         }
         return selMatch;
@@ -622,7 +651,7 @@ module.exports = function (window) {
                     }
                     // if character===&#x27;]&#x27; then we have an attribute without a value-definition
                     if (!vnode.attrs[attributeName] || ((character===&#x27;]&#x27;) &amp;&amp; (vnode.attrs[attributeName]!==&#x27;&#x27;))) {
-                        return false;
+                        return !!vnode.attrs[attributeName];
                     }
                     // now we read the value of the attribute
                     // however, it could be that the selector has a special &#x60;detailed&#x60; identifier set (defined by: ATTR_DETAIL_SPECIFIERS)
@@ -971,7 +1000,7 @@ module.exports = function (window) {
         return list;
     };
 
-    vNodeProto = {
+    vNodeProto = window._ITSAmodules.VNode = {
        /**
         * Check whether the vnode&#x27;s domNode is equal, or contains the specified Element.
         *
@@ -1006,7 +1035,7 @@ module.exports = function (window) {
                 element = vChildren[i];
                 element.matchesSelector(cssSelector) &amp;&amp; (found=element);
             }
-            return found || null;
+            return found;
         },
 
        /**
@@ -1076,7 +1105,7 @@ module.exports = function (window) {
                     element.matchesSelector(cssSelector) &amp;&amp; (found=element);
                 }
             }
-            return found || null;
+            return found;
         },
 
        /**
@@ -1085,10 +1114,12 @@ module.exports = function (window) {
         *
         * @method matchesSelector
         * @param selectors {String} one or more css-selectors
+        * @param [relatedVNode] {vnode} a related vnode where to selectors starting with &#x60;&gt;&#x60;, &#x60;~&#x60; or &#x60;+&#x60; should be compared.
+        *        If not specified, any of these three starting selector-characters will be ignored (leading to matching this first character).
         * @return {Boolean} whether the vnode matches one of the selectors
         * @since 0.0.1
         */
-        matchesSelector: function(selectors) {
+        matchesSelector: function(selectors, relatedVNode) {
             var instance = this;
             if (instance.nodeType!==1) {
                 return false;
@@ -1097,50 +1128,72 @@ module.exports = function (window) {
             // we can use Array.some, because there won&#x27;t be many separated selectoritems,
             // so the final invocation won&#x27;t be delayed much compared to looping
             return selectors.some(function(selector) {
-                return _matchesOneSelector(instance, selector);
+                return _matchesOneSelector(instance, selector, relatedVNode);
             });
         },
 
-        reloadAttr: function(attribute) {
+       /**
+        * Reloads the DOM-attribute into the vnode.
+        *
+        * @method matchesSelector
+        * @param attributeName {String} the name of the attribute to be reloaded.
+        * @return {Node} the domNode that was reloaded.
+        * @since 0.0.1
+        */
+        reloadAttr: function(attributeName) {
             var instance = this,
-                attributeValue = this.domNode._getAttribute(attribute),
+                domNode = instance.domNode,
+                attributeValue = domNode._getAttribute(attributeName),
                 attrs = instance.attrs,
                 extractStyle, extractClass;
-            attributeValue || (attributeValue=&#x27;&#x27;);
-            if (attributeValue===&#x27;&#x27;) {
-                delete attrs[attribute];
-                // in case of STYLE attribute --&gt; special treatment
-                (attribute===STYLE) &amp;&amp; (instance.styles={});
-                // in case of CLASS attribute --&gt; special treatment
-                (attribute===CLASS) &amp;&amp; (instance.classNames={});
-            }
-            else {
-                attrs[attribute] = attributeValue;
-                // in case of STYLE attribute --&gt; special treatment
-                if (attribute===STYLE) {
-                    extractStyle = extractor.extractStyle(attributeValue);
-                    attributeValue = extractStyle.attrStyle;
-                    if (attributeValue) {
-                        attrs.style = attributeValue;
+            if (instance.nodeType==1) {
+                attributeValue || (attributeValue=&#x27;&#x27;);
+                if (attributeValue===&#x27;&#x27;) {
+                    delete attrs[attributeName];
+                    // in case of STYLE attributeName --&gt; special treatment
+                    (attributeName===STYLE) &amp;&amp; (instance.styles={});
+                    // in case of CLASS attributeName --&gt; special treatment
+                    (attributeName===CLASS) &amp;&amp; (instance.classNames={});
+                    // in case of ID attributeName --&gt; special treatment
+                    if ((attributeName===ID) &amp;&amp; (instance.id)) {
+                        delete nodeids[instance.id];
+                        delete instance.id;
                     }
-                    else {
-                        delete attrs.style;
-                    }
-                    instance.styles = extractStyle.styles;
                 }
-                else if (attribute===CLASS) {
-                    // in case of CLASS attribute --&gt; special treatment
-                    extractClass = extractor.extractClass(attributeValue);
-                    attributeValue = extractClass.attrClass;
-                    if (attributeValue) {
-                        attrs[CLASS] = attributeValue;
+                else {
+                    attrs[attributeName] = attributeValue;
+                    // in case of STYLE attributeName --&gt; special treatment
+                    if (attributeName===STYLE) {
+                        extractStyle = extractor.extractStyle(attributeValue);
+                        attributeValue = extractStyle.attrStyle;
+                        if (attributeValue) {
+                            attrs.style = attributeValue;
+                        }
+                        else {
+                            delete attrs.style;
+                        }
+                        instance.styles = extractStyle.styles;
                     }
-                    else {
-                        delete attrs[CLASS];
+                    else if (attributeName===CLASS) {
+                        // in case of CLASS attributeName --&gt; special treatment
+                        extractClass = extractor.extractClass(attributeValue);
+                        attributeValue = extractClass.attrClass;
+                        if (attributeValue) {
+                            attrs[CLASS] = attributeValue;
+                        }
+                        else {
+                            delete attrs[CLASS];
+                        }
+                        instance.classNames = extractClass.classNames;
                     }
-                    instance.classNames = extractClass.classNames;
+                    else if (attributeName===ID) {
+                        instance.id &amp;&amp; (instance.id!==attributeValue) &amp;&amp; (delete nodeids[instance.id]);
+                        instance.id = attributeValue;
+                        nodeids[attributeValue] = domNode;
+                    }
                 }
             }
+            return domNode;
         },
 
         serializeStyles: function() {
@@ -1165,6 +1218,32 @@ module.exports = function (window) {
 
         //---- private ------------------------------------------------------------------
 
+        /**
+         * Adds a vnode to the end of the list of vChildNodes.
+         *
+         * Syns with the DOM.
+         *
+         * @method _appendChild
+         * @param VNode {vnode} vnode to append
+         * @private
+         * @return {Node} the Node that was appended
+         * @since 0.0.1
+         */
+        _appendChild: function(VNode) {
+            var instance = this,
+                domNode = VNode.domNode,
+                size;
+            VNode._moveToParent(instance);
+            instance.domNode._appendChild(domNode);
+            if (VNode.nodeType===3) {
+                size = instance.vChildNodes.length;
+                instance._normalize();
+                // if the size changed, then the domNode was merged
+                (size===instance.vChildNodes.length) || (domNode=instance.vChildNodes[instance.vChildNodes.length-1].domNode);
+            }
+            return domNode;
+        },
+
        /**
         * Removes the vnode from its parent vChildNodes- and vChildren-list.
         *
@@ -1187,11 +1266,85 @@ module.exports = function (window) {
         },
 
        /**
+        * Destroys the vnode and all its vnode-vChildNodes.
+        * Removes it from its vParent.vChildNodes list,
+        * also removes its definitions inside &#x60;NS-vdom.nodeids&#x60;.
+        *
+        * Does NOT sync with the dom.
+        *
+        * @method _destroy
+        * @private
+        * @chainable
+        * @since 0.0.1
+        */
+        _destroy: function() {
+            var instance = this,
+                vChildNodes = instance.vChildNodes,
+                len, i, vChildNode;
+            if (!instance.destroyed) {
+                Object.defineProperty(instance, &#x27;destroyed&#x27;, {
+                    value: true,
+                    writable: false,
+                    configurable: false,
+                    enumerable: true
+                });
+                // first: _remove all its vChildNodes
+                if ((instance.nodeType===1) &amp;&amp; vChildNodes) {
+                    len = vChildNodes.length;
+                    for (i=0; i &lt; len; i++) {
+                        vChildNode = vChildNodes[i];
+                        vChildNode &amp;&amp; vChildNode._destroy();
+                    }
+                }
+                instance._vChildren = null;
+                // explicitely set instance.domNode._vnode and instance.domNode to null in order to prevent problems with the GC (we break the circular reference)
+                instance.domNode._vnode = null;
+                // if valid id, then _remove the DOMnodeRef from internal hash
+                instance.id &amp;&amp; delete nodeids[instance.id];
+                instance._deleteFromParent();
+                async(function() {
+                    instance.domNode = null;
+                });
+            }
+            return instance;
+        },
+
+        /**
+         * Inserts &#x60;newVNode&#x60; before &#x60;refVNode&#x60;.
+         *
+         * Syns with the DOM.
+         *
+         * @method _insertBefore
+         * @param newVNode {vnode} vnode to insert
+         * @param refVNode {vnode} The vnode before which newVNode should be inserted.
+         * @private
+         * @return {Node} the Node being inserted (equals domNode)
+         * @since 0.0.1
+         */
+        _insertBefore: function(newVNode, refVNode) {
+            var instance = this,
+                domNode = newVNode.domNode,
+                index = instance.vChildNodes.indexOf(refVNode),
+                size;
+            if (index!==-1) {
+                newVNode._moveToParent(instance, index);
+                instance.domNode._insertBefore(domNode, refVNode.domNode);
+                if (newVNode.nodeType===3) {
+                    size = instance.vChildNodes.length;
+                    instance._normalize();
+                }
+            }
+            return domNode;
+        },
+
+       /**
         * Moves the vnode from its current parent.vChildNodes list towards a new parent vnode at the specified position.
         *
         * Does NOT sync with the dom.
         *
         * @method _moveToParent
+        * @param parentVNode {vnode} the parent-vnode
+        * @param [index] {Number} the position of the child. When not specified, it will be appended.
         * @private
         * @chainable
         * @since 0.0.1
@@ -1202,12 +1355,11 @@ module.exports = function (window) {
             instance._deleteFromParent();
             instance.vParent = parentVNode;
             parentVNode.vChildNodes || (parentVNode.vChildNodes=[]);
-            parentVNode.vChildNodes.insertAt(instance, index);
+            (typeof index===&#x27;number&#x27;) ? parentVNode.vChildNodes.insertAt(instance, index) : (parentVNode.vChildNodes[parentVNode.vChildNodes.length]=instance);
             // force to recalculate the vChildren on a next call:
-            if (vParent &amp;&amp; (instance.nodeType===1)) {
-                vParent._vChildren = null;
-                parentVNode._vChildren = null;
-            }
+            vParent &amp;&amp; (instance.nodeType===1) &amp;&amp; (vParent._vChildren = null);
+            // force to recalculate the vChildren on a next call:
+            parentVNode &amp;&amp; (instance.nodeType===1) &amp;&amp; (parentVNode._vChildren=null);
             return instance;
         },
 
@@ -1226,20 +1378,20 @@ module.exports = function (window) {
                 domNode = instance.domNode,
                 vChildNodes = instance.vChildNodes,
                 i, preChildNode, vChildNode;
-            if (vChildNodes) {
+            if (!instance._unNormalizable &amp;&amp; vChildNodes) {
                 for (i=vChildNodes.length-1; i&gt;=0; i--) {
                     vChildNode = vChildNodes[i];
                     preChildNode = vChildNodes[i-1]; // i will get the value &#x60;-1&#x60; eventually, which leads into undefined preChildNode
-                    if (vChildNode.nodetype===3) {
+                    if (vChildNode.nodeType===3) {
                         if (vChildNode.text===&#x27;&#x27;) {
-                            domNode.removeChild(vChildNode.domNode);
-                            vChildNode._remove();
+                            domNode._removeChild(vChildNode.domNode);
+                            vChildNode._destroy();
                         }
-                        else if (preChildNode.nodetype===3) {
+                        else if (preChildNode &amp;&amp; preChildNode.nodeType===3) {
                             preChildNode.text += vChildNode.text;
                             preChildNode.domNode.nodeValue = preChildNode.text;
-                            domNode.removeChild(vChildNode.domNode);
-                            vChildNode._remove();
+                            domNode._removeChild(vChildNode.domNode);
+                            vChildNode._destroy();
                         }
                     }
                 }
@@ -1248,10 +1400,27 @@ module.exports = function (window) {
         },
 
        /**
+        * Makes the vnode &#x60;normalizable&#x60;. Could be set to &#x60;false&#x60; when batch-inserting nodes, while &#x60;normalizaing&#x60; manually at the end.
+        * Afterwards, you should always reset &#x60;normalizable&#x60; to true.
+        *
+        * @method _normalizable
+        * @param value {Boolean} whether the vnode should be normalisable.
+        * @private
+        * @chainable
+        * @since 0.0.1
+        */
+        _normalizable: function(value) {
+            var instance = this;
+            value ? (delete instance._unNormalizable) : (instance._unNormalizable=true);
+            return instance;
+        },
+
+       /**
         * Prevents MutationObserver from making the dom sync with the vnode.
         * Should be used when manipulating the dom from within the vnode itself (to preventing looping)
         *
         * @method _noSync
+        * @chainable
         * @private
         * @since 0.0.1
         */
@@ -1260,45 +1429,54 @@ module.exports = function (window) {
             if (!instance._nosync) {
                 instance._nosync = true;
                 async(function() {
-                    // instance._nosync = false;
+                    instance._nosync = false;
                 });
             }
-        },
-
-       /**
-        * Removes the vnode and all its vnode-vChildNodes from its definitions inside &#x60;NS-vdom.nodeids&#x60;.
-        *
-        * Does NOT sync with the dom.
-        *
-        * @method _remove
-        * @private
-        * @chainable
-        * @since 0.0.1
-        */
-        _remove: function() {
-            var instance = this,
-                vChildNodes = instance.vChildNodes,
-                len, i, vChildNode;
-            // first: _remove all its vChildNodes
-            if ((instance.nodeType===1) &amp;&amp; vChildNodes) {
-                len = vChildNodes.length;
-                for (i=0; i &lt; len; i++) {
-                    vChildNode = vChildNodes[i];
-                    vChildNode._remove();
-                }
-            }
-            instance._vChildren = null;
-            // explicitely set instance.domNode._vnode and instance.domNode to null in order to prevent problems with the GC (we break the circular reference)
-            instance.domNode._vnode = null;
-            instance.domNode = null;
-            // if valid id, then _remove the DOMnodeRef from internal hash
-            instance.id &amp;&amp; delete nodeids[instance.id];
-            instance._deleteFromParent();
             return instance;
         },
 
        /**
-        * Replaces the current vnode by the one that is specified at the parent.vChildNode list.
+        * Removes the attribute of both the vnode as well as its related dom-node.
+        *
+        * Syncs with the dom.
+        *
+        * @method _removeAttr
+        * @param attributeName {String}
+        * @private
+        * @chainable
+        * @since 0.0.1
+        */
+        _removeAttr: function(attributeName) {
+            var instance = this;
+            delete instance.attrs[attributeName];
+            // in case of STYLE attribute --&gt; special treatment
+            (attributeName===STYLE) &amp;&amp; (instance.styles={});
+            // in case of CLASS attribute --&gt; special treatment
+            (attributeName===CLASS) &amp;&amp; (instance.classNames={});
+            (attributeName===ID) &amp;&amp; (delete nodeids[instance.id]);
+            instance.domNode._removeAttribute(attributeName);
+            return instance;
+        },
+
+        /**
+        * Removes the vnode&#x27;s child-vnode from its vChildren and the DOM.
+        *
+         * Syns with the DOM.
+         *
+        * @method removeChild
+        * @param VNode {vnode} the child-vnode to remove
+        * @private
+        * @since 0.0.1
+        */
+        _removeChild: function(VNode) {
+            var instance = this;
+            VNode._destroy();
+            instance.domNode._removeChild(VNode.domNode);
+            instance._normalize();
+        },
+
+       /**
+        * Replaces the current vnode at the parent.vChildNode list by &#x60;newVNode&#x60;
         *
         * Does NOT sync with the dom.
         *
@@ -1318,7 +1496,59 @@ module.exports = function (window) {
                 ((instance.nodeType===1) || (newVNode.nodeType===1)) &amp;&amp; (instance.vParent._vChildren=null);
                 vChildNodes[index] = newVNode;
             }
-            return instance._remove();
+            return instance._destroy();
+        },
+
+       /**
+        * Sets the attribute of both the vnode as well as its related dom-node.
+        *
+        * Syncs with the dom.
+        *
+        * @method _setAttr
+        * @param attributeName {String}
+        * @param value {String} the value for the attributeName
+        * @private
+        * @chainable
+        * @since 0.0.1
+        */
+        _setAttr: function(attributeName, value) {
+            var instance = this,
+                extractStyle, extractClass,
+                attrs = instance.attrs;
+            if (attrs[attributeName]!==value) {
+                attrs[attributeName] = value;
+                // in case of STYLE attribute --&gt; special treatment
+                if (attributeName===STYLE) {
+                    extractStyle = extractor.extractStyle(value);
+                    value = extractStyle.attrStyle;
+                    if (value) {
+                        attrs.style = value;
+                    }
+                    else {
+                        delete attrs.style;
+                    }
+                    instance.styles = extractStyle.styles;
+                }
+                else if (attributeName===CLASS) {
+                    // in case of CLASS attribute --&gt; special treatment
+                    extractClass = extractor.extractClass(value);
+                    value = extractClass.attrClass;
+                    if (value) {
+                        attrs[CLASS] = value;
+                    }
+                    else {
+                        delete attrs[CLASS];
+                    }
+                    instance.classNames = extractClass.classNames;
+                }
+                else if (attributeName===ID) {
+                    instance.id &amp;&amp; (delete nodeids[instance.id]);
+                    instance.id = value;
+                    nodeids[value] = instance.domNode;
+                }
+                instance.domNode._setAttribute(attributeName, value);
+            }
+            return instance;
         },
 
        /**
@@ -1336,7 +1566,7 @@ module.exports = function (window) {
         _setAttrs: function(newAttrs) {
             // does sync the DOM
             var instance = this,
-                attrsObj, domNode, attr, attrs, id, i, key, keys, len, value, extractClass, extractStyle;
+                attrsObj, domNode, attr, attrs, i, key, keys, len, value;
             if (instance.nodeType!==1) {
                 return;
             }
@@ -1363,15 +1593,7 @@ module.exports = function (window) {
             len = keys.length;
             for (i = 0; i &lt; len; i++) {
                 key = keys[i];
-                if (!attrsObj[key]) {
-                    // attribute not in the new definition
-                    domNode._removeAttribute(key);
-                    delete attrs[key];
-                    // in case of STYLE attribute --&gt; special treatment
-                    (key===STYLE) &amp;&amp; (instance.styles={});
-                    // in case of CLASS attribute --&gt; special treatment
-                    (key===CLASS) &amp;&amp; (instance.classNames={});
-                }
+                attrsObj[key] || instance._removeAttr(key);
             }
 
             // next: every attribute that differs: redefine
@@ -1380,42 +1602,9 @@ module.exports = function (window) {
             for (i = 0; i &lt; len; i++) {
                 key = keys[i];
                 value = attrsObj[key];
-                if (attrs[key]!==value) {
-                    // different: redefine
-                    // in case of STYLE attribute --&gt; special treatment
-                    if (key===STYLE) {
-                        extractStyle = extractor.extractStyle(value);
-                        value = extractStyle.attrStyle;
-                        if (value) {
-                            newAttrs.style = value;
-                        }
-                        else {
-                            delete newAttrs.style;
-                        }
-                        instance.styles = extractStyle.styles;
-                    }
-                    else if (key===CLASS) {
-                        // in case of CLASS attribute --&gt; special treatment
-                        extractClass = extractor.extractClass(value);
-                        value = extractClass.attrClass;
-                        if (value) {
-                            newAttrs[CLASS] = value;
-                        }
-                        else {
-                            delete newAttrs[CLASS];
-                        }
-                        instance.classNames = extractClass.classNames;
-                    }
-                    domNode._setAttribute(key, value);
-                }
+                (attrs[key]===value) || instance._setAttr(key, value);
             }
 
-            // set node&#x27;s id:
-            id = instance.id = newAttrs.id;
-            // if valid id, then store the DOMnodeRef inside internal hash
-            id &amp;&amp; (nodeids[id]=instance.domNode);
-
-            instance.attrs = newAttrs;
             return instance;
         },
 
@@ -1437,7 +1626,7 @@ module.exports = function (window) {
                 vChildNodes = instance.vChildNodes || [],
                 domNode = instance.domNode,
                 forRemoval = [],
-                i, oldChild, newChild, newLength, len, len2, childDomNode, nodeswitch, bkpAttrs, bkpChildNodes;
+                i, oldChild, newChild, newLength, len, len2, childDomNode, nodeswitch, bkpAttrs, bkpChildNodes, needNormalize;
 
             instance._noSync();
             // first: reset ._vChildren --&gt; by making it empty, its getter will refresh its list on a next call
@@ -1463,7 +1652,7 @@ module.exports = function (window) {
                                 oldChild.attrs.id &amp;&amp; (delete nodeids[oldChild.attrs.id]);
                                 newChild.attrs = {}; // reset to force defined by &#x60;_setAttrs&#x60;
                                 newChild.vChildNodes = []; // reset , to force defined by &#x60;_setAttrs&#x60;
-                                domNode.replaceChild(newChild.domNode, childDomNode);
+                                domNode._replaceChild(newChild.domNode, childDomNode);
                                 newChild.vParent = instance;
                                 newChild._setAttrs(bkpAttrs);
                                 newChild._setChildNodes(bkpChildNodes);
@@ -1483,7 +1672,7 @@ module.exports = function (window) {
                         case 3: // oldNodeType==Element, newNodeType==Comment
                             oldChild.attrs.id &amp;&amp; (delete nodeids[oldChild.attrs.id]);
                             newChild.domNode.nodeValue = newChild.text;
-                            domNode.replaceChild(newChild.domNode, childDomNode);
+                            domNode._replaceChild(newChild.domNode, childDomNode);
                             newChild.vParent = instance;
                             oldChild._replaceAtParent(newChild);
                             break;
@@ -1492,7 +1681,7 @@ module.exports = function (window) {
                         case 7: // oldNodeType==Comment, newNodeType==Element
                                 newChild._setAttrs(newChild.attrs);
 
-                                domNode.replaceChild(newChild.domNode, childDomNode);
+                                domNode._replaceChild(newChild.domNode, childDomNode);
                                 newChild._setChildNodes(newChild.vChildNodes);
 
                                 newChild.id &amp;&amp; (nodeids[newChild.id]=newChild.domNode);
@@ -1502,30 +1691,25 @@ module.exports = function (window) {
                             break;
 
                         case 5: // oldNodeType==TextNode, newNodeType==TextNode
-                                // case5 and case8 should be treated the same
-                        case 8: // oldNodeType==Comment, newNodeType==TextNode
-                            if (oldChild.text !== newChild.text) {
-                                newChild.domNode.nodeValue = newChild.text;
-                                domNode.replaceChild(newChild.domNode, childDomNode);
-                                oldChild.text = newChild.text;
-                            }
+                                // case5 and case9 should be treated the same
+                        case 9: // oldNodeType==Comment, newNodeType==Comment
+                            (oldChild.text===newChild.text) || (oldChild.domNode.nodeValue = oldChild.text = newChild.text);
+                            newVChildNodes[i] = oldChild;
                             break;
                         case 6: // oldNodeType==TextNode, newNodeType==Comment
-                                // case6 and case9 should be treated the same
-                        case 9: // oldNodeType==Comment, newNodeType==Comment
-                            if (oldChild.text !== newChild.text) {
-                                newChild.domNode.nodeValue = newChild.text;
-                                domNode.replaceChild(newChild.domNode, childDomNode);
-                                oldChild.text = newChild.text;
-                            }
+                                // case6 and case8 should be treated the same
+                        case 8: // oldNodeType==Comment, newNodeType==TextNode
+                            newChild.domNode.nodeValue = newChild.text;
+                            domNode._replaceChild(newChild.domNode, childDomNode);
+                            newChild.vParent = oldChild.vParent;
                     }
                     if ((nodeswitch===2) || (nodeswitch===5) || (nodeswitch===8)) {
-                        instance._normalize();
+                        needNormalize = true;
                     }
                 }
                 else {
                     // _remove previous definition
-                    domNode.removeChild(oldChild.domNode);
+                    domNode._removeChild(oldChild.domNode);
                     // the oldChild needs to be removed, however, this canoot be done right now, for it would effect the loop
                     // so we store it inside a hash to remove it later
                     forRemoval[forRemoval.length] = oldChild;
@@ -1534,7 +1718,7 @@ module.exports = function (window) {
             // now definitely remove marked childNodes:
             len2 = forRemoval.length;
             for (i=0; i&lt;len2; i++) {
-                forRemoval[i]._remove();
+                forRemoval[i]._destroy();
             }
             // now we add all new vChildNodes that go beyond &#x60;len&#x60;:
             for (i = len; i &lt; newLength; i++) {
@@ -1546,17 +1730,22 @@ module.exports = function (window) {
                         bkpChildNodes = newChild.vChildNodes;
                         newChild.attrs = {}; // reset, to force defined by &#x60;_setAttrs&#x60;
                         newChild.vChildNodes = []; // reset to current state, to force defined by &#x60;_setAttrs&#x60;
-                        domNode.appendChild(newChild.domNode);
+                        domNode._appendChild(newChild.domNode);
                         newChild._setAttrs(bkpAttrs);
                         newChild._setChildNodes(bkpChildNodes);
                         break;
+                    case 3: // Element
+                        needNormalize = true;
+                        // we need to break through --&gt; no &#x60;break&#x60;
+                        /* falls through */
                     default: // TextNode or CommentNode
                         newChild.domNode.nodeValue = newChild.text;
-                        domNode.appendChild(newChild.domNode);
+                        domNode._appendChild(newChild.domNode);
                 }
                 newChild.storeId();
             }
             instance.vChildNodes = newVChildNodes;
+            needNormalize &amp;&amp; instance._normalize();
             return instance;
         }
 
@@ -1749,6 +1938,7 @@ module.exports = function (window) {
                 if ((instance.nodeType!==1) || !vParent) {
                     return;
                 }
+                instance._noSync();
                 vChildNodes = vParent.vChildNodes;
                 index = vChildNodes.indexOf(instance);
                 isLastChildNode = (index===(vChildNodes.length-1));
@@ -1766,7 +1956,7 @@ module.exports = function (window) {
                             id &amp;&amp; (delete nodeids[id]);
                             vnode.attrs = {}; // reset to force defined by &#x60;_setAttrs&#x60;
                             vnode.vChildNodes = []; // reset , to force defined by &#x60;_setAttrs&#x60;
-                            vParent.domNode.replaceChild(vnode.domNode, instance.domNode);
+                            vParent.domNode._replaceChild(vnode.domNode, instance.domNode);
                             vnode._setAttrs(bkpAttrs);
                             vnode._setChildNodes(bkpChildNodes);
                             // vnode.attrs = bkpAttrs;
@@ -1782,7 +1972,7 @@ module.exports = function (window) {
                     else {
                         id &amp;&amp; (delete nodeids[id]);
                         vnode.domNode.nodeValue = vnode.text;
-                        vParent.domNode.replaceChild(vnode.domNode, instance.domNode);
+                        vParent.domNode._replaceChild(vnode.domNode, instance.domNode);
                         instance._replaceAtParent(vnode);
                     }
                 }
@@ -1794,13 +1984,13 @@ module.exports = function (window) {
                             bkpChildNodes = vnode.vChildNodes;
                             vnode.attrs = {}; // reset, to force defined by &#x60;_setAttrs&#x60;
                             vnode.vChildNodes = []; // reset to current state, to force defined by &#x60;_setAttrs&#x60;
-                            isLastChildNode ? vParent.domNode.appendChild(vnode.domNode) : vParent.domNode.insertBefore(vnode.domNode, refDomNode);
+                            isLastChildNode ? vParent.domNode._appendChild(vnode.domNode) : vParent.domNode._insertBefore(vnode.domNode, refDomNode);
                             vnode._setAttrs(bkpAttrs);
                             vnode._setChildNodes(bkpChildNodes);
                             break;
                         default: // TextNode or CommentNode
                             vnode.domNode.nodeValue = vnode.text;
-                            isLastChildNode ? vParent.domNode.appendChild(vnode.domNode) : vParent.domNode.appendChild(vnode.domNode, refDomNode);
+                            isLastChildNode ? vParent.domNode._appendChild(vnode.domNode) : vParent.domNode._appendChild(vnode.domNode, refDomNode);
                     }
                     vnode.storeId();
                     vnode._moveToParent(vParent, index+i);
@@ -1861,7 +2051,7 @@ module.exports = function (window) {
                     vChildNode, vChildNodes, i, len;
                 vChildNodes = instance.vChildNodes;
                 if (vChildNodes &amp;&amp; !children) {
-                    children = instance._vChildren = ElementArray.createArray();
+                    children = instance._vChildren = [];
                     len = vChildNodes.length;
                     for (i=0; i&lt;len; i++) {
                         vChildNode = vChildNodes[i];

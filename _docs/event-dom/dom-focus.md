@@ -140,6 +140,4 @@ Code-example:
         e.target.focus();
     }, '#submit-button');
 
-
-    ITSA.Event.after('mousemove', function(e) {console.info(e);});
 </script>

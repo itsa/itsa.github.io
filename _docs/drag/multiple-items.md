@@ -42,7 +42,7 @@ intro: "Multiple items can be dragged at once by specifying <b>e.relatives</b> i
     }
 </style>
 
-Drag the items to the dropzones. The `movable or copyable` items will be copyable when the `Ctrl`-key (or `cmd`-key on a Mac) is pressed during dragging. Use the same Ctrl/cmd button to select multiple items.
+Drag the items to the dropzones. Use the Ctrl/Cmd button to select multiple items.
 
 <div class="base-container" dd-draggable=".container" dd-effect-allowed="all">
     <div class="container">drag me nr. 1</div>

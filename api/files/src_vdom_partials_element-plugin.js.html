@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>lib/element-plugin.js - Itsa</title>
+    <title>src/vdom/partials/element-plugin.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -65,13 +65,11 @@
             
                 <li><a href="../classes/Node.html">Node</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
-            
-                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
-            
                 <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -83,19 +81,19 @@
             
                 <li><a href="../classes/window.html">window</a></li>
             
-                <li><a href="../classes/xElement.html">xElement</a></li>
-            
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
             
                 <li><a href="../modules/drag.html">drag</a></li>
             
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
             
                 <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -133,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -194,63 +186,129 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>lib_element-plugin.js Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: src/vdom/partials/element-plugin.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/src_dom-ext_lib_element-plugin.js.html#l3"><code>src&#x2F;dom-ext&#x2F;lib&#x2F;element-plugin.js:3</code></a>
-        </div>
-    
+/**
+ * Integrates DOM-events to event. more about DOM-events:
+ * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module vdom
+ * @submodule element-plugin
+ * @class Plugins
+ * @since 0.0.1
+*/
 
-    
-        <p>Available since 0.0.1</p>
-    
-</div>
+require(&#x27;js-ext/lib/function.js&#x27;);
 
+module.exports = function (window) {
 
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
 
-<div class="box intro">
-    <p>Integrates DOM-events to event. more about DOM-events:
-<a href="http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/">http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/</a></p>
-<p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
-New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
+    if (window._ITSAmodules.ElementPlugin) {
+        return window._ITSAmodules.ElementPlugin; // ElementPlugin was already created
+    }
 
-</div>
+    var NodePlugin, NodeConstrain, ElementPlugin;
 
+    // also extend window.Element:
+    window.Element &amp;&amp; (function(ElementPrototype) {
+       /**
+        * Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.
+        *
+        * @method isPlugged
+        * @param pluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
+        * @return {Boolean} whether the plugin is plugged in
+        * @since 0.0.1
+        */
+        ElementPrototype.isPlugged = function(NodePluginClass) {
+            var plugin = new NodePluginClass();
+            return plugin.validate(this);
+        };
 
-    <div class="example">
-        <h4>Example:</h4>
-        <div class="example-content">
-            <p>require(&#39;dom-ext/lib/element.js&#39;)(window);</p>
+       /**
+        * Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.
+        *
+        * @method plug
+        * @param pluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
+        * @param options {Object} any options that should be passed through when the class is instantiated.
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.plug = function(NodePluginClass, options) {
+            var plugin = new NodePluginClass(options);
+            plugin.setup(this);
+            return this;
+        };
 
-        </div>
-    </div>
+       /**
+        * Unplugs a NodePlugin from the HtmlElement.
+        *
+        * @method unplug
+        * @param pluginClass {NodePlugin} The plugin that should be unplugged. Needs to be the Class, not an instance!
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.unplug = function(NodePluginClass) {
+            var plugin = new NodePluginClass();
+            plugin.teardown(this);
+            return this;
+        };
+    }(window.Element.prototype));
 
+    NodePlugin = Object.createClass(null, {
+        setup: function (hostElement) {
+            this.each(
+                function(value, key) {
+                    value &amp;&amp; hostElement.setAttr(key, value);
+                }
+            );
+        },
+        teardown: function (hostElement) {
+            this.each(
+                function(value, key) {
+                    hostElement.removeAttr(key);
+                }
+            );
+        },
+        validate: function(hostElement) {
+            return this.some(
+                function(value, key) {
+                    return hostElement.hasAttr(key);
+                }
+            );
+        }
+    });
 
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
+    NodeConstrain = NodePlugin.subClass(
+        function (config) {
+            this[&#x27;xy-constrain&#x27;] = (config &amp;&amp; config.selector) || &#x27;window&#x27;;
+        }
+    );
 
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="../classes/NodePlugin.html">
-                        NodePlugin
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
+    ElementPlugin = window._ITSAmodules.ElementPlugin = {
+        NodePlugin: NodePlugin,
+        NodeConstrain: NodeConstrain
+    };
 
-    <div class="yui3-u-1-2">
-        
-    </div>
+    return ElementPlugin;
+};
+    </pre>
 </div>
 
                     </div>

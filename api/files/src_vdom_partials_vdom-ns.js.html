@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/vdom/lib/node-parser.js - Itsa</title>
+    <title>src/vdom/partials/vdom-ns.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -65,13 +65,11 @@
             
                 <li><a href="../classes/Node.html">Node</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
-            
-                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
-            
                 <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -83,19 +81,19 @@
             
                 <li><a href="../classes/window.html">window</a></li>
             
-                <li><a href="../classes/xElement.html">xElement</a></li>
-            
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
             
                 <li><a href="../modules/drag.html">drag</a></li>
             
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
             
                 <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -133,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -194,119 +186,116 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/vdom/lib/node-parser.js</h1>
+                        <h1 class="file-heading">File: src/vdom/partials/vdom-ns.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-&quot;use strict&quot;;
-
 /**
- * Exports &#x60;domNodeToVNode&#x60; which transforms dom-nodes into vnodes.
+ * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
  *
- * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;&lt;br&gt;
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * &lt;br&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
+ *
  * @module vdom
- * @submodule node-parser
+ * @submodule vdom-ns
+ * @class NS-vdom
  * @since 0.0.1
 */
 
+&quot;use strict&quot;;
+
+require(&#x27;js-ext/lib/object.js&#x27;);
+
 module.exports = function (window) {
+    var NS;
 
-    var NS = require(&#x27;./vdom-ns.js&#x27;)(window),
-        extractor = require(&#x27;./attribute-extractor.js&#x27;),
-        voidElements = NS.voidElements,
-        nonVoidElements = NS.nonVoidElements,
-        vNodeProto = require(&#x27;./vnode.js&#x27;)(window),
-        /**
-         * Transforms a dom-node into a vnode.
-         *
-         * @method domNodeToVNode
-         * @param domNode {Node} The dom-node to be transformed
-         * @param [parentVNode] {vnode} the parent-vnode that belongs to the dom-node
-         * @return {vnode} the vnode-representation of the dom-node
-         * @since 0.0.1
-         */
-        domNodeToVNode = function(domNode, parentVNode) {
-            var nodeType = domNode.nodeType,
-                vnode, attributes, attr, i, len, childNodes, domChildNode, vChildNodes, tag, childVNode, extractClass, extractStyle;
-            if (!NS.VALID_NODE_TYPES[nodeType]) {
-                // only process ElementNodes, TextNodes and CommentNodes
-                return;
-            }
-            vnode = Object.create(vNodeProto);
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
 
-            // set properties:
-            vnode.domNode = domNode;
-            // create circular reference:
-            vnode.domNode._vnode = vnode;
+    if (window._ITSAmodules.VDOM_NS) {
+        return window._ITSAmodules.VDOM_NS; // VDOM_NS was already created
+    }
 
-            vnode.nodeType = nodeType;
+    NS = window._ITSAmodules.VDOM_NS = {};
 
-            if (nodeType===1) {
-                // ElementNode
-                tag = vnode.tag = domNode.nodeName; // is always uppercase
+    /**
+     * Reference to the VElement of document.body (gets its value as soon as it gets refered to)
+     *
+     * @property body
+     * @default null
+     * @type VElement
+     * @since 0.0.1
+     */
+     NS.body = null;
 
-                vnode.attrs = {};
-                vnode.vParent = parentVNode;
 
-                attributes = domNode.attributes;
-                len = attributes.length;
-                for (i=0; i&lt;len; i++) {
-                    attr = attributes[i];
-                    vnode.attrs[attr.name] = attr.value;
-                }
+    /**
+     * A hash with all node&#x27;ids (of all the domnodes that have an id). The value is a reference to an VElement.
+     *
+     * @property nodeids
+     * @default {}
+     * @type Object
+     * @since 0.0.1
+     */
+    NS.nodeids || (NS.nodeids={});
 
-                vnode.id = vnode.attrs.id;
+    /**
+     * A hash with all encountered non-void Elements
+     *
+     * @property nonVoidElements
+     * @default {}
+     * @type Object
+     * @since 0.0.1
+     */
+    NS.nonVoidElements || (NS.nonVoidElements={});
 
-                extractClass = extractor.extractClass(vnode.attrs[&#x27;class&#x27;]);
-                extractClass.attrClass &amp;&amp; (vnode.attrs[&#x27;class&#x27;]=extractClass.attrClass);
-                vnode.classNames = extractClass.classNames;
+    /**
+     * A hash to identify what tagNames are equal to &#x60;SCRIPT&#x60; or &#x60;STYLE&#x60;.
+     *
+     * @property SCRIPT_OR_STYLE_TAG
+     * @default {SCRIPT: true, STYLE: true}
+     * @type Object
+     * @since 0.0.1
+     */
+    NS.SCRIPT_OR_STYLE_TAG = {
+        SCRIPT: true,
+        STYLE: true
+    };
 
-                extractStyle = extractor.extractStyle(vnode.attrs.style);
-                extractStyle.attrStyle &amp;&amp; (vnode.attrs.style=extractStyle.attrStyle);
-                vnode.styles = extractStyle.styles;
+    /**
+     * A hash with all nodeTypes that should be captured by the vDOM.
+     *
+     * @property VALID_NODE_TYPES
+     * @default {1: true, 3: true, 8: true}
+     * @type Object
+     * @since 0.0.1
+     */
+    NS.VALID_NODE_TYPES = {
+        1: true,
+        3: true,
+        8: true
+    };
 
-                if (voidElements[tag]) {
-                    vnode.isVoid = true;
-                }
-                else if (nonVoidElements[tag]) {
-                    vnode.isVoid = false;
-                }
-                else {
-                    (vnode.isVoid=!(new RegExp(&#x27;&lt;/&#x27;+tag+&#x27;&gt;$&#x27;, &#x27;i&#x27;)).test(domNode.outerHTML)) ? (voidElements[tag]=true) : (nonVoidElements[tag]=true);
-                }
+    /**
+     * A hash with all encountered void Elements
+     *
+     * @property voidElements
+     * @default {}
+     * @type Object
+     * @since 0.0.1
+     */
+    NS.voidElements || (NS.voidElements={});
 
-                if (!vnode.isVoid) {
-                    // in case of &#x27;SCRIPT&#x27; or &#x27;STYLE&#x27; tags --&gt; just use the innertext, all other tags need to be extracted
-                    if (NS.SCRIPT_OR_STYLE_TAG[tag]) {
-                        vnode.text = domNode.textContent;
-                    }
-                    else {
-                        vChildNodes = vnode.vChildNodes = [];
-                        childNodes = domNode.childNodes;
-                        len = childNodes.length;
-                        for (i=0; i&lt;len; i++) {
-                            domChildNode = childNodes[i];
-                            childVNode = domNodeToVNode(domChildNode, vnode);
-                            vChildNodes[vChildNodes.length] = childVNode;
-                        }
-                    }
-                }
-            }
-            else {
-                // TextNode or CommentNode
-                vnode.vParent = parentVNode;
-                vnode.text = domNode.nodeValue;
-            }
-            // store vnode&#x27;s id:
-            vnode.storeId();
-            return vnode;
-        };
-
-    return domNodeToVNode;
-
+    return NS;
 };
     </pre>
 </div>

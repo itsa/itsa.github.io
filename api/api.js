@@ -13,22 +13,21 @@ YUI.add("yuidoc-meta", function(Y) {
         "ITSA",
         "NS-vdom",
         "Node",
-        "NodeList",
-        "NodePlugin",
         "Object",
+        "Plugins",
         "Promise",
         "String",
         "Utils",
         "document",
         "vnode",
-        "window",
-        "xElement"
+        "window"
     ],
     "modules": [
-        "dom-ext",
+        "attribute-extractor",
         "drag",
         "drag-drop",
         "element-array",
+        "element-plugin",
         "event",
         "event-dom",
         "event-emitter",
@@ -47,10 +46,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "itsa.build",
         "js-ext",
         "lib/array.js",
-        "lib/element-plugin.js",
-        "lib/element.js",
         "lib/function.js",
-        "lib/nodelist.js",
         "lib/object.js",
         "lib/promise.s",
         "lib/string.js",
@@ -63,8 +59,9 @@ YUI.add("yuidoc-meta", function(Y) {
     ],
     "allModules": [
         {
-            "displayName": "dom-ext",
-            "name": "dom-ext"
+            "displayName": "attribute-extractor",
+            "name": "attribute-extractor",
+            "description": "Exports `htmlToVNodes` which transforms html-text into vnodes.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "drag",
@@ -80,6 +77,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "element-array",
             "name": "element-array",
             "description": "Extends Array into an array with special utility-methods that can be applied upon its members.\nThe membres should be vElement's\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "element-plugin",
+            "name": "element-plugin",
+            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "event",
@@ -171,24 +173,9 @@ YUI.add("yuidoc-meta", function(Y) {
             "description": "Pollyfils for often used functionality for Arrays\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
-            "displayName": "lib/element-plugin.js",
-            "name": "lib_element-plugin.js",
-            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        {
-            "displayName": "lib/element.js",
-            "name": "lib_element.js",
-            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        {
             "displayName": "lib/function.js",
             "name": "lib_function.js",
             "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        {
-            "displayName": "lib/nodelist.js",
-            "name": "lib_nodelist.js",
-            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "lib/object.js",

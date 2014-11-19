@@ -65,13 +65,11 @@
             
                 <li><a href="../classes/Node.html">Node</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
-            
-                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
-            
                 <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -83,19 +81,19 @@
             
                 <li><a href="../classes/window.html">window</a></li>
             
-                <li><a href="../classes/xElement.html">xElement</a></li>
-            
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
             
                 <li><a href="../modules/drag.html">drag</a></li>
             
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
             
                 <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -133,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -224,6 +216,19 @@ var NAME = &#x27;[io-xml]: &#x27;,
     REGEXP_XML = /(?: )*(&lt;\?xml (?:.)*\?&gt;)(?: )*(&lt;(?:\w)+&gt;)/;
 
 module.exports = function (window) {
+
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
+
+    if (window._ITSAmodules.IO_XML) {
+        return window._ITSAmodules.IO_XML; // IO_XML was already created
+    }
 
     var IO = require(&#x27;../io.js&#x27;)(window),
 
@@ -337,6 +342,8 @@ module.exports = function (window) {
         returnPromise.abort = ioPromise.abort;
         return returnPromise;
     };
+
+    window._ITSAmodules.IO_XML = IO;
 
     return IO;
 };

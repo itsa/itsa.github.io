@@ -65,13 +65,11 @@
             
                 <li><a href="../classes/Node.html">Node</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
-            
-                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
-            
                 <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -83,19 +81,19 @@
             
                 <li><a href="../classes/window.html">window</a></li>
             
-                <li><a href="../classes/xElement.html">xElement</a></li>
-            
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
             
                 <li><a href="../modules/drag.html">drag</a></li>
             
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
             
                 <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -133,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -202,7 +194,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_vdom_lib_vnode.js.html#l3"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:3</code></a>
+            Defined in: <a href="../files/src_vdom_partials_vnode.js.html#l3"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:3</code></a>
         </div>
     
 
@@ -256,7 +248,21 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                     <ul class="index-list methods">
                         
                             <li class="index-item method private">
+                                <a href="#method__appendChild">_appendChild</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
                                 <a href="#method__deleteFromParent">_deleteFromParent</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method__destroy">_destroy</a>
 
                                 
                                 
@@ -271,6 +277,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item method private">
                                 <a href="#method__findNodeSibling">_findNodeSibling</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method__insertBefore">_insertBefore</a>
 
                                 
                                 
@@ -305,6 +318,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                             </li>
                         
                             <li class="index-item method private">
+                                <a href="#method__normalizable">_normalizable</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
                                 <a href="#method__normalize">_normalize</a>
 
                                 
@@ -319,7 +339,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                             </li>
                         
                             <li class="index-item method private">
-                                <a href="#method__remove">_remove</a>
+                                <a href="#method__removeAttr">_removeAttr</a>
 
                                 
                                 
@@ -327,6 +347,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item method private">
                                 <a href="#method__replaceAtParent">_replaceAtParent</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method__setAttr">_setAttr</a>
 
                                 
                                 
@@ -397,6 +424,20 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item method">
                                 <a href="#method_matchesSelector">matchesSelector</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_matchesSelector">matchesSelector</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_removeChild">removeChild</a>
 
                                 
                                 
@@ -657,6 +698,118 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                 <h2 class="off-left">Methods</h2>
 
                 
+                    <div id="method__appendChild" class="method item private">
+    <h3 class="name"><code>_appendChild</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>VNode</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Node.html" class="crosslink">Node</a></span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_vnode.js.html#l1029"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1029</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Adds a vnode to the end of the list of vChildNodes.</p>
+<p>Syns with the DOM.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">VNode</code>
+                        <span class="type">Vnode</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>vnode to append</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Node.html" class="crosslink">Node</a></span>:
+                    
+                    <p>the Node that was appended</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method__deleteFromParent" class="method item private">
     <h3 class="name"><code>_deleteFromParent</code></h3>
 
@@ -693,7 +846,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l968"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:968</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1055"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1055</code></a>
         
         </p>
 
@@ -707,6 +860,70 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
 
     <div class="description">
         <p>Removes the vnode from its parent vChildNodes- and vChildren-list.</p>
+<p>Does NOT sync with the dom.</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method__destroy" class="method item private">
+    <h3 class="name"><code>_destroy</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_vnode.js.html#l1076"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1076</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Destroys the vnode and all its vnode-vChildNodes.
+Removes it from its vParent.vChildNodes list,
+also removes its definitions inside <code>NS-vdom.nodeids</code>.</p>
 <p>Does NOT sync with the dom.</p>
 
     </div>
@@ -773,7 +990,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l210"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:210</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l222"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:222</code></a>
         
         </p>
 
@@ -907,7 +1124,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l189"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:189</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l201"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:201</code></a>
         
         </p>
 
@@ -987,6 +1204,140 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
 </div>
 
                 
+                    <div id="method__insertBefore" class="method item private">
+    <h3 class="name"><code>_insertBefore</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>newVNode</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>refVNode</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Node.html" class="crosslink">Node</a></span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_vnode.js.html#l1120"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1120</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Inserts <code>newVNode</code> before <code>refVNode</code>.</p>
+<p>Syns with the DOM.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">newVNode</code>
+                        <span class="type">Vnode</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>vnode to insert</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">refVNode</code>
+                        <span class="type">Vnode</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The vnode before which newVNode should be inserted.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Node.html" class="crosslink">Node</a></span>:
+                    
+                    <p>the Node being inserted (equals domNode)</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method__matchesOneSelector" class="method item private">
     <h3 class="name"><code>_matchesOneSelector</code></h3>
 
@@ -1003,6 +1354,12 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                 <li class="arg">
                     
                         <code>selector</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[relatedVNode]</code>
                     
                 </li>
             
@@ -1041,7 +1398,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l286"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:286</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l298"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:298</code></a>
         
         </p>
 
@@ -1068,7 +1425,7 @@ not multiple, so it shouldn&#39;t contain a <code>comma</code>.</p>
                 <li class="param">
                     
                         <code class="param-name">vnode</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="type">Vnode</span>
                     
 
                     
@@ -1091,6 +1448,24 @@ not multiple, so it shouldn&#39;t contain a <code>comma</code>.</p>
 
                     <div class="param-description">
                         <p>the selector-item to check the match for</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[relatedVNode]</code>
+                        <span class="type">Vnode</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>a related vnode where to selectors starting with <code>&gt;</code>, <code>~</code> or <code>+</code> should be compared.
+       If not specified, any of these three starting selector-characters will be ignored (leading to matching this first character).</p>
 
                     </div>
 
@@ -1175,7 +1550,7 @@ not multiple, so it shouldn&#39;t contain a <code>comma</code>.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l353"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:353</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l390"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:390</code></a>
         
         </p>
 
@@ -1318,7 +1693,7 @@ then there are 3 selector-items: &quot;#mynode&quot;,  &quot;li.red&quot; and &q
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l239"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:239</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l251"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:251</code></a>
         
         </p>
 
@@ -1401,7 +1776,23 @@ then there are 3 selector-items: &quot;#mynode&quot;,  &quot;li.red&quot; and &q
     <h3 class="name"><code>_moveToParent</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>parentVNode</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[index]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
     
@@ -1433,7 +1824,7 @@ then there are 3 selector-items: &quot;#mynode&quot;,  &quot;li.red&quot; and &q
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l989"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:989</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1148"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1148</code></a>
         
         </p>
 
@@ -1451,6 +1842,143 @@ then there are 3 selector-items: &quot;#mynode&quot;,  &quot;li.red&quot; and &q
 
     </div>
 
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">parentVNode</code>
+                        <span class="type">Vnode</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the parent-vnode</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[index]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the position of the child. When not specified, it will be appended.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method__normalizable" class="method item private">
+    <h3 class="name"><code>_normalizable</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>value</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_vnode.js.html#l1210"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1210</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Makes the vnode <code>normalizable</code>. Could be set to <code>false</code> when batch-inserting nodes, while <code>normalizaing</code> manually at the end.
+Afterwards, you should always reset <code>normalizable</code> to true.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">value</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>whether the vnode should be normalisable.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -1495,7 +2023,7 @@ then there are 3 selector-items: &quot;#mynode&quot;,  &quot;li.red&quot; and &q
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1014"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1014</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1174"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1174</code></a>
         
         </p>
 
@@ -1541,6 +2069,8 @@ then there are 3 selector-items: &quot;#mynode&quot;,  &quot;li.red&quot; and &q
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -1555,7 +2085,7 @@ then there are 3 selector-items: &quot;#mynode&quot;,  &quot;li.red&quot; and &q
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1050"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1050</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1226"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1226</code></a>
         
         </p>
 
@@ -1581,11 +2111,21 @@ Should be used when manipulating the dom from within the vnode itself (to preven
 </div>
 
                 
-                    <div id="method__remove" class="method item private">
-    <h3 class="name"><code>_remove</code></h3>
+                    <div id="method__removeAttr" class="method item private">
+    <h3 class="name"><code>_removeAttr</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>attributeName</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
     
@@ -1617,7 +2157,7 @@ Should be used when manipulating the dom from within the vnode itself (to preven
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1068"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1068</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1246"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1246</code></a>
         
         </p>
 
@@ -1630,11 +2170,34 @@ Should be used when manipulating the dom from within the vnode itself (to preven
     </div>
 
     <div class="description">
-        <p>Removes the vnode and all its vnode-vChildNodes from its definitions inside <code>NS-vdom.nodeids</code>.</p>
-<p>Does NOT sync with the dom.</p>
+        <p>Removes the attribute of both the vnode as well as its related dom-node.</p>
+<p>Syncs with the dom.</p>
 
     </div>
 
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">attributeName</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -1689,7 +2252,7 @@ Should be used when manipulating the dom from within the vnode itself (to preven
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1100"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1100</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1286"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1286</code></a>
         
         </p>
 
@@ -1702,7 +2265,7 @@ Should be used when manipulating the dom from within the vnode itself (to preven
     </div>
 
     <div class="description">
-        <p>Replaces the current vnode by the one that is specified at the parent.vChildNode list.</p>
+        <p>Replaces the current vnode at the parent.vChildNode list by <code>newVNode</code></p>
 <p>Does NOT sync with the dom.</p>
 
     </div>
@@ -1723,6 +2286,123 @@ Should be used when manipulating the dom from within the vnode itself (to preven
 
                     <div class="param-description">
                         <p>the new vnode which should take over the place of the current vnode</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method__setAttr" class="method item private">
+    <h3 class="name"><code>_setAttr</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>attributeName</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>value</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_vnode.js.html#l1310"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1310</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Sets the attribute of both the vnode as well as its related dom-node.</p>
+<p>Syncs with the dom.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">attributeName</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">value</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the value for the attributeName</p>
 
                     </div>
 
@@ -1785,7 +2465,7 @@ Should be used when manipulating the dom from within the vnode itself (to preven
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1124"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1124</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1362"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1362</code></a>
         
         </p>
 
@@ -1882,7 +2562,7 @@ definition replaces any previous attributes (without touching unmodified attribu
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1222"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1222</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1419"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1419</code></a>
         
         </p>
 
@@ -1981,7 +2661,7 @@ definition replaces any previous nodes. (without touching unmodified nodes).</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l726"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:726</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l763"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:763</code></a>
         
         </p>
 
@@ -2081,7 +2761,7 @@ Special characters &#39;&gt;&#39; and &#39;+&#39; are added as separate items in
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l775"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:775</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l812"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:812</code></a>
         
         </p>
 
@@ -2166,7 +2846,7 @@ Special characters &#39;&gt;&#39; and &#39;+&#39; are added as separate items in
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l789"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:789</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l826"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:826</code></a>
         
         </p>
 
@@ -2275,7 +2955,7 @@ Special characters &#39;&gt;&#39; and &#39;+&#39; are added as separate items in
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l834"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:834</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l871"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:871</code></a>
         
         </p>
 
@@ -2374,7 +3054,7 @@ Special characters &#39;&gt;&#39; and &#39;+&#39; are added as separate items in
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l812"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:812</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l849"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:849</code></a>
         
         </p>
 
@@ -2449,7 +3129,7 @@ Special characters &#39;&gt;&#39; and &#39;+&#39; are added as separate items in
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l823"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:823</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l860"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:860</code></a>
         
         </p>
 
@@ -2534,7 +3214,7 @@ Special characters &#39;&gt;&#39; and &#39;+&#39; are added as separate items in
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l859"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:859</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l896"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:896</code></a>
         
         </p>
 
@@ -2610,6 +3290,12 @@ Special characters &#39;&gt;&#39; and &#39;+&#39; are added as separate items in
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code class="optional">[relatedVNode]</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -2643,7 +3329,7 @@ Special characters &#39;&gt;&#39; and &#39;+&#39; are added as separate items in
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l882"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:882</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l919"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:919</code></a>
         
         </p>
 
@@ -2683,6 +3369,24 @@ separated by a <code>comma</code>. For example: &quot;#myid li.red blue&quot; is
                     
                 </li>
             
+                <li class="param">
+                    
+                        <code class="param-name optional">[relatedVNode]</code>
+                        <span class="type">Vnode</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>a related vnode where to selectors starting with <code>&gt;</code>, <code>~</code> or <code>+</code> should be compared.
+       If not specified, any of these three starting selector-characters will be ignored (leading to matching this first character).</p>
+
+                    </div>
+
+                    
+                </li>
+            
             </ul>
         </div>
     
@@ -2701,6 +3405,209 @@ separated by a <code>comma</code>. For example: &quot;#myid li.red blue&quot; is
                 
             </div>
         </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_matchesSelector" class="method item">
+    <h3 class="name"><code>matchesSelector</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>attributeName</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Node.html" class="crosslink">Node</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_vnode.js.html#l943"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:943</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Reloads the DOM-attribute into the vnode.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">attributeName</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the name of the attribute to be reloaded.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Node.html" class="crosslink">Node</a></span>:
+                    
+                    <p>the domNode that was reloaded.</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_removeChild" class="method item private">
+    <h3 class="name"><code>removeChild</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>VNode</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_vnode.js.html#l1269"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1269</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Removes the vnode&#39;s child-vnode from its vChildren and the DOM.</p>
+<p>Syns with the DOM.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">VNode</code>
+                        <span class="type">Vnode</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the child-vnode to remove</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
     
 
     
@@ -2741,7 +3648,7 @@ separated by a <code>comma</code>. For example: &quot;#myid li.red blue&quot; is
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l950"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:950</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1011"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1011</code></a>
         
         </p>
 
@@ -2798,7 +3705,7 @@ separated by a <code>comma</code>. For example: &quot;#myid li.red blue&quot; is
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1368"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1368</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1565"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1565</code></a>
         
         </p>
 
@@ -2845,7 +3752,7 @@ separated by a <code>comma</code>. For example: &quot;#myid li.red blue&quot; is
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1376"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1376</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1573"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1573</code></a>
         
         </p>
 
@@ -2892,7 +3799,7 @@ separated by a <code>comma</code>. For example: &quot;#myid li.red blue&quot; is
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1436"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1436</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1633"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1633</code></a>
         
         </p>
 
@@ -2941,7 +3848,7 @@ separated by a <code>comma</code>. For example: &quot;#myid li.red blue&quot; is
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l62"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:62</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l74"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:74</code></a>
         
         </p>
 
@@ -2993,7 +3900,7 @@ separated by a <code>comma</code>. For example: &quot;#myid li.red blue&quot; is
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1384"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1384</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1581"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1581</code></a>
         
         </p>
 
@@ -3040,7 +3947,7 @@ separated by a <code>comma</code>. For example: &quot;#myid li.red blue&quot; is
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1453"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1453</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1650"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1650</code></a>
         
         </p>
 
@@ -3088,7 +3995,7 @@ separated by a <code>comma</code>. For example: &quot;#myid li.red blue&quot; is
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1392"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1392</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1589"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1589</code></a>
         
         </p>
 
@@ -3138,7 +4045,7 @@ For TextNodes and CommentNodes, this property is <code>undefined</code>.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l83"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:83</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l95"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:95</code></a>
         
         </p>
 
@@ -3203,7 +4110,7 @@ For TextNodes and CommentNodes, this property is <code>undefined</code>.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1401"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1401</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1598"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1598</code></a>
         
         </p>
 
@@ -3250,7 +4157,7 @@ For TextNodes and CommentNodes, this property is <code>undefined</code>.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1491"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1491</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1688"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1688</code></a>
         
         </p>
 
@@ -3298,7 +4205,7 @@ For TextNodes and CommentNodes, this property is <code>undefined</code>.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1515"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1515</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1712"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1712</code></a>
         
         </p>
 
@@ -3348,7 +4255,7 @@ For TextNodes and CommentNodes, this property is <code>undefined</code>.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l154"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:154</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l166"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:166</code></a>
         
         </p>
 
@@ -3410,7 +4317,7 @@ For TextNodes and CommentNodes, this property is <code>undefined</code>.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l125"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:125</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l137"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:137</code></a>
         
         </p>
 
@@ -3463,7 +4370,7 @@ For TextNodes and CommentNodes, this property is <code>undefined</code>.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1409"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1409</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1606"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1606</code></a>
         
         </p>
 
@@ -3510,7 +4417,7 @@ For TextNodes and CommentNodes, this property is <code>undefined</code>.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1417"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1417</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1614"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1614</code></a>
         
         </p>
 
@@ -3559,7 +4466,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1611"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1611</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1809"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1809</code></a>
         
         </p>
 
@@ -3607,7 +4514,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1428"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1428</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1625"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1625</code></a>
         
         </p>
 
@@ -3654,7 +4561,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1650"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1650</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1848"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1848</code></a>
         
         </p>
 
@@ -3701,7 +4608,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1675"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1675</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1873"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1873</code></a>
         
         </p>
 
@@ -3748,7 +4655,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1692"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1692</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1890"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1890</code></a>
         
         </p>
 
@@ -3795,7 +4702,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1705"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1705</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1903"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1903</code></a>
         
         </p>
 
@@ -3842,7 +4749,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1722"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1722</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1920"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1920</code></a>
         
         </p>
 
@@ -3889,7 +4796,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1735"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1735</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1933"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1933</code></a>
         
         </p>
 
@@ -3936,7 +4843,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1752"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1752</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1950"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1950</code></a>
         
         </p>
 
@@ -3983,7 +4890,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1766"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1766</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1964"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1964</code></a>
         
         </p>
 
@@ -4030,7 +4937,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1783"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1783</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1981"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1981</code></a>
         
         </p>
 
@@ -4077,7 +4984,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1805"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1805</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2003"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2003</code></a>
         
         </p>
 
@@ -4124,7 +5031,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1818"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1818</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2016"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2016</code></a>
         
         </p>
 
@@ -4171,7 +5078,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1444"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1444</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1641"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1641</code></a>
         
         </p>
 
@@ -4218,7 +5125,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1797"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1797</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1995"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1995</code></a>
         
         </p>
 
@@ -4265,7 +5172,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1831"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1831</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2029"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2029</code></a>
         
         </p>
 
@@ -4312,7 +5219,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_lib_vnode.js.html#l1844"><code>src&#x2F;vdom&#x2F;lib&#x2F;vnode.js:1844</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2042"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2042</code></a>
         
         </p>
 

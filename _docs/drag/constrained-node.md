@@ -53,7 +53,7 @@ Drag the 2 rectangles: they will be constrained to their container. The first is
 </script>
 ```
 
-<script src="../../dist/itsabuild-min.js"></script>
+<script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa');
 

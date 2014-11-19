@@ -65,13 +65,11 @@
             
                 <li><a href="../classes/Node.html">Node</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
-            
-                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
-            
                 <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -83,19 +81,19 @@
             
                 <li><a href="../classes/window.html">window</a></li>
             
-                <li><a href="../classes/xElement.html">xElement</a></li>
-            
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
             
                 <li><a href="../modules/drag.html">drag</a></li>
             
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
             
                 <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -133,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -202,7 +194,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_vdom_lib_element-array.js.html#l3"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:3</code></a>
+            Defined in: <a href="../files/src_vdom_partials_element-array.js.html#l3"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:3</code></a>
         </div>
     
 
@@ -266,14 +258,21 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_prepend">prepend</a>
+                                <a href="#method_isPlugged">isPlugged</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_remove">remove</a>
+                                <a href="#method_plug">plug</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_prepend">prepend</a>
 
                                 
                                 
@@ -308,7 +307,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_replace">replace</a>
+                                <a href="#method_removeNode">removeNode</a>
 
                                 
                                 
@@ -316,6 +315,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item method">
                                 <a href="#method_replaceClass">replaceClass</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_replaceNode">replaceNode</a>
 
                                 
                                 
@@ -336,13 +342,6 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_setClassName">setClassName</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
                                 <a href="#method_setData">setData</a>
 
                                 
@@ -351,6 +350,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item method">
                                 <a href="#method_setHTML">setHTML</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_setOuterHTML">setOuterHTML</a>
 
                                 
                                 
@@ -372,6 +378,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item method">
                                 <a href="#method_toggleClass">toggleClass</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_unplug">unplug</a>
 
                                 
                                 
@@ -443,7 +456,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_lib_element-array.js.html#l41"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:41</code></a>
+        <a href="../files/src_vdom_partials_element-array.js.html#l50"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:50</code></a>
         
         </p>
 
@@ -553,7 +566,7 @@ Appends a HtmlElement or text at the end of HtmlElement&#39;s innerHTML.</p>
             
         
         
-        <a href="../files/src_vdom_lib_element-array.js.html#l55"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:55</code></a>
+        <a href="../files/src_vdom_partials_element-array.js.html#l64"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:64</code></a>
         
         </p>
 
@@ -589,6 +602,233 @@ Making the HtmlElement&#39;s inline-style look like: style=&quot;value&quot;.</p
 
                     <div class="param-description">
                         <p>the style string to be set</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_isPlugged" class="method item">
+    <h3 class="name"><code>isPlugged</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>pluginClass</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_element-array.js.html#l80"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:80</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>For all vElements of the ElementArray:
+Checks whether the plugin is plugged in at ALL the HtmlElements of the NodeList/HTMLCollection.
+Checks whether all its attributes are set.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">pluginClass</code>
+                        <span class="type">NodePlugin</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The plugin that should be plugged. Needs to be the Class, not an instance!</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+                    
+                    <p>whether the plugin is plugged in</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_plug" class="method item">
+    <h3 class="name"><code>plug</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>pluginClass</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>options</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_element-array.js.html#l96"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:96</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>For all vElements of the ElementArray:
+Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">pluginClass</code>
+                        <span class="type">NodePlugin</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The plugin that should be plugged. Needs to be the Class, not an instance!</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">options</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>any options that should be passed through when the class is instantiated.</p>
 
                     </div>
 
@@ -655,7 +895,7 @@ Making the HtmlElement&#39;s inline-style look like: style=&quot;value&quot;.</p
             
         
         
-        <a href="../files/src_vdom_lib_element-array.js.html#l71"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:71</code></a>
+        <a href="../files/src_vdom_partials_element-array.js.html#l110"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:110</code></a>
         
         </p>
 
@@ -722,64 +962,6 @@ Prepends a HtmlElement or text at the start of HtmlElement&#39;s innerHTML.</p>
 </div>
 
                 
-                    <div id="method_remove" class="method item">
-    <h3 class="name"><code>remove</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_vdom_lib_element-array.js.html#l85"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:85</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>For all vElements of the ElementArray:
-Removes the HtmlElement from the DOM.</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
                     <div id="method_removeAttr" class="method item">
     <h3 class="name"><code>removeAttr</code></h3>
 
@@ -826,7 +1008,7 @@ Removes the HtmlElement from the DOM.</p>
             
         
         
-        <a href="../files/src_vdom_lib_element-array.js.html#l96"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:96</code></a>
+        <a href="../files/src_vdom_partials_element-array.js.html#l124"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:124</code></a>
         
         </p>
 
@@ -934,7 +1116,7 @@ Removes the attribute from the HtmlElement.</p>
             
         
         
-        <a href="../files/src_vdom_lib_element-array.js.html#l111"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:111</code></a>
+        <a href="../files/src_vdom_partials_element-array.js.html#l139"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:139</code></a>
         
         </p>
 
@@ -1028,7 +1210,7 @@ Removes a className from the HtmlElement.</p>
             
         
         
-        <a href="../files/src_vdom_lib_element-array.js.html#l124"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:124</code></a>
+        <a href="../files/src_vdom_partials_element-array.js.html#l152"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:152</code></a>
         
         </p>
 
@@ -1122,7 +1304,7 @@ Removes data specified by <code>key</code>. When no arguments are passed, all no
             
         
         
-        <a href="../files/src_vdom_lib_element-array.js.html#l137"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:137</code></a>
+        <a href="../files/src_vdom_partials_element-array.js.html#l165"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:165</code></a>
         
         </p>
 
@@ -1172,27 +1354,11 @@ Removes a css-property (inline) out of the HtmlElement. Use camelCase.</p>
 </div>
 
                 
-                    <div id="method_replace" class="method item">
-    <h3 class="name"><code>replace</code></h3>
+                    <div id="method_removeNode" class="method item">
+    <h3 class="name"><code>removeNode</code></h3>
 
     
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>newHtmlElement</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code class="optional">[escape]</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
+        <span class="paren">()</span>
     
 
     
@@ -1220,7 +1386,7 @@ Removes a css-property (inline) out of the HtmlElement. Use camelCase.</p>
             
         
         
-        <a href="../files/src_vdom_lib_element-array.js.html#l150"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:150</code></a>
+        <a href="../files/src_vdom_partials_element-array.js.html#l178"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:178</code></a>
         
         </p>
 
@@ -1234,51 +1400,10 @@ Removes a css-property (inline) out of the HtmlElement. Use camelCase.</p>
 
     <div class="description">
         <p>For all vElements of the ElementArray:
-Replaces the HtmlElement with a new HtmlElement.</p>
+Removes the HtmlElement from the DOM.</p>
 
     </div>
 
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">newHtmlElement</code>
-                        <span class="type">HtmlElement | <a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the new HtmlElement</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[escape]</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>whether to insert <code>escaped</code> content, leading it into only text inserted</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
     
 
     
@@ -1343,7 +1468,7 @@ Replaces the HtmlElement with a new HtmlElement.</p>
             
         
         
-        <a href="../files/src_vdom_lib_element-array.js.html#l163"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:163</code></a>
+        <a href="../files/src_vdom_partials_element-array.js.html#l192"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:192</code></a>
         
         </p>
 
@@ -1426,6 +1551,121 @@ If the previous className is not available, the new className is set nevertheles
 </div>
 
                 
+                    <div id="method_replaceNode" class="method item">
+    <h3 class="name"><code>replaceNode</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>newHtmlElement</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[escape]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_element-array.js.html#l208"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:208</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>For all vElements of the ElementArray:
+Replaces the HtmlElement with a new HtmlElement.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">newHtmlElement</code>
+                        <span class="type">HtmlElement | <a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the new HtmlElement</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[escape]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>whether to insert <code>escaped</code> content, leading it into only text inserted</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_setAttr" class="method item">
     <h3 class="name"><code>setAttr</code></h3>
 
@@ -1476,7 +1716,7 @@ If the previous className is not available, the new className is set nevertheles
             
         
         
-        <a href="../files/src_vdom_lib_element-array.js.html#l179"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:179</code></a>
+        <a href="../files/src_vdom_partials_element-array.js.html#l228"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:228</code></a>
         
         </p>
 
@@ -1586,7 +1826,7 @@ Sets the attribute on the HtmlElement with the specified value.</p>
             
         
         
-        <a href="../files/src_vdom_lib_element-array.js.html#l195"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:195</code></a>
+        <a href="../files/src_vdom_partials_element-array.js.html#l244"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:244</code></a>
         
         </p>
 
@@ -1620,100 +1860,6 @@ Adds a class to the HtmlElement. If the class already exists it won&#39;t be dup
 
                     <div class="param-description">
                         <p>className to be added</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_setClassName" class="method item">
-    <h3 class="name"><code>setClassName</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>value</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag chainable">chainable</span>
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_vdom_lib_element-array.js.html#l208"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:208</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>For all vElements of the ElementArray:
-Sets the class to the HtmlElement. Cleaning up any previous classes.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">value</code>
-                        <span class="type">Any</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the value that belongs to <code>key</code></p>
 
                     </div>
 
@@ -1780,7 +1926,7 @@ Sets the class to the HtmlElement. Cleaning up any previous classes.</p>
             
         
         
-        <a href="../files/src_vdom_lib_element-array.js.html#l221"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:221</code></a>
+        <a href="../files/src_vdom_partials_element-array.js.html#l257"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:257</code></a>
         
         </p>
 
@@ -1891,7 +2037,7 @@ it is just a way to bind any data to the specific Element so it can be retrieved
             
         
         
-        <a href="../files/src_vdom_lib_element-array.js.html#l236"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:236</code></a>
+        <a href="../files/src_vdom_partials_element-array.js.html#l272"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:272</code></a>
         
         </p>
 
@@ -1927,6 +2073,103 @@ you might be better of using setContent().</p>
 
                     <div class="param-description">
                         <p>content to append</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_setOuterHTML" class="method item">
+    <h3 class="name"><code>setOuterHTML</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>val</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_element-array.js.html#l303"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:303</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>For all vElements of the ElementArray:
+Gets or sets the outerHTML of both the Element as well as the representing dom-node.
+Goes through the vdom, so it&#39;s superfast.</p>
+<p>Use this property instead of <code>outerHTML</code></p>
+<p>Syncs with the DOM.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">val</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the new value to be set</p>
 
                     </div>
 
@@ -1993,7 +2236,7 @@ you might be better of using setContent().</p>
             
         
         
-        <a href="../files/src_vdom_lib_element-array.js.html#l251"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:251</code></a>
+        <a href="../files/src_vdom_partials_element-array.js.html#l287"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:287</code></a>
         
         </p>
 
@@ -2110,7 +2353,7 @@ Sets a css-property (inline) out of the HtmlElement. Use camelCase.</p>
             
         
         
-        <a href="../files/src_vdom_lib_element-array.js.html#l267"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:267</code></a>
+        <a href="../files/src_vdom_partials_element-array.js.html#l321"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:321</code></a>
         
         </p>
 
@@ -2222,7 +2465,7 @@ If you do need to set HTML inside the node, use setHTML().</p>
             
         
         
-        <a href="../files/src_vdom_lib_element-array.js.html#l282"><code>src&#x2F;vdom&#x2F;lib&#x2F;element-array.js:282</code></a>
+        <a href="../files/src_vdom_partials_element-array.js.html#l336"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:336</code></a>
         
         </p>
 
@@ -2256,6 +2499,100 @@ Toggles the className of the Element.</p>
 
                     <div class="param-description">
                         <p>the className that should be toggled</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_unplug" class="method item">
+    <h3 class="name"><code>unplug</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>pluginClass</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_element-array.js.html#l349"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-array.js:349</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>For all vElements of the ElementArray:
+Unplugs a NodePlugin from the HtmlElement.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">pluginClass</code>
+                        <span class="type">NodePlugin</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The plugin that should be unplugged. Needs to be the Class, not an instance!</p>
 
                     </div>
 

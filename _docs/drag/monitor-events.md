@@ -102,7 +102,7 @@ Drag the item and watch for the events.
         }
         else {
             monitorCont.append('<p class="monitor-drag">dd-drag --> item is dragging: 1 event</p>');
-            node = monitorCont.getElement('.monitor-drag'),
+            node = monitorCont.getElement('.monitor-drag');
             node.setData('count', 1);
         }
     });

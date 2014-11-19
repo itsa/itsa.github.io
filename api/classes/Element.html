@@ -65,13 +65,11 @@
             
                 <li><a href="../classes/Node.html">Node</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
-            
-                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
-            
                 <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -83,19 +81,19 @@
             
                 <li><a href="../classes/window.html">window</a></li>
             
-                <li><a href="../classes/xElement.html">xElement</a></li>
-            
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
             
                 <li><a href="../modules/drag.html">drag</a></li>
             
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
             
                 <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -133,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -202,7 +194,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_vdom_lib_extend-element.js.html#l3"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:3</code></a>
+            Defined in: <a href="../files/src_vdom_partials_extend-element.js.html#l3"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3</code></a>
         </div>
     
 
@@ -458,6 +450,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_getHTML">getHTML</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_getId">getId</a>
 
                                 
@@ -466,13 +465,6 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item method">
                                 <a href="#method_getInlineStyle">getInlineStyle</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_getInnerHTML">getInnerHTML</a>
 
                                 
                                 
@@ -578,6 +570,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item method">
                                 <a href="#method_insertAdjacentText">insertAdjacentText</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_insertBefore">insertBefore</a>
 
                                 
                                 
@@ -801,14 +800,14 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_setId">setId</a>
+                                <a href="#method_setHTML">setHTML</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_setInnerHTML">setInnerHTML</a>
+                                <a href="#method_setId">setId</a>
 
                                 
                                 
@@ -1219,7 +1218,156 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
                 <li class="arg">
                     
+                        <code class="optional">[escape]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
                         <code class="optional">[refElement]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_extend-element.js.html#l338"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:338</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Appends an Element or an Element&#39;s string-representation at the end of Element&#39;s innerHTML, or before the <code>refElement</code>.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">content</code>
+                        <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a> | <a href="../classes/ElementArray.html" class="crosslink">ElementArray</a> | <a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>content to append</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[escape]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>whether to insert <code>escaped</code> content, leading it into only text inserted</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[refElement]</code>
+                        <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>reference Element where the content should be appended</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a></span>:
+                    
+                    <p>the created Element (or the last when multiple)</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_appendChild" class="method item">
+    <h3 class="name"><code>appendChild</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>content</code>
                     
                 </li>
             
@@ -1262,7 +1410,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l284"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:284</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l384"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:384</code></a>
         
         </p>
 
@@ -1270,12 +1418,10 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
         
 
         
-            <p>Available since 0.0.1</p>
-        
     </div>
 
     <div class="description">
-        <p>Appends an Element or an Element&#39;s string-representation at the end of Element&#39;s innerHTML, or before the <code>refElement</code>.</p>
+        <p>Adds a node to the end of the list of childNodes of a specified parent node.</p>
 
     </div>
 
@@ -1303,23 +1449,6 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
                 <li class="param">
                     
-                        <code class="param-name optional">[refElement]</code>
-                        <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a></span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>reference Element where the content should be appended</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
                         <code class="param-name optional">[escape]</code>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
                         <span class="flag optional" title="This parameter is optional.">optional</span>
@@ -1329,113 +1458,6 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
 
                     <div class="param-description">
                         <p>whether to insert <code>escaped</code> content, leading it into only text inserted</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a></span>:
-                    
-                    <p>the created Element (or the last when multiple)</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_appendChild" class="method item">
-    <h3 class="name"><code>appendChild</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>element</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1896"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1896</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Adds a node to the end of the list of children of a specified parent node.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">element</code>
-                        <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>content to append</p>
 
                     </div>
 
@@ -1512,7 +1534,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l330"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:330</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l397"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:397</code></a>
         
         </p>
 
@@ -1622,7 +1644,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l355"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:355</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l440"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:440</code></a>
         
         </p>
 
@@ -1636,11 +1658,11 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
         <p>Compares the position of the current node against another node in any other document.</p>
 <p>Returnvalues are a composition of the following bitwise values:</p>
 <ul>
-    <li>Node.DOCUMENT_POSITION_DISCONNECTED  (one of the Elements is not part of the dom)</li>
-    <li>Node.DOCUMENT_POSITION_PRECEDING  (this Element comes before otherElement)</li>
-    <li>Node.DOCUMENT_POSITION_FOLLOWING  (this Element comes after otherElement)</li>
-    <li>Node.DOCUMENT_POSITION_CONTAINS  (otherElement trully contains -not equals- this Element)</li>
-    <li>Node.DOCUMENT_POSITION_CONTAINED_BY  (Element trully contains -not equals- otherElement)</li>
+    <li>Node.DOCUMENT_POSITION_DISCONNECTED === 1 (one of the Elements is not part of the dom)</li>
+    <li>Node.DOCUMENT_POSITION_PRECEDING === 2 (this Element comes before otherElement)</li>
+    <li>Node.DOCUMENT_POSITION_FOLLOWING === 4 (this Element comes after otherElement)</li>
+    <li>Node.DOCUMENT_POSITION_CONTAINS === 8 (otherElement trully contains -not equals- this Element)</li>
+    <li>Node.DOCUMENT_POSITION_CONTAINED_BY === 16 (Element trully contains -not equals- otherElement)</li>
 </ul>
     </div>
 
@@ -1735,7 +1757,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l398"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:398</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l484"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:484</code></a>
         
         </p>
 
@@ -1847,7 +1869,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1935"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1935</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2189"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2189</code></a>
         
         </p>
 
@@ -1990,7 +2012,7 @@ You can use or sum one of the next properties:</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l412"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:412</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l498"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:498</code></a>
         
         </p>
 
@@ -2043,9 +2065,29 @@ You can use or sum one of the next properties:</p>
                         <p>Filter specification constants from the NodeFilter DOM interface, indicating which nodes to iterate over.
 You can use or sum one of the next properties:</p>
 <ul>
-  <li>window.NodeFilter.SHOW_ELEMENT</li>
-  <li>window.NodeFilter.SHOW_COMMENT</li>
-  <li>window.NodeFilter.SHOW_TEXT</li>
+  <li>window.NodeFilter.SHOW_ALL === -1</li>
+  <li>window.NodeFilter.SHOW_ELEMENT === 1</li>
+  <li>window.NodeFilter.SHOW_COMMENT === 128</li>
+  <li>window.NodeFilter.SHOW_TEXT === 4</li>
+</ul>
+
+<p>A treewalker has the next methods:</p>
+<ul>
+  <li>treewalker.firstChild()</li>
+  <li>treewalker.lastChild()</li>
+  <li>treewalker.nextNode()</li>
+  <li>treewalker.nextSibling()</li>
+  <li>treewalker.parentNode()</li>
+  <li>treewalker.previousNode()</li>
+  <li>treewalker.previousSibling()</li>
+</ul>
+
+<p>A treewalker has the next properties:</p>
+<ul>
+  <li>treewalker.currentNode</li>
+  <li>treewalker.filter</li>
+  <li>treewalker.root</li>
+  <li>treewalker.whatToShow</li>
 </ul>
                     </div>
 
@@ -2135,7 +2177,7 @@ You can use or sum one of the next properties:</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l436"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:436</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l543"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:543</code></a>
         
         </p>
 
@@ -2220,7 +2262,7 @@ Making the Element&#39;s inline-style look like: style=&quot;value&quot;.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l451"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:451</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l558"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:558</code></a>
         
         </p>
 
@@ -2292,7 +2334,7 @@ Alias for thisNode.vTextContent = &#39;&#39;;</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l463"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:463</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l570"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:570</code></a>
         
         </p>
 
@@ -2400,7 +2442,7 @@ Alias for thisNode.vTextContent = &#39;&#39;;</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l475"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:475</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l582"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:582</code></a>
         
         </p>
 
@@ -2506,7 +2548,7 @@ Alias for thisNode.vTextContent = &#39;&#39;;</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l487"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:487</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l595"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:595</code></a>
         
         </p>
 
@@ -2608,7 +2650,7 @@ Alias for thisNode.vTextContent = &#39;&#39;;</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l548"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:548</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l658"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:658</code></a>
         
         </p>
 
@@ -2789,7 +2831,7 @@ that <code>forceIntoView()</code> doesn&#39;t change the position when it&#39;s 
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l607"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:607</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l717"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:717</code></a>
         
         </p>
 
@@ -2898,7 +2940,7 @@ that <code>forceIntoView()</code> doesn&#39;t change the position when it&#39;s 
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l619"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:619</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l729"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:729</code></a>
         
         </p>
 
@@ -3007,7 +3049,7 @@ that <code>forceIntoView()</code> doesn&#39;t change the position when it&#39;s 
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l645"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:645</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l755"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:755</code></a>
         
         </p>
 
@@ -3106,7 +3148,7 @@ that <code>forceIntoView()</code> doesn&#39;t change the position when it&#39;s 
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1904"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1904</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2158"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2158</code></a>
         
         </p>
 
@@ -3187,7 +3229,7 @@ that <code>forceIntoView()</code> doesn&#39;t change the position when it&#39;s 
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l633"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:633</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l743"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:743</code></a>
         
         </p>
 
@@ -3285,7 +3327,7 @@ that <code>forceIntoView()</code> doesn&#39;t change the position when it&#39;s 
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1911"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1911</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2165"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2165</code></a>
         
         </p>
 
@@ -3378,7 +3420,7 @@ describing the border-box in pixels. top and left are relative to the top-left o
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l804"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:804</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l921"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:921</code></a>
         
         </p>
 
@@ -3498,7 +3540,7 @@ Note3: no need to camelCase cssProperty: both <code>margin-left</code> as well a
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l660"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:660</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l770"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:770</code></a>
         
         </p>
 
@@ -3571,7 +3613,7 @@ Note3: no need to camelCase cssProperty: both <code>margin-left</code> as well a
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l671"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:671</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l788"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:788</code></a>
         
         </p>
 
@@ -3645,7 +3687,7 @@ See: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList">htt
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1923"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1923</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2177"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2177</code></a>
         
         </p>
 
@@ -3730,7 +3772,7 @@ the caption is included even though it&#39;s outside the border box of the table
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l689"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:689</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l806"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:806</code></a>
         
         </p>
 
@@ -3840,7 +3882,7 @@ The data is efficiently stored on the vnode.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l703"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:703</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l820"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:820</code></a>
         
         </p>
 
@@ -3950,7 +3992,7 @@ you need to prepend the id-name with a <code>#</code>. When multiple Element&#39
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l716"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:716</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l833"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:833</code></a>
         
         </p>
 
@@ -4055,7 +4097,7 @@ you need to prepend the id-name with a <code>#</code>. When multiple Element&#39
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1953"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1953</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2207"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2207</code></a>
         
         </p>
 
@@ -4165,7 +4207,7 @@ To match multiple different classes, separate them with a <code>comma</code>.</p
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1966"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1966</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2220"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2220</code></a>
         
         </p>
 
@@ -4274,7 +4316,7 @@ To match multiple different classes, separate them with a <code>comma</code>.</p
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1979"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1979</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2233"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2233</code></a>
         
         </p>
 
@@ -4337,6 +4379,81 @@ To match multiple different classes, separate them with a <code>comma</code>.</p
 </div>
 
                 
+                    <div id="method_getHTML" class="method item">
+    <h3 class="name"><code>getHTML</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_extend-element.js.html#l850"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:850</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Gets innerHTML of the dom-node.
+Goes through the vdom, so it&#39;s superfast.</p>
+<p>Use this method instead of <code>innerHTML</code></p>
+
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_getId" class="method item">
     <h3 class="name"><code>getId</code></h3>
 
@@ -4373,7 +4490,7 @@ To match multiple different classes, separate them with a <code>comma</code>.</p
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l733"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:733</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l864"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:864</code></a>
         
         </p>
 
@@ -4464,7 +4581,7 @@ To match multiple different classes, separate them with a <code>comma</code>.</p
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l744"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:744</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l875"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:875</code></a>
         
         </p>
 
@@ -4548,81 +4665,6 @@ an appearance because of other CSS-rules.</p>
 </div>
 
                 
-                    <div id="method_getInnerHTML" class="method item">
-    <h3 class="name"><code>getInnerHTML</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_vdom_lib_extend-element.js.html#l765"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:765</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Gets innerHTML of the dom-node.
-Goes through the vdom, so it&#39;s superfast.</p>
-<p>Use this method instead of <code>innerHTML</code></p>
-
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>:
-                    
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
                     <div id="method_getOuterHTML" class="method item">
     <h3 class="name"><code>getOuterHTML</code></h3>
 
@@ -4659,7 +4701,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l779"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:779</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l896"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:896</code></a>
         
         </p>
 
@@ -4734,7 +4776,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l793"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:793</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l910"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:910</code></a>
         
         </p>
 
@@ -4805,7 +4847,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l822"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:822</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l939"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:939</code></a>
         
         </p>
 
@@ -4878,7 +4920,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l833"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:833</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l950"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:950</code></a>
         
         </p>
 
@@ -4953,7 +4995,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l847"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:847</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l964"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:964</code></a>
         
         </p>
 
@@ -5041,7 +5083,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l870"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:870</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l987"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:987</code></a>
         
         </p>
 
@@ -5150,7 +5192,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l884"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:884</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1001"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1001</code></a>
         
         </p>
 
@@ -5249,7 +5291,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l898"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:898</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1015"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1015</code></a>
         
         </p>
 
@@ -5322,7 +5364,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l908"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:908</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1026"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1026</code></a>
         
         </p>
 
@@ -5407,7 +5449,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l919"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:919</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1037"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1037</code></a>
         
         </p>
 
@@ -5516,7 +5558,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l931"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:931</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1049"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1049</code></a>
         
         </p>
 
@@ -5613,7 +5655,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l944"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:944</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1062"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1062</code></a>
         
         </p>
 
@@ -5698,7 +5740,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1991"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1991</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2245"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2245</code></a>
         
         </p>
 
@@ -5812,7 +5854,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2005"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2005</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2259"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2259</code></a>
         
         </p>
 
@@ -5926,7 +5968,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2019"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2019</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2273"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2273</code></a>
         
         </p>
 
@@ -6044,7 +6086,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2033"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2033</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2287"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2287</code></a>
         
         </p>
 
@@ -6121,8 +6163,8 @@ Goes through the vdom, so it&#39;s superfast.</p>
 </div>
 
                 
-                    <div id="method_inside" class="method item">
-    <h3 class="name"><code>inside</code></h3>
+                    <div id="method_insertBefore" class="method item">
+    <h3 class="name"><code>insertBefore</code></h3>
 
     
         <div class="args">
@@ -6130,7 +6172,19 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
                 <li class="arg">
                     
-                        <code>selector</code>
+                        <code>domNode</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>refDomNode</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[escape]</code>
                     
                 </li>
             
@@ -6140,7 +6194,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
 
     
         <span class="returns-inline">
-            <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a> | Null</span>
+            <span class="type"><a href="../classes/Node.html" class="crosslink">Node</a></span>
         </span>
     
 
@@ -6167,7 +6221,147 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l955"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:955</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1121"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1121</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Inserts <code>domNode</code> before <code>refDomNode</code>.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">domNode</code>
+                        <span class="type"><a href="../classes/Node.html" class="crosslink">Node</a> | <a href="../classes/Element.html" class="crosslink">Element</a> | <a href="../classes/ElementArray.html" class="crosslink">ElementArray</a> | <a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>content to insert</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">refDomNode</code>
+                        <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The Element before which newElement is inserted.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[escape]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>whether to insert <code>escaped</code> content, leading it into only text inserted</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Node.html" class="crosslink">Node</a></span>:
+                    
+                    <p>the Element being inserted (equals domNode)</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_inside" class="method item">
+    <h3 class="name"><code>inside</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>selector</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a> | False</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1073"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1073</code></a>
         
         </p>
 
@@ -6217,9 +6411,9 @@ Goes through the vdom, so it&#39;s superfast.</p>
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a> | Null</span>:
+                        <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a> | False</span>:
                     
-                    <p>the nearest Element that matches the selector, or <code>null</code> when not found</p>
+                    <p>the nearest Element that matches the selector, or <code>false</code> when not found</p>
 
                 
             </div>
@@ -6292,7 +6486,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l985"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:985</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1103"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1103</code></a>
         
         </p>
 
@@ -6417,7 +6611,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1003"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1003</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1135"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1135</code></a>
         
         </p>
 
@@ -6525,7 +6719,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1016"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1016</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1148"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1148</code></a>
         
         </p>
 
@@ -6633,7 +6827,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1028"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1028</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1161"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1161</code></a>
         
         </p>
 
@@ -6742,7 +6936,7 @@ Alias for matchesSelector()</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1041"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1041</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1174"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1174</code></a>
         
         </p>
 
@@ -6851,7 +7045,7 @@ Alias for matches()</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1054"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1054</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1187"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1187</code></a>
         
         </p>
 
@@ -6928,13 +7122,13 @@ Alias for matches()</p>
             
                 <li class="arg">
                     
-                        <code class="optional">[refElement]</code>
+                        <code class="optional">[escape]</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code class="optional">[escape]</code>
+                        <code class="optional">[refElement]</code>
                     
                 </li>
             
@@ -6971,7 +7165,7 @@ Alias for matches()</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1078"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1078</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1222"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1222</code></a>
         
         </p>
 
@@ -7012,23 +7206,6 @@ Alias for matches()</p>
             
                 <li class="param">
                     
-                        <code class="param-name optional">[refElement]</code>
-                        <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a></span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>reference Element where the content should be prepended</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
                         <code class="param-name optional">[escape]</code>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
                         <span class="flag optional" title="This parameter is optional.">optional</span>
@@ -7038,6 +7215,23 @@ Alias for matches()</p>
 
                     <div class="param-description">
                         <p>whether to insert <code>escaped</code> content, leading it into only text inserted</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[refElement]</code>
+                        <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>reference Element where the content should be prepended</p>
 
                     </div>
 
@@ -7114,7 +7308,7 @@ Alias for matches()</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1123"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1123</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1272"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1272</code></a>
         
         </p>
 
@@ -7222,7 +7416,7 @@ Alias for matches()</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1146"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1146</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1307"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1307</code></a>
         
         </p>
 
@@ -7328,7 +7522,7 @@ they need to be separated by a <code>comma</code>.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1170"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1170</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1340"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1340</code></a>
         
         </p>
 
@@ -7437,7 +7631,7 @@ they need to be separated by a <code>comma</code>.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1196"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1196</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1375"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1375</code></a>
         
         </p>
 
@@ -7450,7 +7644,7 @@ they need to be separated by a <code>comma</code>.</p>
     </div>
 
     <div class="description">
-        <p>Checks whether the Element has its rectangle inside the outboud-Element.
+        <p>Checks whether the Element has its rectangle inside the outbound-Element.
 This is no check of the DOM-tree, but purely based upon coordinates.</p>
 
     </div>
@@ -7533,7 +7727,7 @@ This is no check of the DOM-tree, but purely based upon coordinates.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1215"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1215</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1394"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1394</code></a>
         
         </p>
 
@@ -7587,6 +7781,8 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -7601,7 +7797,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1244"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1244</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1406"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1406</code></a>
         
         </p>
 
@@ -7615,7 +7811,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
 
     <div class="description">
         <p>Removes the attribute from the Element.</p>
-<p>Use removeAttr() to be able to chain.</p>
+<p>Alias for removeAttribute() BUT is chainable instead (removeAttribute is not).</p>
 
     </div>
 
@@ -7678,8 +7874,6 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
     
 
     
-        <span class="flag chainable">chainable</span>
-    
 
     
 
@@ -7694,7 +7888,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1229"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1229</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1421"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1421</code></a>
         
         </p>
 
@@ -7708,7 +7902,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
 
     <div class="description">
         <p>Removes the attribute from the Element.</p>
-<p>Alias for removeAttribute() BUT is chainable instead (removeAttribute is not).</p>
+<p>Use removeAttr() to be able to chain.</p>
 
     </div>
 
@@ -7785,7 +7979,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2042"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2042</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2296"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2296</code></a>
         
         </p>
 
@@ -7842,7 +8036,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
             
                 <li class="arg">
                     
-                        <code>childVElement</code>
+                        <code>domNode</code>
                     
                 </li>
             
@@ -7875,7 +8069,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2050"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2050</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1435"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1435</code></a>
         
         </p>
 
@@ -7883,12 +8077,10 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
         
 
         
-            <p>Available since 0.0.1</p>
-        
     </div>
 
     <div class="description">
-        <p>Removes the Element&#39;s child-Element from the DOM.</p>
+        <p>Removes the Element&#39;s child-Node from the DOM.</p>
 
     </div>
 
@@ -7900,14 +8092,14 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
             
                 <li class="param">
                     
-                        <code class="param-name">childVElement</code>
-                        <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a></span>
+                        <code class="param-name">domNode</code>
+                        <span class="type"><a href="../classes/Node.html" class="crosslink">Node</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>the child-Element to remove</p>
+                        <p>the child-Node to remove</p>
 
                     </div>
 
@@ -7968,7 +8160,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1265"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1265</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1446"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1446</code></a>
         
         </p>
 
@@ -8061,7 +8253,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1279"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1279</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1460"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1460</code></a>
         
         </p>
 
@@ -8161,7 +8353,7 @@ When no arguments are passed, all node-data (key-value pairs) will be removed.</
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1306"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1306</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1487"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1487</code></a>
         
         </p>
 
@@ -8280,7 +8472,7 @@ No need to use camelCase.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1332"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1332</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1513"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1513</code></a>
         
         </p>
 
@@ -8379,6 +8571,12 @@ No need to use camelCase.</p>
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code class="optional">[escape]</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -8412,7 +8610,7 @@ No need to use camelCase.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2058"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2058</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1534"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1534</code></a>
         
         </p>
 
@@ -8461,6 +8659,23 @@ No need to use camelCase.</p>
 
                     <div class="param-description">
                         <p>the Element to be replaced</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[escape]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>whether to insert <code>escaped</code> content, leading it into only text inserted</p>
 
                     </div>
 
@@ -8547,7 +8762,7 @@ No need to use camelCase.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1350"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1350</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1549"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1549</code></a>
         
         </p>
 
@@ -8661,7 +8876,7 @@ If the previous className is not available, the new className is set nevertheles
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2068"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2068</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2304"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2304</code></a>
         
         </p>
 
@@ -8734,7 +8949,7 @@ If the previous className is not available, the new className is set nevertheles
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1369"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1369</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1568"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1568</code></a>
         
         </p>
 
@@ -8850,7 +9065,7 @@ Only available when the Element has overflow.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1386"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1386</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1585"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1585</code></a>
         
         </p>
 
@@ -8963,7 +9178,7 @@ Only available when the Element has overflow.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1403"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1403</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1602"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1602</code></a>
         
         </p>
 
@@ -9003,13 +9218,13 @@ Only available when the Element has overflow.</p>
                 <li class="param">
                     
                         <code class="param-name">value</code>
-                        <span class="type">Any</span>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>the value that belongs to <code>key</code></p>
+                        <p>the value for the attributeName</p>
 
                     </div>
 
@@ -9068,7 +9283,7 @@ Only available when the Element has overflow.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2074"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2074</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2310"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2310</code></a>
         
         </p>
 
@@ -9158,7 +9373,7 @@ Only available when the Element has overflow.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1429"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1429</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1619"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1619</code></a>
         
         </p>
 
@@ -9257,7 +9472,7 @@ Only available when the Element has overflow.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1443"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1443</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1633"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1633</code></a>
         
         </p>
 
@@ -9323,6 +9538,102 @@ it is just a way to bind any data to the specific Element so it can be retrieved
 </div>
 
                 
+                    <div id="method_setHTML" class="method item">
+    <h3 class="name"><code>setHTML</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>val</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1655"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1655</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Sets the innerHTML of both the vnode as well as the representing dom-node.
+Goes through the vdom, so it&#39;s superfast.</p>
+<p>Use this method instead of <code>innerHTML</code></p>
+<p>Syncs with the DOM.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">val</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the new value to be set</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_setId" class="method item">
     <h3 class="name"><code>setId</code></h3>
 
@@ -9367,7 +9678,7 @@ it is just a way to bind any data to the specific Element so it can be retrieved
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1465"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1465</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1673"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1673</code></a>
         
         </p>
 
@@ -9400,102 +9711,6 @@ it is just a way to bind any data to the specific Element so it can be retrieved
 
                     <div class="param-description">
                         <p>Elements new <code>id</code></p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_setInnerHTML" class="method item">
-    <h3 class="name"><code>setInnerHTML</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>val</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag chainable">chainable</span>
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1507"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1507</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Sets the innerHTML of both the vnode as well as the representing dom-node.
-Goes through the vdom, so it&#39;s superfast.</p>
-<p>Use this method instead of <code>innerHTML</code></p>
-<p>Syncs with the DOM.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">val</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the new value to be set</p>
 
                     </div>
 
@@ -9556,7 +9771,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1525"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1525</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1715"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1715</code></a>
         
         </p>
 
@@ -9664,7 +9879,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1477"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1477</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1685"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1685</code></a>
         
         </p>
 
@@ -9791,7 +10006,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1543"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1543</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1733"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1733</code></a>
         
         </p>
 
@@ -9887,7 +10102,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1561"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1561</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1751"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1751</code></a>
         
         </p>
 
@@ -10006,7 +10221,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1601"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1601</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1806"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1806</code></a>
         
         </p>
 
@@ -10164,7 +10379,7 @@ The element must be part of the DOM tree to have page coordinates (display:none 
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1742"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1742</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1976"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1976</code></a>
         
         </p>
 
@@ -10260,7 +10475,7 @@ The element must be part of the DOM tree to have page coordinates (display:none 
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2098"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2098</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2334"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2334</code></a>
         
         </p>
 
@@ -10306,7 +10521,7 @@ Note: The way of accessing the shortcut key is varying in different browsers: <a
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2107"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2107</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2343"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2343</code></a>
         
         </p>
 
@@ -10354,7 +10569,7 @@ To be more specific, attributes is a key/value pair of strings that represents a
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2118"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2118</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2354"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2354</code></a>
         
         </p>
 
@@ -10399,7 +10614,7 @@ To be more specific, attributes is a key/value pair of strings that represents a
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2126"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2126</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2362"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2362</code></a>
         
         </p>
 
@@ -10423,7 +10638,7 @@ To be more specific, attributes is a key/value pair of strings that represents a
                 
                     <div id="property_childNodes" class="property item">
     <h3 class="name"><code>childNodes</code></h3>
-    <span class="type"><a href="../classes/NodeList.html" class="crosslink">NodeList</a></span>
+    <span class="type">NodeList</span>
 
     
 
@@ -10444,7 +10659,7 @@ To be more specific, attributes is a key/value pair of strings that represents a
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2134"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2134</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2370"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2370</code></a>
         
         </p>
 
@@ -10468,7 +10683,7 @@ To be more specific, attributes is a key/value pair of strings that represents a
                 
                     <div id="property_children" class="property item">
     <h3 class="name"><code>children</code></h3>
-    <span class="type"><a href="../classes/NodeList.html" class="crosslink">NodeList</a></span>
+    <span class="type">NodeList</span>
 
     
 
@@ -10489,7 +10704,7 @@ To be more specific, attributes is a key/value pair of strings that represents a
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2142"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2142</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2378"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2378</code></a>
         
         </p>
 
@@ -10534,7 +10749,7 @@ To be more specific, attributes is a key/value pair of strings that represents a
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2150"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2150</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2386"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2386</code></a>
         
         </p>
 
@@ -10579,7 +10794,7 @@ To be more specific, attributes is a key/value pair of strings that represents a
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2157"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2157</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2393"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2393</code></a>
         
         </p>
 
@@ -10624,7 +10839,7 @@ To be more specific, attributes is a key/value pair of strings that represents a
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2165"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2165</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2401"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2401</code></a>
         
         </p>
 
@@ -10670,7 +10885,7 @@ and if there is an overflow causing a left vertical scrollbar to be rendered. cl
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2174"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2174</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2410"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2410</code></a>
         
         </p>
 
@@ -10715,7 +10930,7 @@ and if there is an overflow causing a left vertical scrollbar to be rendered. cl
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2182"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2182</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2418"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2418</code></a>
         
         </p>
 
@@ -10762,7 +10977,7 @@ and if there is an overflow causing a left vertical scrollbar to be rendered. cl
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2190"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2190</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2426"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2426</code></a>
         
         </p>
 
@@ -10808,7 +11023,7 @@ and if there is an overflow causing a left vertical scrollbar to be rendered. cl
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2201"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2201</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2437"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2437</code></a>
         
         </p>
 
@@ -10853,7 +11068,7 @@ and if there is an overflow causing a left vertical scrollbar to be rendered. cl
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1759"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1759</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1993"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1993</code></a>
         
         </p>
 
@@ -10903,7 +11118,7 @@ By setting the argument <code>overflow</code> you get the total height, included
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2209"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2209</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2445"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2445</code></a>
         
         </p>
 
@@ -10948,7 +11163,7 @@ By setting the argument <code>overflow</code> you get the total height, included
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2216"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2216</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2452"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2452</code></a>
         
         </p>
 
@@ -10995,7 +11210,7 @@ By setting the argument <code>overflow</code> you get the total height, included
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2223"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2223</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2459"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2459</code></a>
         
         </p>
 
@@ -11041,7 +11256,7 @@ By setting the argument <code>overflow</code> you get the total height, included
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2234"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2234</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2470"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2470</code></a>
         
         </p>
 
@@ -11086,7 +11301,7 @@ By setting the argument <code>overflow</code> you get the total height, included
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1786"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1786</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2020"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2020</code></a>
         
         </p>
 
@@ -11134,7 +11349,7 @@ DOCUMENT-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2242"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2242</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2478"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2478</code></a>
         
         </p>
 
@@ -11180,7 +11395,7 @@ DOCUMENT-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2250"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2250</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2486"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2486</code></a>
         
         </p>
 
@@ -11228,7 +11443,7 @@ Is an Element (nodeType===1).</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2259"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2259</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2495"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2495</code></a>
         
         </p>
 
@@ -11275,7 +11490,7 @@ Is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2271"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2271</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2507"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2507</code></a>
         
         </p>
 
@@ -11320,7 +11535,7 @@ Is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2279"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2279</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2515"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2515</code></a>
         
         </p>
 
@@ -11365,7 +11580,7 @@ Is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2287"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2287</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2523"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2523</code></a>
         
         </p>
 
@@ -11412,7 +11627,7 @@ Is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2309"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2309</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2545"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2545</code></a>
         
         </p>
 
@@ -11462,7 +11677,7 @@ Included borders and padding (no margin).</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2295"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2295</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2531"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2531</code></a>
         
         </p>
 
@@ -11512,7 +11727,7 @@ Included borders and padding (no margin).</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2322"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2322</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2558"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2558</code></a>
         
         </p>
 
@@ -11558,7 +11773,7 @@ Included borders and padding (no margin).</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2331"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2331</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2567"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2567</code></a>
         
         </p>
 
@@ -11604,7 +11819,7 @@ Included borders and padding (no margin).</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2340"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2340</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2576"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2576</code></a>
         
         </p>
 
@@ -11652,7 +11867,7 @@ Is an Element (nodeType===1).</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2349"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2349</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2585"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2585</code></a>
         
         </p>
 
@@ -11699,7 +11914,7 @@ Is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2362"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2362</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2598"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2598</code></a>
         
         </p>
 
@@ -11747,7 +11962,7 @@ without using a vertical scrollbar. It includes the element padding but not its 
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2374"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2374</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2610"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2610</code></a>
         
         </p>
 
@@ -11792,7 +12007,7 @@ without using a vertical scrollbar. It includes the element padding but not its 
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2381"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2381</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2617"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2617</code></a>
         
         </p>
 
@@ -11839,7 +12054,7 @@ then its scrollTop value defaults to 0.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2390"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2390</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2626"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2626</code></a>
         
         </p>
 
@@ -11887,7 +12102,7 @@ the scrollWidth is larger than the clientWidth.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2402"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2402</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2638"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2638</code></a>
         
         </p>
 
@@ -11932,7 +12147,7 @@ the scrollWidth is larger than the clientWidth.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2409"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2409</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2645"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2645</code></a>
         
         </p>
 
@@ -11977,7 +12192,7 @@ the scrollWidth is larger than the clientWidth.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1802"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1802</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2036"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2036</code></a>
         
         </p>
 
@@ -12025,7 +12240,7 @@ DOCUMENT-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2416"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2416</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2652"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2652</code></a>
         
         </p>
 
@@ -12070,7 +12285,7 @@ DOCUMENT-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2423"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2423</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2659"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2659</code></a>
         
         </p>
 
@@ -12118,7 +12333,7 @@ DOCUMENT-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1818"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1818</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2052"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2052</code></a>
         
         </p>
 
@@ -12178,7 +12393,7 @@ By setting the argument <code>overflow</code> you get the total width, included 
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2083"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2083</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2319"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2319</code></a>
         
         </p>
 
@@ -12222,7 +12437,7 @@ By setting the argument <code>overflow</code> you get the total width, included 
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l2090"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:2090</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2326"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2326</code></a>
         
         </p>
 
@@ -12266,7 +12481,7 @@ By setting the argument <code>overflow</code> you get the total width, included 
             
         
         
-        <a href="../files/src_vdom_lib_extend-element.js.html#l1592"><code>src&#x2F;vdom&#x2F;lib&#x2F;extend-element.js:1592</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1797"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1797</code></a>
         
         </p>
 

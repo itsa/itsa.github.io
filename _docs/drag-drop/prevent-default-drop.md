@@ -119,7 +119,7 @@ Drag the items to the dropzones.
         'dd-drop',
         returnItem,
         function(e) {
-            return e.dropTarget && e.dropTarget.hasClass('.return');
+            return e.dropTarget && e.dropTarget.hasClass('return');
         }
     );
 
@@ -127,7 +127,7 @@ Drag the items to the dropzones.
         'dd-drop',
         absorbItem,
         function(e) {
-            return e.dropTarget && e.dropTarget.hasClass('.absorb');
+            return e.dropTarget && e.dropTarget.hasClass('absorb');
         }
     );
 </script>
@@ -162,7 +162,7 @@ Drag the items to the dropzones.
         'dd-drop',
         returnItem,
         function(e) {
-            return e.dropTarget && e.dropTarget.hasClass('.return');
+            return e.dropTarget && e.dropTarget.hasClass('return');
         }
     );
 
@@ -170,7 +170,7 @@ Drag the items to the dropzones.
         'dd-drop',
         absorbItem,
         function(e) {
-            return e.dropTarget && e.dropTarget.hasClass('.absorb');
+            return e.dropTarget && e.dropTarget.hasClass('absorb');
         }
     );
 </script>

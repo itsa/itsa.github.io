@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/vdom/lib/extend-element.js - Itsa</title>
+    <title>src/vdom/partials/extend-element.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -65,13 +65,11 @@
             
                 <li><a href="../classes/Node.html">Node</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
-            
-                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
-            
                 <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -83,19 +81,19 @@
             
                 <li><a href="../classes/window.html">window</a></li>
             
-                <li><a href="../classes/xElement.html">xElement</a></li>
-            
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
             
                 <li><a href="../modules/drag.html">drag</a></li>
             
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
             
                 <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -133,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -194,7 +186,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/vdom/lib/extend-element.js</h1>
+                        <h1 class="file-heading">File: src/vdom/partials/extend-element.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -222,14 +214,32 @@ require(&#x27;polyfill/lib/window.console.js&#x27;);
 require(&#x27;polyfill/lib/weakmap.js&#x27;);
 require(&#x27;polyfill/lib/mutationobserver.js&#x27;); // needs weakmap
 
-var ElementArray = require(&#x27;./element-array.js&#x27;);
 
 module.exports = function (window) {
 
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
+
+    if (window._ITSAmodules.ExtendElement) {
+        return; // ExtendElement was already created
+    }
+
+    // prevent double definition:
+    window._ITSAmodules.ExtendElement = true;
+
     var NAME = &#x27;[extend-element]: &#x27;,
+        ElementArray = require(&#x27;./element-array.js&#x27;)(window),
         domNodeToVNode = require(&#x27;./node-parser.js&#x27;)(window),
         htmlToVNodes = require(&#x27;./html-parser.js&#x27;)(window),
+        vNodeProto = require(&#x27;./vnode.js&#x27;)(window),
         NS = require(&#x27;./vdom-ns.js&#x27;)(window),
+        TRANSFORM_XY = require(&#x27;polyfill/extra/transform.js&#x27;)(window),
         DOCUMENT = window.document,
         nodeids = NS.nodeids,
         arrayIndexOf = Array.prototype.indexOf,
@@ -249,17 +259,47 @@ module.exports = function (window) {
         STRING = &#x27;string&#x27;,
         CLASS = &#x27;class&#x27;,
         STYLE = &#x27;style&#x27;,
+        OVERFLOW = &#x27;overflow&#x27;,
+        SCROLL = &#x27;scroll&#x27;,
         BORDER_LEFT_WIDTH = BORDER+&#x27;-left-&#x27;+WIDTH,
         BORDER_RIGHT_WIDTH = BORDER+&#x27;-right-&#x27;+WIDTH,
         BORDER_TOP_WIDTH = BORDER+&#x27;-top-&#x27;+WIDTH,
         BORDER_BOTTOM_WIDTH = BORDER+&#x27;-bottom-&#x27;+WIDTH,
         NUMBER = &#x27;number&#x27;,
         PX = &#x27;px&#x27;,
+        REGEXP_TRX = /translateX\((-?\d+)/,
+        REGEXP_TRY = /translateY\((-?\d+)/,
         setupObserver,
+        SIBLING_MATCH_CHARACTER = {
+            &#x27;+&#x27;: true,
+            &#x27;~&#x27;: true
+        },
         htmlToVFragments = function(html) {
+            var vnodes = htmlToVNodes(html, vNodeProto),
+                len = vnodes.length,
+                vnode, i, bkpAttrs, bkpVChildNodes;
+            for (i=0; i&lt;len; i++) {
+                vnode = vnodes[i];
+                if (vnode.nodeType===1) {
+                    // same tag --&gt; only update what is needed
+                    bkpAttrs = vnode.attrs;
+                    bkpVChildNodes = vnode.vChildNodes;
+
+                    // reset, to force creation of inner domNodes:
+                    vnode.attrs = {};
+                    vnode.vChildNodes = [];
+
+                    // next: sync the vnodes:
+                    vnode._setAttrs(bkpAttrs);
+                    vnode._setChildNodes(bkpVChildNodes);
+                }
+                else {
+                    vnode.domNode.nodeValue = vnode.text;
+                }
+            }
             return {
                 isFragment: true,
-                cVhildNodes: htmlToVNodes(html)
+                vnodes: vnodes
             };
         },
         toCamelCase = function(input) {
@@ -312,7 +352,12 @@ module.exports = function (window) {
                 // note: &#x60;this&#x60; is the returned object which is NOT the Elementinstance
                 var thisobject = this,
                     doToggle = function(cl) {
-                        (((typeof forceState === &#x27;boolean&#x27;) &amp;&amp; !forceState) || thisobject.contains(cl)) ? thisobject.remove(cl) : thisobject.add(cl);
+                        if (typeof forceState === &#x27;boolean&#x27;) {
+                            forceState ? thisobject.add(cl) : thisobject.remove(cl);
+                        }
+                        else {
+                            thisobject.contains(cl) ? thisobject.remove(cl) : thisobject.add(cl);
+                        }
                     };
                 if (typeof className === STRING) {
                     doToggle(className);
@@ -340,11 +385,13 @@ module.exports = function (window) {
                 var instance = this;
                 if (typeof filter !== &#x27;function&#x27;) {
                     // check if it is a NodeFilter-object
-                    filter.acceptNode &amp;&amp; (filter=filter.acceptNode);
+                    filter &amp;&amp; filter.acceptNode &amp;&amp; (filter=filter.acceptNode);
                 }
                 (typeof filter===&#x27;function&#x27;) || (filter=null);
-                instance.vNodePointer = element.vnode.vFirstChild;
+                instance.vNodePointer = element.vnode;
                 instance._root = element;
+                whatToShow || (whatToShow=-1); // -1 equals NodeFilter.SHOW_ALL
+                (whatToShow===-1) &amp;&amp; (whatToShow=133);
                 instance._whatToShow = whatToShow; // making it accessable for the getter &#x60;whatToShow&#x60;
                 instance._filter = filter; // making it accessable for the getter &#x60;filter&#x60;
             },
@@ -381,7 +428,7 @@ module.exports = function (window) {
                 var instance = this,
                     foundVNode = instance.vNodePointer.vNext;
                 while (foundVNode &amp;&amp; !instance._match(foundVNode, true)) {
-                    foundVNode = foundVNode.vNext();
+                    foundVNode = foundVNode.vNext;
                 }
                 foundVNode &amp;&amp; (instance.vNodePointer=foundVNode);
                 return foundVNode &amp;&amp; foundVNode.domNode;
@@ -390,7 +437,7 @@ module.exports = function (window) {
                 var instance = this,
                     foundVNode = instance.vNodePointer.vNext;
                 while (foundVNode &amp;&amp; !instance._match(foundVNode)) {
-                    foundVNode = foundVNode.vNext();
+                    foundVNode = foundVNode.vNext;
                 }
                 foundVNode &amp;&amp; (instance.vNodePointer=foundVNode);
                 return foundVNode &amp;&amp; foundVNode.domNode;
@@ -405,7 +452,7 @@ module.exports = function (window) {
                 var instance = this,
                     foundVNode = instance.vNodePointer.vPrevious;
                 while (foundVNode &amp;&amp; !instance._match(foundVNode, true)) {
-                    foundVNode = foundVNode.vPrevious();
+                    foundVNode = foundVNode.vPrevious;
                 }
                 foundVNode &amp;&amp; (instance.vNodePointer=foundVNode);
                 return foundVNode &amp;&amp; foundVNode.domNode;
@@ -414,14 +461,13 @@ module.exports = function (window) {
                 var instance = this,
                     foundVNode = instance.vNodePointer.vPrevious;
                 while (foundVNode &amp;&amp; !instance._match(foundVNode)) {
-                    foundVNode = foundVNode.vPrevious();
+                    foundVNode = foundVNode.vPrevious;
                 }
                 foundVNode &amp;&amp; (instance.vNodePointer=foundVNode);
                 return foundVNode &amp;&amp; foundVNode.domNode;
             }
         };
 
-    require(&#x27;./nodelist.js&#x27;)(window);
     require(&#x27;window-ext&#x27;)(window);
 
     Object.defineProperties(treeWalkerProto, {
@@ -487,34 +533,33 @@ module.exports = function (window) {
         * @for Element
         * @method append
         * @param content {Element|ElementArray|String} content to append
-        * @param [refElement] {Element} reference Element where the content should be appended
         * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
+        * @param [refElement] {Element} reference Element where the content should be appended
         * @return {Element} the created Element (or the last when multiple)
         * @since 0.0.1
         */
-        ElementPrototype.append = function(content, refElement, escape) {
+        ElementPrototype.append = function(content, escape, refElement) {
             var instance = this,
-                i, len, item, createdElement,
+                vnode = instance.vnode,
+                i, len, item, createdElement, vnodes, vRefElement,
             doAppend = function(oneItem) {
-                var vChildNodes, i, len, fragment;
-                if (escape) {
-                    if (oneItem.isFragment) {
-                        vChildNodes = oneItem.vChildNodes;
-                        len = vChildNodes.length;
-                        for (i=1; i&lt;len; i++) {
-                            fragment = vChildNodes[i];
-                            fragment.textContent = fragment.innerHTML;
-                        }
-                    }
-                    else {
-                        oneItem.vTextContent = oneItem.vInnerHTML;
-                    }
-                }
-                createdElement = refElement ? instance.insertBefore(oneItem, refElement) : instance.appendChild(oneItem);
+                escape &amp;&amp; (oneItem.nodeType===1) &amp;&amp; (oneItem=DOCUMENT.createTextNode(oneItem.getOuterHTML()));
+                createdElement = refElement ? vnode._insertBefore(oneItem.vnode, refElement.vnode) : vnode._appendChild(oneItem.vnode);
             };
-            refElement &amp;&amp; (instance.children.indexOf(refElement)!==-1) &amp;&amp; (refElement=refElement.next());
+            vnode._noSync()._normalizable(false);
+            if (refElement &amp;&amp; (vnode.vChildNodes.indexOf(refElement.vnode)!==-1)) {
+                vRefElement = refElement.vnode.vNext;
+                refElement = vRefElement &amp;&amp; vRefElement.domNode;
+            }
             (typeof content===STRING) &amp;&amp; (content=htmlToVFragments(content));
-            if (Array.isArray(content)) {
+            if (content.isFragment) {
+                vnodes = content.vnodes;
+                len = vnodes.length;
+                for (i=0; i&lt;len; i++) {
+                    doAppend(vnodes[i].domNode);
+                }
+            }
+            else if (Array.isArray(content)) {
                 len = content.length;
                 for (i=0; i&lt;len; i++) {
                     item = content[i];
@@ -524,7 +569,21 @@ module.exports = function (window) {
             else {
                 doAppend(content);
             }
+            vnode._normalizable(true)._normalize();
             return createdElement;
+        };
+
+        /**
+         * Adds a node to the end of the list of childNodes of a specified parent node.
+         *
+         * @method appendChild
+         * @param content {Element|ElementArray|String} content to append
+         * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
+         * @return {Element} the Element that was appended
+         */
+        ElementPrototype._appendChild = ElementPrototype.appendChild;
+        ElementPrototype.appendChild = function(domNode, escape) {
+            return this.append(domNode, escape);
         };
 
        /**
@@ -538,17 +597,35 @@ module.exports = function (window) {
         ElementPrototype._cloneNode = ElementPrototype.cloneNode;
         ElementPrototype.cloneNode = function(deep) {
             var instance = this,
-                cloned = instance._cloneNode(deep);
+                vnode = instance.vnode,
+                cloned = instance._cloneNode(deep),
+                cloneData = function(srcVNode, targetVNode) {
+                    if (srcVNode._data) {
+                        Object.defineProperty(targetVNode, &#x27;_data&#x27;, {
+                            configurable: false,
+                            enumerable: false,
+                            writable: false,
+                            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {}&#x27;s properties itself
+                        });
+                        targetVNode._data.merge(srcVNode._data);
+                    }
+                },
+                cloneDeepData = function(srcVNode, targetVNode) {
+                    var srcVChildren = srcVNode.vChildren,
+                        targetVChildren = targetVNode.vChildren,
+                        len = srcVChildren.length,
+                        i, childSrcVNode, childTargetVNode;
+                    for (i=0; i&lt;len; i++) {
+                        childSrcVNode = srcVChildren[i];
+                        childTargetVNode = targetVChildren[i];
+                        cloneData(childSrcVNode, childTargetVNode);
+                        childSrcVNode.hasVChildren() &amp;&amp; cloneDeepData(childSrcVNode, childTargetVNode);
+                    }
+                };
             cloned.vnode = domNodeToVNode(cloned);
-            if (instance.vnode._data) {
-                Object.defineProperty(cloned.vnode, &#x27;_data&#x27;, {
-                    configurable: false,
-                    enumerable: false,
-                    writable: false,
-                    value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {}&#x27;s properties itself
-                });
-                cloned.vnode._data.merge(instance.vnode._data);
-            }
+            cloneData(vnode, cloned.vnode);
+            // if deep, then we need to merge _data of all deeper nodes
+            deep &amp;&amp; vnode.hasVChildren() &amp;&amp; cloneDeepData(vnode, cloned.vnode);
             return cloned;
         };
 
@@ -557,11 +634,11 @@ module.exports = function (window) {
          *
          * Returnvalues are a composition of the following bitwise values:
          * &lt;ul&gt;
-         *     &lt;li&gt;Node.DOCUMENT_POSITION_DISCONNECTED  (one of the Elements is not part of the dom)&lt;/li&gt;
-         *     &lt;li&gt;Node.DOCUMENT_POSITION_PRECEDING  (this Element comes before otherElement)&lt;/li&gt;
-         *     &lt;li&gt;Node.DOCUMENT_POSITION_FOLLOWING  (this Element comes after otherElement)&lt;/li&gt;
-         *     &lt;li&gt;Node.DOCUMENT_POSITION_CONTAINS  (otherElement trully contains -not equals- this Element)&lt;/li&gt;
-         *     &lt;li&gt;Node.DOCUMENT_POSITION_CONTAINED_BY  (Element trully contains -not equals- otherElement)&lt;/li&gt;
+         *     &lt;li&gt;Node.DOCUMENT_POSITION_DISCONNECTED === 1 (one of the Elements is not part of the dom)&lt;/li&gt;
+         *     &lt;li&gt;Node.DOCUMENT_POSITION_PRECEDING === 2 (this Element comes before otherElement)&lt;/li&gt;
+         *     &lt;li&gt;Node.DOCUMENT_POSITION_FOLLOWING === 4 (this Element comes after otherElement)&lt;/li&gt;
+         *     &lt;li&gt;Node.DOCUMENT_POSITION_CONTAINS === 8 (otherElement trully contains -not equals- this Element)&lt;/li&gt;
+         *     &lt;li&gt;Node.DOCUMENT_POSITION_CONTAINED_BY === 16 (Element trully contains -not equals- otherElement)&lt;/li&gt;
          * &lt;/ul&gt;
          *
          * @method compareDocumentPosition
@@ -571,7 +648,7 @@ module.exports = function (window) {
         ElementPrototype.compareDocumentPosition = function(otherElement) {
             // see http://ejohn.org/blog/comparing-document-position/
             var instance = this,
-                parent, index1, index2;
+                parent, index1, index2, vChildNodes;
             if (instance===otherElement) {
                 return 0;
             }
@@ -585,13 +662,14 @@ module.exports = function (window) {
                 return 10;
             }
             parent = instance.getParent();
-            index1 = parent.vChildNodes.indexOf(instance.vnode);
-            index2 = parent.vChildNodes.indexOf(otherElement.vnode);
+            vChildNodes = parent.vnode.vChildNodes;
+            index1 = vChildNodes.indexOf(instance.vnode);
+            index2 = vChildNodes.indexOf(otherElement.vnode);
             if (index1&lt;index2) {
-                return 4;
+                return 2;
             }
             else {
-                return 2;
+                return 4;
             }
         };
 
@@ -619,10 +697,31 @@ module.exports = function (window) {
          * @param [whatToShow] {Number} Filter specification constants from the NodeFilter DOM interface, indicating which nodes to iterate over.
          * You can use or sum one of the next properties:
          * &lt;ul&gt;
-         *   &lt;li&gt;window.NodeFilter.SHOW_ELEMENT&lt;/li&gt;
-         *   &lt;li&gt;window.NodeFilter.SHOW_COMMENT&lt;/li&gt;
-         *   &lt;li&gt;window.NodeFilter.SHOW_TEXT&lt;/li&gt;
+         *   &lt;li&gt;window.NodeFilter.SHOW_ALL === -1&lt;/li&gt;
+         *   &lt;li&gt;window.NodeFilter.SHOW_ELEMENT === 1&lt;/li&gt;
+         *   &lt;li&gt;window.NodeFilter.SHOW_COMMENT === 128&lt;/li&gt;
+         *   &lt;li&gt;window.NodeFilter.SHOW_TEXT === 4&lt;/li&gt;
          * &lt;/ul&gt;
+         *
+         * A treewalker has the next methods:
+         * &lt;ul&gt;
+         *   &lt;li&gt;treewalker.firstChild()&lt;/li&gt;
+         *   &lt;li&gt;treewalker.lastChild()&lt;/li&gt;
+         *   &lt;li&gt;treewalker.nextNode()&lt;/li&gt;
+         *   &lt;li&gt;treewalker.nextSibling()&lt;/li&gt;
+         *   &lt;li&gt;treewalker.parentNode()&lt;/li&gt;
+         *   &lt;li&gt;treewalker.previousNode()&lt;/li&gt;
+         *   &lt;li&gt;treewalker.previousSibling()&lt;/li&gt;
+         * &lt;/ul&gt;
+         *
+         * A treewalker has the next properties:
+         * &lt;ul&gt;
+         *   &lt;li&gt;treewalker.currentNode&lt;/li&gt;
+         *   &lt;li&gt;treewalker.filter&lt;/li&gt;
+         *   &lt;li&gt;treewalker.root&lt;/li&gt;
+         *   &lt;li&gt;treewalker.whatToShow&lt;/li&gt;
+         * &lt;/ul&gt;
+         *
          * @param [filter] {NodeFilter|function} An object implementing the NodeFilter interface or a function. See https://developer.mozilla.org/en-US/docs/Web/API/NodeFilter
          * @return {TreeWalker}
          * @since 0.0.1
@@ -681,7 +780,8 @@ module.exports = function (window) {
          * @since 0.0.1
          */
         ElementPrototype.firstOfChildren = function(cssSelector) {
-            return this.vnode.firstOfVChildren(cssSelector).domNode;
+            var foundVNode = this.vnode.firstOfVChildren(cssSelector);
+            return foundVNode &amp;&amp; foundVNode.domNode;
         };
 
        /**
@@ -700,46 +800,48 @@ module.exports = function (window) {
                 parentOverflowNode = this.getParent(),
                 match, left, width, right, height, top, bottom, scrollLeft, scrollTop, parentOverflowNodeX, parentOverflowNodeY,
                 parentOverflowNodeStartTop, parentOverflowNodeStartLeft, parentOverflowNodeStopRight, parentOverflowNodeStopBottom, newX, newY;
-            if (ancestor) {
-                parentOverflowNode = ancestor;
-            }
-            else {
-                while ((parentOverflowNode!==DOCUMENT) &amp;&amp; !(match=(parentOverflowNode.getStyle(&#x27;overflow&#x27;)===&#x27;scroll&#x27;))) {
-                    parentOverflowNode = parentOverflowNode.getParent();
+            if (parentOverflowNode) {
+                if (ancestor) {
+                    parentOverflowNode = ancestor;
                 }
-            }
-            if (parentOverflowNode!==DOCUMENT) {
-                left = instance.left;
-                width = instance.offsetWidth;
-                right = left + width;
-                height = instance.offsetHeight;
-                top = instance.top;
-                bottom = top + height;
-                scrollLeft = parentOverflowNode.scrollLeft;
-                scrollTop = parentOverflowNode.scrollTop;
-                parentOverflowNodeX = parentOverflowNode.left;
-                parentOverflowNodeY = parentOverflowNode.top;
-                parentOverflowNodeStartTop = parentOverflowNodeY+parseInt(parentOverflowNode.getStyle(BORDER_TOP_WIDTH), 10);
-                parentOverflowNodeStartLeft = parentOverflowNodeX+parseInt(parentOverflowNode.getStyle(BORDER_LEFT_WIDTH), 10);
-                parentOverflowNodeStopRight = parentOverflowNodeX+parentOverflowNode.offsetWidth-parseInt(parentOverflowNode.getStyle(BORDER_RIGHT_WIDTH), 10);
-                parentOverflowNodeStopBottom = parentOverflowNodeY+parentOverflowNode.offsetHeight-parseInt(parentOverflowNode.getStyle(BORDER_BOTTOM_WIDTH), 10);
+                else {
+                    while (parentOverflowNode &amp;&amp; (parentOverflowNode!==DOCUMENT) &amp;&amp; !(match=((parentOverflowNode.getStyle(OVERFLOW)===SCROLL) || (parentOverflowNode.getStyle(OVERFLOW+&#x27;-y&#x27;)===SCROLL)))) {
+                        parentOverflowNode = parentOverflowNode.getParent();
+                    }
+                }
+                if (parentOverflowNode &amp;&amp; (parentOverflowNode!==DOCUMENT)) {
+                    left = instance.left;
+                    width = instance.offsetWidth;
+                    right = left + width;
+                    height = instance.offsetHeight;
+                    top = instance.top;
+                    bottom = top + height;
+                    scrollLeft = parentOverflowNode.scrollLeft;
+                    scrollTop = parentOverflowNode.scrollTop;
+                    parentOverflowNodeX = parentOverflowNode.left;
+                    parentOverflowNodeY = parentOverflowNode.top;
+                    parentOverflowNodeStartTop = parentOverflowNodeY+parseInt(parentOverflowNode.getStyle(BORDER_TOP_WIDTH), 10);
+                    parentOverflowNodeStartLeft = parentOverflowNodeX+parseInt(parentOverflowNode.getStyle(BORDER_LEFT_WIDTH), 10);
+                    parentOverflowNodeStopRight = parentOverflowNodeX+parentOverflowNode.offsetWidth-parseInt(parentOverflowNode.getStyle(BORDER_RIGHT_WIDTH), 10);
+                    parentOverflowNodeStopBottom = parentOverflowNodeY+parentOverflowNode.offsetHeight-parseInt(parentOverflowNode.getStyle(BORDER_BOTTOM_WIDTH), 10);
 
-                if (left&lt;parentOverflowNodeStartLeft) {
-                    newX = Math.max(0, scrollLeft+left-parentOverflowNodeStartLeft);
-                }
-                else if (right&gt;parentOverflowNodeStopRight) {
-                    newX = scrollLeft + right - parentOverflowNodeStopRight;
-                }
+                    if (left&lt;parentOverflowNodeStartLeft) {
+                        newX = Math.max(0, scrollLeft+left-parentOverflowNodeStartLeft);
+                    }
+                    else if (right&gt;parentOverflowNodeStopRight) {
+                        newX = scrollLeft + right - parentOverflowNodeStopRight;
+                    }
 
-                if (top&lt;parentOverflowNodeStartTop) {
-                    newY = Math.max(0, scrollTop+top-parentOverflowNodeStartTop);
-                }
-                else if (bottom&gt;parentOverflowNodeStopBottom) {
-                    newY = scrollTop + bottom - parentOverflowNodeStopBottom;
-                }
+                    if (top&lt;parentOverflowNodeStartTop) {
+                        newY = Math.max(0, scrollTop+top-parentOverflowNodeStartTop);
+                    }
+                    else if (bottom&gt;parentOverflowNodeStopBottom) {
+                        newY = scrollTop + bottom - parentOverflowNodeStopBottom;
+                    }
 
-                if ((newX!==undefined) || (newY!==undefined)) {
-                    parentOverflowNode.scrollTo((newX!==undefined) ? newX : scrollLeft,(newY!==undefined) ? newY : scrollTop);
+                    if ((newX!==undefined) || (newY!==undefined)) {
+                        parentOverflowNode.scrollTo((newX!==undefined) ? newX : scrollLeft,(newY!==undefined) ? newY : scrollTop);
+                    }
                 }
             }
             return instance;
@@ -865,7 +967,14 @@ module.exports = function (window) {
          * @since 0.0.1
          */
         ElementPrototype.getChildren = function() {
-            return this.vnode.children;
+            var vChildren = this.vnode.vChildren,
+                len = vChildren.length,
+                children = ElementArray.createArray(),
+                i;
+            for (i=0; i&lt;len; i++) {
+                children[children.length] = vChildren[i].domNode;
+            }
+            return children;
         };
 
         /**
@@ -930,6 +1039,20 @@ module.exports = function (window) {
             return element || null;
         };
 
+        /**
+         * Gets innerHTML of the dom-node.
+         * Goes through the vdom, so it&#x27;s superfast.
+         *
+         * Use this method instead of &#x60;innerHTML&#x60;
+         *
+         * @method getHTML
+         * @return {String}
+         * @since 0.0.1
+         */
+        ElementPrototype.getHTML = function() {
+            return this.vnode.innerHTML;
+        };
+
        /**
         * Returns the Elments &#x60;id&#x60;
         *
@@ -960,20 +1083,6 @@ module.exports = function (window) {
             var styles = this.vnode.styles,
                 groupStyle = styles &amp;&amp; styles[pseudo || &#x27;element&#x27;];
             return groupStyle &amp;&amp; groupStyle[fromCamelCase(cssProperty)];
-        };
-
-        /**
-         * Gets innerHTML of the dom-node.
-         * Goes through the vdom, so it&#x27;s superfast.
-         *
-         * Use this method instead of &#x60;innerHTML&#x60;
-         *
-         * @method getInnerHTML
-         * @return {String}
-         * @since 0.0.1
-         */
-        ElementPrototype.getInnerHTML = function() {
-            return this.vnode.innerHTML;
         };
 
         /**
@@ -1102,7 +1211,8 @@ module.exports = function (window) {
          * @return {Boolean} Whether the current element has any attributes or not.
          */
         ElementPrototype.hasAttributes = function() {
-            return !!this.vnode.attrs &amp;&amp; (this.vnode.attrs.length &gt; 0);
+            var attrs = this.vnode.attrs;
+            return attrs ? (attrs.size() &gt; 0) : false;
         };
 
        /**
@@ -1163,7 +1273,7 @@ module.exports = function (window) {
          *
          * @method inside
          * @param selector {Element|String} the selector, specified by a Element or a css-selector
-         * @return {Element|null} the nearest Element that matches the selector, or &#x60;null&#x60; when not found
+         * @return {Element|false} the nearest Element that matches the selector, or &#x60;false&#x60; when not found
          * @since 0.0.1
          */
         ElementPrototype.inside = function(selector) {
@@ -1174,11 +1284,11 @@ module.exports = function (window) {
                 while (vParent &amp;&amp; !vParent.matchesSelector(selector)) {
                     vParent = vParent.vParent;
                 }
-                return vParent ? vParent.domNode : null;
+                return vParent ? vParent.domNode : false;
             }
             else {
                 // selector should be an Element
-                return ((selector!==instance) &amp;&amp; selector.contains(instance)) ? selector : null;
+                return ((selector!==instance) &amp;&amp; selector.contains(instance)) ? selector : false;
             }
         };
 
@@ -1198,6 +1308,20 @@ module.exports = function (window) {
                 right = left + instance.offsetWidth,
                 bottom = top + instance.offsetHeight;
             return (x&gt;=left) &amp;&amp; (x&lt;=right) &amp;&amp; (y&gt;=top) &amp;&amp; (y&lt;=bottom);
+        };
+
+        /**
+         * Inserts &#x60;domNode&#x60; before &#x60;refDomNode&#x60;.
+         *
+         * @method insertBefore
+         * @param domNode {Node|Element|ElementArray|String} content to insert
+         * @param refDomNode {Element} The Element before which newElement is inserted.
+         * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
+         * @return {Node} the Element being inserted (equals domNode)
+         */
+        ElementPrototype._insertBefore = ElementPrototype.insertBefore;
+        ElementPrototype.insertBefore = function(domNode, refDomNode, escape) {
+            return this.prepend(domNode, escape, refDomNode);
         };
 
         /**
@@ -1222,7 +1346,8 @@ module.exports = function (window) {
          * @since 0.0.1
          */
         ElementPrototype.lastOfChildren = function(cssSelector) {
-            return this.vnode.lastOfVChildren(cssSelector).domNode;
+            var foundVNode = this.vnode.lastOfVChildren(cssSelector);
+            return foundVNode &amp;&amp; foundVNode.domNode;
         };
 
         /**
@@ -1262,9 +1387,21 @@ module.exports = function (window) {
          */
         ElementPrototype.next = function(cssSelector) {
             var vnode = this.vnode,
-                found, vNextElement;
+                found, vNextElement, firstCharacter, i, len;
             if (!cssSelector) {
-                return vnode.vNextElement.domNode;
+                vNextElement = vnode.vNextElement;
+                return vNextElement &amp;&amp; vNextElement.domNode;
+            }
+            else {
+                i = -1;
+                len = cssSelector.length;
+                while (!firstCharacter &amp;&amp; (++i&lt;len)) {
+                    firstCharacter = cssSelector[i];
+                    (firstCharacter===&#x27; &#x27;) &amp;&amp; (firstCharacter=null);
+                }
+                if (firstCharacter===&#x27;&gt;&#x27;) {
+                    return null;
+                }
             }
             vNextElement = vnode;
             do {
@@ -1274,42 +1411,45 @@ module.exports = function (window) {
             return found ? vNextElement.domNode : null;
         };
 
-
        /**
         * Prepends a Element or text at the start of Element&#x27;s innerHTML, or before the &#x60;refElement&#x60;.
         *
         * @method prepend
         * @param content {Element|Element|ElementArray|String} content to prepend
-        * @param [refElement] {Element} reference Element where the content should be prepended
         * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
+        * @param [refElement] {Element} reference Element where the content should be prepended
         * @return {Element} the created Element (or the last when multiple)
         * @since 0.0.1
         */
-        ElementPrototype.prepend = function(content, refElement, escape) {
+        ElementPrototype.prepend = function(content, escape, refElement) {
             var instance = this,
-                i, len, item, createdElement,
+                vnode = instance.vnode,
+                i, len, item, createdElement, vnodes, vChildNodes, vRefElement,
             doPrepend = function(oneItem) {
-                var vChildNodes, i, len, fragment;
-                if (escape) {
-                    if (oneItem.isFragment) {
-                        vChildNodes = oneItem.vChildNodes;
-                        len = vChildNodes.length;
-                        for (i=1; i&lt;len; i++) {
-                            fragment = vChildNodes[i];
-                            fragment.textContent = fragment.innerHTML;
-                        }
-                    }
-                    else {
-                        oneItem.vTextContent = oneItem.vInnerHTML;
-                    }
-                }
-                createdElement = refElement ? instance.insertBefore(oneItem, refElement) : instance.appendChild(oneItem);
+                escape &amp;&amp; (oneItem.nodeType===1) &amp;&amp; (oneItem=DOCUMENT.createTextNode(oneItem.getOuterHTML()));
+                createdElement = refElement ? vnode._insertBefore(oneItem.vnode, refElement.vnode) : vnode._appendChild(oneItem.vnode);
+                // CAUTIOUS: when using TextNodes, they might get merged (vnode._normalize does this), which leads into disappearance of refElement:
+                refElement = createdElement;
             };
-            refElement || (refElement=instance.firstChild);
+            vnode._noSync()._normalizable(false);
+            if (!refElement) {
+                vChildNodes = vnode.vChildNodes;
+                vRefElement = vChildNodes &amp;&amp; vChildNodes[0];
+                refElement = vRefElement &amp;&amp; vRefElement.domNode;
+            }
             (typeof content===STRING) &amp;&amp; (content=htmlToVFragments(content));
-            if (Array.isArray(content)) {
+            if (content.isFragment) {
+                vnodes = content.vnodes;
+                len = vnodes.length;
+                // to manage TextNodes which might get merged, we loop downwards:
+                for (i=len-1; i&gt;=0; i--) {
+                    doPrepend(vnodes[i].domNode);
+                }
+            }
+            else if (Array.isArray(content)) {
                 len = content.length;
-                for (i=0; i&lt;len; i++) {
+                // to manage TextNodes which might get merged, we loop downwards:
+                for (i=len-1; i&gt;=0; i--) {
                     item = content[i];
                     doPrepend(item);
                 }
@@ -1317,6 +1457,7 @@ module.exports = function (window) {
             else {
                 doPrepend(content);
             }
+            vnode._normalizable(true)._normalize();
             return createdElement;
         };
 
@@ -1331,9 +1472,21 @@ module.exports = function (window) {
          */
         ElementPrototype.previous = function(cssSelector) {
             var vnode = this.vnode,
-                found, vPreviousElement;
+                found, vPreviousElement, firstCharacter, i, len;
             if (!cssSelector) {
-                return vnode.vPreviousElement.domNode;
+                vPreviousElement = vnode.vPreviousElement;
+                return vPreviousElement &amp;&amp; vPreviousElement.domNode;
+            }
+            else {
+                i = -1;
+                len = cssSelector.length;
+                while (!firstCharacter &amp;&amp; (++i&lt;len)) {
+                    firstCharacter = cssSelector[i];
+                    (firstCharacter===&#x27; &#x27;) &amp;&amp; (firstCharacter=null);
+                }
+                if (firstCharacter===&#x27;&gt;&#x27;) {
+                    return null;
+                }
             }
             vPreviousElement = vnode;
             do {
@@ -1353,17 +1506,26 @@ module.exports = function (window) {
          */
         ElementPrototype.querySelector = function(selectors) {
             var found,
+                i = -1,
+                len = selectors.length,
+                firstCharacter, startvnode,
+                thisvnode = this.vnode,
                 inspectChildren = function(vnode) {
-                    var vChildNodes = vnode.vChildNodes,
-                        len = vChildNodes.length,
+                    var vChildren = vnode.vChildren,
+                        len = vChildren ? vChildren.length : 0,
                         i, vChildNode;
                     for (i=0; (i&lt;len) &amp;&amp; !found; i++) {
-                        vChildNode = vChildNodes[i];
-                        vChildNode.matchesSelector(selectors) &amp;&amp; (found=vChildNode.domNode);
+                        vChildNode = vChildren[i];
+                        vChildNode.matchesSelector(selectors, thisvnode) &amp;&amp; (found=vChildNode.domNode);
                         found || inspectChildren(vChildNode);
                     }
                 };
-            inspectChildren(this.vnode);
+            while (!firstCharacter &amp;&amp; (++i&lt;len)) {
+                firstCharacter = selectors[i];
+                (firstCharacter===&#x27; &#x27;) &amp;&amp; (firstCharacter=null);
+            }
+            startvnode = SIBLING_MATCH_CHARACTER[firstCharacter] ? thisvnode.vParent : thisvnode;
+            startvnode &amp;&amp; inspectChildren(startvnode);
             return found;
         };
 
@@ -1379,22 +1541,31 @@ module.exports = function (window) {
          */
         ElementPrototype.querySelectorAll = function(selectors) {
             var found = ElementArray.createArray(),
+                i = -1,
+                len = selectors.length,
+                firstCharacter, startvnode,
+                thisvnode = this.vnode,
                 inspectChildren = function(vnode) {
-                    var vChildNodes = vnode.vChildNodes,
-                        len = vChildNodes.length,
+                    var vChildren = vnode.vChildren,
+                        len = vChildren ? vChildren.length : 0,
                         i, vChildNode;
                     for (i=0; i&lt;len; i++) {
-                        vChildNode = vChildNodes[i];
-                        vChildNode.matchesSelector(selectors) &amp;&amp; (found[found.length]=vChildNode.domNode);
+                        vChildNode = vChildren[i];
+                        vChildNode.matchesSelector(selectors, thisvnode) &amp;&amp; (found[found.length]=vChildNode.domNode);
                         inspectChildren(vChildNode);
                     }
                 };
-            inspectChildren(this.vnode);
+            while (!firstCharacter &amp;&amp; (++i&lt;len)) {
+                firstCharacter = selectors[i];
+                (firstCharacter===&#x27; &#x27;) &amp;&amp; (firstCharacter=null);
+            }
+            startvnode = SIBLING_MATCH_CHARACTER[firstCharacter] ? thisvnode.vParent : thisvnode;
+            startvnode &amp;&amp; inspectChildren(startvnode);
             return found;
         };
 
        /**
-         * Checks whether the Element has its rectangle inside the outboud-Element.
+         * Checks whether the Element has its rectangle inside the outbound-Element.
          * This is no check of the DOM-tree, but purely based upon coordinates.
          *
          * @method rectangleInside
@@ -1421,9 +1592,7 @@ module.exports = function (window) {
         */
         ElementPrototype.remove = function() {
             var vnode = this.vnode;
-            vnode._noSync();
-            vnode.vParent.domNode.removeChild(vnode.domNode);
-            vnode._remove();
+            vnode.vParent._removeChild(vnode);
         };
 
        /**
@@ -1452,14 +1621,18 @@ module.exports = function (window) {
         */
         ElementPrototype._removeAttribute = ElementPrototype.removeAttribute;
         ElementPrototype.removeAttribute = function(attributeName) {
-            var instance = this,
-                vnode = this.vnode;
-            instance._removeAttribute.apply(instance, arguments);
-            delete vnode.attrs[attributeName];
-            // in case of STYLE attribute --&gt; special treatment
-            (attributeName===STYLE) &amp;&amp; (vnode.styles={});
-            // in case of CLASS attribute --&gt; special treatment
-            (attributeName===CLASS) &amp;&amp; (vnode.classNames={});
+            this.vnode._removeAttr(attributeName);
+        };
+
+        /**
+        * Removes the Element&#x27;s child-Node from the DOM.
+        *
+        * @method removeChild
+        * @param domNode {Node} the child-Node to remove
+        */
+        ElementPrototype._removeChild = ElementPrototype.removeChild;
+        ElementPrototype.removeChild = function(domNode) {
+            this.vnode._removeChild(domNode.vnode);
         };
 
        /**
@@ -1540,11 +1713,29 @@ module.exports = function (window) {
         */
         ElementPrototype.replace = function(newElement, escape) {
             var instance = this,
+                vnode = instance.vnode,
+                previousVNode = vnode.vPrevious,
+                vParent = vnode.vParent,
                 createdElement;
+            createdElement = previousVNode ? vParent.domNode.append(newElement, escape, previousVNode.domNode) : vParent.domNode.prepend(newElement, escape);
             instance.setClass(HIDDEN);
-            createdElement = instance.getParent().prepend(newElement, instance, escape);
             instance.remove();
             return createdElement;
+        };
+
+        /**
+        * Replaces the Element&#x27;s child-Element with a new Element.
+        *
+        * @method replaceChild
+        * @param newElement {Element} the new Element
+        * @param oldVChild {Element} the Element to be replaced
+        * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
+        * @return {Element} the Element that was removed (equals oldVChild)
+        * @since 0.0.1
+        */
+        ElementPrototype._replaceChild = ElementPrototype.replaceChild;
+        ElementPrototype.replaceChild = function(newDomNode, oldDomNode, escape) {
+            return oldDomNode.replace(newDomNode, escape);
         };
 
        /**
@@ -1607,23 +1798,14 @@ module.exports = function (window) {
          *
          * @method setAttribute
          * @param attributeName {String}
-         * @param value {Any} the value that belongs to &#x60;key&#x60;
+         * @param value {String} the value for the attributeName
         */
         ElementPrototype._setAttribute = ElementPrototype.setAttribute;
         ElementPrototype.setAttribute = function(attributeName, value) {
             var instance = this,
                 vnode = instance.vnode;
             (value===&#x27;&#x27;) &amp;&amp; (value=null);
-            if (value) {
-                instance._setAttribute.apply(instance, arguments);
-                vnode.attrs[attributeName] = value;
-                if ((attributeName===CLASS) || (attributeName===STYLE)) {
-                    vnode.reloadAttr(attributeName);
-                }
-            }
-            else {
-                instance.removeAttribute(attributeName);
-            }
+            value ? vnode._setAttr(attributeName, value) : vnode._removeAttr(attributeName);
         };
 
        /**
@@ -1659,6 +1841,24 @@ module.exports = function (window) {
                 value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {}&#x27;s properties itself
             });
             vnode._data[key] = value;
+            return this;
+        };
+
+        /**
+         * Sets the innerHTML of both the vnode as well as the representing dom-node.
+         * Goes through the vdom, so it&#x27;s superfast.
+         *
+         * Use this method instead of &#x60;innerHTML&#x60;
+         *
+         * Syncs with the DOM.
+         *
+         * @method setHTML
+         * @param val {String} the new value to be set
+         * @chainable
+         * @since 0.0.1
+         */
+        ElementPrototype.setHTML = function(val) {
+            this.vnode.innerHTML = val;
             return this;
         };
 
@@ -1702,24 +1902,6 @@ module.exports = function (window) {
             styles[cssProperty] = value;
             instance.setAttr(&#x27;style&#x27;, vnode.serializeStyles());
             return instance;
-        };
-
-        /**
-         * Sets the innerHTML of both the vnode as well as the representing dom-node.
-         * Goes through the vdom, so it&#x27;s superfast.
-         *
-         * Use this method instead of &#x60;innerHTML&#x60;
-         *
-         * Syncs with the DOM.
-         *
-         * @method setInnerHTML
-         * @param val {String} the new value to be set
-         * @chainable
-         * @since 0.0.1
-         */
-        ElementPrototype.setInnerHTML = function(val) {
-            this.vnode.innerHTML = val;
-            return this;
         };
 
         /**
@@ -1781,12 +1963,27 @@ module.exports = function (window) {
             // cautious: input and textarea must be accessed by their propertyname:
             // input.getAttribute(&#x27;value&#x27;) would return the defualt-value instead of actusl
             // and textarea.getAttribute(&#x27;value&#x27;) doesn&#x27;t exist
-                editable = ((editable=instance.vnode.attrs.contenteditable) &amp;&amp; (editable!==&#x27;false&#x27;));
+                editable = ((editable=instance.vnode.attrs.contenteditable) &amp;&amp; (editable!==&#x27;false&#x27;)),
+                tag, i, option, len, vChildren;
             if (editable) {
                 instance.setHTML(val);
             }
             else {
-                instance.value = val;
+                tag = instance.getTagName();
+                if ((tag===&#x27;INPUT&#x27;) || (tag===&#x27;TEXTAREA&#x27;)) {
+                    instance.value = val;
+                }
+                else if (tag===&#x27;SELECT&#x27;) {
+                    vChildren = instance.vnode.vChildren;
+                    len = vChildren.length;
+                    for (i=0; i&lt;len; i++) {
+                        option = vChildren[i];
+                        if (option.attrs.value === val) {
+                            instance.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
             }
             // if &#x60;document._emitVC&#x60; is available, then invoke it to emit the &#x60;valuechange&#x60;-event
             /**
@@ -1824,17 +2021,18 @@ module.exports = function (window) {
         ElementPrototype.setXY = function(x, y, constrain, notransition) {
             console.log(NAME, &#x27;setXY &#x27;+x+&#x27;,&#x27;+y);
             var instance = this,
-                position = instance.getStyle(POSITION),
-                dif, match, constrainNode, byExactId, parent, clone,
+                transformXY = arguments[4] &amp;&amp; TRANSFORM_XY, // hidden feature: is used by the &#x60;drag&#x60;-module to get smoother dragging
+                dif, match, constrainNode, byExactId, parent, clone, currentT, extract,
                 containerTop, containerRight, containerLeft, containerBottom, requestedX, requestedY;
 
-            // default position to relative
-            if (position===&#x27;static&#x27;) {
-                instance.setInlineStyle(POSITION, &#x27;relative&#x27;);
-            }
+            // default position to relative: check first inlinestye because this goes quicker
+            (instance.getInlineStyle(POSITION)===&#x27;relative&#x27;) || (instance.getStyle(POSITION)!==&#x27;static&#x27;) || instance.setInlineStyle(POSITION, &#x27;relative&#x27;);
             // make sure it has sizes and can be positioned
             instance.setClass(INVISIBLE).setClass(BORDERBOX);
             (instance.getInlineStyle(&#x27;display&#x27;)===&#x27;none&#x27;) &amp;&amp; instance.setClass(BLOCK);
+            // transformXY need display &#x60;block&#x60; or &#x60;inline-block&#x60;
+            transformXY &amp;&amp; instance.setInlineStyle(&#x27;display&#x27;, BLOCK); // goes through the vdom: won&#x27;t update when already set
+            constrain || (constrain=instance.getAttr(&#x27;xy-constrain&#x27;));
             if (constrain) {
                 if (constrain===&#x27;window&#x27;) {
                     containerLeft = window.getScrollLeft();
@@ -1898,41 +2096,69 @@ module.exports = function (window) {
             if (typeof x === NUMBER) {
                 // check if there is a transition:
                 if (notransition) {
-                    instance.setClass(INVISIBLE);
-                    instance.setInlineStyle(LEFT, x + PX);
-                    dif = (instance.left-x);
-                    (dif!==0) &amp;&amp; (instance.setInlineStyle(LEFT, (x - dif) + PX));
-                    instance.removeClass(INVISIBLE);
+                    if (transformXY) {
+                        dif = (x-instance.left);
+                        currentT = instance.getInlineStyle(transformXY) || &#x27;&#x27;;
+                        if (currentT.indexOf(&#x27;translateX(&#x27;)!==-1) {
+                            extract = currentT.match(REGEXP_TRX);
+                            currentT = currentT.replace(REGEXP_TRX, &#x27;translateX(&#x27;+(parseInt(extract[1], 10) + dif));
+                        }
+                        else {
+                            currentT += &#x27; translateX(&#x27;+dif+&#x27;px)&#x27;;
+                        }
+                        instance.setInlineStyle(transformXY, currentT);
+                    }
+                    else {
+                        instance.setClass(INVISIBLE);
+                        instance.setInlineStyle(LEFT, x + PX);
+                        dif = (instance.left-x);
+                        (dif!==0) &amp;&amp; (instance.setInlineStyle(LEFT, (x - dif) + PX));
+                        instance.removeClass(INVISIBLE);
+                    }
                 }
                 else {
                     // we will clone the node, make it invisible and without transitions and look what its correction should be
                     clone = instance.cloneNode();
                     clone.setClass(NO_TRANS).setClass(INVISIBLE);
                     parent = instance.getParent() || DOCUMENT.body;
-                    parent.append(clone);
+                    parent.prepend(clone, null, instance);
                     clone.setInlineStyle(LEFT, x+PX);
                     dif = (clone.left-x);
-                    parent.removeChild(clone);
+                    clone.remove();
                     instance.setInlineStyle(LEFT, (x - dif) + PX);
                 }
             }
             if (typeof y === NUMBER) {
                 if (notransition) {
-                    instance.setClass(INVISIBLE);
-                    instance.setInlineStyle(TOP, y + PX);
-                    dif = (instance.top-y);
-                    (dif!==0) &amp;&amp; (instance.setInlineStyle(TOP, (y - dif) + PX));
-                    instance.removeClass(INVISIBLE);
+                    if (transformXY) {
+                        dif = (y-instance.top);
+                        currentT = instance.getInlineStyle(transformXY) || &#x27;&#x27;;
+                        if (currentT.indexOf(&#x27;translateY(&#x27;)!==-1) {
+                            extract = currentT.match(REGEXP_TRY);
+                            currentT = currentT.replace(REGEXP_TRY, &#x27;translateY(&#x27;+(parseInt(extract[1], 10) + dif));
+                        }
+                        else {
+                            currentT += &#x27; translateY(&#x27;+dif+&#x27;px)&#x27;;
+                        }
+                        instance.setInlineStyle(transformXY, currentT);
+                    }
+                    else {
+                        instance.setClass(INVISIBLE);
+                        instance.setInlineStyle(TOP, y + PX);
+                        dif = (instance.top-y);
+                        (dif!==0) &amp;&amp; (instance.setInlineStyle(TOP, (y - dif) + PX));
+                        instance.removeClass(INVISIBLE);
+                    }
                 }
                 else {
                     // we will clone the node, make it invisible and without transitions and look what its correction should be
                     clone = instance.cloneNode();
                     clone.setClass(NO_TRANS).setClass(INVISIBLE);
                     parent = instance.getParent() || DOCUMENT.body;
-                    parent.append(clone);
+                    parent.prepend(clone, null, instance);
                     clone.setInlineStyle(TOP, y+PX);
                     dif = (clone.top-y);
-                    parent.removeChild(clone);
+                    clone.remove();
                     instance.setInlineStyle(TOP, (y - dif) + PX);
                 }
             }
@@ -2059,27 +2285,55 @@ module.exports = function (window) {
 
                 var node = mutation.target,
                     vnode = node.vnode,
+                    type = mutation.type,
                     attribute = mutation.attributeName,
                     addedChildNodes = mutation.addedNodes,
                     removedChildNodes = mutation.removedNodes,
-                    i, len, childDomNode, childVNode, index;
+                    i, len, childDomNode, childVNode, index, vchildnode;
                 if (vnode &amp;&amp; !vnode._nosync) {
-                    if (attribute) {
+                    if (type===&#x27;attributes&#x27;) {
                         vnode.reloadAttr(attribute);
+                    }
+                    else if (type===&#x27;characterData&#x27;) {
+                        vnode.text = node.nodeValue;
                     }
                     else {
                         // remove the childNodes that are no longer there:
                         len = removedChildNodes.length;
                         for (i=len-1; i&gt;=0; i--) {
                             childVNode = removedChildNodes[i].vnode;
-                            childVNode &amp;&amp; childVNode._remove();
+                            childVNode &amp;&amp; childVNode._destroy();
                         }
                        // add the new childNodes:
                         len = addedChildNodes.length;
                         for (i=0; i&lt;len; i++) {
                             childDomNode = addedChildNodes[i];
+                            // find its index in the true DOM:
                             index = node.childNodes.indexOf(childDomNode);
-                            domNodeToVNode(childDomNode)._moveToParent(vnode, index);
+                            // create the vnode:
+                            vchildnode = domNodeToVNode(childDomNode);
+//======================================================================================================
+// TODO: remove this block of code: we shouldn;t be needing it
+// that is: when the alert never rises (which I expect it doesn&#x27;t)
+
+
+// prevent double definitions (for whatever reason):
+// check if there is a vChild with the same domNode and remove it:
+var vChildNodes = vnode.vChildNodes;
+var len2 = vChildNodes.length;
+var j;
+for (j=0; j&lt;len2; j++) {
+    var checkChildVNode = vChildNodes[j];
+    if (checkChildVNode.domNode===node) {
+        checkChildVNode._destroy();
+        alert(&#x27;double deleted&#x27;);
+        break;
+    }
+}
+// END OF removable block
+//======================================================================================================
+                            // add the vnode:
+                            vchildnode._moveToParent(vnode, index);
                         }
                     }
                 }
@@ -2092,14 +2346,6 @@ module.exports = function (window) {
 };
 
 //--- definition API of unmodified &#x60;Element&#x60;-methods ------
-
-/**
- * Adds a node to the end of the list of children of a specified parent node.
- *
- * @method appendChild
- * @param element {Element} content to append
- * @return {Element} the Element that was appended
- */
 
 /**
  * Returns the specified attribute of the specified element, as an Attr node.
@@ -2244,24 +2490,6 @@ module.exports = function (window) {
 *
 * @method removeAttributeNode
 * @param attributeNode {attributeNode}
-* @since 0.0.1
-*/
-
-/**
-* Removes the Element&#x27;s child-Element from the DOM.
-*
-* @method removeChild
-* @param childVElement {Element} the child-Element to remove
-* @since 0.0.1
-*/
-
-/**
-* Replaces the Element&#x27;s child-Element with a new Element.
-*
-* @method replaceChild
-* @param newElement {Element} the new Element
-* @param oldVChild {Element} the Element to be replaced
-* @return {Element} the Element that was removed (equals oldVChild)
 * @since 0.0.1
 */
 

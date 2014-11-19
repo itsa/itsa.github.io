@@ -65,13 +65,11 @@
             
                 <li><a href="../classes/Node.html">Node</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
-            
-                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
-            
                 <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -83,19 +81,19 @@
             
                 <li><a href="../classes/window.html">window</a></li>
             
-                <li><a href="../classes/xElement.html">xElement</a></li>
-            
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
             
                 <li><a href="../modules/drag.html">drag</a></li>
             
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
             
                 <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -133,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -323,6 +315,8 @@ module.exports = function (window) {
             // this stage is runned when the event happens
             console.log(NAME, &#x27;_domSelToFunc inside filter. selector: &#x27;+selector);
             var node = e.target,
+                vnode = node.vnode,
+                character1 = selector.substr(1),
                 match = false;
             // e.target is the most deeply node in the dom-tree that caught the event
             // our listener uses &#x60;selector&#x60; which might be a node higher up the tree.
@@ -330,15 +324,31 @@ module.exports = function (window) {
             // note that e.currentTarget will always be &#x60;document&#x60; --&gt; we&#x27;re not interested in that
             // also, we don&#x27;t check for &#x60;node&#x60;, but for node.matchesSelector: the highest level &#x60;document&#x60;
             // is not null, yet it doesn;t have .matchesSelector so it would fail
-            while (node.matchesSelector &amp;&amp; !match) {
-                console.log(NAME, &#x27;_domSelToFunc inside filter check match&#x27;);
-                match = byExactId ? (node.id===selector.substr(1)) : node.matchesSelector(selector);
-                // if there is a match, then set
-                // e.target to the target that matches the selector
-                if (match &amp;&amp; !outsideEvent) {
-                    subscriber.t = node;
+            if (vnode) {
+                // we go through the vdom
+                while (vnode &amp;&amp; !match) {
+                    console.log(NAME, &#x27;_domSelToFunc inside filter check match using the vdom&#x27;);
+                    match = byExactId ? (vnode.id===character1) : vnode.matchesSelector(selector);
+                    // if there is a match, then set
+                    // e.target to the target that matches the selector
+                    if (match &amp;&amp; !outsideEvent) {
+                        subscriber.t = vnode.domNode;
+                    }
+                    vnode = vnode.vParent;
                 }
-                node = node.parentNode;
+            }
+            else {
+                // we go through the dom
+                while (node.matchesSelector &amp;&amp; !match) {
+                    console.log(NAME, &#x27;_domSelToFunc inside filter check match using the dom&#x27;);
+                    match = byExactId ? (node.id===character1) : node.matchesSelector(selector);
+                    // if there is a match, then set
+                    // e.target to the target that matches the selector
+                    if (match &amp;&amp; !outsideEvent) {
+                        subscriber.t = node;
+                    }
+                    node = node.parentNode;
+                }
             }
             console.log(NAME, &#x27;_domSelToFunc filter returns &#x27;+(!outsideEvent ? match : !match));
             return !outsideEvent ? match : !match;

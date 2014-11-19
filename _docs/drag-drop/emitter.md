@@ -57,7 +57,7 @@ intro: "Draggable items can be dropped inside dropzones. When these dronzones ar
     }
 </style>
 
-Drag the items to the dropzones. The `movable and optional copyable` item will be copyable when the `Ctrl`-key (or `cmd`-key on a Mac) is pressed.
+Drag the items to the dropzones..
 
 <div id="constr" class="base-container">
     <div class="container" dd-draggable="true" dd-emitter="blue"></div>
@@ -99,25 +99,26 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
 
     ITSA.DD.init();
     document.getElement('#without').plug(ITSA.Plugins.NodeDD, {emitter: 'red'});
-    document.getElement('#without-emitter').plug(ITSA.Plugins.NodeDD, {emitter: 'blue'});
+    document.getElement('#without-emitter').plug(ITSA.Plugins.NodeDD);
     document.getElement('#dropzone-without').plug(ITSA.Plugins.NodeDropzone, {emitter: 'red'});
 
-    ITSA.Event.before('dd-start', function(e) {
+    ITSA.Event.before('dd', function(e) {
         e.emitter = "blue";
     }, '#without-emitter');
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
 
     ITSA.DD.init();
     document.getElement('#without').plug(ITSA.Plugins.NodeDD, {emitter: 'red'});
-    document.getElement('#without-emitter').plug(ITSA.Plugins.NodeDD, {emitter: 'blue'});
+    document.getElement('#without-emitter').plug(ITSA.Plugins.NodeDD);
     document.getElement('#dropzone-without').plug(ITSA.Plugins.NodeDropzone, {emitter: 'red'});
 
-    ITSA.Event.before('dd-start', function(e) {
+    ITSA.Event.before('dd', function(e) {
         e.emitter = "blue";
+        console.info('SETTING EMITTER');
     }, '#without-emitter');
 </script>

@@ -65,13 +65,11 @@
             
                 <li><a href="../classes/Node.html">Node</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
-            
-                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
-            
                 <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -83,19 +81,19 @@
             
                 <li><a href="../classes/window.html">window</a></li>
             
-                <li><a href="../classes/xElement.html">xElement</a></li>
-            
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
             
                 <li><a href="../modules/drag.html">drag</a></li>
             
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
             
                 <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -133,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_element-plugin.js.html">lib/element-plugin.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -230,14 +222,13 @@ var NAME = &#x27;[drag]: &#x27;,
     CONSTRAIN_ATTR = &#x27;xy-constrain&#x27;,
     MOUSE = &#x27;mouse&#x27;,
     DROPZONE = &#x27;dropzone&#x27;,
-    NO_TRANS_CLASS = &#x27;el-notrans&#x27;, // delivered by &#x60;dom-ext&#x60;
+    NO_TRANS_CLASS = &#x27;el-notrans&#x27;, // delivered by &#x60;vdom&#x60;
     HIGH_Z_CLASS = DD_MINUS+&#x27;high-z&#x27;,
     REGEXP_NODE_ID = /^#\S+$/,
     EMITTER = &#x27;emitter&#x27;,
     DD_EMITTER = DD_MINUS+EMITTER,
     DD_DRAG = DD_MINUS+DRAG,
     DD_DROP = DD_MINUS+DROP,
-    UI_DD_START = &#x27;UI:dd&#x27;,
     DD_FAKE = DD_MINUS+&#x27;fake-&#x27;,
     DOWN = &#x27;down&#x27;,
     UP = &#x27;up&#x27;,
@@ -263,9 +254,23 @@ require(&#x27;js-ext&#x27;);
 require(&#x27;./css/drag.css&#x27;);
 
 module.exports = function (window) {
+
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
+
+    if (window._ITSAmodules.Drag) {
+        return window._ITSAmodules.Drag; // Drag was already created
+    }
+
     var Event = require(&#x27;event-dom&#x27;)(window),
-        NodePlugin = require(&#x27;dom-ext&#x27;)(window).Plugins.NodePlugin,
-        DD, NodeDD;
+        NodePlugin = require(&#x27;vdom&#x27;)(window).Plugins.NodePlugin,
+        DD, NodeDD, DD_Object;
 
     require(&#x27;window-ext&#x27;)(window);
 
@@ -365,14 +370,14 @@ module.exports = function (window) {
                     ddProps.constrain.y = ddProps.constrain.yOrig - constrainNode.scrollTop;
                 }
 
-                x = ddProps.x+e.xMouse+(winConstrained ? ddProps.winScrollLeft : window.scrollLeft)-e.xMouseOrigin;
-                y = ddProps.y+e.yMouse+(winConstrained ? ddProps.winScrollTop : window.scrollTop)-e.yMouseOrigin;
+                x = ddProps.x+e.xMouse+(winConstrained ? ddProps.winScrollLeft : window.getScrollLeft())-e.xMouseOrigin;
+                y = ddProps.y+e.yMouse+(winConstrained ? ddProps.winScrollTop : window.getScrollTop())-e.yMouseOrigin;
 
-                dragNode.setXY(x, y, ddProps.constrain, true);
+                dragNode.setXY(x, y, ddProps.constrain, true, true);
 
                 ddProps.relatives &amp;&amp; ddProps.relatives.forEach(
                     function(item) {
-                        item.dragNode.setXY(x+item.shiftX, y+item.shiftY, null, true);
+                        item.dragNode.setXY(x+item.shiftX, y+item.shiftY, null, true, true);
                     }
                 );
 
@@ -412,7 +417,7 @@ module.exports = function (window) {
         },
 
         /**
-         * Default function for the &#x60;UI:dd-start&#x60;-event
+         * Default function for the &#x60;*:dd&#x60;-event
          *
          * @method _defFnStart
          * @param e {Object} eventobject
@@ -433,16 +438,16 @@ module.exports = function (window) {
         * Defines the definition of the &#x60;dd&#x60; event: the first phase of the drag-eventcycle (dd, *:dd-drag, *:dd-drop)
         *
         * @method _defineDDStart
-        * @param e {Object} eventobject
+        * @param emitterName {String} the emitterName, which leads into the definition of event &#x60;emitterName:dd&#x60;
         * @private
         * @since 0.0.1
         */
-        _defineDDStart: function() {
+        _defineDDStart: function(emitterName) {
             console.log(NAME, &#x27;_defineDDStart&#x27;);
             var instance = this;
             // by using dd before dd-drag, the user can create a &#x60;before&#x60;-subscriber to dd
             // and define e.emitter and/or e.relatives before going into &#x60;dd-drag&#x60;
-            Event.defineEvent(UI_DD_START)
+            Event.defineEvent(emitterName+&#x27;:dd&#x27;)
                 .defaultFn(instance._defFnStart.bind(instance))
                 .preventedFn(instance._prevFnStart.bind(instance));
         },
@@ -477,8 +482,8 @@ module.exports = function (window) {
 
             if (constrain) {
                 if (ddProps.winConstrained) {
-                    ddProps.winScrollLeft = winScrollLeft = window.scrollLeft;
-                    ddProps.winScrollTop = winScrollTop = window.scrollTop;
+                    ddProps.winScrollLeft = winScrollLeft = window.getScrollLeft();
+                    ddProps.winScrollTop = winScrollTop = window.getScrollTop();
                     ddProps.constrain = {
                         x: winScrollLeft,
                         y: winScrollTop,
@@ -648,7 +653,7 @@ module.exports = function (window) {
 
             nodeTargetFn = function(e) {
                 var node = e.target,
-                    handle, availableHandles, insideHandle;
+                    handle, availableHandles, insideHandle, emitterName;
 
                 // first check if there is a handle to determine if the drag started here:
                 handle = node.getAttr(DD_HANDLE);
@@ -679,13 +684,12 @@ module.exports = function (window) {
                     e.dd.setCallback(callbackFn);
                 };
                 // store the orriginal mouseposition:
-                e.xMouseOrigin = e.clientX + window.scrollLeft;
-                e.yMouseOrigin = e.clientY + window.scrollTop;
+                e.xMouseOrigin = e.clientX + window.getScrollLeft();
+                e.yMouseOrigin = e.clientY + window.getScrollTop();
 
                 //set the emitterName:
-                e.emitter = e.target.getAttr(DD_EMITTER) || UI,
-
-                // now we can start the eventcycle by emitting UI:dd:
+                emitterName = e.target.getAttr(DD_EMITTER) || UI,
+                // now we can start the eventcycle by emitting emitterName:dd:
                 /**
                 * Emitted when a draggable Element&#x27;s drag-cycle starts. You can use a &#x60;before&#x60;-subscriber to specify
                 * e.relatives, which should be a nodelist with HtmlElements, that should be dragged togehter with the master
@@ -707,7 +711,8 @@ module.exports = function (window) {
                 *        to inform which nodes are related to the draggable node and should be dragged as well.
                 * @since 0.1
                 */
-                Event.emit(e.target, UI_DD_START, e);
+                instance._defineDDStart(emitterName);
+                Event.emit(e.target, emitterName+&#x27;:dd&#x27;, e);
             };
 
             delegatedTargetFn = function(e, cssSelector) {
@@ -757,7 +762,6 @@ module.exports = function (window) {
             console.log(NAME, &#x27;init&#x27;);
             var instance = this;
             if (!instance._inited) {
-                instance._defineDDStart();
                 instance._setupMouseEv(); // engine behind the dragdrop-eventcycle
                 Event.defineEvent(&#x27;UI:&#x27;+DD_DROP)
                      .defaultFn(instance._defFnDrop.rbind(instance));
@@ -809,12 +813,14 @@ module.exports = function (window) {
         }
     );
 
-    return {
+    DD_Object = window._ITSAmodules.Drag = {
         DD: DD,
         Plugins: {
             NodeDD: NodeDD
         }
     };
+
+    return DD_Object;
 };
     </pre>
 </div>
