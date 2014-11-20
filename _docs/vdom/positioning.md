@@ -1,5 +1,5 @@
 ---
-module: dom-ext
+module: vdom
 maintainer: Marco Asbreuk
 title: Positioning element
 intro: "This example moves a div-node to a new location"
@@ -12,7 +12,8 @@ intro: "This example moves a div-node to a new location"
     }
     #btncontainer button {
         margin-top: 0.5em;
-        min-width: 16em;
+        min-width: 20em;
+        display: block;
     }
     .container {
         background-color: #F00;
@@ -25,10 +26,11 @@ intro: "This example moves a div-node to a new location"
     }
 </style>
 
-Clik on the button to move the div:
+Clik on the buttons to move the div:
 
 <div id="btncontainer">
-    <button id="button-move" class="pure-button pure-button-primary pure-button-bordered">Move the div</button>
+    <button id="button-move1" class="pure-button pure-button-primary pure-button-bordered">Move using node.setXY()</button>
+    <button id="button-move2" class="pure-button pure-button-primary pure-button-bordered">Move using node.left and node.top</button>
 </div>
 
 <div class="container"></div>
@@ -50,13 +52,20 @@ Code-example:
 <script>
     var ITSA = require('itsa'),
         container = document.getElement('.container'),
-        move;
+        move1, move2;
 
-    move = function() {
-        container.setXY(350, 425);
+    move1 = function() {
+        container.setXY(525, 250);
     };
 
-    ITSA.Event.after('click', move, '#button-move');
+    move2 = function() {
+        container.left = 200;
+        container.top = 600;
+    };
+
+    ITSA.Event.after('click', move1, '#button-move1');
+    ITSA.Event.after('click', move2, '#button-move2');
+
 </script>
 ```
 
@@ -64,11 +73,17 @@ Code-example:
 <script>
     var ITSA = require('itsa'),
         container = document.getElement('.container'),
-        move;
+        move1, move2;
 
-    move = function() {
-        container.setXY(350, 425);
+    move1 = function() {
+        container.setXY(525, 250);
     };
 
-    ITSA.Event.after('click', move, '#button-move');
+    move2 = function() {
+        container.left = 200;
+        container.top = 600;
+    };
+
+    ITSA.Event.after('click', move1, '#button-move1');
+    ITSA.Event.after('click', move2, '#button-move2');
 </script>

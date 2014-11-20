@@ -1,8 +1,8 @@
 ---
-module: dom-ext
+module: vdom
 maintainer: Marco Asbreuk
-title: Toggle className
-intro: "This example toggles the classname of multiple div's at once."
+title: Toggle className on multiple elements at once
+intro: "This example toggles the classname of multiple div's at once. The elements are selected by document.getAll()."
 ---
 
 <style type="text/css">

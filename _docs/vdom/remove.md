@@ -1,8 +1,8 @@
 ---
-module: dom-ext
+module: vdom
 maintainer: Marco Asbreuk
-title: Appending content
-intro: "This example appends content to a dic-container"
+title: Remove element
+intro: "This example removes a div-node"
 ---
 
 <style type="text/css">
@@ -25,9 +25,9 @@ intro: "This example appends content to a dic-container"
 Click on the button to initiate the request.
 
 <div id="container">
-    <button id="button-get" class="pure-button pure-button-primary pure-button-bordered">Click me to add data</button>
+    <button id="button-get" class="pure-button pure-button-primary pure-button-bordered">Click me to remove container</button>
 </div>
-<div id="target-container">This is the target-container</div>
+<div id="target-container">This is the container which will be removed</div>
 
 Code-example:
 
@@ -45,17 +45,13 @@ Code-example:
 <script>
     var ITSA = require('itsa'),
         container = document.getElement('#target-container'),
-        addContent;
+        removeContainer;
 
-    addContent = function(data) {
-        container.append('<br>Some <i>new data</i>');
+    removeContainer = function(data) {
+        container.remove();
     };
 
-    ITSA.Event.after(
-        'click',
-        addContent,
-        '#button-get'
-    );
+    ITSA.Event.after('click', removeContainer, '#button-get');
 </script>
 ```
 
@@ -63,15 +59,11 @@ Code-example:
 <script>
     var ITSA = require('itsa'),
         container = document.getElement('#target-container'),
-        addContent;
+        removeContainer;
 
-    addContent = function(data) {
-        container.append('<br>Some <i>new data</i>');
+    removeContainer = function(data) {
+        container.remove();
     };
 
-    ITSA.Event.after(
-        'click',
-        addContent,
-        '#button-get'
-    );
+    ITSA.Event.after('click', removeContainer, '#button-get');
 </script>

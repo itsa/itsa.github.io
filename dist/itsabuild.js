@@ -5499,7 +5499,7 @@ module.exports = function (window) {
     return DD_Object;
 
 };
-},{"./css/drag-drop.css":9,"drag":12,"event-dom":13,"js-ext":27,"polyfill/polyfill-base.js":38,"utils":39,"vdom":52,"window-ext":53}],11:[function(require,module,exports){
+},{"./css/drag-drop.css":9,"drag":12,"event-dom":13,"js-ext":27,"polyfill/polyfill-base.js":36,"utils":37,"vdom":50,"window-ext":51}],11:[function(require,module,exports){
 module.exports=require(9)
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],12:[function(require,module,exports){
 "use strict";
@@ -6134,7 +6134,7 @@ module.exports = function (window) {
 
     return DD_Object;
 };
-},{"./css/drag.css":11,"event-dom":13,"js-ext":27,"polyfill":38,"vdom":52,"window-ext":53}],13:[function(require,module,exports){
+},{"./css/drag.css":11,"event-dom":13,"js-ext":27,"polyfill":36,"vdom":50,"window-ext":51}],13:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6625,7 +6625,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":20,"js-ext/lib/array.js":28,"js-ext/lib/object.js":30,"js-ext/lib/string.js":32,"polyfill/polyfill-base.js":38,"utils":39,"vdom":52}],14:[function(require,module,exports){
+},{"event":20,"js-ext/lib/array.js":28,"js-ext/lib/object.js":30,"js-ext/lib/string.js":32,"polyfill/polyfill-base.js":36,"utils":37,"vdom":50}],14:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6997,7 +6997,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":13,"utils":39,"vdom":52}],16:[function(require,module,exports){
+},{"../event-dom.js":13,"utils":37,"vdom":50}],16:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8399,7 +8399,7 @@ require('js-ext/lib/object.js');
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/lib/function.js":29,"js-ext/lib/object.js":30,"polyfill/polyfill-base.js":38}],18:[function(require,module,exports){
+},{"js-ext/lib/function.js":29,"js-ext/lib/object.js":30,"polyfill/polyfill-base.js":36}],18:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9373,7 +9373,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":25,"js-ext/lib/string.js":32,"polyfill/polyfill-base.js":38}],24:[function(require,module,exports){
+},{"../io.js":25,"js-ext/lib/string.js":32,"polyfill/polyfill-base.js":36}],24:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9848,7 +9848,7 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":27,"polyfill/polyfill-base.js":38}],26:[function(require,module,exports){
+},{"js-ext":27,"polyfill/polyfill-base.js":36}],26:[function(require,module,exports){
 module.exports = {
     'abstract': true,
     'arguments': true,
@@ -10034,7 +10034,7 @@ require('polyfill/polyfill-base.js');
     });
 
 }(Array.prototype));
-},{"polyfill/polyfill-base.js":38}],29:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":36}],29:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -10255,7 +10255,7 @@ defineProperties(Function.prototype, {
 defineProperty(Object.prototype, 'createClass', function () {
 	return Function.prototype.subClass.apply(this, arguments);
 });
-},{"polyfill/polyfill-base.js":38}],30:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":36}],30:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -10566,7 +10566,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"polyfill/polyfill-base.js":38}],31:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":36}],31:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10870,7 +10870,7 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill":38}],32:[function(require,module,exports){
+},{"polyfill":36}],32:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -11187,701 +11187,6 @@ module.exports = function (window) {
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],35:[function(require,module,exports){
 (function (global){
-/*
- * Copyright 2012 The Polymer Authors. All rights reserved.
- * Use of this source code is goverened by a BSD-style
- * license that can be found in the LICENSE file.
- */
-
-(function(global) {
-  "use strict";
-
-  var registrationsTable = new WeakMap(),
-      uidCounter = 0,
-      currentRecord, recordWithOldValue,
-      setImmediate, setImmediateQueue, sentinel, queue, isScheduled, scheduledObservers;
-
-  // As much as we would like to use the native implementation, IE
-  // (all versions) suffers a rather annoying bug where it will drop or defer
-  // callbacks when heavy DOM operations are being performed concurrently.
-  //
-  // For a thorough discussion on this, see:
-  // http://codeforhire.com/2013/09/21/setimmediate-and-messagechannel-broken-on-internet-explorer-10/
-  if (/Trident/.test(global.navigator.userAgent)) {
-      // Sadly, this bug also affects postMessage and MessageQueues.
-      //
-      // We would like to use the onreadystatechange hack for IE <= 10, but it is
-      // dangerous in the polyfilled environment due to requiring that the
-      // observed script element be in the document.
-      setImmediate = setTimeout;
-
-  // If some other browser ever implements it, let's prefer their native
-  // implementation:
-  } else if (global.setImmediate) {
-      setImmediate = global.setImmediate;
-  } else {
-      // Otherwise, we fall back to postMessage as a means of emulating the next
-      // task semantics of setImmediate.
-      setImmediateQueue = [];
-      sentinel = String(Math.random());
-      global.addEventListener('message', function(e) {
-          if (e.data === sentinel) {
-              queue = setImmediateQueue;
-              setImmediateQueue = [];
-              queue.forEach(function(func) {
-                 func();
-              });
-          }
-      });
-      setImmediate = function(func) {
-          setImmediateQueue.push(func);
-          global.postMessage(sentinel, '*');
-      };
-  }
-
-  // This is used to ensure that we never schedule 2 callas to setImmediate
-  isScheduled = false;
-
-  // Keep track of observers that needs to be notified next time.
-  scheduledObservers = [];
-
-  /**
-   * Schedules |dispatchCallback| to be called in the future.
-   * @param {MutationObserver} observer
-   */
-  function scheduleCallback(observer) {
-      scheduledObservers.push(observer);
-      if (!isScheduled) {
-          isScheduled = true;
-          setImmediate(dispatchCallbacks);
-      }
-  }
-
-  function wrapIfNeeded(node) {
-      return (global.ShadowDOMPolyfill && global.ShadowDOMPolyfill.wrapIfNeeded(node)) || node;
-  }
-
-  function dispatchCallbacks() {
-      // http://dom.spec.whatwg.org/#mutation-observers
-
-      var observers = scheduledObservers,
-          anyNonEmpty = false;
-
-      isScheduled = false; // Used to allow a new setImmediate call above.
-
-      scheduledObservers = [];
-      // Sort observers based on their creation UID (incremental).
-      observers.sort(function(o1, o2) {
-          return o1.uid_ - o2.uid_;
-      });
-
-      observers.forEach(function(observer) {
-          // 2.1, 2.2
-          var queue = observer.takeRecords();
-          // 2.3. Remove all transient registered observers whose observer is mo.
-          removeTransientObserversFor(observer);
-
-          // 2.4
-          if (queue.length) {
-              observer.callback_(queue, observer);
-              anyNonEmpty = true;
-          }
-      });
-
-      // 3.
-      if (anyNonEmpty) {
-          dispatchCallbacks();
-      }
-  }
-
-  function removeTransientObserversFor(observer) {
-      observer.nodes_.forEach(function(node) {
-          var registrations = registrationsTable.get(node);
-          if (!registrations) {
-              return;
-          }
-          registrations.forEach(function(registration) {
-              if (registration.observer === observer) {
-                  registration.removeTransientObservers();
-              }
-          });
-      });
-  }
-
-  /**
-   * This function is used for the "For each registered observer observer (with
-   * observer's options as options) in target's list of registered observers,
-   * run these substeps:" and the "For each ancestor ancestor of target, and for
-   * each registered observer observer (with options options) in ancestor's list
-   * of registered observers, run these substeps:" part of the algorithms. The
-   * |options.subtree| is checked to ensure that the callback is called
-   * correctly.
-   *
-   * @param {Node} target
-   * @param {function(MutationObserverInit):MutationRecord} callback
-   */
-  function forEachAncestorAndObserverEnqueueRecord(target, callback) {
-      var node, registration, registrations, j, options, record;
-      for (node = target; node; node = node.parentNode) {
-          registrations = registrationsTable.get(node);
-
-          if (registrations) {
-              for (j = 0; j < registrations.length; j++) {
-                  registration = registrations[j];
-                  options = registration.options;
-
-                  // Only target ignores subtree.
-                  if ((node !== target) && !options.subtree) {
-                      continue;
-                  }
-
-                  record = callback(options);
-                  if (record) {
-                      registration.enqueue(record);
-                  }
-              }
-          }
-        }
-  }
-
-  /**
-   * The class that maps to the DOM MutationObserver interface.
-   * @param {Function} callback.
-   * @constructor
-   */
-  function JsMutationObserver(callback) {
-      var instance = this;
-      instance.callback_ = callback;
-      instance.nodes_ = [];
-      instance.records_ = [];
-      instance.uid_ = ++uidCounter;
-  }
-
-  JsMutationObserver.prototype = {
-      observe: function(target, options) {
-          var registrations, registration, i;
-          target = wrapIfNeeded(target);
-
-          if (
-              // 1.1
-              (!options.childList && !options.attributes && !options.characterData) ||
-
-              // 1.2
-              (options.attributeOldValue && !options.attributes) ||
-
-              // 1.3
-              (options.attributeFilter && options.attributeFilter.length && !options.attributes) ||
-
-              // 1.4
-              (options.characterDataOldValue && !options.characterData)) {
-
-              throw new SyntaxError();
-          }
-
-          registrations = registrationsTable.get(target);
-          if (!registrations) {
-              registrationsTable.set(target, registrations = []);
-          }
-
-          // 2
-          // If target's list of registered observers already includes a registered
-          // observer associated with the context object, replace that registered
-          // observer's options with options.
-          for (i = 0; i < registrations.length; i++) {
-              if (registrations[i].observer === this) {
-                  registration = registrations[i];
-                  registration.removeListeners();
-                  registration.options = options;
-                  break;
-              }
-          }
-
-          // 3.
-          // Otherwise, add a new registered observer to target's list of registered
-          // observers with the context object as the observer and options as the
-          // options, and add target to context object's list of nodes on which it
-          // is registered.
-          if (!registration) {
-              registration = new Registration(this, target, options);
-              registrations.push(registration);
-              this.nodes_.push(target);
-          }
-
-          registration.addListeners();
-      },
-
-      disconnect: function() {
-          var instance = this,
-              len = instance.nodes_.length,
-              i, k, node, registrations, registration;
-          for (k=0; k<len; k++) {
-              node = instance.nodes_[k];
-              registrations = registrationsTable.get(node);
-              for (i = 0; i < registrations.length; i++) {
-                  registration = registrations[i];
-                  if (registration.observer === instance) {
-                      registration.removeListeners();
-                      registrations.splice(i, 1);
-                      // Each node can only have one registered observer associated with
-                      // this observer.
-                      break;
-                  }
-              }
-          }
-          instance.records_ = [];
-      },
-
-      takeRecords: function() {
-          var copyOfRecords = this.records_;
-          this.records_ = [];
-          return copyOfRecords;
-      }
-  };
-
-  /**
-   * @param {string} type
-   * @param {Node} target
-   * @constructor
-   */
-  function MutationRecord(type, target) {
-      var instance = this;
-      instance.type = type;
-      instance.target = target;
-      instance.addedNodes = [];
-      instance.removedNodes = [];
-      instance.previousSibling = null;
-      instance.nextSibling = null;
-      instance.attributeName = null;
-      instance.attributeNamespace = null;
-      instance.oldValue = null;
-  }
-
-  function copyMutationRecord(original) {
-      var record = new MutationRecord(original.type, original.target);
-      record.addedNodes = original.addedNodes.slice();
-      record.removedNodes = original.removedNodes.slice();
-      record.previousSibling = original.previousSibling;
-      record.nextSibling = original.nextSibling;
-      record.attributeName = original.attributeName;
-      record.attributeNamespace = original.attributeNamespace;
-      record.oldValue = original.oldValue;
-      return record;
-  }
-
-  // We keep track of the two (possibly one) records used in a single mutation.
-
-  /**
-   * Creates a record without |oldValue| and caches it as |currentRecord| for
-   * later use.
-   * @param {string} oldValue
-   * @return {MutationRecord}
-   */
-  function getRecord(type, target) {
-      currentRecord = new MutationRecord(type, target);
-      return currentRecord;
-  }
-
-  /**
-   * Gets or creates a record with |oldValue| based in the |currentRecord|
-   * @param {string} oldValue
-   * @return {MutationRecord}
-   */
-  function getRecordWithOldValue(oldValue) {
-      if (recordWithOldValue) {
-          return recordWithOldValue;
-      }
-      recordWithOldValue = copyMutationRecord(currentRecord);
-      recordWithOldValue.oldValue = oldValue;
-      return recordWithOldValue;
-  }
-
-  function clearRecords() {
-      currentRecord = recordWithOldValue = undefined;
-  }
-
-  /**
-   * @param {MutationRecord} record
-   * @return {boolean} Whether the record represents a record from the current
-   * mutation event.
-   */
-  function recordRepresentsCurrentMutation(record) {
-      return (record === recordWithOldValue) || (record === currentRecord);
-  }
-
-  /**
-   * Selects which record, if any, to replace the last record in the queue.
-   * This returns |null| if no record should be replaced.
-   *
-   * @param {MutationRecord} lastRecord
-   * @param {MutationRecord} newRecord
-   * @param {MutationRecord}
-   */
-  function selectRecord(lastRecord, newRecord) {
-      if (lastRecord === newRecord) {
-          return lastRecord;
-      }
-
-      // Check if the the record we are adding represents the same record. If
-      // so, we keep the one with the oldValue in it.
-      if (recordWithOldValue && recordRepresentsCurrentMutation(lastRecord)) {
-          return recordWithOldValue;
-      }
-
-      return null;
-  }
-
-  /**
-   * Class used to represent a registered observer.
-   * @param {MutationObserver} observer
-   * @param {Node} target
-   * @param {MutationObserverInit} options
-   * @constructor
-   */
-  function Registration(observer, target, options) {
-      var instance = this;
-      instance.observer = observer;
-      instance.target = target;
-      instance.options = options;
-      instance.transientObservedNodes = [];
-  }
-
-  Registration.prototype = {
-      enqueue: function(record) {
-          var records = this.observer.records_,
-              length = records.length,
-              lastRecord, recordToReplaceLast;
-
-          // There are cases where we replace the last record with the new record.
-          // For example if the record represents the same mutation we need to use
-          // the one with the oldValue. If we get same record (this can happen as we
-          // walk up the tree) we ignore the new record.
-          if (records.length > 0) {
-              lastRecord = records[length - 1];
-              recordToReplaceLast = selectRecord(lastRecord, record);
-              if (recordToReplaceLast) {
-                  records[length - 1] = recordToReplaceLast;
-                  return;
-              }
-          } else {
-              scheduleCallback(this.observer);
-          }
-
-          records[length] = record;
-      },
-
-      changeListeners_: function(node, remove) {
-          var instance = this,
-              options = instance.options;
-          if (options.attributes) {
-              remove ? node.removeEventListener('DOMAttrModified', instance, true) : node.addEventListener('DOMAttrModified', instance, true);
-          }
-
-          if (options.characterData) {
-              remove ? node.removeEventListener('DOMCharacterDataModified', instance, true) : node.addEventListener('DOMCharacterDataModified', instance, true);
-          }
-
-          if (options.childList) {
-              remove ? node.removeEventListener('DOMNodeInserted', instance, true) : node.addEventListener('DOMNodeInserted', instance, true);
-          }
-
-          if (options.childList || options.subtree) {
-              remove ? node.removeEventListener('DOMNodeRemoved', instance, true) : node.addEventListener('DOMNodeRemoved', instance, true);
-          }
-      },
-
-      addListeners: function() {
-          this.changeListeners_(this.target);
-      },
-
-      removeListeners: function() {
-          this.changeListeners_(this.target, true);
-      },
-
-      /**
-       * Adds a transient observer on node. The transient observer gets removed
-       * next time we deliver the change records.
-       * @param {Node} node
-       */
-      addTransientObserver: function(node) {
-          var instance = this,
-              registrations;
-          // Don't add transient observers on the target itself. We already have all
-          // the required listeners set up on the target.
-          if (node === instance.target) {
-              return;
-          }
-
-          instance.changeListeners_(node);
-          instance.transientObservedNodes.push(node);
-          registrations = registrationsTable.get(node);
-          if (!registrations) {
-              registrationsTable.set(node, registrations = []);
-          }
-
-          // We know that registrations does not contain this because we already
-          // checked if node === this.target.
-          registrations.push(instance);
-      },
-
-      removeTransientObservers: function() {
-          var instance = this,
-              transientObservedNodes = instance.transientObservedNodes,
-              len = transientObservedNodes.length,
-              registrations, i, k, node;
-          instance.transientObservedNodes = [];
-
-          for (k=0; k<len; k++) {
-              node = transientObservedNodes[k];
-              // Transient observers are never added to the target.
-              instance.changeListeners_(node, true);
-
-              registrations = registrationsTable.get(node);
-              for (i = 0; i < registrations.length; i++) {
-                  if (registrations[i] === instance) {
-                      registrations.splice(i, 1);
-                      // Each node can only have one registered observer associated with
-                      // this observer.
-                      break;
-                  }
-              }
-          }
-      },
-
-      handleEvent: function(e) {
-          var name, namespace, target, record, changedNode, addedNodes, removedNodes, previousSibling, nextSibling, oldValue;
-          // Stop propagation since we are managing the propagation manually.
-          // This means that other mutation events on the page will not work
-          // correctly but that is by design.
-          e.stopImmediatePropagation();
-
-          switch (e.type) {
-              case 'DOMAttrModified':
-                  // http://dom.spec.whatwg.org/#concept-mo-queue-attributes
-
-                  name = e.attrName;
-                  namespace = e.relatedNode.namespaceURI;
-                  target = e.target;
-
-                  // 1.
-                  record = getRecord('attributes', target);
-                  record.attributeName = name;
-                  record.attributeNamespace = namespace;
-
-                  // 2.
-                  oldValue = (e.attrChange === global.MutationEvent.ADDITION) ? null : e.prevValue;
-
-                  forEachAncestorAndObserverEnqueueRecord(target, function(options) {
-                      // 3.1, 4.2
-                      if (!options.attributes) {
-                          return;
-                      }
-
-                      // 3.2, 4.3
-                      if (options.attributeFilter && options.attributeFilter.length &&
-                          (options.attributeFilter.indexOf(name) === -1) &&
-                          (options.attributeFilter.indexOf(namespace) === -1)) {
-                          return;
-                      }
-                      // 3.3, 4.4
-                      if (options.attributeOldValue) {
-                          return getRecordWithOldValue(oldValue);
-                      }
-
-                      // 3.4, 4.5
-                      return record;
-                  });
-
-                  break;
-
-              case 'DOMCharacterDataModified':
-                  // http://dom.spec.whatwg.org/#concept-mo-queue-characterdata
-                  target = e.target;
-
-                  // 1.
-                  record = getRecord('characterData', target);
-
-                  // 2.
-                  oldValue = e.prevValue;
-
-                  forEachAncestorAndObserverEnqueueRecord(target, function(options) {
-                      // 3.1, 4.2
-                      if (!options.characterData) {
-                          return;
-                      }
-
-                      // 3.2, 4.3
-                      if (options.characterDataOldValue) {
-                          return getRecordWithOldValue(oldValue);
-                      }
-
-                      // 3.3, 4.4
-                      return record;
-                  });
-
-                  break;
-
-              case 'DOMNodeRemoved':
-                  this.addTransientObserver(e.target);
-                  // Fall through.
-                  /* falls through */
-              case 'DOMNodeInserted':
-                  // http://dom.spec.whatwg.org/#concept-mo-queue-childlist
-                  target = e.relatedNode;
-                  changedNode = e.target;
-                  if (e.type === 'DOMNodeInserted') {
-                      addedNodes = [changedNode];
-                      removedNodes = [];
-                  } else {
-
-                      addedNodes = [];
-                      removedNodes = [changedNode];
-                  }
-                  previousSibling = changedNode.previousSibling;
-                  nextSibling = changedNode.nextSibling;
-
-                  // 1.
-                  record = getRecord('childList', target);
-                  record.addedNodes = addedNodes;
-                  record.removedNodes = removedNodes;
-                  record.previousSibling = previousSibling;
-                  record.nextSibling = nextSibling;
-
-                  forEachAncestorAndObserverEnqueueRecord(target, function(options) {
-                      // 2.1, 3.2
-                      if (!options.childList) {
-                         return;
-                      }
-
-                      // 2.2, 3.3
-                      return record;
-                  });
-
-          }
-
-          clearRecords();
-      }
-  };
-
-  global.JsMutationObserver = JsMutationObserver;
-
-  if (!global.MutationObserver) {
-      global.MutationObserver = JsMutationObserver;
-  }
-
-
-}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],36:[function(require,module,exports){
-(function (global){
-// based upon https://gist.github.com/Gozala/1269991
-
-(function (global) {
-    "use strict";
-    var defineNamespace, Name, guard;
-
-    if (!global.WeakMap) {
-        defineNamespace = function(object, namespace) {
-            /**
-            Utility function takes `object` and `namespace` and overrides `valueOf`
-            method of `object`, so that when called with a `namespace` argument,
-            `private` object associated with this `namespace` is returned. If argument
-            is different, `valueOf` falls back to original `valueOf` property.
-            **/
-
-            // Private inherits from `object`, so that `this.foo` will refer to the
-            // `object.foo`. Also, original `valueOf` is saved in order to be able to
-            // delegate to it when necessary.
-            var privates = Object.create(object),
-                base = object.valueOf;
-            Object.defineProperty(object, 'valueOf', {
-                value: function valueOf(value) {
-                    // If `this` or `namespace` is not associated with a `privates` being
-                    // stored we fallback to original `valueOf`, otherwise we return privates.
-                    return ((value !== namespace) || (this !== object)) ? base.apply(this, arguments) : privates;
-                },
-                configurable: true
-            });
-            return privates;
-        };
-
-        Name = function() {
-          /**
-          Desugared implementation of private names proposal. API is different as
-          it's not possible to implement API proposed for harmony with in ES5. In
-          terms of provided functionality it supposed to be same.
-          http://wiki.ecmascript.org/doku.php?id=strawman:private_names
-          **/
-
-          var namespace = {};
-          return function name(object) {
-              var privates = object.valueOf(namespace);
-              return (privates !== object) ? privates : defineNamespace(object, namespace);
-          };
-        };
-
-        guard = function(key) {
-            /**
-            Utility function to guard WeakMap methods from keys that are not
-            a non-null objects.
-            **/
-
-            if (key !== Object(key)) {
-                throw new TypeError("value is not a non-null object");
-            }
-            return key;
-        };
-
-        global.WeakMap = function() {
-            /**
-            Implementation of harmony `WeakMaps`, in ES5. This implementation will
-            work only with keys that have configurable `valueOf` property (which is
-            a default for all non-frozen objects).
-            http://wiki.ecmascript.org/doku.php?id=harmony:weak_maps
-            **/
-
-            var privates = new Name();
-
-            return Object.freeze(Object.create(WeakMap.prototype, {
-                has: {
-                    value: function has(object) {
-                        return 'value' in privates(object);
-                    },
-                    configurable: true,
-                    enumerable: false,
-                    writable: true
-                },
-                get: {
-                    value: function get(key, fallback) {
-                        return privates(guard(key)).value || fallback;
-                    },
-                    configurable: true,
-                    enumerable: false,
-                    writable: true
-                },
-                set: {
-                    value: function set(key, value) {
-                        privates(guard(key)).value = value;
-                    },
-                    configurable: true,
-                    enumerable: false,
-                    writable: true
-                },
-                'delete': {
-                    value: function set(key) {
-                        return delete privates(guard(key)).value;
-                    },
-                    configurable: true,
-                    enumerable: false,
-                    writable: true
-                }
-            }));
-        };
-    }
-
-}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],37:[function(require,module,exports){
-(function (global){
 (function (global) {
     "use strict";
 
@@ -11899,16 +11204,16 @@ module.exports = function (window) {
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],38:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":34,"./lib/window.console.js":37}],39:[function(require,module,exports){
+},{"./lib/matchesselector.js":34,"./lib/window.console.js":35}],37:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
 	later: require('./lib/timers.js').later,
 	async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":40,"./lib/timers.js":41}],40:[function(require,module,exports){
+},{"./lib/idgenerator.js":38,"./lib/timers.js":39}],38:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -11965,7 +11270,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"polyfill/polyfill-base.js":38}],41:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":36}],39:[function(require,module,exports){
 (function (process,global){
 /**
  * Collection of various utility functions.
@@ -12125,9 +11430,9 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":55,"polyfill/polyfill-base.js":38}],42:[function(require,module,exports){
-var css = ".el-notrans {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: top 0s ease-out, left 0s ease-out !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.el-invisible {\n    visibility: hidden !important;\n}\n\n.el-hidden {\n    visibility: hidden !important;\n    position: absolute !important;\n    left: -9999px;\n    top: -9999px;\n}\n\n.el-block {\n    display: block !important;\n}\n\n.el-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],43:[function(require,module,exports){
+},{"_process":53,"polyfill/polyfill-base.js":36}],40:[function(require,module,exports){
+var css = ".el-notrans {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: top 0s ease-out, left 0s ease-out !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.el-invisible {\n    visibility: hidden !important;\n}\n\n.el-transparent {\n    opacity: 0;\n}\n\n.el-transformed-1s {\n    -webkit-transition: opacity 1s; !important;\n    -moz-transition: opacity 1s !important;\n    -ms-transition: opacity 1s !important;\n    -o-transition: opacity 1s !important; /* opera doesn't support none */\n    transition: opacity 1s !important;\n}\n\n.el-hidden {\n    visibility: hidden !important;\n    position: absolute !important;\n    left: -9999px;\n    top: -9999px;\n}\n\n.el-block {\n    display: block !important;\n}\n\n.el-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],41:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12296,7 +11601,7 @@ module.exports = {
     }
 
 };
-},{"js-ext/lib/object.js":30,"js-ext/lib/string.js":32}],44:[function(require,module,exports){
+},{"js-ext/lib/object.js":30,"js-ext/lib/string.js":32}],42:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12688,7 +11993,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/lib/object.js":30,"polyfill/polyfill-base.js":38}],45:[function(require,module,exports){
+},{"js-ext/lib/object.js":30,"polyfill/polyfill-base.js":36}],43:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12807,7 +12112,7 @@ module.exports = function (window) {
 
     return ElementPlugin;
 };
-},{"js-ext/lib/function.js":29}],46:[function(require,module,exports){
+},{"js-ext/lib/function.js":29}],44:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13486,7 +12791,7 @@ module.exports = function (window) {
 
 
 
-},{"./vdom-ns.js":50}],47:[function(require,module,exports){
+},{"./vdom-ns.js":48}],45:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13507,10 +12812,7 @@ module.exports = function (window) {
 require('../css/element.css');
 require('js-ext/lib/object.js');
 require('js-ext/lib/string.js');
-require('polyfill/lib/window.console.js');
-require('polyfill/lib/weakmap.js');
-require('polyfill/lib/mutationobserver.js'); // needs weakmap
-
+require('polyfill');
 
 module.exports = function (window) {
 
@@ -13537,6 +12839,7 @@ module.exports = function (window) {
         vNodeProto = require('./vnode.js')(window),
         NS = require('./vdom-ns.js')(window),
         TRANSFORM_XY = require('polyfill/extra/transform.js')(window),
+        later = require('utils').later,
         DOCUMENT = window.document,
         nodeids = NS.nodeids,
         arrayIndexOf = Array.prototype.indexOf,
@@ -13547,6 +12850,8 @@ module.exports = function (window) {
         NO_TRANS = EL_+'notrans',
         INVISIBLE = EL_+'invisible',
         HIDDEN = EL_+'hidden',
+        TRANSPARENT = EL_+'transparent',
+        TRANSFORMED_1S = EL_+'transformed-1s',
         REGEXP_NODE_ID = /^#\S+$/,
         LEFT = 'left',
         TOP = 'top',
@@ -13566,6 +12871,7 @@ module.exports = function (window) {
         PX = 'px',
         REGEXP_TRX = /translateX\((-?\d+)/,
         REGEXP_TRY = /translateY\((-?\d+)/,
+        TRANS_END = 'transitionend',
         setupObserver,
         SIBLING_MATCH_CHARACTER = {
             '+': true,
@@ -14204,11 +13510,11 @@ module.exports = function (window) {
         };
 
         /**
-         * Gets an ElementArray of vElements that lie within this Element and match the css-selector.
+         * Gets an ElementArray of Elements that lie within this Element and match the css-selector.
          *
          * @method getAll
          * @param cssSelector {String} css-selector to match
-         * @return {ElementArray} ElementArray of vElements that match the css-selector
+         * @return {ElementArray} ElementArray of Elements that match the css-selector
          * @since 0.0.1
          */
         ElementPrototype.getAll = function(cssSelector) {
@@ -14451,7 +13757,7 @@ module.exports = function (window) {
         };
 
        /**
-        * Gets the value of the following vElements:
+        * Gets the value of the following Elements:
         *
         * <ul>
         *     <li>input</li>
@@ -14557,6 +13863,134 @@ module.exports = function (window) {
         */
         ElementPrototype.hasFocus = function() {
             return (DOCUMENT.activeElement===this);
+        };
+
+       /**
+        * Indicates whether the current focussed Element lies inside this Element (on a descendant Element).
+        *
+        * @method hasFocusInside
+        * @return {Boolean}
+        * @since 0.0.1
+        */
+        ElementPrototype.hasFocusInside = function() {
+            var activeElement = DOCUMENT.activeElement;
+            return ((DOCUMENT.activeElement!==this) && this.contains(activeElement));
+        };
+
+       /**
+        * Returns whether the inline style of the specified property is present. `Inline` means: what is set directly on the Element.
+        *
+        * Note: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine
+        *
+        * @method hasInlineStyle
+        * @param cssProperty {String} the css-property to look for
+        * @param [pseudo] {String} to look inside a pseudo-style
+        * @return {Boolean} whether the inlinestyle was present
+        * @since 0.0.1
+        */
+        ElementPrototype.hasInlineStyle = function(cssProperty, pseudo) {
+            return !!this.getInlineStyle(cssProperty, pseudo);
+        };
+
+       /**
+        * Returns whether the inline style of the specified property is present. `Inline` means: what is set directly on the Element.
+        *
+        * Note: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine
+        *
+        * @method hide
+        * @param cssProperty {String} the css-property to look for
+        * @param [pseudo] {String} to look inside a pseudo-style
+        * @return {Boolean} whether the inlinestyle was present
+        * @since 0.0.1
+        */
+        ElementPrototype.hide = function(fade) {
+// transitions only work with IE10+, and that browser has addEventListener
+            // when it doesn't have, it doesn;t harm to leave the transitionclass on: it would work anyway
+            // nevertheless we will remove it with a timeout
+            var instance = this,
+                promise,
+            afterTrans = function() {
+                if (instance.hasData('_hidden')) {
+                    instance.setClass(HIDDEN);
+                    instance.removeClass(TRANSFORMED_1S);
+                    instance.removeEventListener(TRANS_END, afterTrans, true);
+                    promise.fulfill();
+                }
+                else {
+                    promise.reject('Node is set to show again after it is set hidden.');
+                }
+            };
+            // we need to set data on the node to inform that the last action was to show the node
+            // this will prevent any `hide()`-transform-callback that moght be running from doing its action
+            instance.setData('_hidden', true);
+            if (fade) {
+                instance.setClass(TRANSFORMED_1S);
+                instance.setClass(TRANSPARENT);
+                instance.addEventListener(TRANS_END, afterTrans, true);
+                later(afterTrans, 1050);
+                promise = Promise.manage();
+                return promise;
+            }
+            else {
+                instance.setClass(HIDDEN);
+                instance.setClass(TRANSPARENT);
+                return Promise.resolve();
+            }
+        };
+
+       /**
+        * Returns whether the inline style of the specified property is present. `Inline` means: what is set directly on the Element.
+        *
+        * Note: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine
+        *
+        * @method hide
+        * @param cssProperty {String} the css-property to look for
+        * @param [pseudo] {String} to look inside a pseudo-style
+        * @return {Boolean} whether the inlinestyle was present
+        * @since 0.0.1
+        */
+        ElementPrototype.show = function(fade) {
+            var instance = this,
+                promise,
+            afterTrans = function() {
+                if (!instance.hasData('_hidden')) {
+                    instance.removeClass(TRANSFORMED_1S);
+                    instance.removeEventListener(TRANS_END, afterTrans, true);
+                    promise.fulfill();
+                }
+                else {
+                    promise.reject('Node is set to hide again after it is set visible.');
+                }
+            };
+            // we need to set data on the node to inform that the last action was to show the node
+            // this will prevent any `hide()`-transform-callback that moght be running from doing its action
+            instance.removeData('_hidden');
+            if (fade) {
+                instance.setClass(TRANSFORMED_1S);
+                instance.removeClass(TRANSPARENT);
+                instance.removeClass(HIDDEN);
+                instance.addEventListener(TRANS_END, afterTrans, true);
+                later(afterTrans, 1050);
+                promise = Promise.manage();
+                return promise;
+            }
+            else {
+                instance.removeClass(TRANSFORMED_1S);
+                instance.removeClass(TRANSPARENT);
+                instance.removeClass(HIDDEN);
+                return Promise.resolve();
+            }
+        };
+
+       /**
+        * Indicates whether the Element currently is part if the DOM.
+        *
+        * @method inDOM
+        * @return {Boolean} whether the Element currently is part if the DOM.
+        * @since 0.0.1
+        */
+        ElementPrototype.inDOM = function() {
+            return DOCUMENT.contains(this);
         };
 
        /**
@@ -14827,14 +14261,14 @@ module.exports = function (window) {
         };
 
         /**
-         * Returns an ElementArray of all vElements within the Element, that match the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,
+         * Returns an ElementArray of all Elements within the Element, that match the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,
          * they need to be separated by a `comma`.
          *
          * querySelectorAll is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.
          *
          * @method querySelectorAll
          * @param selectors {String} CSS-selector(s) that should match
-         * @return {ElementArray} non-life Array (snapshot) with vElements
+         * @return {ElementArray} non-life Array (snapshot) with Elements
          */
         ElementPrototype.querySelectorAll = function(selectors) {
             var found = ElementArray.createArray(),
@@ -14885,11 +14319,15 @@ module.exports = function (window) {
         * Alias for thisNode.parentNode.removeChild(thisNode);
         *
         * @method remove
+        * @return {Node} the DOM-node that was removed. You could re-insert it at a later time.
         * @since 0.0.1
         */
         ElementPrototype.remove = function() {
-            var vnode = this.vnode;
-            vnode.vParent._removeChild(vnode);
+            var instance = this,
+                vnode = instance.vnode,
+                vParent = vnode.vParent;
+            vParent && vParent._removeChild(vnode);
+            return instance;
         };
 
        /**
@@ -14926,10 +14364,13 @@ module.exports = function (window) {
         *
         * @method removeChild
         * @param domNode {Node} the child-Node to remove
+        * @return {Node} the DOM-node that was removed. You could re-insert it at a later time.
         */
         ElementPrototype._removeChild = ElementPrototype.removeChild;
         ElementPrototype.removeChild = function(domNode) {
-            this.vnode._removeChild(domNode.vnode);
+            var instance = this;
+            instance.vnode._removeChild(domNode.vnode);
+            return instance;
         };
 
        /**
@@ -14971,6 +14412,17 @@ module.exports = function (window) {
                 }
             }
             return this;
+        };
+
+       /**
+        * Removes the Elment's `id`.
+        *
+        * @method removeId
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.removeId = function() {
+            return this.removeAttr('id');
         };
 
        /**
@@ -15238,7 +14690,7 @@ module.exports = function (window) {
         };
 
        /**
-        * Sets the value of the following vElements:
+        * Sets the value of the following Elements:
         *
         * <ul>
         *     <li>input</li>
@@ -15694,7 +15146,7 @@ for (j=0; j<len2; j++) {
 */
 
 /**
- * Returns an HTMLCollection of all vElements within this Element, that match their classes with the supplied `classNames` argument.
+ * Returns an HTMLCollection of all Elements within this Element, that match their classes with the supplied `classNames` argument.
  * To match multiple different classes, separate them with a `comma`.
  *
  * getElementsByClassName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
@@ -15703,11 +15155,11 @@ for (j=0; j<len2; j++) {
  *
  * @method getElementsByClassName
  * @param classNames {String} the classes to search for
- * @return {HTMLCollection} life Array with vElements
+ * @return {HTMLCollection} life Array with Elements
  */
 
 /**
- * Returns an HTMLCollection of all vElements within this Element, that match their `name`-attribute with the supplied `name` argument.
+ * Returns an HTMLCollection of all Elements within this Element, that match their `name`-attribute with the supplied `name` argument.
  *
  * getElementsByName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
  *
@@ -15715,12 +15167,12 @@ for (j=0; j<len2; j++) {
  *
  * @method getElementsByName
  * @param name {String} the property of name-attribute to search for
- * @return {HTMLCollection} life Array with vElements
+ * @return {HTMLCollection} life Array with Elements
  */
 
 
 /**
- * Returns an HTMLCollection of all vElements within this Element, that match their `name`-attribute with the supplied `name` argument.
+ * Returns an HTMLCollection of all Elements within this Element, that match their `name`-attribute with the supplied `name` argument.
  *
  * getElementsByTagName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.
  *
@@ -15728,7 +15180,7 @@ for (j=0; j<len2; j++) {
  *
  * @method getElementsByTagName
  * @param tagNames {String} the tags to search for
- * @return {HTMLCollection} life Array with vElements
+ * @return {HTMLCollection} life Array with Elements
  */
 
 /**
@@ -15849,7 +15301,7 @@ for (j=0; j<len2; j++) {
  */
 
 /**
- * Returns the number of children (child vElements)
+ * Returns the number of children (child Elements)
  *
  * @property childElementCount
  * @type Number
@@ -16154,7 +15606,7 @@ for (j=0; j<len2; j++) {
 * @type String
 * @since 0.0.1
 */
-},{"../css/element.css":42,"./element-array.js":44,"./html-parser.js":48,"./node-parser.js":49,"./vdom-ns.js":50,"./vnode.js":51,"js-ext/lib/object.js":30,"js-ext/lib/string.js":32,"polyfill/extra/transform.js":33,"polyfill/lib/mutationobserver.js":35,"polyfill/lib/weakmap.js":36,"polyfill/lib/window.console.js":37,"window-ext":53}],48:[function(require,module,exports){
+},{"../css/element.css":40,"./element-array.js":42,"./html-parser.js":46,"./node-parser.js":47,"./vdom-ns.js":48,"./vnode.js":49,"js-ext/lib/object.js":30,"js-ext/lib/string.js":32,"polyfill":36,"polyfill/extra/transform.js":33,"utils":37,"window-ext":51}],46:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16486,7 +15938,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":43,"./vdom-ns.js":50}],49:[function(require,module,exports){
+},{"./attribute-extractor.js":41,"./vdom-ns.js":48}],47:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16609,7 +16061,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":43,"./vdom-ns.js":50,"./vnode.js":51}],50:[function(require,module,exports){
+},{"./attribute-extractor.js":41,"./vdom-ns.js":48,"./vnode.js":49}],48:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -16717,7 +16169,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/lib/object.js":30}],51:[function(require,module,exports){
+},{"js-ext/lib/object.js":30}],49:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17826,7 +17278,7 @@ module.exports = function (window) {
                 }
                 instance._vChildren = null;
                 // explicitely set instance.domNode._vnode and instance.domNode to null in order to prevent problems with the GC (we break the circular reference)
-                instance.domNode._vnode = null;
+                delete instance.domNode._vnode;
                 // if valid id, then _remove the DOMnodeRef from internal hash
                 instance.id && delete nodeids[instance.id];
                 instance._deleteFromParent();
@@ -17981,7 +17433,10 @@ module.exports = function (window) {
             (attributeName===STYLE) && (instance.styles={});
             // in case of CLASS attribute --> special treatment
             (attributeName===CLASS) && (instance.classNames={});
-            (attributeName===ID) && (delete nodeids[instance.id]);
+            if (attributeName===ID) {
+                delete nodeids[instance.id];
+                delete instance.id;
+            }
             instance.domNode._removeAttribute(attributeName);
             return instance;
         },
@@ -18044,6 +17499,10 @@ module.exports = function (window) {
                 extractStyle, extractClass,
                 attrs = instance.attrs;
             if (attrs[attributeName]!==value) {
+                if ((value===undefined) || (value===undefined)) {
+                    instance._removeAttr(attributeName);
+                    return instance;
+                }
                 attrs[attributeName] = value;
                 // in case of STYLE attribute --> special treatment
                 if (attributeName===STYLE) {
@@ -18776,7 +18235,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":43,"./html-parser.js":48,"./vdom-ns.js":50,"js-ext/lib/array.js":28,"js-ext/lib/object.js":30,"js-ext/lib/string.js":32,"utils/lib/timers.js":41}],52:[function(require,module,exports){
+},{"./attribute-extractor.js":41,"./html-parser.js":46,"./vdom-ns.js":48,"js-ext/lib/array.js":28,"js-ext/lib/object.js":30,"js-ext/lib/string.js":32,"utils/lib/timers.js":39}],50:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
@@ -18814,13 +18273,13 @@ module.exports = function (window) {
 
     return vdom;
 };
-},{"./partials/element-plugin.js":45,"./partials/extend-document.js":46,"./partials/extend-element.js":47,"./partials/node-parser.js":49}],53:[function(require,module,exports){
+},{"./partials/element-plugin.js":43,"./partials/extend-document.js":44,"./partials/extend-element.js":45,"./partials/node-parser.js":47}],51:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":54}],54:[function(require,module,exports){
+},{"./lib/sizes.js":52}],52:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
@@ -18928,7 +18387,7 @@ module.exports = function (window) {
     };
 
 };
-},{}],55:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -19164,4 +18623,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"css":8,"drag-drop":10,"event":20,"event-dom/extra/hover.js":14,"event-dom/extra/valuechange.js":15,"event-mobile":16,"io/extra/io-cors-ie9.js":21,"io/extra/io-stream.js":22,"io/extra/io-transfer.js":23,"io/extra/io-xml.js":24,"js-ext":27,"js-ext/extra/reserved-words.js":26,"node-win":undefined,"polyfill":38,"utils":39,"vdom":52,"window-ext":53}]},{},[]);
+},{"css":8,"drag-drop":10,"event":20,"event-dom/extra/hover.js":14,"event-dom/extra/valuechange.js":15,"event-mobile":16,"io/extra/io-cors-ie9.js":21,"io/extra/io-stream.js":22,"io/extra/io-transfer.js":23,"io/extra/io-xml.js":24,"js-ext":27,"js-ext/extra/reserved-words.js":26,"node-win":undefined,"polyfill":36,"utils":37,"vdom":50,"window-ext":51}]},{},[]);
