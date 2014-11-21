@@ -2,7 +2,7 @@
 module: vdom
 maintainer: Marco Asbreuk
 title: Show or hide a DOM-node
-intro: "This example shows how you can show and hide a node. To hide a node on startup, you must add the 'el-hidden' as well as the 'el-transparent' class. The latter is needed to be able to call node.show(true) on the initial hidden Node. Whithout 'el-transparent' there won't be a fade-effect for the first time the node gets visible. This doesn't account for nodes who are hidden by using node.hide()."
+intro: "This example shows how you can show and hide a node. To hide a node on startup, you must add the 'itsa-hidden' as well as hide the element initially through node.hide(). The latter is needed to be able to call node.show(true) on the initial hidden Node. Without initially hided by JS, there won't be a fade-effect for the first time the node gets visible."
 ---
 
 <style type="text/css">
@@ -49,7 +49,7 @@ Clik on the button to toggle the className:
     <button id="button-hide-faded" class="pure-button pure-button-primary pure-button-bordered">Hide Node faded</button>
 </div>
 
-<div class="container el-hidden el-transparent"></div>
+<div class="container itsa-hidden itsa-transparent"></div>
 
 <p class="spaced">Code-example:</p>
 
@@ -62,7 +62,7 @@ Clik on the button to toggle the className:
         <button id="button-hide-faded" class="pure-button pure-button-primary pure-button-bordered">Hide Node faded</button>
     </div>
 
-    <div class="container el-hidden el-transparent"></div>
+    <div class="container itsa-hidden itsa-transparent"></div>
 </body>
 ```
 

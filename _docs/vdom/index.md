@@ -148,18 +148,24 @@ These <u>do work</u>, but they update their vnode's asynchronously. So, if you q
 ###setAttr###
 ###setInlineStyle###
 ###defineInlineStyle###
+###setInlineTransform###
+###setInlineTransition###
 ###setId###
 ###setClass###
 ###toggleClass###
 ###replaceClass###
 ###removeAttr###
 ###removeInlineStyle###
+###removeInlineTransform###
+###removeInlineTransition###
 ###removeClass###
 ###removeId###
 
 ####methods for information:####
 ###getAttr###
 ###getInlineStyle###
+###getInlineTransform###
+###getInlineTransition###
 ###getId###
 ###getStyle###
 ###getClass###
@@ -168,6 +174,8 @@ These <u>do work</u>, but they update their vnode's asynchronously. So, if you q
 ###hasClass###
 ###hasChildren###
 ###hasInlineStyle###
+###hasInlineTransform###
+###hasInlineTransition###
 ###contains###
 ###matches###
 ###inside###
