@@ -270,6 +270,9 @@ String gets extended with the following new methods:
 ###endsWith###
 Checks if the string ends with the value specified by `test`.
 
+###parsable###
+Checks if the string can be parsed into a number when using `parseInt()`
+
 ###startsWith###
 Checks if the string starts with the value specified by `test`.
 
