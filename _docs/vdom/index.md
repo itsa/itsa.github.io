@@ -167,6 +167,8 @@ These <u>do work</u>, but they update their vnode's asynchronously. So, if you q
 ###getInlineTransform###
 ###getInlineTransition###
 ###getTransform###
+not available yet
+
 ###getTransition###
 ###getId###
 ###getStyle###
@@ -179,6 +181,8 @@ These <u>do work</u>, but they update their vnode's asynchronously. So, if you q
 ###hasInlineTransform###
 ###hasInlineTransition###
 ###hasTransform###
+not available yet
+
 ###hasTransition###
 ###contains###
 ###matches###
