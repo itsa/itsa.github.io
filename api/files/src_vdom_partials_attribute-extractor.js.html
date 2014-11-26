@@ -208,154 +208,354 @@
 require(&#x27;js-ext/lib/string.js&#x27;);
 require(&#x27;js-ext/lib/object.js&#x27;);
 
-var END_OF_VALUE = {
-        &#x27;;&#x27;: true,
-        &#x27;}&#x27;: true
+module.exports = function (window) {
+
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
+
+    if (window._ITSAmodules.AttributeExtractor) {
+        return window._ITSAmodules.AttributeExtractor; // AttributeExtractor was already created
+    }
+
+    var END_OF_VALUE = {
+            &#x27;;&#x27;: true,
+            &#x27;}&#x27;: true
+        },
+        TRANSFORM = &#x27;transform&#x27;,
+        TRANSFORM_MUTATIONS = {},
+        TRANSITION = &#x27;transition&#x27;,
+        TRANSITION_MUTATIONS = {},
+        TRANSFORM_PROPERTY = require(&#x27;polyfill/extra/transform.js&#x27;)(window) || TRANSFORM,
+        TRANSITION_PROPERTY = require(&#x27;polyfill/extra/transition.js&#x27;)(window) || TRANSITION,
+        _serializeTransform, _parseTransform, _serializeTransition, _parseTransition, extractor;
+
+    TRANSFORM_MUTATIONS[TRANSFORM] = true;
+    TRANSFORM_MUTATIONS[&#x27;-webkit-&#x27;+TRANSFORM] = true;
+    TRANSFORM_MUTATIONS[&#x27;-moz-&#x27;+TRANSFORM] = true;
+    TRANSFORM_MUTATIONS[&#x27;-ms-&#x27;+TRANSFORM] = true;
+    TRANSFORM_MUTATIONS[&#x27;-o-&#x27;+TRANSFORM] = true;
+
+    TRANSITION_MUTATIONS[TRANSITION] = true;
+    TRANSITION_MUTATIONS[&#x27;-webkit-&#x27;+TRANSITION] = true;
+    TRANSITION_MUTATIONS[&#x27;-moz-&#x27;+TRANSITION] = true;
+    TRANSITION_MUTATIONS[&#x27;-ms-&#x27;+TRANSITION] = true;
+    TRANSITION_MUTATIONS[&#x27;-o-&#x27;+TRANSITION] = true;
+
+    _serializeTransform = function(transformValue) {
+        // transformValue should an Object !!
+        var serialized = &#x27;&#x27;;
+        if (typeof transformValue===&#x27;string&#x27;) {
+            return transformValue;
+        }
+        transformValue.each(function(value, key) {
+            serialized += &#x27; &#x27;+ key + ((key===&#x27;none&#x27;) ? &#x27;&#x27; : &#x27;(&#x27; + value + &#x27;)&#x27;);
+        });
+        return (serialized[0]===&#x27; &#x27;) ? serialized.substr(1) : serialized;
     };
 
-module.exports = {
-
-    extractClass: function(classes) {
-        var attrClass = &#x27;&#x27;,
-            classNames = {},
-            oneclass, len, i, character;
-        if (classes) {
-            oneclass = &#x27;&#x27;;
-            len = classes.length;
-            for (i=0; i&lt;len; i++) {
-                character = classes[i];
-                if (character===&#x27; &#x27;) {
-                    if (oneclass!==&#x27;&#x27;) {
-                        classNames[oneclass] = true;
-                        attrClass += &#x27; &#x27;+oneclass;
-                        oneclass = &#x27;&#x27;;
-                    }
-                }
-                else {
-                    oneclass += character;
-                }
-            }
-            if (oneclass!==&#x27;&#x27;) {
-                classNames[oneclass] = true;
-                attrClass += &#x27; &#x27;+oneclass;
-            }
+    _serializeTransition = function(transitionValue) {
+        // transitionValue should an Object !!
+        var serialized = &#x27;&#x27;,
+            timingFunction, delay;
+        if (typeof transitionValue===&#x27;string&#x27;) {
+            return transitionValue;
         }
-        return {
-            attrClass: (attrClass===&#x27;&#x27;) ? undefined : attrClass.substr(1),
-            classNames: classNames
-        };
-    },
+        transitionValue.each(function(value, key) {
+            timingFunction = value.timingFunction;
+            delay = value.delay;
+            serialized += &#x27;, &#x27; + key;
+            if (key!==&#x27;none&#x27;) {
+                serialized += &#x27; &#x27; + value.duration+&#x27;s&#x27;;
+                timingFunction &amp;&amp; (serialized+=&#x27; &#x27; + timingFunction);
+                delay &amp;&amp; (serialized+=&#x27; &#x27; + delay+&#x27;s&#x27;);
+            }
+        });
+        return (serialized[0]===&#x27;,&#x27;) ? serialized.substr(2) : serialized;
+    };
 
-    extractStyle: function(styles) {
-    /*  be aware you can encounter inline style like this:
-
-        style=&quot;{color: blue; background: white}
-        :visited {color: green}
-        :hover {background: yellow}
-        :visited:hover {color: purple}
-
-        OR
-
-        style=&quot;color: blue; background: white&quot;
-    */
-        var newStyles = {},
-            i, onlyElement, len, character, groupKey, key, value, insideValue, insideKey, hasValue, group;
-        if (styles) {
+    _parseTransform = function(transformValueSerialised) {
+        //transformValueSerialised might be: translateX(10px) matrix(1.0, 2.0, 3.0, 4.0, 5.0, 6.0) translateY(5px)
+        var parsed = {},
+            i, len, character, key, insideValue, value;
+        if (transformValueSerialised) {
             i = -1;
-            len = styles.length;
-
-            // first eliminate leading spaces
-/*jshint noempty:true */
-            while ((++i&lt;len) &amp;&amp; (character=styles[i]) &amp;&amp; (character===&#x27; &#x27;)) {}
-/*jshint noempty:false */
-
-            // preview next character
-            character = styles[i];
-            onlyElement = (character &amp;&amp; (character!==&#x27;{&#x27;) &amp;&amp; (character!==&#x27;:&#x27;));
-            if (onlyElement) {
-                newStyles.element = {};
-                group = newStyles.element;
-                groupKey = &#x27;element&#x27;;
-                insideKey = true;
-            }
-            else {
-                groupKey = &#x27;&#x27;;
-            }
-
-            // now process
+            len = transformValueSerialised.length;
             key = &#x27;&#x27;;
             insideValue = false;
-            i--;
-            while ((++i&lt;len) &amp;&amp; (character=styles[i])) {
+            while ((++i&lt;len) &amp;&amp; (character=transformValueSerialised[i])) {
                 if (insideValue) {
-                    if (END_OF_VALUE[character]) {
-                        group[key] = value.trim();
+                    if (character===&#x27;)&#x27;) {
+                        parsed[key] = value;
                         key = &#x27;&#x27;;
                         insideValue = false;
-                        insideKey = (character===&#x27;;&#x27;);
-                        insideKey || (groupKey=&#x27;&#x27;);
-                        hasValue = true;
+                        // eliminate next leading spaces, so we get a clean next &#x60;key&#x60;:
+                        while (((i+1)&lt;len) &amp;&amp; (transformValueSerialised[i+1]===&#x27; &#x27;)) {
+                            i++;
+                        }
                     }
                     else {
                         value += character;
                     }
                 }
-                else if (insideKey) {
-                    if (character===&#x27;:&#x27;){
-                        insideKey = false;
+                else {
+                    if (character===&#x27;(&#x27;){
                         insideValue = true;
-                        key = key.trim();
                         value = &#x27;&#x27;;
-                    }
-                    else if (character===&#x27;}&#x27;) {
-                        insideKey = false;
-                        groupKey = &#x27;&#x27;;
                     }
                     else {
                         key += character;
-                    }
-                }
-                else {
-                    if (character===&#x27;{&#x27;) {
-                        groupKey = groupKey.trim();
-                        (groupKey===&#x27;&#x27;) &amp;&amp; (groupKey=&#x27;element&#x27;);
-                        group = newStyles[groupKey] = {};
-                        insideKey = true;
-                        key = &#x27;&#x27;;
-                    }
-                    else {
-                        groupKey += character;
+                        if (key===&#x27;none&#x27;) {
+                            return {
+                                none: true
+                            };
+                        }
                     }
                 }
             }
-            insideValue &amp;&amp; (group[key]=value.trim());
         }
-        return {
-            attrStyle: hasValue &amp;&amp; this.serializeStyles(newStyles),
-            styles: newStyles
-        };
-    },
+        return parsed;
+    };
 
-    serializeStyles: function(styles) {
-        var serialized = &#x27;&#x27;,
-            onlyElementStyle = ((styles.size()===1) &amp;&amp; styles.element);
-        if (onlyElementStyle) {
-            styles.element.each(function(value, key) {
-                serialized += &#x27; &#x27;+ key + &#x27;: &#x27; + value + &#x27;;&#x27;;
-            });
+    _parseTransition = function(transitionValueSerialised) {
+        //transformValueSerialised might be: translateX(10px) matrix(1.0, 2.0, 3.0, 4.0, 5.0, 6.0) translateY(5px)
+        var parsed = {},
+            i, len, transitionItem, item, items, value, properties, item0, item1, item2, item3;
+        if (transitionValueSerialised) {
+            properties = transitionValueSerialised.split(&#x27;,&#x27;);
+            len = properties.length;
+            for (i=0; i&lt;len; i++) {
+                items = properties[i].trim();
+                (items.indexOf(&#x27;  &#x27;)!==-1) &amp;&amp; items.replace(/&#x27;  &#x27;/g, &#x27; &#x27;);
+                item = items.split(&#x27; &#x27;);
+                item0 = item[0];
+                item1 = item[1];
+                item2 = item[2];
+                item3 = item[3];
+
+                if (item0.parsable()) {
+                    // no key, but starting with a duration
+                    item3 = item2;
+                    item2 = item1;
+                    item1 = item0;
+                    item0 = &#x27;all&#x27;;
+                }
+
+                transitionItem = {};
+                (item0.toLowerCase()===&#x27;none&#x27;) &amp;&amp; (item0=&#x27;none&#x27;);
+                if (item0!==&#x27;none&#x27;) {
+                    transitionItem.duration = parseFloat(item1) || 0;
+/*jshint boss:true */
+                    if (value=item2) {
+/*jshint boss:false */
+                        // check if it is a Function, or a delayvalue
+                        if (value.parsable()) {
+                            transitionItem.delay = parseFloat(value);
+                        }
+                        else {
+                            transitionItem.timingFunction = value;
+                            (value=item3) &amp;&amp; (transitionItem.delay = parseFloat(value));
+                        }
+                    }
+                }
+
+                // in case &#x60;key&#x60; equals a variant of &#x60;transform&#x60;, but non-compatible with the current browser --&gt;
+                // redefine it into a browser-compatible version:
+                TRANSFORM_MUTATIONS[item0] &amp;&amp; (item0!==TRANSFORM_PROPERTY) &amp;&amp; (item0=TRANSFORM_PROPERTY);
+
+                parsed[item0] = transitionItem;
+            }
         }
-        else {
-            styles.each(function(groupValue, groupKey) {
-                (groupKey===&#x27;element&#x27;) || (serialized += &#x27; &#x27;+groupKey+&#x27; &#x27;);
-                serialized += &#x27;{&#x27;;
-                groupValue.each(function(value, key) {
-                    serialized += key + &#x27;: &#x27; + value + &#x27;; &#x27;;
+        return parsed;
+    };
+
+    extractor = window._ITSAmodules.AttributeExtractor = {
+        extractClass: function(classes) {
+            var attrClass = &#x27;&#x27;,
+                classNames = {},
+                oneclass, len, i, character;
+            if (classes) {
+                oneclass = &#x27;&#x27;;
+                len = classes.length;
+                for (i=0; i&lt;len; i++) {
+                    character = classes[i];
+                    if (character===&#x27; &#x27;) {
+                        if (oneclass!==&#x27;&#x27;) {
+                            classNames[oneclass] = true;
+                            attrClass += &#x27; &#x27;+oneclass;
+                            oneclass = &#x27;&#x27;;
+                        }
+                    }
+                    else {
+                        oneclass += character;
+                    }
+                }
+                if (oneclass!==&#x27;&#x27;) {
+                    classNames[oneclass] = true;
+                    attrClass += &#x27; &#x27;+oneclass;
+                }
+            }
+            return {
+                attrClass: (attrClass===&#x27;&#x27;) ? undefined : attrClass.substr(1),
+                classNames: classNames
+            };
+        },
+
+        extractStyle: function(styles) {
+        /*  be aware you can encounter inline style like this:
+
+            style=&quot;{color: blue; background: white}
+            :visited {color: green}
+            :hover {background: yellow}
+            :visited:hover {color: purple}
+
+            OR
+
+            style=&quot;color: blue; background: white&quot;
+
+
+            Also, you might encounter inline transform, which should be separated itself:
+
+            style=&quot;{color: blue; background: white; transform: translateX(10px) matrix(1.0, 2.0, 3.0, 4.0, 5.0, 6.0) translateY(5px);}
+            :visited {color: green}
+            :hover {background: yellow; transform: translateX(10px) matrix(1.0, 2.0, 3.0, 4.0, 5.0, 6.0) translateY(5px);}
+            :visited:hover {color: purple}
+
+            OR
+
+            style=&quot;color: blue; background: white; transform: translateX(10px) matrix(1.0, 2.0, 3.0, 4.0, 5.0, 6.0) translateY(5px);&quot;
+
+        */
+            var newStyles = {},
+                instance = this,
+                i, onlyElement, len, character, groupKey, key, value, insideValue, insideKey, hasValue, group;
+            if (styles) {
+                i = -1;
+                len = styles.length;
+
+                // first eliminate leading spaces
+    /*jshint noempty:true */
+                while ((++i&lt;len) &amp;&amp; (character=styles[i]) &amp;&amp; (character===&#x27; &#x27;)) {}
+    /*jshint noempty:false */
+
+                // preview next character
+                character = styles[i];
+                onlyElement = (character &amp;&amp; (character!==&#x27;{&#x27;) &amp;&amp; (character!==&#x27;:&#x27;));
+                if (onlyElement) {
+                    newStyles.element = {};
+                    group = newStyles.element;
+                    groupKey = &#x27;element&#x27;;
+                    insideKey = true;
+                }
+                else {
+                    groupKey = &#x27;&#x27;;
+                }
+
+                // now process
+                key = &#x27;&#x27;;
+                insideValue = false;
+                i--;
+                while ((++i&lt;len) &amp;&amp; (character=styles[i])) {
+                    if (insideValue) {
+                        hasValue = true;
+                        if (END_OF_VALUE[character]) {
+                            value = value.trim();
+                            // in case &#x60;key&#x60; equals a variant of &#x60;transform&#x60;, but non-compatible with the current browser --&gt;
+                            // redefine it into a browser-compatible version:
+                            TRANSFORM_MUTATIONS[key] &amp;&amp; (key!==TRANSFORM_PROPERTY) &amp;&amp; (key=TRANSFORM_PROPERTY);
+                            TRANSITION_MUTATIONS[key] &amp;&amp; (key!==TRANSITION_PROPERTY) &amp;&amp; (key=TRANSITION_PROPERTY);
+                            // store the property:
+                            group[key] = ((key===TRANSFORM_PROPERTY) ? _parseTransform(value) : ((key===TRANSITION_PROPERTY) ? _parseTransition(value) : value));
+                            key = &#x27;&#x27;;
+                            insideValue = false;
+                            insideKey = (character===&#x27;;&#x27;);
+                            insideKey || (groupKey=&#x27;&#x27;);
+                        }
+                        else {
+                            value += character;
+                        }
+                    }
+                    else if (insideKey) {
+                        if (character===&#x27;:&#x27;){
+                            insideKey = false;
+                            insideValue = true;
+                            key = key.trim();
+                            value = &#x27;&#x27;;
+                        }
+                        else if (character===&#x27;}&#x27;) {
+                            insideKey = false;
+                            groupKey = &#x27;&#x27;;
+                        }
+                        else {
+                            key += character;
+                        }
+                    }
+                    else {
+                        if (character===&#x27;{&#x27;) {
+                            groupKey = groupKey.trim();
+                            (groupKey===&#x27;&#x27;) &amp;&amp; (groupKey=&#x27;element&#x27;);
+                            group = newStyles[groupKey] = {};
+                            insideKey = true;
+                            key = &#x27;&#x27;;
+                        }
+                        else {
+                            groupKey += character;
+                        }
+                    }
+                }
+                if (insideValue) {
+                    value = value.trim();
+                    // in case &#x60;key&#x60; equals a variant of &#x60;transform&#x60;, but non-compatible with the current browser --&gt;
+                    // redefine it into a browser-compatible version:
+                    TRANSFORM_MUTATIONS[key] &amp;&amp; (key!==TRANSFORM_PROPERTY) &amp;&amp; (key=TRANSFORM_PROPERTY);
+                    TRANSITION_MUTATIONS[key] &amp;&amp; (key!==TRANSITION_PROPERTY) &amp;&amp; (key=TRANSITION_PROPERTY);
+                    // store the property:
+                    group[key] = ((key===TRANSFORM_PROPERTY) ? _parseTransform(value) : ((key===TRANSITION_PROPERTY) ? _parseTransition(value) : value));
+                }
+            }
+            return {
+                attrStyle: hasValue &amp;&amp; instance.serializeStyles(newStyles),
+                styles: newStyles
+            };
+        },
+
+        toTransitionObject: function(value) {
+            return _parseTransition(value);
+        },
+
+        toTransformObject: function(value) {
+            return _parseTransform(value);
+        },
+
+        serializeStyles: function(styles) {
+            var serialized = &#x27;&#x27;,
+                onlyElementStyle = ((styles.size()===1) &amp;&amp; styles.element);
+            if (onlyElementStyle) {
+                styles.element.each(function(value, key) {
+                    serialized += &#x27; &#x27;+ key + &#x27;: &#x27; + ((key===TRANSFORM_PROPERTY) ? _serializeTransform(value) : ((key===TRANSITION_PROPERTY) ? _serializeTransition(value) : value)) + &#x27;;&#x27;;
                 });
-                serialized += &#x27;}&#x27;;
-            });
+            }
+            else {
+                styles.each(function(groupValue, groupKey) {
+                    (groupKey===&#x27;element&#x27;) || (serialized += &#x27; &#x27;+groupKey+&#x27; &#x27;);
+                    serialized += &#x27;{&#x27;;
+                    groupValue.each(function(value, key) {
+                        serialized += key + &#x27;: &#x27; + ((key===TRANSFORM_PROPERTY) ? _serializeTransform(value) : ((key===TRANSITION_PROPERTY) ? _serializeTransition(value) : value)) + &#x27;; &#x27;;
+                    });
+                    serialized += &#x27;}&#x27;;
+                });
+                (serialized===&#x27;{}&#x27;) &amp;&amp; (serialized=&#x27;&#x27;);
+            }
+            return (serialized[0]===&#x27; &#x27;) ? serialized.substr(1) : serialized;
         }
-        return (serialized[0]===&#x27; &#x27;) ? serialized.substr(1) : serialized;
-    }
+    };
+
+    return extractor;
 
 };
     </pre>

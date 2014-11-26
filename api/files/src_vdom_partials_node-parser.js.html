@@ -220,7 +220,7 @@ module.exports = function (window) {
     }
 
     var NS = require(&#x27;./vdom-ns.js&#x27;)(window),
-        extractor = require(&#x27;./attribute-extractor.js&#x27;),
+        extractor = require(&#x27;./attribute-extractor.js&#x27;)(window),
         voidElements = NS.voidElements,
         nonVoidElements = NS.nonVoidElements,
         vNodeProto = require(&#x27;./vnode.js&#x27;)(window),

@@ -218,11 +218,11 @@ var TYPES = {
        &#x27;[object Date]&#x27; : true,
        &#x27;[object Error]&#x27; : true,
        &#x27;[object Promise]&#x27; : true
-   };
+   },
 
 // Define configurable, writable and non-enumerable props
 // if they don&#x27;t exist.
-var defineProperty = function (object, name, method, force) {
+defineProperty = function (object, name, method, force) {
     if (!force &amp;&amp; (name in object)) {
         return;
     }
@@ -232,8 +232,8 @@ var defineProperty = function (object, name, method, force) {
         writable: true,
         value: method
     });
-};
-var defineProperties = function (object, map, force) {
+},
+defineProperties = function (object, map, force) {
     var names = Object.keys(map),
         l = names.length,
         i = -1,
@@ -242,9 +242,9 @@ var defineProperties = function (object, map, force) {
         name = names[i];
         defineProperty(object, name, map[name], force);
     }
-};
+},
 
-var _each = function (obj, fn, context) {
+_each = function (obj, fn, context) {
     var keys = Object.keys(obj),
         l = keys.length,
         i = -1,
@@ -254,7 +254,37 @@ var _each = function (obj, fn, context) {
         fn.call(context, obj[key], key, obj);
     }
     return obj;
+},
+
+cloneObj = function(obj) {
+    var copy, i, len, value;
+
+    // Handle Array
+    if (obj instanceof Array) {
+        copy = [];
+        len = obj.length;
+        for (i=0; i&lt;len; i++) {
+            value = obj[i];
+            copy[i] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value);
+        }
+        return copy;
+    }
+
+    // Handle Date
+    if (obj instanceof Date) {
+        copy = new Date();
+        copy.setTime(obj.getTime());
+        return copy;
+    }
+
+    // Handle Object
+    else if (obj instanceof Object) {
+        copy = obj.deepClone();
+    }
+
+    return copy;
 };
+
 /**
  * Pollyfils for often used functionality for objects
  * @class Object
@@ -414,6 +444,28 @@ defineProperties(Object.prototype, {
         while (++i &lt; l) {
             key = keys[i];
             m[key] = this[key];
+        }
+        return m;
+    },
+
+    /**
+     * Returns a deep copy of the object.
+     * Only handles members of primary types, Dates, Arrays and Objects.
+     *
+     * @method deepClone
+     * @return {Object} deep-copy of the original
+     */
+    deepClone: function () {
+        var m = {},
+            keys = Object.keys(this),
+            l = keys.length,
+            i = -1,
+            key, attr, value;
+        // loop through the members:
+        while (++i &lt; l) {
+            key = keys[i];
+            value = this[key];
+            m[key] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value);
         }
         return m;
     },

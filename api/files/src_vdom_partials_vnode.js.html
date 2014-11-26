@@ -231,7 +231,7 @@ module.exports = function (window) {
     }
 
     var NS = require(&#x27;./vdom-ns.js&#x27;)(window),
-        extractor = require(&#x27;./attribute-extractor.js&#x27;),
+        extractor = require(&#x27;./attribute-extractor.js&#x27;)(window),
         DOCUMENT = window.document,
         nodeids = NS.nodeids,
         htmlToVNodes = require(&#x27;./html-parser.js&#x27;)(window),

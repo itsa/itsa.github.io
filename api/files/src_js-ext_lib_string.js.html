@@ -251,6 +251,19 @@
     });
 
     /**
+     * Checks if the string can be parsed into a number when using &#x60;parseInt()&#x60;
+     *
+     * @method parsable
+     * @return {Boolean} whether the string is parsable
+     */
+    String.parsable || (StringPrototype.parsable=function() {
+        // strange enough, NaN doen&#x27;t let compare itself, so we need a strange test:
+        // parseInt(value, 10)===parseInt(value, 10)
+        // which returns &#x60;true&#x60; for a parsable value, otherwise false
+        return (parseInt(this)===parseInt(this));
+    });
+
+    /**
      * Checks if the string starts with the value specified by &#x60;test&#x60;
      *
      * @method startsWith
