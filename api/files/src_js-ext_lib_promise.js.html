@@ -226,10 +226,11 @@ var NAME = &#x27;[promise-ext]: &#x27;,
      *
      * @method finally
      * @param finallyback {Function} the callbackfunctio to be invoked.
+     * @return {Promise}
      */
     PromisePrototype.finally = function (finallyback) {
         console.log(NAME, &#x27;finally&#x27;);
-        this.then(finallyback, finallyback);
+        return this.then(finallyback, finallyback);
     };
 
     /**

@@ -223,7 +223,8 @@ module.exports = function (window) {
         return window._ITSAmodules.AttributeExtractor; // AttributeExtractor was already created
     }
 
-    var END_OF_VALUE = {
+    var SUPPORT_INLINE_PSEUDO_STYLES = false, // current browsers don&#x27;t support this. When tey do, set this value &#x60;true&#x60;
+        END_OF_VALUE = {
             &#x27;;&#x27;: true,
             &#x27;}&#x27;: true
         },
@@ -234,6 +235,8 @@ module.exports = function (window) {
         TRANSFORM_PROPERTY = require(&#x27;polyfill/extra/transform.js&#x27;)(window) || TRANSFORM,
         TRANSITION_PROPERTY = require(&#x27;polyfill/extra/transition.js&#x27;)(window) || TRANSITION,
         _serializeTransform, _parseTransform, _serializeTransition, _parseTransition, extractor;
+
+    window.document._supportInlinePseudoStyles = SUPPORT_INLINE_PSEUDO_STYLES;
 
     TRANSFORM_MUTATIONS[TRANSFORM] = true;
     TRANSFORM_MUTATIONS[&#x27;-webkit-&#x27;+TRANSFORM] = true;
@@ -250,9 +253,6 @@ module.exports = function (window) {
     _serializeTransform = function(transformValue) {
         // transformValue should an Object !!
         var serialized = &#x27;&#x27;;
-        if (typeof transformValue===&#x27;string&#x27;) {
-            return transformValue;
-        }
         transformValue.each(function(value, key) {
             serialized += &#x27; &#x27;+ key + ((key===&#x27;none&#x27;) ? &#x27;&#x27; : &#x27;(&#x27; + value + &#x27;)&#x27;);
         });
@@ -263,9 +263,6 @@ module.exports = function (window) {
         // transitionValue should an Object !!
         var serialized = &#x27;&#x27;,
             timingFunction, delay;
-        if (typeof transitionValue===&#x27;string&#x27;) {
-            return transitionValue;
-        }
         transitionValue.each(function(value, key) {
             timingFunction = value.timingFunction;
             delay = value.delay;
@@ -470,7 +467,9 @@ module.exports = function (window) {
                             TRANSFORM_MUTATIONS[key] &amp;&amp; (key!==TRANSFORM_PROPERTY) &amp;&amp; (key=TRANSFORM_PROPERTY);
                             TRANSITION_MUTATIONS[key] &amp;&amp; (key!==TRANSITION_PROPERTY) &amp;&amp; (key=TRANSITION_PROPERTY);
                             // store the property:
-                            group[key] = ((key===TRANSFORM_PROPERTY) ? _parseTransform(value) : ((key===TRANSITION_PROPERTY) ? _parseTransition(value) : value));
+                            if (SUPPORT_INLINE_PSEUDO_STYLES || (groupKey===&#x27;element&#x27;)) {
+                                group[key] = ((key===TRANSFORM_PROPERTY) ? _parseTransform(value) : ((key===TRANSITION_PROPERTY) ? _parseTransition(value) : value));
+                            }
                             key = &#x27;&#x27;;
                             insideValue = false;
                             insideKey = (character===&#x27;;&#x27;);
@@ -515,7 +514,9 @@ module.exports = function (window) {
                     TRANSFORM_MUTATIONS[key] &amp;&amp; (key!==TRANSFORM_PROPERTY) &amp;&amp; (key=TRANSFORM_PROPERTY);
                     TRANSITION_MUTATIONS[key] &amp;&amp; (key!==TRANSITION_PROPERTY) &amp;&amp; (key=TRANSITION_PROPERTY);
                     // store the property:
-                    group[key] = ((key===TRANSFORM_PROPERTY) ? _parseTransform(value) : ((key===TRANSITION_PROPERTY) ? _parseTransition(value) : value));
+                    if (SUPPORT_INLINE_PSEUDO_STYLES || (groupKey===&#x27;element&#x27;)) {
+                        group[key] = ((key===TRANSFORM_PROPERTY) ? _parseTransform(value) : ((key===TRANSITION_PROPERTY) ? _parseTransition(value) : value));
+                    }
                 }
             }
             return {
@@ -532,11 +533,19 @@ module.exports = function (window) {
             return _parseTransform(value);
         },
 
+        serializeTransition: function(value) {
+            return _serializeTransition(value);
+        },
+
+        serializeTransform: function(value) {
+            return _serializeTransform(value);
+        },
+
         serializeStyles: function(styles) {
             var serialized = &#x27;&#x27;,
                 onlyElementStyle = ((styles.size()===1) &amp;&amp; styles.element);
-            if (onlyElementStyle) {
-                styles.element.each(function(value, key) {
+            if (onlyElementStyle || !SUPPORT_INLINE_PSEUDO_STYLES) {
+                styles.element &amp;&amp; styles.element.each(function(value, key) {
                     serialized += &#x27; &#x27;+ key + &#x27;: &#x27; + ((key===TRANSFORM_PROPERTY) ? _serializeTransform(value) : ((key===TRANSITION_PROPERTY) ? _serializeTransition(value) : value)) + &#x27;;&#x27;;
                 });
             }

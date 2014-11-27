@@ -207,6 +207,35 @@
 
 require(&#x27;polyfill/polyfill-base.js&#x27;);
 
+var cloneObj = function(obj) {
+    var copy, i, len, value;
+
+    // Handle Array
+    if (obj instanceof Array) {
+        copy = [];
+        len = obj.length;
+        for (i=0; i&lt;len; i++) {
+            value = obj[i];
+            copy[i] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value);
+        }
+        return copy;
+    }
+
+    // Handle Date
+    if (obj instanceof Date) {
+        copy = new Date();
+        copy.setTime(obj.getTime());
+        return copy;
+    }
+
+    // Handle Object
+    else if (obj instanceof Object) {
+        copy = obj.deepClone();
+    }
+
+    return copy;
+};
+
 (function(ArrayPrototype) {
 
     /**
@@ -298,6 +327,17 @@ require(&#x27;polyfill/polyfill-base.js&#x27;);
         }
         return instance;
     });
+
+    /**
+     * Returns a deep copy of the Array.
+     * Only handles members of primary types, Dates, Arrays and Objects.
+     *
+     * @method deepClone
+     * @return {Array} deep-copy of the original
+     */
+     ArrayPrototype.deepClone = function () {
+        return cloneObj(this);
+     };
 
 }(Array.prototype));
     </pre>

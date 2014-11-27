@@ -117,6 +117,11 @@ var newObj = obj.shallowClone();
 newObj.deep = obj.deep.shallowClone();
 ```
 
+### deepClone
+
+Returns a deep copy of the object. Only handles members of primary types, Dates, Arrays and Objects.
+
+
 ### merge
 
 Merges into the object a set of properties taken from another object.  Properties with the same name will be preserved unless the second argument is passed as true.  The original object is changed.  The method is chainable.
@@ -128,6 +133,11 @@ console.log(a);
 // Prints:
 // {a: 44, b:2, c: 3, d: 4}
 ```
+
+### sameValue
+
+Compares this object with the reference-object whether they have the same value. Not by reference, but their content as simple types.
+
 
 ### Object.merge
 
@@ -317,6 +327,9 @@ Checks whether an item is inside the Array. Alias for (array.indexOf(item) > -1)
 ###remove###
 Removes an item from the array.
 
+
+### deepClone
+Returns a deep copy of the Array. Only handles members of primary types, Dates, Arrays and Objects.
 
 ###shuffle###
 Shuffles the items in the Array randomly.

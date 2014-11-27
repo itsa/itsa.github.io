@@ -1,7 +1,7 @@
 ---
 module: vdom
 maintainer: Marco Asbreuk
-title: Show or hide a DOM-node
+title: Transitions by classes
 intro: "This example shows how you can show and hide a node. To hide a node on startup, you must add the 'itsa-hidden' as well as hide the element initially through node.hide(). The latter is needed to be able to call node.show(true) on the initial hidden Node. Without initially hided by JS, there won't be a fade-effect for the first time the node gets visible."
 ---
 
@@ -20,23 +20,29 @@ intro: "This example shows how you can show and hide a node. To hide a node on s
         text-align: center;
         margin: 2em 0;
         padding-top: 1.5em;
+/*
         height: 100px;
         width: 100px;
+*/
         border: solid 1px #000;
         position: absolute;
         top: 32em;
         left: 23em;
         z-index: 1;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        cursor: default;
+        -webkit-transition: all 1s;
+        -moz-transition: all 1s;
+        -ms-transition: all 1s;
+        -o-transition: all 1s;
+        transition: all 1s;
     }
     .container.blue {
         background-color: #00F;
+        height: 500px;
+        width: 500px;
+    }
+    .container.big {
+        height: 500px;
+        width: 500px;
     }
     .body-content.module p.spaced {
         margin-top: 4em;
@@ -49,7 +55,7 @@ Clik on the button to toggle the className:
     <button id="button-show" class="pure-button pure-button-primary pure-button-bordered">Switch Class</button>
 </div>
 
-<div class="container"></div>
+<div class="container">Hi how are you doing?</div>
 
 <p class="spaced">Code-example:</p>
 
@@ -95,9 +101,8 @@ Clik on the button to toggle the className:
     var container = document.getElement('.container');
 
     var action = function(e) {
-        var delayed = false;
-        container.setInlineTransition('background-color', 1, 'ease', 0);
-        container.setClass('blue', true).then(
+        container.toggleClass('blue', true, true).then(
+        // container.toggleClass(['blue', 'big'], false, true).then(
             function() {
                 console.info('fulfilled');
             }

@@ -449,6 +449,20 @@ defineProperties(Object.prototype, {
     },
 
     /**
+     * Compares this object with the reference-object whether they have the same value.
+     * Not by reference, but their content as simple types.
+     *
+     * Compares both JSON.stringify objects
+     *
+     * @method sameValue
+     * @param refObj {Object} the object to compare with
+     * @return {Boolean} whether both objects have the same value
+     */
+    sameValue: function(refObj) {
+        return JSON.stringify(this)===JSON.stringify(refObj);
+    },
+
+    /**
      * Returns a deep copy of the object.
      * Only handles members of primary types, Dates, Arrays and Objects.
      *
