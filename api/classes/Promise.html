@@ -43,9 +43,13 @@
             
                 <li><a href="../classes/Array.html">Array</a></li>
             
+                <li><a href="../classes/DD.html">DD</a></li>
+            
                 <li><a href="../classes/document.html">document</a></li>
             
                 <li><a href="../classes/Element.html">Element</a></li>
+            
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
             
                 <li><a href="../classes/Event.html">Event</a></li>
             
@@ -59,9 +63,13 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
+                <li><a href="../classes/Node.html">Node</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -69,13 +77,23 @@
             
                 <li><a href="../classes/Utils.html">Utils</a></li>
             
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
+            
+                <li><a href="../modules/drag.html">drag</a></li>
+            
+                <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -88,6 +106,12 @@
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
             
                 <li><a href="../modules/io.html">io</a></li>
             
@@ -107,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -121,9 +139,17 @@
             
                 <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
             
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
                 <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
             
             </ul>
         </div>
@@ -327,7 +353,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_js-ext_lib_promise.js.html#l140"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:140</code></a>
+        <a href="../files/src_js-ext_lib_promise.js.html#l139"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:139</code></a>
         
         </p>
 
@@ -483,6 +509,10 @@ Promise.chainFns(a).then(
     
 
     
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Promise.html" class="crosslink">Promise</a></span>
+        </span>
+    
 
     
 
@@ -507,7 +537,7 @@ Promise.chainFns(a).then(
             
         
         
-        <a href="../files/src_js-ext_lib_promise.js.html#l25"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:25</code></a>
+        <a href="../files/src_js-ext_lib_promise.js.html#l23"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:23</code></a>
         
         </p>
 
@@ -555,6 +585,18 @@ If you need an intermediate method, you should take .thenFulfill().</p>
         </div>
     
 
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Promise.html" class="crosslink">Promise</a></span>:
+                    
+                
+            </div>
+        </div>
     
 
     
@@ -609,7 +651,7 @@ If you need an intermediate method, you should take .thenFulfill().</p>
             
         
         
-        <a href="../files/src_js-ext_lib_promise.js.html#l76"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:76</code></a>
+        <a href="../files/src_js-ext_lib_promise.js.html#l75"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:75</code></a>
         
         </p>
 
@@ -692,7 +734,7 @@ its transformed into a resolved promise.</p>
             
                 <li class="arg">
                     
-                        <code>callbackFn</code>
+                        <code class="optional">[callbackFn]</code>
                     
                 </li>
             
@@ -731,7 +773,7 @@ its transformed into a resolved promise.</p>
             
         
         
-        <a href="../files/src_js-ext_lib_promise.js.html#l232"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:232</code></a>
+        <a href="../files/src_js-ext_lib_promise.js.html#l231"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:231</code></a>
         
         </p>
 
@@ -742,10 +784,11 @@ its transformed into a resolved promise.</p>
     </div>
 
     <div class="description">
-        <p>Returns a Promise with 3 additional methods:</p>
+        <p>Returns a Promise with 4 additional methods:</p>
 <p>promise.fulfill
 promise.reject
-promise.callback</p>
+promise.callback
+promise.setCallback</p>
 <p>With Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.
 You can invoke promise.<strong>callback</strong>() which will invoke the original passed-in callbackFn - if any.
 promise.<strong>fulfill</strong>() and promise.<strong>reject</strong>() are meant to resolve the promise from outside, just like deferred can do.</p>
@@ -760,14 +803,16 @@ promise.<strong>fulfill</strong>() and promise.<strong>reject</strong>() are mea
             
                 <li class="param">
                     
-                        <code class="param-name">callbackFn</code>
+                        <code class="param-name optional">[callbackFn]</code>
                         <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>invoked everytime promiseinstance.callback() is called.</p>
+                        <p>invoked everytime promiseinstance.callback() is called.
+       You may as weel (re)set this method atny time lare by using promise.setCallback()</p>
 
                     </div>
 
@@ -871,7 +916,7 @@ setTimeout(function() {
             
         
         
-        <a href="../files/src_js-ext_lib_promise.js.html#l45"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:45</code></a>
+        <a href="../files/src_js-ext_lib_promise.js.html#l44"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:44</code></a>
         
         </p>
 

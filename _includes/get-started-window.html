@@ -12,7 +12,8 @@ var ITSA = require('itsa'){% if page.itsaclassname %},
 This module needs to be required as a <code class="prettyprint">function</code> with the <code class="prettyprint">window</code>-object passed through, something <code class="prettyprint">"itsa"</code> does under the hood. When requiring this module yourself, you need to use this approach:
 {% highlight js %}
 var window = require('node-win'),
-    {{ page.itsaclassname }} = require('{{ page.module }}')(window);
+    {{ page.itsaclassname }} = require('{{ page.module }}')(window);{% if page.extracodefirstpar %}
+{{ page.extracodefirstpar }}{% endif %}
 {% endhighlight %}
 </p>
 
@@ -22,7 +23,8 @@ var window = require('node-win'),
 {% highlight js %}
 <script>
     var ITSA = require('itsa'){% if page.itsaclassname %},
-        {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }}{% endif %};
+        {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }}{% endif %};{% if page.extracodefirstpar %}
+    {{ page.extracodefirstpar }}{% endif %}
 </script>
 {% endhighlight %}
 <p>

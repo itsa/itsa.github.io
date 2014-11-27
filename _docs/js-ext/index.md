@@ -69,6 +69,24 @@ console.log({a: 1, b: 2}.keys());
 console.log(Object.keys({a: 1, b: 2}));
 ```
 
+### size
+
+Returns the number of keys in the object.
+
+```js
+console.log({a: 15, b: 25}.size());
+// prints 2
+```
+
+### toArray
+
+Transforms the object into an array with  'key/value' objects
+
+```js
+console.log({country: 'USA', Continent: 'North America'}.toArray());
+// prints [{key: 'country', value: 'USA'}, {key: 'Continent', value: 'North America'}]
+```
+
 ### values
 
 Returns an array with the values of the properties.
@@ -99,6 +117,11 @@ var newObj = obj.shallowClone();
 newObj.deep = obj.deep.shallowClone();
 ```
 
+### deepClone
+
+Returns a deep copy of the object. Only handles members of primary types, Dates, Arrays and Objects.
+
+
 ### merge
 
 Merges into the object a set of properties taken from another object.  Properties with the same name will be preserved unless the second argument is passed as true.  The original object is changed.  The method is chainable.
@@ -110,6 +133,11 @@ console.log(a);
 // Prints:
 // {a: 44, b:2, c: 3, d: 4}
 ```
+
+### sameValue
+
+Compares this object with the reference-object whether they have the same value. Not by reference, but their content as simple types.
+
 
 ### Object.merge
 
@@ -252,6 +280,9 @@ String gets extended with the following new methods:
 ###endsWith###
 Checks if the string ends with the value specified by `test`.
 
+###parsable###
+Checks if the string can be parsed into a number when using `parseInt()`
+
 ###startsWith###
 Checks if the string starts with the value specified by `test`.
 
@@ -289,6 +320,16 @@ Validates if the String's value represents a valid URL.
 ##Array extensions##
 
 Array gets extended with the following new methods:
+
+###contains###
+Checks whether an item is inside the Array. Alias for (array.indexOf(item) > -1).
+
+###remove###
+Removes an item from the array.
+
+
+### deepClone
+Returns a deep copy of the Array. Only handles members of primary types, Dates, Arrays and Objects.
 
 ###shuffle###
 Shuffles the items in the Array randomly.
@@ -366,8 +407,9 @@ Promise.**manage**(`callbackFn`) returns a new Promise that is supposed to be ma
 * promise.fulfill
 * promise.reject
 * promise.callback
+* promise.setCallback
 
-You can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any. The method promise.**fulfill**() and promise.**reject**() are meant to resolve the promise from outside, just like deferred can do.
+You can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any, or the callback which is set at a later time using `setCallback()`. The method promise.**fulfill**() and promise.**reject**() are meant to resolve the promise from outside, just like deferred can do.
 
 ####Promise.manage####
 ```js

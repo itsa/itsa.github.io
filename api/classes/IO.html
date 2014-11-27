@@ -43,9 +43,13 @@
             
                 <li><a href="../classes/Array.html">Array</a></li>
             
+                <li><a href="../classes/DD.html">DD</a></li>
+            
                 <li><a href="../classes/document.html">document</a></li>
             
                 <li><a href="../classes/Element.html">Element</a></li>
+            
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
             
                 <li><a href="../classes/Event.html">Event</a></li>
             
@@ -59,9 +63,13 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
+                <li><a href="../classes/Node.html">Node</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -69,13 +77,23 @@
             
                 <li><a href="../classes/Utils.html">Utils</a></li>
             
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
+            
+                <li><a href="../modules/drag.html">drag</a></li>
+            
+                <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -88,6 +106,12 @@
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
             
                 <li><a href="../modules/io.html">io</a></li>
             
@@ -107,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -121,9 +139,17 @@
             
                 <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
             
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
                 <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
             
             </ul>
         </div>
@@ -420,7 +446,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_io_io.js.html#l67"><code>src&#x2F;io&#x2F;io.js:67</code></a>
+        <a href="../files/src_io_io.js.html#l66"><code>src&#x2F;io&#x2F;io.js:66</code></a>
         
         </p>
 
@@ -709,7 +735,7 @@ This method is the standard way of doing xhr-requests without processing streams
             
         
         
-        <a href="../files/src_io_io-stream.js.html#l63"><code>src&#x2F;io&#x2F;io-stream.js:63</code></a>
+        <a href="../files/src_io_extra_io-stream.js.html#l74"><code>src&#x2F;io&#x2F;extra&#x2F;io-stream.js:74</code></a>
         
         </p>
 
@@ -833,7 +859,7 @@ xhr.onerror()  // only XMLHttpRequest2</p>
             
         
         
-        <a href="../files/src_io_io-stream.js.html#l95"><code>src&#x2F;io&#x2F;io-stream.js:95</code></a>
+        <a href="../files/src_io_extra_io-stream.js.html#l106"><code>src&#x2F;io&#x2F;extra&#x2F;io-stream.js:106</code></a>
         
         </p>
 
@@ -970,7 +996,7 @@ xhr.onerror()  // only XMLHttpRequest2</p>
             
         
         
-        <a href="../files/src_io_io.js.html#l148"><code>src&#x2F;io&#x2F;io.js:148</code></a>
+        <a href="../files/src_io_io.js.html#l147"><code>src&#x2F;io&#x2F;io.js:147</code></a>
         
         </p>
 
@@ -1107,7 +1133,7 @@ xhr.onerror()  // only XMLHttpRequest2</p>
             
         
         
-        <a href="../files/src_io_io.js.html#l178"><code>src&#x2F;io&#x2F;io.js:178</code></a>
+        <a href="../files/src_io_io.js.html#l177"><code>src&#x2F;io&#x2F;io.js:177</code></a>
         
         </p>
 
@@ -1239,7 +1265,7 @@ xhr.ontimeout()  // only XMLHttpRequest2</p>
             
         
         
-        <a href="../files/src_io_io.js.html#l222"><code>src&#x2F;io&#x2F;io.js:222</code></a>
+        <a href="../files/src_io_io.js.html#l221"><code>src&#x2F;io&#x2F;io.js:221</code></a>
         
         </p>
 
@@ -1360,7 +1386,7 @@ xhr.ontimeout()  // only XMLHttpRequest2</p>
             
         
         
-        <a href="../files/src_io_io-transfer.js.html#l374"><code>src&#x2F;io&#x2F;io-transfer.js:374</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l386"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:386</code></a>
         
         </p>
 
@@ -1629,7 +1655,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_io-transfer.js.html#l86"><code>src&#x2F;io&#x2F;io-transfer.js:86</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l98"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:98</code></a>
         
         </p>
 
@@ -1864,7 +1890,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_io-assets.js.html#l27"><code>src&#x2F;io&#x2F;io-assets.js:27</code></a>
+        <a href="../files/src_io_extra_io-assets.js.html#l43"><code>src&#x2F;io&#x2F;extra&#x2F;io-assets.js:43</code></a>
         
         </p>
 
@@ -2047,7 +2073,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_io-assets.js.html#l45"><code>src&#x2F;io&#x2F;io-assets.js:45</code></a>
+        <a href="../files/src_io_extra_io-assets.js.html#l61"><code>src&#x2F;io&#x2F;extra&#x2F;io-assets.js:61</code></a>
         
         </p>
 
@@ -2236,7 +2262,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_io-transfer.js.html#l240"><code>src&#x2F;io&#x2F;io-transfer.js:240</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l252"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:252</code></a>
         
         </p>
 
@@ -2511,7 +2537,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_io-transfer.js.html#l130"><code>src&#x2F;io&#x2F;io-transfer.js:130</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l142"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:142</code></a>
         
         </p>
 
@@ -2755,7 +2781,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_io-jsonp.js.html#l29"><code>src&#x2F;io&#x2F;io-jsonp.js:29</code></a>
+        <a href="../files/src_io_extra_io-jsonp.js.html#l44"><code>src&#x2F;io&#x2F;extra&#x2F;io-jsonp.js:44</code></a>
         
         </p>
 
@@ -2942,7 +2968,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_io-xml.js.html#l74"><code>src&#x2F;io&#x2F;io-xml.js:74</code></a>
+        <a href="../files/src_io_extra_io-xml.js.html#l87"><code>src&#x2F;io&#x2F;extra&#x2F;io-xml.js:87</code></a>
         
         </p>
 
@@ -3240,7 +3266,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_io.js.html#l243"><code>src&#x2F;io&#x2F;io.js:243</code></a>
+        <a href="../files/src_io_io.js.html#l242"><code>src&#x2F;io&#x2F;io.js:242</code></a>
         
         </p>
 
@@ -3504,7 +3530,7 @@ This method is the standard way of doing xhr-requests without processing streams
             
         
         
-        <a href="../files/src_io_io-transfer.js.html#l288"><code>src&#x2F;io&#x2F;io-transfer.js:288</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l300"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:300</code></a>
         
         </p>
 
@@ -3761,7 +3787,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_io-transfer.js.html#l192"><code>src&#x2F;io&#x2F;io-transfer.js:192</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l204"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:204</code></a>
         
         </p>
 

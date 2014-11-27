@@ -43,9 +43,13 @@
             
                 <li><a href="../classes/Array.html">Array</a></li>
             
+                <li><a href="../classes/DD.html">DD</a></li>
+            
                 <li><a href="../classes/document.html">document</a></li>
             
                 <li><a href="../classes/Element.html">Element</a></li>
+            
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
             
                 <li><a href="../classes/Event.html">Event</a></li>
             
@@ -59,9 +63,13 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
+                <li><a href="../classes/Node.html">Node</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -69,13 +77,23 @@
             
                 <li><a href="../classes/Utils.html">Utils</a></li>
             
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
+            
+                <li><a href="../modules/drag.html">drag</a></li>
+            
+                <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -88,6 +106,12 @@
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
             
                 <li><a href="../modules/io.html">io</a></li>
             
@@ -107,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -121,9 +139,17 @@
             
                 <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
             
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
                 <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
             
             </ul>
         </div>
@@ -250,11 +276,15 @@
         base: &#x27;/components&#x27;
     };
 
+    ITSA.Plugins = {
+
+    };
+
+
+    require(&#x27;css&#x27;);
     require(&#x27;polyfill&#x27;);
-    require(&#x27;ypromise&#x27;);
-    require(&#x27;window-ext&#x27;)(window);
-    require(&#x27;dom-ext&#x27;)(window);
     require(&#x27;js-ext&#x27;);
+    require(&#x27;window-ext&#x27;)(window);
 
     var fakedom = window.navigator.userAgent===&#x27;fake&#x27;,
         Event = fakedom ? require(&#x27;event&#x27;) : require(&#x27;event-mobile&#x27;)(window),
@@ -263,13 +293,9 @@
             debug: true,
             base: &#x27;/build&#x27;
         },
-        EVENT_NAME_TIMERS_EXECUTION = &#x27;timers:asyncfunc&#x27;;
+        EVENT_NAME_TIMERS_EXECUTION = &#x27;timers:asyncfunc&#x27;,
+        dragdrop;
 
-    if (!fakedom) {
-        require(&#x27;event-dom/extra/hover.js&#x27;)(window);
-        require(&#x27;event-dom/extra/valuechange.js&#x27;)(window);
-        require(&#x27;event-dom/extra/drag.js&#x27;)(window);
-    }
     /**
      * Reference to the &#x60;idGenerator&#x60; function in [utils](../modules/utils.html)
      *
@@ -278,8 +304,19 @@
      * @static
     */
 
+    ITSA.Plugins.merge(require(&#x27;vdom&#x27;)(window).Plugins);
+
     ITSA.merge(require(&#x27;utils&#x27;));
     ITSA.RESERVED_WORDS = require(&#x27;js-ext/extra/reserved-words.js&#x27;);
+
+    if (!fakedom) {
+        require(&#x27;event-dom/extra/hover.js&#x27;)(window);
+        require(&#x27;event-dom/extra/valuechange.js&#x27;)(window);
+        // setup dragdrop:
+        dragdrop = require(&#x27;drag-drop&#x27;)(window);
+        ITSA.DD = dragdrop.DD;
+        ITSA.Plugins.merge(dragdrop.Plugins);
+    }
 
     /**
      * Reference to the [IO](io.html) object
@@ -287,11 +324,11 @@
      * @type Object
      * @static
     */
-    ITSA.IO = require(&#x27;io/io-transfer.js&#x27;)(window);
+    ITSA.IO = require(&#x27;io/extra/io-transfer.js&#x27;)(window);
     ITSA.IO.config.merge(io_config);
-    require(&#x27;io/io-cors-ie9.js&#x27;)(window);
-    require(&#x27;io/io-stream.js&#x27;)(window);
-    require(&#x27;io/io-xml.js&#x27;)(window);
+    require(&#x27;io/extra/io-cors-ie9.js&#x27;)(window);
+    require(&#x27;io/extra/io-stream.js&#x27;)(window);
+    require(&#x27;io/extra/io-xml.js&#x27;)(window);
 
     /**
      * [Event](Event.html)-instance

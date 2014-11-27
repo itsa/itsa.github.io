@@ -4,7 +4,8 @@
 <p>Create your project using this <a href="./dist/package.json">package.json</a>. After downloaded, run <code class="prettyprint">npm install</code> and start writing your application:</p>
 {% highlight js %}
 var ITSA = require('itsa'){% if page.itsaclassname %},
-    {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }}{% endif %};
+    {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }}{% endif %};{% if page.extracodefirstpar %}
+{{ page.extracodefirstpar }}{% endif %}
 {% endhighlight %}
 
 <p class="header">In the browser:</p>
@@ -13,6 +14,7 @@ var ITSA = require('itsa'){% if page.itsaclassname %},
 {% highlight js %}
 <script>
     var ITSA = require('itsa'){% if page.itsaclassname %},
-        {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }}{% endif %};
+        {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }}{% endif %};{% if page.extracodefirstpar %}
+    {{ page.extracodefirstpar }}{% endif %}
 </script>
 {% endhighlight %}

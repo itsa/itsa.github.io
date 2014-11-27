@@ -43,9 +43,13 @@
             
                 <li><a href="../classes/Array.html">Array</a></li>
             
+                <li><a href="../classes/DD.html">DD</a></li>
+            
                 <li><a href="../classes/document.html">document</a></li>
             
                 <li><a href="../classes/Element.html">Element</a></li>
+            
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
             
                 <li><a href="../classes/Event.html">Event</a></li>
             
@@ -59,9 +63,13 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
+                <li><a href="../classes/Node.html">Node</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -69,13 +77,23 @@
             
                 <li><a href="../classes/Utils.html">Utils</a></li>
             
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
+            
+                <li><a href="../modules/drag.html">drag</a></li>
+            
+                <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -88,6 +106,12 @@
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
             
                 <li><a href="../modules/io.html">io</a></li>
             
@@ -107,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -121,9 +139,17 @@
             
                 <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
             
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
                 <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
             
             </ul>
         </div>
@@ -192,11 +218,11 @@ var TYPES = {
        &#x27;[object Date]&#x27; : true,
        &#x27;[object Error]&#x27; : true,
        &#x27;[object Promise]&#x27; : true
-   };
+   },
 
 // Define configurable, writable and non-enumerable props
 // if they don&#x27;t exist.
-var defineProperty = function (object, name, method, force) {
+defineProperty = function (object, name, method, force) {
     if (!force &amp;&amp; (name in object)) {
         return;
     }
@@ -206,8 +232,8 @@ var defineProperty = function (object, name, method, force) {
         writable: true,
         value: method
     });
-};
-var defineProperties = function (object, map, force) {
+},
+defineProperties = function (object, map, force) {
     var names = Object.keys(map),
         l = names.length,
         i = -1,
@@ -216,9 +242,9 @@ var defineProperties = function (object, map, force) {
         name = names[i];
         defineProperty(object, name, map[name], force);
     }
-};
+},
 
-var _each = function (obj, fn, context) {
+_each = function (obj, fn, context) {
     var keys = Object.keys(obj),
         l = keys.length,
         i = -1,
@@ -228,7 +254,37 @@ var _each = function (obj, fn, context) {
         fn.call(context, obj[key], key, obj);
     }
     return obj;
+},
+
+cloneObj = function(obj) {
+    var copy, i, len, value;
+
+    // Handle Array
+    if (obj instanceof Array) {
+        copy = [];
+        len = obj.length;
+        for (i=0; i&lt;len; i++) {
+            value = obj[i];
+            copy[i] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value);
+        }
+        return copy;
+    }
+
+    // Handle Date
+    if (obj instanceof Date) {
+        copy = new Date();
+        copy.setTime(obj.getTime());
+        return copy;
+    }
+
+    // Handle Object
+    else if (obj instanceof Object) {
+        copy = obj.deepClone();
+    }
+
+    return copy;
 };
+
 /**
  * Pollyfils for often used functionality for objects
  * @class Object
@@ -330,6 +386,15 @@ defineProperties(Object.prototype, {
         return Object.keys(this);
     },
     /**
+     * Returns the number of keys of the object
+     *
+     * @method size
+     * @return {Number} Number of items
+     */
+    size: function () {
+        return Object.keys(this).length;
+    },
+    /**
      * Loops through the object collection the values of all its properties.
      * It is the counterpart of the [&#x60;keys&#x60;](#method_keys).
      *
@@ -384,6 +449,67 @@ defineProperties(Object.prototype, {
     },
 
     /**
+     * Compares this object with the reference-object whether they have the same value.
+     * Not by reference, but their content as simple types.
+     *
+     * Compares both JSON.stringify objects
+     *
+     * @method sameValue
+     * @param refObj {Object} the object to compare with
+     * @return {Boolean} whether both objects have the same value
+     */
+    sameValue: function(refObj) {
+        return JSON.stringify(this)===JSON.stringify(refObj);
+    },
+
+    /**
+     * Returns a deep copy of the object.
+     * Only handles members of primary types, Dates, Arrays and Objects.
+     *
+     * @method deepClone
+     * @return {Object} deep-copy of the original
+     */
+    deepClone: function () {
+        var m = {},
+            keys = Object.keys(this),
+            l = keys.length,
+            i = -1,
+            key, attr, value;
+        // loop through the members:
+        while (++i &lt; l) {
+            key = keys[i];
+            value = this[key];
+            m[key] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value);
+        }
+        return m;
+    },
+
+    /**
+     * Transforms the object into an array with  &#x27;key/value&#x27; objects
+     *
+     * @example
+     * {country: &#x27;USA&#x27;, Continent: &#x27;North America&#x27;} --&gt; [{key: &#x27;country&#x27;, value: &#x27;USA&#x27;}, {key: &#x27;Continent&#x27;, value: &#x27;North America&#x27;}]
+     *
+     * @method toArray
+     * @param [options] {Object}
+     * @param [options.key] {String} to overrule the default &#x60;key&#x60;-property-name
+     * @param [options.value] {String} to overrule the default &#x60;value&#x60;-property-name
+     * @return {Array} the transformed Array-representation of the object
+     */
+    toArray: function(options) {
+        var newArray = [],
+            keyIdentifier = (options &amp;&amp; options.key) || &#x27;key&#x27;,
+            valueIdentifier = (options &amp;&amp; options.value) || &#x27;value&#x27;;
+        this.each(function(value, key) {
+            var obj = {};
+            obj[keyIdentifier] = key;
+            obj[valueIdentifier] = value;
+            newArray[newArray.length] = obj;
+        });
+        return newArray;
+    },
+
+    /**
      * Merges into this object the properties of the given object.
      * If the second argument is true, the properties on the source object will be overwritten
      * by those of the second object of the same name, otherwise, they are preserved.
@@ -403,8 +529,6 @@ defineProperties(Object.prototype, {
         });
         return m;
     }
-
-
 
 });
 

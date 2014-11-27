@@ -42,6 +42,10 @@ span.purple {
     color: #000;
 }
 
+.body-content .highlight .k {
+    font-weight: normal;
+}
+
 a:not(.pure-button),
 a:hover:not(.pure-button),
 a:visited:not(.pure-button) {
@@ -78,8 +82,8 @@ body {
 }
 
 body,
-.pure-g [class *= "pure-u"],
-.pure-g-r [class *= "pure-u"] {
+body .pure-g [class *= "pure-u"],
+body .pure-g-r [class *= "pure-u"] {
     /* Set your content font stack here: */
     font-family: "avenir-next", "sans-serif", helvetica, arial;
     line-height: 1.5em;
@@ -97,6 +101,10 @@ div {
 
 .body-content {
     margin: 3em 4em;
+}
+
+h1, h2, h3 {
+    line-height: 1em;
 }
 
 h1.header {

@@ -2,7 +2,7 @@
 module: event-dom
 maintainer: Marco Asbreuk
 title: hover event
-intro: "The hover-event is a single event. But it also notifies you when the hover has finished. You can inspect the Promise e.then for this purpose."
+intro: "The hover-event is a single event. But it also notifies you when the hover has finished. You can inspect the Promise e.hover.then for this purpose."
 ---
 
 <style type="text/css">
@@ -97,7 +97,7 @@ Mouse the mouse over the 5 containers:
 </script>
 ```
 
-<script src="../../dist/itsabuild-min.js"></script>
+<script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa');
     var container = document.getElementById('container');

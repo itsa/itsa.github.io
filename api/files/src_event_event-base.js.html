@@ -43,9 +43,13 @@
             
                 <li><a href="../classes/Array.html">Array</a></li>
             
+                <li><a href="../classes/DD.html">DD</a></li>
+            
                 <li><a href="../classes/document.html">document</a></li>
             
                 <li><a href="../classes/Element.html">Element</a></li>
+            
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
             
                 <li><a href="../classes/Event.html">Event</a></li>
             
@@ -59,9 +63,13 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
+                <li><a href="../classes/Node.html">Node</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -69,13 +77,23 @@
             
                 <li><a href="../classes/Utils.html">Utils</a></li>
             
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
+            
+                <li><a href="../modules/drag.html">drag</a></li>
+            
+                <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -88,6 +106,12 @@
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
             
                 <li><a href="../modules/io.html">io</a></li>
             
@@ -107,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -121,9 +139,17 @@
             
                 <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
             
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
                 <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
             
             </ul>
         </div>
@@ -229,8 +255,6 @@ require(&#x27;js-ext/lib/object.js&#x27;);
          * &#x27;:save&#x27;
          */
         REGEXP_EVENTNAME_WITH_SEMICOLON = /:((?:\w|-)+)$/,
-        MSG_HALTED = &#x27;event was halted&#x27;,
-        MSG_PREVENTED = &#x27;event was defaultPrevented&#x27;,
         DEFINE_IMMUTAL_PROPERTY = function (obj, property, value) {
             Object.defineProperty(obj, property, {
                 configurable: false,
@@ -554,7 +578,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
          *        have the syntax: &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used only  for&#x60;eventName&#x60;.
          *        If &#x60;emitterName&#x60; should be defined.
          * @param callback {Function} subscriber: will be invoked when the customEvent is called (before any subscribers.
-         *                 Recieves 3 arguments: the &#x60;subscriber-object&#x60;, &#x60;customEvent&#x60; and the complete subscriptionobject.
+         *                 Recieves 2 arguments: the &#x60;customEvent&#x60; and &#x60;subscriber-object&#x60;.
          * @param context {Object} context of the callback
          * @param [once=false] {Boolean} whether the subscriptions should be removed after the first invokation
          * @chainable
@@ -586,7 +610,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
          *        have the syntax: &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used only  for&#x60;eventName&#x60;.
          *        If &#x60;emitterName&#x60; should be defined.
          * @param callback {Function} subscriber: will be invoked when the customEvent is called (before any subscribers.
-         *                 Recieves 2 arguments: the &#x60;subscriber-object&#x60; and &#x60;customEvent&#x60;.
+         *                 Recieves 1 arguments: the &#x60;customEvent&#x60;.
          * @param context {Object} context of the callback
          * @param [once=false] {Boolean} whether the subscriptions should be removed after the first invokation
          * @chainable
@@ -706,14 +730,14 @@ require(&#x27;js-ext/lib/object.js&#x27;);
             if (emitterName) {
                 pattern = new RegExp(&#x27;^&#x27;+emitterName+&#x27;:&#x27;);
                 instance._ce.each(
-                    function(value, key, object) {
+                    function(value, key) {
                         key.match(pattern) &amp;&amp; (delete instance._ce[key]);
                     }
                 );
             }
             else {
                 instance._ce.each(
-                    function(value, key, object) {
+                    function(value, key) {
                         delete instance._ce[key];
                     }
                 );
@@ -798,7 +822,8 @@ require(&#x27;js-ext/lib/object.js&#x27;);
         */
         _addMultiSubs: function(before, customEvent, callback, listener, filter, prepend) {
             console.log(NAME, &#x27;_addMultiSubs&#x27;);
-            var instance = this;
+            var instance = this,
+                subscribers;
             if ((typeof listener === &#x27;string&#x27;) || (typeof listener === &#x27;function&#x27;)) {
                 prepend = filter;
                 filter = listener;
@@ -817,16 +842,17 @@ require(&#x27;js-ext/lib/object.js&#x27;);
             if (!Array.isArray(customEvent)) {
                 return instance._addSubscriber(listener, before, customEvent, callback, filter, prepend);
             }
+            subscribers = [];
             customEvent.forEach(
                 function(ce) {
-                    instance._addSubscriber(listener, before, ce, callback, filter, prepend);
+                    subscribers.push(instance._addSubscriber(listener, before, ce, callback, filter, prepend));
                 }
             );
             return {
                 detach: function() {
-                    customEvent.each(
-                        function(ce) {
-                            instance._removeSubscriber(listener, before, ce, callback);
+                    subscribers.each(
+                        function(subscriber) {
+                            subscriber.detach();
                         }
                     );
                 }
@@ -1032,7 +1058,8 @@ require(&#x27;js-ext/lib/object.js&#x27;);
             }
             else {
                 e = Object.create(instance._defaultEventObj);
-                e.target = (payload &amp;&amp; payload.target) || emitter; // make it possible to force a specific e.target
+                // e.target = (payload &amp;&amp; payload.target) || emitter; // make it possible to force a specific e.target
+                e.target = emitter;
                 e.type = eventName;
                 e.emitter = emitterName;
                 e.status = {};
@@ -1062,8 +1089,9 @@ require(&#x27;js-ext/lib/object.js&#x27;);
             }
             e.status.ok = !e.status.halted &amp;&amp; !e.status.defaultPrevented;
             // in case any subscriber changed e.target inside its filter (event-dom does this),
-            // then we reset e.target to its original:
-            e.sourceTarget &amp;&amp; (e.target=e.sourceTarget);
+            // then we reset e.target to its original. But only if e._noResetSourceTarget is undefined:
+            // (e._noResetSourceTarget can be used to supress this behaviour --&gt; dragdrop uses this)
+            e.sourceTarget &amp;&amp; !e._noResetSourceTarget &amp;&amp; (e.target=e.sourceTarget);
             if (customEventDefinition &amp;&amp; !e.status.halted) {
                 // now invoke defFn
                 e.returnValue = e.status.defaultPrevented ?

@@ -9,7 +9,8 @@
 {% highlight js %}
 <script>
     var ITSA = require('itsa'){% if page.itsaclassname %},
-        {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }}{% endif %};
+        {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }}{% endif %};{% if page.extracodefirstpar %}
+    {{ page.extracodefirstpar }}{% endif %}
 </script>
 {% endhighlight %}
 When using your own <a href="../../customized-build/index.html">customized build-file</a>, this module-requirement needs to be invoked with the window-object.

@@ -2,6 +2,10 @@
 layout: "root-index"
 userguide_url: "userguide/index.html"
 contribution_url: "contribution/index.html"
+userguide_url: "userguide/index.html"
+customizedbuild_url: "customized-build/index.html"
+customizedbuild_url: "customized-build/index.html"
+stateandrendering_url: "state-and-rendering/index.html"
 ---
 
 <h1 class="title"><img src="assets/itsa-logo.png" />{{ site.title }}</h1>
@@ -29,13 +33,14 @@ contribution_url: "contribution/index.html"
 		</ul>
 	</p>
 
+	<p>Functionality and state of HtmlElements is set at the attributes as much as possible. Read more here: <a href="{{ page.stateandrendering_url }}">State and rendering</a>.
 	<div class="paragraph">Quick Start</div>
 
-	<p>ITSA provides a <code class="prettyprint">standard distribution</code> which aggregates the various modules. Once included, you can create a root namespace <code class="prettyprint">ITSA</code> that has the members described in the <a href="userguide/index.html">modules-userguides</a>.</p>
+	<p>ITSA provides a <code class="prettyprint">standard distribution</code> which aggregates the various modules. Once included, you can create a root namespace <code class="prettyprint">ITSA</code> that has the members described in the <a href="{{ page.userguide_url }}">modules-userguides</a>.</p>
 
     {% include quick-start.html %}
 
 	<div class="paragraph">Customize</div>
-	<p>Instead of using the <code class="prettyprint">standard distribution</code>, you can create customized build-files. This saves you from a large rollup with all available modules. Read more about it at <a href="customized-build/index.html">ITSA customized build</a> (only for experienced users).</p>
+	<p>Instead of using the <code class="prettyprint">standard distribution</code>, you can create customized build-files. This saves you from a large rollup with all available modules. Read more about it at <a href="{{ page.customizedbuild_url }}">ITSA customized build</a> (only for experienced users).</p>
 
 </div>

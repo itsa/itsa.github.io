@@ -43,9 +43,13 @@
             
                 <li><a href="../classes/Array.html">Array</a></li>
             
+                <li><a href="../classes/DD.html">DD</a></li>
+            
                 <li><a href="../classes/document.html">document</a></li>
             
                 <li><a href="../classes/Element.html">Element</a></li>
+            
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
             
                 <li><a href="../classes/Event.html">Event</a></li>
             
@@ -59,9 +63,13 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
-                <li><a href="../classes/NodeList.html">NodeList</a></li>
+                <li><a href="../classes/Node.html">Node</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -69,13 +77,23 @@
             
                 <li><a href="../classes/Utils.html">Utils</a></li>
             
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
                 <li><a href="../classes/window.html">window</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
-                <li><a href="../modules/dom-ext.html">dom-ext</a></li>
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
+            
+                <li><a href="../modules/drag.html">drag</a></li>
+            
+                <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -88,6 +106,12 @@
                 <li><a href="../modules/event-listener.html">event-listener</a></li>
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
             
                 <li><a href="../modules/io.html">io</a></li>
             
@@ -107,13 +131,7 @@
             
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
-                <li><a href="../modules/lib_document.js.html">lib/document.js</a></li>
-            
-                <li><a href="../modules/lib_element.js.html">lib/element.js</a></li>
-            
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
-            
-                <li><a href="../modules/lib_nodelist.js.html">lib/nodelist.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -121,9 +139,17 @@
             
                 <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
             
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
                 <li><a href="../modules/node-win.html">node-win</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
             
             </ul>
         </div>
@@ -186,20 +212,31 @@
         TRIM_LEFT_REGEX  = new RegExp(&#x27;^&#x27; + WHITESPACE_CLASS),
         TRIM_RIGHT_REGEX = new RegExp(WHITESPACE_CLASS + &#x27;$&#x27;),
         TRIMREGEX        = new RegExp(TRIM_LEFT_REGEX.source + &#x27;|&#x27; + TRIM_RIGHT_REGEX.source, &#x27;g&#x27;),
-        PATTERN_EMAIL = new RegExp(&#x27;^[\\w!#$%&amp;\&#x27;*+/=?&#x60;{|}~^-]+(?:\\.[\\w!#$%&amp;\&#x27;*+/=?&#x60;{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$&#x27;),
-        PATTERN_URLEND = &#x27;[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)+(/[\\w-]+)*&#x27;,
-        PATTERN_URLHTTP = new RegExp(&#x27;^(http://)?&#x27;+PATTERN_URLEND),
+        PATTERN_EMAIL = new RegExp(&#x27;^[\\w!#$%&amp;\&#x27;*+/=?&#x60;{|}~^-]+(?:\\.[\\w!#$%&amp;\&#x27;*+/=?&#x60;{|}~^-]+)*@(?:[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]\\.)+[a-zA-Z]{2,}$&#x27;),
+        PATTERN_URLEND = &#x27;([a-zA-Z0-9]+\\.)*(?:[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]\\.)+[a-zA-Z]{2,}(/[\\w-]+)*$&#x27;,
+        PATTERN_URLHTTP = new RegExp(&#x27;^http://&#x27;+PATTERN_URLEND),
         PATTERN_URLHTTPS = new RegExp(&#x27;^https://&#x27;+PATTERN_URLEND),
         PATTERN_URL = new RegExp(&#x27;^(https?://)?&#x27;+PATTERN_URLEND),
         PATTERN_INTEGER = /^(([-]?[1-9][0-9]*)|0)$/,
-        PATTERN_FLOAT_START = &#x27;^[-]?(([1-9][0-9]*)|0)(\\&#x27;,
+        PATTERN_FLOAT_START = &#x27;^([-]?(([1-9][0-9]*)|0))?(\\&#x27;,
         PATTERN_FLOAT_END = &#x27;[0-9]+)?$&#x27;,
         PATTERN_FLOAT_COMMA = new RegExp(PATTERN_FLOAT_START + &#x27;,&#x27; + PATTERN_FLOAT_END),
         PATTERN_FLOAT_DOT = new RegExp(PATTERN_FLOAT_START + &#x27;.&#x27; + PATTERN_FLOAT_END),
-        PATTERN_HEX_COLOR_HASHALPHA = /^#[0-9A-F]{4}([0-9A-F]{4})?$/,
-        PATTERN_HEX_COLOR_HASH = /^#[0-9A-F]{3}([0-9A-F]{3})?$/,
-        PATTERN_HEX_COLOR_ALPHA = /^[0-9A-F]{4}([0-9A-F]{4})?$/,
-        PATTERN_HEX_COLOR = /^[0-9A-F]{3}([0-9A-F]{3})?$/;
+        PATTERN_HEX_COLOR_ALPHA = /^#?[0-9A-F]{4}([0-9A-F]{4})?$/,
+        PATTERN_HEX_COLOR = /^#?[0-9A-F]{3}([0-9A-F]{3})?$/;
+
+    /**
+     * Checks whether the substring is part if this String.
+     * Alias for (String.indexOf(substring) &gt; -1)
+     *
+     * @method contains
+     * @param substring {String} the substring to test for
+     * @param [caseInsensitive=false] {Boolean} whether to ignore case-sensivity
+     * @return {Boolean} whether the substring is found
+     */
+    String.contains || (StringPrototype.contains=function(substring, caseInsensitive) {
+        return caseInsensitive ? (this.toLowerCase().indexOf(substring.toLowerCase()) &gt; -1) : (this.indexOf(substring) &gt; -1);
+    });
 
     /**
      * Checks if the string ends with the value specified by &#x60;test&#x60;
@@ -210,7 +247,20 @@
      * @return {Boolean} whether the string ends with &#x60;test&#x60;
      */
     String.endsWith || (StringPrototype.endsWith=function(test, caseInsensitive) {
-        return this.test(test+&#x27;$&#x27;, caseInsensitive ? &#x27;i&#x27;: &#x27;&#x27;);
+        return (new RegExp(test+&#x27;$&#x27;, caseInsensitive ? &#x27;i&#x27;: &#x27;&#x27;)).test(this);
+    });
+
+    /**
+     * Checks if the string can be parsed into a number when using &#x60;parseInt()&#x60;
+     *
+     * @method parsable
+     * @return {Boolean} whether the string is parsable
+     */
+    String.parsable || (StringPrototype.parsable=function() {
+        // strange enough, NaN doen&#x27;t let compare itself, so we need a strange test:
+        // parseInt(value, 10)===parseInt(value, 10)
+        // which returns &#x60;true&#x60; for a parsable value, otherwise false
+        return (parseInt(this)===parseInt(this));
     });
 
     /**
@@ -222,7 +272,7 @@
      * @return {Boolean} whether the string starts with &#x60;test&#x60;
      */
     String.startsWith || (StringPrototype.startsWith=function(test, caseInsensitive) {
-        return this.test(&#x27;^&#x27;+test, caseInsensitive ? &#x27;i&#x27;: &#x27;&#x27;);
+        return (new RegExp(&#x27;^&#x27;+test, caseInsensitive ? &#x27;i&#x27;: &#x27;&#x27;)).test(this);
     });
 
     /**
@@ -318,20 +368,11 @@
      * Validates if the String&#x27;s value represents a hexadecimal color.
      *
      * @method validateHexaColor
-     * @param [options] {Object}
-     * @param [options.hashtag=false] {Boolean} whether the hashtag should be part of the String
-     * @param [options.alpha=false] {Boolean} whether to accept alpha transparancy
+     * @param [alpha=false] {Boolean} whether to accept alpha transparancy
      * @return {Boolean} whether the String&#x27;s value is a valid hexadecimal color.
      */
-    StringPrototype.validateHexaColor = function(options) {
-        var instance = this;
-        options || (options={});
-        if (options.hashtag) {
-            return options.alpha ? PATTERN_HEX_COLOR_HASHALPHA.test(instance) : PATTERN_HEX_COLOR_HASH.test(instance);
-        }
-        else {
-            return options.alpha ? PATTERN_HEX_COLOR_ALPHA.test(instance) : PATTERN_HEX_COLOR.test(instance);
-        }
+    StringPrototype.validateHexaColor = function(alpha) {
+        return alpha ? PATTERN_HEX_COLOR_ALPHA.test(this) : PATTERN_HEX_COLOR.test(this);
     };
 
     /**
@@ -342,6 +383,22 @@
      */
     StringPrototype.validateNumber = function() {
         return PATTERN_INTEGER.test(this);
+    };
+
+    /**
+     * Validates if the String&#x27;s value represents a valid boolean.
+     *
+     * @method validateNumber
+     * @return {Boolean} whether the String&#x27;s value is a valid integer number.
+     */
+    StringPrototype.validateBoolean = function() {
+        var length = this.length,
+            check;
+        if ((length&lt;4) || (length&gt;5)) {
+            return false;
+        }
+        check = this.toUpperCase();
+        return ((check===&#x27;TRUE&#x27;) || (check===&#x27;FALSE&#x27;));
     };
 
     /**

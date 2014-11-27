@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/drag/drag.js - Itsa</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title="Itsa"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/Array.html">Array</a></li>
+            
+                <li><a href="../classes/DD.html">DD</a></li>
+            
+                <li><a href="../classes/document.html">document</a></li>
+            
+                <li><a href="../classes/Element.html">Element</a></li>
+            
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
+            
+                <li><a href="../classes/Event.html">Event</a></li>
+            
+                <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
+            
+                <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
+            
+                <li><a href="../classes/Function.html">Function</a></li>
+            
+                <li><a href="../classes/IO.html">IO</a></li>
+            
+                <li><a href="../classes/ITSA.html">ITSA</a></li>
+            
+                <li><a href="../classes/Node.html">Node</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
+            
+                <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
+            
+                <li><a href="../classes/Promise.html">Promise</a></li>
+            
+                <li><a href="../classes/String.html">String</a></li>
+            
+                <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
+            
+                <li><a href="../modules/drag.html">drag</a></li>
+            
+                <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
+            
+                <li><a href="../modules/event.html">event</a></li>
+            
+                <li><a href="../modules/event-dom.html">event-dom</a></li>
+            
+                <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-hover.html">event-hover</a></li>
+            
+                <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
+            
+                <li><a href="../modules/io.html">io</a></li>
+            
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
+            
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/js-ext.html">js-ext</a></li>
+            
+                <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
+            
+                <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
+            
+                <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
+            
+                <li><a href="../modules/lib_promise.s.html">lib/promise.s</a></li>
+            
+                <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
+            
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
+            
+                <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/drag/drag.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+
+/**
+ * Provides &#x60;drag and drop&#x60; functionality, without dropzones.
+ * For &#x60;dropzone&#x60;-support, you should use the module: &#x60;drag-drop&#x60;.
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @example
+ * DD = require(&#x27;drag&#x27;)(window);
+ * DD.init();
+ *
+ * @module drag
+ * @class DD
+ * @since 0.0.4
+*/
+
+var NAME = &#x27;[drag]: &#x27;,
+    DRAG = &#x27;drag&#x27;,
+    DROP = &#x27;drop&#x27;,
+    DRAGGABLE = DRAG+&#x27;gable&#x27;,
+    DEL_DRAGGABLE = &#x27;del-&#x27;+DRAGGABLE,
+    DD_MINUS = &#x27;dd-&#x27;,
+    DD_DRAGGING_CLASS = DD_MINUS+DRAG+&#x27;ging&#x27;,
+    DD_MASTER_CLASS = DD_MINUS+&#x27;master&#x27;,
+    DD_HANDLE = DD_MINUS+&#x27;handle&#x27;,
+    DD_DROPZONE_MOVABLE = DD_MINUS+&#x27;dropzone-movable&#x27;,
+    CONSTRAIN_ATTR = &#x27;xy-constrain&#x27;,
+    MOUSE = &#x27;mouse&#x27;,
+    DROPZONE = &#x27;dropzone&#x27;,
+    NO_TRANS_CLASS = &#x27;el-notrans&#x27;, // delivered by &#x60;vdom&#x60;
+    HIGH_Z_CLASS = DD_MINUS+&#x27;high-z&#x27;,
+    REGEXP_NODE_ID = /^#\S+$/,
+    EMITTER = &#x27;emitter&#x27;,
+    DD_EMITTER = DD_MINUS+EMITTER,
+    DD_DRAG = DD_MINUS+DRAG,
+    DD_DROP = DD_MINUS+DROP,
+    DD_FAKE = DD_MINUS+&#x27;fake-&#x27;,
+    DOWN = &#x27;down&#x27;,
+    UP = &#x27;up&#x27;,
+    MOUSEUP = MOUSE+UP,
+    MOUSEDOWN = MOUSE+DOWN,
+    MOUSEMOVE = MOUSE+&#x27;move&#x27;,
+    DD_FAKE_MOUSEUP = DD_FAKE+MOUSEUP,
+    UI = &#x27;UI&#x27;,
+    DD_EFFECT_ALLOWED = DD_MINUS+&#x27;effect-allowed&#x27;,
+    BORDER = &#x27;border&#x27;,
+    WIDTH = &#x27;width&#x27;,
+    BORDER_LEFT_WIDTH = BORDER+&#x27;-left-&#x27;+WIDTH,
+    BORDER_TOP_WIDTH = BORDER+&#x27;-top-&#x27;+WIDTH,
+    LEFT = &#x27;left&#x27;,
+    TOP = &#x27;top&#x27;,
+    WINDOW = &#x27;window&#x27;,
+    TRUE = &#x27;true&#x27;,
+    DD_MINUSDRAGGABLE = DD_MINUS+DRAGGABLE,
+    PLUGIN_ATTRS = [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTER, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE];
+
+require(&#x27;polyfill&#x27;);
+require(&#x27;js-ext&#x27;);
+require(&#x27;./css/drag.css&#x27;);
+
+module.exports = function (window) {
+
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
+
+    if (window._ITSAmodules.Drag) {
+        return window._ITSAmodules.Drag; // Drag was already created
+    }
+
+    var Event = require(&#x27;event-dom&#x27;)(window),
+        NodePlugin = require(&#x27;vdom&#x27;)(window).Plugins.NodePlugin,
+        DD, NodeDD, DD_Object;
+
+    require(&#x27;window-ext&#x27;)(window);
+
+    DD = {
+        /**
+         * Objecthash containing all specific information about the particular drag-cycle.
+         * It has a structure like this:
+         *
+         * ddProps = {
+         *     dragNode {HtmlElement} Element that is dragged
+         *     x {Number} absolute x-position of the draggable inside &#x60;document&#x60; when the drag starts
+         *     y {Number} absolute y-position of the draggable inside &#x60;document&#x60; when the drag starts
+         *     inlineLeft {String} inline css of the property &#x60;left&#x60; when drag starts
+         *     inlineTop {String} inline css of the property &#x60;top&#x60; when drag starts
+         *     winConstrained {Boolean} whether the draggable should be constrained to &#x60;window&#x60;
+         *     xMouseLast {Number} absolute x-position of the mouse inside &#x60;document&#x60; when the drag starts
+         *     yMouseLast {Number} absolute y-position of the draggable inside &#x60;document&#x60; when the drag starts
+         *     winScrollLeft {Number} the left-scroll of window when drag starts
+         *     winScrollTop {Number} the top-scroll of window when drag starts
+         *     constrain = { // constrain-properties when constrained to a HtmlElement
+         *         xOrig {Number} x-position in the document, included with left-border-width
+         *         yOrig {Number} y-position in the document, included with top-border-width
+         *         x {Number} xOrig corrected with scroll-left of the constrained node
+         *         y {Number} yOrig corrected with scroll-top of the constrained node
+         *         w {Number} scrollWidth
+         *         h {Number} scrollHeight
+         *     };
+         *     relatives[{ // Array with objects that represent all draggables that come along with the master-draggable (in case of multiple items), excluded the master draggable itself
+         *         sourceNode {HtmlElement} original node (defined by drag-drop)
+         *         dragNode {HtmlElement} draggable node
+         *         shiftX {Number} the amount of left-pixels that this HtmlElement differs from the dragged element
+         *         shiftY {Number} the amount of top-pixels that this HtmlElement differs from the dragged element
+         *         inlineLeft {String} inline css of the property &#x60;left&#x60; when drag starts
+         *         inlineTop {String} inline css of the property &#x60;top&#x60; when drag starts
+         *     }]
+         * }
+         *
+         * @property ddProps
+         * @default {}
+         * @type Object
+         * @since 0.0.1
+        */
+       ddProps: {},
+
+        /**
+         * Internal hash with notifiers to response after each &#x60;Drag&#x60; event is set up, or teared down.
+         * You can use this to hook in into the drag-eventcycle: the &#x60;drop&#x60;-module uses it this way.
+         * Is filled by using &#x60;notify()&#x60;.
+         *
+         * @property _notifiers
+         * @default []
+         * @type Array
+         * @private
+         * @since 0.0.1
+         */
+        _notifiers: [],
+
+        /**
+        * Default function for the &#x60;*:dd-drag&#x60;-event
+        *
+        * @method _defFnDrag
+        * @param e {Object} eventobject
+        * @private
+        * @since 0.0.1
+        */
+        _defFnDrag: function(e) {
+            console.log(NAME, &#x27;_defFnDrag: default function dd-drag&#x27;);
+            var ddProps = this.ddProps,
+                dragNode = ddProps.dragNode,
+                constrainNode = ddProps.constrainNode,
+                winConstrained = ddProps.winConstrained,
+                x, y;
+            // is the drag is finished, there will be no ddProps.defined
+            // return then, to prevent any events that stayed behind
+            if (!ddProps.defined) {
+                return;
+            }
+
+            // caution: the user might have put the mouse out of the screen and released the mousebutton!
+            // If that is the case, the a mouseup-event should be initiated instead of draggin the element
+            if (e.buttons===0) {
+                // no more button pressed
+                /**
+                * Fired when the mouse comes back into the browser-window while dd-drag was busy yet no buttons are pressed.
+                * This is a correction to the fact that the mouseup-event wasn&#x27;t noticed because the mouse was outside the browser.
+                *
+                * @event dd-fake-mouseup
+                * @private
+                * @since 0.1
+                */
+                Event.emit(dragNode, DD_FAKE_MOUSEUP);
+            }
+            else {
+                console.log(NAME, &#x27;_defFnDrag: dragging:&#x27;);
+                if (constrainNode) {
+                    ddProps.constrain.x = ddProps.constrain.xOrig - constrainNode.scrollLeft;
+                    ddProps.constrain.y = ddProps.constrain.yOrig - constrainNode.scrollTop;
+                }
+
+                x = ddProps.x+e.xMouse+(winConstrained ? ddProps.winScrollLeft : window.getScrollLeft())-e.xMouseOrigin;
+                y = ddProps.y+e.yMouse+(winConstrained ? ddProps.winScrollTop : window.getScrollTop())-e.yMouseOrigin;
+
+                dragNode.setXY(x, y, ddProps.constrain, true, true);
+
+                ddProps.relatives &amp;&amp; ddProps.relatives.forEach(
+                    function(item) {
+                        item.dragNode.setXY(x+item.shiftX, y+item.shiftY, null, true, true);
+                    }
+                );
+
+                ddProps.winConstrained || dragNode.forceIntoView(true);
+                constrainNode &amp;&amp; dragNode.forceIntoNodeView(constrainNode);
+            }
+        },
+
+        /**
+         * Default function for the &#x60;*:dd-drop&#x60;-event
+         *
+         * @method _defFnDrop
+         * @param e {Object} eventobject
+         * @private
+         * @since 0.0.1
+         */
+        _defFnDrop: function(e) {
+            console.log(NAME, &#x27;_defFnDrop&#x27;);
+            var dragNode = e.target,
+                removeClasses = function (node) {
+                    node.removeClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS, DEL_DRAGGABLE, DD_MASTER_CLASS]);
+                };
+
+            PLUGIN_ATTRS.forEach(function(attribute) {
+                var data = &#x27;_del_&#x27;+attribute;
+                if (dragNode.getData(data)) {
+                    dragNode.removeAttr(attribute);
+                    dragNode.removeData(data);
+                }
+            });
+            removeClasses(dragNode);
+            e.relatives &amp;&amp; e.relatives.forEach(
+                function(node) {
+                    removeClasses(node);
+                }
+            );
+        },
+
+        /**
+         * Default function for the &#x60;*:dd&#x60;-event
+         *
+         * @method _defFnStart
+         * @param e {Object} eventobject
+         * @private
+         * @since 0.0.1
+         */
+        _defFnStart: function(e) {
+            var instance = this,
+                customEvent;
+            customEvent = e.emitter + &#x27;:&#x27;+DD_DRAG;
+            console.log(NAME, &#x27;_defFnStart: default function UI:dd-start. Defining customEvent &#x27;+customEvent);
+            Event.defineEvent(customEvent).defaultFn(instance._defFnDrag.bind(instance));
+            window.document.getAll(&#x27;.&#x27;+DD_MASTER_CLASS).removeClass(DD_MASTER_CLASS);
+            instance._initializeDrag(e);
+        },
+
+      /**
+        * Defines the definition of the &#x60;dd&#x60; event: the first phase of the drag-eventcycle (dd, *:dd-drag, *:dd-drop)
+        *
+        * @method _defineDDStart
+        * @param emitterName {String} the emitterName, which leads into the definition of event &#x60;emitterName:dd&#x60;
+        * @private
+        * @since 0.0.1
+        */
+        _defineDDStart: function(emitterName) {
+            console.log(NAME, &#x27;_defineDDStart&#x27;);
+            var instance = this;
+            // by using dd before dd-drag, the user can create a &#x60;before&#x60;-subscriber to dd
+            // and define e.emitter and/or e.relatives before going into &#x60;dd-drag&#x60;
+            Event.defineEvent(emitterName+&#x27;:dd&#x27;)
+                .defaultFn(instance._defFnStart.bind(instance))
+                .preventedFn(instance._prevFnStart.bind(instance));
+        },
+
+       /**
+         * Default function for the &#x60;*:dd-drag&#x60;-event
+         *
+         * @method _initializeDrag
+         * @param e {Object} eventobject
+         * @private
+         * @since 0.0.1
+         */
+        _initializeDrag: function(e) {
+            console.log(NAME, &#x27;_initializeDrag &#x27;+e.xMouseOrigin);
+            var instance = this,
+                dragNode = e.target,
+                constrain = dragNode.getAttr(CONSTRAIN_ATTR),
+                ddProps = instance.ddProps,
+                emitterName = e.emitter,
+                moveEv, x, y, byExactId, match, constrainNode, winConstrained, winScrollLeft, winScrollTop,
+                inlineLeft, inlineTop, xOrig, yOrig;
+
+            // define ddProps --&gt; internal object with data about the draggable instance
+            ddProps.dragNode = dragNode;
+            ddProps.x = x = dragNode.left;
+            ddProps.y = y = dragNode.top;
+            ddProps.inlineLeft = inlineLeft = dragNode.getInlineStyle(LEFT);
+            ddProps.inlineTop = inlineTop = dragNode.getInlineStyle(TOP);
+            ddProps.winConstrained = winConstrained = (constrain===WINDOW);
+            ddProps.xMouseLast = x;
+            ddProps.yMouseLast = y;
+
+            if (constrain) {
+                if (ddProps.winConstrained) {
+                    ddProps.winScrollLeft = winScrollLeft = window.getScrollLeft();
+                    ddProps.winScrollTop = winScrollTop = window.getScrollTop();
+                    ddProps.constrain = {
+                        x: winScrollLeft,
+                        y: winScrollTop,
+                        w: window.getWidth(),
+                        h: window.getHeight()
+                    };
+                }
+                else {
+                    byExactId = REGEXP_NODE_ID.test(constrain);
+                    constrainNode = dragNode.parentNode;
+                    while (constrainNode.matchesSelector &amp;&amp; !match) {
+                        match = byExactId ? (constrainNode.id===constrain.substr(1)) : constrainNode.matchesSelector(constrain);
+                        // if there is a match, then make sure x and y fall within the region
+                        if (match) {
+                            ddProps.constrainNode = constrainNode;
+                            xOrig = constrainNode.left + parseInt(constrainNode.getStyle(BORDER_LEFT_WIDTH), 10);
+                            yOrig = constrainNode.top + parseInt(constrainNode.getStyle(BORDER_TOP_WIDTH), 10);
+                            ddProps.constrain = {
+                                xOrig: xOrig,
+                                yOrig: yOrig,
+                                x: xOrig - constrainNode.scrollLeft,
+                                y: yOrig - constrainNode.scrollTop,
+                                w: constrainNode.scrollWidth,
+                                h: constrainNode.scrollHeight
+                            };
+                        }
+                        else {
+                            constrainNode = constrainNode.parentNode;
+                        }
+                    }
+                }
+            }
+
+            // create listener for &#x60;mousemove&#x60; and transform it into the &#x60;*:dd:drag&#x60;-event
+            moveEv = Event.after(MOUSEMOVE, function(e2) {
+                if (!e2.clientX) {
+                    return;
+                }
+                // move the object
+                e.xMouse = e2.clientX;
+                e.yMouse = e2.clientY;
+                /**
+                * Emitted during the drag-cycle of a draggable Element (while it is dragged).
+                *
+                * @event *:dd-drag
+                * @param e {Object} eventobject including:
+                * @param e.target {HtmlElement} the HtmlElement that is being dragged
+                * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+                * @param e.sourceTarget {HtmlElement} the deepest HtmlElement where the mouse lies upon
+                * @param e.dd {Promise} Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.
+                * @param e.xMouse {Number} the current x-position in the window-view
+                * @param e.yMouse {Number} the current y-position in the window-view
+                * @param e.clientX {Number} the current x-position in the window-view
+                * @param e.clientY {Number} the current y-position in the window-view
+                * @param e.xMouseOrigin {Number} the original x-position in the document when drag started (incl. scrollOffset)
+                * @param e.yMouseOrigin {Number} the original y-position in the document when drag started (incl. scrollOffset)
+                * @param [e.relatives] {NodeList} an optional list that the user could set in a &#x60;before&#x60;-subscriber of the &#x60;dd&#x60;-event
+                *        to inform which nodes are related to the draggable node and should be dragged as well.
+                * @since 0.1
+                */
+                Event.emit(dragNode, emitterName+&#x27;:&#x27;+DD_DRAG, e);
+                e.dd.callback();
+            });
+
+            // prepare dragNode class for the right CSS:
+            dragNode.setClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS]);
+
+            Event.onceAfter([MOUSE+UP, DD_FAKE_MOUSEUP], function(e3) {
+                moveEv.detach();
+                // set mousepos for the last time:
+                e.xMouse = e3.clientX;
+                e.yMouse = e3.clientY;
+                // invoke all teardown notifiers:
+                instance._notifiers.forEach(
+                    function(notifier) {
+                        notifier.s || notifier.cb.call(notifier.o, e, ddProps);
+                    }
+                );
+                instance.ddProps = {};
+                /**
+                * Emitted when drag-cycle of a draggable Element is ended.
+                *
+                * @event *:dd-drop
+                * @param e {Object} eventobject including:
+                * @param e.target {HtmlElement} the HtmlElement that is being dragged
+                * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+                * @param e.sourceTarget {HtmlElement} the deepest HtmlElement where the mouse lies upon
+                * @param e.dd {Promise} Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.
+                * @param e.xMouse {Number} the current x-position in the window-view
+                * @param e.yMouse {Number} the current y-position in the window-view
+                * @param e.clientX {Number} the current x-position in the window-view
+                * @param e.clientY {Number} the current y-position in the window-view
+                * @param e.xMouseOrigin {Number} the original x-position in the document when drag started (incl. scrollOffset)
+                * @param e.yMouseOrigin {Number} the original y-position in the document when drag started (incl. scrollOffset)
+                * @param [e.relatives] {NodeList} an optional list that the user could set in a &#x60;before&#x60;-subscriber of the &#x60;dd&#x60;-event
+                *        to inform which nodes are related to the draggable node and should be dragged as well.
+                * @since 0.1
+                */
+                Event.emit(dragNode, emitterName+&#x27;:&#x27;+DD_DROP, e);
+                e.dd.fulfill();
+            });
+
+            dragNode.setXY(ddProps.xMouseLast, ddProps.yMouseLast, ddProps.constrain, true);
+
+            if (e.relatives) {
+                // relatives are extra HtmlElements that should be moved aside with the main dragged element
+                // e.relatives is a selector, e.relativeNodes will be an array with nodes
+                e.relativeNodes = [];
+                dragNode.setClass(DD_MASTER_CLASS);
+                dragNode.setClass(DD_MASTER_CLASS);
+                ddProps.relatives = [];
+                e.relatives.forEach(
+                    function(node) {
+                        var item;
+                        if (node !== dragNode) {
+                            item = {
+                                dragNode: node,
+                                shiftX: node.left - x,
+                                shiftY: node.top - y,
+                                inlineLeft: node.getInlineStyle(LEFT),
+                                inlineTop: node.getInlineStyle(TOP)
+                            };
+                            item.dragNode.setClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS]);
+                            ddProps.relatives.push(item);
+                            e.relativeNodes.push(item.dragNode);
+                        }
+                    }
+                );
+            }
+            // invoke all setup notifiers:
+            instance._notifiers.forEach(
+                function(notifier) {
+                    notifier.s &amp;&amp; notifier.cb.call(notifier.o, e, ddProps);
+                }
+            );
+        },
+
+        /**
+         * Prevented function for the &#x60;*:dd-start&#x60;-event
+         *
+         * @method _prevFnStart
+         * @param e {Object} eventobject
+         * @private
+         * @since 0.0.1
+         */
+        _prevFnStart: function(e) {
+            console.log(NAME, &#x27;_prevFnStart&#x27;);
+            e.dd.reject();
+        },
+
+      /**
+        * Engine behind the drag-drop-cycle.
+        * Sets up a &#x60;mousedown&#x60; listener to initiate a drag-drop eventcycle. The eventcycle start whenever
+        * one of these events happens on a HtmlElement with the attribute &#x60;dd-draggable=&quot;true&quot;&#x60;.
+        * The drag-drop eventcycle consists of the events: &#x60;dd-start&#x60;, &#x60;emitterName:dd-drag&#x60; and &#x60;emitterName:dd-drop&#x60;
+        *
+        *
+        * @method _setupMouseEv
+        * @private
+        * @since 0.0.1
+        */
+        _setupMouseEv: function() {
+            console.log(NAME, &#x27;_setupMouseEv: setting up mousedown event&#x27;);
+            var instance = this,
+                nodeTargetFn,
+                delegatedTargetFn;
+
+            nodeTargetFn = function(e) {
+                var node = e.target,
+                    handle, availableHandles, insideHandle, emitterName;
+
+                // first check if there is a handle to determine if the drag started here:
+                handle = node.getAttr(DD_HANDLE);
+                if (handle) {
+                    availableHandles = node.getAll(handle);
+                    insideHandle = false;
+                    availableHandles.some(function(handleNode) {
+                        insideHandle = handleNode.contains(e.sourceTarget);
+                        return insideHandle;
+                    });
+                    if (!insideHandle) {
+                        return;
+                    }
+                }
+
+                // initialize ddProps: have to do here, because the event might not start because it wasn&#x27;t inside the handle when it should be
+                instance.ddProps = {
+                    defined: true,
+                    dragOverList: []
+                };
+
+                // prevent the emitter from resetting e.target to e.sourceTarget:
+                e._noResetSourceTarget = true;
+                // add &#x60;dd&#x60;-Promise to the eventobject --&gt; this Promise will be resolved once the pointer has released.
+                e.dd = Promise.manage();
+                // define e.setOnDrag --&gt; users
+                e.setOnDrag = function(callbackFn) {
+                    e.dd.setCallback(callbackFn);
+                };
+                // store the orriginal mouseposition:
+                e.xMouseOrigin = e.clientX + window.getScrollLeft();
+                e.yMouseOrigin = e.clientY + window.getScrollTop();
+
+                //set the emitterName:
+                emitterName = e.target.getAttr(DD_EMITTER) || UI,
+                // now we can start the eventcycle by emitting emitterName:dd:
+                /**
+                * Emitted when a draggable Element&#x27;s drag-cycle starts. You can use a &#x60;before&#x60;-subscriber to specify
+                * e.relatives, which should be a nodelist with HtmlElements, that should be dragged togehter with the master
+                * draggable Element.
+                *
+                * @event *:dd
+                * @param e {Object} eventobject including:
+                * @param e.target {HtmlElement} the HtmlElement that is being dragged
+                * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+                * @param e.sourceTarget {HtmlElement} the deepest HtmlElement where the mouse lies upon
+                * @param e.dd {Promise} Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.
+                * @param e.xMouse {Number} the current x-position in the window-view
+                * @param e.yMouse {Number} the current y-position in the window-view
+                * @param e.clientX {Number} the current x-position in the window-view
+                * @param e.clientY {Number} the current y-position in the window-view
+                * @param e.xMouseOrigin {Number} the original x-position in the document when drag started (incl. scrollOffset)
+                * @param e.yMouseOrigin {Number} the original y-position in the document when drag started (incl. scrollOffset)
+                * @param [e.relatives] {NodeList} an optional list that the user could set in a &#x60;before&#x60;-subscriber of the &#x60;dd&#x60;-event
+                *        to inform which nodes are related to the draggable node and should be dragged as well.
+                * @since 0.1
+                */
+                instance._defineDDStart(emitterName);
+                Event.emit(e.target, emitterName+&#x27;:dd&#x27;, e);
+            };
+
+            delegatedTargetFn = function(e, cssSelector) {
+                var container = e.target,
+                    nodelist = container.getAll(cssSelector),
+                    foundNode;
+                nodelist.some(
+                    function(node) {
+                        (node.contains(e.sourceTarget)) &amp;&amp; (foundNode=node);
+                        return foundNode;
+                    }
+                );
+                if (foundNode) {
+                    e.currentTarget = container;
+                    e.target = foundNode;
+                    // Mark the delegated node, so it has the same style as [draggable]:
+                    foundNode.setClass(DEL_DRAGGABLE);
+                    // We must transport the other relevant dd-attributes (and xy-constrain)
+                    // which we will remove when finished dragging:
+                    PLUGIN_ATTRS.forEach(function(attribute) {
+                        var attr = container.getAttr(attribute);
+                        if (attr &amp;&amp; !foundNode.hasAttr(attribute)) {
+                            foundNode.setData(&#x27;_del_&#x27;+attribute, attr);
+                            foundNode.setAttr(attribute, attr);
+                        }
+                    });
+                    nodeTargetFn(e);
+                }
+            };
+
+            Event.after(MOUSEDOWN, function(e) {
+                var draggableAttr = e.target.getAttr(DD_MINUSDRAGGABLE);
+                (draggableAttr===TRUE) ? nodeTargetFn(e) : delegatedTargetFn(e, draggableAttr);
+            }, &#x27;[&#x27;+DD_MINUSDRAGGABLE+&#x27;]&#x27;);
+
+        },
+
+       /**
+         * Initializes dragdrop. Needs to be invoked, otherwise DD won&#x27;t run.
+         *
+         * @method init
+         * @param dragableElement {HtmlElement} HtmlElement that is checked for its allowed effects
+         * @return {Boolean} if copy-dragables are allowed
+         * @since 0.0.1
+         */
+        init: function() {
+            console.log(NAME, &#x27;init&#x27;);
+            var instance = this;
+            if (!instance._inited) {
+                instance._setupMouseEv(); // engine behind the dragdrop-eventcycle
+                Event.defineEvent(&#x27;UI:&#x27;+DD_DROP)
+                     .defaultFn(instance._defFnDrop.rbind(instance));
+            }
+            instance._inited = true;
+        },
+
+        /**
+         * Creates a notifier to response after each &#x60;Drag&#x60; event is set up, or teared down.
+         * You can use this to hook in into the drag-eventcycle: the &#x60;drop&#x60;-module uses it this way.
+         *
+         * @static
+         * @method notify
+         * @param callback {Function} subscriber: will be invoked after every drag-event is set up.
+         *                 Recieves 2 arguments: the &#x60;eventobject&#x60; and the internal property: &#x60;ddProps&#x60;
+         * @param context {Object} context of the callback
+         * @param setup {Boolean} wheter the callback should be invoked on setup (true) or teardown (false)
+         * @return {Object} handle with a method &#x60;detach()&#x60; which you can use to remove it from the &#x60;notifier-hash&#x60;
+         * @since 0.0.1
+        */
+        notify: function(callback, context, setup) {
+            console.log(NAME, &#x27;notify&#x27;);
+            var notifier = {
+                cb: callback,
+                o: context,
+                s: setup
+            };
+            this._notifiers.push(notifier);
+            return {
+                detach: function() {
+                    this._notifiers.remove(notifier);
+                }
+            };
+        }
+
+    };
+
+    NodeDD = NodePlugin.subClass(
+        function (config) {
+            var instance = this;
+            config || (config={});
+            instance[DD_MINUSDRAGGABLE] = config.draggable || true;
+            instance[DD_MINUS+DROPZONE] = config.dropzone;
+            instance[CONSTRAIN_ATTR] = config.constrain;
+            instance[DD_EMITTER] = config.emitter;
+            instance[DD_HANDLE] = config.handle;
+            instance[DD_EFFECT_ALLOWED] = config.effectAllowed;
+            instance[DD_DROPZONE_MOVABLE] = config.dropzoneMovable;
+        }
+    );
+
+    DD_Object = window._ITSAmodules.Drag = {
+        DD: DD,
+        Plugins: {
+            NodeDD: NodeDD
+        }
+    };
+
+    return DD_Object;
+};
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

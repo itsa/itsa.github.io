@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/vdom/partials/html-parser.js - Itsa</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title="Itsa"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/Array.html">Array</a></li>
+            
+                <li><a href="../classes/DD.html">DD</a></li>
+            
+                <li><a href="../classes/document.html">document</a></li>
+            
+                <li><a href="../classes/Element.html">Element</a></li>
+            
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
+            
+                <li><a href="../classes/Event.html">Event</a></li>
+            
+                <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
+            
+                <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
+            
+                <li><a href="../classes/Function.html">Function</a></li>
+            
+                <li><a href="../classes/IO.html">IO</a></li>
+            
+                <li><a href="../classes/ITSA.html">ITSA</a></li>
+            
+                <li><a href="../classes/Node.html">Node</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
+            
+                <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
+            
+                <li><a href="../classes/Promise.html">Promise</a></li>
+            
+                <li><a href="../classes/String.html">String</a></li>
+            
+                <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
+            
+                <li><a href="../modules/drag.html">drag</a></li>
+            
+                <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
+            
+                <li><a href="../modules/event.html">event</a></li>
+            
+                <li><a href="../modules/event-dom.html">event-dom</a></li>
+            
+                <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-hover.html">event-hover</a></li>
+            
+                <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
+            
+                <li><a href="../modules/io.html">io</a></li>
+            
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
+            
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/js-ext.html">js-ext</a></li>
+            
+                <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
+            
+                <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
+            
+                <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
+            
+                <li><a href="../modules/lib_promise.s.html">lib/promise.s</a></li>
+            
+                <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
+            
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
+            
+                <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/vdom/partials/html-parser.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+
+/**
+ * Exports &#x60;htmlToVNodes&#x60; which transforms html-text into vnodes.
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * &lt;br&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module vdom
+ * @submodule html-parser
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
+
+    if (window._ITSAmodules.HtmlParser) {
+        return window._ITSAmodules.HtmlParser; // HtmlParser was already created
+    }
+
+    var NS = require(&#x27;./vdom-ns.js&#x27;)(window),
+        extractor = require(&#x27;./attribute-extractor.js&#x27;)(window),
+        DOCUMENT = window.document,
+        voidElements = NS.voidElements,
+        nonVoidElements = NS.nonVoidElements,
+
+        TAG_OR_ATTR_START_CHARACTERS = {
+            a: true,
+            b: true,
+            c: true,
+            d: true,
+            e: true,
+            f: true,
+            g: true,
+            h: true,
+            i: true,
+            j: true,
+            k: true,
+            l: true,
+            m: true,
+            n: true,
+            o: true,
+            p: true,
+            q: true,
+            r: true,
+            s: true,
+            t: true,
+            u: true,
+            v: true,
+            w: true,
+            x: true,
+            y: true,
+            z: true,
+            A: true,
+            B: true,
+            C: true,
+            D: true,
+            E: true,
+            F: true,
+            G: true,
+            H: true,
+            I: true,
+            J: true,
+            K: true,
+            L: true,
+            M: true,
+            N: true,
+            O: true,
+            P: true,
+            Q: true,
+            R: true,
+            S: true,
+            T: true,
+            U: true,
+            V: true,
+            W: true,
+            X: true,
+            Y: true,
+            Z: true
+        },
+        STARTTAG_OR_ATTR_VALUE_ENDS_CHARACTERS = {
+            &#x27; &#x27;: true,
+            &#x27;&gt;&#x27;: true
+        },
+        ATTRUBUTE_NAME_ENDS_CHARACTER = {
+            &#x27; &#x27;: true,
+            &#x27;=&#x27;: true,
+            &#x27;&gt;&#x27;: true
+        },
+
+        /**
+         * Transforms html-text into a vnodes-Array.
+         *
+         * @method htmlToVNodes
+         * @param htmlString {String} plain html as string
+         * @return {Array} array with &#x60;vnodes&#x60;
+         * @since 0.0.1
+         */
+        htmlToVNodes = window._ITSAmodules.HtmlParser = function(htmlString, vNodeProto) {
+            var i = 0,
+                len = htmlString.length,
+                vnodes = [],
+                parentVNode = arguments[2], // private pass through-argument, only available when internal looped
+                insideTagDefinition, insideComment, innerText, endTagCount, stringMarker, attributeisString, attribute, attributeValue,
+                j, character, character2, vnode, isBoolean, checkBoolean, tag, isBeginTag, isEndTag, scriptVNode, extractClass, extractStyle;
+            while (i&lt;len) {
+                character = htmlString[i];
+                character2 = htmlString[i+1];
+                if (insideTagDefinition) {
+
+                    vnode.attrs = {};
+                    if (character!==&#x27;&gt;&#x27;) {
+                        // fill attributes until tagdefinition is over:
+                        // NOTE: we need to DOUBLE check for &quot;(character!==&#x27;&gt;&#x27;)&quot; because the loop might set the position to &#x27;&gt;&#x27; where an i++ would miss it!
+                        while ((character!==&#x27;&gt;&#x27;) &amp;&amp; (++i&lt;len) &amp;&amp; (character=htmlString[i]) &amp;&amp; (character!==&#x27;&gt;&#x27;)) {
+                            // when starting to read an attribute, finish reading until it is completely ready.
+                            // this is, because attributes can have a &#x27;&gt;&#x27; which shouldn&#x27;t be noticed as an end-of-tag definition
+                            if (TAG_OR_ATTR_START_CHARACTERS[character]) {
+                                attribute = character;
+                                while ((++i&lt;len) &amp;&amp; (character=htmlString[i]) &amp;&amp; !ATTRUBUTE_NAME_ENDS_CHARACTER[character]) {
+                                    attribute += character;
+                                }
+                                if (character===&#x27;=&#x27;) {
+                                    stringMarker = htmlString[i+1];
+                                    attributeisString = (stringMarker===&#x27;&quot;&#x27;) || (stringMarker===&quot;&#x27;&quot;);
+
+                                    attributeValue = &#x27;&#x27;;
+                                    if (attributeisString) {
+                                        i++;
+                                        while ((character!==&#x27;\\&#x27;) &amp;&amp; (++i&lt;len) &amp;&amp; (character=htmlString[i]) &amp;&amp; (character!==stringMarker)) {
+                                            attributeValue += character;
+                                        }
+                                    }
+                                    else {
+                                        while ((++i&lt;len) &amp;&amp; (character=htmlString[i]) &amp;&amp; !STARTTAG_OR_ATTR_VALUE_ENDS_CHARACTERS[character]) {
+                                            attributeValue += character;
+                                        }
+                                        // need to set the position one step behind --&gt; the attributeloop will increase it and would otherwise miss a character
+                                        i--;
+                                        isBoolean = ((attributeValue.length&gt;3) &amp;&amp; (attributeValue.length&lt;6) &amp;&amp; (checkBoolean=attributeValue.toUpperCase()) &amp;&amp; ((checkBoolean===&#x27;FALSE&#x27;) || (checkBoolean===&#x27;TRUE&#x27;)));
+                                        // typecast the value to either Boolean or Number:
+                                        attributeValue = isBoolean ? (checkBoolean===&#x27;TRUE&#x27;) : parseFloat(attributeValue);
+                                    }
+                                }
+                                else {
+                                    attributeValue = &quot;&quot;;
+                                }
+                                vnode.attrs[attribute] = attributeValue;
+                            }
+                        }
+                        vnode.id = vnode.attrs.id;
+
+                        extractClass = extractor.extractClass(vnode.attrs[&#x27;class&#x27;]);
+                        extractClass.attrClass &amp;&amp; (vnode.attrs[&#x27;class&#x27;]=extractClass.attrClass);
+                        vnode.classNames = extractClass.classNames;
+
+                        extractStyle = extractor.extractStyle(vnode.attrs.style);
+                        extractStyle.attrStyle &amp;&amp; (vnode.attrs.style=extractStyle.attrStyle);
+                        vnode.styles = extractClass.styles;
+
+                    }
+
+                    if (!vnode.isVoid) {
+                        innerText = &#x27;&#x27;;
+                        endTagCount = 1;
+                        // fill innerText until end-tagdefinition:
+                        while ((endTagCount&gt;0) &amp;&amp; (++i&lt;len) &amp;&amp; (character=htmlString[i])) {
+                            if (character===&#x27;&lt;&#x27;) {
+                                if ((character2=htmlString[i+1]) &amp;&amp; (character2===&#x27;/&#x27;)) {
+                                    // possible end-tag
+                                    j = i+1;
+                                    isEndTag = true;
+                                    while (isEndTag &amp;&amp; (++j&lt;len) &amp;&amp; (htmlString[j]!==&#x27;&gt;&#x27;)) {
+                                        if (htmlString[j].toUpperCase()!==tag[j-i-2]) {
+                                            isEndTag = false;
+                                        }
+                                    }
+                                    isEndTag &amp;&amp; (endTagCount--);
+                                }
+                                else {
+                                    // possible begin-tag of the same tag (an innertag with the same tagname)
+                                    j = i;
+                                    isBeginTag = true;
+                                    while (isBeginTag &amp;&amp; (++j&lt;len) &amp;&amp; (character2=htmlString[j]) &amp;&amp; (character2!==&#x27;&gt;&#x27;) &amp;&amp; (character2!==&#x27; &#x27;)) {
+                                        if (htmlString[j].toUpperCase()!==tag[j-i-1]) {
+                                            isBeginTag = false;
+                                        }
+                                    }
+                                    isBeginTag &amp;&amp; (endTagCount++);
+                                }
+                            }
+                            if (endTagCount&gt;0) {
+                                innerText += character;
+                            }
+                        }
+                        (endTagCount===0) &amp;&amp; (i=i+tag.length+3);
+                        // in case of &#x27;SCRIPT&#x27; or &#x27;STYLE&#x27; tags --&gt; just use the innertext, all other tags need to be extracted
+
+                        if (NS.SCRIPT_OR_STYLE_TAG[vnode.tag]) {
+                            // CREATE INNER TEXTNODE
+                            scriptVNode = Object.create(vNodeProto);
+                            scriptVNode.nodeType = 3;
+                            scriptVNode.domNode = DOCUMENT.createTextNode(innerText);
+                            // create circular reference:
+                            scriptVNode.domNode._vnode = scriptVNode;
+                            scriptVNode.text = innerText;
+                            scriptVNode.vParent = vnode;
+                            vnode.vChildNodes = [scriptVNode];
+                        }
+                        else {
+                            vnode.vChildNodes = (innerText!==&#x27;&#x27;) ? htmlToVNodes(innerText, vNodeProto, vnode) : [];
+                        }
+                    }
+                    else {
+                        i++; // compensate for the &#x27;&gt;&#x27;
+                    }
+                    vnodes[vnodes.length] = vnode;
+                    // reset vnode to force create a new one
+                    vnode = null;
+                    insideTagDefinition = false;
+                }
+
+                else if (insideComment) {
+                    if (character+character2+htmlString[i+2]===&#x27;--&gt;&#x27;) {
+                        // close vnode
+                        // move index to last character of comment
+                        i = i+2;
+                        vnode.domNode = DOCUMENT.createComment(&#x27;&#x27;);
+                        // create circular reference:
+                        vnode.domNode._vnode = vnode;
+                        vnodes[vnodes.length] = vnode;
+                        // reset vnode to force create a new one
+                        vnode = null;
+                        insideComment = false;
+                    }
+                    else {
+                        vnode.text += character;
+                    }
+                    i++;
+                }
+
+                else {
+                    // inside TextNode which could go over into an Element or CommentNode
+                    if ((character===&#x27;&lt;&#x27;) &amp;&amp; TAG_OR_ATTR_START_CHARACTERS[character2] &amp;&amp; (htmlString.lastIndexOf(&#x27;&gt;&#x27;)&gt;i)) {
+                        // begin of opening Element
+                        // first: store current vnode:
+                        if (vnode) {
+                            vnode.domNode = DOCUMENT.createTextNode(&#x27;&#x27;);
+                            // create circular reference:
+                            vnode.domNode._vnode = vnode;
+                            vnodes[vnodes.length] = vnode;
+                        }
+                        vnode = Object.create(vNodeProto);
+                        vnode.nodeType = 1;
+                        vnode.vParent = parentVNode;
+                        vnode.tag = &#x27;&#x27;;
+                        vnode.classNames ={};
+
+                        // find tagname:
+                        while ((++i&lt;len) &amp;&amp; (character=htmlString[i]) &amp;&amp; (!STARTTAG_OR_ATTR_VALUE_ENDS_CHARACTERS[character])) {
+                            vnode.tag += character.toUpperCase();
+                        }
+
+                        tag = vnode.tag;
+                        vnode.domNode = DOCUMENT.createElement(tag);
+                        // create circular reference:
+                        vnode.domNode._vnode = vnode;
+                        // check if it is a void-tag, but only need to do the regexp once per tag-element:
+                        if (voidElements[tag]) {
+                            vnode.isVoid = true;
+                        }
+                        else if (nonVoidElements[tag]) {
+                            vnode.isVoid = false;
+                        }
+                        else {
+                            (vnode.isVoid=!(new RegExp(&#x27;&lt;/&#x27;+tag+&#x27;&gt;$&#x27;, &#x27;i&#x27;)).test(htmlString)) ? (voidElements[tag]=true) : (nonVoidElements[tag]=true);
+                        }
+                        insideTagDefinition = true;
+                    }
+                    else if (character+character2+htmlString[i+2]+htmlString[i+3]===&#x27;&lt;!--&#x27;) {
+                        // begin of CommentNode
+                        if (vnode) {
+                            vnode.domNode = DOCUMENT.createTextNode(&#x27;&#x27;);
+                            // create circular reference:
+                            vnode.domNode._vnode = vnode;
+                            vnodes[vnodes.length] = vnode;
+                        }
+                        vnode = Object.create(vNodeProto);
+                        vnode.nodeType = 8;
+                        vnode.text = &#x27;&#x27;;
+                        vnode.vParent = parentVNode;
+                        // move index to first character of comment
+                        i = i+4;
+                        insideComment = true;
+                    }
+                    else {
+                        if (!vnode) {
+                            // no current vnode --&gt; create a TextNode:
+                            vnode = Object.create(vNodeProto);
+                            vnode.nodeType = 3;
+                            vnode.text = &#x27;&#x27;;
+                            vnode.vParent = parentVNode;
+                        }
+                        vnode.text += character;
+                        i++;
+                    }
+                }
+            }
+
+            if (vnode) {
+                vnode.domNode = DOCUMENT.createTextNode(&#x27;&#x27;);
+                // create circular reference:
+                vnode.domNode._vnode = vnode;
+                vnodes[vnodes.length] = vnode;
+            }
+            return vnodes;
+        };
+
+    return htmlToVNodes;
+
+};
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

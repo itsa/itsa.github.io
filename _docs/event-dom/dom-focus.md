@@ -117,7 +117,7 @@ Code-example:
 </script>
 ```
 
-<script src="../../dist/itsabuild-min.js"></script>
+<script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa');
     var blurContainer, focusContainer, showMsgBlur, showMsgFocus;
@@ -139,4 +139,5 @@ Code-example:
         e.preventDefault();
         e.target.focus();
     }, '#submit-button');
+
 </script>
