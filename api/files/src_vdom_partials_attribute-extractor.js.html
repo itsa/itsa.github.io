@@ -467,7 +467,7 @@ module.exports = function (window) {
                             TRANSFORM_MUTATIONS[key] &amp;&amp; (key!==TRANSFORM_PROPERTY) &amp;&amp; (key=TRANSFORM_PROPERTY);
                             TRANSITION_MUTATIONS[key] &amp;&amp; (key!==TRANSITION_PROPERTY) &amp;&amp; (key=TRANSITION_PROPERTY);
                             // store the property:
-                            if (SUPPORT_INLINE_PSEUDO_STYLES || (groupKey===&#x27;element&#x27;)) {
+                            if ((SUPPORT_INLINE_PSEUDO_STYLES || (groupKey===&#x27;element&#x27;)) &amp;&amp; (value.length&gt;0)) {
                                 group[key] = ((key===TRANSFORM_PROPERTY) ? _parseTransform(value) : ((key===TRANSITION_PROPERTY) ? _parseTransition(value) : value));
                             }
                             key = &#x27;&#x27;;
@@ -514,7 +514,7 @@ module.exports = function (window) {
                     TRANSFORM_MUTATIONS[key] &amp;&amp; (key!==TRANSFORM_PROPERTY) &amp;&amp; (key=TRANSFORM_PROPERTY);
                     TRANSITION_MUTATIONS[key] &amp;&amp; (key!==TRANSITION_PROPERTY) &amp;&amp; (key=TRANSITION_PROPERTY);
                     // store the property:
-                    if (SUPPORT_INLINE_PSEUDO_STYLES || (groupKey===&#x27;element&#x27;)) {
+                    if ((SUPPORT_INLINE_PSEUDO_STYLES || (groupKey===&#x27;element&#x27;)) &amp;&amp; (value.length&gt;0)) {
                         group[key] = ((key===TRANSFORM_PROPERTY) ? _parseTransform(value) : ((key===TRANSITION_PROPERTY) ? _parseTransition(value) : value));
                     }
                 }
