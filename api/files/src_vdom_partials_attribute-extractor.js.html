@@ -228,21 +228,21 @@ module.exports = function (window) {
             &#x27;;&#x27;: true,
             &#x27;}&#x27;: true
         },
-        TRANSFORM = &#x27;transform&#x27;,
-        TRANSFORM_MUTATIONS = {},
         TRANSITION = &#x27;transition&#x27;,
+        TRANSFORM = &#x27;transform&#x27;,
+        PERSPECTIVE = &#x27;perspective&#x27;,
+        _ORIGIN = &#x27;-origin&#x27;,
         TRANSITION_MUTATIONS = {},
-        TRANSFORM_PROPERTY = require(&#x27;polyfill/extra/transform.js&#x27;)(window) || TRANSFORM,
-        TRANSITION_PROPERTY = require(&#x27;polyfill/extra/transition.js&#x27;)(window) || TRANSITION,
-        _serializeTransform, _parseTransform, _serializeTransition, _parseTransition, extractor;
+        TRANSFORM_MUTATIONS = {},
+        TRANSFORM_ORIGIN_MUTATIONS = {},
+        PERSPECTIVE_MUTATIONS = {},
+        TRANSITION_PROPERTY = require(&#x27;polyfill/extra/&#x27;+TRANSITION+&#x27;.js&#x27;)(window) || TRANSITION,
+        TRANSFORM_PROPERTY = require(&#x27;polyfill/extra/&#x27;+TRANSFORM+&#x27;.js&#x27;)(window) || TRANSFORM,
+        PERSPECTIVE_PROPERTY = require(&#x27;polyfill/extra/&#x27;+PERSPECTIVE+&#x27;.js&#x27;)(window) || PERSPECTIVE,
+        TRANSFORM_ORIGIN_PROPERTY = TRANSFORM_PROPERTY+_ORIGIN,
+        _serializeTransition, _parseTransition, extractor;
 
     window.document._supportInlinePseudoStyles = SUPPORT_INLINE_PSEUDO_STYLES;
-
-    TRANSFORM_MUTATIONS[TRANSFORM] = true;
-    TRANSFORM_MUTATIONS[&#x27;-webkit-&#x27;+TRANSFORM] = true;
-    TRANSFORM_MUTATIONS[&#x27;-moz-&#x27;+TRANSFORM] = true;
-    TRANSFORM_MUTATIONS[&#x27;-ms-&#x27;+TRANSFORM] = true;
-    TRANSFORM_MUTATIONS[&#x27;-o-&#x27;+TRANSFORM] = true;
 
     TRANSITION_MUTATIONS[TRANSITION] = true;
     TRANSITION_MUTATIONS[&#x27;-webkit-&#x27;+TRANSITION] = true;
@@ -250,14 +250,23 @@ module.exports = function (window) {
     TRANSITION_MUTATIONS[&#x27;-ms-&#x27;+TRANSITION] = true;
     TRANSITION_MUTATIONS[&#x27;-o-&#x27;+TRANSITION] = true;
 
-    _serializeTransform = function(transformValue) {
-        // transformValue should an Object !!
-        var serialized = &#x27;&#x27;;
-        transformValue.each(function(value, key) {
-            serialized += &#x27; &#x27;+ key + ((key===&#x27;none&#x27;) ? &#x27;&#x27; : &#x27;(&#x27; + value + &#x27;)&#x27;);
-        });
-        return (serialized[0]===&#x27; &#x27;) ? serialized.substr(1) : serialized;
-    };
+    TRANSFORM_MUTATIONS[TRANSFORM] = true;
+    TRANSFORM_MUTATIONS[&#x27;-webkit-&#x27;+TRANSFORM] = true;
+    TRANSFORM_MUTATIONS[&#x27;-moz-&#x27;+TRANSFORM] = true;
+    TRANSFORM_MUTATIONS[&#x27;-ms-&#x27;+TRANSFORM] = true;
+    TRANSFORM_MUTATIONS[&#x27;-o-&#x27;+TRANSFORM] = true;
+
+    TRANSFORM_ORIGIN_MUTATIONS[TRANSFORM+_ORIGIN] = true;
+    TRANSFORM_ORIGIN_MUTATIONS[&#x27;-webkit-&#x27;+TRANSFORM+_ORIGIN] = true;
+    TRANSFORM_ORIGIN_MUTATIONS[&#x27;-moz-&#x27;+TRANSFORM+_ORIGIN] = true;
+    TRANSFORM_ORIGIN_MUTATIONS[&#x27;-ms-&#x27;+TRANSFORM+_ORIGIN] = true;
+    TRANSFORM_ORIGIN_MUTATIONS[&#x27;-o-&#x27;+TRANSFORM+_ORIGIN] = true;
+
+    PERSPECTIVE_MUTATIONS[PERSPECTIVE] = true;
+    PERSPECTIVE_MUTATIONS[&#x27;-webkit-&#x27;+PERSPECTIVE] = true;
+    PERSPECTIVE_MUTATIONS[&#x27;-moz-&#x27;+PERSPECTIVE] = true;
+    PERSPECTIVE_MUTATIONS[&#x27;-ms-&#x27;+PERSPECTIVE] = true;
+    PERSPECTIVE_MUTATIONS[&#x27;-o-&#x27;+PERSPECTIVE] = true;
 
     _serializeTransition = function(transitionValue) {
         // transitionValue should an Object !!
@@ -276,51 +285,7 @@ module.exports = function (window) {
         return (serialized[0]===&#x27;,&#x27;) ? serialized.substr(2) : serialized;
     };
 
-    _parseTransform = function(transformValueSerialised) {
-        //transformValueSerialised might be: translateX(10px) matrix(1.0, 2.0, 3.0, 4.0, 5.0, 6.0) translateY(5px)
-        var parsed = {},
-            i, len, character, key, insideValue, value;
-        if (transformValueSerialised) {
-            i = -1;
-            len = transformValueSerialised.length;
-            key = &#x27;&#x27;;
-            insideValue = false;
-            while ((++i&lt;len) &amp;&amp; (character=transformValueSerialised[i])) {
-                if (insideValue) {
-                    if (character===&#x27;)&#x27;) {
-                        parsed[key] = value;
-                        key = &#x27;&#x27;;
-                        insideValue = false;
-                        // eliminate next leading spaces, so we get a clean next &#x60;key&#x60;:
-                        while (((i+1)&lt;len) &amp;&amp; (transformValueSerialised[i+1]===&#x27; &#x27;)) {
-                            i++;
-                        }
-                    }
-                    else {
-                        value += character;
-                    }
-                }
-                else {
-                    if (character===&#x27;(&#x27;){
-                        insideValue = true;
-                        value = &#x27;&#x27;;
-                    }
-                    else {
-                        key += character;
-                        if (key===&#x27;none&#x27;) {
-                            return {
-                                none: true
-                            };
-                        }
-                    }
-                }
-            }
-        }
-        return parsed;
-    };
-
     _parseTransition = function(transitionValueSerialised) {
-        //transformValueSerialised might be: translateX(10px) matrix(1.0, 2.0, 3.0, 4.0, 5.0, 6.0) translateY(5px)
         var parsed = {},
             i, len, transitionItem, item, items, value, properties, item0, item1, item2, item3;
         if (transitionValueSerialised) {
@@ -361,9 +326,11 @@ module.exports = function (window) {
                     }
                 }
 
-                // in case &#x60;key&#x60; equals a variant of &#x60;transform&#x60;, but non-compatible with the current browser --&gt;
+                // in case &#x60;key&#x60; equals a variant of &#x60;transition&#x60;, but non-compatible with the current browser --&gt;
                 // redefine it into a browser-compatible version:
-                TRANSFORM_MUTATIONS[item0] &amp;&amp; (item0!==TRANSFORM_PROPERTY) &amp;&amp; (item0=TRANSFORM_PROPERTY);
+                TRANSFORM_MUTATIONS[item0] &amp;&amp; (item0=TRANSFORM_PROPERTY);
+                PERSPECTIVE_MUTATIONS[item0] &amp;&amp; (item0=PERSPECTIVE_PROPERTY);
+                TRANSFORM_ORIGIN_MUTATIONS[item0] &amp;&amp; (item0=TRANSFORM_ORIGIN_PROPERTY);
 
                 parsed[item0] = transitionItem;
             }
@@ -464,11 +431,13 @@ module.exports = function (window) {
                             value = value.trim();
                             // in case &#x60;key&#x60; equals a variant of &#x60;transform&#x60;, but non-compatible with the current browser --&gt;
                             // redefine it into a browser-compatible version:
-                            TRANSFORM_MUTATIONS[key] &amp;&amp; (key!==TRANSFORM_PROPERTY) &amp;&amp; (key=TRANSFORM_PROPERTY);
-                            TRANSITION_MUTATIONS[key] &amp;&amp; (key!==TRANSITION_PROPERTY) &amp;&amp; (key=TRANSITION_PROPERTY);
+                            TRANSFORM_MUTATIONS[key] &amp;&amp; (key=TRANSFORM_PROPERTY);
+                            PERSPECTIVE_MUTATIONS[key] &amp;&amp; (key=PERSPECTIVE_PROPERTY);
+                            TRANSFORM_ORIGIN_MUTATIONS[key] &amp;&amp; (key=TRANSFORM_ORIGIN_PROPERTY);
+                            TRANSITION_MUTATIONS[key] &amp;&amp; (key=TRANSITION_PROPERTY);
                             // store the property:
                             if ((SUPPORT_INLINE_PSEUDO_STYLES || (groupKey===&#x27;element&#x27;)) &amp;&amp; (value.length&gt;0)) {
-                                group[key] = ((key===TRANSFORM_PROPERTY) ? _parseTransform(value) : ((key===TRANSITION_PROPERTY) ? _parseTransition(value) : value));
+                                group[key] = ((key===TRANSITION_PROPERTY) ? _parseTransition(value) : value);
                             }
                             key = &#x27;&#x27;;
                             insideValue = false;
@@ -509,13 +478,12 @@ module.exports = function (window) {
                 }
                 if (insideValue) {
                     value = value.trim();
-                    // in case &#x60;key&#x60; equals a variant of &#x60;transform&#x60;, but non-compatible with the current browser --&gt;
+                    // in case &#x60;key&#x60; equals a variant of &#x60;transition&#x60;, but non-compatible with the current browser --&gt;
                     // redefine it into a browser-compatible version:
-                    TRANSFORM_MUTATIONS[key] &amp;&amp; (key!==TRANSFORM_PROPERTY) &amp;&amp; (key=TRANSFORM_PROPERTY);
                     TRANSITION_MUTATIONS[key] &amp;&amp; (key!==TRANSITION_PROPERTY) &amp;&amp; (key=TRANSITION_PROPERTY);
                     // store the property:
                     if ((SUPPORT_INLINE_PSEUDO_STYLES || (groupKey===&#x27;element&#x27;)) &amp;&amp; (value.length&gt;0)) {
-                        group[key] = ((key===TRANSFORM_PROPERTY) ? _parseTransform(value) : ((key===TRANSITION_PROPERTY) ? _parseTransition(value) : value));
+                        group[key] = ((key===TRANSITION_PROPERTY) ? _parseTransition(value) : value);
                     }
                 }
             }
@@ -529,16 +497,8 @@ module.exports = function (window) {
             return _parseTransition(value);
         },
 
-        toTransformObject: function(value) {
-            return _parseTransform(value);
-        },
-
         serializeTransition: function(value) {
             return _serializeTransition(value);
-        },
-
-        serializeTransform: function(value) {
-            return _serializeTransform(value);
         },
 
         serializeStyles: function(styles) {
@@ -546,7 +506,7 @@ module.exports = function (window) {
                 onlyElementStyle = ((styles.size()===1) &amp;&amp; styles.element);
             if (onlyElementStyle || !SUPPORT_INLINE_PSEUDO_STYLES) {
                 styles.element &amp;&amp; styles.element.each(function(value, key) {
-                    serialized += &#x27; &#x27;+ key + &#x27;: &#x27; + ((key===TRANSFORM_PROPERTY) ? _serializeTransform(value) : ((key===TRANSITION_PROPERTY) ? _serializeTransition(value) : value)) + &#x27;;&#x27;;
+                    serialized += &#x27; &#x27;+ key + &#x27;: &#x27; + ((key===TRANSITION_PROPERTY) ? _serializeTransition(value) : value) + &#x27;;&#x27;;
                 });
             }
             else {
@@ -554,7 +514,7 @@ module.exports = function (window) {
                     (groupKey===&#x27;element&#x27;) || (serialized += &#x27; &#x27;+groupKey+&#x27; &#x27;);
                     serialized += &#x27;{&#x27;;
                     groupValue.each(function(value, key) {
-                        serialized += key + &#x27;: &#x27; + ((key===TRANSFORM_PROPERTY) ? _serializeTransform(value) : ((key===TRANSITION_PROPERTY) ? _serializeTransition(value) : value)) + &#x27;; &#x27;;
+                        serialized += key + &#x27;: &#x27; + ((key===TRANSITION_PROPERTY) ? _serializeTransition(value) : value) + &#x27;; &#x27;;
                     });
                     serialized += &#x27;}&#x27;;
                 });

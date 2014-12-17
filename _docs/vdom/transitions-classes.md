@@ -20,15 +20,12 @@ intro: "This example shows how you can show and hide a node. To hide a node on s
         text-align: center;
         margin: 2em 0;
         padding-top: 1.5em;
-
-        height: 500px;
-        width: 500px;
-
         border: solid 1px #000;
         position: absolute;
         top: 32em;
         left: 23em;
         z-index: 1;
+        color: #FFF;
         -webkit-transition: all 10s;
         -moz-transition: all 10s;
         -ms-transition: all 10s;
@@ -37,12 +34,17 @@ intro: "This example shows how you can show and hide a node. To hide a node on s
     }
     .container.blue {
         background-color: #00F;
-        /*height: 500px;*/
-        /*width: 500px;*/
     }
     .container.big {
-        height: auto;
-        width: auto;
+        height: 200px;
+        width: 400px;
+    }
+    .rotate {
+        -webkit-transform: rotateZ(20deg);
+        -moz-transform: rotateZ(20deg);
+        -ms-transform: rotateZ(20deg);
+        -o-transform: rotateZ(20deg);
+        transform: rotateZ(20deg);
     }
     .body-content.module p.spaced {
         margin-top: 4em;
@@ -104,7 +106,8 @@ Clik on the button to toggle the className:
         actionClass, actionInline, actionTransform;
 
     actionClass = function(e) {
-        container.toggleClass(['blue', 'big'], null, true).then(
+        container.toggleClass('rotate', null, true).then(
+        // container.toggleClass(['blue', 'big', 'rotate'], null, true).then(
             function() {
                 console.info('fulfilled');
             }
@@ -119,9 +122,10 @@ Clik on the button to toggle the className:
         var promise = container.hasInlineStyle('width') ?
                       container.removeInlineStyles(['width', 'height', 'background-color'], true) :
                       container.setInlineStyles([
-                          {property: 'width', value: 'auto'},
-                          {property: 'height', value: 'auto'},
+                          {property: 'width', value: '400px'},
+                          {property: 'height', value: '200px'},
                           {property: 'background-color', value: '#00F'}
+                          // {property: 'transform', value: 'rotateZ(20deg)'}
                       ], true);
         promise.then(
             function() {
@@ -139,12 +143,14 @@ Clik on the button to toggle the className:
                       container.transition([
                           {property: 'width', value: ''},
                           {property: 'height', value: ''},
-                          {property: 'background-color', value: ''}
+                          {property: 'background-color', value: '', duration: 10}
+                          // {property: 'transform', value: ''}
                       ]) :
                       container.transition([
-                          {property: 'width', value: 'auto'},
-                          {property: 'height', value: 'auto'},
-                          {property: 'background-color', value: '#00F'}
+                          {property: 'width', value: '400px'},
+                          {property: 'height', value: '200px'},
+                          {property: 'background-color', value: '#00F', duration: 10}
+                          // {property: 'transform', value: 'rotateZ(20deg)', duration: 10}
                       ]);
         promise.then(
             function() {
