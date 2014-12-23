@@ -236,9 +236,9 @@ module.exports = function (window) {
         TRANSFORM_MUTATIONS = {},
         TRANSFORM_ORIGIN_MUTATIONS = {},
         PERSPECTIVE_MUTATIONS = {},
-        TRANSITION_PROPERTY = require(&#x27;polyfill/extra/&#x27;+TRANSITION+&#x27;.js&#x27;)(window) || TRANSITION,
-        TRANSFORM_PROPERTY = require(&#x27;polyfill/extra/&#x27;+TRANSFORM+&#x27;.js&#x27;)(window) || TRANSFORM,
-        PERSPECTIVE_PROPERTY = require(&#x27;polyfill/extra/&#x27;+PERSPECTIVE+&#x27;.js&#x27;)(window) || PERSPECTIVE,
+        TRANSITION_PROPERTY = require(&#x27;polyfill/extra/transition.js&#x27;)(window) || TRANSITION, // DO NOT use TRANSFORM-variable here --&gt; browserify cannot deal this
+        TRANSFORM_PROPERTY = require(&#x27;polyfill/extra/transform.js&#x27;)(window) || TRANSFORM,
+        PERSPECTIVE_PROPERTY = require(&#x27;polyfill/extra/perspective.js&#x27;)(window) || PERSPECTIVE,
         TRANSFORM_ORIGIN_PROPERTY = TRANSFORM_PROPERTY+_ORIGIN,
         _serializeTransition, _parseTransition, extractor;
 
@@ -486,6 +486,10 @@ module.exports = function (window) {
                         group[key] = ((key===TRANSITION_PROPERTY) ? _parseTransition(value) : value);
                     }
                 }
+            }
+            if (!SUPPORT_INLINE_PSEUDO_STYLES) {
+                delete newStyles[&#x27;:before&#x27;];
+                delete newStyles[&#x27;:after&#x27;];
             }
             return {
                 attrStyle: hasValue &amp;&amp; instance.serializeStyles(newStyles),

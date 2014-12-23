@@ -26,14 +26,14 @@ intro: "This example shows how you can show and hide a node. To hide a node on s
         left: 23em;
         z-index: 1;
         color: #FFF;
-        -webkit-transition: all 10s;
-        -moz-transition: all 10s;
-        -ms-transition: all 10s;
-        -o-transition: all 10s;
-        transition: all 10s;
+        -webkit-transition: all 3s;
+        -moz-transition: all 3s;
+        -ms-transition: all 3s;
+        -o-transition: all 3s;
+        transition: all 3s;
     }
     .container.blue {
-        background-color: #00F;
+        color: #0FF;
     }
     .container.big {
         height: 200px;
@@ -45,6 +45,17 @@ intro: "This example shows how you can show and hide a node. To hide a node on s
         -ms-transform: rotateZ(20deg);
         -o-transform: rotateZ(20deg);
         transform: rotateZ(20deg);
+    }
+    .container:before {
+        content: 'OK';
+    }
+    .rotate:before {
+        background-color: #0F0;
+        -webkit-transition: all 1s;
+        -moz-transition: all 1s;
+        -ms-transition: all 1s;
+        -o-transition: all 1s;
+        transition: all 1s;
     }
     .body-content.module p.spaced {
         margin-top: 4em;
@@ -107,6 +118,7 @@ Clik on the button to toggle the className:
 
     actionClass = function(e) {
         container.toggleClass('rotate', null, true).then(
+        // container.toggleClass(['blue', 'big'], null, true).then(
         // container.toggleClass(['blue', 'big', 'rotate'], null, true).then(
             function() {
                 console.info('fulfilled');
