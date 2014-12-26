@@ -164,7 +164,7 @@ Flip the card by clicking on it. <span class="status"></span>
         front = !front;
         deg = front ? 0.1 : -179.9;
         elapsedTime = promise && (promise.freeze()/1000);
-        // we need to go async, because `freeze()` does its work asynchronious
+        // we need to go async, because `freeze()` does its work at the end of the eventstack
         // and freeze should finish before the transition starts:
         ITSA.async(function() {
             var duration = elapsedTime || DURATION;
@@ -188,7 +188,7 @@ Flip the card by clicking on it. <span class="status"></span>
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa'),
         card = document.getElement('#card'),
@@ -205,7 +205,7 @@ Flip the card by clicking on it. <span class="status"></span>
         if (promise && !promise.isFulfilled) {
             elapsedTime = (promise.freeze()/1000);
         }
-        // we need to go async, because `freeze()` does its work asynchronious
+        // we need to go async, because `freeze()` does its work at the end of the eventstack
         // and freeze should finish before the transition starts:
         ITSA.async(function() {
             var duration = elapsedTime || DURATION;

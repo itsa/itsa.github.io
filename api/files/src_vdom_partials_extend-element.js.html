@@ -237,48 +237,17 @@ module.exports = function (window) {
         htmlToVNodes = require(&#x27;./html-parser.js&#x27;)(window),
         vNodeProto = require(&#x27;./vnode.js&#x27;)(window),
         NS = require(&#x27;./vdom-ns.js&#x27;)(window),
+        RUNNING_ON_NODE = (typeof global !== &#x27;undefined&#x27;),
         TRANSITION = &#x27;transition&#x27;,
         TRANSFORM = &#x27;transform&#x27;,
-        _ORIGIN = &#x27;-origin&#x27;,
-        PERSPECTIVE = &#x27;perspective&#x27;,
         BROWSERS_SUPPORT_PSEUDO_TRANS = false, // set true as soon as they do
         SUPPORTS_PSEUDO_TRANS = null, // is a life check --&gt; is irrelevant as long BROWSERS_SUPPORT_PSEUDO_TRANS === false
-        TRANSFORM_ORIGIN = TRANSFORM+_ORIGIN,
-        TRANSFORM_PROPERTY = require(&#x27;polyfill/extra/transform.js&#x27;)(window), // DO NOT use TRANSFORM-variable here --&gt; browserify cannot deal this
-        VENDOR_TRANSFORM_PROPERTY = TRANSFORM_PROPERTY || TRANSFORM,
-        PERSPECTIVE_PROPERTY = require(&#x27;polyfill/extra/perspective.js&#x27;)(window),
-        VENDOR_PERSPECTIVE_PROPERTY = PERSPECTIVE_PROPERTY || PERSPECTIVE,
-        TRANSITION_PROPERTY = require(&#x27;polyfill/extra/transition.js&#x27;)(window),
-        VENDOR_TRANSITION_PROPERTY = TRANSITION_PROPERTY || TRANSITION,
+        VENDOR_TRANSFORM_PROPERTY = require(&#x27;polyfill/extra/transform.js&#x27;)(window), // DO NOT use TRANSFORM-variable here --&gt; browserify cannot deal this
+        VENDOR_TRANSITION_PROPERTY = require(&#x27;polyfill/extra/transition.js&#x27;)(window),
         EV_TRANSITION_END = require(&#x27;polyfill/extra/transitionend.js&#x27;)(window),
-        VENDOR_TRANSITIONS = {
-            &#x27;-webkit-transition&#x27;: true,
-            &#x27;-moz-transition&#x27;: true,
-            &#x27;-ms-transition&#x27;: true,
-            &#x27;-o-transition&#x27;: true,
-            &#x27;transition&#x27;: true
-        },
-        VENDOR_TRANSFORMS = {
-            &#x27;-webkit-transform&#x27;: true,
-            &#x27;-moz-transform&#x27;: true,
-            &#x27;-ms-transform&#x27;: true,
-            &#x27;-o-transform&#x27;: true,
-            &#x27;transform&#x27;: true
-        },
-        VENDOR_PERSPECTIVES = {
-            &#x27;-webkit-perspective&#x27;: true,
-            &#x27;-moz-perspective&#x27;: true,
-            &#x27;-ms-perspective&#x27;: true,
-            &#x27;-o-perspective&#x27;: true,
-            &#x27;perspective&#x27;: true
-        },
-        VENDOR_TRANSFORMS_ORIGIN = {
-            &#x27;-webkit-transform-origin&#x27;: true,
-            &#x27;-moz-transform-origin&#x27;: true,
-            &#x27;-ms-transform-origin&#x27;: true,
-            &#x27;-o-transform-origin&#x27;: true,
-            &#x27;transform-origin&#x27;: true
-        },
+        VENDOR_CSS = require(&#x27;polyfill/extra/vendorCSS.js&#x27;)(window),
+        VENDOR_CSS_PROP_GENERATOR = VENDOR_CSS.generator,
+        VENDOR_CSS_PROPERTIES = VENDOR_CSS_PROP_GENERATOR.cssProps,
         _BEFORE = &#x27;:before&#x27;,
         _AFTER = &#x27;:before&#x27;,
         extractor = require(&#x27;./attribute-extractor.js&#x27;)(window),
@@ -417,6 +386,30 @@ module.exports = function (window) {
             return input.replace(/[a-z]([A-Z])/g, function(match, group) {
                 return match[0]+&#x27;-&#x27;+group.toLowerCase();
             });
+        },
+        getVendorCSS = function(cssProperties) {
+            var uniqueProps = {},
+                i, len, prop, safeProperty;
+            len = cssProperties.length;
+            for (i=len-1; i&gt;=0; i--) {
+                // set the right property, but also dedupe when there are multiple same vendor-properties
+                prop = cssProperties[i];
+                safeProperty = fromCamelCase(prop.property);
+                VENDOR_CSS_PROPERTIES[safeProperty] || (safeProperty=generateVendorCSSProp(safeProperty));
+                if (uniqueProps[safeProperty]) {
+                    cssProperties.splice(i, 1);
+                }
+                else {
+                    uniqueProps[safeProperty] = true;
+                    prop.property = safeProperty;
+                }
+            }
+        },
+        generateVendorCSSProp = function(key) {
+            if (!RUNNING_ON_NODE &amp;&amp; !VENDOR_CSS_PROPERTIES[key]) {
+                key = VENDOR_CSS_PROP_GENERATOR(key);
+            }
+            return key;
         },
         vendorSupportsPseudoTrans = function() {
             // DO NOT CHANGE THIS FUNCTION!
@@ -648,7 +641,9 @@ module.exports = function (window) {
                 var allTrans = !!transProperties.all,
                     searchObject = allTrans ? CSS_PROPS_TO_CALCULATE : transProperties,
                     transprops = {};
+
                 searchObject.each(function(transProp, key) {
+                    // transProp will always be a vendor-specific property already
                     key = toCamelCase(key);
                     if (CSS1[key]!==CSS2[key]) {
                         transprops[key] = true;
@@ -674,10 +669,6 @@ module.exports = function (window) {
                     styles = window.getComputedStyle(node, group);
                 transProperties.each(function(value, property) {
                     // if property is vendor-specific transition, or transform, than we reset it to the current vendor
-                    VENDOR_TRANSITIONS[property] &amp;&amp; (property=VENDOR_TRANSITION_PROPERTY);
-                    VENDOR_TRANSFORMS[property] &amp;&amp; (property=VENDOR_TRANSFORM_PROPERTY);
-                    VENDOR_PERSPECTIVES[property] &amp;&amp; (property=VENDOR_PERSPECTIVE_PROPERTY);
-                    VENDOR_TRANSFORMS_ORIGIN[property] &amp;&amp; (property=VENDOR_TRANSFORM_PROPERTY+_ORIGIN);
                     props.push({
                         property: property,
                         value: styles[toCamelCase(property)],
@@ -722,7 +713,7 @@ module.exports = function (window) {
             transPropertiesAfter = finalNode.getStyle(TRANSITION, _AFTER);
             finalNode.setClass(NO_TRANS2);
             getsTransitioned = false;
-            if ((transPropertiesElement.size()&gt;0) || (transPropertiesBefore.size()&gt;0) || (transPropertiesAfter.size()&gt;0)) {
+            if (!RUNNING_ON_NODE &amp;&amp; ((transPropertiesElement.size()&gt;0) || (transPropertiesBefore.size()&gt;0) || (transPropertiesAfter.size()&gt;0))) {
                 // when code comes here, there are one or more properties that can be transitioned
                 // check if their values differ from the original node
                 originalCSS = window.getComputedStyle(node);
@@ -1024,8 +1015,8 @@ module.exports = function (window) {
     });
 
     CSS_PROPS_TO_CALCULATE[VENDOR_TRANSFORM_PROPERTY] = true;
-    CSS_PROPS_TO_CALCULATE[VENDOR_TRANSFORM_PROPERTY+_ORIGIN] = true;
-    CSS_PROPS_TO_CALCULATE[VENDOR_PERSPECTIVE_PROPERTY] = true;
+    CSS_PROPS_TO_CALCULATE[generateVendorCSSProp(TRANSFORM+&#x27;-origin&#x27;)] = true;
+    CSS_PROPS_TO_CALCULATE[generateVendorCSSProp(&#x27;perspective&#x27;)] = true;
 
     (function(ElementPrototype) {
 
@@ -1096,6 +1087,7 @@ module.exports = function (window) {
                     property = transPropertySplitted[i];
                     duration = transTimingFunctionSplitted[i];
                     if ((property!==&#x27;none&#x27;) &amp;&amp; ((property!==&#x27;all&#x27;) || (duration!==&#x27;0s&#x27;))) {
+                        property = VENDOR_CSS_PROPERTIES[property] || generateVendorCSSProp(property);
                         transitions[property] = {
                             duration: parseFloat(transDurationSplitted[i]),
                             timingFunction: duration,
@@ -1667,10 +1659,6 @@ module.exports = function (window) {
                 groupStyle = styles &amp;&amp; styles[pseudo || &#x27;element&#x27;],
                 value;
             if (groupStyle) {
-                (cssProperty===TRANSITION) &amp;&amp; (cssProperty=VENDOR_TRANSITION_PROPERTY);
-                (cssProperty===TRANSFORM) &amp;&amp; (cssProperty=VENDOR_TRANSFORM_PROPERTY);
-                (cssProperty===PERSPECTIVE) &amp;&amp; (cssProperty=VENDOR_PERSPECTIVE_PROPERTY);
-                (cssProperty===TRANSFORM_ORIGIN) &amp;&amp; (cssProperty=VENDOR_TRANSFORM_PROPERTY+_ORIGIN);
                 value = groupStyle[fromCamelCase(cssProperty)];
                 value &amp;&amp; (cssProperty===VENDOR_TRANSITION_PROPERTY) &amp;&amp; (value=extractor.serializeTransition(value));
             }
@@ -1751,10 +1739,7 @@ module.exports = function (window) {
             // In those cases, we need a patch and look up the tree ourselves
             //  Also: we will return separate value, NOT matrices
             var instance = this;
-            (cssProperty===TRANSITION) &amp;&amp; (cssProperty=VENDOR_TRANSITION_PROPERTY);
-            (cssProperty===TRANSFORM) &amp;&amp; (cssProperty=VENDOR_TRANSITION_PROPERTY);
-            (cssProperty===PERSPECTIVE) &amp;&amp; (cssProperty=VENDOR_PERSPECTIVE_PROPERTY);
-            (cssProperty===TRANSFORM_ORIGIN) &amp;&amp; (cssProperty=VENDOR_TRANSITION_PROPERTY+_ORIGIN);
+            cssProperty = VENDOR_CSS_PROPERTIES[cssProperty] || generateVendorCSSProp(cssProperty);
             return (cssProperty===VENDOR_TRANSITION_PROPERTY) ?
                         instance._getTransitionAll(pseudo) :
                         window.getComputedStyle(instance, pseudo)[toCamelCase(cssProperty)];
@@ -2591,6 +2576,7 @@ module.exports = function (window) {
                 pseudo, group, clonedElement, fromStyles, toStylesExact, value, transproperty, transtime;
 
             Array.isArray(cssProperties) || (cssProperties=[cssProperties]);
+            cssProperties = getVendorCSS(cssProperties);
             len = cssProperties.length;
             vnodeStyles = vnode.styles;
             for (i=0; i&lt;len; i++) {
@@ -2604,13 +2590,8 @@ module.exports = function (window) {
                 group = pseudo || &#x27;element&#x27;;
                 styles = vnodeStyles[group];
                 if (styles) {
-                    prop = fromCamelCase(item.property);
-
+                    prop = item.property;
                     // if property is vendor-specific transition, or transform, than we reset it to the current vendor
-                    VENDOR_TRANSITIONS[prop] &amp;&amp; (prop=item.property=VENDOR_TRANSITION_PROPERTY);
-                    VENDOR_TRANSFORMS[prop] &amp;&amp; (prop=item.property=VENDOR_TRANSFORM_PROPERTY);
-                    VENDOR_TRANSFORMS_ORIGIN[prop] &amp;&amp; (prop=item.property=VENDOR_TRANSFORM_PROPERTY+_ORIGIN);
-                    VENDOR_PERSPECTIVE_PROPERTY[prop] &amp;&amp; (prop=item.property=VENDOR_PERSPECTIVE_PROPERTY);
                     if (styles[prop]) {
                         fromStyles || (fromStyles=vnodeStyles.deepClone());
                         needSync = true;
@@ -2631,6 +2612,7 @@ module.exports = function (window) {
                 }
             }
 
+            RUNNING_ON_NODE &amp;&amp; (hasTransitionedStyle=false);
             if (hasTransitionedStyle) {
                 // fix the current style with what is actual calculated:
                 vnode.styles = fromStyles; // exactly styles, so we can transition well
@@ -2762,6 +2744,7 @@ module.exports = function (window) {
 
             if (styles) {
                 Array.isArray(transitionProperties) || (transitionProperties=[transitionProperties]);
+                transitionProperties = getVendorCSS(transitionProperties);
                 len = transitionProperties.length;
                 for (i=0; i&lt;len; i++) {
                     item = transitionProperties[i];
@@ -2770,7 +2753,6 @@ module.exports = function (window) {
                     transitionStyles = groupStyle &amp;&amp; groupStyle[VENDOR_TRANSITION_PROPERTY];
                     if (transitionStyles) {
                         transitionProperty = item.property;
-                        VENDOR_TRANSFORMS[transitionProperty] &amp;&amp; (transitionProperty=VENDOR_TRANSFORM_PROPERTY);
                         if (transitionStyles[transitionProperty]) {
                             delete transitionStyles[transitionProperty];
                             (transitionStyles.size()===0) &amp;&amp; (delete groupStyle[VENDOR_TRANSITION_PROPERTY]);
@@ -3038,12 +3020,13 @@ module.exports = function (window) {
                 // there might be more bkpNodes, so we need to loop through the data:
                 vnode._data.each(function(bkpNode, key) {
                     if (key.startsWith(&#x27;bkpNode&#x27;)) {
-                        bkpNode.setInlineStyles(cssProperties);
+                        bkpNode.setInlineStyles(cssProperties, null, true);
                     }
                 });
             }
 
             Array.isArray(cssProperties) || (cssProperties=[cssProperties]);
+            cssProperties = getVendorCSS(cssProperties);
             len = cssProperties.length;
             vnode.styles || (vnode.styles={});
             vnodeStyles = vnode.styles;
@@ -3059,12 +3042,6 @@ module.exports = function (window) {
                 styles = vnodeStyles[group];
                 property = fromCamelCase(item.property);
                 value = item.value;
-
-                // if property is vendor-specific transition, or transform, than we reset it to the current vendor
-                VENDOR_TRANSITIONS[property] &amp;&amp; (property=item.property=VENDOR_TRANSITION_PROPERTY);
-                VENDOR_TRANSFORMS[property] &amp;&amp; (property=item.property=VENDOR_TRANSFORM_PROPERTY);
-                VENDOR_PERSPECTIVES[property] &amp;&amp; (property=item.property=VENDOR_PERSPECTIVE_PROPERTY);
-                VENDOR_TRANSFORMS_ORIGIN[property] &amp;&amp; (property=item.property=VENDOR_TRANSFORM_PROPERTY+_ORIGIN);
 
                 (property===VENDOR_TRANSITION_PROPERTY) &amp;&amp; (value=extractor.toTransitionObject(value));
                 if (value===undefined) {
@@ -3096,6 +3073,7 @@ module.exports = function (window) {
                     }
                 }
             }
+            RUNNING_ON_NODE &amp;&amp; (hasTransitionedStyle=false);
             if (hasTransitionedStyle) {
                 // we forced set the exact initial css inline --&gt; this is the only way to make a right transition
                 // under all circumstances
@@ -3138,6 +3116,7 @@ module.exports = function (window) {
                 clonedElement.remove();
                 hasTransitionedStyle = hasChanged;
             }
+            RUNNING_ON_NODE &amp;&amp; (hasTransitionedStyle=false);
             if (returnPromise || hasTransitionedStyle) {
                 promise = window.Promise.manage();
                 // need to call &#x60;setAttr&#x60; in a next event-cycle, otherwise the eventlistener made
@@ -3224,6 +3203,7 @@ module.exports = function (window) {
                 vnode = instance.vnode,
                 transitionStyles, transitionProperty, group, trans, i, len, item;
             Array.isArray(transitionProperties) || (transitionProperties=[transitionProperties]);
+            transitionProperties = getVendorCSS(transitionProperties);
             len = transitionProperties.length;
             vnode.styles || (vnode.styles={});
             for (i=0; i&lt;len; i++) {
@@ -3234,9 +3214,6 @@ module.exports = function (window) {
                     vnode.styles[group][VENDOR_TRANSITION_PROPERTY] || (vnode.styles[group][VENDOR_TRANSITION_PROPERTY]={});
                     transitionStyles = vnode.styles[group][VENDOR_TRANSITION_PROPERTY];
                     transitionProperty = fromCamelCase(item.property);
-                    VENDOR_TRANSFORMS[transitionProperty] &amp;&amp; (transitionProperty=VENDOR_TRANSFORM_PROPERTY);
-                    VENDOR_PERSPECTIVES[transitionProperty] &amp;&amp; (transitionProperty=VENDOR_PERSPECTIVE_PROPERTY);
-                    VENDOR_TRANSFORMS_ORIGIN[transitionProperty] &amp;&amp; (transitionProperty=VENDOR_TRANSFORM_PROPERTY+_ORIGIN);
                     trans = transitionStyles[transitionProperty] = {
                         duration: item.duration
                     };
@@ -3366,7 +3343,8 @@ module.exports = function (window) {
         ElementPrototype.setXY = function(x, y, constrain, notransition) {
             console.log(NAME, &#x27;setXY &#x27;+x+&#x27;,&#x27;+y);
             var instance = this,
-                transformXY = arguments[4] &amp;&amp; TRANSFORM_PROPERTY, // hidden feature: is used by the &#x60;drag&#x60;-module to get smoother dragging
+                transformXY = arguments[4], // hidden feature: is used by the &#x60;drag&#x60;-module to get smoother dragging
+                // transformXY = arguments[4] &amp;&amp; TRANSFORM_PROPERTY, // hidden feature: is used by the &#x60;drag&#x60;-module to get smoother dragging
                 dif, match, constrainNode, byExactId, parent, clone, currentT, extract,
                 containerTop, containerRight, containerLeft, containerBottom, requestedX, requestedY;
 
@@ -3604,6 +3582,7 @@ module.exports = function (window) {
 
             to || (to={});
             Array.isArray(to) || (to=[to]);
+            to = getVendorCSS(to);
             time1 = Date.now();
             cleanup = function() {
                 currentInlineTransition = instance.getData(&#x27;_bkpTransition&#x27;);
@@ -3626,10 +3605,6 @@ module.exports = function (window) {
                     var styles = (value.pseudo===&#x27;:before&#x27;) ? currentStyleBefore : ((value.pseudo===&#x27;:after&#x27;) ? currentStyleAfter : currentStyle),
                         property = value.property;
                     // if property is vendor-specific transition, or transform, than we reset it to the current vendor
-                    VENDOR_TRANSITIONS[property] &amp;&amp; (property=VENDOR_TRANSITION_PROPERTY);
-                    VENDOR_TRANSFORMS[property] &amp;&amp; (property=VENDOR_TRANSFORM_PROPERTY);
-                    VENDOR_PERSPECTIVES[property] &amp;&amp; (property=VENDOR_PERSPECTIVE_PROPERTY);
-                    VENDOR_TRANSFORMS_ORIGIN[property] &amp;&amp; (property=VENDOR_TRANSFORM_PROPERTY+_ORIGIN);
                     props.push({
                         property: property,
                         value: styles[toCamelCase(property)]
@@ -3743,13 +3718,16 @@ module.exports = function (window) {
                             async(function() {
                                 if (!manipulated &amp;&amp; (instance.getData(&#x27;_readyOnRun&#x27;)===transitionRun)) {
                                     cleanup();
-                                    if (transitionError) {
-                                        reject(transitionError);
-                                    }
-                                    else {
-                                        time2 || (time2=Date.now());
-                                        resolve(time2-time1);
-                                    }
+                                    // because cleanup does an async action (setInlineStyles), we will append the eventstack:
+                                    async(function() {
+                                        if (transitionError) {
+                                            reject(transitionError);
+                                        }
+                                        else {
+                                            time2 || (time2=Date.now());
+                                            resolve(time2-time1);
+                                        }
+                                    });
                                 }
                             });
                         }
