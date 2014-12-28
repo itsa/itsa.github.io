@@ -7,7 +7,7 @@ modulesize: 1.69
 dependencies: "polyfill"
 maintainer: Marco Asbreuk
 title: Transitions
-intro: "Proxy for <b>window.document</b> and <b>window.Element</b> which makes working with the DOM ultrafast."
+intro: "CSS-transitions managable by Promises with extra handles."
 firstpar: get-started-onlywindow
 ---
 
@@ -116,6 +116,31 @@ transPromise.then(
 );
 ```
 
+
+
+##Extra managability##
+
+All `transitioned Promises` (explained above) have extra methods (handles) to manage the transition before it gets ready. These methods are:
+
+
+###cancel()###
+
+Will cancel the transition and revert into the initial state at once.
+
+
+###freeze()###
+
+Will freeze (halt) the transition. You can unfreeze it later on.
+
+
+###unfreeze()###
+
+Will unfreeze (continue) a frozen transition.
+
+
+###finish()###
+
+Will finish the transition at once, disregarding any further transition.
 
 
 #About IE9#

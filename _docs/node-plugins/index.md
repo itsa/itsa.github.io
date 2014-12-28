@@ -7,7 +7,7 @@ modulesize: 1.69
 dependencies: "polyfill"
 maintainer: Marco Asbreuk
 title: Node Plugins
-intro: "Proxy for <b>window.document</b> and <b>window.Element</b> which makes working with the DOM ultrafast."
+intro: "Enhancing Elements with node-plugins, which are basicly just extra attributes working together with modulecode."
 firstpar: get-started
 ---
 
