@@ -246,6 +246,7 @@ var NAME = &#x27;[drag]: &#x27;,
     TOP = &#x27;top&#x27;,
     WINDOW = &#x27;window&#x27;,
     TRUE = &#x27;true&#x27;,
+    NO_OVERFLOW = &#x27;itsa-no-overflow&#x27;,
     DD_MINUSDRAGGABLE = DD_MINUS+DRAGGABLE,
     PLUGIN_ATTRS = [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTER, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE];
 
@@ -270,6 +271,7 @@ module.exports = function (window) {
 
     var Event = require(&#x27;event-dom&#x27;)(window),
         NodePlugin = require(&#x27;vdom&#x27;)(window).Plugins.NodePlugin,
+        bodyNode = window.document.body,
         DD, NodeDD, DD_Object;
 
     require(&#x27;window-ext&#x27;)(window);
@@ -373,14 +375,13 @@ module.exports = function (window) {
                 x = ddProps.x+e.xMouse+(winConstrained ? ddProps.winScrollLeft : window.getScrollLeft())-e.xMouseOrigin;
                 y = ddProps.y+e.yMouse+(winConstrained ? ddProps.winScrollTop : window.getScrollTop())-e.yMouseOrigin;
 
-                dragNode.setXY(x, y, ddProps.constrain, true, true);
+                dragNode.setXY(x, y, ddProps.constrain, true);
 
                 ddProps.relatives &amp;&amp; ddProps.relatives.forEach(
                     function(item) {
-                        item.dragNode.setXY(x+item.shiftX, y+item.shiftY, null, true, true);
+                        item.dragNode.setXY(x+item.shiftX, y+item.shiftY, null, true);
                     }
                 );
-
                 ddProps.winConstrained || dragNode.forceIntoView(true);
                 constrainNode &amp;&amp; dragNode.forceIntoNodeView(constrainNode);
             }
@@ -490,6 +491,11 @@ module.exports = function (window) {
                         w: window.getWidth(),
                         h: window.getHeight()
                     };
+                    // if constrained to window:
+                    // set a class that makes overflow hidden --&gt; this will prevent
+                    // some browsers from scrolling the window when a pressed mouse
+                    // gets out of the window
+                    bodyNode.setClass(NO_OVERFLOW);
                 }
                 else {
                     byExactId = REGEXP_NODE_ID.test(constrain);
@@ -562,6 +568,13 @@ module.exports = function (window) {
                         notifier.s || notifier.cb.call(notifier.o, e, ddProps);
                     }
                 );
+
+                if (constrain &amp;&amp; ddProps.winConstrained) {
+                    // if constrained to window:
+                    // remove overflow=hidden from the bodynode
+                    bodyNode.removeClass(NO_OVERFLOW);
+                }
+
                 instance.ddProps = {};
                 /**
                 * Emitted when drag-cycle of a draggable Element is ended.
