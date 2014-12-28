@@ -11,3 +11,8 @@ ul.userguide-list .pure-button {
     color: #FFF;
     background-color: #1f8dd6;
 }
+
+span.functionality {
+    font-size: 0.8em;
+    margin-left: 0.8em;
+}

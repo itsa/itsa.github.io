@@ -17,7 +17,14 @@
             {{ content }}
             <ul class="userguide-list">{% for files in site.docs %}{% assign fragments = files.url | split: '/' %}{% assign filename = fragments.last %}{% if filename == 'index.html' %}
                 <li>
-                  <a class="pure-button pure-button-bordered"  href="..{{ files.url }}">{{ files.module }}</a>
+                    {% if files.functionality %}
+                        {% assign modulename = files.functionality %}
+                        {% assign partof = '<span class="functionality">(' | append: files.module | append: ')</span>' %}
+                    {% else %}
+                        {% assign modulename = files.module %}
+                        {% assign partof = '' %}
+                    {% endif %}
+                  <a class="pure-button pure-button-bordered"  href="..{{ files.url }}">{{ modulename }}{{ partof }}</a>
                 </li>{% endif %}{% endfor %}
             </ul>
         </div>

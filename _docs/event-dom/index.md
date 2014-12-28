@@ -54,7 +54,6 @@ There are some differences between DOM-events v.s. Custom created Events that yo
 * DOM-events are always subscribed by delegation: you need to specify a css-selector at the filter-argument.
 * DOM-events can be subscribed regardless of the existance of the node inside the dom. If the node isn't there: no event; if the node gets inserted at a later time: the events occur.
 * All DOM-events work through delegation, even focus, blur, error, load, focus and scroll.
-* IE8- <u>does not support</u> **error**, **load**, **resize** and **scroll** (it does support focus and scroll by delegation).
 * DOM-events propagate through the dom-tree. This propagation can be stopped either by [e.stopPropagation() or e.stopImmediatePropagation()](#stoppropagation-and-stopimmediatepropagation).
 
 
@@ -270,5 +269,4 @@ All DOM-events receive an event object that extends the eventobject created by E
 
 #Compatability#
 
-* All modern browsers and IE9+ are fully supported.
-* IE8- are supported with the exception of the events **error**, **load**, **resize** and **scroll**
+* All modern browsers and IE9+.
