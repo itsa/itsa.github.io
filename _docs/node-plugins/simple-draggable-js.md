@@ -1,8 +1,9 @@
 ---
-module: drag
+module: vdom
+functionality: node-plugins
 maintainer: Marco Asbreuk
 title: Simple draggable plugin
-intro: "Draggable elements can be setup using the attribute <b>dd-draggable=\"true\"</b>, or using javascript by using <b>node.plugin(ITSA.Plugins.NodeDD)</b>. This example uses the plugin. The plugin does nothing more than add the right attribute to the draggable Element, and it just works.</b>"
+intro: "An element can be made draggable by using <b>node.plugin(ITSA.Plugins.NodeDD)</b>. The plugin does nothing more than add the right attribute to the draggable Element, and it just works.</b>"
 ---
 
 <style type="text/css">
@@ -38,7 +39,7 @@ Drag the rectangle. The Node is made draggable by a plugin.
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
+    ITSA.DD.init(); // needed to enable drag-drop
     document.getElement('.container').plug(ITSA.Plugins.NodeDD);
 </script>
 ```
@@ -47,6 +48,6 @@ Drag the rectangle. The Node is made draggable by a plugin.
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
+    ITSA.DD.init(); // needed to enable drag-drop
     document.getElement('.container').plug(ITSA.Plugins.NodeDD);
 </script>

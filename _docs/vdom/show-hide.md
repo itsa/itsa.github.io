@@ -49,7 +49,7 @@ Clik on the button to toggle the className:
     <button id="button-hide-faded" class="pure-button pure-button-primary pure-button-bordered">Hide Node faded</button>
 </div>
 
-<div class="container itsa-hidden itsa-transparent"></div>
+<div class="container itsa-hidden"></div>
 
 <p class="spaced">Code-example:</p>
 
@@ -76,11 +76,11 @@ Clik on the button to toggle the className:
         switch (e.target.getId()) {
             case 'button-show': container.show();
                 break;
-            case 'button-show-faded': container.show(true);
+            case 'button-show-faded': container.show(5);
                 break;
             case 'button-hide': container.hide();
                 break;
-            case 'button-hide-faded': container.hide(true);
+            case 'button-hide-faded': container.hide(5);
         }
     };
 
@@ -89,7 +89,7 @@ Clik on the button to toggle the className:
 </script>
 ```
 
-<script src="../../dist/itsabuild-min.js"></script>
+<script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa');
     var container = document.getElement('.container');
@@ -98,11 +98,11 @@ Clik on the button to toggle the className:
         switch (e.target.getId()) {
             case 'button-show': container.show();
                 break;
-            case 'button-show-faded': container.show(true);
+            case 'button-show-faded': container.show(5);
                 break;
             case 'button-hide': container.hide();
                 break;
-            case 'button-hide-faded': container.hide(true);
+            case 'button-hide-faded': container.hide(5);
         }
     };
 
