@@ -1,5 +1,6 @@
 ---
 module: vdom
+functionality: transition
 maintainer: Marco Asbreuk
 title: Flip a card
 intro: "This example shows how to flip a card. Most is done by setting the right css-classes. The transition gets activated by setting a transform-style on the card-div. <br><br>By clicking on the card it gets flipped. There also is some logic that can reverse flipping, even during a transition."
@@ -7,14 +8,20 @@ intro: "This example shows how to flip a card. Most is done by setting the right
 
 <style type="text/css">
     .container3D {
-        width: 200px;
-        height: 300px;
-        position: relative;
         -webkit-perspective: 600px;
         -moz-perspective: 600px;
         -ms-perspective: 600px;
         -o-perspective: 600px;
         perspective: 600px;
+        width: 200px;
+        height: 300px;
+        position: relative;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
     #card {
         width: 100%;
@@ -42,12 +49,6 @@ intro: "This example shows how to flip a card. Most is done by setting the right
         text-align: center;
         line-height: 300px;
         cursor: default;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
     }
     #card .front {
         background-color: #F00;
@@ -84,15 +85,29 @@ Flip the card by clicking on it. <span class="status"></span>
 ```css
 <style type="text/css">
     .container3D {
+        -webkit-perspective: 600px;
+        -moz-perspective: 600px;
+        -ms-perspective: 600px;
+        -o-perspective: 600px;
+        perspective: 600px;
         width: 200px;
         height: 300px;
         position: relative;
-        perspective: 600px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
     #card {
         width: 100%;
         height: 100%;
         position: absolute;
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        -o-transform-style: preserve-3d;
         transform-style: preserve-3d;
     }
     #card >div {
@@ -100,6 +115,10 @@ Flip the card by clicking on it. <span class="status"></span>
         position: absolute;
         width: 100%;
         height: 100%;
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+        -o-backface-visibility: hidden;
         backface-visibility: hidden;
         color: #FFF;
         font-size: 8em;
@@ -107,12 +126,6 @@ Flip the card by clicking on it. <span class="status"></span>
         text-align: center;
         line-height: 300px;
         cursor: default;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
     }
     #card .front {
         background-color: #F00;
@@ -124,13 +137,6 @@ Flip the card by clicking on it. <span class="status"></span>
         -ms-transform: rotateY(180deg);
         -o-transform: rotateY(180deg);
         transform: rotateY(180deg);
-    }
-    span.status {
-        margin-left: 2em;
-        font-weight: bold;
-    }
-    .body-content.module p.spaced {
-        margin-top: 4em;
     }
 </style>
 ```

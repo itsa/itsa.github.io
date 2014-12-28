@@ -37,6 +37,10 @@ h1.moduleheader {
     padding: 0.75em;
     color: #555;
 }
+span.functionality {
+    font-size: 0.8em;
+    margin-left: 0.8em;
+}
 span.extrainfo {
     margin-left: 1em;
     font-size: 0.8em;

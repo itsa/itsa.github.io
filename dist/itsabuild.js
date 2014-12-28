@@ -5556,6 +5556,7 @@ var NAME = '[drag]: ',
     TOP = 'top',
     WINDOW = 'window',
     TRUE = 'true',
+    NO_OVERFLOW = 'itsa-no-overflow',
     DD_MINUSDRAGGABLE = DD_MINUS+DRAGGABLE,
     PLUGIN_ATTRS = [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTER, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE];
 
@@ -5580,6 +5581,7 @@ module.exports = function (window) {
 
     var Event = require('event-dom')(window),
         NodePlugin = require('vdom')(window).Plugins.NodePlugin,
+        bodyNode = window.document.body,
         DD, NodeDD, DD_Object;
 
     require('window-ext')(window);
@@ -5799,6 +5801,11 @@ module.exports = function (window) {
                         w: window.getWidth(),
                         h: window.getHeight()
                     };
+                    // if constrained to window:
+                    // set a class that makes overflow hidden --> this will prevent
+                    // some browsers from scrolling the window when a pressed mouse
+                    // gets out of the window
+                    bodyNode.setClass(NO_OVERFLOW);
                 }
                 else {
                     byExactId = REGEXP_NODE_ID.test(constrain);
@@ -5871,6 +5878,13 @@ module.exports = function (window) {
                         notifier.s || notifier.cb.call(notifier.o, e, ddProps);
                     }
                 );
+
+                if (constrain && ddProps.winConstrained) {
+                    // if constrained to window:
+                    // remove overflow=hidden from the bodynode
+                    bodyNode.removeClass(NO_OVERFLOW);
+                }
+
                 instance.ddProps = {};
                 /**
                 * Emitted when drag-cycle of a draggable Element is ended.
@@ -6054,11 +6068,6 @@ module.exports = function (window) {
 
             Event.after(MOUSEDOWN, function(e) {
                 var draggableAttr = e.target.getAttr(DD_MINUSDRAGGABLE);
-
-window.document.body.setInlineStyle('overflow', 'hidden');
-
-
-
                 (draggableAttr===TRUE) ? nodeTargetFn(e) : delegatedTargetFn(e, draggableAttr);
             }, '['+DD_MINUSDRAGGABLE+']');
 
@@ -11649,7 +11658,7 @@ module.exports.idGenerator = function(namespace, start) {
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"_process":55,"polyfill/polyfill-base.js":38}],42:[function(require,module,exports){
-var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n.itsa-invisible,\n.itsa-invisible-relative {\n    visibility: hidden !important;\n    z-index: -1;\n}\n\n.itsa-invisible *,\n.itsa-invisible-relative * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n.itsa-hidden {\n    visibility: hidden !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n.itsa-invisible,\n.itsa-invisible-relative {\n    visibility: hidden !important;\n    z-index: -1;\n}\n\n.itsa-invisible *,\n.itsa-invisible-relative * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n.itsa-hidden {\n    visibility: hidden !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],43:[function(require,module,exports){
 "use strict";
 
@@ -13493,8 +13502,10 @@ module.exports = function (window) {
                     else {
                         unfreezePromise = resolvedPromise;
                     }
-                    node.removeData(bkpFreezed);
-                    node.removeData(bkpFreezedData1);
+                    async(function() {
+                        node.removeData(bkpFreezed);
+                        node.removeData(bkpFreezedData1);
+                    });
                     if (finish || cancel) {
                         finalStyle = finalNode.getAttr(STYLE);
                         node.setAttr(STYLE, finalStyle);
@@ -13601,7 +13612,7 @@ module.exports = function (window) {
                         transprops[key] = true;
                     }
                 });
-                return transprops;
+                return (transprops.size()>0) ? transprops : null;
             };
             generateInlineCSS = function(group, transProperties, CSS1, CSS2) {
                 transProperties.each(function(value, key) {
@@ -14038,8 +14049,10 @@ module.exports = function (window) {
                 for (i=0; i<len; i++) {
                     property = transPropertySplitted[i];
                     duration = transTimingFunctionSplitted[i];
-                    if ((property!=='none') && ((property!=='all') || (duration!=='0s'))) {
-                        property = VENDOR_CSS_PROPERTIES[property] || generateVendorCSSProp(property);
+                    if ((property!=='none') && (duration!=='0s')) {
+                        if (property!=='all') {
+                            property = VENDOR_CSS_PROPERTIES[property] || generateVendorCSSProp(property);
+                        }
                         transitions[property] = {
                             duration: parseFloat(transDurationSplitted[i]),
                             timingFunction: duration,
@@ -14691,10 +14704,11 @@ module.exports = function (window) {
             // In those cases, we need a patch and look up the tree ourselves
             //  Also: we will return separate value, NOT matrices
             var instance = this;
+            if (cssProperty===VENDOR_TRANSITION_PROPERTY) {
+                return instance._getTransitionAll(pseudo);
+            }
             VENDOR_CSS_PROPERTIES[cssProperty] || (cssProperty=generateVendorCSSProp(cssProperty));
-            return (cssProperty===VENDOR_TRANSITION_PROPERTY) ?
-                        instance._getTransitionAll(pseudo) :
-                        window.getComputedStyle(instance, pseudo)[toCamelCase(cssProperty)];
+            return window.getComputedStyle(instance, pseudo)[toCamelCase(cssProperty)];
         };
 
         /**
@@ -15913,7 +15927,9 @@ module.exports = function (window) {
        /**
         * Sets a css-property (inline) for the Element.
         *
-        * Note: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine
+        * Note1: Do not use vendor-specific properties, but general (like `transform` instead of `-webkit-transform`)
+        *        This method will use the appropriate css-property.
+        * Note2: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine
         *
         * @method setInlineStyle
         * @param cssProperty {String} the css-property to be set
@@ -15921,7 +15937,7 @@ module.exports = function (window) {
         * @param [pseudo] {String} to look inside a pseudo-style
         * @param [returnPromise] {Boolean} whether to return a Promise instead of `this`, which might be useful in case of
         *        transition-properties. The promise will fullfil when the transition is ready, or immediately when no transitioned.
-        * @chainable
+        * @return {Promise|this}
         * @since 0.0.1
         */
         ElementPrototype.setInlineStyle = function(cssProperty, value, pseudo, returnPromise) {
@@ -15935,7 +15951,9 @@ module.exports = function (window) {
        /**
         * Sets multiple css-properties (inline) for the Element at once.
         *
-        * Note: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine
+        * Note1: Do not use vendor-specific properties, but general (like `transform` instead of `-webkit-transform`)
+        *        This method will use the appropriate css-property.
+        * Note2: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine
         *
         * @method setInlineStyles
         * @param cssProperties {Array|Object} the css-properties to be set, specified as an Array of Objects, or 1 Object.
@@ -15947,7 +15965,7 @@ module.exports = function (window) {
         *        </ul>
         * @param [returnPromise] {Boolean} whether to return a Promise instead of `this`, which might be useful in case of
         *        transition-properties. The promise will fullfil when the transition is ready, or immediately when no transitioned.
-        * @chainable
+        * @return {Promise|this}
         * @since 0.0.1
         */
         ElementPrototype.setInlineStyles = function(cssProperties, returnPromise) {

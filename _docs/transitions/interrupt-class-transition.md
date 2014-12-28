@@ -1,5 +1,6 @@
 ---
 module: vdom
+functionality: transition
 maintainer: Marco Asbreuk
 title: Interrupt class-transition
 intro: "This example shows how to interrupt a class-transition. Interruption can be done when using the interruption-methods that return a Promise, like node\'s class-methods or transition. These methods return Promise with extra methods: cancel, freeze and finish, which all interrupt the transition and force to the initial, current or final state immediately.<br><br>Start switching the class, while during transition experiment with canceling, freezing or finishing."
@@ -27,11 +28,11 @@ intro: "This example shows how to interrupt a class-transition. Interruption can
         z-index: 1;
         color: #FFF;
         width: 300px;
-        -webkit-transition: all 5s;
-        -moz-transition: all 5s;
-        -ms-transition: all 5s;
-        -o-transition: all 5s;
-        transition: all 5s;
+        -webkit-transition: all 3s;
+        -moz-transition: all 3s;
+        -ms-transition: all 3s;
+        -o-transition: all 3s;
+        transition: all 3s;
     }
     .container.blue {
         background-color: #00F;
@@ -75,11 +76,11 @@ Click on the button to toggle the className:
         z-index: 1;
         color: #FFF;
         width: 300px;
-        -webkit-transition: all 5s;
-        -moz-transition: all 5s;
-        -ms-transition: all 5s;
-        -o-transition: all 5s;
-        transition: all 5s;
+        -webkit-transition: all 3s;
+        -moz-transition: all 3s;
+        -ms-transition: all 3s;
+        -o-transition: all 3s;
+        transition: all 3s;
     }
     .container.blue {
         background-color: #00F;

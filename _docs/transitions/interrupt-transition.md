@@ -1,5 +1,6 @@
 ---
 module: vdom
+functionality: transition
 maintainer: Marco Asbreuk
 title: Interrupt transition
 intro: "This example shows how to interrupt a transition. Interruption can be done when using the interruption-methods that return a Promise, like node\'s class-methods or transition. These methods return Promise with extra methods: cancel, freeze and finish, which all interrupt the transition and force to the initial, current or final state immediately.<br><br>Start switching the class, while during transition experiment with canceling, freezing or finishing."
@@ -27,7 +28,6 @@ intro: "This example shows how to interrupt a transition. Interruption can be do
         z-index: 1;
         color: #FFF;
         width: 300px;
-        border: 2px solid #F00;
     }
     .body-content.module p.spaced {
         margin-top: 4em;
@@ -90,16 +90,17 @@ Click on the button to toggle the className:
         container.setText('Busy transtitioning');
         resetClasses(false);
         promise = container.transition([
-            {property: 'width', value: '600px', duration: 15},
-            {property: 'height', value: '250px', duration: 15},
-            {property: 'background-color', value: '#00F', duration: 15}
-        ], true);
+            {property: 'width', value: '600px', duration: 5},
+            {property: 'height', value: '250px', duration: 5},
+            {property: 'background-color', value: '#00F', duration: 5}
+        ]);
         promise.then(function() {
             container.setText('End of transtition');
-            resetClasses(true);
+            resetClasses(true, true);
         })
         .catch(
             function(err) {
+                console.warn(err);
                 container.setText(err);
             }
         );
@@ -120,8 +121,10 @@ Click on the button to toggle the className:
         resetClasses(true, true);
     };
 
-    resetClasses = function(ready) {
-        switchButton.toggleClass('pure-button-disabled', !ready);
+    resetClasses = function(ready, finished) {
+        if (!finished) {
+            switchButton.toggleClass('pure-button-disabled', !ready);
+        }
         transitionButtons.toggleClass('pure-button-disabled', ready);
     };
 
@@ -148,13 +151,13 @@ Click on the button to toggle the className:
         container.setText('Busy transtitioning');
         resetClasses(false);
         promise = container.transition([
-            {property: 'width', value: '600px', duration: 15},
-            {property: 'height', value: '250px', duration: 15},
-            {property: 'background-color', value: '#00F', duration: 15}
-        ], true);
+            {property: 'width', value: '600px', duration: 5},
+            {property: 'height', value: '250px', duration: 5},
+            {property: 'background-color', value: '#00F', duration: 5}
+        ]);
         promise.then(function() {
             container.setText('End of transtition');
-            resetClasses(true);
+            resetClasses(true, true);
         })
         .catch(
             function(err) {
@@ -179,8 +182,10 @@ Click on the button to toggle the className:
         resetClasses(true, true);
     };
 
-    resetClasses = function(ready) {
-        switchButton.toggleClass('pure-button-disabled', !ready);
+    resetClasses = function(ready, finished) {
+        if (!finished) {
+            switchButton.toggleClass('pure-button-disabled', !ready);
+        }
         transitionButtons.toggleClass('pure-button-disabled', ready);
     };
 
