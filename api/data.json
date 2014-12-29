@@ -305,6 +305,17 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/useragent/useragent.js": {
+            "name": "src/useragent/useragent.js",
+            "modules": {
+                "useragent": 1
+            },
+            "classes": {
+                "USERAGENT": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/utils/lib/idgenerator.js": {
             "name": "src/utils/lib/idgenerator.js",
             "modules": {
@@ -808,6 +819,20 @@
             "description": "Emulation of browser `window` and `dom`. Just enough to make ITSA work.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "static": 1
         },
+        "useragent": {
+            "name": "useragent",
+            "submodules": {},
+            "classes": {
+                "USERAGENT": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "src/useragent/useragent.js",
+            "line": 3,
+            "description": "<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "since": "0.0.1"
+        },
         "utils": {
             "name": "utils",
             "submodules": {},
@@ -1197,6 +1222,20 @@
             "file": "src/node-win/node-win.js",
             "line": 3,
             "description": "Emulation of browser `window` and `dom`. Just enough to make ITSA work.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        "USERAGENT": {
+            "name": "USERAGENT",
+            "shortname": "USERAGENT",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "useragent",
+            "namespace": "",
+            "file": "src/useragent/useragent.js",
+            "line": 3,
+            "description": "<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "Utils": {
             "name": "Utils",
@@ -7779,7 +7818,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 94,
+            "line": 96,
             "description": "Objecthash containing all specific information about the particular drag-cycle.\nIt has a structure like this:\n\nddProps = {\n    dragNode {HtmlElement} Element that is dragged\n    x {Number} absolute x-position of the draggable inside `document` when the drag starts\n    y {Number} absolute y-position of the draggable inside `document` when the drag starts\n    inlineLeft {String} inline css of the property `left` when drag starts\n    inlineTop {String} inline css of the property `top` when drag starts\n    winConstrained {Boolean} whether the draggable should be constrained to `window`\n    xMouseLast {Number} absolute x-position of the mouse inside `document` when the drag starts\n    yMouseLast {Number} absolute y-position of the draggable inside `document` when the drag starts\n    winScrollLeft {Number} the left-scroll of window when drag starts\n    winScrollTop {Number} the top-scroll of window when drag starts\n    constrain = { // constrain-properties when constrained to a HtmlElement\n        xOrig {Number} x-position in the document, included with left-border-width\n        yOrig {Number} y-position in the document, included with top-border-width\n        x {Number} xOrig corrected with scroll-left of the constrained node\n        y {Number} yOrig corrected with scroll-top of the constrained node\n        w {Number} scrollWidth\n        h {Number} scrollHeight\n    };\n    relatives[{ // Array with objects that represent all draggables that come along with the master-draggable (in case of multiple items), excluded the master draggable itself\n        sourceNode {HtmlElement} original node (defined by drag-drop)\n        dragNode {HtmlElement} draggable node\n        shiftX {Number} the amount of left-pixels that this HtmlElement differs from the dragged element\n        shiftY {Number} the amount of top-pixels that this HtmlElement differs from the dragged element\n        inlineLeft {String} inline css of the property `left` when drag starts\n        inlineTop {String} inline css of the property `top` when drag starts\n    }]\n}",
             "itemtype": "property",
             "name": "ddProps",
@@ -7791,7 +7830,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 134,
+            "line": 136,
             "description": "Internal hash with notifiers to response after each `Drag` event is set up, or teared down.\nYou can use this to hook in into the drag-eventcycle: the `drop`-module uses it this way.\nIs filled by using `notify()`.",
             "itemtype": "property",
             "name": "_notifiers",
@@ -7805,7 +7844,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 147,
+            "line": 149,
             "description": "Default function for the `*:dd-drag`-event",
             "itemtype": "method",
             "name": "_defFnDrag",
@@ -7824,7 +7863,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 172,
+            "line": 174,
             "description": "Fired when the mouse comes back into the browser-window while dd-drag was busy yet no buttons are pressed.\nThis is a correction to the fact that the mouseup-event wasn't noticed because the mouse was outside the browser.",
             "itemtype": "event",
             "name": "dd-fake-mouseup",
@@ -7836,7 +7875,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 204,
+            "line": 206,
             "description": "Default function for the `*:dd-drop`-event",
             "itemtype": "method",
             "name": "_defFnDrop",
@@ -7855,7 +7894,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 234,
+            "line": 236,
             "description": "Default function for the `*:dd`-event",
             "itemtype": "method",
             "name": "_defFnStart",
@@ -7874,7 +7913,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 252,
+            "line": 254,
             "description": "Defines the definition of the `dd` event: the first phase of the drag-eventcycle (dd, *:dd-drag, *:dd-drop)",
             "itemtype": "method",
             "name": "_defineDDStart",
@@ -7893,7 +7932,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 270,
+            "line": 272,
             "description": "Default function for the `*:dd-drag`-event",
             "itemtype": "method",
             "name": "_initializeDrag",
@@ -7912,7 +7951,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 352,
+            "line": 354,
             "description": "Emitted during the drag-cycle of a draggable Element (while it is dragged).",
             "itemtype": "event",
             "name": "*:dd-drag",
@@ -7987,7 +8026,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 401,
+            "line": 403,
             "description": "Emitted when drag-cycle of a draggable Element is ended.",
             "itemtype": "event",
             "name": "*:dd-drop",
@@ -8062,7 +8101,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 459,
+            "line": 461,
             "description": "Prevented function for the `*:dd-start`-event",
             "itemtype": "method",
             "name": "_prevFnStart",
@@ -8081,7 +8120,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 472,
+            "line": 474,
             "description": "Engine behind the drag-drop-cycle.\nSets up a `mousedown` listener to initiate a drag-drop eventcycle. The eventcycle start whenever\none of these events happens on a HtmlElement with the attribute `dd-draggable=\"true\"`.\nThe drag-drop eventcycle consists of the events: `dd-start`, `emitterName:dd-drag` and `emitterName:dd-drop`",
             "itemtype": "method",
             "name": "_setupMouseEv",
@@ -8093,7 +8132,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 528,
+            "line": 530,
             "description": "Emitted when a draggable Element's drag-cycle starts. You can use a `before`-subscriber to specify\ne.relatives, which should be a nodelist with HtmlElements, that should be dragged togehter with the master\ndraggable Element.",
             "itemtype": "event",
             "name": "*:dd",
@@ -8168,7 +8207,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 591,
+            "line": 593,
             "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
             "itemtype": "method",
             "name": "init",
@@ -8189,7 +8228,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 616,
+            "line": 617,
             "description": "Creates a notifier to response after each `Drag` event is set up, or teared down.\nYou can use this to hook in into the drag-eventcycle: the `drop`-module uses it this way.",
             "static": 1,
             "itemtype": "method",
@@ -12812,7 +12851,7 @@
                     "type": "MutationObserver"
                 }
             ],
-            "class": "Utils",
+            "class": "USERAGENT",
             "module": "node-win"
         },
         {
@@ -12831,7 +12870,7 @@
                     "type": "Function(MutationObserverInit):MutationRecord"
                 }
             ],
-            "class": "Utils",
+            "class": "USERAGENT",
             "module": "node-win"
         },
         {
@@ -12846,7 +12885,7 @@
                 }
             ],
             "is_constructor": 1,
-            "class": "Utils",
+            "class": "USERAGENT",
             "module": "node-win"
         },
         {
@@ -12865,7 +12904,7 @@
                 }
             ],
             "is_constructor": 1,
-            "class": "Utils",
+            "class": "USERAGENT",
             "module": "node-win"
         },
         {
@@ -12883,7 +12922,7 @@
                 "description": "",
                 "type": "MutationRecord"
             },
-            "class": "Utils",
+            "class": "USERAGENT",
             "module": "node-win"
         },
         {
@@ -12901,7 +12940,7 @@
                 "description": "",
                 "type": "MutationRecord"
             },
-            "class": "Utils",
+            "class": "USERAGENT",
             "module": "node-win"
         },
         {
@@ -12918,7 +12957,7 @@
                 "description": "Whether the record represents a record from the current\nmutation event.",
                 "type": "Boolean"
             },
-            "class": "Utils",
+            "class": "USERAGENT",
             "module": "node-win"
         },
         {
@@ -12942,7 +12981,7 @@
                     "type": "MutationRecord"
                 }
             ],
-            "class": "Utils",
+            "class": "USERAGENT",
             "module": "node-win"
         },
         {
@@ -12967,7 +13006,7 @@
                 }
             ],
             "is_constructor": 1,
-            "class": "Utils",
+            "class": "USERAGENT",
             "module": "node-win"
         },
         {
@@ -12981,35 +13020,35 @@
                     "type": "Node"
                 }
             ],
-            "class": "Utils",
+            "class": "USERAGENT",
             "module": "node-win"
         },
         {
             "file": "src/polyfill/lib/weakmap.js",
             "line": 9,
             "description": "Utility function takes `object` and `namespace` and overrides `valueOf`\nmethod of `object`, so that when called with a `namespace` argument,\n`private` object associated with this `namespace` is returned. If argument\nis different, `valueOf` falls back to original `valueOf` property.",
-            "class": "Utils",
+            "class": "USERAGENT",
             "module": "node-win"
         },
         {
             "file": "src/polyfill/lib/weakmap.js",
             "line": 33,
             "description": "Desugared implementation of private names proposal. API is different as\nit's not possible to implement API proposed for harmony with in ES5. In\nterms of provided functionality it supposed to be same.\nhttp://wiki.ecmascript.org/doku.php?id=strawman:private_names",
-            "class": "Utils",
+            "class": "USERAGENT",
             "module": "node-win"
         },
         {
             "file": "src/polyfill/lib/weakmap.js",
             "line": 48,
             "description": "Utility function to guard WeakMap methods from keys that are not\na non-null objects.",
-            "class": "Utils",
+            "class": "USERAGENT",
             "module": "node-win"
         },
         {
             "file": "src/polyfill/lib/weakmap.js",
             "line": 60,
             "description": "Implementation of harmony `WeakMaps`, in ES5. This implementation will\nwork only with keys that have configurable `valueOf` property (which is\na default for all non-frozen objects).\nhttp://wiki.ecmascript.org/doku.php?id=harmony:weak_maps",
-            "class": "Utils",
+            "class": "USERAGENT",
             "module": "node-win"
         },
         {

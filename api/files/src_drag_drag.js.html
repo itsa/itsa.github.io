@@ -75,6 +75,8 @@
             
                 <li><a href="../classes/String.html">String</a></li>
             
+                <li><a href="../classes/USERAGENT.html">USERAGENT</a></li>
+            
                 <li><a href="../classes/Utils.html">Utils</a></li>
             
                 <li><a href="../classes/vnode.html">vnode</a></li>
@@ -142,6 +144,8 @@
                 <li><a href="../modules/node-parser.html">node-parser</a></li>
             
                 <li><a href="../modules/node-win.html">node-win</a></li>
+            
+                <li><a href="../modules/useragent.html">useragent</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
             
@@ -276,8 +280,10 @@ module.exports = function (window) {
 
     var Event = require(&#x27;event-dom&#x27;)(window),
         NodePlugin = require(&#x27;vdom&#x27;)(window).Plugins.NodePlugin,
+        isMobile = require(&#x27;useragent&#x27;)(window).isMobile,
         bodyNode = window.document.body,
         supportHammer = !!Event.Hammer,
+        mobileEvents = supportHammer &amp;&amp; isMobile,
         DD, NodeDD, DD_Object;
 
     require(&#x27;window-ext&#x27;)(window);
@@ -530,7 +536,7 @@ module.exports = function (window) {
             }
 
             // create listener for &#x60;mousemove&#x60; and transform it into the &#x60;*:dd:drag&#x60;-event
-            moveEv = Event.after(supportHammer ? PANMOVE : MOUSEMOVE, function(e2) {
+            moveEv = Event.after(mobileEvents ? PANMOVE : MOUSEMOVE, function(e2) {
                 if (typeof e2.center===&#x27;object&#x27;) {
                     e2.clientX = e2.center.x;
                     e2.clientY = e2.center.y;
@@ -567,7 +573,7 @@ module.exports = function (window) {
             // prepare dragNode class for the right CSS:
             dragNode.setClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS]);
 
-            Event.onceAfter([supportHammer ? PANEND : MOUSEUP, DD_FAKE_MOUSEUP], function(e3) {
+            Event.onceAfter([mobileEvents ? PANEND : MOUSEUP, DD_FAKE_MOUSEUP], function(e3) {
                 moveEv.detach();
                 // set mousepos for the last time:
                 if (typeof e3.center===&#x27;object&#x27;) {
@@ -769,7 +775,7 @@ module.exports = function (window) {
                     nodeTargetFn(e);
                 }
             };
-            Event.after(supportHammer ? PANSTART : MOUSEDOWN, function(e) {
+            Event.after(mobileEvents ? PANSTART : MOUSEDOWN, function(e) {
                 var draggableAttr = e.target.getAttr(DD_MINUSDRAGGABLE);
                 if (typeof e.center===&#x27;object&#x27;) {
                     e.clientX = e.center.x;
@@ -793,8 +799,7 @@ module.exports = function (window) {
             var instance = this;
             if (!instance._inited) {
                 instance._setupMouseEv(); // engine behind the dragdrop-eventcycle
-                if (supportHammer) {
-    console.warn(&#x27;setting up&#x27;);
+                if (mobileEvents) {
                     Event.before([&#x27;touchstart&#x27;, &#x27;touchmove&#x27;], function(ev) {
                         (instance.ddProps.size()&gt;0) &amp;&amp; ev.preventDefault();
                     });
