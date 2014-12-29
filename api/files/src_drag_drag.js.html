@@ -220,7 +220,7 @@ var NAME = &#x27;[drag]: &#x27;,
     DD_HANDLE = DD_MINUS+&#x27;handle&#x27;,
     DD_DROPZONE_MOVABLE = DD_MINUS+&#x27;dropzone-movable&#x27;,
     CONSTRAIN_ATTR = &#x27;xy-constrain&#x27;,
-    MOUSE = &#x27;pan&#x27;,
+    MOUSE = &#x27;mouse&#x27;,
     DROPZONE = &#x27;dropzone&#x27;,
     NO_TRANS_CLASS = &#x27;el-notrans&#x27;, // delivered by &#x60;vdom&#x60;
     HIGH_Z_CLASS = DD_MINUS+&#x27;high-z&#x27;,
@@ -470,6 +470,8 @@ module.exports = function (window) {
                 emitterName = e.emitter,
                 moveEv, x, y, byExactId, match, constrainNode, winConstrained, winScrollLeft, winScrollTop,
                 inlineLeft, inlineTop, xOrig, yOrig;
+
+    // Event.hammertime &amp;&amp; Event.hammertime.get(&#x27;pan&#x27;).set({ direction: Event.Hammer.DIRECTION_ALL });
 
             // define ddProps --&gt; internal object with data about the draggable instance
             ddProps.dragNode = dragNode;
