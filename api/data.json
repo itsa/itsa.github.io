@@ -7912,7 +7912,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 360,
+            "line": 358,
             "description": "Emitted during the drag-cycle of a draggable Element (while it is dragged).",
             "itemtype": "event",
             "name": "*:dd-drag",
@@ -7987,7 +7987,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 409,
+            "line": 408,
             "description": "Emitted when drag-cycle of a draggable Element is ended.",
             "itemtype": "event",
             "name": "*:dd-drop",
@@ -8062,7 +8062,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 467,
+            "line": 466,
             "description": "Prevented function for the `*:dd-start`-event",
             "itemtype": "method",
             "name": "_prevFnStart",
@@ -8081,7 +8081,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 480,
+            "line": 479,
             "description": "Engine behind the drag-drop-cycle.\nSets up a `mousedown` listener to initiate a drag-drop eventcycle. The eventcycle start whenever\none of these events happens on a HtmlElement with the attribute `dd-draggable=\"true\"`.\nThe drag-drop eventcycle consists of the events: `dd-start`, `emitterName:dd-drag` and `emitterName:dd-drop`",
             "itemtype": "method",
             "name": "_setupMouseEv",
@@ -8093,7 +8093,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 536,
+            "line": 535,
             "description": "Emitted when a draggable Element's drag-cycle starts. You can use a `before`-subscriber to specify\ne.relatives, which should be a nodelist with HtmlElements, that should be dragged togehter with the master\ndraggable Element.",
             "itemtype": "event",
             "name": "*:dd",
@@ -8168,7 +8168,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 600,
+            "line": 598,
             "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
             "itemtype": "method",
             "name": "init",
@@ -8189,7 +8189,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 619,
+            "line": 617,
             "description": "Creates a notifier to response after each `Drag` event is set up, or teared down.\nYou can use this to hook in into the drag-eventcycle: the `drop`-module uses it this way.",
             "static": 1,
             "itemtype": "method",

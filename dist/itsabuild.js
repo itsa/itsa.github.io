@@ -5785,9 +5785,13 @@ module.exports = function (window) {
                 ddProps = instance.ddProps,
                 emitterName = e.emitter,
                 moveEv, x, y, byExactId, match, constrainNode, winConstrained, winScrollLeft, winScrollTop,
-                inlineLeft, inlineTop, xOrig, yOrig;
+                inlineLeft, inlineTop, xOrig, yOrig, disableDeviceScroll;
 
-    // Event.hammertime && Event.hammertime.get('pan').set({ direction: Event.Hammer.DIRECTION_ALL });
+            if (supportHammer) {
+                disableDeviceScroll = Event.before('touchmove', function(ev) {
+                    ev.preventDefault();
+                });
+            }
 
             // define ddProps --> internal object with data about the draggable instance
             ddProps.dragNode = dragNode;
@@ -5841,18 +5845,12 @@ module.exports = function (window) {
                 }
             }
 
-Event.before(['touchstart', 'touchmove'], function(ev) {
-    ev.preventDefault();
-});
             // create listener for `mousemove` and transform it into the `*:dd:drag`-event
             moveEv = Event.after(supportHammer ? PANMOVE : MOUSEMOVE, function(e2) {
-console.warn('PANMOVE');
                 if (typeof e2.center==='object') {
-console.warn('PANMOVE set clientX');
                     e2.clientX = e2.center.x;
                     e2.clientY = e2.center.y;
                 }
-console.warn(e2);
                 if (!e2.clientX) {
                     return;
                 }
@@ -5887,6 +5885,7 @@ console.warn(e2);
 
             Event.onceAfter([supportHammer ? PANEND : MOUSEUP, DD_FAKE_MOUSEUP], function(e3) {
                 moveEv.detach();
+                supportHammer && disableDeviceScroll.detach();
                 // set mousepos for the last time:
                 if (typeof e3.center==='object') {
                     e3.clientX = e3.center.x;
@@ -6087,7 +6086,6 @@ console.warn(e2);
                     nodeTargetFn(e);
                 }
             };
-console.warn('supportHammer '+supportHammer);
             Event.after(supportHammer ? PANSTART : MOUSEDOWN, function(e) {
                 var draggableAttr = e.target.getAttr(DD_MINUSDRAGGABLE);
                 if (typeof e.center==='object') {
