@@ -5841,7 +5841,7 @@ module.exports = function (window) {
                 }
             }
 
-Event.before('touchMove', function(ev) {
+Event.before(['touchStart', 'touchMove'], function(ev) {
     ev.preventDefault();
 });
             // create listener for `mousemove` and transform it into the `*:dd:drag`-event
