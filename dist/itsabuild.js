@@ -5799,7 +5799,6 @@ module.exports = function (window) {
             ddProps.xMouseLast = x;
             ddProps.yMouseLast = y;
 
-bodyNode.setClass(NO_OVERFLOW);
             if (constrain) {
                 if (ddProps.winConstrained) {
                     ddProps.winScrollLeft = winScrollLeft = window.getScrollLeft();
@@ -5847,6 +5846,7 @@ bodyNode.setClass(NO_OVERFLOW);
 console.warn('PANMOVE');
                 if (typeof e2.center==='object') {
 console.warn('PANMOVE set clientX');
+                    e2.preventDefault();
                     e2.clientX = e2.center.x;
                     e2.clientY = e2.center.y;
                 }
@@ -5884,7 +5884,6 @@ console.warn(e2);
             dragNode.setClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS]);
 
             Event.onceAfter([supportHammer ? PANEND : MOUSEUP, DD_FAKE_MOUSEUP], function(e3) {
-bodyNode.removeClass(NO_OVERFLOW);
                 moveEv.detach();
                 // set mousepos for the last time:
                 if (typeof e3.center==='object') {
