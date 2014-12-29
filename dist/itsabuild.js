@@ -5785,13 +5785,7 @@ module.exports = function (window) {
                 ddProps = instance.ddProps,
                 emitterName = e.emitter,
                 moveEv, x, y, byExactId, match, constrainNode, winConstrained, winScrollLeft, winScrollTop,
-                inlineLeft, inlineTop, xOrig, yOrig, disableDeviceScroll;
-
-            if (supportHammer) {
-                disableDeviceScroll = Event.before('touchmove', function(ev) {
-                    ev.preventDefault();
-                });
-            }
+                inlineLeft, inlineTop, xOrig, yOrig;
 
             // define ddProps --> internal object with data about the draggable instance
             ddProps.dragNode = dragNode;
@@ -5885,7 +5879,6 @@ module.exports = function (window) {
 
             Event.onceAfter([supportHammer ? PANEND : MOUSEUP, DD_FAKE_MOUSEUP], function(e3) {
                 moveEv.detach();
-                supportHammer && disableDeviceScroll.detach();
                 // set mousepos for the last time:
                 if (typeof e3.center==='object') {
                     e3.clientX = e3.center.x;
@@ -6110,6 +6103,12 @@ module.exports = function (window) {
             var instance = this;
             if (!instance._inited) {
                 instance._setupMouseEv(); // engine behind the dragdrop-eventcycle
+                if (supportHammer) {
+    console.warn('setting up');
+                    Event.before('touchmove', function(ev) {
+                        (instance.ddProps.size()>0) && ev.preventDefault();
+                    });
+                }
                 Event.defineEvent('UI:'+DD_DROP)
                      .defaultFn(instance._defFnDrop.rbind(instance));
             }
