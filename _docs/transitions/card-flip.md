@@ -165,28 +165,28 @@ Flip the card by clicking on it. <span class="status"></span>
         promise, doFlip;
 
     doFlip = function(e) {
-        var deg, elapsedTime;
+        var deg, runningPromise;
         statusNode.setText('started flipping...');
         front = !front;
         deg = front ? 0.1 : -179.9;
-        elapsedTime = promise && (promise.freeze()/1000);
-        // we need to go async, because `freeze()` does its work at the end of the eventstack
-        // and freeze should finish before the transition starts:
-        ITSA.async(function() {
-            var duration = elapsedTime || DURATION;
-            promise = card.transition({property: 'transform', value: 'rotateY('+deg+'deg)', duration: duration}, true);
-            promise.then(function() {
-                if (!promise.frozen) {
-                    statusNode.setText('ready!');
-                    if (front) {
-                        card.removeInlineStyle('transform');
+        runningPromise = (promise && !promise.isFulfilled) ? promise.freeze() : Promise.resolve();
+        runningPromise.then(
+            function(elapsed) {
+                var duration = elapsed ? (elapsed/1000) : DURATION;
+                promise = card.transition({property: 'transform', value: 'rotateY('+deg+'deg)', duration: duration}, true);
+                promise.then(function() {
+                    if (!promise.frozen) {
+                        statusNode.setText('ready!');
+                        if (front) {
+                            card.removeInlineStyle('transform');
+                        }
+                        else {
+                            card.setInlineStyle('transform', 'rotateY(-180deg)');
+                        }
                     }
-                    else {
-                        card.setInlineStyle('transform', 'rotateY(-180deg)');
-                    }
-                }
-            });
-        });
+                });
+            }
+        );
     };
 
     ITSA.Event.after('tap', doFlip, '.container3D');
@@ -204,30 +204,28 @@ Flip the card by clicking on it. <span class="status"></span>
         promise, doFlip;
 
     doFlip = function(e) {
-        var deg, elapsedTime;
+        var deg, runningPromise;
         statusNode.setText('started flipping...');
         front = !front;
         deg = front ? 0.1 : -179.9;
-        if (promise && !promise.isFulfilled) {
-            elapsedTime = (promise.freeze()/1000);
-        }
-        // we need to go async, because `freeze()` does its work at the end of the eventstack
-        // and freeze should finish before the transition starts:
-        ITSA.async(function() {
-            var duration = elapsedTime || DURATION;
-            promise = card.transition({property: 'transform', value: 'rotateY('+deg+'deg)', duration: duration}, true);
-            promise.then(function() {
-                if (!promise.frozen) {
-                    statusNode.setText('ready!');
-                    if (front) {
-                        card.removeInlineStyle('transform');
+        runningPromise = (promise && !promise.isFulfilled) ? promise.freeze() : Promise.resolve();
+        runningPromise.then(
+            function(elapsed) {
+                var duration = elapsed ? (elapsed/1000) : DURATION;
+                promise = card.transition({property: 'transform', value: 'rotateY('+deg+'deg)', duration: duration}, true);
+                promise.then(function() {
+                    if (!promise.frozen) {
+                        statusNode.setText('ready!');
+                        if (front) {
+                            card.removeInlineStyle('transform');
+                        }
+                        else {
+                            card.setInlineStyle('transform', 'rotateY(-180deg)');
+                        }
                     }
-                    else {
-                        card.setInlineStyle('transform', 'rotateY(-180deg)');
-                    }
-                }
-            });
-        });
+                });
+            }
+        );
     };
 
     ITSA.Event.after('tap', doFlip, '.container3D');

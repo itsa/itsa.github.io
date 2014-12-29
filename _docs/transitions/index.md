@@ -120,7 +120,7 @@ transPromise.then(
 
 ##Extra managability##
 
-All `transitioned Promises` (explained above) have extra methods (handles) to manage the transition before it gets ready. These methods are:
+All `transitioned Promises` (explained above) have extra methods (handles) to manage the transition before it gets ready. All of theze methods (except `unfreeze()`) return a Promise themselves, with the `elasped-time` as argument. These methods are:
 
 
 ###cancel()###
@@ -142,6 +142,16 @@ Will unfreeze (continue) a frozen transition.
 
 Will finish the transition at once, disregarding any further transition.
 
+
+####Example####
+```js
+    transPromise = myNode.toggleClass(['blue', 'big'], null, true);
+    transPromise.freeze().then(
+        function(elapsed) {
+            // `elapsed` is the time in ms that was ran until the promise got frozen
+        }
+    );
+```
 
 #About IE9#
 
