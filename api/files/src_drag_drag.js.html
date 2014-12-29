@@ -475,9 +475,13 @@ module.exports = function (window) {
                 ddProps = instance.ddProps,
                 emitterName = e.emitter,
                 moveEv, x, y, byExactId, match, constrainNode, winConstrained, winScrollLeft, winScrollTop,
-                inlineLeft, inlineTop, xOrig, yOrig;
+                inlineLeft, inlineTop, xOrig, yOrig, disableDeviceScroll;
 
-    // Event.hammertime &amp;&amp; Event.hammertime.get(&#x27;pan&#x27;).set({ direction: Event.Hammer.DIRECTION_ALL });
+            if (supportHammer) {
+                disableDeviceScroll = Event.before(&#x27;touchmove&#x27;, function(ev) {
+                    ev.preventDefault();
+                });
+            }
 
             // define ddProps --&gt; internal object with data about the draggable instance
             ddProps.dragNode = dragNode;
@@ -531,18 +535,12 @@ module.exports = function (window) {
                 }
             }
 
-Event.before([&#x27;touchstart&#x27;, &#x27;touchmove&#x27;], function(ev) {
-    ev.preventDefault();
-});
             // create listener for &#x60;mousemove&#x60; and transform it into the &#x60;*:dd:drag&#x60;-event
             moveEv = Event.after(supportHammer ? PANMOVE : MOUSEMOVE, function(e2) {
-console.warn(&#x27;PANMOVE&#x27;);
                 if (typeof e2.center===&#x27;object&#x27;) {
-console.warn(&#x27;PANMOVE set clientX&#x27;);
                     e2.clientX = e2.center.x;
                     e2.clientY = e2.center.y;
                 }
-console.warn(e2);
                 if (!e2.clientX) {
                     return;
                 }
@@ -577,6 +575,7 @@ console.warn(e2);
 
             Event.onceAfter([supportHammer ? PANEND : MOUSEUP, DD_FAKE_MOUSEUP], function(e3) {
                 moveEv.detach();
+                supportHammer &amp;&amp; disableDeviceScroll.detach();
                 // set mousepos for the last time:
                 if (typeof e3.center===&#x27;object&#x27;) {
                     e3.clientX = e3.center.x;
@@ -777,7 +776,6 @@ console.warn(e2);
                     nodeTargetFn(e);
                 }
             };
-console.warn(&#x27;supportHammer &#x27;+supportHammer);
             Event.after(supportHammer ? PANSTART : MOUSEDOWN, function(e) {
                 var draggableAttr = e.target.getAttr(DD_MINUSDRAGGABLE);
                 if (typeof e.center===&#x27;object&#x27;) {
