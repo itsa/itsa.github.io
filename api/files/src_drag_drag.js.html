@@ -232,9 +232,14 @@ var NAME = &#x27;[drag]: &#x27;,
     DD_FAKE = DD_MINUS+&#x27;fake-&#x27;,
     DOWN = &#x27;down&#x27;,
     UP = &#x27;up&#x27;,
+    MOVE = &#x27;move&#x27;,
     MOUSEUP = MOUSE+UP,
     MOUSEDOWN = MOUSE+DOWN,
-    MOUSEMOVE = MOUSE+&#x27;move&#x27;,
+    MOUSEMOVE = MOUSE+MOVE,
+    PAN = &#x27;pan&#x27;,
+    PANSTART = PAN+&#x27;start&#x27;,
+    PANMOVE = PAN+MOVE,
+    PANEND = PAN+&#x27;end&#x27;,
     DD_FAKE_MOUSEUP = DD_FAKE+MOUSEUP,
     UI = &#x27;UI&#x27;,
     DD_EFFECT_ALLOWED = DD_MINUS+&#x27;effect-allowed&#x27;,
@@ -272,6 +277,7 @@ module.exports = function (window) {
     var Event = require(&#x27;event-dom&#x27;)(window),
         NodePlugin = require(&#x27;vdom&#x27;)(window).Plugins.NodePlugin,
         bodyNode = window.document.body,
+        supportHammer = !!Event.Hammer,
         DD, NodeDD, DD_Object;
 
     require(&#x27;window-ext&#x27;)(window);
@@ -526,7 +532,14 @@ module.exports = function (window) {
             }
 
             // create listener for &#x60;mousemove&#x60; and transform it into the &#x60;*:dd:drag&#x60;-event
-            moveEv = Event.after(MOUSEMOVE, function(e2) {
+            moveEv = Event.after(supportHammer ? PANMOVE : MOUSEMOVE, function(e2) {
+console.warn(&#x27;PANMOVE&#x27;);
+                if (typeof e2.center===&#x27;object&#x27;) {
+console.warn(&#x27;PANMOVE set clientX&#x27;);
+                    e2.clientX = e2.center.x;
+                    e2.clientY = e2.center.y;
+                }
+console.warn(e2);
                 if (!e2.clientX) {
                     return;
                 }
@@ -559,9 +572,13 @@ module.exports = function (window) {
             // prepare dragNode class for the right CSS:
             dragNode.setClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS]);
 
-            Event.onceAfter([MOUSE+UP, DD_FAKE_MOUSEUP], function(e3) {
+            Event.onceAfter([supportHammer ? PANEND : MOUSEUP, DD_FAKE_MOUSEUP], function(e3) {
                 moveEv.detach();
                 // set mousepos for the last time:
+                if (typeof e3.center===&#x27;object&#x27;) {
+                    e3.clientX = e3.center.x;
+                    e3.clientY = e3.center.y;
+                }
                 e.xMouse = e3.clientX;
                 e.yMouse = e3.clientY;
                 // invoke all teardown notifiers:
@@ -757,9 +774,13 @@ module.exports = function (window) {
                     nodeTargetFn(e);
                 }
             };
-
-            Event.after(MOUSEDOWN, function(e) {
+console.warn(&#x27;supportHammer &#x27;+supportHammer);
+            Event.after(supportHammer ? PANSTART : MOUSEDOWN, function(e) {
                 var draggableAttr = e.target.getAttr(DD_MINUSDRAGGABLE);
+                if (typeof e.center===&#x27;object&#x27;) {
+                    e.clientX = e.center.x;
+                    e.clientY = e.center.y;
+                }
                 (draggableAttr===TRUE) ? nodeTargetFn(e) : delegatedTargetFn(e, draggableAttr);
             }, &#x27;[&#x27;+DD_MINUSDRAGGABLE+&#x27;]&#x27;);
 
