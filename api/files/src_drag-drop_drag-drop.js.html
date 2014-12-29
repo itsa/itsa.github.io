@@ -396,6 +396,7 @@ var DRAG = &#x27;drag&#x27;,
     UP = &#x27;up&#x27;,
     KEY = &#x27;key&#x27;,
     MOUSEMOVE = MOUSE+MOVE,
+    PANMOVE = &#x27;pan&#x27;+MOVE,
     DD_FAKE_MOUSEMOVE = DD_FAKE+MOUSEMOVE,
     UI = &#x27;UI&#x27;,
     DROPZONE_BRACKETS = &#x27;[&#x27; + DROPZONE + &#x27;]&#x27;,
@@ -440,6 +441,9 @@ module.exports = function (window) {
         ctrlPressed = false,
         dropEffect = MOVE,
         DOCUMENT = window.document,
+        isMobile = require(&#x27;useragent&#x27;)(window).isMobile,
+        supportHammer = !!Event.Hammer,
+        mobileEvents = supportHammer &amp;&amp; isMobile,
         DD, NodeDropzone, DD_Object;
 
     require(&#x27;window-ext&#x27;)(window);
@@ -607,7 +611,7 @@ module.exports = function (window) {
                 ddProps = instance.ddProps;
             Event.defineEvent(emitterName+&#x27;:&#x27;+DROPZONE_OVER)
                  .defaultFn(instance._defFnOver.bind(instance)); // no need to reassign
-            return Event.after([MOUSEMOVE, DD_FAKE_MOUSEMOVE], function(e2) {
+            return Event.after([mobileEvents ? PANMOVE : MOUSEMOVE, DD_FAKE_MOUSEMOVE], function(e2) {
                 var overDropzone = false,
                     dragNode = ddProps.dragNode;
                 ddProps.mouseOverNode = e.target;
@@ -646,7 +650,7 @@ module.exports = function (window) {
                                 dragOverPromise = Promise.manage();
                                 e.dropzone = dragOverPromise;
                                 dragOutEvent = Event.after(
-                                    [MOUSEMOVE, DD_FAKE_MOUSEMOVE],
+                                    [mobileEvents ? PANMOVE : MOUSEMOVE, DD_FAKE_MOUSEMOVE],
                                     function() {
                                         dragOverPromise.fulfill(false);
                                     },

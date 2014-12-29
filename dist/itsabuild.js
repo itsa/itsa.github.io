@@ -4618,6 +4618,7 @@ var DRAG = 'drag',
     UP = 'up',
     KEY = 'key',
     MOUSEMOVE = MOUSE+MOVE,
+    PANMOVE = 'pan'+MOVE,
     DD_FAKE_MOUSEMOVE = DD_FAKE+MOUSEMOVE,
     UI = 'UI',
     DROPZONE_BRACKETS = '[' + DROPZONE + ']',
@@ -4662,6 +4663,9 @@ module.exports = function (window) {
         ctrlPressed = false,
         dropEffect = MOVE,
         DOCUMENT = window.document,
+        isMobile = require('useragent')(window).isMobile,
+        supportHammer = !!Event.Hammer,
+        mobileEvents = supportHammer && isMobile,
         DD, NodeDropzone, DD_Object;
 
     require('window-ext')(window);
@@ -4829,7 +4833,7 @@ module.exports = function (window) {
                 ddProps = instance.ddProps;
             Event.defineEvent(emitterName+':'+DROPZONE_OVER)
                  .defaultFn(instance._defFnOver.bind(instance)); // no need to reassign
-            return Event.after([MOUSEMOVE, DD_FAKE_MOUSEMOVE], function(e2) {
+            return Event.after([mobileEvents ? PANMOVE : MOUSEMOVE, DD_FAKE_MOUSEMOVE], function(e2) {
                 var overDropzone = false,
                     dragNode = ddProps.dragNode;
                 ddProps.mouseOverNode = e.target;
@@ -4868,7 +4872,7 @@ module.exports = function (window) {
                                 dragOverPromise = Promise.manage();
                                 e.dropzone = dragOverPromise;
                                 dragOutEvent = Event.after(
-                                    [MOUSEMOVE, DD_FAKE_MOUSEMOVE],
+                                    [mobileEvents ? PANMOVE : MOUSEMOVE, DD_FAKE_MOUSEMOVE],
                                     function() {
                                         dragOverPromise.fulfill(false);
                                     },
@@ -5497,7 +5501,7 @@ module.exports = function (window) {
     return DD_Object;
 
 };
-},{"./css/drag-drop.css":9,"drag":12,"event-dom":13,"js-ext":27,"polyfill/polyfill-base.js":38,"vdom":53,"window-ext":54}],11:[function(require,module,exports){
+},{"./css/drag-drop.css":9,"drag":12,"event-dom":13,"js-ext":27,"polyfill/polyfill-base.js":38,"useragent":39,"vdom":53,"window-ext":54}],11:[function(require,module,exports){
 module.exports=require(9)
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],12:[function(require,module,exports){
 "use strict";
