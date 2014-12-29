@@ -17,6 +17,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Plugins",
         "Promise",
         "String",
+        "USERAGENT",
         "Utils",
         "document",
         "vnode",
@@ -52,6 +53,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "lib/string.js",
         "node-parser",
         "node-win",
+        "useragent",
         "utils",
         "vdom",
         "vdom-ns",
@@ -201,6 +203,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "node-win",
             "name": "node-win",
             "description": "Emulation of browser `window` and `dom`. Just enough to make ITSA work.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "useragent",
+            "name": "useragent",
+            "description": "<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "utils",

@@ -5497,7 +5497,7 @@ module.exports = function (window) {
     return DD_Object;
 
 };
-},{"./css/drag-drop.css":9,"drag":12,"event-dom":13,"js-ext":27,"polyfill/polyfill-base.js":38,"vdom":52,"window-ext":53}],11:[function(require,module,exports){
+},{"./css/drag-drop.css":9,"drag":12,"event-dom":13,"js-ext":27,"polyfill/polyfill-base.js":38,"vdom":53,"window-ext":54}],11:[function(require,module,exports){
 module.exports=require(9)
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],12:[function(require,module,exports){
 "use strict";
@@ -5586,8 +5586,10 @@ module.exports = function (window) {
 
     var Event = require('event-dom')(window),
         NodePlugin = require('vdom')(window).Plugins.NodePlugin,
+        isMobile = require('useragent')(window).isMobile,
         bodyNode = window.document.body,
         supportHammer = !!Event.Hammer,
+        mobileEvents = supportHammer && isMobile,
         DD, NodeDD, DD_Object;
 
     require('window-ext')(window);
@@ -5840,7 +5842,7 @@ module.exports = function (window) {
             }
 
             // create listener for `mousemove` and transform it into the `*:dd:drag`-event
-            moveEv = Event.after(supportHammer ? PANMOVE : MOUSEMOVE, function(e2) {
+            moveEv = Event.after(mobileEvents ? PANMOVE : MOUSEMOVE, function(e2) {
                 if (typeof e2.center==='object') {
                     e2.clientX = e2.center.x;
                     e2.clientY = e2.center.y;
@@ -5877,7 +5879,7 @@ module.exports = function (window) {
             // prepare dragNode class for the right CSS:
             dragNode.setClass([NO_TRANS_CLASS, HIGH_Z_CLASS, DD_DRAGGING_CLASS]);
 
-            Event.onceAfter([supportHammer ? PANEND : MOUSEUP, DD_FAKE_MOUSEUP], function(e3) {
+            Event.onceAfter([mobileEvents ? PANEND : MOUSEUP, DD_FAKE_MOUSEUP], function(e3) {
                 moveEv.detach();
                 // set mousepos for the last time:
                 if (typeof e3.center==='object') {
@@ -6079,7 +6081,7 @@ module.exports = function (window) {
                     nodeTargetFn(e);
                 }
             };
-            Event.after(supportHammer ? PANSTART : MOUSEDOWN, function(e) {
+            Event.after(mobileEvents ? PANSTART : MOUSEDOWN, function(e) {
                 var draggableAttr = e.target.getAttr(DD_MINUSDRAGGABLE);
                 if (typeof e.center==='object') {
                     e.clientX = e.center.x;
@@ -6103,8 +6105,7 @@ module.exports = function (window) {
             var instance = this;
             if (!instance._inited) {
                 instance._setupMouseEv(); // engine behind the dragdrop-eventcycle
-                if (supportHammer) {
-    console.warn('setting up');
+                if (mobileEvents) {
                     Event.before(['touchstart', 'touchmove'], function(ev) {
                         (instance.ddProps.size()>0) && ev.preventDefault();
                     });
@@ -6168,7 +6169,7 @@ module.exports = function (window) {
 
     return DD_Object;
 };
-},{"./css/drag.css":11,"event-dom":13,"js-ext":27,"polyfill":38,"vdom":52,"window-ext":53}],13:[function(require,module,exports){
+},{"./css/drag.css":11,"event-dom":13,"js-ext":27,"polyfill":38,"useragent":39,"vdom":53,"window-ext":54}],13:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6667,7 +6668,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":20,"js-ext/lib/array.js":28,"js-ext/lib/object.js":30,"js-ext/lib/string.js":32,"polyfill/polyfill-base.js":38,"utils":39,"vdom":52}],14:[function(require,module,exports){
+},{"event":20,"js-ext/lib/array.js":28,"js-ext/lib/object.js":30,"js-ext/lib/string.js":32,"polyfill/polyfill-base.js":38,"utils":40,"vdom":53}],14:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7039,7 +7040,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":13,"utils":39,"vdom":52}],16:[function(require,module,exports){
+},{"../event-dom.js":13,"utils":40,"vdom":53}],16:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11458,12 +11459,55 @@ module.exports = function (window) {
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
 },{"./lib/matchesselector.js":36,"./lib/window.console.js":37}],39:[function(require,module,exports){
+"use strict";
+
+/**
+ *
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module useragent
+ * @class USERAGENT
+ * @since 0.0.1
+*/
+
+// var NAME = '[io-assets]: ';
+
+module.exports = function (window) {
+
+    var UserAgent,
+        navigator = window.navigator;
+
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, '_ITSAmodules', {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
+
+/*jshint boss:true */
+    if (UserAgent=window._ITSAmodules.UserAgent) {
+/*jshint boss:false */
+        return UserAgent; // UserAgent was already created
+    }
+
+    window._ITSAmodules.UserAgent = UserAgent = {
+        isMobile: ('ontouchstart' in window) || (window.navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
+    };
+
+    return UserAgent;
+};
+},{}],40:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
 	later: require('./lib/timers.js').later,
 	async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":40,"./lib/timers.js":41}],40:[function(require,module,exports){
+},{"./lib/idgenerator.js":41,"./lib/timers.js":42}],41:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -11520,7 +11564,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"polyfill/polyfill-base.js":38}],41:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":38}],42:[function(require,module,exports){
 (function (process,global){
 /**
  * Collection of various utility functions.
@@ -11680,9 +11724,9 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":55,"polyfill/polyfill-base.js":38}],42:[function(require,module,exports){
+},{"_process":56,"polyfill/polyfill-base.js":38}],43:[function(require,module,exports){
 var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n.itsa-invisible,\n.itsa-invisible-relative {\n    visibility: hidden !important;\n    z-index: -1;\n}\n\n.itsa-invisible *,\n.itsa-invisible-relative * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n.itsa-hidden {\n    visibility: hidden !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],43:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],44:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11984,7 +12028,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/lib/object.js":30,"js-ext/lib/string.js":32,"polyfill/extra/transition.js":33,"polyfill/extra/vendorCSS.js":35}],44:[function(require,module,exports){
+},{"js-ext/lib/object.js":30,"js-ext/lib/string.js":32,"polyfill/extra/transition.js":33,"polyfill/extra/vendorCSS.js":35}],45:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12376,7 +12420,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/lib/object.js":30,"polyfill/polyfill-base.js":38}],45:[function(require,module,exports){
+},{"js-ext/lib/object.js":30,"polyfill/polyfill-base.js":38}],46:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12495,7 +12539,7 @@ module.exports = function (window) {
 
     return ElementPlugin;
 };
-},{"js-ext/lib/function.js":29}],46:[function(require,module,exports){
+},{"js-ext/lib/function.js":29}],47:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13174,7 +13218,7 @@ module.exports = function (window) {
 
 
 
-},{"./vdom-ns.js":50}],47:[function(require,module,exports){
+},{"./vdom-ns.js":51}],48:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -17426,7 +17470,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":42,"./attribute-extractor.js":43,"./element-array.js":44,"./html-parser.js":48,"./node-parser.js":49,"./vdom-ns.js":50,"./vnode.js":51,"js-ext/lib/object.js":30,"js-ext/lib/promise.js":31,"js-ext/lib/string.js":32,"polyfill":38,"polyfill/extra/transition.js":33,"polyfill/extra/transitionend.js":34,"polyfill/extra/vendorCSS.js":35,"utils":39,"window-ext":53}],48:[function(require,module,exports){
+},{"../css/element.css":43,"./attribute-extractor.js":44,"./element-array.js":45,"./html-parser.js":49,"./node-parser.js":50,"./vdom-ns.js":51,"./vnode.js":52,"js-ext/lib/object.js":30,"js-ext/lib/promise.js":31,"js-ext/lib/string.js":32,"polyfill":38,"polyfill/extra/transition.js":33,"polyfill/extra/transitionend.js":34,"polyfill/extra/vendorCSS.js":35,"utils":40,"window-ext":54}],49:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17758,7 +17802,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":43,"./vdom-ns.js":50}],49:[function(require,module,exports){
+},{"./attribute-extractor.js":44,"./vdom-ns.js":51}],50:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17881,7 +17925,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":43,"./vdom-ns.js":50,"./vnode.js":51}],50:[function(require,module,exports){
+},{"./attribute-extractor.js":44,"./vdom-ns.js":51,"./vnode.js":52}],51:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -17989,7 +18033,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/lib/object.js":30}],51:[function(require,module,exports){
+},{"js-ext/lib/object.js":30}],52:[function(require,module,exports){
 "use strict";
 
 /**
@@ -20050,7 +20094,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":43,"./html-parser.js":48,"./vdom-ns.js":50,"js-ext/lib/array.js":28,"js-ext/lib/object.js":30,"js-ext/lib/string.js":32,"utils/lib/timers.js":41}],52:[function(require,module,exports){
+},{"./attribute-extractor.js":44,"./html-parser.js":49,"./vdom-ns.js":51,"js-ext/lib/array.js":28,"js-ext/lib/object.js":30,"js-ext/lib/string.js":32,"utils/lib/timers.js":42}],53:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
@@ -20098,13 +20142,13 @@ module.exports = function (window) {
 
     return vdom;
 };
-},{"./partials/element-plugin.js":45,"./partials/extend-document.js":46,"./partials/extend-element.js":47,"./partials/node-parser.js":49}],53:[function(require,module,exports){
+},{"./partials/element-plugin.js":46,"./partials/extend-document.js":47,"./partials/extend-element.js":48,"./partials/node-parser.js":50}],54:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":54}],54:[function(require,module,exports){
+},{"./lib/sizes.js":55}],55:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
@@ -20212,7 +20256,7 @@ module.exports = function (window) {
     };
 
 };
-},{}],55:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -20448,4 +20492,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"css":8,"drag-drop":10,"event":20,"event-dom/extra/hover.js":14,"event-dom/extra/valuechange.js":15,"event-mobile":16,"io/extra/io-cors-ie9.js":21,"io/extra/io-stream.js":22,"io/extra/io-transfer.js":23,"io/extra/io-xml.js":24,"js-ext":27,"js-ext/extra/reserved-words.js":26,"node-win":undefined,"polyfill":38,"utils":39,"vdom":52,"window-ext":53}]},{},[]);
+},{"css":8,"drag-drop":10,"event":20,"event-dom/extra/hover.js":14,"event-dom/extra/valuechange.js":15,"event-mobile":16,"io/extra/io-cors-ie9.js":21,"io/extra/io-stream.js":22,"io/extra/io-transfer.js":23,"io/extra/io-xml.js":24,"js-ext":27,"js-ext/extra/reserved-words.js":26,"node-win":undefined,"polyfill":38,"utils":40,"vdom":53,"window-ext":54}]},{},[]);
