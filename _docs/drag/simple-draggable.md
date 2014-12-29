@@ -41,7 +41,7 @@ Drag the 2 rectangles. The first is constrained using html, the second is set up
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
     ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
