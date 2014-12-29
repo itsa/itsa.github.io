@@ -8878,7 +8878,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 480,
+            "line": 484,
             "description": "Emitted when the draggable gets inside a dropzone.",
             "itemtype": "event",
             "name": "*:dropzone-over",
@@ -8990,7 +8990,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 519,
+            "line": 523,
             "description": "Emits a dropzone-drop event.",
             "itemtype": "method",
             "name": "_emitDropzoneDrop",
@@ -9009,7 +9009,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 528,
+            "line": 532,
             "description": "Emitted when a draggable gets dropped inside a dropzone.",
             "itemtype": "event",
             "name": "*:dropzone-drop",
@@ -9121,7 +9121,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 561,
+            "line": 565,
             "description": "Sets the draggable node back to its original position",
             "itemtype": "method",
             "name": "_handleDrop",
@@ -9155,7 +9155,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 727,
+            "line": 731,
             "description": "Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,\nso you can choose to do set the draggables back conditionally.",
             "itemtype": "method",
             "name": "_restoreDraggables",
@@ -9214,7 +9214,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 765,
+            "line": 769,
             "description": "Sets the draggable node back to its original position",
             "itemtype": "method",
             "name": "_setBack",
@@ -9269,7 +9269,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 840,
+            "line": 844,
             "description": "Sets up a `keydown` and `keyup` listener, to monitor whether a `ctrlKey` (windows) or `metaKey` (Mac)\nis pressed to support the copying of draggable items",
             "itemtype": "method",
             "name": "_setupKeyEv",
@@ -9281,7 +9281,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 875,
+            "line": 879,
             "description": "Fired when the mouse comes back into the browser-window while dd-drag was busy yet no buttons are pressed.\nThis is a correction to the fact that the mouseup-event wasn't noticed because the mouse was outside the browser.",
             "itemtype": "event",
             "name": "dd-fake-mousemove",
@@ -9293,7 +9293,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 888,
+            "line": 892,
             "description": "Cleansup the dragover subscriber and fulfills any dropzone-promise.",
             "itemtype": "method",
             "name": "_teardownOverEvent",
@@ -9312,7 +9312,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 912,
+            "line": 916,
             "description": "Returns true if the dropzone-HtmlElement accepts copy-dragables.\nIs determined by the attribute `dd-effect-allowed=\"copy\"` or `dd-effect-allowed=\"all\"`",
             "itemtype": "method",
             "name": "allowCopy",
@@ -9333,7 +9333,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 927,
+            "line": 931,
             "description": "Returns true if the dragable-HtmlElement allowes to switch between `copy` and `move`.",
             "itemtype": "method",
             "name": "allowSwitch",
@@ -9354,7 +9354,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 940,
+            "line": 944,
             "description": "Returns the emitterName that the dropzone accepts.",
             "itemtype": "method",
             "name": "getDropzoneEmitter",
@@ -9375,7 +9375,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 954,
+            "line": 958,
             "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
             "itemtype": "method",
             "name": "init (extended by drag-drop)",
@@ -9396,7 +9396,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 1032,
+            "line": 1036,
             "description": "Returns true if the dragable-HtmlElement accepts only copy-dragables (no moveable)\nIs determined by the attribute `dd-effect-allowed=\"copy\"`",
             "itemtype": "method",
             "name": "onlyCopy",
@@ -9417,7 +9417,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 1046,
+            "line": 1050,
             "description": "Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,\nso you can choose to do set the draggables back conditionally.",
             "itemtype": "method",
             "name": "restoreDraggables",
@@ -11652,6 +11652,17 @@
         {
             "file": "src/itsa.build/itsa.build.js",
             "line": 141,
+            "description": "Reference to the [UserAgent](useragent.html) object",
+            "itemtype": "property",
+            "name": "UA",
+            "type": "Object",
+            "static": 1,
+            "class": "ITSA",
+            "module": "itsa.build"
+        },
+        {
+            "file": "src/itsa.build/itsa.build.js",
+            "line": 149,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",

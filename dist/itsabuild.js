@@ -4836,6 +4836,10 @@ module.exports = function (window) {
             return Event.after([mobileEvents ? PANMOVE : MOUSEMOVE, DD_FAKE_MOUSEMOVE], function(e2) {
                 var overDropzone = false,
                     dragNode = ddProps.dragNode;
+                if (typeof e2.center==='object') {
+                    e2.clientX = e2.center.x;
+                    e2.clientY = e2.center.y;
+                }
                 ddProps.mouseOverNode = e.target;
                 if (e2.clientX) {
                     ddProps.xMouseLast = e2.clientX + window.getScrollLeft();
@@ -20468,6 +20472,14 @@ process.chdir = function (dir) {
     require('io/extra/io-xml.js')(window);
 
     /**
+     * Reference to the [UserAgent](useragent.html) object
+     * @property UA
+     * @type Object
+     * @static
+    */
+    ITSA.UA = require('useragent')(window);
+
+    /**
      * [Event](Event.html)-instance
      * @property Event
      * @type Event
@@ -20496,4 +20508,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"css":8,"drag-drop":10,"event":20,"event-dom/extra/hover.js":14,"event-dom/extra/valuechange.js":15,"event-mobile":16,"io/extra/io-cors-ie9.js":21,"io/extra/io-stream.js":22,"io/extra/io-transfer.js":23,"io/extra/io-xml.js":24,"js-ext":27,"js-ext/extra/reserved-words.js":26,"node-win":undefined,"polyfill":38,"utils":40,"vdom":53,"window-ext":54}]},{},[]);
+},{"css":8,"drag-drop":10,"event":20,"event-dom/extra/hover.js":14,"event-dom/extra/valuechange.js":15,"event-mobile":16,"io/extra/io-cors-ie9.js":21,"io/extra/io-stream.js":22,"io/extra/io-transfer.js":23,"io/extra/io-xml.js":24,"js-ext":27,"js-ext/extra/reserved-words.js":26,"node-win":undefined,"polyfill":38,"useragent":39,"utils":40,"vdom":53,"window-ext":54}]},{},[]);
