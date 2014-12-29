@@ -6105,7 +6105,7 @@ module.exports = function (window) {
                 instance._setupMouseEv(); // engine behind the dragdrop-eventcycle
                 if (supportHammer) {
     console.warn('setting up');
-                    Event.before('touchmove', function(ev) {
+                    Event.before(['touchstart', 'touchmove'], function(ev) {
                         (instance.ddProps.size()>0) && ev.preventDefault();
                     });
                 }
