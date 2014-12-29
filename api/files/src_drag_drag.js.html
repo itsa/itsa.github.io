@@ -531,12 +531,14 @@ module.exports = function (window) {
                 }
             }
 
+Event.before(&#x27;touchMove&#x27;, function(ev) {
+    ev.preventDefault();
+});
             // create listener for &#x60;mousemove&#x60; and transform it into the &#x60;*:dd:drag&#x60;-event
             moveEv = Event.after(supportHammer ? PANMOVE : MOUSEMOVE, function(e2) {
 console.warn(&#x27;PANMOVE&#x27;);
                 if (typeof e2.center===&#x27;object&#x27;) {
 console.warn(&#x27;PANMOVE set clientX&#x27;);
-                    e2.preventDefault();
                     e2.clientX = e2.center.x;
                     e2.clientY = e2.center.y;
                 }
