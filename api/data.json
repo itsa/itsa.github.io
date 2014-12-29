@@ -142,6 +142,13 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/focusmanager/focusmanager.js": {
+            "name": "src/focusmanager/focusmanager.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "src/io/extra/io-assets.js": {
             "name": "src/io/extra/io-assets.js",
             "modules": {
@@ -586,6 +593,20 @@
             ],
             "since": "0.0.1"
         },
+        "useragent": {
+            "name": "useragent",
+            "submodules": {},
+            "classes": {
+                "USERAGENT": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "src/useragent/useragent.js",
+            "line": 3,
+            "description": "<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "since": "0.0.1"
+        },
         "io": {
             "name": "io",
             "submodules": {
@@ -819,20 +840,6 @@
             "description": "Emulation of browser `window` and `dom`. Just enough to make ITSA work.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "static": 1
         },
-        "useragent": {
-            "name": "useragent",
-            "submodules": {},
-            "classes": {
-                "USERAGENT": 1
-            },
-            "fors": {},
-            "namespaces": {},
-            "tag": "module",
-            "file": "src/useragent/useragent.js",
-            "line": 3,
-            "description": "<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
-            "since": "0.0.1"
-        },
         "utils": {
             "name": "utils",
             "submodules": {},
@@ -854,18 +861,25 @@
                 "element-array": 1,
                 "element-plugin": 1,
                 "extend-document": 1,
+                "extend-element": 1,
                 "html-parser": 1,
                 "node-parser": 1,
-                "vdom-ns": 1
+                "vdom-ns": 1,
+                "vnode": 1
             },
             "classes": {
                 "ElementArray": 1,
                 "Plugins": 1,
                 "document": 1,
+                "Element": 1,
+                "Node": 1,
                 "NS-vdom": 1,
                 "vnode": 1
             },
-            "fors": {},
+            "fors": {
+                "Node": 1,
+                "Element": 1
+            },
             "namespaces": {},
             "file": "src/vdom/partials/vnode.js",
             "line": 3
@@ -932,27 +946,6 @@
             "description": "Provides several methods that override native document-methods to work with the vdom.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "since": "0.0.1"
         },
-        "vnode": {
-            "name": "vnode",
-            "submodules": {
-                "extend-element": 1
-            },
-            "classes": {
-                "Element": 1,
-                "Node": 1,
-                "vnode": 1
-            },
-            "fors": {
-                "Node": 1,
-                "Element": 1
-            },
-            "namespaces": {},
-            "module": "vdom",
-            "file": "src/vdom/partials/vnode.js",
-            "line": 3,
-            "description": "Delivers the `vnode` prototype object, which is a virtualisation of an `Element` inside the Dom.\nThese Elements work smoothless with the vdom (see ...).\n\nvnodes are much quicker to access and walk through than native dom-nodes. However, this is a module you don't need\nby itself: `Element`-types use these features under the hood.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
-            "since": "0.0.1"
-        },
         "extend-element": {
             "name": "extend-element",
             "submodules": {},
@@ -966,7 +959,7 @@
             },
             "is_submodule": 1,
             "namespaces": {},
-            "module": "vnode",
+            "module": "vdom",
             "namespace": "",
             "file": "src/vdom/partials/extend-element.js",
             "line": 3,
@@ -1015,6 +1008,22 @@
             "file": "src/vdom/partials/vdom-ns.js",
             "line": 1,
             "description": "Creates a Namespace that can be used accros multiple vdom-modules to share information.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "since": "0.0.1"
+        },
+        "vnode": {
+            "name": "vnode",
+            "submodules": {},
+            "classes": {
+                "vnode": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "vdom",
+            "namespace": "",
+            "file": "src/vdom/partials/vnode.js",
+            "line": 3,
+            "description": "Delivers the `vnode` prototype object, which is a virtualisation of an `Element` inside the Dom.\nThese Elements work smoothless with the vdom (see ...).\n\nvnodes are much quicker to access and walk through than native dom-nodes. However, this is a module you don't need\nby itself: `Element`-types use these features under the hood.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "since": "0.0.1"
         }
     },
@@ -1089,6 +1098,20 @@
             "example": [
                 "\n    var Event = require('event');<br>"
             ]
+        },
+        "USERAGENT": {
+            "name": "USERAGENT",
+            "shortname": "USERAGENT",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "useragent",
+            "namespace": "",
+            "file": "src/useragent/useragent.js",
+            "line": 3,
+            "description": "<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "IO": {
             "name": "IO",
@@ -1223,20 +1246,6 @@
             "line": 3,
             "description": "Emulation of browser `window` and `dom`. Just enough to make ITSA work.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
-        "USERAGENT": {
-            "name": "USERAGENT",
-            "shortname": "USERAGENT",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "useragent",
-            "namespace": "",
-            "file": "src/useragent/useragent.js",
-            "line": 3,
-            "description": "<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
         "Utils": {
             "name": "Utils",
             "shortname": "Utils",
@@ -1304,7 +1313,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element",
             "namespace": "",
             "file": "src/vdom/partials/extend-element.js",
@@ -1319,7 +1328,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element",
             "namespace": ""
         },
@@ -11640,7 +11649,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 129,
+            "line": 130,
             "description": "Reference to the [IO](io.html) object",
             "itemtype": "property",
             "name": "IO",
@@ -11651,7 +11660,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 141,
+            "line": 142,
             "description": "Reference to the [UserAgent](useragent.html) object",
             "itemtype": "property",
             "name": "UA",
@@ -11662,7 +11671,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 149,
+            "line": 150,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",
@@ -14744,7 +14753,7 @@
             "type": "vnode",
             "since": "0.0.1",
             "class": "Node",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -14757,7 +14766,7 @@
             "tagname": "",
             "since": "0.0.1",
             "class": "Node",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -14787,7 +14796,7 @@
             "tagname": "",
             "since": "0.0.1",
             "class": "Node",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -14821,7 +14830,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -14848,7 +14857,7 @@
                 "type": "Element"
             },
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -14871,7 +14880,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -14892,7 +14901,7 @@
                 "type": "Number"
             },
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -14913,7 +14922,7 @@
                 "type": "Boolean"
             },
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -14947,7 +14956,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -14966,7 +14975,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -14978,7 +14987,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15001,7 +15010,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15024,7 +15033,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15044,7 +15053,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15097,7 +15106,7 @@
             "chainable": 1,
             "since": "0.0.2",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15119,7 +15128,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15141,7 +15150,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15163,7 +15172,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15185,7 +15194,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15200,7 +15209,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15214,7 +15223,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15236,7 +15245,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15258,7 +15267,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15279,7 +15288,7 @@
                 "type": "Element|null"
             },
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15294,7 +15303,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15309,7 +15318,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15337,7 +15346,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15366,7 +15375,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15381,7 +15390,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15395,7 +15404,7 @@
                 "type": "Element"
             },
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15423,7 +15432,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15451,7 +15460,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15466,7 +15475,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15480,7 +15489,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15495,7 +15504,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15517,7 +15526,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15539,7 +15548,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15553,7 +15562,7 @@
                 "type": "Boolean"
             },
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15568,7 +15577,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15590,7 +15599,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15612,7 +15621,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15627,7 +15636,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15642,7 +15651,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15670,7 +15679,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15698,7 +15707,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15726,7 +15735,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15749,7 +15758,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15764,7 +15773,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15790,7 +15799,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15817,7 +15826,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15849,7 +15858,7 @@
                 "type": "Node"
             },
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15872,7 +15881,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15895,7 +15904,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15918,7 +15927,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15941,7 +15950,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15965,7 +15974,7 @@
             "type": "Element",
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -15999,7 +16008,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16023,7 +16032,7 @@
             "type": "Element",
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16044,7 +16053,7 @@
                 "type": "Element"
             },
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16065,7 +16074,7 @@
                 "type": "ElementArray"
             },
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16087,7 +16096,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16102,7 +16111,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16121,7 +16130,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16139,7 +16148,7 @@
             ],
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16160,7 +16169,7 @@
                 "type": "Node"
             },
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16193,7 +16202,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16212,7 +16221,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16224,7 +16233,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16255,7 +16264,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16280,7 +16289,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16305,7 +16314,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16324,7 +16333,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16352,7 +16361,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16385,7 +16394,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16428,7 +16437,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16452,7 +16461,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16476,7 +16485,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16498,7 +16507,7 @@
                 }
             ],
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16531,7 +16540,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16555,7 +16564,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16574,7 +16583,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16593,7 +16602,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16632,7 +16641,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16660,7 +16669,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16701,7 +16710,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16726,7 +16735,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16745,7 +16754,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16764,7 +16773,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16783,7 +16792,7 @@
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16804,7 +16813,7 @@
                 }
             ],
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16844,7 +16853,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16867,7 +16876,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16895,7 +16904,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16933,7 +16942,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16945,7 +16954,7 @@
             "type": "{Number}",
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16956,7 +16965,7 @@
             "name": "left",
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16967,7 +16976,7 @@
             "name": "top",
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16979,7 +16988,7 @@
             "type": "{Number}",
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -16993,7 +17002,7 @@
                 "type": "AttributeNode"
             },
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -17007,7 +17016,7 @@
                 "type": "AttributeNode"
             },
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -17021,7 +17030,7 @@
                 "type": "Collection"
             },
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -17050,7 +17059,7 @@
             },
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -17071,7 +17080,7 @@
                 "type": "HTMLCollection"
             },
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -17092,7 +17101,7 @@
                 "type": "HTMLCollection"
             },
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -17113,7 +17122,7 @@
                 "type": "HTMLCollection"
             },
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -17135,7 +17144,7 @@
                 }
             ],
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -17157,7 +17166,7 @@
                 }
             ],
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
@@ -17179,38 +17188,12 @@
                 }
             ],
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
             "line": 3918,
-            "description": "Inserts `newElement` before `referenceElement`.",
-            "itemtype": "method",
-            "name": "insertBefore",
-            "params": [
-                {
-                    "name": "newElement",
-                    "description": "The newElement to insert",
-                    "type": "Element"
-                },
-                {
-                    "name": "referenceElement",
-                    "description": "The Element before which newElement is inserted.",
-                    "type": "Element"
-                }
-            ],
-            "return": {
-                "description": "the Element being inserted (equals newElement)",
-                "type": "Element"
-            },
-            "class": "Element",
-            "module": "vnode",
-            "submodule": "extend-element"
-        },
-        {
-            "file": "src/vdom/partials/extend-element.js",
-            "line": 3927,
             "description": "Removes the attribute specified by an attributeNode from the Element.",
             "itemtype": "method",
             "name": "removeAttributeNode",
@@ -17223,22 +17206,22 @@
             ],
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3935,
+            "line": 3926,
             "description": "Scrolls the element into view.",
             "itemtype": "method",
             "name": "scrollIntoView",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3941,
+            "line": 3932,
             "description": "Sets the attribute on the Element specified by `attributeNode`",
             "itemtype": "method",
             "name": "setAttributeNode",
@@ -17250,161 +17233,161 @@
                 }
             ],
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3950,
+            "line": 3941,
             "description": "Fired when a static `script` element  finishes executing its script. Does not fire if the element is added dynamically, eg with appendChild().",
             "itemtype": "event",
             "name": "afterscriptexecute",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3957,
+            "line": 3948,
             "description": "Fired when the code in a `script` element declared in an HTML document is about to start executing. Does not fire if the element is added dynamically, eg with appendChild().",
             "itemtype": "event",
             "name": "beforescriptexecute",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3965,
+            "line": 3956,
             "description": "sets or returns an accesskey for an element. An accesskey specifies a shortcut key to activate/focus an element.\nNote: The way of accessing the shortcut key is varying in different browsers: http://www.w3schools.com/jsref/prop_html_accesskey.asp",
             "itemtype": "property",
             "name": "accessKey",
             "type": "String",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3974,
+            "line": 3965,
             "description": "Returns a live collection of all attribute nodes registered to the specified node.\nIt is a NamedNodeMap, not an Array, so it has no Array methods and the Attr nodes' indexes may differ among browsers.\nTo be more specific, attributes is a key/value pair of strings that represents any information regarding that attribute.\n\nPrefer to use `getAttrs()` which is much quicker, but doesn't return a life-list.",
             "itemtype": "property",
             "name": "attributes",
             "type": "NamedNodeMap",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3985,
+            "line": 3976,
             "description": "The absolute base URL of a node.",
             "itemtype": "property",
             "name": "baseURI",
             "type": "String",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3993,
+            "line": 3984,
             "description": "Returns the number of children (child Elements)",
             "itemtype": "property",
             "name": "childElementCount",
             "type": "Number",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4001,
+            "line": 3992,
             "description": "Returns a live collection of childNodes of the given element, either Element, TextNode or CommentNode",
             "itemtype": "property",
             "name": "childNodes",
             "type": "NodeList",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4009,
+            "line": 4000,
             "description": "Returns a live collection of child Element's of the given element.",
             "itemtype": "property",
             "name": "children",
             "type": "NodeList",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4017,
+            "line": 4008,
             "description": "Gets and sets the value of the class attribute of the specified element.",
             "itemtype": "property",
             "name": "className",
             "type": "String",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4024,
+            "line": 4015,
             "description": "Returns the inner height of an element in pixels, including padding but not the horizontal scrollbar height, border, or margin.",
             "itemtype": "property",
             "name": "clientHeight",
             "type": "Number",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4032,
+            "line": 4023,
             "description": "The width of the left border of an element in pixels. It includes the width of the vertical scrollbar if the text direction of the element is right–to–left\nand if there is an overflow causing a left vertical scrollbar to be rendered. clientLeft does not include the left margin or the left padding.",
             "itemtype": "property",
             "name": "clientLeft",
             "type": "Number",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4041,
+            "line": 4032,
             "description": "The width of the top border of an element in pixels. It does not include the top margin or padding.",
             "itemtype": "property",
             "name": "clientTop",
             "type": "Number",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4049,
+            "line": 4040,
             "description": "Returns the inner width of an element in pixels, including padding but not the vertical scrollbar height, border, or margin.",
             "itemtype": "property",
             "name": "clientWidth",
             "type": "Number",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4057,
+            "line": 4048,
             "description": "Reference to the first childNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nBetter work with Elements only:  use `firstElementChild` instead, which returns the first Element-child.",
             "itemtype": "property",
             "name": "firstChild",
@@ -17412,46 +17395,46 @@
             "readonly": "",
             "deprecated": true,
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4068,
+            "line": 4059,
             "description": "Reference to the first Element-child, which is an Element (nodeType===1).",
             "itemtype": "property",
             "name": "firstElementChild",
             "type": "Element",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4076,
+            "line": 4067,
             "description": "Gets or sets the element's attribute `href`. Only applies for the `a`-element.",
             "itemtype": "property",
             "name": "href",
             "type": "String",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4083,
+            "line": 4074,
             "description": "Gets or sets the element's identifier (attribute id).",
             "itemtype": "property",
             "name": "id",
             "type": "String",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4090,
+            "line": 4081,
             "description": "Reference to the last childNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nBetter use `lastElementChild` instead, which returns the last Element-child.",
             "itemtype": "property",
             "name": "lastChild",
@@ -17459,47 +17442,47 @@
             "readonly": "",
             "deprecated": true,
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4101,
+            "line": 4092,
             "description": "Reference to the last Element-child, where the related dom-node is an Element (nodeType===1).",
             "itemtype": "property",
             "name": "lastElementChild",
             "type": "Element",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4109,
+            "line": 4100,
             "description": "Gets or sets the `name` property of a Element; it only applies to the following elements:\n`a`, `applet`, `button`, `form`, `frame`, `iframe`, `img`, `input`, `map`, `meta`, `object`, `param`, `select`, and `textarea`.",
             "itemtype": "property",
             "name": "name",
             "type": "String",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4117,
+            "line": 4108,
             "description": "Returns the Element immediately following the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs an Element (nodeType===1).",
             "itemtype": "property",
             "name": "nextElementSibling",
             "type": "Element",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4126,
+            "line": 4117,
             "description": "Returns the Element immediately following the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nDo not use this, but use `lastElementChild` instead, which returns the next Element-child.",
             "itemtype": "property",
             "name": "nextElementSibling",
@@ -17507,48 +17490,48 @@
             "deprecated": true,
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4138,
+            "line": 4129,
             "description": "Elements tag-name",
             "itemtype": "property",
             "name": "nodeName",
             "type": "String",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4146,
+            "line": 4137,
             "description": "Elements nodetype: 1==Element, 3==TextNode, 8===CommentNode",
             "itemtype": "property",
             "name": "nodeType",
             "type": "String",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4154,
+            "line": 4145,
             "description": "Value/text for non-Element Nodes",
             "itemtype": "property",
             "name": "nodeValue",
             "type": "String",
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4162,
+            "line": 4153,
             "description": "The exact width of the Element on the screen.\nIncluded borders and padding (no margin).\n\nReturns a number without unity.\n\nBetter use `width` --> it's an alias, but has a setter as well",
             "itemtype": "property",
             "name": "offsetWidth",
@@ -17556,58 +17539,58 @@
             "readonly": "",
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4176,
+            "line": 4167,
             "description": "The exact height of the Element on the screen.\nIncluded borders and padding (no margin).\n\nReturns a number without unity.\n\nBetter use `height` --> it's an alias, but has a setter as well",
             "itemtype": "property",
             "name": "offsetHeight",
             "type": "Number",
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4189,
+            "line": 4180,
             "description": "Returns the Element's parent Element.\n\nSame as `parentNode`",
             "itemtype": "property",
             "name": "parentElement",
             "type": "Element",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4198,
+            "line": 4189,
             "description": "Returns the Element's parent Element.\n\nSame as `parentElement`",
             "itemtype": "property",
             "name": "parentNode",
             "type": "Element",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4207,
+            "line": 4198,
             "description": "Returns the Element immediately preceding the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs an Element (nodeType===1).",
             "itemtype": "property",
             "name": "previousElementSibling",
             "type": "Element",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4216,
+            "line": 4207,
             "description": "Returns the Element immediately preceding the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nDo not use this, but use `previousElementSibling` instead, which returns the previous Element-child.",
             "itemtype": "property",
             "name": "previousSibling",
@@ -17615,98 +17598,98 @@
             "type": "Node",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4229,
+            "line": 4220,
             "description": "A measurement of the height of an element's content, including content not visible on the screen due to overflow.\nThe scrollHeight value is equal to the minimum clientHeight the element would require in order to fit all the content in the viewpoint\nwithout using a vertical scrollbar. It includes the element padding but not its margin.\n\nReturns a number without unity.",
             "itemtype": "property",
             "name": "scrollHeight",
             "type": "Number",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4241,
+            "line": 4232,
             "description": "Gets or sets the number of pixels that an element's content is scrolled to the left.",
             "itemtype": "property",
             "name": "scrollLeft",
             "type": "Number",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4248,
+            "line": 4239,
             "description": "Gets or sets the number of pixels that the content of an element is scrolled upward. An element's scrollTop is a measurement\nof the distance of an element's top to its topmost visible content. When an element content does not generate a vertical scrollbar,\nthen its scrollTop value defaults to 0.",
             "itemtype": "property",
             "name": "scrollTop",
             "type": "Number",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4257,
+            "line": 4248,
             "description": "Returns either the width in pixels of the content of an element or the width of the element itself, whichever is greater.\nIf the element is wider than its content area (for example, if there are scroll bars for scrolling through the content),\nthe scrollWidth is larger than the clientWidth.\n\nReturns a number without unity.",
             "itemtype": "property",
             "name": "scrollWidth",
             "type": "Number",
             "readonly": "",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4269,
+            "line": 4260,
             "description": "Gets or sets the element's attribute `type`. Only applies for the `script`, `img` and `style`-elements.",
             "itemtype": "property",
             "name": "src",
             "type": "String",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4276,
+            "line": 4267,
             "description": "Gets or sets the element's attribute `style`.",
             "itemtype": "property",
             "name": "style",
             "type": "String",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4283,
+            "line": 4274,
             "description": "Gets or sets the element's attribute `type`. Only applies for the `input`-element.",
             "itemtype": "property",
             "name": "type",
             "type": "String",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4290,
+            "line": 4281,
             "description": "Gets or sets the value of an input or select Element.\n\nNote it is highly preferable to use getValue() and setValue().",
             "itemtype": "property",
             "name": "value",
             "type": "String",
             "since": "0.0.1",
             "class": "Element",
-            "module": "vnode",
+            "module": "vdom",
             "submodule": "extend-element"
         },
         {

@@ -1098,7 +1098,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
             e.sourceTarget &amp;&amp; !e._noResetSourceTarget &amp;&amp; (e.target=e.sourceTarget);
             if (customEventDefinition &amp;&amp; !e.status.halted) {
                 // now invoke defFn
-                e.returnValue = e.status.defaultPrevented ?
+                e.returnValue = (e.status.defaultPrevented || e.status.defaultPreventedContinue) ?
                                 (customEventDefinition.preventedFn &amp;&amp; (e.status.preventedFn=true) &amp;&amp; customEventDefinition.preventedFn.call(e.target, e)) :
                                 (customEventDefinition.defaultFn &amp;&amp; (e.status.defaultFn=true) &amp;&amp; customEventDefinition.defaultFn.call(e.target, e));
             }
@@ -1485,6 +1485,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
 
     Event._setEventObjProperty(&#x27;halt&#x27;, function(reason) {this.status.ok || this._unHaltable || (this.status.halted = (reason || true));})
          ._setEventObjProperty(&#x27;preventDefault&#x27;, function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPrevented = (reason || true));})
+         ._setEventObjProperty(&#x27;preventDefaultContinue&#x27;, function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPreventedContinue = (reason || true));})
          ._setEventObjProperty(&#x27;preventRender&#x27;, function(reason) {this.status.ok || this._unRenderPreventable || (this.status.renderPrevented = (reason || true));});
 
     return Event;

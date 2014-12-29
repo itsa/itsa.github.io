@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>vdom - Itsa</title>
+    <title>src/focusmanager/focusmanager.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -190,230 +190,182 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>vdom Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: src/focusmanager/focusmanager.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/src_vdom_partials_vnode.js.html#l3"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:3</code></a>
-        </div>
-    
+require(&#x27;js-ext/lib/object.js&#x27;);
+require(&#x27;polyfill&#x27;);
 
-    
-</div>
+/**
+ *
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module useragent
+ * @class USERAGENT
+ * @since 0.0.1
+*/
 
+var NAME = &#x27;[focusmanager]: &#x27;,
+    DEFAULT_SELECTOR = &#x27;input, button, select, .focusable&#x27;,
+    SPECIAL_KEYS = {
+        shift: &#x27;shiftKey&#x27;,
+        ctrl: &#x27;ctrlKey&#x27;,
+        cmd: &#x27;metaKey&#x27;,
+        alt: &#x27;altKey&#x27;
+    };
 
+module.exports = function (window) {
 
-<div class="box intro">
-    
-</div>
+    var DOCUMENT = window.document,
+        NodePlugin, FocusManager, Event, findFocusNode;
 
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
 
+/*jshint boss:true */
+    if (FocusManager=window._ITSAmodules.FocusManager) {
+/*jshint boss:false */
+        return FocusManager; // FocusManager was already created
+    }
 
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
+    NodePlugin = require(&#x27;vdom&#x27;)(window).Plugins.NodePlugin;
+    Event = require(&#x27;event-dom&#x27;)(window);
 
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="../classes/document.html">
-                        document
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Element.html">
-                        Element
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/ElementArray.html">
-                        ElementArray
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Node.html">
-                        Node
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/NS-vdom.html">
-                        NS-vdom
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/Plugins.html">
-                        Plugins
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/vnode.html">
-                        vnode
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
+    findFocusNode = function(e, keyCode, actionkey, sourceNode, selector, downwards) {
+        var keys, lastIndex, i, specialKeysMatch, specialKey, len;
+        keys = actionkey.split(&#x27;+&#x27;);
+        len = keys.length;
+        lastIndex = len - 1;
+        // double == --&gt; keyCode is number, keys is a string
+        if (keyCode==keys[lastIndex]) {
+            // posible keyup --&gt; check if special characters match:
+            specialKeysMatch = true;
+            SPECIAL_KEYS.some(function(value) {
+                specialKeysMatch = !e[value];
+                return !specialKeysMatch;
+            });
+            for (i=lastIndex-1; (i&gt;=0) &amp;&amp; !specialKeysMatch; i--) {
+                specialKey = keys[i].toLowerCase();
+                specialKeysMatch = e[SPECIAL_KEYS[specialKey]];
+            }
+        }
+        if (specialKeysMatch) {
+            if (downwards) {
+                return sourceNode.next(selector) || sourceNode.first(selector);
+            }
+            else {
+                return sourceNode.previous(selector) || sourceNode.last(selector);
+            }
+        }
+        return false;
+    };
 
-    <div class="yui3-u-1-2">
-        
-            <p>This module is a rollup of the following modules:</p>
+    Event.before(&#x27;keydown&#x27;, function(e) {
+        var focusContainerNode,
+            sourceNode = e.target,
+            node = sourceNode.getParent(),
+            selector, keyCode, actionkey, focusNode;
 
-            <ul class="module-submodules">
-            
-                <li class="module-submodule">
-                    <a href="../modules/attribute-extractor.html">
-                        attribute-extractor
-                    </a>
+        focusContainerNode = sourceNode.inside(&#x27;[fm-selector]&#x27;);
+        if (focusContainerNode) {
+            // key was pressed inside a focusmanagable container
+            selector = focusContainerNode.getAttr(&#x27;fm-selector&#x27;);
+            keyCode = e.keyCode;
 
-                    <div class="module-submodule-description">
-                        Exports <code>htmlToVNodes</code> which transforms html-text into vnodes.
+            // first check for keydown:
+            actionkey = node.getAttr(&#x27;fm-keydown&#x27;);
+            focusNode = findFocusNode(e, keyCode, actionkey, sourceNode, selector, true);
+            if (!focusNode) {
+                // check for keyup:
+                actionkey = node.getAttr(&#x27;fm-keyup&#x27;);
+                focusNode = findFocusNode(e, keyCode, actionkey, sourceNode, selector);
+            }
+            if (focusNode) {
+                e.preventDefaultContinue();
+                // prevent default action --&gt; we just want to re-focus, but we DO want afterlisteners
+                // to be handled in the after-listener: someone else might want to halt the keydown event.
+                sourceNode.matches(selector) &amp;&amp; (e._focusNode=focusNode);
+            }
+        }
+    });
 
+    Event.after(&#x27;keydown&#x27;, function(e) {
+        var focusNode = e._focusNode;
+        focusNode &amp;&amp; focusNode.focus &amp;&amp; focusNode.focus();
+    });
 
-<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
-<br>
-New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
-                    </div>
-                </li>
-            
-                <li class="module-submodule">
-                    <a href="../modules/element-array.html">
-                        element-array
-                    </a>
+    Event.after(&#x27;blur&#x27;, function(e) {
+        var node = e.target,
+            body = DOCUMENT.body;
+        if (node &amp;&amp; node.removeAttr) {
+            node.removeAttr(&#x27;tabIndex&#x27;);
+            do {
+                node.removeClass(&#x27;focussed&#x27;);
+                node = (node===body) ? null : node.getParent();
+            } while (node);
+        }
+    });
 
-                    <div class="module-submodule-description">
-                        Extends Array into an array with special utility-methods that can be applied upon its members.
-The membres should be vElement's
+    Event.after(&#x27;focus&#x27;, function(e) {
+        var node = e.target,
+            body = DOCUMENT.body;
+        if (node &amp;&amp; node.setClass) {
+            do {
+                node.setClass(&#x27;focussed&#x27;);
+                node = (node===body) ? null : node.getParent();
+            } while (node);
+        }
+    });
 
+    Event.after(&#x27;tap&#x27;, function(e) {
+        var focusNode = e.target,
+            focusContainerNode = focusNode &amp;&amp; focusNode.inside &amp;&amp; focusNode.inside(&#x27;[fm-selector]&#x27;);
 
-<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
-<br>
-New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
-                    </div>
-                </li>
-            
-                <li class="module-submodule">
-                    <a href="../modules/element-plugin.html">
-                        element-plugin
-                    </a>
+        if (focusContainerNode &amp;&amp; focusNode.matches(focusContainerNode.getAttr(&#x27;fm-selector&#x27;))) {
+            focusNode.hasFocus() || focusNode.focus();
+        }
+    });
 
-                    <div class="module-submodule-description">
-                        Integrates DOM-events to event. more about DOM-events:
-http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
-
-
-<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
-New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
-                    </div>
-                </li>
-            
-                <li class="module-submodule">
-                    <a href="../modules/extend-document.html">
-                        extend-document
-                    </a>
-
-                    <div class="module-submodule-description">
-                        Provides several methods that override native document-methods to work with the vdom.
-
-
-<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
-<br>
-New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
-                    </div>
-                </li>
-            
-                <li class="module-submodule">
-                    <a href="../modules/extend-element.html">
-                        extend-element
-                    </a>
-
-                    <div class="module-submodule-description">
-                        Provides several methods that override native Element-methods to work with the vdom.
-
-
-<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
-<br>
-New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
-                    </div>
-                </li>
-            
-                <li class="module-submodule">
-                    <a href="../modules/html-parser.html">
-                        html-parser
-                    </a>
-
-                    <div class="module-submodule-description">
-                        Exports <code>htmlToVNodes</code> which transforms html-text into vnodes.
+    window._ITSAmodules.FocusManager = FocusManager = NodePlugin.subClass(
+        function (config) {
+            var instance = this;
+            config || (config={});
+            instance[&#x27;fm-selector&#x27;] = config.selector || DEFAULT_SELECTOR;
+            instance[&#x27;fm-keyup&#x27;] = config.keyup || &#x27;shift+9&#x27;;
+            instance[&#x27;fm-keydown&#x27;] = config.keydown || &#x27;9&#x27;;
+        }
+    );
 
 
-<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
-<br>
-New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
-                    </div>
-                </li>
-            
-                <li class="module-submodule">
-                    <a href="../modules/node-parser.html">
-                        node-parser
-                    </a>
+    (function(HTMLElementPrototype) {
 
-                    <div class="module-submodule-description">
-                        Exports <code>domNodeToVNode</code> which transforms dom-nodes into vnodes.
+        HTMLElementPrototype._focus = HTMLElementPrototype.focus;
+        HTMLElementPrototype.focus = function() {
+            var instance = this,
+                focusContainerNode = instance.inside(&#x27;[fm-selector]&#x27;);
 
+            focusContainerNode &amp;&amp; instance.matches(focusContainerNode.getAttr(&#x27;fm-selector&#x27;)) &amp;&amp; instance.setAttr(&#x27;tabIndex&#x27;, &#x27;0&#x27;);
+            instance._focus();
+        };
 
-<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i><br>
-New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
-                    </div>
-                </li>
-            
-                <li class="module-submodule">
-                    <a href="../modules/vdom-ns.html">
-                        vdom-ns
-                    </a>
-
-                    <div class="module-submodule-description">
-                        Creates a Namespace that can be used accros multiple vdom-modules to share information.
+    }(window.HTMLElement.prototype));
 
 
-<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
-<br>
-New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
-                    </div>
-                </li>
-            
-                <li class="module-submodule">
-                    <a href="../modules/vnode.html">
-                        vnode
-                    </a>
-
-                    <div class="module-submodule-description">
-                        Delivers the <code>vnode</code> prototype object, which is a virtualisation of an <code>Element</code> inside the Dom.
-These Elements work smoothless with the vdom (see ...).
-
-vnodes are much quicker to access and walk through than native dom-nodes. However, this is a module you don't need
-by itself: <code>Element</code>-types use these features under the hood.
-
-
-<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
-<br>
-New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
-                    </div>
-                </li>
-            
-            </ul>
-        
-    </div>
+    return FocusManager;
+};
+    </pre>
 </div>
 
                     </div>

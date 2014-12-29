@@ -5505,7 +5505,7 @@ module.exports = function (window) {
     return DD_Object;
 
 };
-},{"./css/drag-drop.css":9,"drag":12,"event-dom":13,"js-ext":27,"polyfill/polyfill-base.js":38,"useragent":39,"vdom":53,"window-ext":54}],11:[function(require,module,exports){
+},{"./css/drag-drop.css":9,"drag":12,"event-dom":13,"js-ext":28,"polyfill/polyfill-base.js":39,"useragent":40,"vdom":54,"window-ext":55}],11:[function(require,module,exports){
 module.exports=require(9)
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],12:[function(require,module,exports){
 "use strict";
@@ -6177,7 +6177,7 @@ module.exports = function (window) {
 
     return DD_Object;
 };
-},{"./css/drag.css":11,"event-dom":13,"js-ext":27,"polyfill":38,"useragent":39,"vdom":53,"window-ext":54}],13:[function(require,module,exports){
+},{"./css/drag.css":11,"event-dom":13,"js-ext":28,"polyfill":39,"useragent":40,"vdom":54,"window-ext":55}],13:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6406,7 +6406,7 @@ module.exports = function (window) {
         eventobject.status.halted && e.stopPropagation && e.stopPropagation();
         // now we might need to preventDefault the original event.
         // be carefull though: not all gesture events have e.preventDefault
-        if ((eventobject.status.halted || eventobject.status.defaultPrevented) && e.preventDefault) {
+        if ((eventobject.status.halted || eventobject.status.defaultPrevented || eventobject.status.defaultPreventedContinue) && e.preventDefault) {
             e.preventDefault();
         }
 
@@ -6676,7 +6676,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":20,"js-ext/lib/array.js":28,"js-ext/lib/object.js":30,"js-ext/lib/string.js":32,"polyfill/polyfill-base.js":38,"utils":40,"vdom":53}],14:[function(require,module,exports){
+},{"event":20,"js-ext/lib/array.js":29,"js-ext/lib/object.js":31,"js-ext/lib/string.js":33,"polyfill/polyfill-base.js":39,"utils":41,"vdom":54}],14:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7048,7 +7048,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":13,"utils":40,"vdom":53}],16:[function(require,module,exports){
+},{"../event-dom.js":13,"utils":41,"vdom":54}],16:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8058,7 +8058,7 @@ require('js-ext/lib/object.js');
             e.sourceTarget && !e._noResetSourceTarget && (e.target=e.sourceTarget);
             if (customEventDefinition && !e.status.halted) {
                 // now invoke defFn
-                e.returnValue = e.status.defaultPrevented ?
+                e.returnValue = (e.status.defaultPrevented || e.status.defaultPreventedContinue) ?
                                 (customEventDefinition.preventedFn && (e.status.preventedFn=true) && customEventDefinition.preventedFn.call(e.target, e)) :
                                 (customEventDefinition.defaultFn && (e.status.defaultFn=true) && customEventDefinition.defaultFn.call(e.target, e));
             }
@@ -8445,12 +8445,13 @@ require('js-ext/lib/object.js');
 
     Event._setEventObjProperty('halt', function(reason) {this.status.ok || this._unHaltable || (this.status.halted = (reason || true));})
          ._setEventObjProperty('preventDefault', function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPrevented = (reason || true));})
+         ._setEventObjProperty('preventDefaultContinue', function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPreventedContinue = (reason || true));})
          ._setEventObjProperty('preventRender', function(reason) {this.status.ok || this._unRenderPreventable || (this.status.renderPrevented = (reason || true));});
 
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/lib/function.js":29,"js-ext/lib/object.js":30,"polyfill/polyfill-base.js":38}],18:[function(require,module,exports){
+},{"js-ext/lib/function.js":30,"js-ext/lib/object.js":31,"polyfill/polyfill-base.js":39}],18:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8720,6 +8721,178 @@ module.exports = require('./event-base.js');
 require('./event-emitter.js');
 require('./event-listener.js');
 },{"./event-base.js":17,"./event-emitter.js":18,"./event-listener.js":19}],21:[function(require,module,exports){
+"use strict";
+
+require('js-ext/lib/object.js');
+require('polyfill');
+
+/**
+ *
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module useragent
+ * @class USERAGENT
+ * @since 0.0.1
+*/
+
+var NAME = '[focusmanager]: ',
+    DEFAULT_SELECTOR = 'input, button, select, .focusable',
+    SPECIAL_KEYS = {
+        shift: 'shiftKey',
+        ctrl: 'ctrlKey',
+        cmd: 'metaKey',
+        alt: 'altKey'
+    };
+
+module.exports = function (window) {
+
+    var DOCUMENT = window.document,
+        NodePlugin, FocusManager, Event, findFocusNode;
+
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, '_ITSAmodules', {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
+
+/*jshint boss:true */
+    if (FocusManager=window._ITSAmodules.FocusManager) {
+/*jshint boss:false */
+        return FocusManager; // FocusManager was already created
+    }
+
+    NodePlugin = require('vdom')(window).Plugins.NodePlugin;
+    Event = require('event-dom')(window);
+
+    findFocusNode = function(e, keyCode, actionkey, sourceNode, selector, downwards) {
+        var keys, lastIndex, i, specialKeysMatch, specialKey, len;
+        keys = actionkey.split('+');
+        len = keys.length;
+        lastIndex = len - 1;
+        // double == --> keyCode is number, keys is a string
+        if (keyCode==keys[lastIndex]) {
+            // posible keyup --> check if special characters match:
+            specialKeysMatch = true;
+            SPECIAL_KEYS.some(function(value) {
+                specialKeysMatch = !e[value];
+                return !specialKeysMatch;
+            });
+            for (i=lastIndex-1; (i>=0) && !specialKeysMatch; i--) {
+                specialKey = keys[i].toLowerCase();
+                specialKeysMatch = e[SPECIAL_KEYS[specialKey]];
+            }
+        }
+        if (specialKeysMatch) {
+            if (downwards) {
+                return sourceNode.next(selector) || sourceNode.first(selector);
+            }
+            else {
+                return sourceNode.previous(selector) || sourceNode.last(selector);
+            }
+        }
+        return false;
+    };
+
+    Event.before('keydown', function(e) {
+        var focusContainerNode,
+            sourceNode = e.target,
+            node = sourceNode.getParent(),
+            selector, keyCode, actionkey, focusNode;
+
+        focusContainerNode = sourceNode.inside('[fm-selector]');
+        if (focusContainerNode) {
+            // key was pressed inside a focusmanagable container
+            selector = focusContainerNode.getAttr('fm-selector');
+            keyCode = e.keyCode;
+
+            // first check for keydown:
+            actionkey = node.getAttr('fm-keydown');
+            focusNode = findFocusNode(e, keyCode, actionkey, sourceNode, selector, true);
+            if (!focusNode) {
+                // check for keyup:
+                actionkey = node.getAttr('fm-keyup');
+                focusNode = findFocusNode(e, keyCode, actionkey, sourceNode, selector);
+            }
+            if (focusNode) {
+                e.preventDefaultContinue();
+                // prevent default action --> we just want to re-focus, but we DO want afterlisteners
+                // to be handled in the after-listener: someone else might want to halt the keydown event.
+                sourceNode.matches(selector) && (e._focusNode=focusNode);
+            }
+        }
+    });
+
+    Event.after('keydown', function(e) {
+        var focusNode = e._focusNode;
+        focusNode && focusNode.focus && focusNode.focus();
+    });
+
+    Event.after('blur', function(e) {
+        var node = e.target,
+            body = DOCUMENT.body;
+        if (node && node.removeAttr) {
+            node.removeAttr('tabIndex');
+            do {
+                node.removeClass('focussed');
+                node = (node===body) ? null : node.getParent();
+            } while (node);
+        }
+    });
+
+    Event.after('focus', function(e) {
+        var node = e.target,
+            body = DOCUMENT.body;
+        if (node && node.setClass) {
+            do {
+                node.setClass('focussed');
+                node = (node===body) ? null : node.getParent();
+            } while (node);
+        }
+    });
+
+    Event.after('tap', function(e) {
+        var focusNode = e.target,
+            focusContainerNode = focusNode && focusNode.inside && focusNode.inside('[fm-selector]');
+
+        if (focusContainerNode && focusNode.matches(focusContainerNode.getAttr('fm-selector'))) {
+            focusNode.hasFocus() || focusNode.focus();
+        }
+    });
+
+    window._ITSAmodules.FocusManager = FocusManager = NodePlugin.subClass(
+        function (config) {
+            var instance = this;
+            config || (config={});
+            instance['fm-selector'] = config.selector || DEFAULT_SELECTOR;
+            instance['fm-keyup'] = config.keyup || 'shift+9';
+            instance['fm-keydown'] = config.keydown || '9';
+        }
+    );
+
+
+    (function(HTMLElementPrototype) {
+
+        HTMLElementPrototype._focus = HTMLElementPrototype.focus;
+        HTMLElementPrototype.focus = function() {
+            var instance = this,
+                focusContainerNode = instance.inside('[fm-selector]');
+
+            focusContainerNode && instance.matches(focusContainerNode.getAttr('fm-selector')) && instance.setAttr('tabIndex', '0');
+            instance._focus();
+        };
+
+    }(window.HTMLElement.prototype));
+
+
+    return FocusManager;
+};
+},{"event-dom":13,"js-ext/lib/object.js":31,"polyfill":39,"vdom":54}],22:[function(require,module,exports){
 
 "use strict";
 
@@ -8851,7 +9024,7 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"../io.js":25,"xmldom":3}],22:[function(require,module,exports){
+},{"../io.js":26,"xmldom":3}],23:[function(require,module,exports){
 "use strict";
 
 var NAME = '[io-stream]: ',
@@ -8982,7 +9155,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":25}],23:[function(require,module,exports){
+},{"../io.js":26}],24:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9424,7 +9597,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":25,"js-ext/lib/string.js":32,"polyfill/polyfill-base.js":38}],24:[function(require,module,exports){
+},{"../io.js":26,"js-ext/lib/string.js":33,"polyfill/polyfill-base.js":39}],25:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9582,7 +9755,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":25,"js-ext":27}],25:[function(require,module,exports){
+},{"../io.js":26,"js-ext":28}],26:[function(require,module,exports){
 (function (global){
 /**
  * Provides core IO-functionality.
@@ -9899,7 +10072,7 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":27,"polyfill/polyfill-base.js":38}],26:[function(require,module,exports){
+},{"js-ext":28,"polyfill/polyfill-base.js":39}],27:[function(require,module,exports){
 module.exports = {
     'abstract': true,
     'arguments': true,
@@ -9968,13 +10141,13 @@ module.exports = {
     'with': true,
     'yield': true
 };
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
 require('./lib/array.js');
 require('./lib/promise.js');
-},{"./lib/array.js":28,"./lib/function.js":29,"./lib/object.js":30,"./lib/promise.js":31,"./lib/string.js":32}],28:[function(require,module,exports){
+},{"./lib/array.js":29,"./lib/function.js":30,"./lib/object.js":31,"./lib/promise.js":32,"./lib/string.js":33}],29:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -10125,7 +10298,7 @@ var cloneObj = function(obj) {
      };
 
 }(Array.prototype));
-},{"polyfill/polyfill-base.js":38}],29:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":39}],30:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -10346,7 +10519,7 @@ defineProperties(Function.prototype, {
 defineProperty(Object.prototype, 'createClass', function () {
 	return Function.prototype.subClass.apply(this, arguments);
 });
-},{"polyfill/polyfill-base.js":38}],30:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":39}],31:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -10723,7 +10896,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"polyfill/polyfill-base.js":38}],31:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":39}],32:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11028,7 +11201,7 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill":38}],32:[function(require,module,exports){
+},{"polyfill":39}],33:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -11260,7 +11433,7 @@ Promise.manage = function (callbackFn) {
 
 }(String.prototype));
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 "use strict";
 
 /*
@@ -11309,7 +11482,7 @@ module.exports = function (window) {
 
     return transition;
 };
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
@@ -11350,7 +11523,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -11420,7 +11593,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/lib/object.js":30}],36:[function(require,module,exports){
+},{"js-ext/lib/object.js":31}],37:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -11444,7 +11617,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -11463,10 +11636,10 @@ module.exports = function (window) {
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":36,"./lib/window.console.js":37}],39:[function(require,module,exports){
+},{"./lib/matchesselector.js":37,"./lib/window.console.js":38}],40:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11481,7 +11654,9 @@ require('./lib/matchesselector.js');
  * @since 0.0.1
 */
 
-// var NAME = '[io-assets]: ';
+require('polyfill');
+
+var NAME = '[useragent]: ';
 
 module.exports = function (window) {
 
@@ -11509,13 +11684,13 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{}],40:[function(require,module,exports){
+},{"polyfill":39}],41:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
 	later: require('./lib/timers.js').later,
 	async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":41,"./lib/timers.js":42}],41:[function(require,module,exports){
+},{"./lib/idgenerator.js":42,"./lib/timers.js":43}],42:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -11572,7 +11747,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"polyfill/polyfill-base.js":38}],42:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":39}],43:[function(require,module,exports){
 (function (process,global){
 /**
  * Collection of various utility functions.
@@ -11732,9 +11907,9 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":56,"polyfill/polyfill-base.js":38}],43:[function(require,module,exports){
+},{"_process":57,"polyfill/polyfill-base.js":39}],44:[function(require,module,exports){
 var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n.itsa-invisible,\n.itsa-invisible-relative {\n    visibility: hidden !important;\n    z-index: -1;\n}\n\n.itsa-invisible *,\n.itsa-invisible-relative * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n.itsa-hidden {\n    visibility: hidden !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],44:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],45:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12036,7 +12211,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/lib/object.js":30,"js-ext/lib/string.js":32,"polyfill/extra/transition.js":33,"polyfill/extra/vendorCSS.js":35}],45:[function(require,module,exports){
+},{"js-ext/lib/object.js":31,"js-ext/lib/string.js":33,"polyfill/extra/transition.js":34,"polyfill/extra/vendorCSS.js":36}],46:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12428,7 +12603,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/lib/object.js":30,"polyfill/polyfill-base.js":38}],46:[function(require,module,exports){
+},{"js-ext/lib/object.js":31,"polyfill/polyfill-base.js":39}],47:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12547,7 +12722,7 @@ module.exports = function (window) {
 
     return ElementPlugin;
 };
-},{"js-ext/lib/function.js":29}],47:[function(require,module,exports){
+},{"js-ext/lib/function.js":30}],48:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13226,7 +13401,7 @@ module.exports = function (window) {
 
 
 
-},{"./vdom-ns.js":51}],48:[function(require,module,exports){
+},{"./vdom-ns.js":52}],49:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -13238,7 +13413,7 @@ module.exports = function (window) {
  * <br>
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
- * @module vnode
+ * @module vdom
  * @submodule extend-element
  * @class Element
  * @since 0.0.1
@@ -17146,15 +17321,6 @@ for (j=0; j<len2; j++) {
 */
 
 /**
- * Inserts `newElement` before `referenceElement`.
- *
- * @method insertBefore
- * @param newElement {Element} The newElement to insert
- * @param referenceElement {Element} The Element before which newElement is inserted.
- * @return {Element} the Element being inserted (equals newElement)
- */
-
-/**
 * Removes the attribute specified by an attributeNode from the Element.
 *
 * @method removeAttributeNode
@@ -17527,7 +17693,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":43,"./attribute-extractor.js":44,"./element-array.js":45,"./html-parser.js":49,"./node-parser.js":50,"./vdom-ns.js":51,"./vnode.js":52,"js-ext/lib/object.js":30,"js-ext/lib/promise.js":31,"js-ext/lib/string.js":32,"polyfill":38,"polyfill/extra/transition.js":33,"polyfill/extra/transitionend.js":34,"polyfill/extra/vendorCSS.js":35,"utils":40,"window-ext":54}],49:[function(require,module,exports){
+},{"../css/element.css":44,"./attribute-extractor.js":45,"./element-array.js":46,"./html-parser.js":50,"./node-parser.js":51,"./vdom-ns.js":52,"./vnode.js":53,"js-ext/lib/object.js":31,"js-ext/lib/promise.js":32,"js-ext/lib/string.js":33,"polyfill":39,"polyfill/extra/transition.js":34,"polyfill/extra/transitionend.js":35,"polyfill/extra/vendorCSS.js":36,"utils":41,"window-ext":55}],50:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17859,7 +18025,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":44,"./vdom-ns.js":51}],50:[function(require,module,exports){
+},{"./attribute-extractor.js":45,"./vdom-ns.js":52}],51:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17982,7 +18148,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":44,"./vdom-ns.js":51,"./vnode.js":52}],51:[function(require,module,exports){
+},{"./attribute-extractor.js":45,"./vdom-ns.js":52,"./vnode.js":53}],52:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -18090,7 +18256,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/lib/object.js":30}],52:[function(require,module,exports){
+},{"js-ext/lib/object.js":31}],53:[function(require,module,exports){
 "use strict";
 
 /**
@@ -20151,7 +20317,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":44,"./html-parser.js":49,"./vdom-ns.js":51,"js-ext/lib/array.js":28,"js-ext/lib/object.js":30,"js-ext/lib/string.js":32,"utils/lib/timers.js":42}],53:[function(require,module,exports){
+},{"./attribute-extractor.js":45,"./html-parser.js":50,"./vdom-ns.js":52,"js-ext/lib/array.js":29,"js-ext/lib/object.js":31,"js-ext/lib/string.js":33,"utils/lib/timers.js":43}],54:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
@@ -20199,13 +20365,13 @@ module.exports = function (window) {
 
     return vdom;
 };
-},{"./partials/element-plugin.js":46,"./partials/extend-document.js":47,"./partials/extend-element.js":48,"./partials/node-parser.js":50}],54:[function(require,module,exports){
+},{"./partials/element-plugin.js":47,"./partials/extend-document.js":48,"./partials/extend-element.js":49,"./partials/node-parser.js":51}],55:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":55}],55:[function(require,module,exports){
+},{"./lib/sizes.js":56}],56:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
@@ -20313,7 +20479,7 @@ module.exports = function (window) {
     };
 
 };
-},{}],56:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -20506,6 +20672,7 @@ process.chdir = function (dir) {
         dragdrop = require('drag-drop')(window);
         ITSA.DD = dragdrop.DD;
         ITSA.Plugins.merge(dragdrop.Plugins);
+        ITSA.Plugins.FocusManager = require('focusmanager')(window);
     }
 
     /**
@@ -20557,4 +20724,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"css":8,"drag-drop":10,"event":20,"event-dom/extra/hover.js":14,"event-dom/extra/valuechange.js":15,"event-mobile":16,"io/extra/io-cors-ie9.js":21,"io/extra/io-stream.js":22,"io/extra/io-transfer.js":23,"io/extra/io-xml.js":24,"js-ext":27,"js-ext/extra/reserved-words.js":26,"node-win":undefined,"polyfill":38,"useragent":39,"utils":40,"vdom":53,"window-ext":54}]},{},[]);
+},{"css":8,"drag-drop":10,"event":20,"event-dom/extra/hover.js":14,"event-dom/extra/valuechange.js":15,"event-mobile":16,"focusmanager":21,"io/extra/io-cors-ie9.js":22,"io/extra/io-stream.js":23,"io/extra/io-transfer.js":24,"io/extra/io-xml.js":25,"js-ext":28,"js-ext/extra/reserved-words.js":27,"node-win":undefined,"polyfill":39,"useragent":40,"utils":41,"vdom":54,"window-ext":55}]},{},[]);
