@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/event-mobile/event-mobile.js - Itsa</title>
+    <title>focusmanager - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -194,114 +194,53 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/event-mobile/event-mobile.js</h1>
+                        <h1>focusmanager Module</h1>
+<div class="box clearfix meta">
+    
 
-<div class="file">
-    <pre class="code prettyprint linenums">
-&quot;use strict&quot;;
+    
 
-/**
- * Integrates mobile-events to event-dom. more about DOM-events:
- * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
- *
- *
- * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * @example
- * Event = require(&#x27;event-mobile&#x27;)(window);
- *
- * @module event
- * @submodule event-mobile
- * @class Event
- * @since 0.0.1
-*/
+    
+        <div class="foundat">
+            Defined in: <a href="../files/src_focusmanager_focusmanager.js.html#l6"><code>src&#x2F;focusmanager&#x2F;focusmanager.js:6</code></a>
+        </div>
+    
 
-var NAME = &#x27;[event-mobile]: &#x27;;
+    
+        <p>Available since 0.0.1</p>
+    
+</div>
 
-module.exports = function (window) {
-    /**
-     * The (only) Hammer-instance that &#x60;Event&#x60; uses. It is bound to the &#x60;body&#x60;-element.
-     *
-     * @property hammertime
-     * @type Hammer-instance
-     * @since 0.0.1
-     */
-    var Event = require(&#x27;event-dom&#x27;)(window),
-        document = window.document,
-        Hammer = require(&#x27;hammerjs&#x27;),
-        hammertime = Event.hammertime = new Hammer(document.body),
-        singletap, doubletap, tripletap;
 
-    if (window._ITSAmodules.EventMobile) {
-        return Event; // Event was already extended
-    }
 
-    // create reference to the HammerClass:
-    /**
-     * Adds the &#x60;Hammer&#x60;-class to Event, so it can be used from within Event.
-     *
-     * @property Hammer
-     * @type Hammer
-     * @since 0.0.1
-     */
-    Event.Hammer = Hammer;
+<div class="box intro">
+    <p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
+ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 
-    // now we extend HammerJS with 2 events: doubletap and tripletap:
-    doubletap = new Hammer.Tap({ event: &#x27;doubletap&#x27;, taps: 2 });
-    tripletap = new Hammer.Tap({ event: &#x27;tripletap&#x27;, taps: 3 });
-    hammertime.add([
-        doubletap,
-        tripletap
-    ]);
+</div>
 
-    // we want to recognize this simulatenous, so a doubletap and trippletap will be detected even while a tap has been recognized.
-    // the tap event will be emitted on every tap
-    singletap = hammertime.get(&#x27;tap&#x27;);
-    doubletap.recognizeWith(singletap);
-    tripletap.recognizeWith([doubletap, singletap]);
 
-    // patch Hammer.Manager.prototype.emit --&gt; it shouldn&#x27;t emit to its own listeners,
-    // but to our eventsystem. Inspired from Jorik Tangelder&#x27;s own jquery plugin: https://github.com/hammerjs/jquery.hammer.js
-    Hammer.Manager.prototype.emit = function(type, data) {
-        if (type===&#x27;hammer.input&#x27;) {
-            return;
-        }
-        console.log(NAME, &#x27;emit &#x27;+type);
-        // label the eventobject by being a Hammer-event
-        // is not being used internally, but we would like
-        // to inform the subscribers
-        data._isHammer = true;
-        data.type = type;
 
-        // Emitting &#x27;ParcelaEvent:eventmobile&#x27; --&gt; its defaultFn is defined inside &#x60;event-dom&#x60;
-        // which will transport the event through the special dom-cycle
-        /**
-         * Is emitted whenever hammerjs detects a gestureevent.
-         * By emitting its original event through ParcelaEvent:eventmobile, &#x60;event-dom&#x60;
-         * will catch it and process it through the dom-event cycle.
-         *
-         * @event ParcelaEvent:eventmobile
-         * @param e {Object} eventobject
-         * @since 0.1
-        **/
-        Event._domCallback(data);
-    };
+<div class="yui3-g">
+    <div class="yui3-u-1-2">
+        
+            <p>This module provides the following classes:</p>
 
-    Hammer.Manager.prototype.set = (function(originalSet) {
-        return function(options) {
-            delete options.domEvents; // we don&#x27;t want the user make Hammer fire domevents
-            originalSet.call(this, options);
-        };
-    })(Hammer.Manager.prototype.set);
+            <ul class="module-classes">
+            
+                <li class="module-class">
+                    <a href="../classes/FocusManager.html">
+                        FocusManager
+                    </a>
+                </li>
+            
+            </ul>
+        
+    </div>
 
-    // store module:
-    window._ITSAmodules.EventMobile = Event;
-
-    return Event;
-};
-
-    </pre>
+    <div class="yui3-u-1-2">
+        
+    </div>
 </div>
 
                     </div>

@@ -1,8 +1,8 @@
 ---
 module: focusmanager
 maintainer: Marco Asbreuk
-title: Multiple focusmanagers
-intro: "This example shows how multiple focusmanagers can be setup. The setup is done by HTML. You can easily switch between the two containers: their state gets reserved. Because of the <b>.focussed</b> class, the container that holds a focussed element gets highlighted. Notice the difference between the tow containers: only the first will focus the area-element."
+title: Focusmanagers by HTML
+intro: "This example shows how multiple focusmanagers can be setup. The setup is done by HTML. You can easily switch between the two containers: their state gets reserved. Because of the .focussed class, the container that holds a focussed element gets highlighted. Notice the difference between the tow containers: only the first will focus the area-element."
 ---
 
 <style type="text/css">
@@ -38,19 +38,19 @@ intro: "This example shows how multiple focusmanagers can be setup. The setup is
 </style>
 
 <div class="container pure-form" focusmanager="input, button, .area">
-    <input type="text" value="first"/>
-    <input type="text" value="second"/>
+    <input type="text" value="first" />
+    <input type="text" value="second" />
     <input type="checkbox" />
-    <div class='area'></div>
+    <div class="area"></div>
     <button class="pure-button pure-button-bordered">Cancel</button>
     <button class="pure-button pure-button-bordered">OK</button>
 </div>
 
 <div class="container pure-form" focusmanager="true">
-    <input type="text" value="first"/>
-    <input type="text" value="second"/>
+    <input type="text" value="first" />
+    <input type="text" value="second" />
     <input type="checkbox" />
-    <div class='area'></div>
+    <div class="area"></div>
     <button class="pure-button pure-button-bordered">Cancel</button>
     <button class="pure-button pure-button-bordered">OK</button>
 </div>

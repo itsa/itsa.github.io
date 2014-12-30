@@ -75,6 +75,7 @@ These <u>do work</u>, but they update their vnode's asynchronously. So, if you q
 
 ####methods for manipulation:####
 ###setAttr###
+###setAttrs###
 ###setInlineStyle###
 ###defineInlineStyle###
 ###setInlineTransition###

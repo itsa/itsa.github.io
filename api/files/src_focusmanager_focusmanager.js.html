@@ -57,6 +57,8 @@
             
                 <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
             
+                <li><a href="../classes/FocusManager.html">FocusManager</a></li>
+            
                 <li><a href="../classes/Function.html">Function</a></li>
             
                 <li><a href="../classes/IO.html">IO</a></li>
@@ -112,6 +114,8 @@
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/focusmanager.html">focusmanager</a></li>
             
                 <li><a href="../modules/html-parser.html">html-parser</a></li>
             
@@ -206,24 +210,27 @@ require(&#x27;polyfill&#x27;);
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
- * @module useragent
- * @class USERAGENT
+ * @module focusmanager
+ * @class FocusManager
  * @since 0.0.1
 */
 
 var NAME = &#x27;[focusmanager]: &#x27;,
+    async = require(&#x27;utils&#x27;).async,
     DEFAULT_SELECTOR = &#x27;input, button, select, .focusable&#x27;,
     SPECIAL_KEYS = {
         shift: &#x27;shiftKey&#x27;,
         ctrl: &#x27;ctrlKey&#x27;,
         cmd: &#x27;metaKey&#x27;,
         alt: &#x27;altKey&#x27;
-    };
+    },
+    DEFAULT_KEYUP = &#x27;shift+9&#x27;,
+    DEFAULT_KEYDOWN = &#x27;9&#x27;;
 
 module.exports = function (window) {
 
     var DOCUMENT = window.document,
-        NodePlugin, FocusManager, Event, findFocusNode;
+        NodePlugin, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed, getFocusManagerSelector;
 
     if (!window._ITSAmodules) {
         Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
@@ -243,13 +250,44 @@ module.exports = function (window) {
     NodePlugin = require(&#x27;vdom&#x27;)(window).Plugins.NodePlugin;
     Event = require(&#x27;event-dom&#x27;)(window);
 
-    findFocusNode = function(e, keyCode, actionkey, sourceNode, selector, downwards) {
-        var keys, lastIndex, i, specialKeysMatch, specialKey, len;
+    getFocusManagerSelector = function(focusContainerNode) {
+        var selector = focusContainerNode.getAttr(&#x27;focusmanager&#x27;);
+        (selector.toLowerCase()===&#x27;true&#x27;) &amp;&amp; (selector=DEFAULT_SELECTOR);
+        return selector;
+    };
+
+    nextFocusNode = function(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, downwards) {
+        console.log(NAME+&#x27;nextFocusNode&#x27;);
+        var keys, lastIndex, i, specialKeysMatch, specialKey, len, enterPressedOnInput, primaryButtons, foundNode, formNode, primaryonenter;
         keys = actionkey.split(&#x27;+&#x27;);
         len = keys.length;
         lastIndex = len - 1;
+        enterPressedOnInput = (keyCode===13) &amp;&amp; (sourceNode.getTagName()===&#x27;INPUT&#x27;) &amp;&amp; (sourceNode.getAttr(&#x27;type&#x27;).toLowerCase()===&#x27;text&#x27;);
+        if (enterPressedOnInput) {
+            // check if we need to press the primary button - if available
+/*jshint boss:true */
+            if ((primaryonenter=sourceNode.getAttr(&#x27;fm-primaryonenter&#x27;)) &amp;&amp; (primaryonenter.toLowerCase()===&#x27;true&#x27;)) {
+/*jshint boss:false */
+                primaryButtons = focusContainerNode.getAll(&#x27;button.pure-button-primary&#x27;);
+                primaryButtons.some(function(buttonNode) {
+                    buttonNode.matches(selector) &amp;&amp; (foundNode=buttonNode);
+                    return foundNode;
+                });
+                if (foundNode) {
+                    async(function() {
+                        Event.emit(foundNode, &#x27;UI:click&#x27;);
+                        // _buttonPressed make event-dom to simulate a pressed button for 200ms
+                        Event.emit(foundNode, &#x27;UI:tap&#x27;, {_buttonPressed: true});
+                        // if the button is of type &#x60;submit&#x60;, then try to submit the form
+                        formNode = foundNode.inside(&#x27;form&#x27;);
+                        formNode &amp;&amp; formNode.submit();
+                    });
+                    return foundNode;
+                }
+            }
+        }
         // double == --&gt; keyCode is number, keys is a string
-        if (keyCode==keys[lastIndex]) {
+        if (enterPressedOnInput || (keyCode==keys[lastIndex])) {
             // posible keyup --&gt; check if special characters match:
             specialKeysMatch = true;
             SPECIAL_KEYS.some(function(value) {
@@ -272,25 +310,67 @@ module.exports = function (window) {
         return false;
     };
 
+    markAsFocussed = function(focusContainerNode, node) {
+        console.log(NAME+&#x27;markAsFocussed&#x27;);
+        focusContainerNode.getAll(&#x27;[fm-lastitem]&#x27;).removeAttr(&#x27;fm-lastitem&#x27;);
+        node.setAttrs([
+            {name: &#x27;tabIndex&#x27;, value: &#x27;0&#x27;},
+            {name: &#x27;fm-lastitem&#x27;, value: true}
+        ]);
+    };
+
+    searchFocusNode = function(initialNode) {
+        console.log(NAME+&#x27;searchFocusNode&#x27;);
+        var focusContainerNode = initialNode.hasAttr(&#x27;focusmanager&#x27;) ? initialNode : initialNode.inside(&#x27;[focusmanager]&#x27;),
+            focusNode, alwaysDefault, fmAlwaysDefault;
+
+        if (focusContainerNode) {
+            if (initialNode.matches(getFocusManagerSelector(focusContainerNode))) {
+                markAsFocussed(focusContainerNode, initialNode);
+                focusNode = initialNode;
+            }
+            else {
+                // find the right node that should get focus
+/*jshint boss:true */
+                alwaysDefault = ((fmAlwaysDefault=focusContainerNode.getAttr(&#x27;fm-alwaysdefault&#x27;)) &amp;&amp; (fmAlwaysDefault.toLowerCase()===&#x27;true&#x27;));
+/*jshint boss:false */
+                focusNode = focusContainerNode.getElement(alwaysDefault ? &#x27;[fm-defaultitem=&quot;true&quot;]&#x27; : &#x27;[fm-lastitem=&quot;true&quot;]&#x27;) ||
+                            focusContainerNode.getElement(alwaysDefault ? &#x27;[fm-lastitem=&quot;true&quot;]&#x27; : &#x27;[fm-defaultitem=&quot;true&quot;]&#x27;) ||
+                            focusContainerNode.getElement(getFocusManagerSelector(focusContainerNode));
+                if (focusNode) {
+                    markAsFocussed(focusContainerNode, focusNode);
+                }
+                else {
+                    focusNode = initialNode;
+                }
+            }
+        }
+        else {
+            focusNode = initialNode;
+        }
+        return focusNode;
+    };
+
     Event.before(&#x27;keydown&#x27;, function(e) {
+        console.log(NAME+&#x27;before keydown-event&#x27;);
         var focusContainerNode,
             sourceNode = e.target,
             node = sourceNode.getParent(),
             selector, keyCode, actionkey, focusNode;
 
-        focusContainerNode = sourceNode.inside(&#x27;[fm-selector]&#x27;);
+        focusContainerNode = sourceNode.inside(&#x27;[focusmanager]&#x27;);
         if (focusContainerNode) {
             // key was pressed inside a focusmanagable container
-            selector = focusContainerNode.getAttr(&#x27;fm-selector&#x27;);
+            selector = getFocusManagerSelector(focusContainerNode);
             keyCode = e.keyCode;
 
             // first check for keydown:
-            actionkey = node.getAttr(&#x27;fm-keydown&#x27;);
-            focusNode = findFocusNode(e, keyCode, actionkey, sourceNode, selector, true);
+            actionkey = node.getAttr(&#x27;fm-keydown&#x27;) || DEFAULT_KEYDOWN;
+            focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, true);
             if (!focusNode) {
                 // check for keyup:
-                actionkey = node.getAttr(&#x27;fm-keyup&#x27;);
-                focusNode = findFocusNode(e, keyCode, actionkey, sourceNode, selector);
+                actionkey = node.getAttr(&#x27;fm-keyup&#x27;) || DEFAULT_KEYUP;
+                focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector);
             }
             if (focusNode) {
                 e.preventDefaultContinue();
@@ -302,11 +382,13 @@ module.exports = function (window) {
     });
 
     Event.after(&#x27;keydown&#x27;, function(e) {
+        console.log(NAME+&#x27;after keydown-event&#x27;);
         var focusNode = e._focusNode;
         focusNode &amp;&amp; focusNode.focus &amp;&amp; focusNode.focus();
     });
 
     Event.after(&#x27;blur&#x27;, function(e) {
+        console.log(NAME+&#x27;after blur-event&#x27;);
         var node = e.target,
             body = DOCUMENT.body;
         if (node &amp;&amp; node.removeAttr) {
@@ -319,6 +401,7 @@ module.exports = function (window) {
     });
 
     Event.after(&#x27;focus&#x27;, function(e) {
+        console.log(NAME+&#x27;after focus-event&#x27;);
         var node = e.target,
             body = DOCUMENT.body;
         if (node &amp;&amp; node.setClass) {
@@ -330,21 +413,71 @@ module.exports = function (window) {
     });
 
     Event.after(&#x27;tap&#x27;, function(e) {
+        console.log(NAME+&#x27;after tap-event&#x27;);
         var focusNode = e.target,
-            focusContainerNode = focusNode &amp;&amp; focusNode.inside &amp;&amp; focusNode.inside(&#x27;[fm-selector]&#x27;);
+            focusContainerNode;
 
-        if (focusContainerNode &amp;&amp; focusNode.matches(focusContainerNode.getAttr(&#x27;fm-selector&#x27;))) {
-            focusNode.hasFocus() || focusNode.focus();
+        if (focusNode &amp;&amp; focusNode.inside) {
+            focusContainerNode = focusNode.hasAttr(&#x27;focusmanager&#x27;) ? focusNode : focusNode.inside(&#x27;[focusmanager]&#x27;);
+        }
+        if (focusContainerNode) {
+            if ((focusNode===focusContainerNode) || !focusNode.matches(getFocusManagerSelector(focusContainerNode))) {
+                focusNode = searchFocusNode(focusNode);
+            }
+            if (focusNode.hasFocus()) {
+                markAsFocussed(focusContainerNode, focusNode);
+            }
+            else {
+                focusNode.focus();
+            }
         }
     });
+
+    Event.after([&#x27;keypress&#x27;, &#x27;mouseup&#x27;, &#x27;panup&#x27;, &#x27;mousedown&#x27;, &#x27;pandown&#x27;], function(e) {
+        console.log(NAME+&#x27;after &#x27;+e.type+&#x27;-event&#x27;);
+        var focusContainerNode,
+            sourceNode = e.target,
+            selector;
+
+        focusContainerNode = sourceNode.inside(&#x27;[focusmanager]&#x27;);
+        if (focusContainerNode) {
+            // key was pressed inside a focusmanagable container
+            selector = getFocusManagerSelector(focusContainerNode);
+            if (sourceNode.matches(selector)) {
+                sourceNode.setAttr(&#x27;fm-selectionstart&#x27;, sourceNode.selectionStart)
+                          .setAttr(&#x27;fm-selectionend&#x27;, sourceNode.selectionEnd);
+            }
+        }
+    }, &#x27;input[type=&quot;text&quot;], textarea&#x27;);
+
+    Event.after(&#x27;focus&#x27;, function(e) {
+        console.log(NAME+&#x27;after focus-event&#x27;);
+        var focusContainerNode,
+            sourceNode = e.target,
+            selector, selectionStart, selectionEnd;
+
+        focusContainerNode = sourceNode.inside(&#x27;[focusmanager]&#x27;);
+        if (focusContainerNode) {
+            // key was pressed inside a focusmanagable container
+            selector = getFocusManagerSelector(focusContainerNode);
+            if (sourceNode.matches(selector)) {
+                selectionStart = sourceNode.getAttr(&#x27;fm-selectionstart&#x27;) || sourceNode.getValue().length;
+                selectionEnd = Math.max(sourceNode.getAttr(&#x27;fm-selectionend&#x27;) || selectionStart, selectionStart);
+                sourceNode.selectionEnd = selectionEnd;
+                sourceNode.selectionStart = selectionStart;
+                markAsFocussed(focusContainerNode, sourceNode);
+            }
+        }
+    }, &#x27;input[type=&quot;text&quot;], textarea&#x27;);
 
     window._ITSAmodules.FocusManager = FocusManager = NodePlugin.subClass(
         function (config) {
             var instance = this;
             config || (config={});
-            instance[&#x27;fm-selector&#x27;] = config.selector || DEFAULT_SELECTOR;
-            instance[&#x27;fm-keyup&#x27;] = config.keyup || &#x27;shift+9&#x27;;
-            instance[&#x27;fm-keydown&#x27;] = config.keydown || &#x27;9&#x27;;
+            instance.focusmanager = config.selector;
+            instance[&#x27;fm-keyup&#x27;] = config.keyup;
+            instance[&#x27;fm-keydown&#x27;] = config.keydown;
+            instance[&#x27;fm-alwaysdefault&#x27;] = config.alwaysdefault;
         }
     );
 
@@ -353,11 +486,8 @@ module.exports = function (window) {
 
         HTMLElementPrototype._focus = HTMLElementPrototype.focus;
         HTMLElementPrototype.focus = function() {
-            var instance = this,
-                focusContainerNode = instance.inside(&#x27;[fm-selector]&#x27;);
-
-            focusContainerNode &amp;&amp; instance.matches(focusContainerNode.getAttr(&#x27;fm-selector&#x27;)) &amp;&amp; instance.setAttr(&#x27;tabIndex&#x27;, &#x27;0&#x27;);
-            instance._focus();
+            console.log(NAME+&#x27;focus&#x27;);
+            searchFocusNode(this)._focus();
         };
 
     }(window.HTMLElement.prototype));

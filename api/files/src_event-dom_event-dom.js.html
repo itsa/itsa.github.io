@@ -57,6 +57,8 @@
             
                 <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
             
+                <li><a href="../classes/FocusManager.html">FocusManager</a></li>
+            
                 <li><a href="../classes/Function.html">Function</a></li>
             
                 <li><a href="../classes/IO.html">IO</a></li>
@@ -112,6 +114,8 @@
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/focusmanager.html">focusmanager</a></li>
             
                 <li><a href="../modules/html-parser.html">html-parser</a></li>
             
@@ -221,6 +225,8 @@ var NAME = &#x27;[event-dom]: &#x27;,
     REGEXP_NODE_ID = /^#\S+$/,
     REGEXP_EXTRACT_NODE_ID = /#(\S+)/,
     REGEXP_UI_OUTSIDE = /^.+outside$/,
+    TIME_BTN_PRESSED = 200,
+    PURE_BUTTON_ACTIVE = &#x27;pure-button-active&#x27;,
 
     /*
      * Internal hash containing all DOM-events that are listened for (at &#x60;document&#x60;).
@@ -586,9 +592,41 @@ module.exports = function (window) {
     };
 
     _setupEvents = function() {
-        Event.before(&#x27;click&#x27;, function(e) {
+
+        // make sure disabled buttons don&#x27;t work:
+        Event.before([&#x27;click&#x27;, &#x27;tap&#x27;], function(e) {
             e.preventDefault();
         }, &#x27;.pure-button-disabled, button[disabled]&#x27;);
+
+        // make sure that a focussed button which recieves an keypress also fires the &#x60;tap&#x60;-event
+        // note: the &#x60;click&#x60;-event will always be fired by the browser
+        Event.before(
+            &#x27;keydown&#x27;,
+            function(e) {
+                e._buttonPressed = true;
+                Event.emit(e.target, &#x27;UI:tap&#x27;, e);
+            },
+            function(e) {
+                var keyCode = e.keyCode;
+                return (e.target.getTagName()===&#x27;BUTTON&#x27;) &amp;&amp; ((keyCode===13) || (keyCode===32));
+            }
+        );
+
+        // make sure that a focussed button which recieves an keypress also fires the &#x60;tap&#x60;-event
+        // note: the &#x60;click&#x60;-event will always be fired by the browser
+        Event.after(
+            &#x27;tap&#x27;,
+            function(e) {
+                var buttonNode = e.target;
+                if (e._buttonPressed) {
+                    buttonNode.setClass(PURE_BUTTON_ACTIVE);
+                    // even if the node isn&#x27;t in the DOM, we can still try to manipulate it:
+                    // the vdom makes sure no errors occur when the node is already removed
+                    later(buttonNode.removeClass.bind(buttonNode, PURE_BUTTON_ACTIVE), TIME_BTN_PRESSED);
+                }
+            }
+        );
+
     };
 
     /*
