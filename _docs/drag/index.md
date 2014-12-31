@@ -46,11 +46,11 @@ When this module gets imported, it returns an object like this:
 {
     DD: DD,
     Plugins: {
-        NodeDD: NodeDD
+        nodeDD: nodeDD
     }
 }
 ```
-This Object is available at the `ITSA` instance. This means, you need to call `ITSA.DD.init()` to inititalize the dragging features. Also, you have `ITSA.Plugins.NodeDD` as a node-plugin available.
+This Object is available at the `ITSA` instance. This means, you need to call `ITSA.DD.init()` to inititalize the dragging features. Also, you have `ITSA.Plugins.nodeDD` as a node-plugin available.
 
 **Note:** ITSA.DD is actually a drag-drop instance, though it could have been a drag-instance, which would mean you had only the drag-functionalities of this module. In reality, ITSA.DD has all features of the [drag-drop module](../drag-drop/index.html), which extends this module.
 
@@ -80,22 +80,22 @@ Should equal a `css-selector` of a descendant that should act as a handle where 
 Which emitterName the draggable HtmlElement should have (will overrule the `UI`-emitterName). The `emitterName` will be used within the events `emittername:dd-drag` and `emittername:dd-drop`
 
 ##Using Plugins##
-When this module gets imported, it defines the node-plugin: `ITSA.Plugins.NodeDD`. Define a HtmlElement draggable or remove draggablilty-features can be done using this plugin.
+When this module gets imported, it defines the node-plugin: `ITSA.Plugins.nodeDD`. Define a HtmlElement draggable or remove draggablilty-features can be done using this plugin.
 
 ###Define draggable###
 ```js
-document.getElement('#someNode').plug(ITSA.Plugins.NodeDD);
+document.getElement('#someNode').plug(ITSA.Plugins.nodeDD);
 ```
 
 ###Remove draggablity###
 ```js
-document.getElement('#someNode').unplug(ITSA.Plugins.NodeDD);
+document.getElement('#someNode').unplug(ITSA.Plugins.nodeDD);
 ```
 
 ###Define draggable with options###
 ```js
 document.getElement('#someNode').plug(
-    ITSA.Plugins.NodeDD,
+    ITSA.Plugins.nodeDD,
     {
         draggable: true, //
         constrain: '.container',

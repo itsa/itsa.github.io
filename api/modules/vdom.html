@@ -57,6 +57,8 @@
             
                 <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
             
+                <li><a href="../classes/FocusManager.html">FocusManager</a></li>
+            
                 <li><a href="../classes/Function.html">Function</a></li>
             
                 <li><a href="../classes/IO.html">IO</a></li>
@@ -112,6 +114,8 @@
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/focusmanager.html">focusmanager</a></li>
             
                 <li><a href="../modules/html-parser.html">html-parser</a></li>
             
@@ -227,8 +231,20 @@
                 </li>
             
                 <li class="module-class">
+                    <a href="../classes/Element.html">
+                        Element
+                    </a>
+                </li>
+            
+                <li class="module-class">
                     <a href="../classes/ElementArray.html">
                         ElementArray
+                    </a>
+                </li>
+            
+                <li class="module-class">
+                    <a href="../classes/Node.html">
+                        Node
                     </a>
                 </li>
             
@@ -322,6 +338,21 @@ New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
                 </li>
             
                 <li class="module-submodule">
+                    <a href="../modules/extend-element.html">
+                        extend-element
+                    </a>
+
+                    <div class="module-submodule-description">
+                        Provides several methods that override native Element-methods to work with the vdom.
+
+
+<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+<br>
+New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+                    </div>
+                </li>
+            
+                <li class="module-submodule">
                     <a href="../modules/html-parser.html">
                         html-parser
                     </a>
@@ -357,6 +388,25 @@ New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
 
                     <div class="module-submodule-description">
                         Creates a Namespace that can be used accros multiple vdom-modules to share information.
+
+
+<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+<br>
+New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+                    </div>
+                </li>
+            
+                <li class="module-submodule">
+                    <a href="../modules/vnode.html">
+                        vnode
+                    </a>
+
+                    <div class="module-submodule-description">
+                        Delivers the <code>vnode</code> prototype object, which is a virtualisation of an <code>Element</code> inside the Dom.
+These Elements work smoothless with the vdom (see ...).
+
+vnodes are much quicker to access and walk through than native dom-nodes. However, this is a module you don't need
+by itself: <code>Element</code>-types use these features under the hood.
 
 
 <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>

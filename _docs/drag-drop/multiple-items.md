@@ -53,7 +53,7 @@ intro: "Multiple items can be dragged at once by specifying <b>e.relatives</b> i
         font-size: 17px;
         padding-top: 130px;
     }
-    .dropzone-awake[dropzone] {
+    .dropzone-awake[dd-dropzone] {
         border-style: dashed;
     }
     .container.selected {
@@ -71,13 +71,13 @@ Drag the items to the dropzones. The `movable or copyable` items will be copyabl
     <div class="container">drag me nr. 5</div>
 </div>
 
-<div class="drop-container" dropzone="true" dd-draggable=".container" dd-dropzone=".drop-container">dropzone</div>
+<div class="drop-container" dd-dropzone="true" dd-draggable=".container" dd-dropzone=".drop-container">dropzone</div>
 
 <p class="spaced">Code-example:</p>
 
 ```css
 <style type="text/css">
-    .dropzone-awake[dropzone] {
+    .dropzone-awake[dd-dropzone] {
         border-style: dashed;
     }
     .container.selected {
@@ -109,7 +109,7 @@ Drag the items to the dropzones. The `movable or copyable` items will be copyabl
         <div class="container">drag me nr. 5</div>
     </div>
 
-    <div class="drop-container" dropzone="true" dd-draggable=".container" dd-dropzone=".drop-container">dropzone</div>
+    <div class="drop-container" dd-dropzone="true" dd-draggable=".container" dd-dropzone=".drop-container">dropzone</div>
 </body>
 ```
 

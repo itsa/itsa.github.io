@@ -49,7 +49,7 @@ intro: "Multiple items can be made draggable by specify <b>draggable=\"css-selec
     .body-content.module p.spaced {
         margin-top: 690px;
     }
-    .dropzone-awake[dropzone] {
+    .dropzone-awake[dd-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -71,7 +71,7 @@ Drag the items, they are all draggable and can be moved or copied into any dropz
 
 ```css
 <style>
-    .dropzone-awake[dropzone] {
+    .dropzone-awake[dd-dropzone] {
         border-style: dashed;
     }
 

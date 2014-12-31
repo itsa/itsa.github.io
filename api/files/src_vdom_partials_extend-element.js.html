@@ -57,6 +57,8 @@
             
                 <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
             
+                <li><a href="../classes/FocusManager.html">FocusManager</a></li>
+            
                 <li><a href="../classes/Function.html">Function</a></li>
             
                 <li><a href="../classes/IO.html">IO</a></li>
@@ -112,6 +114,8 @@
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/focusmanager.html">focusmanager</a></li>
             
                 <li><a href="../modules/html-parser.html">html-parser</a></li>
             
@@ -204,7 +208,7 @@
  * &lt;br&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
- * @module vnode
+ * @module vdom
  * @submodule extend-element
  * @class Element
  * @since 0.0.1
@@ -2914,6 +2918,30 @@ module.exports = function (window) {
         };
 
        /**
+         * Sets multiple attributes on the Element with the specified value.
+         * The argument should be one ore more Objects with the properties: &#x60;name&#x60; and &#x60;value&#x60;
+         *
+         * @example
+         * instance.setAttrs([
+         *                      {name: &#x27;tabIndex&#x27;, value: &#x27;0&#x27;},
+         *                      {name: &#x27;style&#x27;, value: &#x27;color: #000;&#x27;}
+         *                  ]);
+         *
+         * @method setAttrs
+         * @param attributeData {Array|Object}
+         * @chainable
+         * @since 0.0.1
+        */
+        ElementPrototype.setAttrs = function(attributeData) {
+            var instance = this;
+            Array.isArray(attributeData) || (attributeData=[attributeData]);
+            attributeData.forEach(function(item) {
+                instance.setAttribute(item.name, item.value);
+            });
+            return instance;
+        };
+
+       /**
         * Adds a class to the Element. If the class already exists it won&#x27;t be duplicated.
         *
         * @method setClass
@@ -3401,7 +3429,7 @@ module.exports = function (window) {
             // make sure it has sizes and can be positioned
             instance.setClass([invisibleClass, BORDERBOX]);
             (instance.getInlineStyle(&#x27;display&#x27;)===&#x27;none&#x27;) &amp;&amp; instance.setClass(BLOCK);
-            constrain || (constrain=instance.getAttr(&#x27;xy-constrain&#x27;));
+            constrain || (constrain=instance.getAttr(&#x27;constrain-selector&#x27;));
             if (constrain) {
                 if (constrain===&#x27;window&#x27;) {
                     containerLeft = window.getScrollLeft();
@@ -4110,15 +4138,6 @@ for (j=0; j&lt;len2; j++) {
 * &lt;ul&gt;
 * @param element {Element}
 */
-
-/**
- * Inserts &#x60;newElement&#x60; before &#x60;referenceElement&#x60;.
- *
- * @method insertBefore
- * @param newElement {Element} The newElement to insert
- * @param referenceElement {Element} The Element before which newElement is inserted.
- * @return {Element} the Element being inserted (equals newElement)
- */
 
 /**
 * Removes the attribute specified by an attributeNode from the Element.

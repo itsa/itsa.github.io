@@ -52,7 +52,7 @@ intro: "Draggable items can be dropped inside dropzones. When these dronzones ar
     .container[dd-emitter="red"] {
         background-color: #F00;
     }
-    .dropzone-awake[dropzone] {
+    .dropzone-awake[dd-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -65,7 +65,7 @@ Drag the items to the dropzones..
     <div id="without" class="container"></div>
 </div>
 
-<div class="drop-container" dropzone="emitter=blue">only blue items</div>
+<div class="drop-container" dd-dropzone="emitter=blue">only blue items</div>
 <div id="dropzone-without" class="drop-container">only red items</div>
 
 
@@ -73,7 +73,7 @@ Drag the items to the dropzones..
 
 ```css
 <style type="text/css">
-    .dropzone-awake[dropzone] {
+    .dropzone-awake[dd-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -87,7 +87,7 @@ Drag the items to the dropzones..
         <div id="without" class="container"></div>
     </div>
 
-    <div class="drop-container" dropzone="emitter=blue">only blue items</div>
+    <div class="drop-container" dd-dropzone="emitter=blue">only blue items</div>
     <div id="dropzone-without" class="drop-container">only red items</div>
 </body>
 ```
@@ -98,9 +98,9 @@ Drag the items to the dropzones..
     var ITSA = require('itsa');
 
     ITSA.DD.init();
-    document.getElement('#without').plug(ITSA.Plugins.NodeDD, {emitter: 'red'});
-    document.getElement('#without-emitter').plug(ITSA.Plugins.NodeDD);
-    document.getElement('#dropzone-without').plug(ITSA.Plugins.NodeDropzone, {emitter: 'red'});
+    document.getElement('#without').plug(ITSA.Plugins.nodeDD, {emitter: 'red'});
+    document.getElement('#without-emitter').plug(ITSA.Plugins.nodeDD);
+    document.getElement('#dropzone-without').plug(ITSA.Plugins.nodeDropzone, {dropzone: 'true emitter=red'});
 
     ITSA.Event.before('dd', function(e) {
         e.emitter = "blue";
@@ -113,9 +113,9 @@ Drag the items to the dropzones..
     var ITSA = require('itsa');
 
     ITSA.DD.init();
-    document.getElement('#without').plug(ITSA.Plugins.NodeDD, {emitter: 'red'});
-    document.getElement('#without-emitter').plug(ITSA.Plugins.NodeDD);
-    document.getElement('#dropzone-without').plug(ITSA.Plugins.NodeDropzone, {emitter: 'red'});
+    document.getElement('#without').plug(ITSA.Plugins.nodeDD, {emitter: 'red'});
+    document.getElement('#without-emitter').plug(ITSA.Plugins.nodeDD);
+    document.getElement('#dropzone-without').plug(ITSA.Plugins.nodeDropzone, {dropzone: 'true emitter=red'});
 
     ITSA.Event.before('dd', function(e) {
         e.emitter = "blue";

@@ -57,6 +57,8 @@
             
                 <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
             
+                <li><a href="../classes/FocusManager.html">FocusManager</a></li>
+            
                 <li><a href="../classes/Function.html">Function</a></li>
             
                 <li><a href="../classes/IO.html">IO</a></li>
@@ -112,6 +114,8 @@
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/focusmanager.html">focusmanager</a></li>
             
                 <li><a href="../modules/html-parser.html">html-parser</a></li>
             
@@ -369,7 +373,7 @@ var DRAG = &#x27;drag&#x27;,
     DD_SOURCE_ISCOPIED_CLASS = DD_MINUS+COPY+SOURCE,
     DD_COPIED_CLASS = DD_MINUS+COPY,
     DD_DROPZONE_MOVABLE = DD_MINUS+DROPZONE+&#x27;-movable&#x27;,
-    CONSTRAIN_ATTR = &#x27;xy-constrain&#x27;,
+    CONSTRAIN_ATTR = &#x27;constrain-selector&#x27;,
     MOUSE = &#x27;mouse&#x27;,
     DROPZONE_OVER = DROPZONE+&#x27;-over&#x27;,
     DROPZONE_DROP = DROPZONE+&#x27;-&#x27;+DROP,
@@ -399,7 +403,7 @@ var DRAG = &#x27;drag&#x27;,
     PANMOVE = &#x27;pan&#x27;+MOVE,
     DD_FAKE_MOUSEMOVE = DD_FAKE+MOUSEMOVE,
     UI = &#x27;UI&#x27;,
-    DROPZONE_BRACKETS = &#x27;[&#x27; + DROPZONE + &#x27;]&#x27;,
+    DROPZONE_BRACKETS = &#x27;[&#x27; + DD_DROPZONE + &#x27;]&#x27;,
     DD_EFFECT_ALLOWED = DD_MINUS+&#x27;effect-allowed&#x27;,
     BORDER = &#x27;border&#x27;,
     WIDTH = &#x27;width&#x27;,
@@ -413,7 +417,7 @@ var DRAG = &#x27;drag&#x27;,
     ABSOLUTE = &#x27;absolute&#x27;,
     TRUE = &#x27;true&#x27;,
     DD_MINUSDRAGGABLE = DD_MINUS+DRAGGABLE,
-    PLUGIN_ATTRS = [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTER, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE];
+    PLUGIN_ATTRS = [DD_DROPZONE, CONSTRAIN_ATTR, DD_EMITTER, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE];
 
 require(&#x27;polyfill/polyfill-base.js&#x27;);
 require(&#x27;js-ext&#x27;);
@@ -435,7 +439,7 @@ module.exports = function (window) {
     }
 
     var Event = require(&#x27;event-dom&#x27;)(window),
-        NodePlugin = require(&#x27;vdom&#x27;)(window).Plugins.NodePlugin,
+        nodePlugin = require(&#x27;vdom&#x27;)(window).Plugins.nodePlugin,
         DragModule = require(&#x27;drag&#x27;)(window),
         $superInit = DragModule.DD.init,
         ctrlPressed = false,
@@ -444,7 +448,7 @@ module.exports = function (window) {
         isMobile = require(&#x27;useragent&#x27;)(window).isMobile,
         supportHammer = !!Event.Hammer,
         mobileEvents = supportHammer &amp;&amp; isMobile,
-        DD, NodeDropzone, DD_Object;
+        DD, DD_Object;
 
     require(&#x27;window-ext&#x27;)(window);
 
@@ -630,7 +634,7 @@ module.exports = function (window) {
                             overDropzone = true;
                             return;
                         }
-                        var dropzoneAccept = dropzone.getAttr(DROPZONE) || &#x27;&#x27;,
+                        var dropzoneAccept = dropzone.getAttr(DD_DROPZONE) || &#x27;&#x27;,
                             dropzoneMove = REGEXP_MOVE.test(dropzoneAccept),
                             dropzoneCopy = REGEXP_COPY.test(dropzoneAccept),
                             dropzoneDefDraggable = dragNode.getAttr(DD_DROPZONE),
@@ -661,7 +665,7 @@ module.exports = function (window) {
                                     function(e3) {
                                         var effectAllowed, dropzoneAccept, dropzoneMove, dropzoneCopy;
                                         if (e3.type===DD_FAKE_MOUSEMOVE) {
-                                            dropzoneAccept = dropzone.getAttr(DROPZONE) || &#x27;&#x27;;
+                                            dropzoneAccept = dropzone.getAttr(DD_DROPZONE) || &#x27;&#x27;;
                                             dropzoneMove = REGEXP_MOVE.test(dropzoneAccept);
                                             dropzoneCopy = REGEXP_COPY.test(dropzoneAccept);
                                             effectAllowed = (!dropzoneMove &amp;&amp; !dropzoneCopy) || (dropzoneCopy &amp;&amp; (dropEffect===COPY)) || (dropzoneMove &amp;&amp; (dropEffect===MOVE));
@@ -1256,27 +1260,11 @@ module.exports = function (window) {
 
     };
 
-    NodeDropzone = NodePlugin.subClass(
-        function (config) {
-            var dropzone = TRUE,
-                emitter;
-            config || (config={});
-            if (config.copy &amp;&amp; !config.move) {
-                dropzone = COPY;
-            }
-            else if (!config.copy &amp;&amp; config.move) {
-                dropzone = MOVE;
-            }
-            (emitter=config.emitter) &amp;&amp; (dropzone+=&#x27; &#x27;+EMITTER+&#x27;=&#x27;+emitter);
-            this.dropzone = dropzone;
-        }
-    );
-
     DD_Object = window._ITSAmodules.DragDrop = {
         DD: DragModule.DD.merge(DD, true),
         Plugins: {
-            NodeDD: DragModule.Plugins.NodeDD,
-            NodeDropzone: NodeDropzone
+            nodeDD: DragModule.Plugins.nodeDD,
+            nodeDropzone: nodePlugin.definePlugin(&#x27;dd&#x27;, {dropzone: &#x27;true&#x27;})
         }
     };
 

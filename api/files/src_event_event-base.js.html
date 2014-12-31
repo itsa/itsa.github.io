@@ -57,6 +57,8 @@
             
                 <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
             
+                <li><a href="../classes/FocusManager.html">FocusManager</a></li>
+            
                 <li><a href="../classes/Function.html">Function</a></li>
             
                 <li><a href="../classes/IO.html">IO</a></li>
@@ -112,6 +114,8 @@
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/focusmanager.html">focusmanager</a></li>
             
                 <li><a href="../modules/html-parser.html">html-parser</a></li>
             
@@ -1098,7 +1102,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
             e.sourceTarget &amp;&amp; !e._noResetSourceTarget &amp;&amp; (e.target=e.sourceTarget);
             if (customEventDefinition &amp;&amp; !e.status.halted) {
                 // now invoke defFn
-                e.returnValue = e.status.defaultPrevented ?
+                e.returnValue = (e.status.defaultPrevented || e.status.defaultPreventedContinue) ?
                                 (customEventDefinition.preventedFn &amp;&amp; (e.status.preventedFn=true) &amp;&amp; customEventDefinition.preventedFn.call(e.target, e)) :
                                 (customEventDefinition.defaultFn &amp;&amp; (e.status.defaultFn=true) &amp;&amp; customEventDefinition.defaultFn.call(e.target, e));
             }
@@ -1485,6 +1489,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
 
     Event._setEventObjProperty(&#x27;halt&#x27;, function(reason) {this.status.ok || this._unHaltable || (this.status.halted = (reason || true));})
          ._setEventObjProperty(&#x27;preventDefault&#x27;, function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPrevented = (reason || true));})
+         ._setEventObjProperty(&#x27;preventDefaultContinue&#x27;, function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPreventedContinue = (reason || true));})
          ._setEventObjProperty(&#x27;preventRender&#x27;, function(reason) {this.status.ok || this._unRenderPreventable || (this.status.renderPrevented = (reason || true));});
 
     return Event;
