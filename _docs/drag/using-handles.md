@@ -2,7 +2,7 @@
 module: drag
 maintainer: Marco Asbreuk
 title: Draggable with handles
-intro: "Draggable elements can have handles wher you can drag them. You set this up using the attribute <b>dd-handle==\"css-selector\"</b>, or using javascript by using <b>node.plugin(ITSA.Plugins.NodeDD, {handle: 'css-selector'})</b>. The plugin does nothing more than add the right attribute to the draggable Element, and it just works.</b>"
+intro: "Draggable elements can have handles wher you can drag them. You set this up using the attribute <b>dd-handle==\"css-selector\"</b>, or using javascript by using <b>node.plugin(ITSA.Plugins.nodeDD, {handle: 'css-selector'})</b>. The plugin does nothing more than add the right attribute to the draggable Element, and it just works.</b>"
 ---
 
 <style type="text/css">
@@ -60,7 +60,7 @@ Drag the 2 rectangles. The first is constrained using html, the second is set up
     var ITSA = require('itsa');
 
     ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
-    document.getElement('#without').plug(ITSA.Plugins.NodeDD, {handle: 'h1'});
+    document.getElement('#without').plug(ITSA.Plugins.nodeDD, {handle: 'h1'});
 </script>
 ```
 
@@ -69,5 +69,5 @@ Drag the 2 rectangles. The first is constrained using html, the second is set up
     var ITSA = require('itsa');
 
     ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
-    document.getElement('#without').plug(ITSA.Plugins.NodeDD, {handle: 'h1'});
+    document.getElement('#without').plug(ITSA.Plugins.nodeDD, {handle: 'h1'});
 </script>

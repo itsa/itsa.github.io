@@ -44,7 +44,7 @@ intro: "Dragging can be monitored using the dd, dd-drag, dd-over, dd-out, dd-dro
     .body-content.module p.spaced {
         margin-top: 25px;
     }
-    .dropzone-awake[dropzone] {
+    .dropzone-awake[dd-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -52,7 +52,7 @@ intro: "Dragging can be monitored using the dd, dd-drag, dd-over, dd-out, dd-dro
 Drag the item and watch for the events.
 
 
-<div id="dropzone-1" class="drop-container" dropzone="true">dropzone</div>
+<div id="dropzone-1" class="drop-container" dd-dropzone="true">dropzone</div>
 <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me</div>
 <div class="monitor-container"></div>
 <div class="monitor-container dz"></div>
@@ -61,7 +61,7 @@ Drag the item and watch for the events.
 
 ```css
 <style type="text/css">
-    .dropzone-awake[dropzone] {
+    .dropzone-awake[dd-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -69,7 +69,7 @@ Drag the item and watch for the events.
 
 ```html
 <body>
-    <div id="dropzone-1" class="drop-container" dropzone="true">dropzone</div>
+    <div id="dropzone-1" class="drop-container" dd-dropzone="true">dropzone</div>
     <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me</div>
     <div class="monitor-container"></div>
     <div class="monitor-container dz"></div>

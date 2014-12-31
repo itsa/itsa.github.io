@@ -42,7 +42,7 @@ intro: "Draggable items can be dropped inside dropzones. Dronzones are HtmlEleme
         font-size: 17px;
         padding-top: 105px;
     }
-    .dropzone-awake[dropzone] {
+    .dropzone-awake[dd-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -54,8 +54,8 @@ Drag the items to the dropzones. The items can be copied by pressing the `Ctrl`-
     <div id="without" class="container">drag me (copyable)</div>
 </div>
 
-<div class="drop-container" dropzone="copy">only copied items</div>
-<div class="drop-container" dropzone="move">only moved items</div>
+<div class="drop-container" dd-dropzone="copy">only copied items</div>
+<div class="drop-container" dd-dropzone="move">only moved items</div>
 <div id="dropzone-without" class="drop-container">copied and moved items</div>
 
 
@@ -63,7 +63,7 @@ Drag the items to the dropzones. The items can be copied by pressing the `Ctrl`-
 
 ```css
 <style type="text/css">
-    .dropzone-awake[dropzone] {
+    .dropzone-awake[dd-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -76,8 +76,8 @@ Drag the items to the dropzones. The items can be copied by pressing the `Ctrl`-
         <div id="without" class="container">drag me (copyable)</div>
     </div>
 
-    <div class="drop-container" dropzone="copy">only copied items</div>
-    <div class="drop-container" dropzone="move">only moved items</div>
+    <div class="drop-container" dd-dropzone="copy">only copied items</div>
+    <div class="drop-container" dd-dropzone="move">only moved items</div>
     <div id="dropzone-without" class="drop-container">all items</div>
 </body>
 ```
@@ -88,8 +88,8 @@ Drag the items to the dropzones. The items can be copied by pressing the `Ctrl`-
     var ITSA = require('itsa');
 
     ITSA.DD.init();
-    document.getElement('#without').plug(ITSA.Plugins.NodeDD, {effectAllowed: 'all', dropzone: '.drop-container'});
-    document.getElement('#dropzone-without').plug(ITSA.Plugins.NodeDropzone);
+    document.getElement('#without').plug(ITSA.Plugins.nodeDD, {effectAllowed: 'all', dropzone: '.drop-container'});
+    document.getElement('#dropzone-without').plug(ITSA.Plugins.nodeDropzone);
 
     // we will change the text of copied items, so that it is clear they are only movable
     ITSA.Event.after('dropzone-drop', function(e) {
@@ -107,8 +107,8 @@ Drag the items to the dropzones. The items can be copied by pressing the `Ctrl`-
     var ITSA = require('itsa');
 
     ITSA.DD.init();
-    document.getElement('#without').plug(ITSA.Plugins.NodeDD, {effectAllowed: 'all', dropzone: '.drop-container'});
-    document.getElement('#dropzone-without').plug(ITSA.Plugins.NodeDropzone);
+    document.getElement('#without').plug(ITSA.Plugins.nodeDD, {effectAllowed: 'all', dropzone: '.drop-container'});
+    document.getElement('#dropzone-without').plug(ITSA.Plugins.nodeDropzone);
 
     // we will change the text of copied items, so that it is clear they are only movable
     ITSA.Event.after('dropzone-drop', function(e) {

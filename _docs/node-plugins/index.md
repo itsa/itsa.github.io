@@ -31,49 +31,57 @@ A plugin can be set on a Node (only Element), by using `Element.plugin`:
 ####Example plugin without options####
 ```js
 var myNode = document.getElement('#mynode');
-myNode.plug(ITSA.Plugins.NodeConstrain);
+myNode.plug(ITSA.Plugins.nodeConstrain);
 // will constrain repositioning to the window
 ```
 
 This leads into a HTML like this:
 
 ```html
-<div xy-constrain="window"></div>
+<div constrain-selector="window"></div>
 ```
 
 ####Example plugin with options####
 ```js
 var myNode = document.getElement('#mynode');
-myNode.plug(ITSA.Plugins.NodeConstrain, {selector: '#container'});
+myNode.plug(ITSA.Plugins.nodeConstrain, {selector: '#container'});
 // will constrain repositioning to the node with id=`container`
 ```
 
 This leads into a HTML like this:
 
 ```html
-<div xy-constrain="#container"></div>
+<div constrain-selector="#container"></div>
 ```
 
 Or in relation with the rest of the page:
 
 ```html
 <div id="container">
-    <div xy-constrain="#container"></div>
+    <div constrain-selector="#container"></div>
 </div>
 ```
 
 
-##Creating a plugin-Class##
+##Developing plugins##
 
-A plugin-Class is created by extending ITSA.Plugins.NodePlugin, where the initiliser is important: here you define all the properties of the plugin --> these will be rendered as Node-attributes. See the code of the constrained plugin:
+A plugin is created by using the method `nodePlugin.definePlugin`. nodePlugin is available at either:
 
-####Samplecode of the NodeConstrain plugin####
 ```js
-ITSA.Plugins.NodeConstrain = ITSA.Plugins.NodePlugin.subClass(
-    function (config) {
-        this['xy-constrain'] = (config && config.selector) || 'window';
-    }
-);
+nodePlugin = require('vdom')(window).Plugins.nodePlugin;
+```
+
+or at `ITSA`:
+
+```js
+nodePlugin = ITSA.Plugins.nodePlugin;
+```
+
+When using `definePlugin`, it requires at least one argument: the `namespace` of your Plugin. The namespace will be used to prepend attributes like this: `ns-`. This way, all attributes made by the plugin are well defined. The second argument is an optional object, containing any default-values.
+
+####Samplecode of the nodeConstrain plugin####
+```js
+ITSA.Plugins.nodeConstrain = nodePlugin.definePlugin('constrain', {selector: 'window'});
 ```
 
 
@@ -81,4 +89,4 @@ ITSA.Plugins.NodeConstrain = ITSA.Plugins.NodePlugin.subClass(
 
 The vdom comes with one Node-plugin:
 
-###ITSA.Plugins.NodeConstrain###
+###ITSA.Plugins.nodeConstrain###

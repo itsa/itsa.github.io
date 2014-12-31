@@ -2,13 +2,12 @@
 module: focusmanager
 maintainer: Marco Asbreuk
 title: Different focuskeys
-intro: "This example shows how multiple focusmanagers can be setup. The setup is done by HTML. You can easily switch between the two containers: their state gets reserved. Because of the <b>.focussed</b> class, the container that holds a focussed element gets highlighted. Notice the difference between the tow containers: only the first will focus the area-element."
+intro: "This example shows how to setup a focusmanager that navigates with different keys: <b>arrow-up</b> and <b>arrow-down</b>. You could as wel use a plugin, with an additional config-object that looks like: <b>{keyup: 39, keydown: 41}</b>.<br><br>By setting the focus to the container, the first element gets focussed automaticly."
 ---
 
 <style type="text/css">
     .container {
         width: 300px;
-        height: 250px;
         margin: 20px;
         border: solid 1px #000;
         padding: 10px;
@@ -22,35 +21,15 @@ intro: "This example shows how multiple focusmanagers can be setup. The setup is
         display: block;
         margin: 4px 0;
     }
-    .area {
-        width: 50px;
-        height: 30px;
-        border: solid 1px #666;
-        display: block;
-        margin: 5px 0;
-    }
-    .area:focus {
-        border: solid 2px #F00;
-    }
     .body-content.module p.spaced {
         margin-top: 4em;
     }
 </style>
 
-<div class="container pure-form" focusmanager="input, button, .area">
+<div class="container pure-form" fm-manage="true" fm-keyup="38" fm-keydown="40">
     <input type="text" value="first"/>
     <input type="text" value="second"/>
     <input type="checkbox" />
-    <div class='area'></div>
-    <button class="pure-button pure-button-bordered">Cancel</button>
-    <button class="pure-button pure-button-bordered">OK</button>
-</div>
-
-<div class="container pure-form" focusmanager="true">
-    <input type="text" value="first"/>
-    <input type="text" value="second"/>
-    <input type="checkbox" />
-    <div class='area'></div>
     <button class="pure-button pure-button-bordered">Cancel</button>
     <button class="pure-button pure-button-bordered">OK</button>
 </div>
@@ -61,7 +40,6 @@ intro: "This example shows how multiple focusmanagers can be setup. The setup is
 <style type="text/css">
     .container {
         width: 300px;
-        height: 250px;
         margin: 20px;
         border: solid 1px #000;
         padding: 10px;
@@ -75,38 +53,18 @@ intro: "This example shows how multiple focusmanagers can be setup. The setup is
         display: block;
         margin: 4px 0;
     }
-    .area {
-        width: 50px;
-        height: 30px;
-        border: solid 1px #666;
-        display: block;
-        margin: 5px 0;
-    }
-    .area:focus {
-        border: solid 2px #F00;
-    }
 </style>
 ```
 
 ```html
 <body>
-    <div class="container pure-form" fm-selector="input, button, .area">
-        <input type="text" value="first"/>
-        <input type="text" value="second"/>
-        <input type="checkbox" />
-        <div class='area'></div>
-        <button class="pure-button pure-button-bordered">Cancel</button>
-        <button class="pure-button pure-button-bordered">OK</button>
-    </div>
-
-    <div class="container pure-form">
-        <input type="text" value="first"/>
-        <input type="text" value="second"/>
-        <input type="checkbox" />
-        <div class='area'></div>
-        <button class="pure-button pure-button-bordered">Cancel</button>
-        <button class="pure-button pure-button-bordered">OK</button>
-    </div>
+<div class="container pure-form" fm-manage="true" fm-keyup="38" fm-keydown="40">
+    <input type="text" value="first"/>
+    <input type="text" value="second"/>
+    <input type="checkbox" />
+    <button class="pure-button pure-button-bordered">Cancel</button>
+    <button class="pure-button pure-button-bordered">OK</button>
+</div>
 </body>
 ```
 
@@ -114,10 +72,12 @@ intro: "This example shows how multiple focusmanagers can be setup. The setup is
 <script src="itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
+    document.getElement('.container').focus();
 </script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
+    document.getElement('.container').focus();
 </script>

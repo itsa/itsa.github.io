@@ -50,7 +50,7 @@ intro: "Draggable items can be dropped inside dropzones. Dronzones are HtmlEleme
         font-size: 17px;
         padding-top: 105px;
     }
-    .dropzone-awake[dropzone] {
+    .dropzone-awake[dd-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -63,9 +63,9 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
     <div class="container" dd-effect-allowed="all">movable and optional copyable</div>
 </div>
 
-<div class="drop-container" dropzone="copy">only copied items</div>
-<div class="drop-container" dropzone="move">only moved items</div>
-<div class="drop-container" dropzone="true">copied and moved items</div>
+<div class="drop-container" dd-dropzone="copy">only copied items</div>
+<div class="drop-container" dd-dropzone="move">only moved items</div>
+<div class="drop-container" dd-dropzone="true">copied and moved items</div>
 
 
 <p class="spaced">Code-example:</p>
@@ -80,7 +80,7 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
         float: left;
         position: relative;
     }
-    .dropzone-awake[dropzone] {
+    .dropzone-awake[dd-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -94,9 +94,9 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
         <div dd-effect-allowed="all">movable and optional copyable</div>
     </div>
 
-    <div class="drop-container" dropzone="copy">only copied items</div>
-    <div class="drop-container" dropzone="move">only moved items</div>
-    <div class="drop-container" dropzone="true">copied and moved items</div>
+    <div class="drop-container" dd-dropzone="copy">only copied items</div>
+    <div class="drop-container" dd-dropzone="move">only moved items</div>
+    <div class="drop-container" dd-dropzone="true">copied and moved items</div>
 </body>
 ```
 

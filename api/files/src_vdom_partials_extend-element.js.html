@@ -3429,7 +3429,7 @@ module.exports = function (window) {
             // make sure it has sizes and can be positioned
             instance.setClass([invisibleClass, BORDERBOX]);
             (instance.getInlineStyle(&#x27;display&#x27;)===&#x27;none&#x27;) &amp;&amp; instance.setClass(BLOCK);
-            constrain || (constrain=instance.getAttr(&#x27;xy-constrain&#x27;));
+            constrain || (constrain=instance.getAttr(&#x27;constrain-selector&#x27;));
             if (constrain) {
                 if (constrain===&#x27;window&#x27;) {
                     containerLeft = window.getScrollLeft();

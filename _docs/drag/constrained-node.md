@@ -2,7 +2,7 @@
 module: drag
 maintainer: Marco Asbreuk
 title: Constrained to a node
-intro: "Draggable elements can be constrained by setting the attribute <b>xy-constrain=\"css-selector\"</b>, or using javascript by using <b>node.plugin(ITSA.Plugins.NodeConstrain, {selector: 'css-selector'})</b>. The plugin does nothing more than add the right attribute to the draggable Element, and it just works.</b>"
+intro: "Draggable elements can be constrained by setting the attribute <b>constrain-selector=\"css-selector\"</b>, or using javascript by using <b>node.plugin(ITSA.Plugins.NodeConstrain, {selector: 'css-selector'})</b>. The plugin does nothing more than add the right attribute to the draggable Element, and it just works.</b>"
 ---
 
 <style type="text/css">
@@ -28,7 +28,7 @@ intro: "Draggable elements can be constrained by setting the attribute <b>xy-con
 Drag the 2 rectangles: they will be constrained to their container. The first is constrained using html, the second is set up using javascript.
 
 <div class="base-container">
-    <div class="container" dd-draggable="true" xy-constrain=".base-container"></div>
+    <div class="container" dd-draggable="true" constrain-selector=".base-container"></div>
     <div id="without" class="container" dd-draggable="true"></div>
 </div>
 
@@ -37,7 +37,7 @@ Drag the 2 rectangles: they will be constrained to their container. The first is
 ```html
 <body>
     <div class="base-container">
-        <div class="container" dd-draggable="true" xy-constrain=".base-container"></div>
+        <div class="container" dd-draggable="true" constrain-selector=".base-container"></div>
         <div id="without" class="container" dd-draggable="true"></div>
     </div>
 </body>
@@ -49,7 +49,7 @@ Drag the 2 rectangles: they will be constrained to their container. The first is
     var ITSA = require('itsa');
 
     ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
-    document.getElement('#without').plug(ITSA.Plugins.NodeConstrain, {selector: '.base-container'});
+    document.getElement('#without').plug(ITSA.Plugins.nodeConstrain, {selector: '.base-container'});
 </script>
 ```
 
@@ -58,5 +58,5 @@ Drag the 2 rectangles: they will be constrained to their container. The first is
     var ITSA = require('itsa');
 
     ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
-    document.getElement('#without').plug(ITSA.Plugins.NodeConstrain, {selector: '.base-container'});
+    document.getElement('#without').plug(ITSA.Plugins.nodeConstrain, {selector: '.base-container'});
 </script>

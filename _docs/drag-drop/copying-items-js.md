@@ -42,7 +42,7 @@ intro: "Draggable items can be dropped inside dropzones. Dronzones are HtmlEleme
         font-size: 17px;
         padding-top: 105px;
     }
-    .dropzone-awake[dropzone] {
+    .dropzone-awake[dd-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -64,7 +64,7 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
 
 ```css
 <style type="text/css">
-    .dropzone-awake[dropzone] {
+    .dropzone-awake[dd-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -103,15 +103,17 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
             else {
                 effect = 'all';
             }
-            node.plug(ITSA.Plugins.NodeDD, {effectAllowed: effect, dropzone: '.drop-container'});
+            node.plug(ITSA.Plugins.nodeDD, {effectAllowed: effect, dropzone: '.drop-container'});
         }
     );
 
     document.getAll('.drop-container').forEach(
         function(node) {
-            node.plug(ITSA.Plugins.NodeDropzone, {
-                move: (node.getText!=='only copied items'),
-                copy: (node.getText!=='only moved items')
+            var innertext = node.getText(),
+                move = (innertext!=='only copied items'),
+                copy = (innertext!=='only moved items');
+            node.plug(ITSA.Plugins.nodeDropzone, {
+                dropzone: move ? (copy ? 'true' : 'move') : 'copy'
             });
         }
     );
@@ -145,16 +147,17 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
             else {
                 effect = 'all';
             }
-            node.plug(ITSA.Plugins.NodeDD, {effectAllowed: effect, dropzone: '.drop-container'});
+            node.plug(ITSA.Plugins.nodeDD, {effectAllowed: effect, dropzone: '.drop-container'});
         }
     );
 
     document.getAll('.drop-container').forEach(
         function(node) {
-            var innertext = node.getText();
-            node.plug(ITSA.Plugins.NodeDropzone, {
-                move: (innertext!=='only copied items'),
-                copy: (innertext!=='only moved items')
+            var innertext = node.getText(),
+                move = (innertext!=='only copied items'),
+                copy = (innertext!=='only moved items');
+            node.plug(ITSA.Plugins.nodeDropzone, {
+                dropzone: move ? (copy ? 'true' : 'move') : 'copy'
             });
         }
     );

@@ -152,14 +152,14 @@ Whether the draggable HtmlElement can be moved inside a dropzone (once it gets t
 
 
 ##Draggable attributes by plugin##
-The node-plugin: `ITSA.Plugins.NodeDD` can be used as [explained here](../drag/index.html#using-plugins). However, using `drag-drop`, you can define more options at when plugin (which are all optional):
+The node-plugin: `ITSA.Plugins.nodeDD` can be used as [explained here](../drag/index.html#using-plugins). However, using `drag-drop`, you can define more options at when plugin (which are all optional):
 
 ###Define draggable with options###
 **Example**
 
 ```js
 document.getElement('#someNode').plug(
-    ITSA.Plugins.NodeDD,
+    ITSA.Plugins.nodeDD,
     {
         draggable: true,
         constrain: '.container',

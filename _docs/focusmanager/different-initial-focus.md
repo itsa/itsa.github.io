@@ -1,10 +1,9 @@
 ---
 module: focusmanager
 maintainer: Marco Asbreuk
-title: Focusmanager by plugin
-intro: "This example shows how to set up a simple focusmanagers with the plugin <b>ITSA.Plugins.focusManager</b>. Also, the config-property <b>manage</b> is changed in a way that the div-element with class <b>.area</b> can ge focus.<br><br>By setting the focus to the container, the first element gets focussed automaticly."
+title: Different initial focus
+intro: "This example shows how mark en element to be the first focusable item, which is the OK-button."
 ---
-
 
 <style type="text/css">
     .container {
@@ -22,16 +21,6 @@ intro: "This example shows how to set up a simple focusmanagers with the plugin 
         display: block;
         margin: 4px 0;
     }
-    .area {
-        width: 50px;
-        height: 30px;
-        border: solid 1px #666;
-        display: block;
-        margin: 5px 0;
-    }
-    .area:focus {
-        border: solid 2px #F00;
-    }
     .body-content.module p.spaced {
         margin-top: 4em;
     }
@@ -41,9 +30,8 @@ intro: "This example shows how to set up a simple focusmanagers with the plugin 
     <input type="text" value="first"/>
     <input type="text" value="second"/>
     <input type="checkbox" />
-    <div class='area'></div>
     <button class="pure-button pure-button-bordered">Cancel</button>
-    <button class="pure-button pure-button-bordered">OK</button>
+    <button class="pure-button pure-button-bordered" fm-defaultitem="true">OK</button>
 </div>
 
 <p class="spaced">Code-example:</p>
@@ -65,28 +53,17 @@ intro: "This example shows how to set up a simple focusmanagers with the plugin 
         display: block;
         margin: 4px 0;
     }
-    .area {
-        width: 50px;
-        height: 30px;
-        border: solid 1px #666;
-        display: block;
-        margin: 5px 0;
-    }
-    .area:focus {
-        border: solid 2px #F00;
-    }
 </style>
 ```
 
 ```html
 <body>
-<div class="container pure-form" fm-manage="true">
+<div class="container pure-form" fm-manage="true" fm-keyup="38" fm-keydown="40">
     <input type="text" value="first"/>
     <input type="text" value="second"/>
     <input type="checkbox" />
-    <div class='area'></div>
     <button class="pure-button pure-button-bordered">Cancel</button>
-    <button class="pure-button pure-button-bordered">OK</button>
+    <button class="pure-button pure-button-bordered" fm-defaultitem="true">OK</button>
 </div>
 </body>
 ```
@@ -94,19 +71,13 @@ intro: "This example shows how to set up a simple focusmanagers with the plugin 
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container = document.getElement('.container');
-
-    container.plug(ITSA.Plugins.focusManager, {manage: 'button, input, .area'});
+    var ITSA = require('itsa');
     document.getElement('.container').focus();
 </script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container = document.getElement('.container');
-
-    container.plug(ITSA.Plugins.focusManager, {manage: 'button, input, .area'});
+    var ITSA = require('itsa');
     document.getElement('.container').focus();
 </script>

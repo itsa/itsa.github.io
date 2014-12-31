@@ -2,7 +2,7 @@
 module: drag
 maintainer: Marco Asbreuk
 title: Simple draggable
-intro: "Draggable elements can be setup using the attribute <b>dd-draggable=\"true\"</b>, or using javascript by using <b>node.plugin(ITSA.Plugins.NodeDD)</b>. This example uses plain HTML. Draggable items will force the window to scroll by default when coming outside the visible area.</b>"
+intro: "Draggable elements can be setup using the attribute <b>dd-draggable=\"true\"</b>, or using javascript by using <b>node.plugin(ITSA.Plugins.nodeDD)</b>. This example uses plain HTML. Draggable items will force the window to scroll by default when coming outside the visible area.</b>"
 ---
 
 <style type="text/css">

@@ -12075,6 +12075,17 @@
         {
             "file": "src/js-ext/lib/object.js",
             "line": 238,
+            "description": "Creates a protected property on the object.",
+            "itemtype": "method",
+            "name": "protectedProp",
+            "chainable": 1,
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "lib/object.js"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 254,
             "description": "Returns a shallow copy of the object.\nIt does not clone objects within the object, it does a simple, shallow clone.\nFast, mostly useful for plain hash maps.",
             "itemtype": "method",
             "name": "shallowClone",
@@ -12088,7 +12099,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 259,
+            "line": 275,
             "description": "Compares this object with the reference-object whether they have the same value.\nNot by reference, but their content as simple types.\n\nCompares both JSON.stringify objects",
             "itemtype": "method",
             "name": "sameValue",
@@ -12109,7 +12120,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 273,
+            "line": 289,
             "description": "Returns a deep copy of the object.\nOnly handles members of primary types, Dates, Arrays and Objects.",
             "itemtype": "method",
             "name": "deepClone",
@@ -12123,7 +12134,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 295,
+            "line": 311,
             "description": "Transforms the object into an array with  'key/value' objects",
             "example": [
                 "\n{country: 'USA', Continent: 'North America'} --> [{key: 'country', value: 'USA'}, {key: 'Continent', value: 'North America'}]"
@@ -12162,7 +12173,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 320,
+            "line": 336,
             "description": "Merges into this object the properties of the given object.\nIf the second argument is true, the properties on the source object will be overwritten\nby those of the second object of the same name, otherwise, they are preserved.",
             "itemtype": "method",
             "name": "merge",
@@ -12185,7 +12196,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 343,
+            "line": 359,
             "description": "Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object",
             "itemtype": "method",
             "name": "isObject",
@@ -12199,7 +12210,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 353,
+            "line": 369,
             "description": "Returns a new object resulting of merging the properties of the given objects.\nThe copying is shallow, complex properties will reference the very same object.\nProperties in later objects do **not overwrite** properties of the same name in earlier objects.\nIf any of the objects is missing, it will be skiped.",
             "example": [
                 "\n\n var foo = function (config) {\n      config = Object.merge(config, defaultConfig);\n }"
@@ -13718,7 +13729,7 @@
         },
         {
             "file": "src/vdom/partials/element-plugin.js",
-            "line": 52,
+            "line": 51,
             "description": "Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.",
             "itemtype": "method",
             "name": "plug",
@@ -13729,8 +13740,8 @@
                     "type": "NodePlugin"
                 },
                 {
-                    "name": "options",
-                    "description": "any options that should be passed through when the class is instantiated.",
+                    "name": "config",
+                    "description": "any config that should be passed through when the class is instantiated.",
                     "type": "Object"
                 }
             ],
@@ -13742,7 +13753,7 @@
         },
         {
             "file": "src/vdom/partials/element-plugin.js",
-            "line": 67,
+            "line": 65,
             "description": "Unplugs a NodePlugin from the HtmlElement.",
             "itemtype": "method",
             "name": "unplug",

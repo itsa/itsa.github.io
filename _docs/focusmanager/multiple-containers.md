@@ -2,13 +2,12 @@
 module: focusmanager
 maintainer: Marco Asbreuk
 title: Multiple focusmanagers
-intro: "This example shows how multiple focusmanagers can be setup. The setup is done by HTML. You can easily switch between the two containers: their state gets reserved. Because of the <b>.focussed</b> class, the container that holds a focussed element gets highlighted. Notice the difference between the tow containers: only the first will focus the area-element."
+intro: "This example shows how multiple focusmanagers can be setup. The setup is done by HTML. You can easily switch between the two containers: their state gets reserved. Because of the <b>.focussed</b> class, the container that holds a focussed element gets highlighted. Notice the difference between the two containers: only the first will focus the area-element."
 ---
 
 <style type="text/css">
     .container {
         width: 300px;
-        height: 250px;
         margin: 20px;
         border: solid 1px #000;
         padding: 10px;
@@ -37,7 +36,7 @@ intro: "This example shows how multiple focusmanagers can be setup. The setup is
     }
 </style>
 
-<div class="container pure-form" focusmanager="input, button, .area">
+<div class="container pure-form" fm-manage="input, button, .area">
     <input type="text" value="first"/>
     <input type="text" value="second"/>
     <input type="checkbox" />
@@ -46,7 +45,7 @@ intro: "This example shows how multiple focusmanagers can be setup. The setup is
     <button class="pure-button pure-button-bordered">OK</button>
 </div>
 
-<div class="container pure-form" focusmanager="true">
+<div class="container pure-form" fm-manage="true">
     <input type="text" value="first"/>
     <input type="text" value="second"/>
     <input type="checkbox" />
@@ -61,7 +60,6 @@ intro: "This example shows how multiple focusmanagers can be setup. The setup is
 <style type="text/css">
     .container {
         width: 300px;
-        height: 250px;
         margin: 20px;
         border: solid 1px #000;
         padding: 10px;

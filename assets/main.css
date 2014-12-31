@@ -201,7 +201,7 @@ div.paragraph {
 }
 
 /* restore pure-button:active */
-.pure-button.pure-button-bordered.pure-button:active,
+.pure-button.pure-button-bordered:active,
 .pure-button.pure-button-bordered.pure-button-active,
 .pure-button.pure-button-active:focus {
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15) inset, 0 0 6px rgba(0, 0, 0, 0.2) inset;

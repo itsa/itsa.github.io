@@ -227,7 +227,7 @@ var NAME = &#x27;[drag]: &#x27;,
     DD_MASTER_CLASS = DD_MINUS+&#x27;master&#x27;,
     DD_HANDLE = DD_MINUS+&#x27;handle&#x27;,
     DD_DROPZONE_MOVABLE = DD_MINUS+&#x27;dropzone-movable&#x27;,
-    CONSTRAIN_ATTR = &#x27;xy-constrain&#x27;,
+    CONSTRAIN_ATTR = &#x27;constrain-selector&#x27;,
     MOUSE = &#x27;mouse&#x27;,
     DROPZONE = &#x27;dropzone&#x27;,
     NO_TRANS_CLASS = &#x27;el-notrans&#x27;, // delivered by &#x60;vdom&#x60;
@@ -283,12 +283,12 @@ module.exports = function (window) {
     }
 
     var Event = require(&#x27;event-dom&#x27;)(window),
-        NodePlugin = require(&#x27;vdom&#x27;)(window).Plugins.NodePlugin,
+        nodePlugin = require(&#x27;vdom&#x27;)(window).Plugins.nodePlugin,
         isMobile = require(&#x27;useragent&#x27;)(window).isMobile,
         bodyNode = window.document.body,
         supportHammer = !!Event.Hammer,
         mobileEvents = supportHammer &amp;&amp; isMobile,
-        DD, NodeDD, DD_Object;
+        DD, DD_Object;
 
     require(&#x27;window-ext&#x27;)(window);
 
@@ -767,7 +767,7 @@ module.exports = function (window) {
                     e.target = foundNode;
                     // Mark the delegated node, so it has the same style as [draggable]:
                     foundNode.setClass(DEL_DRAGGABLE);
-                    // We must transport the other relevant dd-attributes (and xy-constrain)
+                    // We must transport the other relevant dd-attributes (and constrain-selector)
                     // which we will remove when finished dragging:
                     PLUGIN_ATTRS.forEach(function(attribute) {
                         var attr = container.getAttr(attribute);
@@ -844,24 +844,10 @@ module.exports = function (window) {
 
     };
 
-    NodeDD = NodePlugin.subClass(
-        function (config) {
-            var instance = this;
-            config || (config={});
-            instance[DD_MINUSDRAGGABLE] = config.draggable || true;
-            instance[DD_MINUS+DROPZONE] = config.dropzone;
-            instance[CONSTRAIN_ATTR] = config.constrain;
-            instance[DD_EMITTER] = config.emitter;
-            instance[DD_HANDLE] = config.handle;
-            instance[DD_EFFECT_ALLOWED] = config.effectAllowed;
-            instance[DD_DROPZONE_MOVABLE] = config.dropzoneMovable;
-        }
-    );
-
     DD_Object = window._ITSAmodules.Drag = {
         DD: DD,
         Plugins: {
-            NodeDD: NodeDD
+            nodeDD: nodePlugin.definePlugin(&#x27;dd&#x27;, {draggable: &#x27;true&#x27;})
         }
     };
 
