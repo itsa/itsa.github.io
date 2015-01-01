@@ -2,7 +2,7 @@
 module: focusmanager
 maintainer: Marco Asbreuk
 title: Focusmanager by plugin
-intro: "This example shows how to set up a simple focusmanagers with the plugin <b>ITSA.Plugins.focusManager</b>. Also, the config-property <b>manage</b> is changed in a way that the div-element with class <b>.area</b> can ge focus.<br><br>By setting the focus to the container, the first element gets focussed automaticly. Looping through the focussable items can be done by the tab-keys - which is the default."
+intro: "This example shows how to set up a simple focusmanagers with the plugin <b>ITSA.Plugins.focusManager</b>. Also, the config-property <b>manage</b> is changed in a way that the div-element with class <b>.area</b> can get focus.<br><br>By setting the focus to the container, the first element gets focussed automaticly. Looping through the focussable items can be done by the tab-keys - which is the default."
 ---
 
 

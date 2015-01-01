@@ -18298,7 +18298,7 @@
         {
             "file": "src/vdom/partials/vnode.js",
             "line": 1029,
-            "description": "Adds a vnode to the end of the list of vChildNodes.\n\nSyns with the DOM.",
+            "description": "Adds a vnode to the end of the list of vChildNodes.\n\nSyncs with the DOM.",
             "itemtype": "method",
             "name": "_appendChild",
             "params": [
@@ -18350,7 +18350,7 @@
         {
             "file": "src/vdom/partials/vnode.js",
             "line": 1120,
-            "description": "Inserts `newVNode` before `refVNode`.\n\nSyns with the DOM.",
+            "description": "Inserts `newVNode` before `refVNode`.\n\nSyncs with the DOM.",
             "itemtype": "method",
             "name": "_insertBefore",
             "params": [
@@ -18476,7 +18476,7 @@
         {
             "file": "src/vdom/partials/vnode.js",
             "line": 1268,
-            "description": "Removes the vnode's child-vnode from its vChildren and the DOM.\n\nSyns with the DOM.",
+            "description": "Removes the vnode's child-vnode from its vChildren and the DOM.\n\nSyncs with the DOM.",
             "itemtype": "method",
             "name": "removeChild",
             "params": [
@@ -18495,7 +18495,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1285,
+            "line": 1295,
             "description": "Replaces the current vnode at the parent.vChildNode list by `newVNode`\n\nDoes NOT sync with the dom.",
             "itemtype": "method",
             "name": "_replaceAtParent",
@@ -18516,7 +18516,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1309,
+            "line": 1319,
             "description": "Sets the attribute of both the vnode as well as its related dom-node.\n\nSyncs with the dom.",
             "itemtype": "method",
             "name": "_setAttr",
@@ -18542,7 +18542,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1365,
+            "line": 1375,
             "description": "Redefines the attributes of both the vnode as well as its related dom-node. The new\ndefinition replaces any previous attributes (without touching unmodified attributes).\n\nSyncs the new vnode's attributes with the dom.",
             "itemtype": "method",
             "name": "_setAttrs",
@@ -18563,7 +18563,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1421,
+            "line": 1431,
             "description": "Redefines the childNodes of both the vnode as well as its related dom-node. The new\ndefinition replaces any previous nodes. (without touching unmodified nodes).\n\nSyncs the new vnode's childNodes with the dom.",
             "itemtype": "method",
             "name": "_setChildNodes",
@@ -18584,7 +18584,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1567,
+            "line": 1577,
             "description": "A hash of all the `attributes` of the vnode's representing dom-node.",
             "itemtype": "property",
             "name": "attrs",
@@ -18596,7 +18596,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1575,
+            "line": 1585,
             "description": "Hash with all the classes of the vnode. Every class represents a key, all values are set `true`.",
             "itemtype": "property",
             "name": "classNames",
@@ -18608,7 +18608,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1583,
+            "line": 1593,
             "description": "The `id` of the vnode's representing dom-node (if any).",
             "itemtype": "property",
             "name": "id",
@@ -18620,7 +18620,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1591,
+            "line": 1601,
             "description": "Tells whether tag is a void Element. Examples are: `br`, `img` and `input`. Non-void Elements are f.e. `div` and `table`.\nFor TextNodes and CommentNodes, this property is `undefined`.",
             "itemtype": "property",
             "name": "isVoid",
@@ -18632,7 +18632,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1600,
+            "line": 1610,
             "description": "The `nodeType` of the vnode's representing dom-node (1===ElementNode, 3===TextNode, 8===CommentNode).",
             "itemtype": "property",
             "name": "nodeType",
@@ -18644,7 +18644,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1608,
+            "line": 1618,
             "description": "The `tag` of the vnode's representing dom-node (allways uppercase).",
             "itemtype": "property",
             "name": "tag",
@@ -18656,7 +18656,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1616,
+            "line": 1626,
             "description": "The `content` of the vnode's representing dom-node, in case it is a TextNode or CommentNode.\nEquals dom-node.nodeValue.\n\nIs `undefined` for ElementNodes.",
             "itemtype": "property",
             "name": "text",
@@ -18668,7 +18668,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1627,
+            "line": 1637,
             "description": "Hash with all the childNodes (vnodes). vChildNodes are any kind of vnodes (nodeType===1, 3 or 8)",
             "itemtype": "property",
             "name": "vChildNodes",
@@ -18680,7 +18680,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1635,
+            "line": 1645,
             "description": "The underlying `dom-node` that the vnode represents.",
             "itemtype": "property",
             "name": "domNode",
@@ -18692,7 +18692,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1643,
+            "line": 1653,
             "description": "vnode's parentNode (defined as a vnode itself).",
             "itemtype": "property",
             "name": "vParent",
@@ -18704,7 +18704,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1652,
+            "line": 1662,
             "description": "Gets or sets the innerHTML of both the vnode as well as the representing dom-node.\n\nThe setter syncs with the DOM.",
             "itemtype": "property",
             "name": "innerHTML",
@@ -18716,7 +18716,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1690,
+            "line": 1700,
             "description": "Gets or sets the innerHTML of both the vnode as well as the representing dom-node.\n\nThe setter syncs with the DOM.",
             "itemtype": "property",
             "name": "nodeValue",
@@ -18728,7 +18728,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1714,
+            "line": 1724,
             "description": "Gets or sets the outerHTML of both the vnode as well as the representing dom-node.\n\nThe setter syncs with the DOM.",
             "itemtype": "property",
             "name": "outerHTML",
@@ -18740,7 +18740,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1811,
+            "line": 1821,
             "description": "Gets or sets the innerContent of the Node as plain text.\n\nThe setter syncs with the DOM.",
             "itemtype": "property",
             "name": "textContent",
@@ -18752,7 +18752,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1850,
+            "line": 1860,
             "description": "Hash with all the children (vnodes). vChildren are vnodes that have a representing dom-node that is an HtmlElement (nodeType===1)",
             "itemtype": "property",
             "name": "vChildren",
@@ -18764,7 +18764,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1875,
+            "line": 1885,
             "description": "Reference to the first of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vFirst",
@@ -18776,7 +18776,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1892,
+            "line": 1902,
             "description": "Reference to the first vChildNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vFirstChild",
@@ -18788,7 +18788,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1905,
+            "line": 1915,
             "description": "Reference to the first of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "property",
             "name": "vFirstElement",
@@ -18800,7 +18800,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1922,
+            "line": 1932,
             "description": "Reference to the first vChild, where the related dom-node an Element (nodeType===1).",
             "itemtype": "property",
             "name": "vFirstElementChild",
@@ -18812,7 +18812,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1935,
+            "line": 1945,
             "description": "Reference to the last of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vLast",
@@ -18824,7 +18824,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1952,
+            "line": 1962,
             "description": "Reference to the last vChildNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vLastChild",
@@ -18836,7 +18836,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1966,
+            "line": 1976,
             "description": "Reference to the last of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "property",
             "name": "vLastElement",
@@ -18848,7 +18848,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1983,
+            "line": 1993,
             "description": "Reference to the last vChild, where the related dom-node an Element (nodeType===1).",
             "itemtype": "property",
             "name": "vLastElementChild",
@@ -18860,7 +18860,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1997,
+            "line": 2007,
             "description": "the Parent vnode",
             "itemtype": "property",
             "name": "vParent",
@@ -18872,7 +18872,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2005,
+            "line": 2015,
             "description": "Reference to the next of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vNext",
@@ -18884,7 +18884,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2018,
+            "line": 2028,
             "description": "Reference to the next of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "property",
             "name": "vNextElement",
@@ -18896,7 +18896,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2031,
+            "line": 2041,
             "description": "Reference to the previous of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vPrevious",
@@ -18908,7 +18908,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2044,
+            "line": 2054,
             "description": "Reference to the previous of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "property",
             "name": "vPreviousElement",

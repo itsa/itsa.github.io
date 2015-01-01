@@ -8796,10 +8796,12 @@ module.exports = function (window) {
         keys = actionkey.split('+');
         len = keys.length;
         lastIndex = len - 1;
-        enterPressedOnInput = (keyCode===13) &&
-                              (sourceNode.getTagName()==='INPUT') &&
-                              (inputType=sourceNode.getAttr('type').toLowerCase())
-                              ((inputType==='text') || (inputType==='password'));
+
+        if ((keyCode===13) && (sourceNode.getTagName()==='INPUT')) {
+            inputType = sourceNode.getAttr('type').toLowerCase();
+            enterPressedOnInput = (inputType==='text') || (inputType==='password');
+        }
+
         if (enterPressedOnInput) {
             // check if we need to press the primary button - if available
 /*jshint boss:true */
@@ -8849,17 +8851,24 @@ module.exports = function (window) {
 
     markAsFocussed = function(focusContainerNode, node) {
         console.log(NAME+'markAsFocussed');
+        var selector = getFocusManagerSelector(focusContainerNode),
+            index;
+
         focusContainerNode.getAll('[fm-lastitem]').removeAttr('fm-lastitem');
         node.setAttrs([
             {name: 'tabIndex', value: '0'},
             {name: 'fm-lastitem', value: true}
         ]);
+        // also store the lastitem's index --> in case the node gets removed,
+        // a refocus on the container will set the focus to the nearest item
+        index = focusContainerNode.getAll(selector).indexOf(node) || 0;
+        focusContainerNode.setAttr('fm-lastitem-bpk', index);
     };
 
     searchFocusNode = function(initialNode) {
         console.log(NAME+'searchFocusNode');
         var focusContainerNode = initialNode.hasAttr('fm-manage') ? initialNode : initialNode.inside('[fm-manage]'),
-            focusNode, alwaysDefault, fmAlwaysDefault;
+            focusNode, alwaysDefault, fmAlwaysDefault, selector, allFocusableNodes, index;
 
         if (focusContainerNode) {
             if (initialNode.matches(getFocusManagerSelector(focusContainerNode))) {
@@ -8871,9 +8880,25 @@ module.exports = function (window) {
 /*jshint boss:true */
                 alwaysDefault = ((fmAlwaysDefault=focusContainerNode.getAttr('fm-alwaysdefault')) && (fmAlwaysDefault.toLowerCase()==='true'));
 /*jshint boss:false */
-                focusNode = focusContainerNode.getElement(alwaysDefault ? '[fm-defaultitem="true"]' : '[fm-lastitem="true"]') ||
-                            focusContainerNode.getElement(alwaysDefault ? '[fm-lastitem="true"]' : '[fm-defaultitem="true"]') ||
-                            focusContainerNode.getElement(getFocusManagerSelector(focusContainerNode));
+                alwaysDefault && (focusNode=focusContainerNode.getElement('[fm-defaultitem="true"]'));
+                if (!focusNode) {
+                    // search for last item
+                    focusNode = focusContainerNode.getElement('[fm-lastitem="true"]');
+                    if (!focusNode) {
+                        // set `selector` right now: we might use it later on even when index is undefined
+                        selector = getFocusManagerSelector(focusContainerNode);
+                        // look at the lastitemindex of the focuscontainer
+                        index = focusContainerNode.getAttr('fm-lastitem-bpk');
+                        if (index!==undefined) {
+                            allFocusableNodes = focusContainerNode.getAll(selector);
+                            focusNode = allFocusableNodes[index];
+                        }
+                    }
+                }
+                // still not found and alwaysDefault was falsy: try the defualt node:
+                !focusNode && !alwaysDefault && (focusNode=focusContainerNode.getElement('[fm-defaultitem="true"]'));
+                // still not found: try the first focussable node (which we might find inside `allFocusableNodes`:
+                !focusNode && (focusNode = allFocusableNodes ? allFocusableNodes[0] : focusContainerNode.getElement(selector));
                 if (focusNode) {
                     markAsFocussed(focusContainerNode, focusNode);
                 }
@@ -16292,7 +16317,7 @@ module.exports = function (window) {
             var instance = this,
                 vnode = instance.vnode;
             (value==='') && (value=null);
-            value ? vnode._setAttr(attributeName, value) : vnode._removeAttr(attributeName);
+            ((value!==null) && (value!==undefined)) ? vnode._setAttr(attributeName, value) : vnode._removeAttr(attributeName);
         };
 
        /**
@@ -19485,7 +19510,7 @@ module.exports = function (window) {
         /**
          * Adds a vnode to the end of the list of vChildNodes.
          *
-         * Syns with the DOM.
+         * Syncs with the DOM.
          *
          * @method _appendChild
          * @param VNode {vnode} vnode to append
@@ -19576,7 +19601,7 @@ module.exports = function (window) {
         /**
          * Inserts `newVNode` before `refVNode`.
          *
-         * Syns with the DOM.
+         * Syncs with the DOM.
          *
          * @method _insertBefore
          * @param newVNode {vnode} vnode to insert
@@ -19724,7 +19749,7 @@ module.exports = function (window) {
         /**
         * Removes the vnode's child-vnode from its vChildren and the DOM.
         *
-         * Syns with the DOM.
+         * Syncs with the DOM.
          *
         * @method removeChild
         * @param VNode {vnode} the child-vnode to remove
@@ -19732,10 +19757,20 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         _removeChild: function(VNode) {
-            var instance = this;
+            var instance = this,
+                domNode = VNode.domNode,
+                hadFocus = domNode.hasFocus() && (VNode.attrs['fm-lastitem']==='true'),
+                parentVNode = VNode.vParent;
             VNode._destroy();
             instance.domNode._removeChild(VNode.domNode);
             instance._normalize();
+            // now, reset the focus on focusmanager when needed:
+            if (hadFocus) {
+                while (parentVNode && !parentVNode.attrs['fm-manage']) {
+                    parentVNode = parentVNode.vParent;
+                }
+                parentVNode && parentVNode.domNode.focus();
+            }
         },
 
        /**

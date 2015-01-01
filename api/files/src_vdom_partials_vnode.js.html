@@ -1229,7 +1229,7 @@ module.exports = function (window) {
         /**
          * Adds a vnode to the end of the list of vChildNodes.
          *
-         * Syns with the DOM.
+         * Syncs with the DOM.
          *
          * @method _appendChild
          * @param VNode {vnode} vnode to append
@@ -1320,7 +1320,7 @@ module.exports = function (window) {
         /**
          * Inserts &#x60;newVNode&#x60; before &#x60;refVNode&#x60;.
          *
-         * Syns with the DOM.
+         * Syncs with the DOM.
          *
          * @method _insertBefore
          * @param newVNode {vnode} vnode to insert
@@ -1468,7 +1468,7 @@ module.exports = function (window) {
         /**
         * Removes the vnode&#x27;s child-vnode from its vChildren and the DOM.
         *
-         * Syns with the DOM.
+         * Syncs with the DOM.
          *
         * @method removeChild
         * @param VNode {vnode} the child-vnode to remove
@@ -1476,10 +1476,20 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         _removeChild: function(VNode) {
-            var instance = this;
+            var instance = this,
+                domNode = VNode.domNode,
+                hadFocus = domNode.hasFocus() &amp;&amp; (VNode.attrs[&#x27;fm-lastitem&#x27;]===&#x27;true&#x27;),
+                parentVNode = VNode.vParent;
             VNode._destroy();
             instance.domNode._removeChild(VNode.domNode);
             instance._normalize();
+            // now, reset the focus on focusmanager when needed:
+            if (hadFocus) {
+                while (parentVNode &amp;&amp; !parentVNode.attrs[&#x27;fm-manage&#x27;]) {
+                    parentVNode = parentVNode.vParent;
+                }
+                parentVNode &amp;&amp; parentVNode.domNode.focus();
+            }
         },
 
        /**
