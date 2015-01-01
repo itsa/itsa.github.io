@@ -37,7 +37,7 @@ intro: "This example shows how to set up a simple focusmanagers with the plugin 
     }
 </style>
 
-<div class="container pure-form" fm-manage="true">
+<div class="container pure-form">
     <input type="text" value="first"/>
     <input type="text" value="second"/>
     <input type="checkbox" />
@@ -80,14 +80,14 @@ intro: "This example shows how to set up a simple focusmanagers with the plugin 
 
 ```html
 <body>
-<div class="container pure-form" fm-manage="true">
-    <input type="text" value="first"/>
-    <input type="text" value="second"/>
-    <input type="checkbox" />
-    <div class='area'></div>
-    <button class="pure-button pure-button-bordered">Cancel</button>
-    <button class="pure-button pure-button-bordered">OK</button>
-</div>
+    <div class="container pure-form">
+        <input type="text" value="first"/>
+        <input type="text" value="second"/>
+        <input type="checkbox" />
+        <div class='area'></div>
+        <button class="pure-button pure-button-bordered">Cancel</button>
+        <button class="pure-button pure-button-bordered">OK</button>
+    </div>
 </body>
 ```
 
