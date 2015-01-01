@@ -59,13 +59,13 @@ intro: "This example shows how to set up a simple focusmanagers with plain HTML.
 
 ```html
 <body>
-<div class="container pure-form" fm-manage="true">
-    <input type="text" value="first"/>
-    <input type="text" value="second"/>
-    <input type="checkbox" />
-    <button class="pure-button pure-button-bordered">Cancel</button>
-    <button class="pure-button pure-button-bordered">OK</button>
-</div>
+    <div class="container pure-form" fm-manage="true">
+        <input type="text" value="first"/>
+        <input type="text" value="second"/>
+        <input type="checkbox" />
+        <button class="pure-button pure-button-bordered">Cancel</button>
+        <button class="pure-button pure-button-bordered">OK</button>
+    </div>
 </body>
 ```
 

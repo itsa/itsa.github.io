@@ -8747,7 +8747,7 @@ require('polyfill');
 
 var NAME = '[focusmanager]: ',
     async = require('utils').async,
-    DEFAULT_SELECTOR = 'input, button, select, .focusable',
+    DEFAULT_SELECTOR = 'input, button, select, textarea, .focusable',
     SPECIAL_KEYS = {
         shift: 'shiftKey',
         ctrl: 'ctrlKey',
@@ -8763,7 +8763,7 @@ var NAME = '[focusmanager]: ',
 module.exports = function (window) {
 
     var DOCUMENT = window.document,
-        nodePlugin, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed, getFocusManagerSelector;
+        nodePlugin, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed, getFocusManagerSelector, setupEvents;
 
     if (!window._ITSAmodules) {
         Object.defineProperty(window, '_ITSAmodules', {
@@ -8791,11 +8791,15 @@ module.exports = function (window) {
 
     nextFocusNode = function(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, downwards) {
         console.log(NAME+'nextFocusNode');
-        var keys, lastIndex, i, specialKeysMatch, specialKey, len, enterPressedOnInput, primaryButtons, foundNode, formNode, primaryonenter;
+        var keys, lastIndex, i, specialKeysMatch, specialKey, len, enterPressedOnInput, primaryButtons,
+            inputType, foundNode, formNode, primaryonenter;
         keys = actionkey.split('+');
         len = keys.length;
         lastIndex = len - 1;
-        enterPressedOnInput = (keyCode===13) && (sourceNode.getTagName()==='INPUT') && (sourceNode.getAttr('type').toLowerCase()==='text');
+        enterPressedOnInput = (keyCode===13) &&
+                              (sourceNode.getTagName()==='INPUT') &&
+                              (inputType=sourceNode.getAttr('type').toLowerCase())
+                              ((inputType==='text') || (inputType==='password'));
         if (enterPressedOnInput) {
             // check if we need to press the primary button - if available
 /*jshint boss:true */
@@ -8884,133 +8888,139 @@ module.exports = function (window) {
         return focusNode;
     };
 
-    Event.before('keydown', function(e) {
-        console.log(NAME+'before keydown-event');
-        var focusContainerNode,
-            sourceNode = e.target,
-            node = sourceNode.getParent(),
-            selector, keyCode, actionkey, focusNode;
+    setupEvents = function() {
 
-        focusContainerNode = sourceNode.inside('[fm-manage]');
-        if (focusContainerNode) {
-            // key was pressed inside a focusmanagable container
-            selector = getFocusManagerSelector(focusContainerNode);
-            keyCode = e.keyCode;
+        Event.before('keydown', function(e) {
+            console.log(NAME+'before keydown-event');
+            var focusContainerNode,
+                sourceNode = e.target,
+                node = sourceNode.getParent(),
+                selector, keyCode, actionkey, focusNode;
 
-            // first check for keydown:
-            actionkey = node.getAttr('fm-keydown') || DEFAULT_KEYDOWN;
-            focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, true);
-            if (!focusNode) {
-                // check for keyup:
-                actionkey = node.getAttr('fm-keyup') || DEFAULT_KEYUP;
-                focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector);
+            focusContainerNode = sourceNode.inside('[fm-manage]');
+            if (focusContainerNode) {
+                // key was pressed inside a focusmanagable container
+                selector = getFocusManagerSelector(focusContainerNode);
+                keyCode = e.keyCode;
+
+                // first check for keydown:
+                actionkey = node.getAttr('fm-keydown') || DEFAULT_KEYDOWN;
+                focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, true);
+                if (!focusNode) {
+                    // check for keyup:
+                    actionkey = node.getAttr('fm-keyup') || DEFAULT_KEYUP;
+                    focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector);
+                }
+                if (focusNode) {
+                    e.preventDefaultContinue();
+                    // prevent default action --> we just want to re-focus, but we DO want afterlisteners
+                    // to be handled in the after-listener: someone else might want to halt the keydown event.
+                    sourceNode.matches(selector) && (e._focusNode=focusNode);
+                }
             }
-            if (focusNode) {
-                e.preventDefaultContinue();
-                // prevent default action --> we just want to re-focus, but we DO want afterlisteners
-                // to be handled in the after-listener: someone else might want to halt the keydown event.
-                sourceNode.matches(selector) && (e._focusNode=focusNode);
+        });
+
+        Event.after('keydown', function(e) {
+            console.log(NAME+'after keydown-event');
+            var focusNode = e._focusNode;
+            focusNode && focusNode.focus && focusNode.focus();
+        });
+
+        Event.after('blur', function(e) {
+            console.log(NAME+'after blur-event');
+            var node = e.target,
+                body = DOCUMENT.body;
+            if (node && node.removeAttr) {
+                node.removeAttr('tabIndex');
+                do {
+                    node.removeClass('focussed');
+                    node = (node===body) ? null : node.getParent();
+                } while (node);
             }
-        }
-    });
+        });
 
-    Event.after('keydown', function(e) {
-        console.log(NAME+'after keydown-event');
-        var focusNode = e._focusNode;
-        focusNode && focusNode.focus && focusNode.focus();
-    });
-
-    Event.after('blur', function(e) {
-        console.log(NAME+'after blur-event');
-        var node = e.target,
-            body = DOCUMENT.body;
-        if (node && node.removeAttr) {
-            node.removeAttr('tabIndex');
-            do {
-                node.removeClass('focussed');
-                node = (node===body) ? null : node.getParent();
-            } while (node);
-        }
-    });
-
-    Event.after('focus', function(e) {
-        console.log(NAME+'after focus-event');
-        var node = e.target,
-            body = DOCUMENT.body;
-        if (node && node.setClass) {
-            do {
-                node.setClass('focussed');
-                node = (node===body) ? null : node.getParent();
-            } while (node);
-        }
-    });
-
-    Event.after(['mousedown', 'press'], function(e) {
-        console.log(NAME+'after focus-event');
-        var node = e.target;
-        node.hasFocus() || node.focus();
-    }, 'button');
-
-    Event.after('tap', function(e) {
-        console.log(NAME+'after tap-event');
-        var focusNode = e.target,
-            focusContainerNode;
-
-        if (focusNode && focusNode.inside) {
-            focusContainerNode = focusNode.hasAttr('fm-manage') ? focusNode : focusNode.inside('[fm-manage]');
-        }
-        if (focusContainerNode) {
-            if ((focusNode===focusContainerNode) || !focusNode.matches(getFocusManagerSelector(focusContainerNode))) {
-                focusNode = searchFocusNode(focusNode);
+        Event.after('focus', function(e) {
+            console.log(NAME+'after focus-event');
+            var node = e.target,
+                body = DOCUMENT.body;
+            if (node && node.setClass) {
+                do {
+                    node.setClass('focussed');
+                    node = (node===body) ? null : node.getParent();
+                } while (node);
             }
-            if (focusNode.hasFocus()) {
-                markAsFocussed(focusContainerNode, focusNode);
+        });
+
+        // focus-fix for keeping focus when a mouse gets down for a longer time
+        Event.after(['mousedown', 'press'], function(e) {
+            console.log(NAME+'after focus-event');
+            var node = e.target;
+            node.hasFocus() || node.focus();
+        }, 'button');
+
+        Event.after('tap', function(e) {
+            console.log(NAME+'after tap-event');
+            var focusNode = e.target,
+                focusContainerNode;
+
+            if (focusNode && focusNode.inside) {
+                focusContainerNode = focusNode.hasAttr('fm-manage') ? focusNode : focusNode.inside('[fm-manage]');
             }
-            else {
-                focusNode.focus();
+            if (focusContainerNode) {
+                if ((focusNode===focusContainerNode) || !focusNode.matches(getFocusManagerSelector(focusContainerNode))) {
+                    focusNode = searchFocusNode(focusNode);
+                }
+                if (focusNode.hasFocus()) {
+                    markAsFocussed(focusContainerNode, focusNode);
+                }
+                else {
+                    focusNode.focus();
+                }
             }
-        }
-    });
+        });
 
-    Event.after(['keypress', 'mouseup', 'panup', 'mousedown', 'pandown'], function(e) {
-        console.log(NAME+'after '+e.type+'-event');
-        var focusContainerNode,
-            sourceNode = e.target,
-            selector;
+        Event.after(['keypress', 'mouseup', 'panup', 'mousedown', 'pandown'], function(e) {
+            console.log(NAME+'after '+e.type+'-event');
+            var focusContainerNode,
+                sourceNode = e.target,
+                selector;
 
-        focusContainerNode = sourceNode.inside('[fm-manage]');
-        if (focusContainerNode) {
-            // key was pressed inside a focusmanagable container
-            selector = getFocusManagerSelector(focusContainerNode);
-            if (sourceNode.matches(selector)) {
-                sourceNode.setAttr(FM_SELECTION_START, sourceNode.selectionStart || '0')
-                          .setAttr(FM_SELECTION_END, sourceNode.selectionEnd || '0');
+            focusContainerNode = sourceNode.inside('[fm-manage]');
+            if (focusContainerNode) {
+                // key was pressed inside a focusmanagable container
+                selector = getFocusManagerSelector(focusContainerNode);
+                if (sourceNode.matches(selector)) {
+                    sourceNode.setAttr(FM_SELECTION_START, sourceNode.selectionStart || '0')
+                              .setAttr(FM_SELECTION_END, sourceNode.selectionEnd || '0');
+                }
             }
-        }
-    }, 'input[type="text"], textarea');
+        }, 'input[type="text"], textarea');
 
-    Event.after('focus', function(e) {
-        console.log(NAME+'after focus-event');
-        var focusContainerNode,
-            sourceNode = e.target,
-            selector, selectionStart, selectionEnd;
+        Event.after('focus', function(e) {
+            console.log(NAME+'after focus-event');
+            var focusContainerNode,
+                sourceNode = e.target,
+                selector, selectionStart, selectionEnd;
 
-        focusContainerNode = sourceNode.inside('[fm-manage]');
-        if (focusContainerNode) {
-            // key was pressed inside a focusmanagable container
-            selector = getFocusManagerSelector(focusContainerNode);
-            if (sourceNode.matches(selector)) {
-                // cautious: fm-selectionstart can be 0 --> which would lead into a falsy value
-                selectionStart = sourceNode.getAttr(FM_SELECTION_START);
-                (selectionStart===undefined) && (selectionStart=sourceNode.getValue().length);
-                selectionEnd = Math.max(sourceNode.getAttr(FM_SELECTION_END) || selectionStart, selectionStart);
-                sourceNode.selectionEnd = selectionEnd;
-                sourceNode.selectionStart = selectionStart;
-                markAsFocussed(focusContainerNode, sourceNode);
+            focusContainerNode = sourceNode.inside('[fm-manage]');
+            if (focusContainerNode) {
+                // key was pressed inside a focusmanagable container
+                selector = getFocusManagerSelector(focusContainerNode);
+                if (sourceNode.matches(selector)) {
+                    // cautious: fm-selectionstart can be 0 --> which would lead into a falsy value
+                    selectionStart = sourceNode.getAttr(FM_SELECTION_START);
+                    (selectionStart===undefined) && (selectionStart=sourceNode.getValue().length);
+                    selectionEnd = Math.max(sourceNode.getAttr(FM_SELECTION_END) || selectionStart, selectionStart);
+                    sourceNode.selectionEnd = selectionEnd;
+                    sourceNode.selectionStart = selectionStart;
+                    markAsFocussed(focusContainerNode, sourceNode);
+                }
             }
-        }
-    }, 'input[type="text"], textarea');
+        }, 'input[type="text"], textarea');
 
+    };
+
+    setupEvents();
 
     window._ITSAmodules.FocusManager = FocusManager = nodePlugin.definePlugin('fm', {manage: 'true'});
 

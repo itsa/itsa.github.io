@@ -58,13 +58,13 @@ intro: "This example shows how mark en element to be the first focusable item, w
 
 ```html
 <body>
-<div class="container pure-form" fm-manage="true" fm-keyup="38" fm-keydown="40">
-    <input type="text" value="first"/>
-    <input type="text" value="second"/>
-    <input type="checkbox" />
-    <button class="pure-button pure-button-bordered">Cancel</button>
-    <button class="pure-button pure-button-bordered" fm-defaultitem="true">OK</button>
-</div>
+    <div class="container pure-form" fm-manage="true" fm-keyup="38" fm-keydown="40">
+        <input type="text" value="first"/>
+        <input type="text" value="second"/>
+        <input type="checkbox" />
+        <button class="pure-button pure-button-bordered">Cancel</button>
+        <button class="pure-button pure-button-bordered" fm-defaultitem="true">OK</button>
+    </div>
 </body>
 ```
 
