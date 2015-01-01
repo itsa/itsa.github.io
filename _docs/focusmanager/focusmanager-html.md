@@ -2,7 +2,7 @@
 module: focusmanager
 maintainer: Marco Asbreuk
 title: Focusmanager by HTML
-intro: "This example shows how to set up a simple focusmanagers with plain HTML. <br><br>By setting the focus to the container, the first element gets focussed automaticly."
+intro: "This example shows how to set up a simple focusmanagers with plain HTML. <br><br>By setting the focus to the container, the first element gets focussed automaticly. Looping through the focussable items can be done by the tab-keys - which is the default."
 ---
 
 
