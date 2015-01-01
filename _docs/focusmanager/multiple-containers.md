@@ -2,7 +2,7 @@
 module: focusmanager
 maintainer: Marco Asbreuk
 title: Multiple focusmanagers
-intro: "This example shows how multiple focusmanagers can be setup. The setup is done by HTML. You can easily switch between the two containers: their state gets reserved. Because of the <b>.focussed</b> class, the container that holds a focussed element gets highlighted. Notice the difference between the two containers: only the first will focus the area-element."
+intro: "This example shows how multiple focusmanagers can be setup. The setup is done by HTML. You can easily switch between the two containers: their state gets reserved. Because of the <b>.focussed</b> class, the container that holds a focussed element gets highlighted. Notice the difference between the two containers: only the first will focus the area-element. Looping through the focussable items can be done by the tab-keys - which is the default."
 ---
 
 <style type="text/css">

@@ -2,7 +2,7 @@
 module: focusmanager
 maintainer: Marco Asbreuk
 title: Different initial focus
-intro: "This example shows how mark en element to be the first focusable item, which is the OK-button."
+intro: "This example shows how mark an element to be the first focusable item, which is the OK-button. Looping through the focussable items can be done by the tab-keys - which is the default."
 ---
 
 <style type="text/css">
