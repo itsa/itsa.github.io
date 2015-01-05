@@ -213,6 +213,7 @@
 */
 
 require(&#x27;polyfill&#x27;);
+require(&#x27;js-ext/lib/object.js&#x27;);
 
 var NAME = &#x27;[useragent]: &#x27;;
 
@@ -221,7 +222,7 @@ module.exports = function (window) {
     var UserAgent,
         navigator = window.navigator;
 
-    window._ITSAmodules || window.protectedProp(&#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
 
 /*jshint boss:true */
     if (UserAgent=window._ITSAmodules.UserAgent) {

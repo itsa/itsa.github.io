@@ -436,22 +436,6 @@ defineProperties(Object.prototype, {
     },
 
     /**
-     * Creates a protected property on the object.
-     *
-     * @method protectedProp
-     * @chainable
-     */
-    protectedProp: function(property, value) {
-        Object.defineProperty(this, property, {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: value
-        });
-        return this;
-    },
-
-    /**
      * Returns a shallow copy of the object.
      * It does not clone objects within the object, it does a simple, shallow clone.
      * Fast, mostly useful for plain hash maps.
@@ -560,10 +544,26 @@ defineProperties(Object.prototype, {
 * Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object
 *
 * @method isObject
+* @static
 * @return {Boolean} true if the object is empty
 */
 Object.isObject = function (item) {
    return !!(!TYPES[typeof item] &amp;&amp; !TYPES[({}.toString).call(item)] &amp;&amp; item);
+};
+
+/**
+ * Creates a protected property on the object.
+ *
+ * @method protectedProp
+ * @static
+ */
+Object.protectedProp = function(obj, property, value) {
+    Object.defineProperty(obj, property, {
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: value
+    });
 };
 
 /**

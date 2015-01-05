@@ -216,14 +216,15 @@
 
     require(&#x27;../lib/function.js&#x27;);
     require(&#x27;../lib/array.js&#x27;);
+    require(&#x27;../lib/object.js&#x27;);
     require(&#x27;polyfill/lib/weakmap.js&#x27;);
 
     var LightMap;
 
     global.LightMap = LightMap = Object.createClass(
         function() {
-            this.protectedProp(&#x27;_array&#x27;, []);
-            this.protectedProp(&#x27;_map&#x27;, new global.WeakMap());
+            Object.protectedProp(this, &#x27;_array&#x27;, []);
+            Object.protectedProp(this, &#x27;_map&#x27;, new global.WeakMap());
         },
         {
             each: function(fn, context) {

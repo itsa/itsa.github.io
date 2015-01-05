@@ -228,9 +228,11 @@
 
 var NAME = &#x27;[event-hover]: &#x27;;
 
+require(&#x27;js-ext/lib/object.js&#x27;);
+
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp(&#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
 
     if (window._ITSAmodules.EventHover) {
         return window._ITSAmodules.EventHover; // EventHover was already created

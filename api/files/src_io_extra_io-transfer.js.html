@@ -219,6 +219,7 @@
 */
 
 require(&#x27;js-ext/lib/string.js&#x27;);
+require(&#x27;js-ext/lib/object.js&#x27;);
 require(&#x27;polyfill/polyfill-base.js&#x27;);
 
 var NAME = &#x27;[io-transfer]: &#x27;,
@@ -234,7 +235,7 @@ var NAME = &#x27;[io-transfer]: &#x27;,
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp(&#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
 
     if (window._ITSAmodules.IO_Transfer) {
         return window._ITSAmodules.IO_Transfer; // IO_Transfer was already created
