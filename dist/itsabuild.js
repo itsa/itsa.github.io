@@ -11724,11 +11724,16 @@ Promise.manage = function (callbackFn) {
  * `transform`, `-webkit-transform`, `-moz-transform`, `-ms-transform`, `-o-transform` or `undefined` when not supported
  */
 
-require('js-ext/lib/object.js');
-
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, '_ITSAmodules', {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
 
     if (window._ITSAmodules.Transition) {
         return window._ITSAmodules.Transition; // Transition was already created
@@ -11759,14 +11764,19 @@ module.exports = function (window) {
 
     return transition;
 };
-},{"js-ext/lib/object.js":33}],37:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 "use strict";
-
-require('js-ext/lib/object.js');
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, '_ITSAmodules', {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
 
     if (window._ITSAmodules.TransitionEnd) {
         return window._ITSAmodules.TransitionEnd; // TransitionEnd was already created
@@ -11795,7 +11805,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{"js-ext/lib/object.js":33}],38:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -11804,8 +11814,6 @@ module.exports = function (window) {
  *
  * `transform`, `-webkit-transform`, `-moz-transform`, `-ms-transform`, `-o-transform` or `undefined` when not supported
  */
-
-require('js-ext/lib/object.js');
 
 var toCamelCase = function(input) {
         return input.replace(/-(.)/g, function(match, group) {
@@ -11816,7 +11824,14 @@ var toCamelCase = function(input) {
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    if (!window._ITSAmodules) {
+        Object.defineProperty(window, '_ITSAmodules', {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
+        });
+    }
 
     if (window._ITSAmodules.VendorCSS) {
         return window._ITSAmodules.VendorCSS; // VendorCSS was already created
@@ -11858,7 +11873,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/lib/object.js":33}],39:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -19552,7 +19567,7 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         contains: function(otherVNode) {
-            if (this.vnode.destroyed) {
+            if (otherVNode.destroyed) {
                 return false;
             }
             while (otherVNode && (otherVNode!==this)) {
