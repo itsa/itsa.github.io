@@ -6166,6 +6166,18 @@ var NAME = '[event-dom]: ',
     REGEXP_UI_OUTSIDE = /^.+outside$/,
     TIME_BTN_PRESSED = 200,
     PURE_BUTTON_ACTIVE = 'pure-button-active',
+    UI = 'UI:',
+    NODE = 'node',
+    REMOVE = 'remove',
+    INSERT = 'insert',
+    CHANGE = 'change',
+    ATTRIBUTE = 'attribute',
+    EV_REMOVED = UI+NODE+REMOVE,
+    EV_INSERTED = UI+NODE+INSERT,
+    EV_CONTENT_CHANGE = UI+NODE+'content'+CHANGE,
+    EV_ATTRIBUTE_REMOVED = UI+ATTRIBUTE+REMOVE,
+    EV_ATTRIBUTE_CHANGED = UI+ATTRIBUTE+CHANGE,
+    EV_ATTRIBUTE_INSERTED = UI+ATTRIBUTE+INSERT,
 
     /*
      * Internal hash containing all DOM-events that are listened for (at `document`).
@@ -6191,8 +6203,8 @@ var NAME = '[event-dom]: ',
 
 module.exports = function (window) {
     var DOCUMENT = window.document,
-        _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor, _setupEvents,
-        _setupDomListener, _teardownDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc;
+        _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor, _setupEvents, _setupMutationListener, _teardownMutationListener,
+        _setupDomListener, _teardownDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc, MUTATION_EVENTS;
 
     require('vdom')(window);
 
@@ -6201,6 +6213,8 @@ module.exports = function (window) {
     if (window._ITSAmodules.EventDom) {
         return Event; // Event was already extended
     }
+
+    MUTATION_EVENTS = [EV_REMOVED, EV_INSERTED, EV_CONTENT_CHANGE, EV_ATTRIBUTE_REMOVED, , EV_ATTRIBUTE_CHANGED, EV_ATTRIBUTE_INSERTED];
 
     /*
      * Transfprms the selector to a valid function
@@ -6239,7 +6253,7 @@ module.exports = function (window) {
         // this stage is runned during subscription
         var outsideEvent = REGEXP_UI_OUTSIDE.test(customEvent),
             selector = subscriber.f,
-            nodeid, byExactId, findParent;
+            nodeid, byExactId;
 
         console.log(NAME, '_domSelToFunc type of selector = '+typeof selector);
         // note: selector could still be a function: in case another subscriber
@@ -6248,16 +6262,6 @@ module.exports = function (window) {
             subscriber.n || (subscriber.n=DOCUMENT);
             return true;
         }
-
-        findParent = function(treeBeforeRemoved, vnode) {
-            var len = treeBeforeRemoved.length,
-                domNode = vnode.domNode,
-                i, found;
-            for (i=0; (i<len-2) && (found===undefined); i++) {
-                (treeBeforeRemoved[i].domNode===domNode) && (found=i+1);
-            }
-            return (found!==undefined) ? treeBeforeRemoved[found] : null;
-        };
 
         nodeid = selector.match(REGEXP_EXTRACT_NODE_ID);
         nodeid ? (subscriber.nId=nodeid[1]) : (subscriber.n=DOCUMENT);
@@ -6269,7 +6273,6 @@ module.exports = function (window) {
             console.log(NAME, '_domSelToFunc inside filter. selector: '+selector);
             var node = e.target,
                 vnode = node.vnode,
-                treeBeforeRemoved = e._treeBeforeRemoved, // in case of `noderemove`-event
                 character1 = selector.substr(1),
                 match = false;
             // e.target is the most deeply node in the dom-tree that caught the event
@@ -6288,7 +6291,7 @@ module.exports = function (window) {
                     if (match && !outsideEvent) {
                         subscriber.t = vnode.domNode;
                     }
-                    vnode = vnode.vParent || (treeBeforeRemoved && findParent(treeBeforeRemoved, vnode));
+                    vnode = vnode.vParent;
                 }
             }
             else {
@@ -6573,6 +6576,10 @@ module.exports = function (window) {
 
     };
 
+    _setupMutationListener = function() {
+        DOCUMENT.hasMutationSubs = true;
+    };
+
     /*
      *
      * @method _sortFunc
@@ -6625,6 +6632,18 @@ module.exports = function (window) {
         }
     };
 
+    _teardownMutationListener = function() {
+        if (!Event._subs[EV_REMOVED] &&
+            !Event._subs[EV_INSERTED] &&
+            !Event._subs[EV_CONTENT_CHANGE] &&
+            !Event._subs[EV_ATTRIBUTE_REMOVED] &&
+            !Event._subs[EV_ATTRIBUTE_CHANGED] &&
+            !Event._subs[EV_ATTRIBUTE_INSERTED]
+        ) {
+            DOCUMENT.hasMutationSubs = false;
+        }
+    };
+
     // Now a very tricky one:
     // Some browsers do an array.sort down-top instead of top-down.
     // In those cases we need another sortFn, for the position on an equal match should fall
@@ -6638,13 +6657,13 @@ module.exports = function (window) {
     // Notify when someone subscribes to an UI:* event
     // if so: then we might need to define a customEvent for it:
     // alse define the specific DOM-methods that can be called on the eventobject: `stopPropagation` and `stopImmediatePropagation`
-    Event.notify('UI:*', _setupDomListener, Event)
+    Event.notify(UI+'*', _setupDomListener, Event)
          ._setEventObjProperty('stopPropagation', function() {this.status.ok || (this.status.propagationStopped = this.target);})
          ._setEventObjProperty('stopImmediatePropagation', function() {this.status.ok || (this.status.immediatePropagationStopped = this.target);});
 
     // Notify when someone detaches an UI:* event
     // if so: then we might need to detach the native listener on `document`
-    Event.notifyDetach('UI:*', _teardownDomListener, Event);
+    Event.notifyDetach(UI+'*', _teardownDomListener, Event);
 
     Event._sellist = [_domSelToFunc];
 
@@ -6655,10 +6674,30 @@ module.exports = function (window) {
         HTMLElementPrototype.merge(Event.Emitter('UI'));
     }(window.HTMLElement.prototype));
 
+
+
+
+
+
+
+
+    // Notify when someone subscribes to an UI:* event
+    // if so: then we might need to define a customEvent for it:
+    // alse define the specific DOM-methods that can be called on the eventobject: `stopPropagation` and `stopImmediatePropagation`
+    Event.notify(MUTATION_EVENTS, _setupMutationListener, Event);
+
+    // Notify when someone detaches an UI:* event
+    // if so: then we might need to detach the native listener on `document`
+    Event.notifyDetach(MUTATION_EVENTS, _teardownMutationListener, Event);
+
     // Note: window.document has no prototype
     DOCUMENT.suppressMutationEvents = function(suppress) {
         this._suppressMutationEvents = suppress;
     };
+
+
+
+
 
 
     // Event._domCallback is the only method that is added to Event.
@@ -7538,11 +7577,17 @@ require('js-ext/lib/object.js');
         */
         notify: function(customEvent, callback, context, once) {
             console.log(NAME, 'notify');
-            this._notifiers[customEvent] = {
-                cb: callback,
-                o: context,
-                r: once // r = remove automaticly
-            };
+            var i, len, ce;
+            Array.isArray(customEvent) || (customEvent=[customEvent]);
+            len = customEvent.length;
+            for (i=0; i<len; i++) {
+                ce = customEvent[i];
+                this._notifiers[ce] = {
+                    cb: callback,
+                    o: context,
+                    r: once // r = remove automaticly
+                };
+            }
             return this;
         },
 
@@ -7570,11 +7615,17 @@ require('js-ext/lib/object.js');
         */
         notifyDetach: function(customEvent, callback, context, once) {
             console.log(NAME, 'notifyDetach');
-            this._detachNotifiers[customEvent] = {
-                cb: callback,
-                o: context,
-                r: once // r = remove automaticly
-            };
+            var i, len, ce;
+            Array.isArray(customEvent) || (customEvent=[customEvent]);
+            len = customEvent.length;
+            for (i=0; i<len; i++) {
+                ce = customEvent[i];
+                this._detachNotifiers[ce] = {
+                    cb: callback,
+                    o: context,
+                    r: once // r = remove automaticly
+                };
+            }
             return this;
         },
 
@@ -14692,12 +14743,7 @@ module.exports = function (window) {
                 cloned = instance._cloneNode(deep),
                 cloneData = function(srcVNode, targetVNode) {
                     if (srcVNode._data) {
-                        Object.defineProperty(targetVNode, '_data', {
-                            configurable: false,
-                            enumerable: false,
-                            writable: false,
-                            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {}'s properties itself
-                        });
+                        targetVNode.protectedProp('_data', {});
                         targetVNode._data.merge(srcVNode._data);
                     }
                 },
@@ -16046,7 +16092,7 @@ module.exports = function (window) {
         * When no arguments are passed, all node-data (key-value pairs) will be removed.
         *
         * @method removeData
-        * @param key {string} name of the key
+        * @param [key] {string} name of the key, when not set, all data is removed
         * @param [deep] {Boolean} whether to set the data to all descendants recursively
         * @chainable
         * @since 0.0.1
@@ -16060,11 +16106,7 @@ module.exports = function (window) {
                 }
                 else {
                     // we cannot just redefine _data, for it is set as readonly
-                    vnode._data.each(
-                        function(value, key) {
-                            delete vnode._data[key];
-                        }
-                    );
+                    vnode._cleanData();
                     if (deep) {
                         instance.getChildren().forEach(function(element) {
                             element.removeData(key, true);
@@ -18646,7 +18688,14 @@ module.exports = function (window) {
         BATCH_WILL_RUN = false,
         nodeids = NS.nodeids,
         htmlToVNodes = require('./html-parser.js')(window),
-        async = require('utils/lib/timers.js').async,
+        timers = require('utils/lib/timers.js'),
+        async = timers.async,
+        later = timers.later,
+
+        // cleanup memory after 1 minute: removed nodes SHOULD NOT be accessed afterwards
+        // because vnode would be recalculated and might be different from before
+        DESTROY_DELAY = 60000,
+
         NTH_CHILD_REGEXP = /^(?:(\d*)[n|N])([\+|\-](\d+))?$/, // an+b
         STRING = 'string',
         CLASS = 'class',
@@ -18799,7 +18848,7 @@ module.exports = function (window) {
          */
         PSEUDO_REQUIRED_CHILDREN = {},
         _matchesSelectorItem, _matchesOneSelector, _findElementSibling, vNodeProto,
-        _splitSelector, _findNodeSibling, _matchNthChild, _batchEmit;
+        _splitSelector, _findNodeSibling, _matchNthChild, _batchEmit, _emitDestroyChildren;
         PSEUDO_REQUIRED_CHILDREN[PSEUDO_FIRST_CHILD] = true;
         PSEUDO_REQUIRED_CHILDREN[PSEUDO_FIRST_OF_TYPE] = true;
         PSEUDO_REQUIRED_CHILDREN[PSEUDO_LAST_CHILD] = true;
@@ -19430,16 +19479,32 @@ module.exports = function (window) {
     _batchEmit = function() {
         MUTATION_EVENTS.each(function (mutationEvents, vnode) {
             var domNode = vnode.domNode;
-            mutationEvents.each(function(value, evt) {
-                var payload, firstItem;
-                if ((typeof value !== 'boolean') && (firstItem=value[0])) {
-                    payload = firstItem.attribute ? {changed: value} : {_treeBeforeRemoved: value};
-                }
-                domNode.emit(evt, payload);
-            });
+            if (mutationEvents[EV_REMOVED]) {
+                domNode.emit(EV_REMOVED);
+            }
+            else if (mutationEvents[EV_INSERTED]) {
+                domNode.emit(EV_INSERTED);
+            }
+            else {
+                // contentchange and attributechanges can go hand in hand
+                mutationEvents.each(function(value, evt) {
+                    domNode.emit(evt, (evt===EV_CONTENT_CHANGE) ? null : {changed: value});
+                });
+            }
         });
         MUTATION_EVENTS.clear();
         BATCH_WILL_RUN = false;
+    };
+
+    _emitDestroyChildren = function(vnode) {
+        var children = vnode.vChildren,
+            len = children.length,
+            i, vChild;
+        for (i=0; i<len; i++) {
+            vChild = children[i];
+            vChild._emit(EV_REMOVED);
+            _emitDestroyChildren(vChild);
+        }
     };
 
     vNodeProto = window._ITSAmodules.VNode = {
@@ -19712,6 +19777,16 @@ module.exports = function (window) {
             return instance;
         },
 
+        _cleanData: function() {
+            var instance = this,
+                data = instance._data;
+            data && data.each(
+                function(value, key) {
+                    delete data[key];
+                }
+            );
+            return instance;
+        },
        /**
         * Destroys the vnode and all its vnode-vChildNodes.
         * Removes it from its vParent.vChildNodes list,
@@ -19724,12 +19799,14 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        _destroy: function() {
+        _destroy: function(silent) {
             var instance = this,
                 vChildNodes = instance.vChildNodes,
                 len, i, vChildNode, vParent, treeNodes;
             if (!instance.destroyed) {
+                silent || instance._emit(EV_REMOVED);
                 instance.protectedProp('destroyed', true);
+
                 // first: determine the dom-tree, which module `event-dom` needs to determine where the node was before it was destroyed:
                 treeNodes = [instance];
                 vParent = instance.vParent;
@@ -19737,54 +19814,148 @@ module.exports = function (window) {
                     treeNodes[treeNodes.length] = vParent;
                     vParent = vParent.vParent;
                 }
-                // next: _remove all its vChildNodes
-                if ((instance.nodeType===1) && vChildNodes) {
-                    len = vChildNodes.length;
-                    for (i=0; i < len; i++) {
-                        vChildNode = vChildNodes[i];
-                        vChildNode && vChildNode._destroy();
+
+                // The definite cleanup needs to be done after a timeout:
+                // someone might need to handle the Element when removed (fe to cleanup specific things)
+                later(function() {
+                    instance._cleanData();
+                    // _destroy all its vChildNodes
+                    if ((instance.nodeType===1) && vChildNodes) {
+                        len = vChildNodes.length;
+                        for (i=0; i < len; i++) {
+                            vChildNode = vChildNodes[i];
+                            vChildNode && vChildNode._destroy(true);
+                        }
                     }
-                }
-                instance._vChildren = null;
-                // explicitely set instance.domNode._vnode and instance.domNode to null in order to prevent problems with the GC (we break the circular reference)
-                delete instance.domNode._vnode;
-                // if valid id, then _remove the DOMnodeRef from internal hash
-                instance.id && delete nodeids[instance.id];
+                    instance._vChildren = null;
+                    // explicitely set instance.domNode._vnode and instance.domNode to null in order to prevent problems with the GC (we break the circular reference)
+                    delete instance.domNode._vnode;
+                    // if valid id, then _remove the DOMnodeRef from internal hash
+                    instance.id && delete nodeids[instance.id];
+                }, silent ? 0 : DESTROY_DELAY);
+
                 instance._deleteFromParent();
                 // Do not make domNode `null` --> it could be used even when not in the dom
-                instance._emit(EV_REMOVED, null, null, null, treeNodes);
             }
             return instance;
         },
 
-        _emit: function(evt, attribute, newValue, prevValue, treeBeforeRemoved) {
+        _emit: function(evt, attribute, newValue, prevValue) {
+           /**
+            * Emitted by every Element that gets inserted.
+            *
+            * @event nodeinsert
+            * @param e {Object} eventobject including:
+            * @param e.target {HtmlElement} the HtmlElement that is being dragged
+            * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+            * @since 0.1
+            */
+
+           /**
+            * Emitted by every Element that gets removed.
+            *
+            * @event noderemove
+            * @param e {Object} eventobject including:
+            * @param e.target {HtmlElement} the HtmlElement that is being dragged
+            * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+            * @since 0.1
+            */
+
+           /**
+            * Emitted by every Element that gets its content changed (innerHTML/innerText).
+            *
+            * @event nodecontentchange
+            * @param e {Object} eventobject including:
+            * @param e.target {HtmlElement} the HtmlElement that is being dragged
+            * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+            * @since 0.1
+            */
+
+           /**
+            * Emitted by every Element that gets an attribute inserted.
+            *
+            * @event attributeinsert
+            * @param e {Object} eventobject including:
+            * @param e.target {HtmlElement} the HtmlElement that is being dragged
+            * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+            * @param e.changed {Array} Array with Objects having three properties:
+            * <ul>
+            *     <li>attribute</li>
+            *     <li>newValue</li>
+            * </ul>
+            * @since 0.1
+            */
+
+           /**
+            * Emitted by every Element that gets an attribute removed.
+            *
+            * @event attributeremove
+            * @param e {Object} eventobject including:
+            * @param e.target {HtmlElement} the HtmlElement that is being dragged
+            * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+            * @param e.changed {Array} Array with Strings of the attributeNames that are removed
+            * @since 0.1
+            */
+
+           /**
+            * Emitted by every Element that gets an attribute changed.
+            *
+            * @event attributechange
+            * @param e {Object} eventobject including:
+            * @param e.target {HtmlElement} the HtmlElement that is being dragged
+            * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+            * @param e.changed {Array} Array with Objects having three properties:
+            * <ul>
+            *     <li>attribute</li>
+            *     <li>newValue</li>
+            *     <li>prevValue</li>
+            * </ul>
+            * @since 0.1
+            */
+
             var instance = this,
-                domNode = instance.domNode,
-                silent, attrMutations, mutationEvents, mutation;
-            if (instance.nodeType!==1) {
+                silent, attrMutations, mutationEvents, mutation, vParent;
+            if (!DOCUMENT.hasMutationSubs || (instance.nodeType!==1)) {
                 return;
             }
             silent = !!DOCUMENT._suppressMutationEvents;
-            if (domNode.emit && !silent) {
+            if (!silent && !instance.destroyed) {
                 mutationEvents = MUTATION_EVENTS.get(instance) || {};
                 if (attribute) {
                     attrMutations = mutationEvents[evt] || [];
-                    mutation = {
-                        attribute: attribute
-                    };
-                    if ((evt===EV_ATTRIBUTE_INSERTED) || (evt===EV_ATTRIBUTE_CHANGED)) {
-                        mutation.newValue = newValue;
+                    if (evt===EV_ATTRIBUTE_REMOVED) {
+                        mutation = attribute;
                     }
-                    if ((evt===EV_ATTRIBUTE_CHANGED) && prevValue) {
-                        mutation.prevValue = prevValue;
+                    else {
+                        mutation = {
+                            attribute: attribute
+                        };
+                        if ((evt===EV_ATTRIBUTE_INSERTED) || (evt===EV_ATTRIBUTE_CHANGED)) {
+                            mutation.newValue = newValue;
+                        }
+                        if ((evt===EV_ATTRIBUTE_CHANGED) && prevValue) {
+                            mutation.prevValue = prevValue;
+                        }
                     }
                     attrMutations.push(mutation);
                     mutationEvents[evt] = attrMutations;
                 }
                 else {
-                    mutationEvents[evt] = treeBeforeRemoved || true;
+                    mutationEvents[evt] = true;
                 }
                 MUTATION_EVENTS.set(instance, mutationEvents);
+                // now set all parent to have a nodecontentchange:
+                vParent = instance;
+/*jshint boss:true */
+                while (vParent=vParent.vParent) {
+/*jshint boss:false */
+                    vParent._emit(EV_CONTENT_CHANGE);
+                }
+
+                // in case of removal we need to emit EV_REMOVED for all children right now
+                // for they will be actually removed silently after a delay of 1 minute
+                (evt===EV_REMOVED) && _emitDestroyChildren(instance);
+
                 if (!BATCH_WILL_RUN) {
                     BATCH_WILL_RUN = true;
                     async(function() {
@@ -20020,6 +20191,7 @@ module.exports = function (window) {
                 attrs = instance.attrs,
                 prevVal = attrs[attributeName];
             // don't check by !== --> value isn't parsed into a String yet
+
             if (prevVal!=value) {
                 if ((value===undefined) || (value===null)) {
                     instance._removeAttr(attributeName);
@@ -20173,11 +20345,13 @@ module.exports = function (window) {
                             }
                             else {
                                 // same tag --> only update what is needed
-                                newChild.domNode = childDomNode;
                                 oldChild.attrs = newChild.attrs;
                                 oldChild._setAttrs(newChild.attrs);
                                 // next: sync the vChildNodes:
                                 oldChild._setChildNodes(newChild.vChildNodes);
+                                // reset ref. to the domNode, for it might heva been changed by newChild:
+                                oldChild.id && (nodeids[oldChild.id]=childDomNode);
+                                newVChildNodes[i] = oldChild;
                             }
                             break;
                         case 2: // oldNodeType==Element, newNodeType==TextNode
