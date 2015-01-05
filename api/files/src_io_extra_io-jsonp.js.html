@@ -222,11 +222,13 @@
 // var NAME = &#x27;[io-jsonp]: &#x27;,
 // var idgenerator = require(&#x27;utils&#x27;).idgenerator;
 
+require(&#x27;js-ext/lib/object.js&#x27;);
+
 module.exports = function (window) {
 
     var IO = require(&#x27;../io.js&#x27;)(window);
 
-    window._ITSAmodules || window.protectedProp(&#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
 
     if (window._ITSAmodules.IO_JSONP) {
         return IO; // IO_JSONP was already created

@@ -221,11 +221,13 @@
 
 // var NAME = &#x27;[io-assets]: &#x27;;
 
+require(&#x27;js-ext/lib/object.js&#x27;);
+
 module.exports = function (window) {
 
     var IO = require(&#x27;../io.js&#x27;)(window);
 
-    window._ITSAmodules || window.protectedProp(&#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
 
     if (window._ITSAmodules.IO_Assets) {
         return IO; // IO_Assets was already created

@@ -220,6 +220,8 @@
  * @since 0.0.1
 */
 
+require(&#x27;js-ext/lib/object.js&#x27;);
+
 var NAME = &#x27;[io-cors-ie9]: &#x27;,
     XmlDOMParser = require(&#x27;xmldom&#x27;).DOMParser,
     UNKNOW_ERROR = &#x27;Unknown XDR-error&#x27;, // XDR doesn&#x27;t specify the error
@@ -237,7 +239,7 @@ var NAME = &#x27;[io-cors-ie9]: &#x27;,
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp(&#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
 
     if (window._ITSAmodules.IO_Cors) {
         return window._ITSAmodules.IO_Cors; // IO_Cors was already created

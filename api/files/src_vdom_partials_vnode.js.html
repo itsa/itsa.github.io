@@ -227,7 +227,7 @@ require(&#x27;polyfill&#x27;);
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp(&#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
 
     if (window._ITSAmodules.VNode) {
         return window._ITSAmodules.VNode; // VNODE was already created
@@ -399,7 +399,7 @@ module.exports = function (window) {
          * @since 0.0.1
          */
         PSEUDO_REQUIRED_CHILDREN = {},
-        _matchesSelectorItem, _matchesOneSelector, _findElementSibling, vNodeProto,
+        _matchesSelectorItem, _matchesOneSelector, _findElementSibling, vNodeProto, _markRemoved,
         _splitSelector, _findNodeSibling, _matchNthChild, _batchEmit, _emitDestroyChildren;
         PSEUDO_REQUIRED_CHILDREN[PSEUDO_FIRST_CHILD] = true;
         PSEUDO_REQUIRED_CHILDREN[PSEUDO_FIRST_OF_TYPE] = true;
@@ -1059,6 +1059,21 @@ module.exports = function (window) {
         }
     };
 
+    _markRemoved = function(vnode) {
+        var vChildNodes = vnode.vChildNodes,
+            len, i, vChildNode;
+        if (vnode.nodeType===1) {
+            Object.protectedProp(vnode, &#x27;removedFromDOM&#x27;, true);
+            if (vChildNodes) {
+                len = vChildNodes.length;
+                for (i=0; i &lt; len; i++) {
+                    vChildNode = vChildNodes[i];
+                    vChildNode &amp;&amp; _markRemoved(vChildNode);
+                }
+            }
+        }
+    };
+
     vNodeProto = window._ITSAmodules.VNode = {
        /**
         * Check whether the vnode&#x27;s domNode is equal, or contains the specified Element.
@@ -1068,6 +1083,9 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         contains: function(otherVNode) {
+            if (this.vnode.destroyed) {
+                return false;
+            }
             while (otherVNode &amp;&amp; (otherVNode!==this)) {
                 otherVNode = otherVNode.vParent;
             }
@@ -1339,6 +1357,7 @@ module.exports = function (window) {
             );
             return instance;
         },
+
        /**
         * Destroys the vnode and all its vnode-vChildNodes.
         * Removes it from its vParent.vChildNodes list,
@@ -1357,7 +1376,7 @@ module.exports = function (window) {
                 len, i, vChildNode, vParent, treeNodes;
             if (!instance.destroyed) {
                 silent || instance._emit(EV_REMOVED);
-                instance.protectedProp(&#x27;destroyed&#x27;, true);
+                Object.protectedProp(instance, &#x27;destroyed&#x27;, true);
 
                 // first: determine the dom-tree, which module &#x60;event-dom&#x60; needs to determine where the node was before it was destroyed:
                 treeNodes = [instance];
@@ -1366,6 +1385,9 @@ module.exports = function (window) {
                     treeNodes[treeNodes.length] = vParent;
                     vParent = vParent.vParent;
                 }
+
+                // mark all its vChildNodes so we can see if the node is in the DOM
+                _markRemoved(instance);
 
                 // The definite cleanup needs to be done after a timeout:
                 // someone might need to handle the Element when removed (fe to cleanup specific things)

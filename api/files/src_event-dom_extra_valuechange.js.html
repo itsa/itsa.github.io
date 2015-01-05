@@ -224,7 +224,9 @@
  * @class Event
  * @since 0.0.2
 */
+
 require(&#x27;vdom&#x27;);
+require(&#x27;js-ext/lib/object.js&#x27;);
 
 var NAME = &#x27;[event-valuechange]: &#x27;,
     VALUE = &#x27;value&#x27;,
@@ -245,7 +247,7 @@ var NAME = &#x27;[event-valuechange]: &#x27;,
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp(&#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
 
     if (window._ITSAmodules.EventValueChange) {
         return window._ITSAmodules.EventValueChange; // EventValueChange was already created

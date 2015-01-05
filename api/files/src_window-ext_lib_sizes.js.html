@@ -200,9 +200,11 @@
     <pre class="code prettyprint linenums">
 &quot;use strict&quot;;
 
+require(&#x27;js-ext/lib/object.js&#x27;);
+
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp(&#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
 
     if (window._ITSAmodules.WindowSizes) {
         return; // WindowSizes was already created

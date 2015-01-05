@@ -269,7 +269,7 @@ require(&#x27;./css/drag.css&#x27;);
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp(&#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
 
     if (window._ITSAmodules.Drag) {
         return window._ITSAmodules.Drag; // Drag was already created

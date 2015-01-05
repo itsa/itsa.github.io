@@ -4646,7 +4646,7 @@ require('./css/drag-drop.css');
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.DragDrop) {
         return window._ITSAmodules.DragDrop; // DragDrop was already created
@@ -5559,7 +5559,7 @@ require('./css/drag.css');
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.Drag) {
         return window._ITSAmodules.Drag; // Drag was already created
@@ -6208,7 +6208,7 @@ module.exports = function (window) {
 
     require('vdom')(window);
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.EventDom) {
         return Event; // Event was already extended
@@ -6755,9 +6755,11 @@ module.exports = function (window) {
 
 var NAME = '[event-hover]: ';
 
+require('js-ext/lib/object.js');
+
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.EventHover) {
         return window._ITSAmodules.EventHover; // EventHover was already created
@@ -6823,7 +6825,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":14}],16:[function(require,module,exports){
+},{"../event-dom.js":14,"js-ext/lib/object.js":33}],16:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6850,7 +6852,9 @@ module.exports = function (window) {
  * @class Event
  * @since 0.0.2
 */
+
 require('vdom');
+require('js-ext/lib/object.js');
 
 var NAME = '[event-valuechange]: ',
     VALUE = 'value',
@@ -6871,7 +6875,7 @@ var NAME = '[event-valuechange]: ',
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.EventValueChange) {
         return window._ITSAmodules.EventValueChange; // EventValueChange was already created
@@ -7082,7 +7086,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":14,"utils":44,"vdom":57}],17:[function(require,module,exports){
+},{"../event-dom.js":14,"js-ext/lib/object.js":33,"utils":44,"vdom":57}],17:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7215,7 +7219,7 @@ require('js-ext/lib/object.js');
 
     "use strict";
 
-    global._ITSAmodules || global.protectedProp('_ITSAmodules', {});
+    global._ITSAmodules || Object.protectedProp(global, '_ITSAmodules', {});
     global._ITSAmodules.Event || (global._ITSAmodules.Event = factory());
 
     module.exports = global._ITSAmodules.Event;
@@ -8797,7 +8801,7 @@ module.exports = function (window) {
     var DOCUMENT = window.document,
         nodePlugin, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed, getFocusManagerSelector, setupEvents;
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
 /*jshint boss:true */
     if (FocusManager=window._ITSAmodules.FocusManager) {
@@ -9110,6 +9114,8 @@ module.exports = function (window) {
  * @since 0.0.1
 */
 
+require('js-ext/lib/object.js');
+
 var NAME = '[io-cors-ie9]: ',
     XmlDOMParser = require('xmldom').DOMParser,
     UNKNOW_ERROR = 'Unknown XDR-error', // XDR doesn't specify the error
@@ -9127,7 +9133,7 @@ var NAME = '[io-cors-ie9]: ',
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.IO_Cors) {
         return window._ITSAmodules.IO_Cors; // IO_Cors was already created
@@ -9212,15 +9218,17 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"../io.js":27,"xmldom":3}],24:[function(require,module,exports){
+},{"../io.js":27,"js-ext/lib/object.js":33,"xmldom":3}],24:[function(require,module,exports){
 "use strict";
+
+require('js-ext/lib/object.js');
 
 var NAME = '[io-stream]: ',
     UNKNOW_ERROR = 'Unknown XDR-error'; // XDR doesn't specify the error
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.IO_Stream) {
         return window._ITSAmodules.IO_Stream; // IO_Stream was already created
@@ -9336,7 +9344,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":27}],25:[function(require,module,exports){
+},{"../io.js":27,"js-ext/lib/object.js":33}],25:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9358,6 +9366,7 @@ module.exports = function (window) {
 */
 
 require('js-ext/lib/string.js');
+require('js-ext/lib/object.js');
 require('polyfill/polyfill-base.js');
 
 var NAME = '[io-transfer]: ',
@@ -9373,7 +9382,7 @@ var NAME = '[io-transfer]: ',
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.IO_Transfer) {
         return window._ITSAmodules.IO_Transfer; // IO_Transfer was already created
@@ -9771,7 +9780,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":27,"js-ext/lib/string.js":35,"polyfill/polyfill-base.js":42}],26:[function(require,module,exports){
+},{"../io.js":27,"js-ext/lib/object.js":33,"js-ext/lib/string.js":35,"polyfill/polyfill-base.js":42}],26:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9799,7 +9808,7 @@ var NAME = '[io-xml]: ',
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.IO_XML) {
         return window._ITSAmodules.IO_XML; // IO_XML was already created
@@ -9966,7 +9975,7 @@ module.exports = function (window) {
     // into some other IO-instance than which is used.
     var Glob = (typeof global !== 'undefined' ? global : /* istanbul ignore next */ this);
 
-    Glob._ITSAmodules || Glob.protectedProp('_ITSAmodules', {});
+    Glob._ITSAmodules || Object.protectedProp(Glob, '_ITSAmodules', {});
 
     if (Glob._ITSAmodules.IO) {
         return Glob._ITSAmodules.IO;
@@ -10254,14 +10263,15 @@ module.exports = function (window) {
 
     require('../lib/function.js');
     require('../lib/array.js');
+    require('../lib/object.js');
     require('polyfill/lib/weakmap.js');
 
     var LightMap;
 
     global.LightMap = LightMap = Object.createClass(
         function() {
-            this.protectedProp('_array', []);
-            this.protectedProp('_map', new global.WeakMap());
+            Object.protectedProp(this, '_array', []);
+            Object.protectedProp(this, '_map', new global.WeakMap());
         },
         {
             each: function(fn, context) {
@@ -10328,7 +10338,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":31,"../lib/function.js":32,"polyfill/lib/weakmap.js":40}],29:[function(require,module,exports){
+},{"../lib/array.js":31,"../lib/function.js":32,"../lib/object.js":33,"polyfill/lib/weakmap.js":40}],29:[function(require,module,exports){
 module.exports = {
     'abstract': true,
     'arguments': true,
@@ -11014,22 +11024,6 @@ defineProperties(Object.prototype, {
     },
 
     /**
-     * Creates a protected property on the object.
-     *
-     * @method protectedProp
-     * @chainable
-     */
-    protectedProp: function(property, value) {
-        Object.defineProperty(this, property, {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: value
-        });
-        return this;
-    },
-
-    /**
      * Returns a shallow copy of the object.
      * It does not clone objects within the object, it does a simple, shallow clone.
      * Fast, mostly useful for plain hash maps.
@@ -11138,10 +11132,26 @@ defineProperties(Object.prototype, {
 * Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object
 *
 * @method isObject
+* @static
 * @return {Boolean} true if the object is empty
 */
 Object.isObject = function (item) {
    return !!(!TYPES[typeof item] && !TYPES[({}.toString).call(item)] && item);
+};
+
+/**
+ * Creates a protected property on the object.
+ *
+ * @method protectedProp
+ * @static
+ */
+Object.protectedProp = function(obj, property, value) {
+    Object.defineProperty(obj, property, {
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: value
+    });
 };
 
 /**
@@ -11714,9 +11724,11 @@ Promise.manage = function (callbackFn) {
  * `transform`, `-webkit-transform`, `-moz-transform`, `-ms-transform`, `-o-transform` or `undefined` when not supported
  */
 
+require('js-ext/lib/object.js');
+
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.Transition) {
         return window._ITSAmodules.Transition; // Transition was already created
@@ -11747,12 +11759,14 @@ module.exports = function (window) {
 
     return transition;
 };
-},{}],37:[function(require,module,exports){
+},{"js-ext/lib/object.js":33}],37:[function(require,module,exports){
 "use strict";
+
+require('js-ext/lib/object.js');
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.TransitionEnd) {
         return window._ITSAmodules.TransitionEnd; // TransitionEnd was already created
@@ -11781,7 +11795,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{}],38:[function(require,module,exports){
+},{"js-ext/lib/object.js":33}],38:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -11802,7 +11816,7 @@ var toCamelCase = function(input) {
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.VendorCSS) {
         return window._ITSAmodules.VendorCSS; // VendorCSS was already created
@@ -12016,6 +12030,7 @@ require('./lib/matchesselector.js');
 */
 
 require('polyfill');
+require('js-ext/lib/object.js');
 
 var NAME = '[useragent]: ';
 
@@ -12024,7 +12039,7 @@ module.exports = function (window) {
     var UserAgent,
         navigator = window.navigator;
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
 /*jshint boss:true */
     if (UserAgent=window._ITSAmodules.UserAgent) {
@@ -12038,7 +12053,7 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"polyfill":42}],44:[function(require,module,exports){
+},{"js-ext/lib/object.js":33,"polyfill":42}],44:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
 	later: require('./lib/timers.js').later,
@@ -12285,7 +12300,7 @@ require('polyfill');
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.AttributeExtractor) {
         return window._ITSAmodules.AttributeExtractor; // AttributeExtractor was already created
@@ -12582,7 +12597,7 @@ require('js-ext/lib/object.js');
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.ElementArray) {
         return window._ITSAmodules.ElementArray; // ElementArray was already created
@@ -12974,7 +12989,7 @@ var fromCamelCase = function(input) {
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.ElementPlugin) {
         return window._ITSAmodules.ElementPlugin; // ElementPlugin was already created
@@ -13061,7 +13076,7 @@ module.exports = function (window) {
             Object.isObject(defaults) || (defaults = {});
             (typeof ns==='string') || (ns = 'invalid_ns');
             ns = ns.replace(/ /g, '').replace(/-/g, '');
-            newPlugin.protectedProp('ns', ns);
+            Object.protectedProp(newPlugin, 'ns', ns);
             newPlugin.defaults = defaults;
             return newPlugin;
         }
@@ -13094,10 +13109,11 @@ module.exports = function (window) {
 */
 
 require('polyfill');
+require('js-ext/lib/object.js');
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.ExtendDocument) {
         return; // ExtendDocument was already created
@@ -13750,7 +13766,7 @@ module.exports = function (window) {
 
 
 
-},{"./vdom-ns.js":55,"polyfill":42}],52:[function(require,module,exports){
+},{"./vdom-ns.js":55,"js-ext/lib/object.js":33,"polyfill":42}],52:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -13777,7 +13793,7 @@ require('polyfill');
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.ExtendElement) {
         return; // ExtendElement was already created
@@ -14743,7 +14759,7 @@ module.exports = function (window) {
                 cloned = instance._cloneNode(deep),
                 cloneData = function(srcVNode, targetVNode) {
                     if (srcVNode._data) {
-                        targetVNode.protectedProp('_data', {});
+                        Object.protectedProp(targetVNode, '_data', {});
                         targetVNode._data.merge(srcVNode._data);
                     }
                 },
@@ -15651,6 +15667,9 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         ElementPrototype.inDOM = function() {
+            if (this.vnode.removedFromDOM) {
+                return false;
+            }
             return DOCUMENT.contains(this);
         };
 
@@ -16560,7 +16579,7 @@ module.exports = function (window) {
             var instance = this,
                 vnode = instance.vnode;
             if (value!==undefined) {
-                vnode._data ||  vnode.protectedProp('_data', {});
+                vnode._data || Object.protectedProp(vnode, '_data', {});
                 vnode._data[key] = value;
                 if (deep) {
                     instance.getChildren().forEach(function(element) {
@@ -18118,10 +18137,11 @@ for (j=0; j<len2; j++) {
 */
 
 require('polyfill');
+require('js-ext/lib/object.js');
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.HtmlParser) {
         return window._ITSAmodules.HtmlParser; // HtmlParser was already created
@@ -18425,7 +18445,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":48,"./vdom-ns.js":55,"polyfill":42}],54:[function(require,module,exports){
+},{"./attribute-extractor.js":48,"./vdom-ns.js":55,"js-ext/lib/object.js":33,"polyfill":42}],54:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18441,10 +18461,11 @@ module.exports = function (window) {
 */
 
 require('polyfill');
+require('js-ext/lib/object.js');
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.NodeParser) {
         return window._ITSAmodules.NodeParser; // NodeParser was already created
@@ -18543,7 +18564,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":48,"./vdom-ns.js":55,"./vnode.js":56,"polyfill":42}],55:[function(require,module,exports){
+},{"./attribute-extractor.js":48,"./vdom-ns.js":55,"./vnode.js":56,"js-ext/lib/object.js":33,"polyfill":42}],55:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -18567,7 +18588,7 @@ require('polyfill');
 module.exports = function (window) {
     var NS;
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.VDOM_NS) {
         return window._ITSAmodules.VDOM_NS; // VDOM_NS was already created
@@ -18675,7 +18696,7 @@ require('polyfill');
 
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.VNode) {
         return window._ITSAmodules.VNode; // VNODE was already created
@@ -18847,7 +18868,7 @@ module.exports = function (window) {
          * @since 0.0.1
          */
         PSEUDO_REQUIRED_CHILDREN = {},
-        _matchesSelectorItem, _matchesOneSelector, _findElementSibling, vNodeProto,
+        _matchesSelectorItem, _matchesOneSelector, _findElementSibling, vNodeProto, _markRemoved,
         _splitSelector, _findNodeSibling, _matchNthChild, _batchEmit, _emitDestroyChildren;
         PSEUDO_REQUIRED_CHILDREN[PSEUDO_FIRST_CHILD] = true;
         PSEUDO_REQUIRED_CHILDREN[PSEUDO_FIRST_OF_TYPE] = true;
@@ -19507,6 +19528,21 @@ module.exports = function (window) {
         }
     };
 
+    _markRemoved = function(vnode) {
+        var vChildNodes = vnode.vChildNodes,
+            len, i, vChildNode;
+        if (vnode.nodeType===1) {
+            Object.protectedProp(vnode, 'removedFromDOM', true);
+            if (vChildNodes) {
+                len = vChildNodes.length;
+                for (i=0; i < len; i++) {
+                    vChildNode = vChildNodes[i];
+                    vChildNode && _markRemoved(vChildNode);
+                }
+            }
+        }
+    };
+
     vNodeProto = window._ITSAmodules.VNode = {
        /**
         * Check whether the vnode's domNode is equal, or contains the specified Element.
@@ -19516,6 +19552,9 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         contains: function(otherVNode) {
+            if (this.vnode.destroyed) {
+                return false;
+            }
             while (otherVNode && (otherVNode!==this)) {
                 otherVNode = otherVNode.vParent;
             }
@@ -19787,6 +19826,7 @@ module.exports = function (window) {
             );
             return instance;
         },
+
        /**
         * Destroys the vnode and all its vnode-vChildNodes.
         * Removes it from its vParent.vChildNodes list,
@@ -19805,7 +19845,7 @@ module.exports = function (window) {
                 len, i, vChildNode, vParent, treeNodes;
             if (!instance.destroyed) {
                 silent || instance._emit(EV_REMOVED);
-                instance.protectedProp('destroyed', true);
+                Object.protectedProp(instance, 'destroyed', true);
 
                 // first: determine the dom-tree, which module `event-dom` needs to determine where the node was before it was destroyed:
                 treeNodes = [instance];
@@ -19814,6 +19854,9 @@ module.exports = function (window) {
                     treeNodes[treeNodes.length] = vParent;
                     vParent = vParent.vParent;
                 }
+
+                // mark all its vChildNodes so we can see if the node is in the DOM
+                _markRemoved(instance);
 
                 // The definite cleanup needs to be done after a timeout:
                 // someone might need to handle the Element when removed (fe to cleanup specific things)
@@ -20954,9 +20997,11 @@ module.exports = function (window) {
 },{"./attribute-extractor.js":48,"./html-parser.js":53,"./vdom-ns.js":55,"js-ext/extra/lightmap.js":28,"js-ext/lib/array.js":31,"js-ext/lib/object.js":33,"js-ext/lib/string.js":35,"polyfill":42,"utils/lib/timers.js":46}],57:[function(require,module,exports){
 "use strict";
 
+require('js-ext/lib/object.js');
+
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.VDOM) {
         return window._ITSAmodules.VDOM; // VDOM was already created
@@ -20992,7 +21037,7 @@ module.exports = function (window) {
 
     return vdom;
 };
-},{"./partials/element-plugin.js":50,"./partials/extend-document.js":51,"./partials/extend-element.js":52,"./partials/node-parser.js":54}],58:[function(require,module,exports){
+},{"./partials/element-plugin.js":50,"./partials/extend-document.js":51,"./partials/extend-element.js":52,"./partials/node-parser.js":54,"js-ext/lib/object.js":33}],58:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
@@ -21001,9 +21046,11 @@ module.exports = function (window) {
 },{"./lib/sizes.js":59}],59:[function(require,module,exports){
 "use strict";
 
+require('js-ext/lib/object.js');
+
 module.exports = function (window) {
 
-    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
 
     if (window._ITSAmodules.WindowSizes) {
         return; // WindowSizes was already created
@@ -21099,7 +21146,7 @@ module.exports = function (window) {
     };
 
 };
-},{}],60:[function(require,module,exports){
+},{"js-ext/lib/object.js":33}],60:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
