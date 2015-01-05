@@ -216,18 +216,12 @@
 &quot;use strict&quot;;
 
 require(&#x27;js-ext/lib/object.js&#x27;);
+require(&#x27;polyfill&#x27;);
 
 module.exports = function (window) {
     var NS;
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp(&#x27;_ITSAmodules&#x27;, {});
 
     if (window._ITSAmodules.VDOM_NS) {
         return window._ITSAmodules.VDOM_NS; // VDOM_NS was already created

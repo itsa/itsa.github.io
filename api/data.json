@@ -227,6 +227,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/js-ext/extra/lightmap.js": {
+            "name": "src/js-ext/extra/lightmap.js",
+            "modules": {
+                "lib/string.js": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "src/js-ext/lib/array.js": {
             "name": "src/js-ext/lib/array.js",
             "modules": {
@@ -275,9 +284,7 @@
         },
         "src/js-ext/lib/string.js": {
             "name": "src/js-ext/lib/string.js",
-            "modules": {
-                "lib/string.js": 1
-            },
+            "modules": {},
             "classes": {
                 "String": 1
             },
@@ -733,25 +740,40 @@
         "js-ext": {
             "name": "js-ext",
             "submodules": {
+                "lib/string.js": 1,
                 "lib/array.js": 1,
                 "lib/function.js": 1,
                 "lib/object.js": 1,
-                "lib/promise.s": 1,
-                "lib/string.js": 1
+                "lib/promise.s": 1
             },
             "classes": {
+                "String": 1,
                 "Array": 1,
                 "Function": 1,
                 "Object": 1,
-                "Promise": 1,
-                "String": 1
+                "Promise": 1
             },
             "fors": {
                 "Object": 1
             },
             "namespaces": {},
+            "file": "src/js-ext/lib/promise.js",
+            "line": 3
+        },
+        "lib/string.js": {
+            "name": "lib/string.js",
+            "submodules": {},
+            "classes": {
+                "String": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "js-ext",
+            "namespace": "",
             "file": "src/js-ext/lib/string.js",
-            "line": 1
+            "line": 1,
+            "description": "Pollyfils for often used functionality for Strings\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "lib/array.js": {
             "name": "lib/array.js",
@@ -814,21 +836,6 @@
             "file": "src/js-ext/lib/promise.js",
             "line": 3,
             "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        "lib/string.js": {
-            "name": "lib/string.js",
-            "submodules": {},
-            "classes": {
-                "String": 1
-            },
-            "fors": {},
-            "is_submodule": 1,
-            "namespaces": {},
-            "module": "js-ext",
-            "namespace": "",
-            "file": "src/js-ext/lib/string.js",
-            "line": 1,
-            "description": "Pollyfils for often used functionality for Strings\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "node-win": {
             "name": "node-win",
@@ -1175,6 +1182,21 @@
                 "type": "Object"
             }
         },
+        "String": {
+            "name": "String",
+            "shortname": "String",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "js-ext",
+            "submodule": "lib/string.js",
+            "namespace": "",
+            "file": "src/js-ext/lib/string.js",
+            "line": 1,
+            "description": "Pollyfils for often used functionality for Strings\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
         "Array": {
             "name": "Array",
             "shortname": "Array",
@@ -1234,21 +1256,6 @@
             "file": "src/js-ext/lib/promise.js",
             "line": 3,
             "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        "String": {
-            "name": "String",
-            "shortname": "String",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "js-ext",
-            "submodule": "lib/string.js",
-            "namespace": "",
-            "file": "src/js-ext/lib/string.js",
-            "line": 1,
-            "description": "Pollyfils for often used functionality for Strings\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "window": {
             "name": "window",
@@ -7859,7 +7866,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 96,
+            "line": 89,
             "description": "Objecthash containing all specific information about the particular drag-cycle.\nIt has a structure like this:\n\nddProps = {\n    dragNode {HtmlElement} Element that is dragged\n    x {Number} absolute x-position of the draggable inside `document` when the drag starts\n    y {Number} absolute y-position of the draggable inside `document` when the drag starts\n    inlineLeft {String} inline css of the property `left` when drag starts\n    inlineTop {String} inline css of the property `top` when drag starts\n    winConstrained {Boolean} whether the draggable should be constrained to `window`\n    xMouseLast {Number} absolute x-position of the mouse inside `document` when the drag starts\n    yMouseLast {Number} absolute y-position of the draggable inside `document` when the drag starts\n    winScrollLeft {Number} the left-scroll of window when drag starts\n    winScrollTop {Number} the top-scroll of window when drag starts\n    constrain = { // constrain-properties when constrained to a HtmlElement\n        xOrig {Number} x-position in the document, included with left-border-width\n        yOrig {Number} y-position in the document, included with top-border-width\n        x {Number} xOrig corrected with scroll-left of the constrained node\n        y {Number} yOrig corrected with scroll-top of the constrained node\n        w {Number} scrollWidth\n        h {Number} scrollHeight\n    };\n    relatives[{ // Array with objects that represent all draggables that come along with the master-draggable (in case of multiple items), excluded the master draggable itself\n        sourceNode {HtmlElement} original node (defined by drag-drop)\n        dragNode {HtmlElement} draggable node\n        shiftX {Number} the amount of left-pixels that this HtmlElement differs from the dragged element\n        shiftY {Number} the amount of top-pixels that this HtmlElement differs from the dragged element\n        inlineLeft {String} inline css of the property `left` when drag starts\n        inlineTop {String} inline css of the property `top` when drag starts\n    }]\n}",
             "itemtype": "property",
             "name": "ddProps",
@@ -7871,7 +7878,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 136,
+            "line": 129,
             "description": "Internal hash with notifiers to response after each `Drag` event is set up, or teared down.\nYou can use this to hook in into the drag-eventcycle: the `drop`-module uses it this way.\nIs filled by using `notify()`.",
             "itemtype": "property",
             "name": "_notifiers",
@@ -7885,7 +7892,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 149,
+            "line": 142,
             "description": "Default function for the `*:dd-drag`-event",
             "itemtype": "method",
             "name": "_defFnDrag",
@@ -7904,7 +7911,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 174,
+            "line": 167,
             "description": "Fired when the mouse comes back into the browser-window while dd-drag was busy yet no buttons are pressed.\nThis is a correction to the fact that the mouseup-event wasn't noticed because the mouse was outside the browser.",
             "itemtype": "event",
             "name": "dd-fake-mouseup",
@@ -7916,7 +7923,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 206,
+            "line": 199,
             "description": "Default function for the `*:dd-drop`-event",
             "itemtype": "method",
             "name": "_defFnDrop",
@@ -7935,7 +7942,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 236,
+            "line": 229,
             "description": "Default function for the `*:dd`-event",
             "itemtype": "method",
             "name": "_defFnStart",
@@ -7954,7 +7961,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 254,
+            "line": 247,
             "description": "Defines the definition of the `dd` event: the first phase of the drag-eventcycle (dd, *:dd-drag, *:dd-drop)",
             "itemtype": "method",
             "name": "_defineDDStart",
@@ -7973,7 +7980,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 272,
+            "line": 265,
             "description": "Default function for the `*:dd-drag`-event",
             "itemtype": "method",
             "name": "_initializeDrag",
@@ -7992,7 +7999,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 354,
+            "line": 347,
             "description": "Emitted during the drag-cycle of a draggable Element (while it is dragged).",
             "itemtype": "event",
             "name": "*:dd-drag",
@@ -8067,7 +8074,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 403,
+            "line": 396,
             "description": "Emitted when drag-cycle of a draggable Element is ended.",
             "itemtype": "event",
             "name": "*:dd-drop",
@@ -8142,7 +8149,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 461,
+            "line": 454,
             "description": "Prevented function for the `*:dd-start`-event",
             "itemtype": "method",
             "name": "_prevFnStart",
@@ -8161,7 +8168,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 474,
+            "line": 467,
             "description": "Engine behind the drag-drop-cycle.\nSets up a `mousedown` listener to initiate a drag-drop eventcycle. The eventcycle start whenever\none of these events happens on a HtmlElement with the attribute `dd-draggable=\"true\"`.\nThe drag-drop eventcycle consists of the events: `dd-start`, `emitterName:dd-drag` and `emitterName:dd-drop`",
             "itemtype": "method",
             "name": "_setupMouseEv",
@@ -8173,7 +8180,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 530,
+            "line": 523,
             "description": "Emitted when a draggable Element's drag-cycle starts. You can use a `before`-subscriber to specify\ne.relatives, which should be a nodelist with HtmlElements, that should be dragged togehter with the master\ndraggable Element.",
             "itemtype": "event",
             "name": "*:dd",
@@ -8248,7 +8255,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 593,
+            "line": 586,
             "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
             "itemtype": "method",
             "name": "init",
@@ -8269,7 +8276,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 617,
+            "line": 610,
             "description": "Creates a notifier to response after each `Drag` event is set up, or teared down.\nYou can use this to hook in into the drag-eventcycle: the `drop`-module uses it this way.",
             "static": 1,
             "itemtype": "method",
@@ -8643,7 +8650,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 256,
+            "line": 249,
             "description": "Returns the allowed effects on the dragable-HtmlElement. Is determined by the attribute `dd-effect-allowed`\nWill be set to \"move\" when undefined.",
             "itemtype": "method",
             "name": "_allowedEffects",
@@ -8666,7 +8673,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 272,
+            "line": 265,
             "description": "Default function for the `*:dd-drop`-event. Overrides the definition of the `drag`-module.",
             "itemtype": "method",
             "name": "_defFnDrop (extended by drag-drop)",
@@ -8705,7 +8712,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 322,
+            "line": 315,
             "description": "Default function for the `*:dropzone`-event",
             "itemtype": "method",
             "name": "_defFnOver",
@@ -8724,7 +8731,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 341,
+            "line": 334,
             "description": "Emitted when the draggable gets out of the dropzone.",
             "itemtype": "event",
             "name": "*:dropzone-out",
@@ -8836,7 +8843,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 376,
+            "line": 369,
             "description": "Defines the definition of the `dd-drop` event: the last phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)",
             "itemtype": "method",
             "name": "_defineDropEv",
@@ -8895,7 +8902,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 401,
+            "line": 394,
             "description": "Defines the definition of the `dropzone` event.\nAlso sets up listeners to tricker dd-over when the mouse is above an dropzone.",
             "itemtype": "method",
             "name": "_defineOverEv",
@@ -8919,7 +8926,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 484,
+            "line": 477,
             "description": "Emitted when the draggable gets inside a dropzone.",
             "itemtype": "event",
             "name": "*:dropzone-over",
@@ -9031,7 +9038,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 523,
+            "line": 516,
             "description": "Emits a dropzone-drop event.",
             "itemtype": "method",
             "name": "_emitDropzoneDrop",
@@ -9050,7 +9057,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 532,
+            "line": 525,
             "description": "Emitted when a draggable gets dropped inside a dropzone.",
             "itemtype": "event",
             "name": "*:dropzone-drop",
@@ -9162,7 +9169,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 565,
+            "line": 558,
             "description": "Sets the draggable node back to its original position",
             "itemtype": "method",
             "name": "_handleDrop",
@@ -9196,7 +9203,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 731,
+            "line": 724,
             "description": "Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,\nso you can choose to do set the draggables back conditionally.",
             "itemtype": "method",
             "name": "_restoreDraggables",
@@ -9255,7 +9262,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 769,
+            "line": 762,
             "description": "Sets the draggable node back to its original position",
             "itemtype": "method",
             "name": "_setBack",
@@ -9310,7 +9317,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 844,
+            "line": 837,
             "description": "Sets up a `keydown` and `keyup` listener, to monitor whether a `ctrlKey` (windows) or `metaKey` (Mac)\nis pressed to support the copying of draggable items",
             "itemtype": "method",
             "name": "_setupKeyEv",
@@ -9322,7 +9329,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 879,
+            "line": 872,
             "description": "Fired when the mouse comes back into the browser-window while dd-drag was busy yet no buttons are pressed.\nThis is a correction to the fact that the mouseup-event wasn't noticed because the mouse was outside the browser.",
             "itemtype": "event",
             "name": "dd-fake-mousemove",
@@ -9334,7 +9341,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 892,
+            "line": 885,
             "description": "Cleansup the dragover subscriber and fulfills any dropzone-promise.",
             "itemtype": "method",
             "name": "_teardownOverEvent",
@@ -9353,7 +9360,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 916,
+            "line": 909,
             "description": "Returns true if the dropzone-HtmlElement accepts copy-dragables.\nIs determined by the attribute `dd-effect-allowed=\"copy\"` or `dd-effect-allowed=\"all\"`",
             "itemtype": "method",
             "name": "allowCopy",
@@ -9374,7 +9381,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 931,
+            "line": 924,
             "description": "Returns true if the dragable-HtmlElement allowes to switch between `copy` and `move`.",
             "itemtype": "method",
             "name": "allowSwitch",
@@ -9395,7 +9402,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 944,
+            "line": 937,
             "description": "Returns the emitterName that the dropzone accepts.",
             "itemtype": "method",
             "name": "getDropzoneEmitter",
@@ -9416,7 +9423,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 958,
+            "line": 951,
             "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
             "itemtype": "method",
             "name": "init (extended by drag-drop)",
@@ -9437,7 +9444,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 1036,
+            "line": 1029,
             "description": "Returns true if the dragable-HtmlElement accepts only copy-dragables (no moveable)\nIs determined by the attribute `dd-effect-allowed=\"copy\"`",
             "itemtype": "method",
             "name": "onlyCopy",
@@ -9458,7 +9465,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 1050,
+            "line": 1043,
             "description": "Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,\nso you can choose to do set the draggables back conditionally.",
             "itemtype": "method",
             "name": "restoreDraggables",
@@ -9471,7 +9478,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 77,
+            "line": 70,
             "description": "Subscribes to a customEvent. The callback will be executed `after` the defaultFn.",
             "static": 1,
             "itemtype": "method",
@@ -9517,7 +9524,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 104,
+            "line": 97,
             "description": "Subscribes to a customEvent. The callback will be executed `before` the defaultFn.",
             "static": 1,
             "itemtype": "method",
@@ -9563,7 +9570,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 131,
+            "line": 124,
             "description": "Defines an emitterName into the instance (emitter).\nThis will add a protected property `_emitterName` to the instance.",
             "static": 1,
             "itemtype": "method",
@@ -9586,7 +9593,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 152,
+            "line": 145,
             "description": "Defines a CustomEvent. If the eventtype already exists, it will not be overridden,\nunless you force to assign with `.forceAssign()`\n\nThe returned object comes with 4 methods which can be invoked chainable:\n\n<ul>\n    <li>defaultFn() --> the default-function of the event</li>\n    <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n    <li>forceAssign() --> overrides any previous definition</li>\n    <li>unHaltable() --> makes the customEvent cannot be halted</li>\n    <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n    <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>\n    <li>unRenderPreventable() --> makes that the customEvent's render cannot be prevented</li>\n    <li>noRender() --> prevents this customEvent from render the dom. Overrules unRenderPreventable()</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -9608,7 +9615,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 246,
+            "line": 239,
             "description": "Detaches (unsubscribes) the listener from the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -9632,7 +9639,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 264,
+            "line": 257,
             "description": "Detaches (unsubscribes) the listener from all customevents.",
             "static": 1,
             "itemtype": "method",
@@ -9650,7 +9657,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 288,
+            "line": 281,
             "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.rendered (optional) --> `true` the vDOM rendered the dom</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n              <li>e.status.renderPrevented (optional) -->  `reason|true` if the event got renderPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n    <li>e.preventRender() --> by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()` or `e.preventRender()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li>\n<ul>",
             "static": 1,
             "itemtype": "method",
@@ -9683,7 +9690,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 349,
+            "line": 342,
             "description": "Adds a subscriber to the finalization-cycle, which happens after the after-subscribers.\nOnly get invoked when the cycle was not preventDefaulted or halted.",
             "itemtype": "method",
             "name": "finalize",
@@ -9704,7 +9711,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 372,
+            "line": 365,
             "description": "Creates a notifier for the customEvent.\nYou can use this to create delayed `defineEvents`. When the customEvent is called, the callback gets invoked\n(even before the subsrcibers). Use this callback for delayed customEvent-definitions.\n\nUse **no** wildcards for the emitterName. You might use wildcards for the eventName. Without wildcards, the\nnotification will be unNotified (callback automaticly detached) on the first time the event occurs.\n\nYou **must** specify the full `emitterName:eventName` syntax.\nThe module `core-event-dom` uses `notify` to auto-define DOM-events (UI:*).",
             "static": 1,
             "itemtype": "method",
@@ -9740,7 +9747,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 405,
+            "line": 404,
             "description": "Creates a detach-notifier for the customEvent.\nYou can use this to get informed whenever a subscriber detaches.\n\nUse **no** wildcards for the emitterName. You might use wildcards for the eventName. Without wildcards, the\nnotification will be unNotified (callback automaticly detached) on the first time the event occurs.\n\nYou **must** specify the full `emitterName:eventName` syntax.\nThe module `core-event-dom` uses `notify` to auto-define DOM-events (UI:*).",
             "static": 1,
             "itemtype": "method",
@@ -9776,7 +9783,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 437,
+            "line": 442,
             "description": "Subscribes to a customEvent. The callback will be executed `after` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
             "itemtype": "method",
@@ -9822,7 +9829,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 481,
+            "line": 486,
             "description": "Subscribes to a customEvent. The callback will be executed `before` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
             "itemtype": "method",
@@ -9868,7 +9875,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 525,
+            "line": 530,
             "description": "Removes all event-definitions of an emitter, specified by its `emitterName`.\nWhen `emitterName` is not set, ALL event-definitions will be removed.",
             "static": 1,
             "itemtype": "method",
@@ -9887,7 +9894,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 555,
+            "line": 560,
             "description": "Removes the event-definition of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -9905,7 +9912,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 568,
+            "line": 573,
             "description": "unNotifies (unsubscribes) the notifier of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -9923,7 +9930,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 581,
+            "line": 586,
             "description": "unNotifies (unsubscribes) the detach-notifier of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -9941,7 +9948,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 598,
+            "line": 603,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -9993,7 +10000,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 670,
+            "line": 675,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -10045,7 +10052,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 777,
+            "line": 782,
             "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.rendered (optional) --> `true` the vDOM rendered the dom</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n              <li>e.status.renderPrevented (optional) -->  `reason|true` if the event got renderPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n    <li>e.preventRender() --> by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()` or `e.preventRender()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li>\n<ul>",
             "static": 1,
             "itemtype": "method",
@@ -10102,7 +10109,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 935,
+            "line": 940,
             "description": "Does the actual invocation of a subscriber.",
             "itemtype": "method",
             "name": "_invokeSubs",
@@ -10144,7 +10151,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 985,
+            "line": 990,
             "description": "Removes a subscriber from the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`.",
             "static": 1,
             "itemtype": "method",
@@ -10180,7 +10187,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1050,
+            "line": 1055,
             "description": "Removes subscribers from the multiple customevents. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -10205,7 +10212,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1105,
+            "line": 1110,
             "description": "Adds a property to the default eventobject's prototype which passes through all eventcycles.\nGoes through Object.defineProperty with configurable, enumerable and writable\nall set to false.",
             "itemtype": "method",
             "name": "_setEventObjProperty",
@@ -10230,7 +10237,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1125,
+            "line": 1130,
             "description": "Objecthash containing all defined custom-events\nwhich has a structure like this:\n\n_ce = {\n    'UI:click': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    },\n    'redmodel:save': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -10244,7 +10251,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1157,
+            "line": 1162,
             "description": "Objecthash containing all defined before and after subscribers\nwhich has a structure like this (`b` represents `before` and `a` represents `after`)\nEvery item that gets in the array consist by itself of 3 properties:\n                                                         subscriberitem = {\n                                                             o: listener,\n                                                             cb: callbackFn(e),\n                                                             f: filter\n                                                         };\n\n_subs = {\n    'UI:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    '*:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    'redmodel:save': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -10258,7 +10265,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1208,
+            "line": 1213,
             "description": "Internal list of finalize-subscribers which are invoked at the finalization-cycle, which happens after the after-subscribers.\nIs an array of function-references.",
             "itemtype": "property",
             "name": "_final",
@@ -10272,7 +10279,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1220,
+            "line": 1225,
             "description": "Object that acts as the prototype of the eventobject.\nTo add more methods, you can use `_setEventObjProperty`",
             "itemtype": "property",
             "name": "_defaultEventObj",
@@ -10286,7 +10293,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1236,
+            "line": 1241,
             "description": "Objecthash containing all detach-notifiers, keyed by customEvent name.\nThis list is maintained by `notifyDetach` and `unNotifyDetach`\n\n_detachNotifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_detachNotifiers",
@@ -10300,7 +10307,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1263,
+            "line": 1268,
             "description": "Objecthash containing all notifiers, keyed by customEvent name.\nThis list is maintained by `notify` and `unNotify`\n\n_notifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_notifiers",
@@ -10594,7 +10601,7 @@
         },
         {
             "file": "src/event-dom/extra/valuechange.js",
-            "line": 253,
+            "line": 246,
             "itemtype": "event",
             "name": "valuechange",
             "params": [
@@ -10615,7 +10622,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 514,
+            "line": 569,
             "description": "Does the actual transportation from DOM-events into the Eventsystem. It also looks at the response of\nthe Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will be preventDefaulted.",
             "itemtype": "method",
             "name": "_domCallback",
@@ -10682,7 +10689,7 @@
         },
         {
             "file": "src/io/extra/io-assets.js",
-            "line": 43,
+            "line": 36,
             "description": "Creates a `<style>` tag to load the CSS file at the given url.",
             "itemtype": "method",
             "name": "getCSS",
@@ -10731,7 +10738,7 @@
         },
         {
             "file": "src/io/extra/io-assets.js",
-            "line": 61,
+            "line": 54,
             "description": "Creates a `<script>` tag to load the script at the given url.",
             "itemtype": "method",
             "name": "getJS",
@@ -10780,7 +10787,7 @@
         },
         {
             "file": "src/io/extra/io-jsonp.js",
-            "line": 44,
+            "line": 37,
             "description": "Creates a `<style>` tag to load the CSS file at the given url.",
             "itemtype": "method",
             "name": "readObjectJSONP",
@@ -10829,7 +10836,7 @@
         },
         {
             "file": "src/io/extra/io-stream.js",
-            "line": 74,
+            "line": 67,
             "description": "Adds 2 methods on the xhr-instance which are used by xhr when events occur:\n\nxhr.onload()\nxhr.onerror()  // only XMLHttpRequest2\n\nThese events are only added in case of XDR",
             "itemtype": "method",
             "name": "_readyHandleXDR",
@@ -10852,7 +10859,7 @@
         },
         {
             "file": "src/io/extra/io-stream.js",
-            "line": 106,
+            "line": 99,
             "description": "Adds a `headers` X-Stream=true in case of a streaming request.",
             "itemtype": "method",
             "name": "_setHeaders",
@@ -10880,7 +10887,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 98,
+            "line": 91,
             "description": "Performs an AJAX GET request.  Shortcut for a call to [`xhr`](#method_xhr) with `method` set to  `'GET'`.\nAdditional parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `params` should be a plain object with only primitive types which are transformed into key/value pairs.",
             "itemtype": "method",
             "name": "get",
@@ -10948,7 +10955,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 142,
+            "line": 135,
             "description": "Performs an AJAX request with the GET HTTP method and expects a JSON-object.\nThe resolved Promise-callback returns an object (JSON-parsed serverresponse).\n\nAdditional request-parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: If you expect the server to response with data that consist of Date-properties, you should set `options.parseJSONDate` true.\n       Parsing takes a bit longer, but it will generate trully Date-objects.\nNote2: CORS is supported, as long as the responseserver is set up to:\n      a) has a response header which allows the clientdomain:\n         header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n      b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n         to requests with the OPTION-method\n      More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/",
             "itemtype": "method",
             "name": "read",
@@ -11017,7 +11024,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 204,
+            "line": 197,
             "description": "Sends data (object) which will be JSON-stringified before sending.\nPerforms an AJAX request with the PUT HTTP method by default.\nWhen options.allfields is `false`, it will use the POST-method: see Note2.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: The server needs to inspect the bodyparam: 'action', which always equals 'update'.\n       'body.action' is the way to distinquish 'I.IO.updateObject' from 'I.IO.insertObject'.\n       On purpose, we didn't make this distinction through a custom CONTENT-HEADER, because\n       that would lead into a more complicated CORS-setup (see Note3)\nNote2: By default this method uses the PUT-request: which is preferable is you send the WHOLE object.\n       if you send part of the fields, set `options.allfields`=false.\n       This will lead into using the POST-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote3: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote4: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "update",
@@ -11092,7 +11099,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 252,
+            "line": 245,
             "description": "Performs an AJAX request with the POST HTTP method by default.\nWhen options.allfields is `true`, it will use the PUT-method: see Note2.\nThe send data is an object which will be JSON-stringified before sending.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n'body.action' has the value 'insert'\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: The server needs to inspect the bodyparam: 'action', which always equals 'insert'.\n       'body.action' is the way to distinquish 'I.IO.insertObject' from 'I.IO.updateObject'.\n       On purpose, we didn't make this distinction through a custom CONTENT-HEADER, because\n       that would lead into a more complicated CORS-setup (see Note3)\nNote2: By default this method uses the POST-request: which is preferable if you don't know all the fields (like its unique id).\n       if you send ALL the fields, set `options.allfields`=true.\n       This will lead into using the PUT-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote3: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote4: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "insert",
@@ -11167,7 +11174,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 300,
+            "line": 293,
             "description": "Performs an AJAX request with the PUT HTTP method by default.\nWhen options.allfields is `false`, it will use the POST-method: see Note2.\nThe send data is an object which will be JSON-stringified before sending.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: By default this method uses the PUT-request: which is preferable is you send the WHOLE object.\n       if you send part of the fields, set `options.allfields`=false.\n       This will lead into using the POST-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote2: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote3: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "send",
@@ -11235,7 +11242,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 386,
+            "line": 379,
             "description": "Performs an AJAX DELETE request.  Shortcut for a call to [`xhr`](#method_xhr) with `method` set to  `'DELETE'`.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `data` should be a plain object with only primitive types which are transformed into key/value pairs.",
             "itemtype": "method",
             "name": "delete",
@@ -11314,7 +11321,7 @@
         },
         {
             "file": "src/io/extra/io-xml.js",
-            "line": 87,
+            "line": 80,
             "description": "Performs an AJAX request with the GET HTTP method and expects a JSON-object.\nThe resolved Promise-callback returns an object (JSON-parsed serverresponse).\n\nAdditional request-parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: If you expect the server to response with data that consist of Date-properties, you should set `options.parseJSONDate` true.\n       Parsing takes a bit longer, but it will generate trully Date-objects.\nNote2: CORS is supported, as long as the responseserver is set up to:\n      a) has a response header which allows the clientdomain:\n         header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n      b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n         to requests with the OPTION-method\n      More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/",
             "itemtype": "method",
             "name": "readXML",
@@ -11408,7 +11415,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 66,
+            "line": 61,
             "description": "Initializes the xhr-instance, based on the config-params.\nThis method is the standard way of doing xhr-requests without processing streams.",
             "itemtype": "method",
             "name": "_initXHR",
@@ -11500,7 +11507,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 147,
+            "line": 142,
             "description": "Adds the `headers`-object to `xhr`-headers.",
             "itemtype": "method",
             "name": "_setHeaders",
@@ -11528,7 +11535,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 177,
+            "line": 172,
             "description": "Adds 2 methods on the xhr-instance which are used by xhr when events occur:\n\nxhr.onreadystatechange()\nxhr.ontimeout()  // only XMLHttpRequest2\n\nThese events are responsible for making the Promise resolve.",
             "itemtype": "method",
             "name": "_setReadyHandle",
@@ -11556,7 +11563,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 221,
+            "line": 216,
             "description": "Stringifies an object into one string with every pair separated by `&`",
             "itemtype": "method",
             "name": "_toQueryString",
@@ -11578,7 +11585,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 242,
+            "line": 237,
             "description": "Sends a HTTP request to the server and returns a Promise with an additional .abort() method to cancel the request.\nThis method is the standard way of doing xhr-requests without processing streams.",
             "itemtype": "method",
             "name": "request",
@@ -13258,7 +13265,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 50,
+            "line": 43,
             "description": "For all vElements of the ElementArray:\nAppends a HtmlElement or text at the end of HtmlElement's innerHTML.",
             "itemtype": "method",
             "name": "append",
@@ -13282,7 +13289,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 64,
+            "line": 57,
             "description": "For all vElements of the ElementArray:\nSets the inline-style of the HtmlElement exactly to the specified `value`, overruling previous values.\nMaking the HtmlElement's inline-style look like: style=\"value\".\n\nThis is meant for a quick one-time setup. For individually inline style-properties to be set, you can use `setInlineStyle()`.",
             "itemtype": "method",
             "name": "defineInlineStyle",
@@ -13301,7 +13308,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 80,
+            "line": 73,
             "description": "For all vElements of the ElementArray:\nChecks whether the plugin is plugged in at ALL the HtmlElements of the NodeList/HTMLCollection.\nChecks whether all its attributes are set.",
             "itemtype": "method",
             "name": "isPlugged",
@@ -13323,7 +13330,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 96,
+            "line": 89,
             "description": "For all vElements of the ElementArray:\nPlugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.",
             "itemtype": "method",
             "name": "plug",
@@ -13347,7 +13354,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 110,
+            "line": 103,
             "description": "For all vElements of the ElementArray:\nPrepends a HtmlElement or text at the start of HtmlElement's innerHTML.",
             "itemtype": "method",
             "name": "prepend",
@@ -13372,7 +13379,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 124,
+            "line": 117,
             "description": "For all vElements of the ElementArray:\nRemoves the attribute from the HtmlElement.\n\nAlias for removeAttribute().",
             "itemtype": "method",
             "name": "removeAttr",
@@ -13394,7 +13401,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 139,
+            "line": 132,
             "description": "For all vElements of the ElementArray:\nRemoves a className from the HtmlElement.",
             "itemtype": "method",
             "name": "removeClass",
@@ -13413,7 +13420,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 152,
+            "line": 145,
             "description": "For all vElements of the ElementArray:\nRemoves data specified by `key`. When no arguments are passed, all node-data (key-value pairs) will be removed.",
             "itemtype": "method",
             "name": "removeData",
@@ -13432,7 +13439,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 165,
+            "line": 158,
             "description": "For all vElements of the ElementArray:\nRemoves a css-property (inline) out of the HtmlElement. Use camelCase.",
             "itemtype": "method",
             "name": "removeInlineStyle",
@@ -13451,7 +13458,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 178,
+            "line": 171,
             "description": "For all vElements of the ElementArray:\nRemoves the HtmlElement from the DOM.",
             "itemtype": "method",
             "name": "removeNode",
@@ -13462,7 +13469,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 192,
+            "line": 185,
             "description": "For all vElements of the ElementArray:\nReplaces the className of the HtmlElement with a new className.\nIf the previous className is not available, the new className is set nevertheless.",
             "itemtype": "method",
             "name": "replaceClass",
@@ -13491,7 +13498,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 208,
+            "line": 201,
             "description": "For all vElements of the ElementArray:\nReplaces the HtmlElement with a new HtmlElement.",
             "itemtype": "method",
             "name": "replaceNode",
@@ -13515,7 +13522,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 228,
+            "line": 221,
             "description": "For all vElements of the ElementArray:\nSets the attribute on the HtmlElement with the specified value.\n\nAlias for setAttribute().",
             "itemtype": "method",
             "name": "setAttr",
@@ -13539,7 +13546,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 244,
+            "line": 237,
             "description": "For all vElements of the ElementArray:\nAdds a class to the HtmlElement. If the class already exists it won't be duplicated.",
             "itemtype": "method",
             "name": "setClass",
@@ -13558,7 +13565,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 257,
+            "line": 250,
             "description": "For all vElements of the ElementArray:\nStores arbitary `data` at the HtmlElement. This has nothing to do with node-attributes whatsoever,\nit is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.",
             "itemtype": "method",
             "name": "setData",
@@ -13582,7 +13589,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 272,
+            "line": 265,
             "description": "For all vElements of the ElementArray:\nSets the content of the HtmlElement (innerHTML). Careful: only set content like this if you controll the data and\nare sure what is going inside. Otherwise XSS might occur. If you let the user insert, or insert right from a db,\nyou might be better of using setContent().",
             "itemtype": "method",
             "name": "setHTML",
@@ -13601,7 +13608,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 287,
+            "line": 280,
             "description": "For all vElements of the ElementArray:\nSets a css-property (inline) out of the HtmlElement. Use camelCase.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "setStyle",
@@ -13625,7 +13632,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 303,
+            "line": 296,
             "description": "For all vElements of the ElementArray:\nGets or sets the outerHTML of both the Element as well as the representing dom-node.\nGoes through the vdom, so it's superfast.\n\nUse this property instead of `outerHTML`\n\nSyncs with the DOM.",
             "itemtype": "method",
             "name": "setOuterHTML",
@@ -13644,7 +13651,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 321,
+            "line": 314,
             "description": "For all vElements of the ElementArray:\nSets the content of the HtmlElement. This is a safe way to set the content, because HTML is not parsed.\nIf you do need to set HTML inside the node, use setHTML().",
             "itemtype": "method",
             "name": "setText",
@@ -13669,7 +13676,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 336,
+            "line": 329,
             "description": "For all vElements of the ElementArray:\nToggles the className of the Element.",
             "itemtype": "method",
             "name": "toggleClass",
@@ -13688,7 +13695,7 @@
         },
         {
             "file": "src/vdom/partials/element-array.js",
-            "line": 349,
+            "line": 342,
             "description": "For all vElements of the ElementArray:\nUnplugs a NodePlugin from the HtmlElement.",
             "itemtype": "method",
             "name": "unplug",
@@ -13707,7 +13714,7 @@
         },
         {
             "file": "src/vdom/partials/element-plugin.js",
-            "line": 39,
+            "line": 40,
             "description": "Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.",
             "itemtype": "method",
             "name": "isPlugged",
@@ -13729,7 +13736,7 @@
         },
         {
             "file": "src/vdom/partials/element-plugin.js",
-            "line": 51,
+            "line": 52,
             "description": "Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.",
             "itemtype": "method",
             "name": "plug",
@@ -13753,7 +13760,7 @@
         },
         {
             "file": "src/vdom/partials/element-plugin.js",
-            "line": 65,
+            "line": 66,
             "description": "Unplugs a NodePlugin from the HtmlElement.",
             "itemtype": "method",
             "name": "unplug",
@@ -13772,7 +13779,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 41,
+            "line": 36,
             "description": "Returns a newly created TreeWalker object.\n\nThe TreeWalker is life presentation of the dom. It gets updated when the dom changes.",
             "itemtype": "method",
             "name": "createTreeWalker",
@@ -13805,7 +13812,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 62,
+            "line": 57,
             "description": "Indicating whether an Element is inside the DOM.",
             "itemtype": "method",
             "name": "contains",
@@ -13827,7 +13834,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 74,
+            "line": 69,
             "description": "Gets an ElementArray of Elements, specified by the css-selector.",
             "itemtype": "method",
             "name": "getAll",
@@ -13849,7 +13856,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 86,
+            "line": 81,
             "description": "Gets one Element, specified by the css-selector. To retrieve a single element by id,\nyou need to prepend the id-name with a `#`. When multiple Element's match, the first is returned.",
             "itemtype": "method",
             "name": "getElement",
@@ -13871,7 +13878,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 99,
+            "line": 94,
             "description": "Returns the Element matching the specified id.",
             "itemtype": "method",
             "name": "getElementById",
@@ -13892,7 +13899,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 111,
+            "line": 106,
             "description": "Returns the first Element that matches the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,\nthey need to be separated by a `comma`.",
             "itemtype": "method",
             "name": "querySelector",
@@ -13913,7 +13920,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 127,
+            "line": 122,
             "description": "Returns an ElementArray of all Elements that match the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,\nthey need to be separated by a `comma`.\n\nquerySelectorAll is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.",
             "itemtype": "method",
             "name": "querySelectorAll",
@@ -13934,7 +13941,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 144,
+            "line": 139,
             "description": "Replaces the Element with a new Element.",
             "itemtype": "method",
             "name": "replace",
@@ -13959,7 +13966,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 157,
+            "line": 152,
             "description": "Tests if an Element would be selected by the specified cssSelector.\nAlias for `matchesSelector()`",
             "itemtype": "method",
             "name": "test",
@@ -13986,7 +13993,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 175,
+            "line": 170,
             "description": "Returns the currently focused element, that is, the element that will get keystroke events if the user types any.",
             "itemtype": "property",
             "name": "activeElement",
@@ -13998,7 +14005,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 183,
+            "line": 178,
             "description": "Returns an HTMLCollection with Elements of all of the `anchors` in the document that have a `name` specified (a[name]).\nFor reasons of backwards compatibility, the returned set of anchors only contains those anchors created with the `name` attribute.\n\n`anchors` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "anchors",
@@ -14010,7 +14017,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 194,
+            "line": 189,
             "description": "Returns an HTMLCollection with Elements of all of the `applets` in the document.\n\n`applets` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "applets",
@@ -14022,7 +14029,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 204,
+            "line": 199,
             "description": "Returns the `body` or `frameset` Element of the current document, or null if no such element exists.",
             "itemtype": "property",
             "name": "body",
@@ -14034,7 +14041,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 212,
+            "line": 207,
             "description": "Returns the `script`-Element whose script is currently being processed.",
             "itemtype": "property",
             "name": "currentScript",
@@ -14046,7 +14053,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 221,
+            "line": 216,
             "description": "Returns the root-element (===`html`-Element) of the current document",
             "itemtype": "property",
             "name": "documentElement",
@@ -14058,7 +14065,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 229,
+            "line": 224,
             "description": "Returns an HTMLCollection with Elements of all of the `embed`-elements in the document.\n\n`embeds` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "embeds",
@@ -14070,7 +14077,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 239,
+            "line": 234,
             "description": "Returns the firstChild element (===`html`-Element) of the current document",
             "itemtype": "property",
             "name": "firstChild",
@@ -14082,7 +14089,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 247,
+            "line": 242,
             "description": "Returns an HTMLCollection with Elements of all of the `form`-elements in the document.\n\n`forms` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "forms",
@@ -14094,7 +14101,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 257,
+            "line": 252,
             "description": "Returns an HTMLCollection with Elements of all of the images in the document.\n\n`images` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "images",
@@ -14106,7 +14113,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 267,
+            "line": 262,
             "description": "Returns the lastChild element (===`html`-Element) of the current document",
             "itemtype": "property",
             "name": "lastChild",
@@ -14118,7 +14125,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 275,
+            "line": 270,
             "description": "Returns an HTMLCollection with Elements of all of the  of all `area`-Elements and `a`-Elements in a document with a value for the href attribute.\n\n`links` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "links",
@@ -14130,7 +14137,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 285,
+            "line": 280,
             "description": "Returns an HTMLCollection with Elements of all of the plugins (`object`- or `embed`-elements) in the document.\n\n`plugins` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "plugins",
@@ -14142,7 +14149,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 295,
+            "line": 290,
             "description": "Returns an HTMLCollection with Elements of all of the script-elements in the document.\n\n`scripts` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "scripts",
@@ -14154,7 +14161,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 305,
+            "line": 300,
             "description": "Returns an HTMLCollection with Elements of all of the style-elements in the document.\n\n`styleSheets` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "styleSheets",
@@ -14166,7 +14173,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 315,
+            "line": 310,
             "description": "Gets or sets the `title` of the document. That is, the `title`-Element within the `head`-Element",
             "itemtype": "property",
             "name": "title",
@@ -14177,7 +14184,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 325,
+            "line": 320,
             "description": "\"online\" event is fired on the <body> of each page when the browser switches between online and offline mode.\nThe event is non-cancellable (you can't prevent the user from coming online, or going offline).",
             "itemtype": "event",
             "name": "online",
@@ -14187,7 +14194,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 332,
+            "line": 327,
             "description": "\"offline\" event is fired on the <body> of each page when the browser switches between online and offline mode.\nThe event is non-cancellable (you can't prevent the user from coming online, or going offline).",
             "itemtype": "event",
             "name": "offline",
@@ -14197,7 +14204,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 341,
+            "line": 336,
             "description": "Adopts a node from an external document. The node and its subtree is removed from the document it's in (if any),\nand its ownerDocument is changed to the current document. The node can then be inserted into the current document.",
             "itemtype": "method",
             "name": "adoptNode",
@@ -14218,7 +14225,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 351,
+            "line": 346,
             "description": "Adds a HtmlElement or DocumentFragment to the end of the `html`-element",
             "itemtype": "method",
             "name": "appendChild",
@@ -14239,7 +14246,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 359,
+            "line": 354,
             "description": "Creates a new attribute-node, and returns it.",
             "itemtype": "method",
             "name": "createAttribute",
@@ -14260,7 +14267,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 367,
+            "line": 362,
             "description": "Creates a new Comment-node, and returns it.",
             "itemtype": "method",
             "name": "createComment",
@@ -14281,7 +14288,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 375,
+            "line": 370,
             "description": "Creates a new HtmlElement, and returns it.\n\nDon't use qualified names (like \"html:a\") with this method.",
             "itemtype": "method",
             "name": "createElement",
@@ -14302,7 +14309,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 386,
+            "line": 381,
             "description": "Returns a new NodeIterator object.\n\nThe NodeIterator is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.",
             "itemtype": "method",
             "name": "createNodeIterator",
@@ -14335,7 +14342,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 404,
+            "line": 399,
             "description": "Returns a new Range object. See https://developer.mozilla.org/en-US/docs/Web/API/Range",
             "itemtype": "method",
             "name": "createRange",
@@ -14349,7 +14356,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 411,
+            "line": 406,
             "description": "Creates a new Text-node, and returns it.",
             "itemtype": "method",
             "name": "createTextNode",
@@ -14370,7 +14377,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 419,
+            "line": 414,
             "description": "Returns the Element from the document whose `elementFromPoint`-method is being called which is the topmost\ndom-Element which lies under the given point. To get a Element, specify the point via coordinates, in CSS pixels,\nrelative to the upper-left-most point in the window or frame containing the document.",
             "itemtype": "method",
             "name": "elementFromPoint",
@@ -14396,7 +14403,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 430,
+            "line": 425,
             "description": "Enables the style sheets matching the specified name in the current style sheet set,\nand disables all other style sheets (except those without a title, which are always enabled).",
             "itemtype": "method",
             "name": "enableStyleSheetsForSet",
@@ -14413,7 +14420,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 440,
+            "line": 435,
             "description": "Returns an ElementArray of all Elements that match their classes with the supplied `classNames` argument.\nTo match multiple different classes, separate them with a `comma`.\n\ngetElementsByClassName is life presentation of the dom. The returned ElementArray gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByClassName",
@@ -14434,7 +14441,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 454,
+            "line": 449,
             "description": "Returns an ElementArray of all Elements that match their `name`-attribute with the supplied `name` argument.\n\ngetElementsByName is life presentation of the dom. The returned ElementArray gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByName",
@@ -14455,7 +14462,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 466,
+            "line": 461,
             "description": "Returns an ElementArray of all Elements that match their `name`-attribute with the supplied `name` argument.\n\ngetElementsByTagName is life presentation of the dom. The returned ElementArray gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByTagName",
@@ -14476,7 +14483,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 478,
+            "line": 473,
             "description": "Returns a selection object representing the range of text selected by the user.\n\nIs also available on the `window`-object.",
             "itemtype": "method",
             "name": "getSelection",
@@ -14490,7 +14497,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 487,
+            "line": 482,
             "description": "Returns a Boolean value indicating whether the document or any element inside the document has focus.",
             "itemtype": "method",
             "name": "hasFocus",
@@ -14504,7 +14511,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 494,
+            "line": 489,
             "description": "Creates a copy of a node from an external document that can be inserted into the current document.",
             "itemtype": "method",
             "name": "importNode",
@@ -14530,7 +14537,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 504,
+            "line": 499,
             "description": "Inserts `newElement` before `referenceElement`.",
             "itemtype": "method",
             "name": "insertBefore",
@@ -14556,7 +14563,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 513,
+            "line": 508,
             "description": "Removes a child node from the DOM.",
             "itemtype": "method",
             "name": "removeChild",
@@ -14577,7 +14584,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 521,
+            "line": 516,
             "description": "Replaces one child-element of its parent element with a new child-element.",
             "itemtype": "method",
             "name": "replaceChild",
@@ -14603,7 +14610,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 532,
+            "line": 527,
             "description": "Returns the character encoding of the current document.",
             "itemtype": "property",
             "name": "characterSet",
@@ -14614,7 +14621,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 539,
+            "line": 534,
             "description": "Indicates whether the document is rendered in Quirks mode or Standards mode. Its value is either:\n<ul>\n    <li>`BackCompat` if the document is in quirks mode</li>\n    <li>`CSS1Compat` if the document is in no-quirks (also known as `standards`) mode or limited-quirks (also known as `almost standards`) mode.</li>\n</ul>",
             "itemtype": "property",
             "name": "compatMode",
@@ -14625,7 +14632,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 550,
+            "line": 545,
             "description": "Returns the MIME type that the document is being rendered as.  This may come from HTTP headers or other sources of MIME information,\nand might be affected by automatic type conversions performed by either the browser or extensions.",
             "itemtype": "property",
             "name": "contentType",
@@ -14636,7 +14643,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 558,
+            "line": 553,
             "description": "Returns the Document Type Declaration (DTD) associated with current document. The returned object implements the DocumentType interface.\nUse DOMImplementation.createDocumentType() to create a DocumentType.",
             "itemtype": "property",
             "name": "doctype",
@@ -14647,7 +14654,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 566,
+            "line": 561,
             "description": "Returns string URI of the HTML document. Same as `document.URL`.\n\nNote: HTML documents have a document.URL property which returns the same value. Unlike URL, documentURI is available on all types of documents.",
             "itemtype": "property",
             "name": "documentURI",
@@ -14659,7 +14666,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 576,
+            "line": 571,
             "description": "Controls whether the entire document is editable. Its value should be either \"off\" or \"on\".",
             "itemtype": "property",
             "name": "designMode",
@@ -14671,7 +14678,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 584,
+            "line": 579,
             "description": "Gets the domain portion of the origin of the current document.\n\nSetter will fail, because the same origin policy needs to persist.",
             "itemtype": "property",
             "name": "domain",
@@ -14683,7 +14690,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 594,
+            "line": 589,
             "description": "Returns a DOMImplementation object associated with the current document.",
             "itemtype": "property",
             "name": "implementation",
@@ -14695,7 +14702,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 602,
+            "line": 597,
             "description": "Returns a string containing the date and time on which the current document was last modified.\nIf you want a Date-object, you need to transform lastModified into a Date object: `modifyDate = new Date(document.lastModified);`",
             "itemtype": "property",
             "name": "lastModified",
@@ -14707,7 +14714,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 611,
+            "line": 606,
             "description": "Returns the last enabled style sheet set; this property's value changes whenever the document.selectedStyleSheetSet property is changed.",
             "itemtype": "property",
             "name": "lastStyleSheetSet",
@@ -14719,7 +14726,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 619,
+            "line": 614,
             "description": "returns a Location object, which contains information about the URL of the document and provides methods for changing that URL and loading another URL.\n\nThough Document.location is a read-only Location object, you can also assign a DOMString to it. This means that you can work with document.location\nas if it were a string in most cases: document.location = 'http://www.example.com' is a synonym of document.location.href = 'http://www.example.com'.\n\nTo retrieve just the URL as a string, the read-only document.URL property can also be used.\n\nSee more about the `Location` object: https://developer.mozilla.org/en-US/docs/Web/API/Location",
             "itemtype": "property",
             "name": "location",
@@ -14731,7 +14738,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 634,
+            "line": 629,
             "description": "Returns the preferred style sheet set as set by the page author. This is determined from the order of style sheet declarations and the Default-Style HTTP header.",
             "itemtype": "property",
             "name": "preferredStyleSheetSet",
@@ -14742,7 +14749,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 641,
+            "line": 636,
             "description": "Returns \"loading\" while the document is loading, \"interactive\" once it is finished parsing but still loading sub-resources,\nand \"complete\" once it has loaded.",
             "itemtype": "property",
             "name": "readyState",
@@ -14754,7 +14761,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 650,
+            "line": 645,
             "description": "Returns the URI of the page that linked to this page.",
             "itemtype": "property",
             "name": "referrer",
@@ -14766,7 +14773,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 658,
+            "line": 653,
             "description": "Indicates the name of the style sheet set that's currently in use. See more about Stylesheets: https://developer.mozilla.org/en-US/docs/Web/API/Stylesheet\nSetting the value of this property is equivalent to calling document.enableStyleSheetsForSet() with the value of currentStyleSheetSet,\nthen setting the value of lastStyleSheetSet to that value as well.",
             "itemtype": "property",
             "name": "selectedStyleSheetSet",
@@ -14777,7 +14784,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 667,
+            "line": 662,
             "description": "Returns string URL of the HTML document. Same as `document.documentURI`\n\nNote: HTML documents have a document.URL property which returns the same value. Unlike URL, documentURI is available on all types of documents.",
             "itemtype": "property",
             "name": "URL",
@@ -14789,7 +14796,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 803,
+            "line": 796,
             "description": "Reference to the vnode-object that represents the Node\n\n(will autogenerate a vnode, should it not exists)",
             "itemtype": "property",
             "name": "vnode",
@@ -14801,7 +14808,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 841,
+            "line": 834,
             "description": "Determines the number of transitionend-events there will occur",
             "itemtype": "method",
             "name": "_getEvtTransEndCount",
@@ -14814,7 +14821,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 862,
+            "line": 855,
             "description": "Returns cascaded \"transition\" style of all transition-properties. `Cascaded` means: the actual present style,\nthe way it is visible (calculated through the DOM-tree).\n\nNote1: When \"transition\" is set inline, ONLY inline transtition is active!\nThus, if parentNode has \"transition: width 2s\" and inline has \"transition: height 3s\", then the transition\nwill be \"transition: height 3s\" --> returning \"undefined\" for transitionProperty=width.\nNote2: in case of \"transition: all\" --> these values will be returned for every \"transitionProperty\" (even when querying \"width\")",
             "itemtype": "method",
             "name": "_getTransitionAll",
@@ -14844,7 +14851,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 922,
+            "line": 915,
             "description": "Appends an Element or an Element's string-representation at the end of Element's innerHTML, or before the `refElement`.",
             "itemtype": "method",
             "name": "append",
@@ -14865,6 +14872,13 @@
                     "description": "reference Element where the content should be appended",
                     "type": "Element",
                     "optional": true
+                },
+                {
+                    "name": "silent",
+                    "description": "prevent node-mutation events by the Event-module to emit",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
                 }
             ],
             "return": {
@@ -14878,7 +14892,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 968,
+            "line": 964,
             "description": "Adds a node to the end of the list of childNodes of a specified parent node.",
             "itemtype": "method",
             "name": "appendChild",
@@ -14905,7 +14919,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 981,
+            "line": 977,
             "description": "Returns a duplicate of the node. Use cloneNode(true) for a `deep` clone.",
             "itemtype": "method",
             "name": "cloneNode",
@@ -14928,7 +14942,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1024,
+            "line": 1015,
             "description": "Compares the position of the current node against another node in any other document.\n\nReturnvalues are a composition of the following bitwise values:\n<ul>\n    <li>Node.DOCUMENT_POSITION_DISCONNECTED === 1 (one of the Elements is not part of the dom)</li>\n    <li>Node.DOCUMENT_POSITION_PRECEDING === 2 (this Element comes before otherElement)</li>\n    <li>Node.DOCUMENT_POSITION_FOLLOWING === 4 (this Element comes after otherElement)</li>\n    <li>Node.DOCUMENT_POSITION_CONTAINS === 8 (otherElement trully contains -not equals- this Element)</li>\n    <li>Node.DOCUMENT_POSITION_CONTAINED_BY === 16 (Element trully contains -not equals- otherElement)</li>\n</ul>",
             "itemtype": "method",
             "name": "compareDocumentPosition",
@@ -14949,7 +14963,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1068,
+            "line": 1059,
             "description": "Indicating whether this Element contains OR equals otherElement.",
             "itemtype": "method",
             "name": "contains",
@@ -14970,7 +14984,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1082,
+            "line": 1073,
             "description": "Returns a newly created TreeWalker object with this Element as root.\n\nThe TreeWalker is life presentation of the dom. It gets updated when the dom changes.",
             "itemtype": "method",
             "name": "createTreeWalker",
@@ -15004,7 +15018,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1127,
+            "line": 1118,
             "description": "Sets the inline-style of the Element exactly to the specified `value`, overruling previous values.\nMaking the Element's inline-style look like: style=\"value\".\n\nThis is meant for a quick one-time setup. For individually inline style-properties to be set, you can use `setInlineStyle()`.",
             "itemtype": "method",
             "name": "defineInlineStyle",
@@ -15023,10 +15037,19 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1142,
+            "line": 1133,
             "description": "Empties the content of the Element.\nAlias for thisNode.vTextContent = '';",
             "itemtype": "method",
             "name": "empty",
+            "params": [
+                {
+                    "name": "silent",
+                    "description": "prevent node-mutation events by the Event-module to emit",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
             "chainable": 1,
             "since": "0.0.1",
             "class": "Element",
@@ -15035,7 +15058,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1154,
+            "line": 1148,
             "description": "Reference to the first of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "method",
             "name": "first",
@@ -15058,7 +15081,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1166,
+            "line": 1160,
             "description": "Reference to the first child-Element, where the related dom-node an Element (nodeType===1).",
             "itemtype": "method",
             "name": "firstOfChildren",
@@ -15081,7 +15104,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1179,
+            "line": 1173,
             "description": "Forces the Element to be inside an ancestor-Element that has the `overfow=\"scroll\" set.",
             "itemtype": "method",
             "name": "forceIntoNodeView",
@@ -15101,7 +15124,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1243,
+            "line": 1237,
             "description": "Forces the Element to be inside the window-view. Differs from `scrollIntoView()` in a way\nthat `forceIntoView()` doesn't change the position when it's inside the view, whereas\n`scrollIntoView()` sets it on top of the view.",
             "itemtype": "method",
             "name": "forceIntoView",
@@ -15154,7 +15177,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1304,
+            "line": 1298,
             "description": "Gets an ElementArray of Elements that lie within this Element and match the css-selector.",
             "itemtype": "method",
             "name": "getAll",
@@ -15176,7 +15199,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1316,
+            "line": 1310,
             "description": "Gets an attribute of the Element.\n\nAlias for getAttribute().",
             "itemtype": "method",
             "name": "getAttr",
@@ -15198,7 +15221,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1330,
+            "line": 1324,
             "description": "Returns all attributes as defined as an key/value object.",
             "itemtype": "method",
             "name": "getAttrs",
@@ -15220,7 +15243,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1342,
+            "line": 1336,
             "description": "Gets an attribute of the Element.\n\nSame as getAttr().",
             "itemtype": "method",
             "name": "getAttribute",
@@ -15242,7 +15265,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1357,
+            "line": 1351,
             "description": "Returns a live collection of the Element-childNodes.",
             "itemtype": "method",
             "name": "getChildren",
@@ -15257,7 +15280,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1375,
+            "line": 1369,
             "description": "Returns a token list of the class attribute of the element.\nSee: https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList",
             "itemtype": "method",
             "name": "getClassList",
@@ -15271,7 +15294,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1393,
+            "line": 1387,
             "description": "Returns data set specified by `key`. If not set, `undefined` will be returned.\nThe data is efficiently stored on the vnode.",
             "itemtype": "method",
             "name": "getData",
@@ -15293,7 +15316,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1407,
+            "line": 1401,
             "description": "Gets one Element, specified by the css-selector. To retrieve a single element by id,\nyou need to prepend the id-name with a `#`. When multiple Element's match, the first is returned.",
             "itemtype": "method",
             "name": "getElement",
@@ -15315,7 +15338,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1420,
+            "line": 1414,
             "description": "Returns the Element matching the specified id, which should should be a descendant of this Element.",
             "itemtype": "method",
             "name": "getElementById",
@@ -15336,7 +15359,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1437,
+            "line": 1431,
             "description": "Gets innerHTML of the dom-node.\nGoes through the vdom, so it's superfast.\n\nUse this method instead of `innerHTML`",
             "itemtype": "method",
             "name": "getHTML",
@@ -15351,7 +15374,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1451,
+            "line": 1445,
             "description": "Returns the Elments `id`",
             "itemtype": "method",
             "name": "getId",
@@ -15366,7 +15389,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1462,
+            "line": 1456,
             "description": "Returns inline style of the specified property. `Inline` means: what is set directly on the Element,\nthis doesn't mean necesairy how it is looked like: when no css is set inline, the Element might still have\nan appearance because of other CSS-rules.\n\nIn most cases, you would be interesting in using `getStyle()` instead.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "getInlineStyle",
@@ -15394,7 +15417,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1488,
+            "line": 1482,
             "description": "Returns inline transition-css-property. `Inline` means: what is set directly on the Element,\nWhen `transition` is set inline, no `parent` transition-rules apply.",
             "itemtype": "method",
             "name": "getInlineTransition",
@@ -15423,7 +15446,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1513,
+            "line": 1507,
             "description": "Gets the outerHTML of the dom-node.\nGoes through the vdom, so it's superfast.\n\nUse this method instead of `outerHTML`",
             "itemtype": "method",
             "name": "getOuterHTML",
@@ -15438,7 +15461,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1527,
+            "line": 1521,
             "description": "Returns the Element's parent Element.",
             "itemtype": "method",
             "name": "getParent",
@@ -15452,7 +15475,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1538,
+            "line": 1532,
             "description": "Returns cascaded style of the specified property. `Cascaded` means: the actual present style,\nthe way it is visible (calculated through the DOM-tree).\n\n<ul>\n    <li>Note1: values are absolute: percentages and points are converted to absolute values, sizes are in pixels, colors in rgb/rgba-format.</li>\n    <li>Note2: you cannot query shotcut-properties: use `margin-left` instead of `margin`.</li>\n    <li>Note3: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine.</li>\n    <li>Note4: you can query `transition`, `transform`, `perspective` and `transform-origin` instead of their vendor-specific properties.</li>\n    <li>Note5: `transition` or `transform` return an Object instead of a String.</li>\n</ul>",
             "itemtype": "method",
             "name": "getCascadeStyle",
@@ -15480,7 +15503,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1569,
+            "line": 1563,
             "description": "Returns cascaded \"transition\" style of the specified trandform-property. `Cascaded` means: the actual present style,\nthe way it is visible (calculated through the DOM-tree).\n\nNote1: When \"transition\" is set inline, ONLY inline transtition is active!\nThus, if parentNode has \"transition: width 2s\" and inline has \"transition: height 3s\", then the transition\nwill be \"transition: height 3s\" --> returning \"undefined\" for transitionProperty=width.\nNote2: in case of \"transition: all\" --> these values will be returned for every \"transitionProperty\" (even when querying \"width\")",
             "itemtype": "method",
             "name": "getTransition",
@@ -15508,7 +15531,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1648,
+            "line": 1642,
             "description": "Elements tag-name in uppercase (same as nodeName).",
             "itemtype": "method",
             "name": "getTagName",
@@ -15523,7 +15546,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1659,
+            "line": 1653,
             "description": "Gets the innerContent of the Element as plain text.\nGoes through the vdom, so it's superfast.\n\nUse this method instead of `textContent`",
             "itemtype": "method",
             "name": "getText",
@@ -15537,7 +15560,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1673,
+            "line": 1667,
             "description": "Gets the value of the following Elements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>\n</ul>",
             "itemtype": "method",
             "name": "getValue",
@@ -15552,7 +15575,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1697,
+            "line": 1691,
             "description": "Whether the Element has the attribute set.\n\nAlias for hasAttribute().",
             "itemtype": "method",
             "name": "hasAttr",
@@ -15574,7 +15597,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1711,
+            "line": 1705,
             "description": "Whether the Element has the attribute set.\n\nSame as hasAttr().",
             "itemtype": "method",
             "name": "hasAttribute",
@@ -15596,7 +15619,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1725,
+            "line": 1719,
             "description": "Indicating if the current element has any attributes or not.",
             "itemtype": "method",
             "name": "hasAttributes",
@@ -15610,7 +15633,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1736,
+            "line": 1730,
             "description": "Indicating if the Element has any children (childNodes with nodeType of 1).",
             "itemtype": "method",
             "name": "hasChildren",
@@ -15625,7 +15648,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1747,
+            "line": 1741,
             "description": "Checks whether the className is present on the Element.",
             "itemtype": "method",
             "name": "hasClass",
@@ -15647,7 +15670,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1759,
+            "line": 1753,
             "description": "If the Element has data set specified by `key`. The data could be set with `setData()`.",
             "itemtype": "method",
             "name": "hasData",
@@ -15669,7 +15692,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1772,
+            "line": 1766,
             "description": "Indicates whether Element currently has the focus.",
             "itemtype": "method",
             "name": "hasFocus",
@@ -15684,7 +15707,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1783,
+            "line": 1777,
             "description": "Indicates whether the current focussed Element lies inside this Element (on a descendant Element).",
             "itemtype": "method",
             "name": "hasFocusInside",
@@ -15699,7 +15722,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1795,
+            "line": 1789,
             "description": "Returns whether the inline style of the specified property is present. `Inline` means: what is set directly on the Element.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "hasInlineStyle",
@@ -15727,7 +15750,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1810,
+            "line": 1804,
             "description": "Returns whether the specified inline transform-css-property is present. `Inline` means: what is set directly on the Element.\n\nSee more about tranform-properties: https://developer.mozilla.org/en-US/docs/Web/CSS/transform",
             "itemtype": "method",
             "name": "hasInlineTransition",
@@ -15755,7 +15778,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1825,
+            "line": 1819,
             "description": "Returns whether the specified transform-property is active.\n\nNote1: When \"transition\" is set inline, ONLY inline transtition is active!\nThus, if parentNode has \"transition: width 2s\" and inline has \"transition: height 3s\",\nthen hasTransition('width') will return false.\nNote2: in case of \"transition: all\" --> hasTransition() will always `true` for every transitionProperty.",
             "itemtype": "method",
             "name": "hasTransition",
@@ -15783,7 +15806,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1843,
+            "line": 1837,
             "description": "Hides a node by making it floated and removing it out of the visible screen.\nHides immediately without `fade`, or will fade when fade is specified.",
             "itemtype": "method",
             "name": "hide",
@@ -15806,7 +15829,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1898,
+            "line": 1892,
             "description": "Indicates whether the Element currently is part if the DOM.",
             "itemtype": "method",
             "name": "inDOM",
@@ -15821,7 +15844,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1909,
+            "line": 1903,
             "description": "Checks whether the Element lies within the specified selector (which can be a CSS-selector or a Element)",
             "example": [
                 "\nvar divnode = childnode.inside('div.red');",
@@ -15847,7 +15870,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1939,
+            "line": 1933,
             "description": "Checks whether a point specified with x,y is within the Element's region.",
             "itemtype": "method",
             "name": "insidePos",
@@ -15874,7 +15897,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1957,
+            "line": 1951,
             "description": "Inserts `domNode` before `refDomNode`.",
             "itemtype": "method",
             "name": "insertBefore",
@@ -15906,7 +15929,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1971,
+            "line": 1965,
             "description": "Reference to the last of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "method",
             "name": "last",
@@ -15929,7 +15952,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1984,
+            "line": 1978,
             "description": "Reference to the last child-Element, where the related dom-node an Element (nodeType===1).",
             "itemtype": "method",
             "name": "lastOfChildren",
@@ -15952,7 +15975,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1997,
+            "line": 1991,
             "description": "Indicates if the element would be selected by the specified selector string.\nAlias for matchesSelector()",
             "itemtype": "method",
             "name": "matches",
@@ -15975,7 +15998,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2010,
+            "line": 2004,
             "description": "Indicates if the element would be selected by the specified selector string.\nAlias for matches()",
             "itemtype": "method",
             "name": "matchesSelector",
@@ -15998,7 +16021,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2023,
+            "line": 2017,
             "description": "Reference to the next of sibbling Element, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "method",
             "name": "next",
@@ -16022,7 +16045,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2058,
+            "line": 2052,
             "description": "Prepends a Element or text at the start of Element's innerHTML, or before the `refElement`.",
             "itemtype": "method",
             "name": "prepend",
@@ -16043,6 +16066,13 @@
                     "description": "reference Element where the content should be prepended",
                     "type": "Element",
                     "optional": true
+                },
+                {
+                    "name": "silent",
+                    "description": "prevent node-mutation events by the Event-module to emit",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
                 }
             ],
             "return": {
@@ -16056,7 +16086,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2108,
+            "line": 2105,
             "description": "Reference to the previous of sibbling Element, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "method",
             "name": "previous",
@@ -16080,7 +16110,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2143,
+            "line": 2140,
             "description": "Returns the first Element within the Element, that matches the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,\nthey need to be separated by a `comma`.",
             "itemtype": "method",
             "name": "querySelector",
@@ -16101,7 +16131,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2176,
+            "line": 2173,
             "description": "Returns an ElementArray of all Elements within the Element, that match the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,\nthey need to be separated by a `comma`.\n\nquerySelectorAll is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.",
             "itemtype": "method",
             "name": "querySelectorAll",
@@ -16122,7 +16152,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2211,
+            "line": 2208,
             "description": "Checks whether the Element has its rectangle inside the outbound-Element.\nThis is no check of the DOM-tree, but purely based upon coordinates.",
             "itemtype": "method",
             "name": "rectangleInside",
@@ -16144,7 +16174,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2230,
+            "line": 2227,
             "description": "Removes the Element from the DOM.\nAlias for thisNode.parentNode.removeChild(thisNode);",
             "itemtype": "method",
             "name": "remove",
@@ -16159,7 +16189,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2246,
+            "line": 2243,
             "description": "Removes the attribute from the Element.\n\nAlias for removeAttribute() BUT is chainable instead (removeAttribute is not).",
             "itemtype": "method",
             "name": "removeAttr",
@@ -16178,7 +16208,29 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2261,
+            "line": 2258,
+            "description": "Removes multiple attributes on the Element.\nThe argument should be one ore more AttributeNames.",
+            "example": [
+                "\ninstance.removeAttrs(['tabIndex', 'style']);"
+            ],
+            "itemtype": "method",
+            "name": "removeAttrs",
+            "params": [
+                {
+                    "name": "attributeData",
+                    "description": "",
+                    "type": "Array|String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Element",
+            "module": "vdom",
+            "submodule": "extend-element"
+        },
+        {
+            "file": "src/vdom/partials/extend-element.js",
+            "line": 2279,
             "description": "Removes the attribute from the Element.\n\nUse removeAttr() to be able to chain.",
             "itemtype": "method",
             "name": "removeAttr",
@@ -16196,7 +16248,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2275,
+            "line": 2293,
             "description": "Removes the Element's child-Node from the DOM.",
             "itemtype": "method",
             "name": "removeChild",
@@ -16217,7 +16269,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2289,
+            "line": 2307,
             "description": "Removes a className from the Element.",
             "itemtype": "method",
             "name": "removeClass",
@@ -16250,15 +16302,22 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2318,
+            "line": 2336,
             "description": "Removes data specified by `key` that was set by using `setData()`.\nWhen no arguments are passed, all node-data (key-value pairs) will be removed.",
             "itemtype": "method",
             "name": "removeData",
             "params": [
                 {
                     "name": "key",
-                    "description": "name of the key",
-                    "type": "String"
+                    "description": "name of the key, when not set, all data is removed",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "deep",
+                    "description": "whether to set the data to all descendants recursively",
+                    "type": "Boolean",
+                    "optional": true
                 }
             ],
             "chainable": 1,
@@ -16269,7 +16328,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2345,
+            "line": 2366,
             "description": "Removes the Elment's `id`.",
             "itemtype": "method",
             "name": "removeId",
@@ -16281,7 +16340,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2356,
+            "line": 2377,
             "description": "Removes a css-property (inline) out of the Element.\nNo need to use camelCase.",
             "itemtype": "method",
             "name": "removeInlineStyle",
@@ -16312,7 +16371,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2372,
+            "line": 2393,
             "description": "Removes multiple css-properties (inline) out of the Element. You need to supply an Array of Objects, with the properties:\n       <ul>\n           <li>property  {String}</li>\n           <li>pseudo  {String}</li>\n       <ul>\nNo need to use camelCase.",
             "itemtype": "method",
             "name": "removeInlineStyles",
@@ -16337,7 +16396,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2533,
+            "line": 2554,
             "description": "Removes a subtype `transform`-css-property of (inline) out of the Element.\nThis way you can sefely remove partial `transform`-properties while remaining the\nother inline `transform` css=properties.\n\nSee more about tranform-properties: https://developer.mozilla.org/en-US/docs/Web/CSS/transform",
             "itemtype": "method",
             "name": "removeInlineTransition",
@@ -16362,7 +16421,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2550,
+            "line": 2571,
             "description": "Removes multiple subtype `transform`-css-property of (inline) out of the Element.\nThis way you can sefely remove partial `transform`-properties while remaining the\nother inline `transform` css=properties.\nYou need to supply an Array of Objects, with the properties:\n       <ul>\n           <li>property  {String}</li>\n           <li>pseudo  {String}</li>\n       <ul>\n\nSee more about tranform-properties: https://developer.mozilla.org/en-US/docs/Web/CSS/transform",
             "itemtype": "method",
             "name": "removeInlineTransitions",
@@ -16381,7 +16440,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2597,
+            "line": 2618,
             "description": "Replaces the Element with a new Element.",
             "itemtype": "method",
             "name": "replace",
@@ -16409,7 +16468,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2618,
+            "line": 2639,
             "description": "Replaces the Element's child-Element with a new Element.",
             "itemtype": "method",
             "name": "replaceChild",
@@ -16442,7 +16501,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2633,
+            "line": 2654,
             "description": "Replaces the className of the Element with a new className.\nIf the previous className is not available, the new className is set nevertheless.",
             "itemtype": "method",
             "name": "replaceClass",
@@ -16485,7 +16544,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2669,
+            "line": 2690,
             "description": "Scrolls the content of the Element into the specified scrollposition.\nOnly available when the Element has overflow.",
             "itemtype": "method",
             "name": "scrollTo",
@@ -16509,7 +16568,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2686,
+            "line": 2707,
             "description": "Sets the attribute on the Element with the specified value.\n\nAlias for setAttribute(), BUT differs in a way that setAttr is chainable, setAttribute is not.",
             "itemtype": "method",
             "name": "setAttr",
@@ -16533,7 +16592,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2703,
+            "line": 2724,
             "description": "Sets the attribute on the Element with the specified value.\n\nAlias for setAttr(), BUT differs in a way that setAttr is chainable, setAttribute is not.",
             "itemtype": "method",
             "name": "setAttribute",
@@ -16555,7 +16614,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2720,
+            "line": 2741,
             "description": "Sets multiple attributes on the Element with the specified value.\nThe argument should be one ore more Objects with the properties: `name` and `value`",
             "example": [
                 "\ninstance.setAttrs([\n                     {name: 'tabIndex', value: '0'},\n                     {name: 'style', value: 'color: #000;'}\n                 ]);"
@@ -16577,7 +16636,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2744,
+            "line": 2765,
             "description": "Adds a class to the Element. If the class already exists it won't be duplicated.",
             "itemtype": "method",
             "name": "setClass",
@@ -16610,7 +16669,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2773,
+            "line": 2794,
             "description": "Stores arbitary `data` at the Element (actually at vnode). This has nothing to do with node-attributes whatsoever,\nit is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.",
             "itemtype": "method",
             "name": "setData",
@@ -16624,6 +16683,12 @@
                     "name": "value",
                     "description": "the value that belongs to `key`",
                     "type": "Any"
+                },
+                {
+                    "name": "deep",
+                    "description": "whether to set the data to all descendants recursively",
+                    "type": "Boolean",
+                    "optional": true
                 }
             ],
             "chainable": 1,
@@ -16634,7 +16699,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2797,
+            "line": 2820,
             "description": "Sets the innerHTML of both the vnode as well as the representing dom-node.\nGoes through the vdom, so it's superfast.\n\nUse this method instead of `innerHTML`\n\nSyncs with the DOM.",
             "itemtype": "method",
             "name": "setHTML",
@@ -16643,6 +16708,13 @@
                     "name": "val",
                     "description": "the new value to be set",
                     "type": "String"
+                },
+                {
+                    "name": "silent",
+                    "description": "prevent node-mutation events by the Event-module to emit",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
                 }
             ],
             "chainable": 1,
@@ -16653,7 +16725,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2815,
+            "line": 2842,
             "description": "Sets the Elments `id`",
             "itemtype": "method",
             "name": "setId",
@@ -16672,7 +16744,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2827,
+            "line": 2854,
             "description": "Sets a css-property (inline) for the Element.\n\nNote1: Do not use vendor-specific properties, but general (like `transform` instead of `-webkit-transform`)\n       This method will use the appropriate css-property.\nNote2: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "setInlineStyle",
@@ -16711,7 +16783,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2851,
+            "line": 2878,
             "description": "Sets multiple css-properties (inline) for the Element at once.\n\nNote1: Do not use vendor-specific properties, but general (like `transform` instead of `-webkit-transform`)\n       This method will use the appropriate css-property.\nNote2: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "setInlineStyles",
@@ -16739,7 +16811,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3032,
+            "line": 3059,
             "description": "Sets a transform-css-property (inline) for the Element.\n\nSee more about transitions: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transitions",
             "itemtype": "method",
             "name": "setStyle",
@@ -16780,7 +16852,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3051,
+            "line": 3078,
             "description": "Sets a transform-css-property (inline) for the Element.\n\nSee more about transitions: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transitions",
             "itemtype": "method",
             "name": "setStyle",
@@ -16805,7 +16877,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3098,
+            "line": 3125,
             "description": "Gets or sets the outerHTML of both the Element as well as the representing dom-node.\nGoes through the vdom, so it's superfast.\n\nUse this property instead of `outerHTML`\n\nSyncs with the DOM.",
             "itemtype": "method",
             "name": "setOuterHTML",
@@ -16814,6 +16886,13 @@
                     "name": "val",
                     "description": "the new value to be set",
                     "type": "String"
+                },
+                {
+                    "name": "silent",
+                    "description": "prevent node-mutation events by the Event-module to emit",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
                 }
             ],
             "chainable": 1,
@@ -16824,7 +16903,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3116,
+            "line": 3147,
             "description": "Sets the innerContent of the Element as plain text.\nGoes through the vdom, so it's superfast.\n\nUse this method instead of `textContent`\n\nSyncs with the DOM.",
             "itemtype": "method",
             "name": "setText",
@@ -16833,6 +16912,13 @@
                     "name": "val",
                     "description": "the textContent to be set",
                     "type": "String"
+                },
+                {
+                    "name": "silent",
+                    "description": "prevent node-mutation events by the Event-module to emit",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
                 }
             ],
             "chainable": 1,
@@ -16843,7 +16929,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3134,
+            "line": 3169,
             "description": "Sets the value of the following Elements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>\n</ul>\n\nWill emit a `valuechange`-event when a new value is set and ITSA's `event`-module is active.",
             "itemtype": "method",
             "name": "setValue",
@@ -16862,7 +16948,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3181,
+            "line": 3216,
             "itemtype": "event",
             "name": "valuechange",
             "params": [
@@ -16883,7 +16969,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3190,
+            "line": 3225,
             "description": "Set the position of an html element in page coordinates.\nThe element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).\n\nIf the Element has the attribute `xy-constrian` set, then its position cannot exceed any matching container it lies within.",
             "itemtype": "method",
             "name": "setXY",
@@ -16923,7 +17009,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3345,
+            "line": 3380,
             "description": "Shows a previously hidden node.\nShows immediately without `fade`, or will fade-in when fade is specified.",
             "itemtype": "method",
             "name": "show",
@@ -16946,7 +17032,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3404,
+            "line": 3439,
             "description": "Transitions one ore more properties of the Element.",
             "itemtype": "method",
             "name": "toggleClass",
@@ -16974,7 +17060,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3616,
+            "line": 3651,
             "description": "Toggles the className of the Element.",
             "itemtype": "method",
             "name": "toggleClass",
@@ -17012,7 +17098,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3648,
+            "line": 3683,
             "description": "Gets or set the height of the element in pixels. Included are padding and border, not any margins.\nBy setting the argument `overflow` you get the total height, included the invisible overflow.\n\nThe getter is calculating through `offsetHeight`, the setter will set inline css-style for the height.\n\nValues are numbers without unity.",
             "itemtype": "property",
             "name": "height",
@@ -17024,7 +17110,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3675,
+            "line": 3710,
             "description": "Gets the x-position (in the DOCUMENT) of the element in pixels.\nDOCUMENT-related: regardless of the window's scroll-position.",
             "itemtype": "property",
             "name": "left",
@@ -17035,7 +17121,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3691,
+            "line": 3726,
             "description": "Gets the y-position (in the DOCUMENT) of the element in pixels.\nDOCUMENT-related: regardless of the window's scroll-position.",
             "itemtype": "property",
             "name": "top",
@@ -17046,7 +17132,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3707,
+            "line": 3742,
             "description": "Gets or set the width of the element in pixels. Included are padding and border, not any margins.\nBy setting the argument `overflow` you get the total width, included the invisible overflow.\n\nThe getter is calculating through `offsetHeight`, the setter will set inline css-style for the width.\n\nValues are numbers without unity.",
             "itemtype": "property",
             "name": "width",
@@ -17058,7 +17144,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3813,
+            "line": 3848,
             "description": "Returns the specified attribute of the specified element, as an Attr node.",
             "itemtype": "method",
             "name": "getAttributeNode",
@@ -17072,7 +17158,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3820,
+            "line": 3855,
             "description": "Returns a text rectangle object that encloses a group of text rectangles. The returned value is\na TextRectangle object which is the union of the rectangles returned by getClientRects() for the element,\ni.e., the CSS border-boxes associated with the element.\n\nThe returned value is a TextRectangle object, which contains read-only left, top, right and bottom properties\ndescribing the border-box in pixels. top and left are relative to the top-left of the viewport.",
             "itemtype": "method",
             "name": "getBoundingClientRect",
@@ -17086,7 +17172,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3832,
+            "line": 3867,
             "description": "Returns a collection of rectangles that indicate the bounding rectangles for each box in a client.\n\nThe returned value is a collection of ClientRect objects, one for each CSS border box associated with the element.\nEach ClientRect object contains read-only left, top, right and bottom properties describing the border box, in pixels,\nwith the top-left relative to the top-left of the viewport. For tables with captions,\nthe caption is included even though it's outside the border box of the table.",
             "itemtype": "method",
             "name": "getClientRects",
@@ -17100,7 +17186,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3844,
+            "line": 3879,
             "description": "Returns a new NodeIterator object with this Element as root.\n\nThe NodeIterator is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.",
             "itemtype": "method",
             "name": "createNodeIterator",
@@ -17129,7 +17215,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3862,
+            "line": 3897,
             "description": "Returns an HTMLCollection of all Elements within this Element, that match their classes with the supplied `classNames` argument.\nTo match multiple different classes, separate them with a `comma`.\n\ngetElementsByClassName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByClassName",
@@ -17150,7 +17236,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3875,
+            "line": 3910,
             "description": "Returns an HTMLCollection of all Elements within this Element, that match their `name`-attribute with the supplied `name` argument.\n\ngetElementsByName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByName",
@@ -17171,7 +17257,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3888,
+            "line": 3923,
             "description": "Returns an HTMLCollection of all Elements within this Element, that match their `name`-attribute with the supplied `name` argument.\n\ngetElementsByTagName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByTagName",
@@ -17192,7 +17278,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3900,
+            "line": 3935,
             "description": "Inserts the Element into the DOM tree at a specified position.",
             "itemtype": "method",
             "name": "insertAdjacentElement",
@@ -17214,7 +17300,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3914,
+            "line": 3949,
             "description": "Parses the specified text as HTML and inserts the resulting nodes into the DOM tree at a specified position.",
             "itemtype": "method",
             "name": "insertAdjacentHTML",
@@ -17236,7 +17322,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3928,
+            "line": 3963,
             "description": "Inserts the text into the DOM tree as a TextNode at a specified position.",
             "itemtype": "method",
             "name": "insertAdjacentText",
@@ -17258,7 +17344,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3942,
+            "line": 3977,
             "description": "Removes the attribute specified by an attributeNode from the Element.",
             "itemtype": "method",
             "name": "removeAttributeNode",
@@ -17276,7 +17362,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3950,
+            "line": 3985,
             "description": "Scrolls the element into view.",
             "itemtype": "method",
             "name": "scrollIntoView",
@@ -17286,7 +17372,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3956,
+            "line": 3991,
             "description": "Sets the attribute on the Element specified by `attributeNode`",
             "itemtype": "method",
             "name": "setAttributeNode",
@@ -17303,7 +17389,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3965,
+            "line": 4000,
             "description": "Fired when a static `script` element  finishes executing its script. Does not fire if the element is added dynamically, eg with appendChild().",
             "itemtype": "event",
             "name": "afterscriptexecute",
@@ -17313,7 +17399,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3972,
+            "line": 4007,
             "description": "Fired when the code in a `script` element declared in an HTML document is about to start executing. Does not fire if the element is added dynamically, eg with appendChild().",
             "itemtype": "event",
             "name": "beforescriptexecute",
@@ -17323,7 +17409,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3980,
+            "line": 4015,
             "description": "sets or returns an accesskey for an element. An accesskey specifies a shortcut key to activate/focus an element.\nNote: The way of accessing the shortcut key is varying in different browsers: http://www.w3schools.com/jsref/prop_html_accesskey.asp",
             "itemtype": "property",
             "name": "accessKey",
@@ -17334,7 +17420,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3989,
+            "line": 4024,
             "description": "Returns a live collection of all attribute nodes registered to the specified node.\nIt is a NamedNodeMap, not an Array, so it has no Array methods and the Attr nodes' indexes may differ among browsers.\nTo be more specific, attributes is a key/value pair of strings that represents any information regarding that attribute.\n\nPrefer to use `getAttrs()` which is much quicker, but doesn't return a life-list.",
             "itemtype": "property",
             "name": "attributes",
@@ -17345,7 +17431,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4000,
+            "line": 4035,
             "description": "The absolute base URL of a node.",
             "itemtype": "property",
             "name": "baseURI",
@@ -17357,7 +17443,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4008,
+            "line": 4043,
             "description": "Returns the number of children (child Elements)",
             "itemtype": "property",
             "name": "childElementCount",
@@ -17369,7 +17455,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4016,
+            "line": 4051,
             "description": "Returns a live collection of childNodes of the given element, either Element, TextNode or CommentNode",
             "itemtype": "property",
             "name": "childNodes",
@@ -17381,7 +17467,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4024,
+            "line": 4059,
             "description": "Returns a live collection of child Element's of the given element.",
             "itemtype": "property",
             "name": "children",
@@ -17393,7 +17479,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4032,
+            "line": 4067,
             "description": "Gets and sets the value of the class attribute of the specified element.",
             "itemtype": "property",
             "name": "className",
@@ -17404,7 +17490,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4039,
+            "line": 4074,
             "description": "Returns the inner height of an element in pixels, including padding but not the horizontal scrollbar height, border, or margin.",
             "itemtype": "property",
             "name": "clientHeight",
@@ -17416,7 +17502,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4047,
+            "line": 4082,
             "description": "The width of the left border of an element in pixels. It includes the width of the vertical scrollbar if the text direction of the element is right–to–left\nand if there is an overflow causing a left vertical scrollbar to be rendered. clientLeft does not include the left margin or the left padding.",
             "itemtype": "property",
             "name": "clientLeft",
@@ -17428,7 +17514,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4056,
+            "line": 4091,
             "description": "The width of the top border of an element in pixels. It does not include the top margin or padding.",
             "itemtype": "property",
             "name": "clientTop",
@@ -17440,7 +17526,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4064,
+            "line": 4099,
             "description": "Returns the inner width of an element in pixels, including padding but not the vertical scrollbar height, border, or margin.",
             "itemtype": "property",
             "name": "clientWidth",
@@ -17452,7 +17538,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4072,
+            "line": 4107,
             "description": "Reference to the first childNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nBetter work with Elements only:  use `firstElementChild` instead, which returns the first Element-child.",
             "itemtype": "property",
             "name": "firstChild",
@@ -17465,7 +17551,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4083,
+            "line": 4118,
             "description": "Reference to the first Element-child, which is an Element (nodeType===1).",
             "itemtype": "property",
             "name": "firstElementChild",
@@ -17477,7 +17563,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4091,
+            "line": 4126,
             "description": "Gets or sets the element's attribute `href`. Only applies for the `a`-element.",
             "itemtype": "property",
             "name": "href",
@@ -17488,7 +17574,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4098,
+            "line": 4133,
             "description": "Gets or sets the element's identifier (attribute id).",
             "itemtype": "property",
             "name": "id",
@@ -17499,7 +17585,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4105,
+            "line": 4140,
             "description": "Reference to the last childNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nBetter use `lastElementChild` instead, which returns the last Element-child.",
             "itemtype": "property",
             "name": "lastChild",
@@ -17512,7 +17598,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4116,
+            "line": 4151,
             "description": "Reference to the last Element-child, where the related dom-node is an Element (nodeType===1).",
             "itemtype": "property",
             "name": "lastElementChild",
@@ -17524,7 +17610,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4124,
+            "line": 4159,
             "description": "Gets or sets the `name` property of a Element; it only applies to the following elements:\n`a`, `applet`, `button`, `form`, `frame`, `iframe`, `img`, `input`, `map`, `meta`, `object`, `param`, `select`, and `textarea`.",
             "itemtype": "property",
             "name": "name",
@@ -17535,7 +17621,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4132,
+            "line": 4167,
             "description": "Returns the Element immediately following the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs an Element (nodeType===1).",
             "itemtype": "property",
             "name": "nextElementSibling",
@@ -17547,7 +17633,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4141,
+            "line": 4176,
             "description": "Returns the Element immediately following the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nDo not use this, but use `lastElementChild` instead, which returns the next Element-child.",
             "itemtype": "property",
             "name": "nextElementSibling",
@@ -17560,7 +17646,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4153,
+            "line": 4188,
             "description": "Elements tag-name",
             "itemtype": "property",
             "name": "nodeName",
@@ -17572,7 +17658,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4161,
+            "line": 4196,
             "description": "Elements nodetype: 1==Element, 3==TextNode, 8===CommentNode",
             "itemtype": "property",
             "name": "nodeType",
@@ -17584,7 +17670,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4169,
+            "line": 4204,
             "description": "Value/text for non-Element Nodes",
             "itemtype": "property",
             "name": "nodeValue",
@@ -17596,7 +17682,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4177,
+            "line": 4212,
             "description": "The exact width of the Element on the screen.\nIncluded borders and padding (no margin).\n\nReturns a number without unity.\n\nBetter use `width` --> it's an alias, but has a setter as well",
             "itemtype": "property",
             "name": "offsetWidth",
@@ -17609,7 +17695,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4191,
+            "line": 4226,
             "description": "The exact height of the Element on the screen.\nIncluded borders and padding (no margin).\n\nReturns a number without unity.\n\nBetter use `height` --> it's an alias, but has a setter as well",
             "itemtype": "property",
             "name": "offsetHeight",
@@ -17621,7 +17707,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4204,
+            "line": 4239,
             "description": "Returns the Element's parent Element.\n\nSame as `parentNode`",
             "itemtype": "property",
             "name": "parentElement",
@@ -17632,7 +17718,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4213,
+            "line": 4248,
             "description": "Returns the Element's parent Element.\n\nSame as `parentElement`",
             "itemtype": "property",
             "name": "parentNode",
@@ -17643,7 +17729,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4222,
+            "line": 4257,
             "description": "Returns the Element immediately preceding the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs an Element (nodeType===1).",
             "itemtype": "property",
             "name": "previousElementSibling",
@@ -17655,7 +17741,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4231,
+            "line": 4266,
             "description": "Returns the Element immediately preceding the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nDo not use this, but use `previousElementSibling` instead, which returns the previous Element-child.",
             "itemtype": "property",
             "name": "previousSibling",
@@ -17668,7 +17754,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4244,
+            "line": 4279,
             "description": "A measurement of the height of an element's content, including content not visible on the screen due to overflow.\nThe scrollHeight value is equal to the minimum clientHeight the element would require in order to fit all the content in the viewpoint\nwithout using a vertical scrollbar. It includes the element padding but not its margin.\n\nReturns a number without unity.",
             "itemtype": "property",
             "name": "scrollHeight",
@@ -17680,7 +17766,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4256,
+            "line": 4291,
             "description": "Gets or sets the number of pixels that an element's content is scrolled to the left.",
             "itemtype": "property",
             "name": "scrollLeft",
@@ -17691,7 +17777,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4263,
+            "line": 4298,
             "description": "Gets or sets the number of pixels that the content of an element is scrolled upward. An element's scrollTop is a measurement\nof the distance of an element's top to its topmost visible content. When an element content does not generate a vertical scrollbar,\nthen its scrollTop value defaults to 0.",
             "itemtype": "property",
             "name": "scrollTop",
@@ -17702,7 +17788,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4272,
+            "line": 4307,
             "description": "Returns either the width in pixels of the content of an element or the width of the element itself, whichever is greater.\nIf the element is wider than its content area (for example, if there are scroll bars for scrolling through the content),\nthe scrollWidth is larger than the clientWidth.\n\nReturns a number without unity.",
             "itemtype": "property",
             "name": "scrollWidth",
@@ -17714,7 +17800,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4284,
+            "line": 4319,
             "description": "Gets or sets the element's attribute `type`. Only applies for the `script`, `img` and `style`-elements.",
             "itemtype": "property",
             "name": "src",
@@ -17725,7 +17811,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4291,
+            "line": 4326,
             "description": "Gets or sets the element's attribute `style`.",
             "itemtype": "property",
             "name": "style",
@@ -17736,7 +17822,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4298,
+            "line": 4333,
             "description": "Gets or sets the element's attribute `type`. Only applies for the `input`-element.",
             "itemtype": "property",
             "name": "type",
@@ -17747,7 +17833,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4305,
+            "line": 4340,
             "description": "Gets or sets the value of an input or select Element.\n\nNote it is highly preferable to use getValue() and setValue().",
             "itemtype": "property",
             "name": "value",
@@ -17759,7 +17845,7 @@
         },
         {
             "file": "src/vdom/partials/html-parser.js",
-            "line": 101,
+            "line": 96,
             "description": "Transforms html-text into a vnodes-Array.",
             "itemtype": "method",
             "name": "htmlToVNodes",
@@ -17781,7 +17867,7 @@
         },
         {
             "file": "src/vdom/partials/node-parser.js",
-            "line": 35,
+            "line": 30,
             "description": "Transforms a dom-node into a vnode.",
             "itemtype": "method",
             "name": "domNodeToVNode",
@@ -17809,7 +17895,7 @@
         },
         {
             "file": "src/vdom/partials/vdom-ns.js",
-            "line": 38,
+            "line": 32,
             "description": "Reference to the VElement of document.body (gets its value as soon as it gets refered to)",
             "itemtype": "property",
             "name": "body",
@@ -17822,7 +17908,7 @@
         },
         {
             "file": "src/vdom/partials/vdom-ns.js",
-            "line": 49,
+            "line": 43,
             "description": "A hash with all node'ids (of all the domnodes that have an id). The value is a reference to an VElement.",
             "itemtype": "property",
             "name": "nodeids",
@@ -17835,7 +17921,7 @@
         },
         {
             "file": "src/vdom/partials/vdom-ns.js",
-            "line": 59,
+            "line": 53,
             "description": "A hash with all encountered non-void Elements",
             "itemtype": "property",
             "name": "nonVoidElements",
@@ -17848,7 +17934,7 @@
         },
         {
             "file": "src/vdom/partials/vdom-ns.js",
-            "line": 69,
+            "line": 63,
             "description": "A hash to identify what tagNames are equal to `SCRIPT` or `STYLE`.",
             "itemtype": "property",
             "name": "SCRIPT_OR_STYLE_TAG",
@@ -17861,7 +17947,7 @@
         },
         {
             "file": "src/vdom/partials/vdom-ns.js",
-            "line": 82,
+            "line": 76,
             "description": "A hash with all nodeTypes that should be captured by the vDOM.",
             "itemtype": "property",
             "name": "VALID_NODE_TYPES",
@@ -17874,7 +17960,7 @@
         },
         {
             "file": "src/vdom/partials/vdom-ns.js",
-            "line": 96,
+            "line": 90,
             "description": "A hash with all encountered void Elements",
             "itemtype": "property",
             "name": "voidElements",
@@ -17887,7 +17973,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 74,
+            "line": 89,
             "description": "Object to gain quick access to attribute-name end-tokens.",
             "itemtype": "property",
             "name": "END_ATTRIBUTENAME",
@@ -17902,7 +17988,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 95,
+            "line": 110,
             "description": "Object to gain quick access to different changes of Element nodeType changes.",
             "itemtype": "property",
             "name": "NODESWITCH",
@@ -17917,7 +18003,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 137,
+            "line": 152,
             "description": "Object to gain quick access to selector start-tokens.",
             "itemtype": "property",
             "name": "SELECTOR_IDENTIFIERS",
@@ -17932,7 +18018,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 166,
+            "line": 181,
             "description": "Object to gain quick access to the selectors that required children",
             "itemtype": "property",
             "name": "PSEUDO_REQUIRED_CHILDREN",
@@ -17947,7 +18033,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 201,
+            "line": 215,
             "description": "Searches for the next -or previous- node-sibling (nodeType of 1, 3 or 8).",
             "itemtype": "method",
             "name": "_findNodeSibling",
@@ -17977,7 +18063,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 222,
+            "line": 236,
             "description": "Searches for the next -or previous- Element-sibling (nodeType of 1).",
             "itemtype": "method",
             "name": "_findElementSibling",
@@ -18007,7 +18093,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 251,
+            "line": 265,
             "description": "Check whether the vnode matches a \"nth-child\" test, which is used for css pseudoselectors like `nth-child`, `nth-of-type` etc.",
             "itemtype": "method",
             "name": "_matchNthChild",
@@ -18036,7 +18122,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 298,
+            "line": 318,
             "description": "Check whether the vnode matches the css-selector. the css-selector should be a single selector,\nnot multiple, so it shouldn't contain a `comma`.",
             "itemtype": "method",
             "name": "_matchesOneSelector",
@@ -18071,7 +18157,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 390,
+            "line": 410,
             "description": "Check whether the vnode matches one specific selector-item. Suppose the css-selector: \"#mynode li.red .blue\"\nthen there are 3 selector-items: \"#mynode\",  \"li.red\" and \".blue\"\n\nThis method also can handle the new selectors:\n<ul>\n    <li>[att^=val] –-> the “begins with” selector</li>\n    <li>[att$=val] –-> the “ends with” selector</li>\n    <li>[att*=val] –-> the “contains” selector (might be a substring)</li>\n    <li>[att~=val] –-> the “contains” selector as a separate word, separated by spaces</li>\n    <li>[att|=val] –-> the “contains” selector as a separate word, separated by `|`</li>\n    <li>+ --> (same level)</li>\n    <li>~ --> (same level)</li>\n</ul>",
             "itemtype": "method",
             "name": "_matchesSelectorItem",
@@ -18100,7 +18186,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 763,
+            "line": 783,
             "description": "Splits the selector into separate subselector-items that should match different elements through the tree.\nSpecial characters '>' and '+' are added as separate items in the hash.",
             "itemtype": "method",
             "name": "_splitSelector",
@@ -18124,7 +18210,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 812,
+            "line": 863,
             "description": "Check whether the vnode's domNode is equal, or contains the specified Element.",
             "itemtype": "method",
             "name": "contains",
@@ -18139,7 +18225,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 826,
+            "line": 881,
             "description": "Returns the first child-vnode (if any). The child represents an Element (nodeType===1).",
             "itemtype": "method",
             "name": "firstOfVChildren",
@@ -18161,7 +18247,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 849,
+            "line": 904,
             "description": "Checks whether the vnode has any vChildNodes (nodeType of 1, 3 or 8).",
             "itemtype": "method",
             "name": "hasVChildNodes",
@@ -18176,7 +18262,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 860,
+            "line": 915,
             "description": "Checks whether the vnode has any vChildren (vChildNodes with nodeType of 1).",
             "itemtype": "method",
             "name": "hasVChildren",
@@ -18191,7 +18277,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 871,
+            "line": 926,
             "description": "Checks whether the className is present on the vnode.",
             "itemtype": "method",
             "name": "hasClass",
@@ -18213,7 +18299,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 896,
+            "line": 951,
             "description": "Returns the last child-vnode (if any). The child represents an Element (nodeType===1).",
             "itemtype": "method",
             "name": "lastOfVChildren",
@@ -18235,7 +18321,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 919,
+            "line": 974,
             "description": "Checks whether the vnode matches one of the specified selectors. `selectors` can be one, or multiple css-selectors,\nseparated by a `comma`. For example: \"#myid li.red blue\" is one selector, \"div.red, div.blue, div.green\" are three selectors.",
             "itemtype": "method",
             "name": "matchesSelector",
@@ -18263,7 +18349,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 943,
+            "line": 998,
             "description": "Reloads the DOM-attribute into the vnode.",
             "itemtype": "method",
             "name": "matchesSelector",
@@ -18285,7 +18371,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1011,
+            "line": 1066,
             "description": "Syncs the vnode's nodeid (if available) inside `NS-vdom.nodeids`.\n\nDoes NOT sync with the dom. Can be invoked multiple times without issues.",
             "itemtype": "method",
             "name": "storeId",
@@ -18297,8 +18383,8 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1029,
-            "description": "Adds a vnode to the end of the list of vChildNodes.\n\nSyns with the DOM.",
+            "line": 1084,
+            "description": "Adds a vnode to the end of the list of vChildNodes.\n\nSyncs with the DOM.",
             "itemtype": "method",
             "name": "_appendChild",
             "params": [
@@ -18321,7 +18407,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1055,
+            "line": 1111,
             "description": "Removes the vnode from its parent vChildNodes- and vChildren-list.\n\nDoes NOT sync with the dom.",
             "itemtype": "method",
             "name": "_deleteFromParent",
@@ -18335,7 +18421,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1076,
+            "line": 1142,
             "description": "Destroys the vnode and all its vnode-vChildNodes.\nRemoves it from its vParent.vChildNodes list,\nalso removes its definitions inside `NS-vdom.nodeids`.\n\nDoes NOT sync with the dom.",
             "itemtype": "method",
             "name": "_destroy",
@@ -18349,8 +18435,203 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1120,
-            "description": "Inserts `newVNode` before `refVNode`.\n\nSyns with the DOM.",
+            "line": 1196,
+            "description": "Emitted by every Element that gets inserted.",
+            "itemtype": "event",
+            "name": "nodeinsert",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject including:",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "target",
+                            "description": "the HtmlElement that is being dragged",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "currentTarget",
+                            "description": "the HtmlElement that is delegating",
+                            "type": "HtmlElement"
+                        }
+                    ]
+                }
+            ],
+            "since": "0.1",
+            "class": "vnode",
+            "module": "vdom",
+            "submodule": "vnode"
+        },
+        {
+            "file": "src/vdom/partials/vnode.js",
+            "line": 1206,
+            "description": "Emitted by every Element that gets removed.",
+            "itemtype": "event",
+            "name": "noderemove",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject including:",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "target",
+                            "description": "the HtmlElement that is being dragged",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "currentTarget",
+                            "description": "the HtmlElement that is delegating",
+                            "type": "HtmlElement"
+                        }
+                    ]
+                }
+            ],
+            "since": "0.1",
+            "class": "vnode",
+            "module": "vdom",
+            "submodule": "vnode"
+        },
+        {
+            "file": "src/vdom/partials/vnode.js",
+            "line": 1216,
+            "description": "Emitted by every Element that gets its content changed (innerHTML/innerText).",
+            "itemtype": "event",
+            "name": "nodecontentchange",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject including:",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "target",
+                            "description": "the HtmlElement that is being dragged",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "currentTarget",
+                            "description": "the HtmlElement that is delegating",
+                            "type": "HtmlElement"
+                        }
+                    ]
+                }
+            ],
+            "since": "0.1",
+            "class": "vnode",
+            "module": "vdom",
+            "submodule": "vnode"
+        },
+        {
+            "file": "src/vdom/partials/vnode.js",
+            "line": 1226,
+            "description": "Emitted by every Element that gets an attribute inserted.",
+            "itemtype": "event",
+            "name": "attributeinsert",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject including:",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "target",
+                            "description": "the HtmlElement that is being dragged",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "currentTarget",
+                            "description": "the HtmlElement that is delegating",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "changed",
+                            "description": "Array with Objects having three properties:\n<ul>\n    <li>attribute</li>\n    <li>newValue</li>\n</ul>",
+                            "type": "Array"
+                        }
+                    ]
+                }
+            ],
+            "since": "0.1",
+            "class": "vnode",
+            "module": "vdom",
+            "submodule": "vnode"
+        },
+        {
+            "file": "src/vdom/partials/vnode.js",
+            "line": 1241,
+            "description": "Emitted by every Element that gets an attribute removed.",
+            "itemtype": "event",
+            "name": "attributeremove",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject including:",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "target",
+                            "description": "the HtmlElement that is being dragged",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "currentTarget",
+                            "description": "the HtmlElement that is delegating",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "changed",
+                            "description": "Array with Strings of the attributeNames that are removed",
+                            "type": "Array"
+                        }
+                    ]
+                }
+            ],
+            "since": "0.1",
+            "class": "vnode",
+            "module": "vdom",
+            "submodule": "vnode"
+        },
+        {
+            "file": "src/vdom/partials/vnode.js",
+            "line": 1252,
+            "description": "Emitted by every Element that gets an attribute changed.",
+            "itemtype": "event",
+            "name": "attributechange",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject including:",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "target",
+                            "description": "the HtmlElement that is being dragged",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "currentTarget",
+                            "description": "the HtmlElement that is delegating",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "changed",
+                            "description": "Array with Objects having three properties:\n<ul>\n    <li>attribute</li>\n    <li>newValue</li>\n    <li>prevValue</li>\n</ul>",
+                            "type": "Array"
+                        }
+                    ]
+                }
+            ],
+            "since": "0.1",
+            "class": "vnode",
+            "module": "vdom",
+            "submodule": "vnode"
+        },
+        {
+            "file": "src/vdom/partials/vnode.js",
+            "line": 1321,
+            "description": "Inserts `newVNode` before `refVNode`.\n\nSyncs with the DOM.",
             "itemtype": "method",
             "name": "_insertBefore",
             "params": [
@@ -18378,7 +18659,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1144,
+            "line": 1346,
             "description": "Moves the vnode from its current parent.vChildNodes list towards a new parent vnode at the specified position.\n\nDoes NOT sync with the dom.",
             "itemtype": "method",
             "name": "_moveToParent",
@@ -18405,7 +18686,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1170,
+            "line": 1372,
             "description": "Removes empty TextNodes and merges following TextNodes inside the vnode.\n\nSyncs with the dom.",
             "itemtype": "method",
             "name": "_normalize",
@@ -18419,7 +18700,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1206,
+            "line": 1412,
             "description": "Makes the vnode `normalizable`. Could be set to `false` when batch-inserting nodes, while `normalizaing` manually at the end.\nAfterwards, you should always reset `normalizable` to true.",
             "itemtype": "method",
             "name": "_normalizable",
@@ -18440,7 +18721,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1222,
+            "line": 1428,
             "description": "Prevents MutationObserver from making the dom sync with the vnode.\nShould be used when manipulating the dom from within the vnode itself (to preventing looping)",
             "itemtype": "method",
             "name": "_noSync",
@@ -18454,7 +18735,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1242,
+            "line": 1448,
             "description": "Removes the attribute of both the vnode as well as its related dom-node.\n\nSyncs with the dom.",
             "itemtype": "method",
             "name": "_removeAttr",
@@ -18475,8 +18756,8 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1268,
-            "description": "Removes the vnode's child-vnode from its vChildren and the DOM.\n\nSyns with the DOM.",
+            "line": 1477,
+            "description": "Removes the vnode's child-vnode from its vChildren and the DOM.\n\nSyncs with the DOM.",
             "itemtype": "method",
             "name": "removeChild",
             "params": [
@@ -18495,7 +18776,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1285,
+            "line": 1504,
             "description": "Replaces the current vnode at the parent.vChildNode list by `newVNode`\n\nDoes NOT sync with the dom.",
             "itemtype": "method",
             "name": "_replaceAtParent",
@@ -18516,7 +18797,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1309,
+            "line": 1528,
             "description": "Sets the attribute of both the vnode as well as its related dom-node.\n\nSyncs with the dom.",
             "itemtype": "method",
             "name": "_setAttr",
@@ -18542,7 +18823,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1365,
+            "line": 1590,
             "description": "Redefines the attributes of both the vnode as well as its related dom-node. The new\ndefinition replaces any previous attributes (without touching unmodified attributes).\n\nSyncs the new vnode's attributes with the dom.",
             "itemtype": "method",
             "name": "_setAttrs",
@@ -18563,7 +18844,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1421,
+            "line": 1646,
             "description": "Redefines the childNodes of both the vnode as well as its related dom-node. The new\ndefinition replaces any previous nodes. (without touching unmodified nodes).\n\nSyncs the new vnode's childNodes with the dom.",
             "itemtype": "method",
             "name": "_setChildNodes",
@@ -18584,7 +18865,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1567,
+            "line": 1805,
             "description": "A hash of all the `attributes` of the vnode's representing dom-node.",
             "itemtype": "property",
             "name": "attrs",
@@ -18596,7 +18877,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1575,
+            "line": 1813,
             "description": "Hash with all the classes of the vnode. Every class represents a key, all values are set `true`.",
             "itemtype": "property",
             "name": "classNames",
@@ -18608,7 +18889,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1583,
+            "line": 1821,
             "description": "The `id` of the vnode's representing dom-node (if any).",
             "itemtype": "property",
             "name": "id",
@@ -18620,7 +18901,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1591,
+            "line": 1829,
             "description": "Tells whether tag is a void Element. Examples are: `br`, `img` and `input`. Non-void Elements are f.e. `div` and `table`.\nFor TextNodes and CommentNodes, this property is `undefined`.",
             "itemtype": "property",
             "name": "isVoid",
@@ -18632,7 +18913,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1600,
+            "line": 1838,
             "description": "The `nodeType` of the vnode's representing dom-node (1===ElementNode, 3===TextNode, 8===CommentNode).",
             "itemtype": "property",
             "name": "nodeType",
@@ -18644,7 +18925,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1608,
+            "line": 1846,
             "description": "The `tag` of the vnode's representing dom-node (allways uppercase).",
             "itemtype": "property",
             "name": "tag",
@@ -18656,7 +18937,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1616,
+            "line": 1854,
             "description": "The `content` of the vnode's representing dom-node, in case it is a TextNode or CommentNode.\nEquals dom-node.nodeValue.\n\nIs `undefined` for ElementNodes.",
             "itemtype": "property",
             "name": "text",
@@ -18668,7 +18949,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1627,
+            "line": 1865,
             "description": "Hash with all the childNodes (vnodes). vChildNodes are any kind of vnodes (nodeType===1, 3 or 8)",
             "itemtype": "property",
             "name": "vChildNodes",
@@ -18680,7 +18961,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1635,
+            "line": 1873,
             "description": "The underlying `dom-node` that the vnode represents.",
             "itemtype": "property",
             "name": "domNode",
@@ -18692,7 +18973,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1643,
+            "line": 1881,
             "description": "vnode's parentNode (defined as a vnode itself).",
             "itemtype": "property",
             "name": "vParent",
@@ -18704,7 +18985,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1652,
+            "line": 1890,
             "description": "Gets or sets the innerHTML of both the vnode as well as the representing dom-node.\n\nThe setter syncs with the DOM.",
             "itemtype": "property",
             "name": "innerHTML",
@@ -18716,7 +18997,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1690,
+            "line": 1928,
             "description": "Gets or sets the innerHTML of both the vnode as well as the representing dom-node.\n\nThe setter syncs with the DOM.",
             "itemtype": "property",
             "name": "nodeValue",
@@ -18728,7 +19009,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1714,
+            "line": 1955,
             "description": "Gets or sets the outerHTML of both the vnode as well as the representing dom-node.\n\nThe setter syncs with the DOM.",
             "itemtype": "property",
             "name": "outerHTML",
@@ -18740,7 +19021,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1811,
+            "line": 2055,
             "description": "Gets or sets the innerContent of the Node as plain text.\n\nThe setter syncs with the DOM.",
             "itemtype": "property",
             "name": "textContent",
@@ -18752,7 +19033,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1850,
+            "line": 2094,
             "description": "Hash with all the children (vnodes). vChildren are vnodes that have a representing dom-node that is an HtmlElement (nodeType===1)",
             "itemtype": "property",
             "name": "vChildren",
@@ -18764,7 +19045,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1875,
+            "line": 2120,
             "description": "Reference to the first of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vFirst",
@@ -18776,7 +19057,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1892,
+            "line": 2137,
             "description": "Reference to the first vChildNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vFirstChild",
@@ -18788,7 +19069,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1905,
+            "line": 2150,
             "description": "Reference to the first of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "property",
             "name": "vFirstElement",
@@ -18800,7 +19081,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1922,
+            "line": 2167,
             "description": "Reference to the first vChild, where the related dom-node an Element (nodeType===1).",
             "itemtype": "property",
             "name": "vFirstElementChild",
@@ -18812,7 +19093,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1935,
+            "line": 2180,
             "description": "Reference to the last of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vLast",
@@ -18824,7 +19105,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1952,
+            "line": 2197,
             "description": "Reference to the last vChildNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vLastChild",
@@ -18836,7 +19117,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1966,
+            "line": 2211,
             "description": "Reference to the last of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "property",
             "name": "vLastElement",
@@ -18848,7 +19129,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1983,
+            "line": 2228,
             "description": "Reference to the last vChild, where the related dom-node an Element (nodeType===1).",
             "itemtype": "property",
             "name": "vLastElementChild",
@@ -18860,7 +19141,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1997,
+            "line": 2242,
             "description": "the Parent vnode",
             "itemtype": "property",
             "name": "vParent",
@@ -18872,7 +19153,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2005,
+            "line": 2250,
             "description": "Reference to the next of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vNext",
@@ -18884,7 +19165,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2018,
+            "line": 2263,
             "description": "Reference to the next of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "property",
             "name": "vNextElement",
@@ -18896,7 +19177,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2031,
+            "line": 2276,
             "description": "Reference to the previous of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vPrevious",
@@ -18908,7 +19189,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2044,
+            "line": 2289,
             "description": "Reference to the previous of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "property",
             "name": "vPreviousElement",
@@ -18920,7 +19201,7 @@
         },
         {
             "file": "src/window-ext/lib/sizes.js",
-            "line": 66,
+            "line": 59,
             "description": "Gets the left-scroll offset of the window.",
             "itemtype": "method",
             "name": "getScrollLeft",
@@ -18934,7 +19215,7 @@
         },
         {
             "file": "src/window-ext/lib/sizes.js",
-            "line": 76,
+            "line": 69,
             "description": "Gets the top-scroll offset of the window.",
             "itemtype": "method",
             "name": "getScrollTop",
@@ -18948,7 +19229,7 @@
         },
         {
             "file": "src/window-ext/lib/sizes.js",
-            "line": 86,
+            "line": 79,
             "description": "Gets the width of the window.",
             "itemtype": "method",
             "name": "getWidth",
@@ -18962,7 +19243,7 @@
         },
         {
             "file": "src/window-ext/lib/sizes.js",
-            "line": 96,
+            "line": 89,
             "description": "Gets the height of the window.",
             "itemtype": "method",
             "name": "getHeight",

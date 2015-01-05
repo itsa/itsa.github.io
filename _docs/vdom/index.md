@@ -6,7 +6,7 @@ modulesize: 1.69
 dependencies: "polyfill"
 maintainer: Marco Asbreuk
 title: Virtual DOM
-intro: "Proxy for <b>window.document</b> and <b>window.Element</b> which makes working with the DOM ultrafast."
+intro: "The vdom creates <b>vnodes</b> for every dom-Node which makes working with the DOM ultrafast. Additionally, both document and Element have many sugar methods making working with the dom fun again."
 firstpar: get-started
 ---
 
@@ -33,6 +33,53 @@ On startup, the complete DOM is virtualised into `vnodes`. These are plain objec
 #About Dom Nodes#
 
 Technically spoken, the DOM consists of three different type of Nodes: Elements, TextNodes and CommentNodes (all virtualised into vnodes). However, you should work with the DOM by thinking of `Elements`. Whenever you query the DOM for a `Node`, you get an Element in return. These Elements are the objects the API returns and by which you can manipulate the DOM.
+
+
+
+#Node mutation events#
+
+When both the `vdom` and the `event-dom` module are loaded, the vdom fires `Node mutation events`. That is, only when there is a subscriber.
+
+##Available events##
+
+###nodeinsert###
+Emitted for every Element that gets inserted.
+
+###noderemove###
+Emitted for every Element that gets removed.
+
+###nodecontentchange###
+Emitted for every Element that gets its content changed (innerHTML/innerText).
+
+###attributeinsert###
+Emitted for every Element that gets an attribute inserted.
+The eventobject has an extra property: `changed` which is an Array of Objects:
+
+```js
+e.changed = [
+    {attribute: attrName, newValue: new_value},
+    {attribute: attrName, newValue: new_value}
+]
+```
+
+###attributeremove###
+Emitted for every Element that gets an attribute removed.
+The eventobject has an extra property: `changed` which is an Array of Strings:
+
+```js
+e.changed = [attributeName, attributeName]
+```
+
+###attributechange###
+Emitted for every Element that gets an attribute changed.
+The eventobject has an extra property: `changed` which is an Array of Objects:
+
+```js
+e.changed = [
+    {attribute: attrName, newValue: new_value, prevValue: previous_value},
+    {attribute: attrName, newValue: new_value, prevValue: previous_value}
+]
+```
 
 
 
@@ -84,6 +131,7 @@ These <u>do work</u>, but they update their vnode's asynchronously. So, if you q
 ###toggleClass###
 ###replaceClass###
 ###removeAttr###
+###removeAttrs###
 ###removeInlineStyle###
 ###removeInlineTransition###
 ###removeClass###

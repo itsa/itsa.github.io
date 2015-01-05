@@ -24,6 +24,7 @@ intro: "This example appends content to a diV-container"
 
 Click on the button to initiate the request.
 
+<div id="test">hmm</div>
 <div id="container">
     <button id="button-get" class="pure-button pure-button-primary pure-button-bordered">Click me to add data</button>
 </div>
@@ -64,6 +65,8 @@ Code-example:
     var ITSA = require('itsa'),
         container = document.getElement('#target-container'),
         addContent;
+
+document.getElement('#test').setHTML('<div>I am inner</div>');
 
     addContent = function(data) {
         container.append('<br>Some <i>new data</i>');

@@ -4646,14 +4646,7 @@ require('./css/drag-drop.css');
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.DragDrop) {
         return window._ITSAmodules.DragDrop; // DragDrop was already created
@@ -5492,7 +5485,7 @@ module.exports = function (window) {
     return DD_Object;
 
 };
-},{"./css/drag-drop.css":10,"drag":13,"event-dom":14,"js-ext":29,"polyfill/polyfill-base.js":40,"useragent":41,"vdom":55,"window-ext":56}],12:[function(require,module,exports){
+},{"./css/drag-drop.css":10,"drag":13,"event-dom":14,"js-ext":30,"polyfill/polyfill-base.js":42,"useragent":43,"vdom":57,"window-ext":58}],12:[function(require,module,exports){
 module.exports=require(10)
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],13:[function(require,module,exports){
 "use strict";
@@ -5566,14 +5559,7 @@ require('./css/drag.css');
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.Drag) {
         return window._ITSAmodules.Drag; // Drag was already created
@@ -6150,7 +6136,7 @@ module.exports = function (window) {
 
     return DD_Object;
 };
-},{"./css/drag.css":12,"event-dom":14,"js-ext":29,"polyfill":40,"useragent":41,"vdom":55,"window-ext":56}],14:[function(require,module,exports){
+},{"./css/drag.css":12,"event-dom":14,"js-ext":30,"polyfill":42,"useragent":43,"vdom":57,"window-ext":58}],14:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6180,6 +6166,18 @@ var NAME = '[event-dom]: ',
     REGEXP_UI_OUTSIDE = /^.+outside$/,
     TIME_BTN_PRESSED = 200,
     PURE_BUTTON_ACTIVE = 'pure-button-active',
+    UI = 'UI:',
+    NODE = 'node',
+    REMOVE = 'remove',
+    INSERT = 'insert',
+    CHANGE = 'change',
+    ATTRIBUTE = 'attribute',
+    EV_REMOVED = UI+NODE+REMOVE,
+    EV_INSERTED = UI+NODE+INSERT,
+    EV_CONTENT_CHANGE = UI+NODE+'content'+CHANGE,
+    EV_ATTRIBUTE_REMOVED = UI+ATTRIBUTE+REMOVE,
+    EV_ATTRIBUTE_CHANGED = UI+ATTRIBUTE+CHANGE,
+    EV_ATTRIBUTE_INSERTED = UI+ATTRIBUTE+INSERT,
 
     /*
      * Internal hash containing all DOM-events that are listened for (at `document`).
@@ -6198,7 +6196,6 @@ var NAME = '[event-dom]: ',
     */
     DOMEvents = {};
 
-    require('vdom');
     require('js-ext/lib/string.js');
     require('js-ext/lib/array.js');
     require('js-ext/lib/object.js');
@@ -6206,21 +6203,18 @@ var NAME = '[event-dom]: ',
 
 module.exports = function (window) {
     var DOCUMENT = window.document,
-        _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor, _setupEvents,
-        _setupDomListener, _teardownDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc;
+        _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor, _setupEvents, _setupMutationListener, _teardownMutationListener,
+        _setupDomListener, _teardownDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc, MUTATION_EVENTS;
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    require('vdom')(window);
+
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.EventDom) {
         return Event; // Event was already extended
     }
+
+    MUTATION_EVENTS = [EV_REMOVED, EV_INSERTED, EV_CONTENT_CHANGE, EV_ATTRIBUTE_REMOVED, , EV_ATTRIBUTE_CHANGED, EV_ATTRIBUTE_INSERTED];
 
     /*
      * Transfprms the selector to a valid function
@@ -6238,7 +6232,7 @@ module.exports = function (window) {
         Event._sellist.some(function(selFn) {
             return selFn(customEvent, subscriber);
         });
-    },
+    };
 
     /*
      * Creates a filterfunction out of a css-selector. To be used for catching any dom-element, without restrictions
@@ -6582,6 +6576,10 @@ module.exports = function (window) {
 
     };
 
+    _setupMutationListener = function() {
+        DOCUMENT.hasMutationSubs = true;
+    };
+
     /*
      *
      * @method _sortFunc
@@ -6634,6 +6632,18 @@ module.exports = function (window) {
         }
     };
 
+    _teardownMutationListener = function() {
+        if (!Event._subs[EV_REMOVED] &&
+            !Event._subs[EV_INSERTED] &&
+            !Event._subs[EV_CONTENT_CHANGE] &&
+            !Event._subs[EV_ATTRIBUTE_REMOVED] &&
+            !Event._subs[EV_ATTRIBUTE_CHANGED] &&
+            !Event._subs[EV_ATTRIBUTE_INSERTED]
+        ) {
+            DOCUMENT.hasMutationSubs = false;
+        }
+    };
+
     // Now a very tricky one:
     // Some browsers do an array.sort down-top instead of top-down.
     // In those cases we need another sortFn, for the position on an equal match should fall
@@ -6647,17 +6657,48 @@ module.exports = function (window) {
     // Notify when someone subscribes to an UI:* event
     // if so: then we might need to define a customEvent for it:
     // alse define the specific DOM-methods that can be called on the eventobject: `stopPropagation` and `stopImmediatePropagation`
-    Event.notify('UI:*', _setupDomListener, Event)
+    Event.notify(UI+'*', _setupDomListener, Event)
          ._setEventObjProperty('stopPropagation', function() {this.status.ok || (this.status.propagationStopped = this.target);})
          ._setEventObjProperty('stopImmediatePropagation', function() {this.status.ok || (this.status.immediatePropagationStopped = this.target);});
 
     // Notify when someone detaches an UI:* event
     // if so: then we might need to detach the native listener on `document`
-    Event.notifyDetach('UI:*', _teardownDomListener, Event);
+    Event.notifyDetach(UI+'*', _teardownDomListener, Event);
 
     Event._sellist = [_domSelToFunc];
 
     _setupEvents();
+
+    // making HTMLElement to be able to emit using event-emitter:
+    (function(HTMLElementPrototype) {
+        HTMLElementPrototype.merge(Event.Emitter('UI'));
+    }(window.HTMLElement.prototype));
+
+
+
+
+
+
+
+
+    // Notify when someone subscribes to an UI:* event
+    // if so: then we might need to define a customEvent for it:
+    // alse define the specific DOM-methods that can be called on the eventobject: `stopPropagation` and `stopImmediatePropagation`
+    Event.notify(MUTATION_EVENTS, _setupMutationListener, Event);
+
+    // Notify when someone detaches an UI:* event
+    // if so: then we might need to detach the native listener on `document`
+    Event.notifyDetach(MUTATION_EVENTS, _teardownMutationListener, Event);
+
+    // Note: window.document has no prototype
+    DOCUMENT.suppressMutationEvents = function(suppress) {
+        this._suppressMutationEvents = suppress;
+    };
+
+
+
+
+
 
     // Event._domCallback is the only method that is added to Event.
     // We need to do this, because `event-mobile` needs access to the same method.
@@ -6683,7 +6724,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":21,"js-ext/lib/array.js":30,"js-ext/lib/object.js":32,"js-ext/lib/string.js":34,"polyfill/polyfill-base.js":40,"utils":42,"vdom":55}],15:[function(require,module,exports){
+},{"event":21,"js-ext/lib/array.js":31,"js-ext/lib/object.js":33,"js-ext/lib/string.js":35,"polyfill/polyfill-base.js":42,"utils":44,"vdom":57}],15:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6716,14 +6757,7 @@ var NAME = '[event-hover]: ';
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.EventHover) {
         return window._ITSAmodules.EventHover; // EventHover was already created
@@ -6837,14 +6871,7 @@ var NAME = '[event-valuechange]: ',
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.EventValueChange) {
         return window._ITSAmodules.EventValueChange; // EventValueChange was already created
@@ -7055,7 +7082,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":14,"utils":42,"vdom":55}],17:[function(require,module,exports){
+},{"../event-dom.js":14,"utils":44,"vdom":57}],17:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7188,14 +7215,7 @@ require('js-ext/lib/object.js');
 
     "use strict";
 
-    if (!global._ITSAmodules) {
-        Object.defineProperty(global, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    global._ITSAmodules || global.protectedProp('_ITSAmodules', {});
     global._ITSAmodules.Event || (global._ITSAmodules.Event = factory());
 
     module.exports = global._ITSAmodules.Event;
@@ -7557,11 +7577,17 @@ require('js-ext/lib/object.js');
         */
         notify: function(customEvent, callback, context, once) {
             console.log(NAME, 'notify');
-            this._notifiers[customEvent] = {
-                cb: callback,
-                o: context,
-                r: once // r = remove automaticly
-            };
+            var i, len, ce;
+            Array.isArray(customEvent) || (customEvent=[customEvent]);
+            len = customEvent.length;
+            for (i=0; i<len; i++) {
+                ce = customEvent[i];
+                this._notifiers[ce] = {
+                    cb: callback,
+                    o: context,
+                    r: once // r = remove automaticly
+                };
+            }
             return this;
         },
 
@@ -7589,11 +7615,17 @@ require('js-ext/lib/object.js');
         */
         notifyDetach: function(customEvent, callback, context, once) {
             console.log(NAME, 'notifyDetach');
-            this._detachNotifiers[customEvent] = {
-                cb: callback,
-                o: context,
-                r: once // r = remove automaticly
-            };
+            var i, len, ce;
+            Array.isArray(customEvent) || (customEvent=[customEvent]);
+            len = customEvent.length;
+            for (i=0; i<len; i++) {
+                ce = customEvent[i];
+                this._detachNotifiers[ce] = {
+                    cb: callback,
+                    o: context,
+                    r: once // r = remove automaticly
+                };
+            }
             return this;
         },
 
@@ -8005,7 +8037,7 @@ require('js-ext/lib/object.js');
                 allCustomEvents = instance._ce,
                 allSubscribers = instance._subs,
                 customEventDefinition, extract, emitterName, eventName, subs, wildcard_named_subs,
-                named_wildcard_subs, wildcard_wildcard_subs, e, invokeSubs;
+                named_wildcard_subs, wildcard_wildcard_subs, e, invokeSubs, key;
 
             (customEvent.indexOf(':') !== -1) || (customEvent = emitter._emitterName+':'+customEvent);
             console.log(NAME, 'customEvent.emit: '+customEvent);
@@ -8042,7 +8074,7 @@ require('js-ext/lib/object.js');
                 }
                 if (payload) {
                     // e.merge(payload); is not enough --> DOM-eventobject has many properties that are not "own"-properties
-                    for (var key in payload) {
+                    for (key in payload) {
                         e[key] || (e[key]=payload[key]);
                     }
                 }
@@ -8458,7 +8490,7 @@ require('js-ext/lib/object.js');
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/lib/function.js":31,"js-ext/lib/object.js":32,"polyfill/polyfill-base.js":40}],19:[function(require,module,exports){
+},{"js-ext/lib/function.js":32,"js-ext/lib/object.js":33,"polyfill/polyfill-base.js":42}],19:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8765,14 +8797,7 @@ module.exports = function (window) {
     var DOCUMENT = window.document,
         nodePlugin, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed, getFocusManagerSelector, setupEvents;
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
 /*jshint boss:true */
     if (FocusManager=window._ITSAmodules.FocusManager) {
@@ -8796,10 +8821,12 @@ module.exports = function (window) {
         keys = actionkey.split('+');
         len = keys.length;
         lastIndex = len - 1;
-        enterPressedOnInput = (keyCode===13) &&
-                              (sourceNode.getTagName()==='INPUT') &&
-                              (inputType=sourceNode.getAttr('type').toLowerCase())
-                              ((inputType==='text') || (inputType==='password'));
+
+        if ((keyCode===13) && (sourceNode.getTagName()==='INPUT')) {
+            inputType = sourceNode.getAttr('type').toLowerCase();
+            enterPressedOnInput = (inputType==='text') || (inputType==='password');
+        }
+
         if (enterPressedOnInput) {
             // check if we need to press the primary button - if available
 /*jshint boss:true */
@@ -8849,17 +8876,24 @@ module.exports = function (window) {
 
     markAsFocussed = function(focusContainerNode, node) {
         console.log(NAME+'markAsFocussed');
+        var selector = getFocusManagerSelector(focusContainerNode),
+            index;
+
         focusContainerNode.getAll('[fm-lastitem]').removeAttr('fm-lastitem');
         node.setAttrs([
             {name: 'tabIndex', value: '0'},
             {name: 'fm-lastitem', value: true}
         ]);
+        // also store the lastitem's index --> in case the node gets removed,
+        // a refocus on the container will set the focus to the nearest item
+        index = focusContainerNode.getAll(selector).indexOf(node) || 0;
+        focusContainerNode.setAttr('fm-lastitem-bpk', index);
     };
 
     searchFocusNode = function(initialNode) {
         console.log(NAME+'searchFocusNode');
         var focusContainerNode = initialNode.hasAttr('fm-manage') ? initialNode : initialNode.inside('[fm-manage]'),
-            focusNode, alwaysDefault, fmAlwaysDefault;
+            focusNode, alwaysDefault, fmAlwaysDefault, selector, allFocusableNodes, index;
 
         if (focusContainerNode) {
             if (initialNode.matches(getFocusManagerSelector(focusContainerNode))) {
@@ -8871,9 +8905,25 @@ module.exports = function (window) {
 /*jshint boss:true */
                 alwaysDefault = ((fmAlwaysDefault=focusContainerNode.getAttr('fm-alwaysdefault')) && (fmAlwaysDefault.toLowerCase()==='true'));
 /*jshint boss:false */
-                focusNode = focusContainerNode.getElement(alwaysDefault ? '[fm-defaultitem="true"]' : '[fm-lastitem="true"]') ||
-                            focusContainerNode.getElement(alwaysDefault ? '[fm-lastitem="true"]' : '[fm-defaultitem="true"]') ||
-                            focusContainerNode.getElement(getFocusManagerSelector(focusContainerNode));
+                alwaysDefault && (focusNode=focusContainerNode.getElement('[fm-defaultitem="true"]'));
+                if (!focusNode) {
+                    // search for last item
+                    focusNode = focusContainerNode.getElement('[fm-lastitem="true"]');
+                    if (!focusNode) {
+                        // set `selector` right now: we might use it later on even when index is undefined
+                        selector = getFocusManagerSelector(focusContainerNode);
+                        // look at the lastitemindex of the focuscontainer
+                        index = focusContainerNode.getAttr('fm-lastitem-bpk');
+                        if (index!==undefined) {
+                            allFocusableNodes = focusContainerNode.getAll(selector);
+                            focusNode = allFocusableNodes[index];
+                        }
+                    }
+                }
+                // still not found and alwaysDefault was falsy: try the defualt node:
+                !focusNode && !alwaysDefault && (focusNode=focusContainerNode.getElement('[fm-defaultitem="true"]'));
+                // still not found: try the first focussable node (which we might find inside `allFocusableNodes`:
+                !focusNode && (focusNode = allFocusableNodes ? allFocusableNodes[0] : focusContainerNode.getElement(selector));
                 if (focusNode) {
                     markAsFocussed(focusContainerNode, focusNode);
                 }
@@ -9037,7 +9087,7 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"event-dom":14,"js-ext/lib/object.js":32,"polyfill":40,"utils":42,"vdom":55}],23:[function(require,module,exports){
+},{"event-dom":14,"js-ext/lib/object.js":33,"polyfill":42,"utils":44,"vdom":57}],23:[function(require,module,exports){
 
 "use strict";
 
@@ -9077,14 +9127,7 @@ var NAME = '[io-cors-ie9]: ',
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.IO_Cors) {
         return window._ITSAmodules.IO_Cors; // IO_Cors was already created
@@ -9177,14 +9220,7 @@ var NAME = '[io-stream]: ',
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.IO_Stream) {
         return window._ITSAmodules.IO_Stream; // IO_Stream was already created
@@ -9337,14 +9373,7 @@ var NAME = '[io-transfer]: ',
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.IO_Transfer) {
         return window._ITSAmodules.IO_Transfer; // IO_Transfer was already created
@@ -9742,7 +9771,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":27,"js-ext/lib/string.js":34,"polyfill/polyfill-base.js":40}],26:[function(require,module,exports){
+},{"../io.js":27,"js-ext/lib/string.js":35,"polyfill/polyfill-base.js":42}],26:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9770,14 +9799,7 @@ var NAME = '[io-xml]: ',
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.IO_XML) {
         return window._ITSAmodules.IO_XML; // IO_XML was already created
@@ -9900,7 +9922,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":27,"js-ext":29}],27:[function(require,module,exports){
+},{"../io.js":27,"js-ext":30}],27:[function(require,module,exports){
 (function (global){
 /**
  * Provides core IO-functionality.
@@ -9943,14 +9965,9 @@ module.exports = function (window) {
     // We need a singleton IO, because submodules might merge in. You can't have them merging
     // into some other IO-instance than which is used.
     var Glob = (typeof global !== 'undefined' ? global : /* istanbul ignore next */ this);
-    if (!Glob._ITSAmodules) {
-        Object.defineProperty(Glob, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+
+    Glob._ITSAmodules || Glob.protectedProp('_ITSAmodules', {});
+
     if (Glob._ITSAmodules.IO) {
         return Glob._ITSAmodules.IO;
     }
@@ -10217,7 +10234,101 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":29,"polyfill/polyfill-base.js":40}],28:[function(require,module,exports){
+},{"js-ext":30,"polyfill/polyfill-base.js":42}],28:[function(require,module,exports){
+(function (global){
+/**
+ *
+ * Pollyfils for often used functionality for Strings
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module js-ext
+ * @submodule lib/string.js
+ * @class String
+ *
+ */
+(function (global) {
+
+    "use strict";
+
+    require('../lib/function.js');
+    require('../lib/array.js');
+    require('polyfill/lib/weakmap.js');
+
+    var LightMap;
+
+    global.LightMap = LightMap = Object.createClass(
+        function() {
+            this.protectedProp('_array', []);
+            this.protectedProp('_map', new global.WeakMap());
+        },
+        {
+            each: function(fn, context) {
+                var instance = this,
+                    array = instance._array,
+                    l = array.length,
+                    i = -1,
+                    obj, value;
+                while (++i < l) {
+                    obj = array[i];
+                    value = instance.get(obj); // read from WeakMap
+                    fn.call(context, value, obj, instance);
+                }
+                return instance;
+            },
+            some: function(fn, context) {
+                var instance = this,
+                    array = instance._array,
+                    l = array.length,
+                    i = -1,
+                    obj, value;
+                while (++i < l) {
+                    obj = array[i];
+                    value = instance.get(obj); // read from WeakMap
+                    if (fn.call(context, value, obj, instance)) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            clear: function() {
+                var instance = this,
+                    array = instance._array;
+                array.forEach(function(key) {
+                    instance.delete(key, true);
+                });
+                array.length = 0;
+            },
+            has: function(object) {
+                return this._map.has(object);
+            },
+            get: function(key, fallback) {
+                return this._map.get(key, fallback);
+            },
+            set: function (key, value) {
+                var instance = this,
+                    array = instance._array,
+                    map = instance._map;
+                map.set(key, value);
+                array.contains(key) || array.push(key);
+                return instance;
+            },
+            'delete': function (key) {
+                var instance = this,
+                    array = instance._array,
+                    map = instance._map,
+                    silent = arguments[1], // hidden feature used by `clear()`
+                    returnValue = map.delete(key);
+                silent || array.remove(key);
+                return returnValue;
+            }
+        }
+    );
+
+}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../lib/array.js":31,"../lib/function.js":32,"polyfill/lib/weakmap.js":40}],29:[function(require,module,exports){
 module.exports = {
     'abstract': true,
     'arguments': true,
@@ -10286,13 +10397,13 @@ module.exports = {
     'with': true,
     'yield': true
 };
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
 require('./lib/array.js');
 require('./lib/promise.js');
-},{"./lib/array.js":30,"./lib/function.js":31,"./lib/object.js":32,"./lib/promise.js":33,"./lib/string.js":34}],30:[function(require,module,exports){
+},{"./lib/array.js":31,"./lib/function.js":32,"./lib/object.js":33,"./lib/promise.js":34,"./lib/string.js":35}],31:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -10443,7 +10554,7 @@ var cloneObj = function(obj) {
      };
 
 }(Array.prototype));
-},{"polyfill/polyfill-base.js":40}],31:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":42}],32:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -10664,7 +10775,7 @@ defineProperties(Function.prototype, {
 defineProperty(Object.prototype, 'createClass', function () {
 	return Function.prototype.subClass.apply(this, arguments);
 });
-},{"polyfill/polyfill-base.js":40}],32:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":42}],33:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -11057,7 +11168,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"polyfill/polyfill-base.js":40}],33:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":42}],34:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11362,7 +11473,7 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill":40}],34:[function(require,module,exports){
+},{"polyfill":42}],35:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -11594,7 +11705,7 @@ Promise.manage = function (callbackFn) {
 
 }(String.prototype));
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 "use strict";
 
 /*
@@ -11605,14 +11716,7 @@ Promise.manage = function (callbackFn) {
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.Transition) {
         return window._ITSAmodules.Transition; // Transition was already created
@@ -11643,19 +11747,12 @@ module.exports = function (window) {
 
     return transition;
 };
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.TransitionEnd) {
         return window._ITSAmodules.TransitionEnd; // TransitionEnd was already created
@@ -11684,7 +11781,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -11705,14 +11802,7 @@ var toCamelCase = function(input) {
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.VendorCSS) {
         return window._ITSAmodules.VendorCSS; // VendorCSS was already created
@@ -11754,7 +11844,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/lib/object.js":32}],38:[function(require,module,exports){
+},{"js-ext/lib/object.js":33}],39:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -11778,7 +11868,117 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
+(function (global){
+// based upon https://gist.github.com/Gozala/1269991
+
+(function (global) {
+    "use strict";
+    var defineNamespace, Name, guard;
+
+    if (!global.WeakMap) {
+        defineNamespace = function(object, namespace) {
+            /**
+            Utility function takes `object` and `namespace` and overrides `valueOf`
+            method of `object`, so that when called with a `namespace` argument,
+            `private` object associated with this `namespace` is returned. If argument
+            is different, `valueOf` falls back to original `valueOf` property.
+            **/
+
+            // Private inherits from `object`, so that `this.foo` will refer to the
+            // `object.foo`. Also, original `valueOf` is saved in order to be able to
+            // delegate to it when necessary.
+            var privates = Object.create(object),
+                base = object.valueOf;
+            Object.defineProperty(object, 'valueOf', {
+                value: function valueOf(value) {
+                    // If `this` or `namespace` is not associated with a `privates` being
+                    // stored we fallback to original `valueOf`, otherwise we return privates.
+                    return ((value !== namespace) || (this !== object)) ? base.apply(this, arguments) : privates;
+                },
+                configurable: true
+            });
+            return privates;
+        };
+
+        Name = function() {
+            /**
+            Desugared implementation of private names proposal. API is different as
+            it's not possible to implement API proposed for harmony with in ES5. In
+            terms of provided functionality it supposed to be same.
+            http://wiki.ecmascript.org/doku.php?id=strawman:private_names
+            **/
+
+            var namespace = {};
+            return function name(object) {
+                var privates = object.valueOf(namespace);
+                return (privates !== object) ? privates : defineNamespace(object, namespace);
+            };
+        };
+
+        guard = function(key) {
+            /**
+            Utility function to guard WeakMap methods from keys that are not
+            a non-null objects.
+            **/
+
+            if (key !== Object(key)) {
+                throw new TypeError("value is not a non-null object");
+            }
+            return key;
+        };
+
+        global.WeakMap = function() {
+            /**
+            Implementation of harmony `WeakMaps`, in ES5. This implementation will
+            work only with keys that have configurable `valueOf` property (which is
+            a default for all non-frozen objects).
+            http://wiki.ecmascript.org/doku.php?id=harmony:weak_maps
+            **/
+
+            var privates = new Name();
+
+            return Object.freeze(Object.create(WeakMap.prototype, {
+                has: {
+                    value: function has(object) {
+                        return 'value' in privates(object);
+                    },
+                    configurable: true,
+                    enumerable: false,
+                    writable: true
+                },
+                get: {
+                    value: function get(key, fallback) {
+                        return privates(guard(key)).value || fallback;
+                    },
+                    configurable: true,
+                    enumerable: false,
+                    writable: true
+                },
+                set: {
+                    value: function set(key, value) {
+                        privates(guard(key)).value = value;
+                        return this;
+                    },
+                    configurable: true,
+                    enumerable: false,
+                    writable: true
+                },
+                'delete': {
+                    value: function set(key) {
+                        return delete privates(guard(key)).value;
+                    },
+                    configurable: true,
+                    enumerable: false,
+                    writable: true
+                }
+            }));
+        };
+    }
+
+}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],41:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -11797,10 +11997,10 @@ module.exports = function (window) {
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],40:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":38,"./lib/window.console.js":39}],41:[function(require,module,exports){
+},{"./lib/matchesselector.js":39,"./lib/window.console.js":41}],43:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11824,14 +12024,7 @@ module.exports = function (window) {
     var UserAgent,
         navigator = window.navigator;
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
 /*jshint boss:true */
     if (UserAgent=window._ITSAmodules.UserAgent) {
@@ -11845,13 +12038,13 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"polyfill":40}],42:[function(require,module,exports){
+},{"polyfill":42}],44:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
 	later: require('./lib/timers.js').later,
 	async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":43,"./lib/timers.js":44}],43:[function(require,module,exports){
+},{"./lib/idgenerator.js":45,"./lib/timers.js":46}],45:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -11908,7 +12101,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"polyfill/polyfill-base.js":40}],44:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":42}],46:[function(require,module,exports){
 (function (process,global){
 /**
  * Collection of various utility functions.
@@ -12068,9 +12261,9 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":58,"polyfill/polyfill-base.js":40}],45:[function(require,module,exports){
+},{"_process":60,"polyfill/polyfill-base.js":42}],47:[function(require,module,exports){
 var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n.itsa-invisible,\n.itsa-invisible-relative {\n    visibility: hidden !important;\n    z-index: -1;\n}\n\n.itsa-invisible *,\n.itsa-invisible-relative * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n.itsa-hidden {\n    visibility: hidden !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],46:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],48:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12088,17 +12281,11 @@ var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:
 
 require('js-ext/lib/string.js');
 require('js-ext/lib/object.js');
+require('polyfill');
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.AttributeExtractor) {
         return window._ITSAmodules.AttributeExtractor; // AttributeExtractor was already created
@@ -12372,7 +12559,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/lib/object.js":32,"js-ext/lib/string.js":34,"polyfill/extra/transition.js":35,"polyfill/extra/vendorCSS.js":37}],47:[function(require,module,exports){
+},{"js-ext/lib/object.js":33,"js-ext/lib/string.js":35,"polyfill":42,"polyfill/extra/transition.js":36,"polyfill/extra/vendorCSS.js":38}],49:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12390,19 +12577,12 @@ module.exports = function (window) {
  * @since 0.0.1
 */
 
-require('polyfill/polyfill-base.js');
+require('polyfill');
 require('js-ext/lib/object.js');
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.ElementArray) {
         return window._ITSAmodules.ElementArray; // ElementArray was already created
@@ -12764,7 +12944,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/lib/object.js":32,"polyfill/polyfill-base.js":40}],48:[function(require,module,exports){
+},{"js-ext/lib/object.js":33,"polyfill":42}],50:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12784,6 +12964,7 @@ module.exports = function (window) {
 
 require('js-ext/lib/object.js');
 require('js-ext/lib/string.js');
+require('polyfill');
 
 var fromCamelCase = function(input) {
         return input.replace(/[a-z]([A-Z])/g, function(match, group) {
@@ -12895,7 +13076,7 @@ module.exports = function (window) {
 
     return ElementPlugin;
 };
-},{"js-ext/lib/object.js":32,"js-ext/lib/string.js":34}],49:[function(require,module,exports){
+},{"js-ext/lib/object.js":33,"js-ext/lib/string.js":35,"polyfill":42}],51:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12912,16 +13093,11 @@ module.exports = function (window) {
  * @since 0.0.1
 */
 
+require('polyfill');
+
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.ExtendDocument) {
         return; // ExtendDocument was already created
@@ -13574,7 +13750,7 @@ module.exports = function (window) {
 
 
 
-},{"./vdom-ns.js":53}],50:[function(require,module,exports){
+},{"./vdom-ns.js":55,"polyfill":42}],52:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -13601,14 +13777,7 @@ require('polyfill');
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.ExtendElement) {
         return; // ExtendElement was already created
@@ -13896,10 +14065,10 @@ module.exports = function (window) {
             }
             unFreeze = function(options) {
                 var bkpFreezedStyle = node.getData(bkpFreezed),
-                    bkpFreezedData1 = node.getData(bkpFreezedData1),
                     finish = options && options.finish,
                     cancel = options && options.cancel,
                     transitioned = !finish;
+                bkpFreezedData1 = node.getData(bkpFreezedData1);
                 if (bkpFreezedStyle!==undefined) {
                     if (finish || cancel) {
                         node.setClass(NO_TRANS2);
@@ -14505,10 +14674,11 @@ module.exports = function (window) {
         * @param content {Element|ElementArray|String} content to append
         * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
         * @param [refElement] {Element} reference Element where the content should be appended
+        * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         * @return {Element} the created Element (or the last when multiple)
         * @since 0.0.1
         */
-        ElementPrototype.append = function(content, escape, refElement) {
+        ElementPrototype.append = function(content, escape, refElement, silent) {
             var instance = this,
                 vnode = instance.vnode,
                 i, len, item, createdElement, vnodes, vRefElement,
@@ -14516,6 +14686,7 @@ module.exports = function (window) {
                 escape && (oneItem.nodeType===1) && (oneItem=DOCUMENT.createTextNode(oneItem.getOuterHTML()));
                 createdElement = refElement ? vnode._insertBefore(oneItem.vnode, refElement.vnode) : vnode._appendChild(oneItem.vnode);
             };
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             vnode._noSync()._normalizable(false);
             if (refElement && (vnode.vChildNodes.indexOf(refElement.vnode)!==-1)) {
                 vRefElement = refElement.vnode.vNext;
@@ -14540,6 +14711,7 @@ module.exports = function (window) {
                 doAppend(content);
             }
             vnode._normalizable(true)._normalize();
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
             return createdElement;
         };
 
@@ -14571,12 +14743,7 @@ module.exports = function (window) {
                 cloned = instance._cloneNode(deep),
                 cloneData = function(srcVNode, targetVNode) {
                     if (srcVNode._data) {
-                        Object.defineProperty(targetVNode, '_data', {
-                            configurable: false,
-                            enumerable: false,
-                            writable: false,
-                            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {}'s properties itself
-                        });
+                        targetVNode.protectedProp('_data', {});
                         targetVNode._data.merge(srcVNode._data);
                     }
                 },
@@ -14722,11 +14889,14 @@ module.exports = function (window) {
         * Alias for thisNode.vTextContent = '';
         *
         * @method empty
+        * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.empty = function() {
-            this.setText('');
+        ElementPrototype.empty = function(silent) {
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
+            this.vnode.empty();
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
         };
 
         /**
@@ -15640,10 +15810,11 @@ module.exports = function (window) {
         * @param content {Element|Element|ElementArray|String} content to prepend
         * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
         * @param [refElement] {Element} reference Element where the content should be prepended
+        * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         * @return {Element} the created Element (or the last when multiple)
         * @since 0.0.1
         */
-        ElementPrototype.prepend = function(content, escape, refElement) {
+        ElementPrototype.prepend = function(content, escape, refElement, silent) {
             var instance = this,
                 vnode = instance.vnode,
                 i, len, item, createdElement, vnodes, vChildNodes, vRefElement,
@@ -15653,6 +15824,7 @@ module.exports = function (window) {
                 // CAUTIOUS: when using TextNodes, they might get merged (vnode._normalize does this), which leads into disappearance of refElement:
                 refElement = createdElement;
             };
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             vnode._noSync()._normalizable(false);
             if (!refElement) {
                 vChildNodes = vnode.vChildNodes;
@@ -15680,6 +15852,7 @@ module.exports = function (window) {
                 doPrepend(content);
             }
             vnode._normalizable(true)._normalize();
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
             return createdElement;
         };
 
@@ -15837,6 +16010,27 @@ module.exports = function (window) {
         };
 
        /**
+         * Removes multiple attributes on the Element.
+         * The argument should be one ore more AttributeNames.
+         *
+         * @example
+         * instance.removeAttrs(['tabIndex', 'style']);
+         *
+         * @method removeAttrs
+         * @param attributeData {Array|String}
+         * @chainable
+         * @since 0.0.1
+        */
+        ElementPrototype.removeAttrs = function(attributeData) {
+            var instance = this;
+            Array.isArray(attributeData) || (attributeData=[attributeData]);
+            attributeData.forEach(function(item) {
+                instance.removeAttribute(item);
+            });
+            return instance;
+        };
+
+       /**
         * Removes the attribute from the Element.
         *
         * Use removeAttr() to be able to chain.
@@ -15898,26 +16092,29 @@ module.exports = function (window) {
         * When no arguments are passed, all node-data (key-value pairs) will be removed.
         *
         * @method removeData
-        * @param key {string} name of the key
+        * @param [key] {string} name of the key, when not set, all data is removed
+        * @param [deep] {Boolean} whether to set the data to all descendants recursively
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.removeData = function(key) {
-            var vnode = this.vnode;
+        ElementPrototype.removeData = function(key, deep) {
+            var instance = this,
+                vnode = instance.vnode;
             if (vnode._data) {
                 if (key) {
                     delete vnode._data[key];
                 }
                 else {
                     // we cannot just redefine _data, for it is set as readonly
-                    vnode._data.each(
-                        function(value, key) {
-                            delete vnode._data[key];
-                        }
-                    );
+                    vnode._cleanData();
+                    if (deep) {
+                        instance.getChildren().forEach(function(element) {
+                            element.removeData(key, true);
+                        });
+                    }
                 }
             }
-            return this;
+            return instance;
         };
 
        /**
@@ -16292,7 +16489,7 @@ module.exports = function (window) {
             var instance = this,
                 vnode = instance.vnode;
             (value==='') && (value=null);
-            value ? vnode._setAttr(attributeName, value) : vnode._removeAttr(attributeName);
+            ((value!==null) && (value!==undefined)) ? vnode._setAttr(attributeName, value) : vnode._removeAttr(attributeName);
         };
 
        /**
@@ -16355,21 +16552,23 @@ module.exports = function (window) {
          * @method setData
          * @param key {string} name of the key
          * @param value {Any} the value that belongs to `key`
+         * @param [deep] {Boolean} whether to set the data to all descendants recursively
          * @chainable
          * @since 0.0.1
         */
-        ElementPrototype.setData = function(key, value) {
-            var vnode = this.vnode;
+        ElementPrototype.setData = function(key, value, deep) {
+            var instance = this,
+                vnode = instance.vnode;
             if (value!==undefined) {
-                vnode._data ||  Object.defineProperty(vnode, '_data', {
-                    configurable: false,
-                    enumerable: false,
-                    writable: false,
-                    value: {} // `writable` is false means we cannot chance the value-reference, but we can change {}'s properties itself
-                });
+                vnode._data ||  vnode.protectedProp('_data', {});
                 vnode._data[key] = value;
+                if (deep) {
+                    instance.getChildren().forEach(function(element) {
+                        element.setData(key, value, true);
+                    });
+                }
             }
-            return this;
+            return instance;
         };
 
         /**
@@ -16382,12 +16581,16 @@ module.exports = function (window) {
          *
          * @method setHTML
          * @param val {String} the new value to be set
+         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
          * @chainable
          * @since 0.0.1
          */
-        ElementPrototype.setHTML = function(val) {
-            this.vnode.innerHTML = val;
-            return this;
+        ElementPrototype.setHTML = function(val, silent) {
+            var instance = this;
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
+            instance.vnode.innerHTML = val;
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
+            return instance;
         };
 
        /**
@@ -16683,12 +16886,16 @@ module.exports = function (window) {
          *
          * @method setOuterHTML
          * @param val {String} the new value to be set
+         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
          * @chainable
          * @since 0.0.1
          */
-        ElementPrototype.setOuterHTML = function(val) {
-            this.vnode.outerHTML = val;
-            return this;
+        ElementPrototype.setOuterHTML = function(val, silent) {
+            var instance = this;
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
+            instance.vnode.outerHTML = val;
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
+            return instance;
         };
 
         /**
@@ -16701,12 +16908,16 @@ module.exports = function (window) {
          *
          * @method setText
          * @param val {String} the textContent to be set
+         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
          * @chainable
          * @since 0.0.1
          */
-        ElementPrototype.setText = function(val) {
-            this.vnode.textContent = val;
-            return this;
+        ElementPrototype.setText = function(val, silent) {
+            var instance = this;
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
+            instance.vnode.textContent = val;
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
+            return instance;
         };
 
        /**
@@ -17890,7 +18101,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":45,"./attribute-extractor.js":46,"./element-array.js":47,"./html-parser.js":51,"./node-parser.js":52,"./vdom-ns.js":53,"./vnode.js":54,"js-ext/lib/object.js":32,"js-ext/lib/promise.js":33,"js-ext/lib/string.js":34,"polyfill":40,"polyfill/extra/transition.js":35,"polyfill/extra/transitionend.js":36,"polyfill/extra/vendorCSS.js":37,"utils":42,"window-ext":56}],51:[function(require,module,exports){
+},{"../css/element.css":47,"./attribute-extractor.js":48,"./element-array.js":49,"./html-parser.js":53,"./node-parser.js":54,"./vdom-ns.js":55,"./vnode.js":56,"js-ext/lib/object.js":33,"js-ext/lib/promise.js":34,"js-ext/lib/string.js":35,"polyfill":42,"polyfill/extra/transition.js":36,"polyfill/extra/transitionend.js":37,"polyfill/extra/vendorCSS.js":38,"utils":44,"window-ext":58}],53:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17906,16 +18117,11 @@ for (j=0; j<len2; j++) {
  * @since 0.0.1
 */
 
+require('polyfill');
+
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.HtmlParser) {
         return window._ITSAmodules.HtmlParser; // HtmlParser was already created
@@ -18005,7 +18211,7 @@ module.exports = function (window) {
                 vnodes = [],
                 parentVNode = arguments[2], // private pass through-argument, only available when internal looped
                 insideTagDefinition, insideComment, innerText, endTagCount, stringMarker, attributeisString, attribute, attributeValue,
-                j, character, character2, vnode, isBoolean, checkBoolean, tag, isBeginTag, isEndTag, scriptVNode, extractClass, extractStyle;
+                j, character, character2, vnode, tag, isBeginTag, isEndTag, scriptVNode, extractClass, extractStyle;
             while (i<len) {
                 character = htmlString[i];
                 character2 = htmlString[i+1];
@@ -18040,9 +18246,6 @@ module.exports = function (window) {
                                         }
                                         // need to set the position one step behind --> the attributeloop will increase it and would otherwise miss a character
                                         i--;
-                                        isBoolean = ((attributeValue.length>3) && (attributeValue.length<6) && (checkBoolean=attributeValue.toUpperCase()) && ((checkBoolean==='FALSE') || (checkBoolean==='TRUE')));
-                                        // typecast the value to either Boolean or Number:
-                                        attributeValue = isBoolean ? (checkBoolean==='TRUE') : parseFloat(attributeValue);
                                     }
                                 }
                                 else {
@@ -18222,7 +18425,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":46,"./vdom-ns.js":53}],52:[function(require,module,exports){
+},{"./attribute-extractor.js":48,"./vdom-ns.js":55,"polyfill":42}],54:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18237,16 +18440,11 @@ module.exports = function (window) {
  * @since 0.0.1
 */
 
+require('polyfill');
+
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.NodeParser) {
         return window._ITSAmodules.NodeParser; // NodeParser was already created
@@ -18293,7 +18491,7 @@ module.exports = function (window) {
                 len = attributes.length;
                 for (i=0; i<len; i++) {
                     attr = attributes[i];
-                    vnode.attrs[attr.name] = attr.value;
+                    vnode.attrs[attr.name] = String(attr.value);
                 }
 
                 vnode.id = vnode.attrs.id;
@@ -18345,7 +18543,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":46,"./vdom-ns.js":53,"./vnode.js":54}],53:[function(require,module,exports){
+},{"./attribute-extractor.js":48,"./vdom-ns.js":55,"./vnode.js":56,"polyfill":42}],55:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -18364,18 +18562,12 @@ module.exports = function (window) {
 "use strict";
 
 require('js-ext/lib/object.js');
+require('polyfill');
 
 module.exports = function (window) {
     var NS;
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.VDOM_NS) {
         return window._ITSAmodules.VDOM_NS; // VDOM_NS was already created
@@ -18453,7 +18645,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/lib/object.js":32}],54:[function(require,module,exports){
+},{"js-ext/lib/object.js":33,"polyfill":42}],56:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18478,17 +18670,12 @@ module.exports = function (window) {
 require('js-ext/lib/array.js');
 require('js-ext/lib/object.js');
 require('js-ext/lib/string.js');
+require('js-ext/extra/lightmap.js');
+require('polyfill');
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.VNode) {
         return window._ITSAmodules.VNode; // VNODE was already created
@@ -18497,14 +18684,34 @@ module.exports = function (window) {
     var NS = require('./vdom-ns.js')(window),
         extractor = require('./attribute-extractor.js')(window),
         DOCUMENT = window.document,
+        MUTATION_EVENTS = new window.LightMap(),
+        BATCH_WILL_RUN = false,
         nodeids = NS.nodeids,
         htmlToVNodes = require('./html-parser.js')(window),
-        async = require('utils/lib/timers.js').async,
+        timers = require('utils/lib/timers.js'),
+        async = timers.async,
+        later = timers.later,
+
+        // cleanup memory after 1 minute: removed nodes SHOULD NOT be accessed afterwards
+        // because vnode would be recalculated and might be different from before
+        DESTROY_DELAY = 60000,
+
         NTH_CHILD_REGEXP = /^(?:(\d*)[n|N])([\+|\-](\d+))?$/, // an+b
         STRING = 'string',
         CLASS = 'class',
         STYLE = 'style',
         ID = 'id',
+        NODE= 'node',
+        REMOVE = 'remove',
+        INSERT = 'insert',
+        CHANGE = 'change',
+        ATTRIBUTE = 'attribute',
+        EV_REMOVED = NODE+REMOVE,
+        EV_INSERTED = NODE+INSERT,
+        EV_CONTENT_CHANGE = NODE+'content'+CHANGE,
+        EV_ATTRIBUTE_REMOVED = ATTRIBUTE+REMOVE,
+        EV_ATTRIBUTE_CHANGED = ATTRIBUTE+CHANGE,
+        EV_ATTRIBUTE_INSERTED = ATTRIBUTE+INSERT,
         SPLIT_CHARACTER = {
             ' ': true,
             '>': true,
@@ -18641,8 +18848,7 @@ module.exports = function (window) {
          */
         PSEUDO_REQUIRED_CHILDREN = {},
         _matchesSelectorItem, _matchesOneSelector, _findElementSibling, vNodeProto,
-        _splitSelector, _findNodeSibling, _matchNthChild;
-
+        _splitSelector, _findNodeSibling, _matchNthChild, _batchEmit, _emitDestroyChildren;
         PSEUDO_REQUIRED_CHILDREN[PSEUDO_FIRST_CHILD] = true;
         PSEUDO_REQUIRED_CHILDREN[PSEUDO_FIRST_OF_TYPE] = true;
         PSEUDO_REQUIRED_CHILDREN[PSEUDO_LAST_CHILD] = true;
@@ -18716,19 +18922,25 @@ module.exports = function (window) {
     * @since 0.0.1
     */
     _matchNthChild = function(pseudoArg, index) {
-        var match, k, a, b, nodeOk, nthIndex, sign;
+        var match, k, a, b, nodeOk, nthIndex, sign, isNumber;
         (pseudoArg==='even') && (pseudoArg='2n');
         (pseudoArg==='odd') && (pseudoArg='2n+1');
 
-        match = pseudoArg.match(NTH_CHILD_REGEXP);
+        match = pseudoArg.match(NTH_CHILD_REGEXP) || (isNumber=pseudoArg.validateNumber());
         if (!match) {
             return false;
         }
         // pseudoArg follows the pattern: `an+b`
-        a = match[1];
-        sign = match[2];
-        b = match[3];
-        (b==='') && (b=0);
+        if (!isNumber) {
+            a = match[1];
+            sign = match[2];
+            b = match[3] || 0;
+            (b==='') && (b=0);
+        }
+        else {
+            b = pseudoArg;
+        }
+        sign && (sign=sign[0]);
         if (!a) {
             // only fixed index to match
             return (sign==='-') ? false : (parseInt(b, 10)===index);
@@ -19264,6 +19476,37 @@ module.exports = function (window) {
         return list;
     };
 
+    _batchEmit = function() {
+        MUTATION_EVENTS.each(function (mutationEvents, vnode) {
+            var domNode = vnode.domNode;
+            if (mutationEvents[EV_REMOVED]) {
+                domNode.emit(EV_REMOVED);
+            }
+            else if (mutationEvents[EV_INSERTED]) {
+                domNode.emit(EV_INSERTED);
+            }
+            else {
+                // contentchange and attributechanges can go hand in hand
+                mutationEvents.each(function(value, evt) {
+                    domNode.emit(evt, (evt===EV_CONTENT_CHANGE) ? null : {changed: value});
+                });
+            }
+        });
+        MUTATION_EVENTS.clear();
+        BATCH_WILL_RUN = false;
+    };
+
+    _emitDestroyChildren = function(vnode) {
+        var children = vnode.vChildren,
+            len = children.length,
+            i, vChild;
+        for (i=0; i<len; i++) {
+            vChild = children[i];
+            vChild._emit(EV_REMOVED);
+            _emitDestroyChildren(vChild);
+        }
+    };
+
     vNodeProto = window._ITSAmodules.VNode = {
        /**
         * Check whether the vnode's domNode is equal, or contains the specified Element.
@@ -19277,6 +19520,10 @@ module.exports = function (window) {
                 otherVNode = otherVNode.vParent;
             }
             return (otherVNode===this);
+        },
+
+        empty: function() {
+            this._setChildNodes([]);
         },
 
        /**
@@ -19410,7 +19657,7 @@ module.exports = function (window) {
                 attributeValue = domNode._getAttribute(attributeName),
                 attrs = instance.attrs,
                 extractStyle, extractClass;
-            if (instance.nodeType==1) {
+            if (instance.nodeType===1) {
                 attributeValue || (attributeValue='');
                 if (attributeValue==='') {
                     delete attrs[attributeName];
@@ -19485,7 +19732,7 @@ module.exports = function (window) {
         /**
          * Adds a vnode to the end of the list of vChildNodes.
          *
-         * Syns with the DOM.
+         * Syncs with the DOM.
          *
          * @method _appendChild
          * @param VNode {vnode} vnode to append
@@ -19505,6 +19752,7 @@ module.exports = function (window) {
                 // if the size changed, then the domNode was merged
                 (size===instance.vChildNodes.length) || (domNode=instance.vChildNodes[instance.vChildNodes.length-1].domNode);
             }
+            VNode._emit(EV_INSERTED);
             return domNode;
         },
 
@@ -19529,6 +19777,16 @@ module.exports = function (window) {
             return instance;
         },
 
+        _cleanData: function() {
+            var instance = this,
+                data = instance._data;
+            data && data.each(
+                function(value, key) {
+                    delete data[key];
+                }
+            );
+            return instance;
+        },
        /**
         * Destroys the vnode and all its vnode-vChildNodes.
         * Removes it from its vParent.vChildNodes list,
@@ -19541,34 +19799,169 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        _destroy: function() {
+        _destroy: function(silent) {
             var instance = this,
                 vChildNodes = instance.vChildNodes,
-                len, i, vChildNode;
+                len, i, vChildNode, vParent, treeNodes;
             if (!instance.destroyed) {
-                Object.defineProperty(instance, 'destroyed', {
-                    value: true,
-                    writable: false,
-                    configurable: false,
-                    enumerable: true
-                });
-                // first: _remove all its vChildNodes
-                if ((instance.nodeType===1) && vChildNodes) {
-                    len = vChildNodes.length;
-                    for (i=0; i < len; i++) {
-                        vChildNode = vChildNodes[i];
-                        vChildNode && vChildNode._destroy();
-                    }
+                silent || instance._emit(EV_REMOVED);
+                instance.protectedProp('destroyed', true);
+
+                // first: determine the dom-tree, which module `event-dom` needs to determine where the node was before it was destroyed:
+                treeNodes = [instance];
+                vParent = instance.vParent;
+                while (vParent) {
+                    treeNodes[treeNodes.length] = vParent;
+                    vParent = vParent.vParent;
                 }
-                instance._vChildren = null;
-                // explicitely set instance.domNode._vnode and instance.domNode to null in order to prevent problems with the GC (we break the circular reference)
-                delete instance.domNode._vnode;
-                // if valid id, then _remove the DOMnodeRef from internal hash
-                instance.id && delete nodeids[instance.id];
+
+                // The definite cleanup needs to be done after a timeout:
+                // someone might need to handle the Element when removed (fe to cleanup specific things)
+                later(function() {
+                    instance._cleanData();
+                    // _destroy all its vChildNodes
+                    if ((instance.nodeType===1) && vChildNodes) {
+                        len = vChildNodes.length;
+                        for (i=0; i < len; i++) {
+                            vChildNode = vChildNodes[i];
+                            vChildNode && vChildNode._destroy(true);
+                        }
+                    }
+                    instance._vChildren = null;
+                    // explicitely set instance.domNode._vnode and instance.domNode to null in order to prevent problems with the GC (we break the circular reference)
+                    delete instance.domNode._vnode;
+                    // if valid id, then _remove the DOMnodeRef from internal hash
+                    instance.id && delete nodeids[instance.id];
+                }, silent ? 0 : DESTROY_DELAY);
+
                 instance._deleteFromParent();
-                async(function() {
-                    instance.domNode = null;
-                });
+                // Do not make domNode `null` --> it could be used even when not in the dom
+            }
+            return instance;
+        },
+
+        _emit: function(evt, attribute, newValue, prevValue) {
+           /**
+            * Emitted by every Element that gets inserted.
+            *
+            * @event nodeinsert
+            * @param e {Object} eventobject including:
+            * @param e.target {HtmlElement} the HtmlElement that is being dragged
+            * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+            * @since 0.1
+            */
+
+           /**
+            * Emitted by every Element that gets removed.
+            *
+            * @event noderemove
+            * @param e {Object} eventobject including:
+            * @param e.target {HtmlElement} the HtmlElement that is being dragged
+            * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+            * @since 0.1
+            */
+
+           /**
+            * Emitted by every Element that gets its content changed (innerHTML/innerText).
+            *
+            * @event nodecontentchange
+            * @param e {Object} eventobject including:
+            * @param e.target {HtmlElement} the HtmlElement that is being dragged
+            * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+            * @since 0.1
+            */
+
+           /**
+            * Emitted by every Element that gets an attribute inserted.
+            *
+            * @event attributeinsert
+            * @param e {Object} eventobject including:
+            * @param e.target {HtmlElement} the HtmlElement that is being dragged
+            * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+            * @param e.changed {Array} Array with Objects having three properties:
+            * <ul>
+            *     <li>attribute</li>
+            *     <li>newValue</li>
+            * </ul>
+            * @since 0.1
+            */
+
+           /**
+            * Emitted by every Element that gets an attribute removed.
+            *
+            * @event attributeremove
+            * @param e {Object} eventobject including:
+            * @param e.target {HtmlElement} the HtmlElement that is being dragged
+            * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+            * @param e.changed {Array} Array with Strings of the attributeNames that are removed
+            * @since 0.1
+            */
+
+           /**
+            * Emitted by every Element that gets an attribute changed.
+            *
+            * @event attributechange
+            * @param e {Object} eventobject including:
+            * @param e.target {HtmlElement} the HtmlElement that is being dragged
+            * @param e.currentTarget {HtmlElement} the HtmlElement that is delegating
+            * @param e.changed {Array} Array with Objects having three properties:
+            * <ul>
+            *     <li>attribute</li>
+            *     <li>newValue</li>
+            *     <li>prevValue</li>
+            * </ul>
+            * @since 0.1
+            */
+
+            var instance = this,
+                silent, attrMutations, mutationEvents, mutation, vParent;
+            if (!DOCUMENT.hasMutationSubs || (instance.nodeType!==1)) {
+                return;
+            }
+            silent = !!DOCUMENT._suppressMutationEvents;
+            if (!silent && !instance.destroyed) {
+                mutationEvents = MUTATION_EVENTS.get(instance) || {};
+                if (attribute) {
+                    attrMutations = mutationEvents[evt] || [];
+                    if (evt===EV_ATTRIBUTE_REMOVED) {
+                        mutation = attribute;
+                    }
+                    else {
+                        mutation = {
+                            attribute: attribute
+                        };
+                        if ((evt===EV_ATTRIBUTE_INSERTED) || (evt===EV_ATTRIBUTE_CHANGED)) {
+                            mutation.newValue = newValue;
+                        }
+                        if ((evt===EV_ATTRIBUTE_CHANGED) && prevValue) {
+                            mutation.prevValue = prevValue;
+                        }
+                    }
+                    attrMutations.push(mutation);
+                    mutationEvents[evt] = attrMutations;
+                }
+                else {
+                    mutationEvents[evt] = true;
+                }
+                MUTATION_EVENTS.set(instance, mutationEvents);
+                // now set all parent to have a nodecontentchange:
+                vParent = instance;
+/*jshint boss:true */
+                while (vParent=vParent.vParent) {
+/*jshint boss:false */
+                    vParent._emit(EV_CONTENT_CHANGE);
+                }
+
+                // in case of removal we need to emit EV_REMOVED for all children right now
+                // for they will be actually removed silently after a delay of 1 minute
+                (evt===EV_REMOVED) && _emitDestroyChildren(instance);
+
+                if (!BATCH_WILL_RUN) {
+                    BATCH_WILL_RUN = true;
+                    async(function() {
+                        _batchEmit();
+                    });
+                }
             }
             return instance;
         },
@@ -19576,7 +19969,7 @@ module.exports = function (window) {
         /**
          * Inserts `newVNode` before `refVNode`.
          *
-         * Syns with the DOM.
+         * Syncs with the DOM.
          *
          * @method _insertBefore
          * @param newVNode {vnode} vnode to insert
@@ -19593,6 +19986,7 @@ module.exports = function (window) {
                 newVNode._moveToParent(instance, index);
                 instance.domNode._insertBefore(domNode, refVNode.domNode);
                 (newVNode.nodeType===3) && instance._normalize();
+                newVNode._emit(EV_INSERTED);
             }
             return domNode;
         },
@@ -19637,6 +20031,7 @@ module.exports = function (window) {
             var instance = this,
                 domNode = instance.domNode,
                 vChildNodes = instance.vChildNodes,
+                changed = false,
                 i, preChildNode, vChildNode;
             if (!instance._unNormalizable && vChildNodes) {
                 for (i=vChildNodes.length-1; i>=0; i--) {
@@ -19646,16 +20041,19 @@ module.exports = function (window) {
                         if (vChildNode.text==='') {
                             domNode._removeChild(vChildNode.domNode);
                             vChildNode._destroy();
+                            changed = true;
                         }
                         else if (preChildNode && preChildNode.nodeType===3) {
                             preChildNode.text += vChildNode.text;
                             preChildNode.domNode.nodeValue = preChildNode.text;
                             domNode._removeChild(vChildNode.domNode);
                             vChildNode._destroy();
+                            changed = true;
                         }
                     }
                 }
             }
+            changed && instance._emit(EV_CONTENT_CHANGE);
             return instance;
         },
 
@@ -19708,23 +20106,26 @@ module.exports = function (window) {
         */
         _removeAttr: function(attributeName) {
             var instance = this;
-            delete instance.attrs[attributeName];
-            // in case of STYLE attribute --> special treatment
-            (attributeName===STYLE) && (instance.styles={});
-            // in case of CLASS attribute --> special treatment
-            (attributeName===CLASS) && (instance.classNames={});
-            if (attributeName===ID) {
-                delete nodeids[instance.id];
-                delete instance.id;
+            if (instance.attrs[attributeName]!==undefined) {
+                delete instance.attrs[attributeName];
+                // in case of STYLE attribute --> special treatment
+                (attributeName===STYLE) && (instance.styles={});
+                // in case of CLASS attribute --> special treatment
+                (attributeName===CLASS) && (instance.classNames={});
+                if (attributeName===ID) {
+                    delete nodeids[instance.id];
+                    delete instance.id;
+                }
+                instance.domNode._removeAttribute(attributeName);
+                instance._emit(EV_ATTRIBUTE_REMOVED, attributeName);
             }
-            instance.domNode._removeAttribute(attributeName);
             return instance;
         },
 
         /**
         * Removes the vnode's child-vnode from its vChildren and the DOM.
         *
-         * Syns with the DOM.
+         * Syncs with the DOM.
          *
         * @method removeChild
         * @param VNode {vnode} the child-vnode to remove
@@ -19732,10 +20133,20 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         _removeChild: function(VNode) {
-            var instance = this;
+            var instance = this,
+                domNode = VNode.domNode,
+                hadFocus = domNode.hasFocus() && (VNode.attrs['fm-lastitem']==='true'),
+                parentVNode = VNode.vParent;
             VNode._destroy();
             instance.domNode._removeChild(VNode.domNode);
             instance._normalize();
+            // now, reset the focus on focusmanager when needed:
+            if (hadFocus) {
+                while (parentVNode && !parentVNode.attrs['fm-manage']) {
+                    parentVNode = parentVNode.vParent;
+                }
+                parentVNode && parentVNode.domNode.focus();
+            }
         },
 
        /**
@@ -19777,12 +20188,17 @@ module.exports = function (window) {
         _setAttr: function(attributeName, value) {
             var instance = this,
                 extractStyle, extractClass,
-                attrs = instance.attrs;
-            if (attrs[attributeName]!==value) {
-                if ((value===undefined) || (value===undefined)) {
+                attrs = instance.attrs,
+                prevVal = attrs[attributeName];
+            // don't check by !== --> value isn't parsed into a String yet
+
+            if (prevVal!=value) {
+                if ((value===undefined) || (value===null)) {
                     instance._removeAttr(attributeName);
                     return instance;
                 }
+                // attribute-values are always Strings:
+                value = String(value);
                 attrs[attributeName] = value;
                 // in case of STYLE attribute --> special treatment
                 if (attributeName===STYLE) {
@@ -19814,6 +20230,7 @@ module.exports = function (window) {
                     nodeids[value] = instance.domNode;
                 }
                 instance.domNode._setAttribute(attributeName, value);
+                instance._emit(prevVal ? EV_ATTRIBUTE_CHANGED : EV_ATTRIBUTE_INSERTED, attributeName, value, prevVal);
             }
             return instance;
         },
@@ -19924,6 +20341,7 @@ module.exports = function (window) {
                                 newChild._setChildNodes(bkpChildNodes);
                                 newChild.id && (nodeids[newChild.id]=newChild.domNode);
                                 oldChild._replaceAtParent(newChild);
+                                newChild._emit(EV_INSERTED);
                             }
                             else {
                                 // same tag --> only update what is needed
@@ -19931,6 +20349,9 @@ module.exports = function (window) {
                                 oldChild._setAttrs(newChild.attrs);
                                 // next: sync the vChildNodes:
                                 oldChild._setChildNodes(newChild.vChildNodes);
+                                // reset ref. to the domNode, for it might heva been changed by newChild:
+                                oldChild.id && (nodeids[oldChild.id]=childDomNode);
+                                newVChildNodes[i] = oldChild;
                             }
                             break;
                         case 2: // oldNodeType==Element, newNodeType==TextNode
@@ -19941,25 +20362,31 @@ module.exports = function (window) {
                             domNode._replaceChild(newChild.domNode, childDomNode);
                             newChild.vParent = instance;
                             oldChild._replaceAtParent(newChild);
+                            instance._emit(EV_CONTENT_CHANGE);
                             break;
                         case 4: // oldNodeType==TextNode, newNodeType==Element
                                 // case4 and case7 should be treated the same
                         case 7: // oldNodeType==Comment, newNodeType==Element
-                                newChild._setAttrs(newChild.attrs);
-
-                                domNode._replaceChild(newChild.domNode, childDomNode);
-                                newChild._setChildNodes(newChild.vChildNodes);
-
-                                newChild.id && (nodeids[newChild.id]=newChild.domNode);
-
-                                oldChild.isVoid = newChild.isVoid;
-                                delete oldChild.text;
+                            bkpAttrs = newChild.attrs;
+                            bkpChildNodes = newChild.vChildNodes;
+                            newChild.attrs = {}; // reset, to force defined by `_setAttrs`
+                            newChild.vChildNodes = []; // reset to current state, to force defined by `_setAttrs`
+                            domNode._replaceChild(newChild.domNode, childDomNode);
+                            newChild._setAttrs(bkpAttrs);
+                            newChild._setChildNodes(bkpChildNodes);
+                            newChild.id && (nodeids[newChild.id]=newChild.domNode);
+                            oldChild.isVoid = newChild.isVoid;
+                            delete oldChild.text;
+                            instance._emit(EV_CONTENT_CHANGE);
+                            newChild._emit(EV_INSERTED);
                             break;
-
                         case 5: // oldNodeType==TextNode, newNodeType==TextNode
                                 // case5 and case9 should be treated the same
                         case 9: // oldNodeType==Comment, newNodeType==Comment
-                            (oldChild.text===newChild.text) || (oldChild.domNode.nodeValue = oldChild.text = newChild.text);
+                            if (oldChild.text!==newChild.text) {
+                                oldChild.domNode.nodeValue = oldChild.text = newChild.text;
+                                instance._emit(EV_CONTENT_CHANGE);
+                            }
                             newVChildNodes[i] = oldChild;
                             break;
                         case 6: // oldNodeType==TextNode, newNodeType==Comment
@@ -19968,6 +20395,7 @@ module.exports = function (window) {
                             newChild.domNode.nodeValue = newChild.text;
                             domNode._replaceChild(newChild.domNode, childDomNode);
                             newChild.vParent = oldChild.vParent;
+                            instance._emit(EV_CONTENT_CHANGE);
                     }
                     if ((nodeswitch===2) || (nodeswitch===5) || (nodeswitch===8)) {
                         needNormalize = true;
@@ -19976,7 +20404,7 @@ module.exports = function (window) {
                 else {
                     // _remove previous definition
                     domNode._removeChild(oldChild.domNode);
-                    // the oldChild needs to be removed, however, this canoot be done right now, for it would effect the loop
+                    // the oldChild needs to be removed, however, this cannot be done right now, for it would effect the loop
                     // so we store it inside a hash to remove it later
                     forRemoval[forRemoval.length] = oldChild;
                 }
@@ -19999,14 +20427,16 @@ module.exports = function (window) {
                         domNode._appendChild(newChild.domNode);
                         newChild._setAttrs(bkpAttrs);
                         newChild._setChildNodes(bkpChildNodes);
+                        newChild._emit(EV_INSERTED);
                         break;
-                    case 3: // Element
+                    case 3: // TextNode
                         needNormalize = true;
                         // we need to break through --> no `break`
                         /* falls through */
                     default: // TextNode or CommentNode
                         newChild.domNode.nodeValue = newChild.text;
                         domNode._appendChild(newChild.domNode);
+                        instance._emit(EV_CONTENT_CHANGE);
                 }
                 newChild.storeId();
             }
@@ -20158,11 +20588,14 @@ module.exports = function (window) {
                 return ((instance.nodeType===3) || (instance.nodeType===8)) ? instance.text : null;
             },
             set: function(v) {
-                var instance = this;
+                var instance = this,
+                    newTextContent, prevTextContent;
                 if ((instance.nodeType===3) || (instance.nodeType===8)) {
+                    prevTextContent = instance.domNode.textContent;
                     instance.domNode.textContent = v;
                     // set .text AFTER the dom-node is updated --> the content might be escaped!
-                    instance.text = instance.domNode.textContent;
+                    newTextContent = instance.text = instance.domNode.textContent;
+                    (newTextContent!==prevTextContent) && instance._emit(EV_CONTENT_CHANGE);
                 }
             }
         },
@@ -20229,6 +20662,7 @@ module.exports = function (window) {
                             // vnode.vChildNodes = bkpChildNodes;
                             vnode.id && (nodeids[vnode.id]=vnode.domNode);
                             instance._replaceAtParent(vnode);
+                            vnode._emit(EV_INSERTED);
                         }
                         else {
                             instance._setAttrs(vnode.attrs);
@@ -20240,6 +20674,7 @@ module.exports = function (window) {
                         vnode.domNode.nodeValue = vnode.text;
                         vParent.domNode._replaceChild(vnode.domNode, instance.domNode);
                         instance._replaceAtParent(vnode);
+                        vnode._emit(EV_INSERTED);
                     }
                 }
                 for (i=1; i<len; i++) {
@@ -20251,6 +20686,7 @@ module.exports = function (window) {
                             vnode.attrs = {}; // reset, to force defined by `_setAttrs`
                             vnode.vChildNodes = []; // reset to current state, to force defined by `_setAttrs`
                             isLastChildNode ? vParent.domNode._appendChild(vnode.domNode) : vParent.domNode._insertBefore(vnode.domNode, refDomNode);
+                            vnode._emit(EV_INSERTED);
                             vnode._setAttrs(bkpAttrs);
                             vnode._setChildNodes(bkpChildNodes);
                             break;
@@ -20324,6 +20760,7 @@ module.exports = function (window) {
                         (vChildNode.nodeType===1) && (children[children.length]=vChildNode);
                     }
                 }
+                children || (children = instance._vChildren = []);
                 return children;
             }
         },
@@ -20514,19 +20951,12 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":46,"./html-parser.js":51,"./vdom-ns.js":53,"js-ext/lib/array.js":30,"js-ext/lib/object.js":32,"js-ext/lib/string.js":34,"utils/lib/timers.js":44}],55:[function(require,module,exports){
+},{"./attribute-extractor.js":48,"./html-parser.js":53,"./vdom-ns.js":55,"js-ext/extra/lightmap.js":28,"js-ext/lib/array.js":31,"js-ext/lib/object.js":33,"js-ext/lib/string.js":35,"polyfill":42,"utils/lib/timers.js":46}],57:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.VDOM) {
         return window._ITSAmodules.VDOM; // VDOM was already created
@@ -20562,25 +20992,18 @@ module.exports = function (window) {
 
     return vdom;
 };
-},{"./partials/element-plugin.js":48,"./partials/extend-document.js":49,"./partials/extend-element.js":50,"./partials/node-parser.js":52}],56:[function(require,module,exports){
+},{"./partials/element-plugin.js":50,"./partials/extend-document.js":51,"./partials/extend-element.js":52,"./partials/node-parser.js":54}],58:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":57}],57:[function(require,module,exports){
+},{"./lib/sizes.js":59}],59:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, '_ITSAmodules', {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp('_ITSAmodules', {});
 
     if (window._ITSAmodules.WindowSizes) {
         return; // WindowSizes was already created
@@ -20676,7 +21099,7 @@ module.exports = function (window) {
     };
 
 };
-},{}],58:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -20921,4 +21344,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"css":9,"drag-drop":11,"event":21,"event-dom/extra/hover.js":15,"event-dom/extra/valuechange.js":16,"event-mobile":17,"focusmanager":22,"io/extra/io-cors-ie9.js":23,"io/extra/io-stream.js":24,"io/extra/io-transfer.js":25,"io/extra/io-xml.js":26,"js-ext":29,"js-ext/extra/reserved-words.js":28,"node-win":undefined,"polyfill":40,"useragent":41,"utils":42,"vdom":55,"window-ext":56}]},{},[]);
+},{"css":9,"drag-drop":11,"event":21,"event-dom/extra/hover.js":15,"event-dom/extra/valuechange.js":16,"event-mobile":17,"focusmanager":22,"io/extra/io-cors-ie9.js":23,"io/extra/io-stream.js":24,"io/extra/io-transfer.js":25,"io/extra/io-xml.js":26,"js-ext":30,"js-ext/extra/reserved-words.js":29,"node-win":undefined,"polyfill":42,"useragent":43,"utils":44,"vdom":57,"window-ext":58}]},{},[]);

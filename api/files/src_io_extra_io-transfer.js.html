@@ -234,14 +234,7 @@ var NAME = &#x27;[io-transfer]: &#x27;,
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp(&#x27;_ITSAmodules&#x27;, {});
 
     if (window._ITSAmodules.IO_Transfer) {
         return window._ITSAmodules.IO_Transfer; // IO_Transfer was already created

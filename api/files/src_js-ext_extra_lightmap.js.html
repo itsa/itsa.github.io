@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/vdom/partials/element-plugin.js - Itsa</title>
+    <title>src/js-ext/extra/lightmap.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -194,141 +194,101 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/vdom/partials/element-plugin.js</h1>
+                        <h1 class="file-heading">File: src/js-ext/extra/lightmap.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-&quot;use strict&quot;;
-
 /**
- * Integrates DOM-events to event. more about DOM-events:
- * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
  *
+ * Pollyfils for often used functionality for Strings
  *
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
+ * @module js-ext
+ * @submodule lib/string.js
+ * @class String
  *
- * @module vdom
- * @submodule element-plugin
- * @class Plugins
- * @since 0.0.1
-*/
+ */
+(function (global) {
 
-require(&#x27;js-ext/lib/object.js&#x27;);
-require(&#x27;js-ext/lib/string.js&#x27;);
-require(&#x27;polyfill&#x27;);
+    &quot;use strict&quot;;
 
-var fromCamelCase = function(input) {
-        return input.replace(/[a-z]([A-Z])/g, function(match, group) {
-            return match[0]+&#x27;-&#x27;+group.toLowerCase();
-        });
-    };
+    require(&#x27;../lib/function.js&#x27;);
+    require(&#x27;../lib/array.js&#x27;);
+    require(&#x27;polyfill/lib/weakmap.js&#x27;);
 
-module.exports = function (window) {
+    var LightMap;
 
-    window._ITSAmodules || window.protectedProp(&#x27;_ITSAmodules&#x27;, {});
-
-    if (window._ITSAmodules.ElementPlugin) {
-        return window._ITSAmodules.ElementPlugin; // ElementPlugin was already created
-    }
-
-    var nodePlugin, nodeConstrain, ElementPlugin;
-
-    // also extend window.Element:
-    window.Element &amp;&amp; (function(ElementPrototype) {
-       /**
-        * Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.
-        *
-        * @method isPlugged
-        * @param pluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
-        * @return {Boolean} whether the plugin is plugged in
-        * @since 0.0.1
-        */
-        ElementPrototype.isPlugged = function(nodePlugin) {
-            return nodePlugin.validate(this);
-        };
-
-       /**
-        * Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.
-        *
-        * @method plug
-        * @param pluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
-        * @param config {Object} any config that should be passed through when the class is instantiated.
-        * @chainable
-        * @since 0.0.1
-        */
-        ElementPrototype.plug = function(nodePlugin, config) {
-            nodePlugin.setup(this, config);
-            return this;
-        };
-
-       /**
-        * Unplugs a NodePlugin from the HtmlElement.
-        *
-        * @method unplug
-        * @param pluginClass {NodePlugin} The plugin that should be unplugged. Needs to be the Class, not an instance!
-        * @chainable
-        * @since 0.0.1
-        */
-        ElementPrototype.unplug = function(nodePlugin) {
-            nodePlugin.teardown(this);
-            return this;
-        };
-    }(window.Element.prototype));
-
-    nodePlugin = {
-        setup: function (hostElement, config) {
-            var instance = this,
-                attrs = instance.defaults.shallowClone();
-            attrs.merge(config, true);
-            attrs.each(
-                function(value, key) {
-                    key = fromCamelCase(key);
-                    value &amp;&amp; hostElement.setAttr(instance.ns+&#x27;-&#x27;+key, value);
-                }
-            );
-        } ,
-        teardown: function (hostElement) {
-            var instance = this,
-                attrs = hostElement.vnode.attrs,
-                ns = instance.ns+&#x27;-&#x27;;
-            attrs.each(
-                function(value, key) {
-                     key.startsWith(ns) &amp;&amp; hostElement.removeAttr(key);
-                }
-            );
+    global.LightMap = LightMap = Object.createClass(
+        function() {
+            this.protectedProp(&#x27;_array&#x27;, []);
+            this.protectedProp(&#x27;_map&#x27;, new global.WeakMap());
         },
-        validate: function (hostElement) {
-            var instance = this,
-                attrs = hostElement.vnode.attrs,
-                ns = instance.ns+&#x27;-&#x27;;
-            return attrs.some(
-                function(value, key) {
-                    return key.startsWith(ns);
+        {
+            each: function(fn, context) {
+                var instance = this,
+                    array = instance._array,
+                    l = array.length,
+                    i = -1,
+                    obj, value;
+                while (++i &lt; l) {
+                    obj = array[i];
+                    value = instance.get(obj); // read from WeakMap
+                    fn.call(context, value, obj, instance);
                 }
-            );
-        },
-        definePlugin: function (ns, defaults) {
-            var newPlugin = Object.create(nodePlugin);
-            Object.isObject(defaults) || (defaults = {});
-            (typeof ns===&#x27;string&#x27;) || (ns = &#x27;invalid_ns&#x27;);
-            ns = ns.replace(/ /g, &#x27;&#x27;).replace(/-/g, &#x27;&#x27;);
-            newPlugin.protectedProp(&#x27;ns&#x27;, ns);
-            newPlugin.defaults = defaults;
-            return newPlugin;
+                return instance;
+            },
+            some: function(fn, context) {
+                var instance = this,
+                    array = instance._array,
+                    l = array.length,
+                    i = -1,
+                    obj, value;
+                while (++i &lt; l) {
+                    obj = array[i];
+                    value = instance.get(obj); // read from WeakMap
+                    if (fn.call(context, value, obj, instance)) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            clear: function() {
+                var instance = this,
+                    array = instance._array;
+                array.forEach(function(key) {
+                    instance.delete(key, true);
+                });
+                array.length = 0;
+            },
+            has: function(object) {
+                return this._map.has(object);
+            },
+            get: function(key, fallback) {
+                return this._map.get(key, fallback);
+            },
+            set: function (key, value) {
+                var instance = this,
+                    array = instance._array,
+                    map = instance._map;
+                map.set(key, value);
+                array.contains(key) || array.push(key);
+                return instance;
+            },
+            &#x27;delete&#x27;: function (key) {
+                var instance = this,
+                    array = instance._array,
+                    map = instance._map,
+                    silent = arguments[1], // hidden feature used by &#x60;clear()&#x60;
+                    returnValue = map.delete(key);
+                silent || array.remove(key);
+                return returnValue;
+            }
         }
-    };
+    );
 
-    nodeConstrain = nodePlugin.definePlugin(&#x27;constrain&#x27;, {selector: &#x27;window&#x27;});
-
-    ElementPlugin = window._ITSAmodules.ElementPlugin = {
-        nodePlugin: nodePlugin,
-        nodeConstrain: nodeConstrain
-    };
-
-    return ElementPlugin;
-};
+}(typeof global !== &#x27;undefined&#x27; ? global : /* istanbul ignore next */ this));
     </pre>
 </div>
 

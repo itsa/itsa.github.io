@@ -97,7 +97,7 @@ Mouse the mouse over the 5 containers:
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
     var container = document.getElementById('container');
