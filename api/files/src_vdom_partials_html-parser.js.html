@@ -213,16 +213,11 @@
  * @since 0.0.1
 */
 
+require(&#x27;polyfill&#x27;);
+
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp(&#x27;_ITSAmodules&#x27;, {});
 
     if (window._ITSAmodules.HtmlParser) {
         return window._ITSAmodules.HtmlParser; // HtmlParser was already created
@@ -312,7 +307,7 @@ module.exports = function (window) {
                 vnodes = [],
                 parentVNode = arguments[2], // private pass through-argument, only available when internal looped
                 insideTagDefinition, insideComment, innerText, endTagCount, stringMarker, attributeisString, attribute, attributeValue,
-                j, character, character2, vnode, isBoolean, checkBoolean, tag, isBeginTag, isEndTag, scriptVNode, extractClass, extractStyle;
+                j, character, character2, vnode, tag, isBeginTag, isEndTag, scriptVNode, extractClass, extractStyle;
             while (i&lt;len) {
                 character = htmlString[i];
                 character2 = htmlString[i+1];
@@ -347,9 +342,6 @@ module.exports = function (window) {
                                         }
                                         // need to set the position one step behind --&gt; the attributeloop will increase it and would otherwise miss a character
                                         i--;
-                                        isBoolean = ((attributeValue.length&gt;3) &amp;&amp; (attributeValue.length&lt;6) &amp;&amp; (checkBoolean=attributeValue.toUpperCase()) &amp;&amp; ((checkBoolean===&#x27;FALSE&#x27;) || (checkBoolean===&#x27;TRUE&#x27;)));
-                                        // typecast the value to either Boolean or Number:
-                                        attributeValue = isBoolean ? (checkBoolean===&#x27;TRUE&#x27;) : parseFloat(attributeValue);
                                     }
                                 }
                                 else {

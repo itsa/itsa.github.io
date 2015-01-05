@@ -239,14 +239,9 @@ module.exports = function (window) {
     // We need a singleton IO, because submodules might merge in. You can&#x27;t have them merging
     // into some other IO-instance than which is used.
     var Glob = (typeof global !== &#x27;undefined&#x27; ? global : /* istanbul ignore next */ this);
-    if (!Glob._ITSAmodules) {
-        Object.defineProperty(Glob, &#x27;_ITSAmodules&#x27;, {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+
+    Glob._ITSAmodules || Glob.protectedProp(&#x27;_ITSAmodules&#x27;, {});
+
     if (Glob._ITSAmodules.IO) {
         return Glob._ITSAmodules.IO;
     }

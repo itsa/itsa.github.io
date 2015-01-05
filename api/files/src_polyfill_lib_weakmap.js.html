@@ -230,18 +230,18 @@
         };
 
         Name = function() {
-          /**
-          Desugared implementation of private names proposal. API is different as
-          it&#x27;s not possible to implement API proposed for harmony with in ES5. In
-          terms of provided functionality it supposed to be same.
-          http://wiki.ecmascript.org/doku.php?id=strawman:private_names
-          **/
+            /**
+            Desugared implementation of private names proposal. API is different as
+            it&#x27;s not possible to implement API proposed for harmony with in ES5. In
+            terms of provided functionality it supposed to be same.
+            http://wiki.ecmascript.org/doku.php?id=strawman:private_names
+            **/
 
-          var namespace = {};
-          return function name(object) {
-              var privates = object.valueOf(namespace);
-              return (privates !== object) ? privates : defineNamespace(object, namespace);
-          };
+            var namespace = {};
+            return function name(object) {
+                var privates = object.valueOf(namespace);
+                return (privates !== object) ? privates : defineNamespace(object, namespace);
+            };
         };
 
         guard = function(key) {
@@ -286,6 +286,7 @@
                 set: {
                     value: function set(key, value) {
                         privates(guard(key)).value = value;
+                        return this;
                     },
                     configurable: true,
                     enumerable: false,

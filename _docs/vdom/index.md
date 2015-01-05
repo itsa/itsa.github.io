@@ -84,6 +84,7 @@ These <u>do work</u>, but they update their vnode's asynchronously. So, if you q
 ###toggleClass###
 ###replaceClass###
 ###removeAttr###
+###removeAttrs###
 ###removeInlineStyle###
 ###removeInlineTransition###
 ###removeClass###

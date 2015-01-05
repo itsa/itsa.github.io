@@ -215,19 +215,12 @@
  * @since 0.0.1
 */
 
-require(&#x27;polyfill/polyfill-base.js&#x27;);
+require(&#x27;polyfill&#x27;);
 require(&#x27;js-ext/lib/object.js&#x27;);
 
 module.exports = function (window) {
 
-    if (!window._ITSAmodules) {
-        Object.defineProperty(window, &#x27;_ITSAmodules&#x27;, {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} its members
-        });
-    }
+    window._ITSAmodules || window.protectedProp(&#x27;_ITSAmodules&#x27;, {});
 
     if (window._ITSAmodules.ElementArray) {
         return window._ITSAmodules.ElementArray; // ElementArray was already created
