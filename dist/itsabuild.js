@@ -6178,6 +6178,7 @@ var NAME = '[event-dom]: ',
     EV_ATTRIBUTE_REMOVED = UI+ATTRIBUTE+REMOVE,
     EV_ATTRIBUTE_CHANGED = UI+ATTRIBUTE+CHANGE,
     EV_ATTRIBUTE_INSERTED = UI+ATTRIBUTE+INSERT,
+    mutationEventsDefined = false,
 
     /*
      * Internal hash containing all DOM-events that are listened for (at `document`).
@@ -6253,19 +6254,21 @@ module.exports = function (window) {
         // this stage is runned during subscription
         var outsideEvent = REGEXP_UI_OUTSIDE.test(customEvent),
             selector = subscriber.f,
+            context = subscriber.o,
+            isCustomElement = subscriber.o._isCustomElement,
             nodeid, byExactId;
 
         console.log(NAME, '_domSelToFunc type of selector = '+typeof selector);
         // note: selector could still be a function: in case another subscriber
         // already changed it.
-        if (!selector || (typeof selector === 'function')) {
-            subscriber.n || (subscriber.n=DOCUMENT);
+        if ((!selector && !isCustomElement) || (typeof selector === 'function')) {
+            subscriber.n || (subscriber.n = isCustomElement ? context : DOCUMENT);
             return true;
         }
+        selector || (selector='');
 
         nodeid = selector.match(REGEXP_EXTRACT_NODE_ID);
-        nodeid ? (subscriber.nId=nodeid[1]) : (subscriber.n=DOCUMENT);
-
+        nodeid ? (subscriber.nId=nodeid[1]) : (subscriber.n=isCustomElement ? context : DOCUMENT);
         byExactId = REGEXP_NODE_ID.test(selector);
 
         subscriber.f = function(e) {
@@ -6273,38 +6276,47 @@ module.exports = function (window) {
             console.log(NAME, '_domSelToFunc inside filter. selector: '+selector);
             var node = e.target,
                 vnode = node.vnode,
-                character1 = selector.substr(1),
+                character1 = selector && selector.substr(1),
                 match = false;
-            // e.target is the most deeply node in the dom-tree that caught the event
-            // our listener uses `selector` which might be a node higher up the tree.
-            // we will reset e.target to this node (if there is a match)
-            // note that e.currentTarget will always be `document` --> we're not interested in that
-            // also, we don't check for `node`, but for node.matchesSelector: the highest level `document`
-            // is not null, yet it doesn;t have .matchesSelector so it would fail
-            if (vnode) {
-                // we go through the vdom
-                while (vnode && !match) {
-                    console.log(NAME, '_domSelToFunc inside filter check match using the vdom');
-                    match = byExactId ? (vnode.id===character1) : vnode.matchesSelector(selector);
-                    // if there is a match, then set
-                    // e.target to the target that matches the selector
-                    if (match && !outsideEvent) {
-                        subscriber.t = vnode.domNode;
-                    }
-                    vnode = vnode.vParent;
+            if (!subscriber.o._isCustomElement || subscriber.o.contains(node)) {
+                if (selector==='') {
+                    match = true;
                 }
-            }
-            else {
-                // we go through the dom
-                while (node.matchesSelector && !match) {
-                    console.log(NAME, '_domSelToFunc inside filter check match using the dom');
-                    match = byExactId ? (node.id===character1) : node.matchesSelector(selector);
-                    // if there is a match, then set
-                    // e.target to the target that matches the selector
-                    if (match && !outsideEvent) {
-                        subscriber.t = node;
+                else {
+                    // e.target is the most deeply node in the dom-tree that caught the event
+                    // our listener uses `selector` which might be a node higher up the tree.
+                    // we will reset e.target to this node (if there is a match)
+                    // note that e.currentTarget will always be `document` --> we're not interested in that
+                    // also, we don't check for `node`, but for node.matchesSelector: the highest level `document`
+                    // is not null, yet it doesn;t have .matchesSelector so it would fail
+                    if (vnode) {
+                        // we go through the vdom
+                        if (!vnode.removedFromDOM) {
+                            while (vnode && !match) {
+                                console.log(NAME, '_domSelToFunc inside filter check match using the vdom');
+                                match = byExactId ? (vnode.id===character1) : vnode.matchesSelector(selector);
+                                // if there is a match, then set
+                                // e.target to the target that matches the selector
+                                if (match && !outsideEvent) {
+                                    subscriber.t = vnode.domNode;
+                                }
+                                vnode = vnode.vParent;
+                            }
+                        }
                     }
-                    node = node.parentNode;
+                    else {
+                        // we go through the dom
+                        while (node.matchesSelector && !match) {
+                            console.log(NAME, '_domSelToFunc inside filter check match using the dom');
+                            match = byExactId ? (node.id===character1) : node.matchesSelector(selector);
+                            // if there is a match, then set
+                            // e.target to the target that matches the selector
+                            if (match && !outsideEvent) {
+                                subscriber.t = node;
+                            }
+                            node = node.parentNode;
+                        }
+                    }
                 }
             }
             console.log(NAME, '_domSelToFunc filter returns '+(!outsideEvent ? match : !match));
@@ -6578,6 +6590,15 @@ module.exports = function (window) {
 
     _setupMutationListener = function() {
         DOCUMENT.hasMutationSubs = true;
+        if (!mutationEventsDefined) {
+            Event.defineEvent(EV_REMOVED).unPreventable().noRender();
+            Event.defineEvent(EV_INSERTED).unPreventable().noRender();
+            Event.defineEvent(EV_CONTENT_CHANGE).unPreventable().noRender();
+            Event.defineEvent(EV_ATTRIBUTE_REMOVED).unPreventable().noRender();
+            Event.defineEvent(EV_ATTRIBUTE_CHANGED).unPreventable().noRender();
+            Event.defineEvent(EV_ATTRIBUTE_INSERTED).unPreventable().noRender();
+            mutationEventsDefined = true;
+        }
     };
 
     /*
@@ -6672,6 +6693,7 @@ module.exports = function (window) {
     // making HTMLElement to be able to emit using event-emitter:
     (function(HTMLElementPrototype) {
         HTMLElementPrototype.merge(Event.Emitter('UI'));
+        HTMLElementPrototype._isCustomElement = true;
     }(window.HTMLElement.prototype));
 
 
@@ -7340,7 +7362,7 @@ require('js-ext/lib/object.js');
          * Defines a CustomEvent. If the eventtype already exists, it will not be overridden,
          * unless you force to assign with `.forceAssign()`
          *
-         * The returned object comes with 4 methods which can be invoked chainable:
+         * The returned object comes with 8 methods which can be invoked chainable:
          *
          * <ul>
          *     <li>defaultFn() --> the default-function of the event</li>
@@ -7363,6 +7385,10 @@ require('js-ext/lib/object.js');
          *      <li>forceAssign() --> overrides any previous definition</li>
          *      <li>defaultFn() --> the default-function of the event</li>
          *      <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>
+         *      <li>forceAssign() --> overrides any previous definition</li>
+         *      <li>unHaltable() --> makes the customEvent cannot be halted</li>
+         *      <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>
+         *      <li>noRender() --> prevents this customEvent from render the dom. Overrules unRenderPreventable()</li>
          * </ul>
          * @since 0.0.1
          */
@@ -10630,19 +10656,33 @@ defineProperties(Function.prototype, {
 	 * @chainable
 	 */
 	mergePrototypes: function (map, force) {
-		var proto = this.prototype;
-
-		var names = Object.keys(map || {}),
+		var instance = this,
+		    proto = instance.prototype,
+		    names = Object.keys(map || {}),
 			l = names.length,
 			i = -1,
-			name;
+			name, nameInProto;
 		while (++i < l) {
 			name = names[i];
-			if (!force && name in proto) continue;
-			proto[name] = map[name];
+			nameInProto = (name in proto);
+			if (!nameInProto || force) {
+				// if nameInProto: set the property, but also backup for chaining using $orig
+				if (typeof map[name] === 'function') {
+/*jshint -W083 */
+					proto[name] = (function (original, methodName) {
+						return function () {
+/*jshint +W083 */
+							instance.$orig[methodName] = original;
+							return map[methodName].apply(this, arguments);
+						};
+					})(proto[name] || NOOP, name);
+				}
+				else {
+					proto[name] = map[name];
+				}
+			}
 		}
-		return this;
-
+		return instance;
 	},
 
 	/**
@@ -10701,40 +10741,6 @@ defineProperties(Function.prototype, {
 
 		constructor.mergePrototypes(prototypes, true);
 		return constructor;
-	},
-
-	/**
-	 * Overwrites the given prototype functions with the ones given in
-	 * the hashmap while still providing a means of calling the original
-	 * overridden method.
-     *
-	 * The patching function will receive a reference to the original method
-	 * prepended to the arguments the original would have received.
-     *
-	 * @method patch
-	 * @param map {Object} Hash map of method names to their new implementation.
-	 * @chainable
-	*/
-	patch: function (map) {
-		var proto = this.prototype;
-
-		var names = Object.keys(map || {}),
-			l = names.length,
-			i = -1,
-			name;
-		while (++i < l) {
-			name = names[i];
-			/*jshint -W083 */
-			proto[name] = (function (original) {
-				return function () {
-					/*jshint +W083 */
-					var a = Array.prototype.slice.call(arguments, 0);
-					a.unshift(original || NOOP);
-					return map[name].apply(this, a);
-				};
-			})(proto[name]);
-		}
-		return this;
 	},
 
 	/**
@@ -11726,6 +11732,7 @@ Promise.manage = function (callbackFn) {
 
 module.exports = function (window) {
 
+    // NOTE: CANNOT use dependency to js-ext/lib/object.js --> would be circular!
     if (!window._ITSAmodules) {
         Object.defineProperty(window, '_ITSAmodules', {
             configurable: false,
@@ -11769,6 +11776,7 @@ module.exports = function (window) {
 
 module.exports = function (window) {
 
+    // NOTE: CANNOT use dependency to js-ext/lib/object.js --> would be circular!
     if (!window._ITSAmodules) {
         Object.defineProperty(window, '_ITSAmodules', {
             configurable: false,
@@ -11824,6 +11832,7 @@ var toCamelCase = function(input) {
 
 module.exports = function (window) {
 
+    // NOTE: CANNOT use dependency to js-ext/lib/object.js --> would be circular!
     if (!window._ITSAmodules) {
         Object.defineProperty(window, '_ITSAmodules', {
             configurable: false,
@@ -12132,7 +12141,7 @@ module.exports.idGenerator = function(namespace, start) {
 };
 
 },{"polyfill/polyfill-base.js":42}],46:[function(require,module,exports){
-(function (process,global){
+(function (global){
 /**
  * Collection of various utility functions.
  *
@@ -12153,7 +12162,7 @@ module.exports.idGenerator = function(namespace, start) {
 	require('polyfill/polyfill-base.js');
 
 	var NAME = '[utils-timers]: ',
-	    _asynchronizer, _async;
+	    _asynchronizer, _async, _asynchronizerSilent, _later;
 
 	/**
 	 * Forces a function to be run asynchronously, but as fast as possible. In Node.js
@@ -12164,8 +12173,32 @@ module.exports.idGenerator = function(namespace, start) {
 	 * @static
 	 * @private
 	**/
-	_asynchronizer = (typeof setImmediate !== 'undefined') ? function (fn) {setImmediate(fn);} :
-                        ((typeof process !== 'undefined') && process.nextTick) ? process.nextTick : function (fn) {setTimeout(fn, 0);};
+	_asynchronizer = (typeof global.setImmediate !== 'undefined') ?
+						function (fn) {
+							global.setImmediate(fn);
+						} :
+                	((typeof global.process !== 'undefined') && global.process.nextTick) ?
+                		global.process.nextTick :
+                		function (fn) {
+                    		global.setTimeout(fn, 0);
+                    	};
+
+	/**
+	 * Forces a function to be run asynchronously, but as fast as possible. In Node.js
+	 * this is achieved using `setImmediate` or `process.nextTick`.
+	 *
+	 * @method _asynchronizerSilent
+	 * @param callbackFn {Function} The function to call asynchronously
+	 * @static
+	 * @private
+	**/
+	_asynchronizerSilent = (typeof global.setImmediate !== 'undefined') ?
+								function (fn) {
+									global._setImmediate(fn);
+								} :
+		                		function (fn) {
+		                    		global._setTimeout(fn, 0);
+		                    	};
 
 	/**
 	 * Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function
@@ -12182,18 +12215,21 @@ module.exports.idGenerator = function(namespace, start) {
 	**/
 	_async = function (callbackFn, invokeAfterFn) {
 		console.log(NAME, 'async');
-		var host = this || global,
-			canceled;
+		var canceled, callback;
 
 		invokeAfterFn = (typeof invokeAfterFn === 'boolean') ? invokeAfterFn : true;
-		(typeof callbackFn==='function') && _asynchronizer(function () {
-			if (!canceled) {
-	        	console.log(NAME, 'async is running its callbakcFn');
-				callbackFn();
-				// in case host._afterAsyncFn is defined: invoke it, to identify that later has been executed
-				invokeAfterFn && host._afterAsyncFn && host._afterAsyncFn();
-			}
-		});
+		// if not available, then don't invoke the afterFn:
+		!global._setTimeout && (invokeAfterFn=false);
+
+		if (typeof callbackFn==='function') {
+			callback = function () {
+				if (!canceled) {
+		        	console.log(NAME, 'async is running its callbakcFn');
+					callbackFn();
+				}
+			};
+			invokeAfterFn ? _asynchronizer(callback) : _asynchronizerSilent(callback);
+		}
 
 		return {
 			cancel: function () {
@@ -12216,6 +12252,9 @@ module.exports.idGenerator = function(namespace, start) {
 	 * called before the callback function, the callback function won't be called.
 	**/
 	module.exports.async = _async;
+	module.exports.asyncSilent = function() {
+		return _async.call(this, arguments[0], false);
+	};
 
 	/**
 	 * Invokes the callbackFn after a timeout (asynchronous). If the function
@@ -12238,11 +12277,12 @@ module.exports.idGenerator = function(namespace, start) {
 	 * @param [invokeAfterFn=true] {boolean} set to false to prevent the _afterSyncFn to be invoked
 	 * @return {object} a timer object. Call the cancel() method on this object to stop the timer.
 	*/
-	module.exports.later = function (callbackFn, timeout, periodic, invokeAfterFn) {
+	_later = function (callbackFn, timeout, periodic, invokeAfterFn) {
 		console.log(NAME, 'later --> timeout: '+timeout+'ms | periodic: '+periodic);
-		var host = this || global,
-			canceled = false;
+		var canceled = false;
 		invokeAfterFn = (typeof invokeAfterFn === 'boolean') ? invokeAfterFn : true;
+		// if not available, then don't invoke the afterFn:
+		!global._setTimeout && (invokeAfterFn=false);
 		if (!timeout) {
 			return _async(callbackFn);
 		}
@@ -12255,9 +12295,9 @@ module.exports.idGenerator = function(namespace, start) {
 				if (!canceled) {
 	            	console.log(NAME, 'later is running its callbakcFn');
 					callbackFn();
-					secondtimeout && (secondairId=setInterval(wrapperInterval, interval));
-					// in case host._afterAsyncFn is defined: invoke it, to identify that later has been executed
-					invokeAfterFn && host._afterAsyncFn && host._afterAsyncFn();
+					if (secondtimeout) {
+						secondairId = invokeAfterFn ? global.setInterval(wrapperInterval, interval) : global._setInterval(wrapperInterval, interval);
+					}
 					// break closure inside returned object:
 					id = null;
 				}
@@ -12269,12 +12309,19 @@ module.exports.idGenerator = function(namespace, start) {
 				if (!canceled) {
 	            	console.log(NAME, 'later is running its callbakcFn');
 					callbackFn();
-					// in case host._afterAsyncFn is defined: invoke it, to identify that later has been executed
-					invokeAfterFn && host._afterAsyncFn && host._afterAsyncFn();
 				}
 			},
 			id;
-		(typeof callbackFn==='function') && (id=(interval && !secondtimeout) ? setInterval(wrapperInterval, timeout) : setTimeout(wrapper, timeout));
+		if (typeof callbackFn==='function') {
+/*jshint boss:true */
+			if (id=(interval && !secondtimeout)) {
+/*jshint boss:false */
+				invokeAfterFn ? global.setInterval(wrapperInterval, timeout) : global._setInterval(wrapperInterval, timeout);
+			}
+			else {
+				invokeAfterFn ? global.setTimeout(wrapper, timeout) : global._setTimeout(wrapper, timeout);
+			}
+		}
 
 		return {
 			cancel: function() {
@@ -12288,10 +12335,19 @@ module.exports.idGenerator = function(namespace, start) {
 		};
 	};
 
+	module.exports.later = _later;
+
+	module.exports.laterSilent = function() {
+		var args = arguments;
+		args[3] = false;
+		return _later.apply(this, args);
+	};
+
+
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
-}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":60,"polyfill/polyfill-base.js":42}],47:[function(require,module,exports){
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"polyfill/polyfill-base.js":42}],47:[function(require,module,exports){
 var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n.itsa-invisible,\n.itsa-invisible-relative {\n    visibility: hidden !important;\n    z-index: -1;\n}\n\n.itsa-invisible *,\n.itsa-invisible-relative * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n.itsa-hidden {\n    visibility: hidden !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],48:[function(require,module,exports){
 "use strict";
@@ -13125,6 +13181,7 @@ module.exports = function (window) {
 
 require('polyfill');
 require('js-ext/lib/object.js');
+require('js-ext/lib/string.js');
 
 module.exports = function (window) {
 
@@ -13211,6 +13268,41 @@ module.exports = function (window) {
      */
     DOCUMENT.getElementById = function(id) {
         return nodeids[id] || null; // force `null` instead of `undefined` to be compatible with native getElementById.
+    };
+
+    /**
+     * Returns the Element matching the specified id.
+     *
+     * @method getElementById
+     * @param id {String} id of the Element
+     * @return {Element|null}
+     *
+     */
+    DOCUMENT.getParcels = function() {
+        var instance = this,
+            findChildren;
+        // i-parcel elements can only exists when the window.ITAGS are defined (by itags.core)
+        if (!window.ITAGS) {
+            return [];
+        }
+        if (instance._parcelList) {
+            return instance._parcelList;
+        }
+        // when not returned: it would be the first time --> we setup the current list
+        // the quickest way is by going through the vdom and inspect the tagNames ourselves:
+        findChildren = function(vnode) {
+            var vChildren = vnode.getChildren(),
+                len = vChildren.length,
+                i, vChild;
+            for (i=0; i<len; i++) {
+                vChild = vChildren[i];
+                vChild.tag.startsWith('I-PARCEL-') && (DOCUMENT._parcelList[DOCUMENT._parcelList.length]=vChild.domNode);
+                findChildren(vChild);
+            }
+        };
+        Object.protectedProp(instance, '_parcelList', []);
+        findChildren(instance.getElement('body').vnode);
+        return instance._parcelList;
     };
 
     /**
@@ -13781,7 +13873,7 @@ module.exports = function (window) {
 
 
 
-},{"./vdom-ns.js":55,"js-ext/lib/object.js":33,"polyfill":42}],52:[function(require,module,exports){
+},{"./vdom-ns.js":55,"js-ext/lib/object.js":33,"js-ext/lib/string.js":35,"polyfill":42}],52:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -13838,8 +13930,8 @@ module.exports = function (window) {
         _AFTER = ':before',
         extractor = require('./attribute-extractor.js')(window),
         UTILS = require('utils'),
-        later = UTILS.later,
-        async = UTILS.async,
+        later = UTILS.laterSilent,
+        async = UTILS.asyncSilent,
         idGenerator = UTILS.idGenerator,
         DOCUMENT = window.document,
         nodeids = NS.nodeids,
@@ -18725,8 +18817,8 @@ module.exports = function (window) {
         nodeids = NS.nodeids,
         htmlToVNodes = require('./html-parser.js')(window),
         timers = require('utils/lib/timers.js'),
-        async = timers.async,
-        later = timers.later,
+        async = timers.asyncSilent,
+        later = timers.laterSilent,
 
         // cleanup memory after 1 minute: removed nodes SHOULD NOT be accessed afterwards
         // because vnode would be recalculated and might be different from before
@@ -19567,7 +19659,7 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         contains: function(otherVNode) {
-            if (otherVNode.destroyed) {
+            if (otherVNode && otherVNode.destroyed) {
                 return false;
             }
             while (otherVNode && (otherVNode!==this)) {
@@ -19806,7 +19898,10 @@ module.exports = function (window) {
                 // if the size changed, then the domNode was merged
                 (size===instance.vChildNodes.length) || (domNode=instance.vChildNodes[instance.vChildNodes.length-1].domNode);
             }
-            VNode._emit(EV_INSERTED);
+            if (VNode.nodeType===1) {
+                DOCUMENT._parcelList && VNode.tag.startsWith('I-PARCEL-') && !DOCUMENT._parcelList.contains(domNode) && DOCUMENT._parcelList.push(domNode);
+                VNode._emit(EV_INSERTED);
+            }
             return domNode;
         },
 
@@ -19877,6 +19972,10 @@ module.exports = function (window) {
                 // someone might need to handle the Element when removed (fe to cleanup specific things)
                 later(function() {
                     instance._cleanData();
+                    // if vnode is part of DOCUMENT._parcelList then remove it
+                    if (DOCUMENT._parcelList && instance.tag.startsWith('I-PARCEL-')) {
+                        DOCUMENT._parcelList.remove(instance.domNode);
+                    }
                     // _destroy all its vChildNodes
                     if ((instance.nodeType===1) && vChildNodes) {
                         len = vChildNodes.length;
@@ -20044,7 +20143,10 @@ module.exports = function (window) {
                 newVNode._moveToParent(instance, index);
                 instance.domNode._insertBefore(domNode, refVNode.domNode);
                 (newVNode.nodeType===3) && instance._normalize();
-                newVNode._emit(EV_INSERTED);
+                if (newVNode.nodeType===1) {
+                    DOCUMENT._parcelList && newVNode.tag.startsWith('I-PARCEL-') && !DOCUMENT._parcelList.contains(domNode) && DOCUMENT._parcelList.push(domNode);
+                    newVNode._emit(EV_INSERTED);
+                }
             }
             return domNode;
         },
@@ -20399,6 +20501,7 @@ module.exports = function (window) {
                                 newChild._setChildNodes(bkpChildNodes);
                                 newChild.id && (nodeids[newChild.id]=newChild.domNode);
                                 oldChild._replaceAtParent(newChild);
+                                DOCUMENT._parcelList && newChild.tag.startsWith('I-PARCEL-') && !DOCUMENT._parcelList.contains(newChild.domNode) && DOCUMENT._parcelList.push(newChild.domNode);
                                 newChild._emit(EV_INSERTED);
                             }
                             else {
@@ -20436,6 +20539,7 @@ module.exports = function (window) {
                             oldChild.isVoid = newChild.isVoid;
                             delete oldChild.text;
                             instance._emit(EV_CONTENT_CHANGE);
+                            DOCUMENT._parcelList && newChild.tag.startsWith('I-PARCEL-') && !DOCUMENT._parcelList.contains(newChild.domNode) && DOCUMENT._parcelList.push(newChild.domNode);
                             newChild._emit(EV_INSERTED);
                             break;
                         case 5: // oldNodeType==TextNode, newNodeType==TextNode
@@ -20485,6 +20589,7 @@ module.exports = function (window) {
                         domNode._appendChild(newChild.domNode);
                         newChild._setAttrs(bkpAttrs);
                         newChild._setChildNodes(bkpChildNodes);
+                        DOCUMENT._parcelList && newChild.tag.startsWith('I-PARCEL-') && !DOCUMENT._parcelList.contains(newChild.domNode) && DOCUMENT._parcelList.push(newChild.domNode);
                         newChild._emit(EV_INSERTED);
                         break;
                     case 3: // TextNode
@@ -20720,6 +20825,7 @@ module.exports = function (window) {
                             // vnode.vChildNodes = bkpChildNodes;
                             vnode.id && (nodeids[vnode.id]=vnode.domNode);
                             instance._replaceAtParent(vnode);
+                            DOCUMENT._parcelList && vnode.tag.startsWith('I-PARCEL-') && !DOCUMENT._parcelList.contains(vnode.domNode) && DOCUMENT._parcelList.push(vnode.domNode);
                             vnode._emit(EV_INSERTED);
                         }
                         else {
@@ -20732,6 +20838,7 @@ module.exports = function (window) {
                         vnode.domNode.nodeValue = vnode.text;
                         vParent.domNode._replaceChild(vnode.domNode, instance.domNode);
                         instance._replaceAtParent(vnode);
+                        DOCUMENT._parcelList && vnode.tag.startsWith('I-PARCEL-') && !DOCUMENT._parcelList.contains(vnode.domNode) && DOCUMENT._parcelList.push(vnode.domNode);
                         vnode._emit(EV_INSERTED);
                     }
                 }
@@ -20744,6 +20851,7 @@ module.exports = function (window) {
                             vnode.attrs = {}; // reset, to force defined by `_setAttrs`
                             vnode.vChildNodes = []; // reset to current state, to force defined by `_setAttrs`
                             isLastChildNode ? vParent.domNode._appendChild(vnode.domNode) : vParent.domNode._insertBefore(vnode.domNode, refDomNode);
+                            DOCUMENT._parcelList && vnode.tag.startsWith('I-PARCEL-') && !DOCUMENT._parcelList.contains(vnode.domNode) && DOCUMENT._parcelList.push(vnode.domNode);
                             vnode._emit(EV_INSERTED);
                             vnode._setAttrs(bkpAttrs);
                             vnode._setChildNodes(bkpChildNodes);
@@ -21161,72 +21269,7 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/lib/object.js":33}],60:[function(require,module,exports){
-// shim for using process in browser
-
-var process = module.exports = {};
-
-process.nextTick = (function () {
-    var canSetImmediate = typeof window !== 'undefined'
-    && window.setImmediate;
-    var canPost = typeof window !== 'undefined'
-    && window.postMessage && window.addEventListener
-    ;
-
-    if (canSetImmediate) {
-        return function (f) { return window.setImmediate(f) };
-    }
-
-    if (canPost) {
-        var queue = [];
-        window.addEventListener('message', function (ev) {
-            var source = ev.source;
-            if ((source === window || source === null) && ev.data === 'process-tick') {
-                ev.stopPropagation();
-                if (queue.length > 0) {
-                    var fn = queue.shift();
-                    fn();
-                }
-            }
-        }, true);
-
-        return function nextTick(fn) {
-            queue.push(fn);
-            window.postMessage('process-tick', '*');
-        };
-    }
-
-    return function nextTick(fn) {
-        setTimeout(fn, 0);
-    };
-})();
-
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-}
-
-// TODO(shtylman)
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-
-},{}],"itsa":[function(require,module,exports){
+},{"js-ext/lib/object.js":33}],"itsa":[function(require,module,exports){
 (function (global){
 /**
  * The ITSA module is an aggregator for all the individual modules that the library uses.
