@@ -271,20 +271,19 @@
     **/
     _async = function (callbackFn, invokeAfterFn) {
         console.log(NAME, &#x27;async&#x27;);
-        var canceled, callback;
-
         invokeAfterFn = (typeof invokeAfterFn === &#x27;boolean&#x27;) ? invokeAfterFn : true;
-        // if not available, then don&#x27;t invoke the afterFn:
-        !global._setTimeout &amp;&amp; (invokeAfterFn=false);
+        var canceled, callback,
+            // if not available, then don&#x27;t invoke the afterFn:
+            originalTimer = (invokeAfterFn || !global._setTimeout);
 
         if (typeof callbackFn===&#x27;function&#x27;) {
             callback = function () {
                 if (!canceled) {
-                    console.log(NAME, &#x27;async is running its callbakcFn&#x27;);
+                    console.log(NAME, &#x27;async is running its callbackFn&#x27;);
                     callbackFn();
                 }
             };
-            invokeAfterFn ? _asynchronizer(callback) : _asynchronizerSilent(callback);
+            originalTimer ? _asynchronizer(callback) : _asynchronizerSilent(callback);
         }
 
         return {
@@ -335,15 +334,15 @@
     */
     _later = function (callbackFn, timeout, periodic, invokeAfterFn) {
         console.log(NAME, &#x27;later --&gt; timeout: &#x27;+timeout+&#x27;ms | periodic: &#x27;+periodic);
-        var canceled = false;
-        invokeAfterFn = (typeof invokeAfterFn === &#x27;boolean&#x27;) ? invokeAfterFn : true;
         // if not available, then don&#x27;t invoke the afterFn:
-        !global._setTimeout &amp;&amp; (invokeAfterFn=false);
+        invokeAfterFn = (typeof invokeAfterFn === &#x27;boolean&#x27;) ? invokeAfterFn : true;
         if (!timeout) {
-            return _async(callbackFn);
+            return _async(callbackFn, invokeAfterFn);
         }
         var interval = periodic,
             secondtimeout = (typeof interval===&#x27;number&#x27;),
+            canceled = false,
+            originalTimer = (invokeAfterFn || !global._setTimeout),
             secondairId,
             wrapper = function() {
                 // IE 8- and also nodejs may execute a callback, so in order to preserve
@@ -352,7 +351,7 @@
                     console.log(NAME, &#x27;later is running its callbakcFn&#x27;);
                     callbackFn();
                     if (secondtimeout) {
-                        secondairId = invokeAfterFn ? global.setInterval(wrapperInterval, interval) : global._setInterval(wrapperInterval, interval);
+                        secondairId = originalTimer ? global.setInterval(wrapperInterval, interval) : global._setInterval(wrapperInterval, interval);
                     }
                     // break closure inside returned object:
                     id = null;
@@ -372,10 +371,10 @@
 /*jshint boss:true */
             if (id=(interval &amp;&amp; !secondtimeout)) {
 /*jshint boss:false */
-                invokeAfterFn ? global.setInterval(wrapperInterval, timeout) : global._setInterval(wrapperInterval, timeout);
+                originalTimer ? global.setInterval(wrapperInterval, timeout) : global._setInterval(wrapperInterval, timeout);
             }
             else {
-                invokeAfterFn ? global.setTimeout(wrapper, timeout) : global._setTimeout(wrapper, timeout);
+                originalTimer ? global.setTimeout(wrapper, timeout) : global._setTimeout(wrapper, timeout);
             }
         }
 

@@ -12217,20 +12217,19 @@ module.exports.idGenerator = function(namespace, start) {
 	**/
 	_async = function (callbackFn, invokeAfterFn) {
 		console.log(NAME, 'async');
-		var canceled, callback;
-
 		invokeAfterFn = (typeof invokeAfterFn === 'boolean') ? invokeAfterFn : true;
-		// if not available, then don't invoke the afterFn:
-		!global._setTimeout && (invokeAfterFn=false);
+		var canceled, callback,
+			// if not available, then don't invoke the afterFn:
+		    originalTimer = (invokeAfterFn || !global._setTimeout);
 
 		if (typeof callbackFn==='function') {
 			callback = function () {
 				if (!canceled) {
-		        	console.log(NAME, 'async is running its callbakcFn');
+		        	console.log(NAME, 'async is running its callbackFn');
 					callbackFn();
 				}
 			};
-			invokeAfterFn ? _asynchronizer(callback) : _asynchronizerSilent(callback);
+			originalTimer ? _asynchronizer(callback) : _asynchronizerSilent(callback);
 		}
 
 		return {
@@ -12281,15 +12280,15 @@ module.exports.idGenerator = function(namespace, start) {
 	*/
 	_later = function (callbackFn, timeout, periodic, invokeAfterFn) {
 		console.log(NAME, 'later --> timeout: '+timeout+'ms | periodic: '+periodic);
-		var canceled = false;
-		invokeAfterFn = (typeof invokeAfterFn === 'boolean') ? invokeAfterFn : true;
 		// if not available, then don't invoke the afterFn:
-		!global._setTimeout && (invokeAfterFn=false);
+		invokeAfterFn = (typeof invokeAfterFn === 'boolean') ? invokeAfterFn : true;
 		if (!timeout) {
-			return _async(callbackFn);
+			return _async(callbackFn, invokeAfterFn);
 		}
 		var interval = periodic,
 			secondtimeout = (typeof interval==='number'),
+		    canceled = false,
+		    originalTimer = (invokeAfterFn || !global._setTimeout),
 			secondairId,
 			wrapper = function() {
 				// IE 8- and also nodejs may execute a callback, so in order to preserve
@@ -12298,7 +12297,7 @@ module.exports.idGenerator = function(namespace, start) {
 	            	console.log(NAME, 'later is running its callbakcFn');
 					callbackFn();
 					if (secondtimeout) {
-						secondairId = invokeAfterFn ? global.setInterval(wrapperInterval, interval) : global._setInterval(wrapperInterval, interval);
+						secondairId = originalTimer ? global.setInterval(wrapperInterval, interval) : global._setInterval(wrapperInterval, interval);
 					}
 					// break closure inside returned object:
 					id = null;
@@ -12318,10 +12317,10 @@ module.exports.idGenerator = function(namespace, start) {
 /*jshint boss:true */
 			if (id=(interval && !secondtimeout)) {
 /*jshint boss:false */
-				invokeAfterFn ? global.setInterval(wrapperInterval, timeout) : global._setInterval(wrapperInterval, timeout);
+				originalTimer ? global.setInterval(wrapperInterval, timeout) : global._setInterval(wrapperInterval, timeout);
 			}
 			else {
-				invokeAfterFn ? global.setTimeout(wrapper, timeout) : global._setTimeout(wrapper, timeout);
+				originalTimer ? global.setTimeout(wrapper, timeout) : global._setTimeout(wrapper, timeout);
 			}
 		}
 
@@ -13292,7 +13291,7 @@ module.exports = function (window) {
         // when not returned: it would be the first time --> we setup the current list
         // the quickest way is by going through the vdom and inspect the tagNames ourselves:
         findChildren = function(vnode) {
-            var vChildren = vnode.vChildren(),
+            var vChildren = vnode.vChildren,
                 len = vChildren.length,
                 i, vChild;
             for (i=0; i<len; i++) {
@@ -19973,16 +19972,18 @@ module.exports = function (window) {
                 // someone might need to handle the Element when removed (fe to cleanup specific things)
                 later(function() {
                     instance._cleanData();
-                    // if vnode is part of DOCUMENT._parcelList then remove it
-                    if (DOCUMENT._parcelList && instance.tag.startsWith('I-PARCEL-')) {
-                        DOCUMENT._parcelList.remove(instance.domNode);
-                    }
-                    // _destroy all its vChildNodes
-                    if ((instance.nodeType===1) && vChildNodes) {
-                        len = vChildNodes.length;
-                        for (i=0; i < len; i++) {
-                            vChildNode = vChildNodes[i];
-                            vChildNode && vChildNode._destroy(true);
+                    if (instance.nodeType===1) {
+                        // if vnode is part of DOCUMENT._parcelList then remove it
+                        if (DOCUMENT._parcelList && instance.tag.startsWith('I-PARCEL-')) {
+                            DOCUMENT._parcelList.remove(instance.domNode);
+                        }
+                        // _destroy all its vChildNodes
+                        if (vChildNodes) {
+                            len = vChildNodes.length;
+                            for (i=0; i < len; i++) {
+                                vChildNode = vChildNodes[i];
+                                vChildNode && vChildNode._destroy(true);
+                            }
                         }
                     }
                     instance._vChildren = null;
