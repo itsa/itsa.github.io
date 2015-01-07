@@ -218,7 +218,7 @@
     require(&#x27;polyfill/polyfill-base.js&#x27;);
 
     var NAME = &#x27;[utils-timers]: &#x27;,
-        _asynchronizer, _async;
+        _asynchronizer, _async, _asynchronizerSilent, _later;
 
     /**
      * Forces a function to be run asynchronously, but as fast as possible. In Node.js
@@ -229,8 +229,32 @@
      * @static
      * @private
     **/
-    _asynchronizer = (typeof setImmediate !== &#x27;undefined&#x27;) ? function (fn) {setImmediate(fn);} :
-                        ((typeof process !== &#x27;undefined&#x27;) &amp;&amp; process.nextTick) ? process.nextTick : function (fn) {setTimeout(fn, 0);};
+    _asynchronizer = (typeof global.setImmediate !== &#x27;undefined&#x27;) ?
+                        function (fn) {
+                            global.setImmediate(fn);
+                        } :
+                    ((typeof global.process !== &#x27;undefined&#x27;) &amp;&amp; global.process.nextTick) ?
+                        global.process.nextTick :
+                        function (fn) {
+                            global.setTimeout(fn, 0);
+                        };
+
+    /**
+     * Forces a function to be run asynchronously, but as fast as possible. In Node.js
+     * this is achieved using &#x60;setImmediate&#x60; or &#x60;process.nextTick&#x60;.
+     *
+     * @method _asynchronizerSilent
+     * @param callbackFn {Function} The function to call asynchronously
+     * @static
+     * @private
+    **/
+    _asynchronizerSilent = (typeof global.setImmediate !== &#x27;undefined&#x27;) ?
+                                function (fn) {
+                                    global._setImmediate(fn);
+                                } :
+                                function (fn) {
+                                    global._setTimeout(fn, 0);
+                                };
 
     /**
      * Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function
@@ -247,18 +271,21 @@
     **/
     _async = function (callbackFn, invokeAfterFn) {
         console.log(NAME, &#x27;async&#x27;);
-        var host = this || global,
-            canceled;
+        var canceled, callback;
 
         invokeAfterFn = (typeof invokeAfterFn === &#x27;boolean&#x27;) ? invokeAfterFn : true;
-        (typeof callbackFn===&#x27;function&#x27;) &amp;&amp; _asynchronizer(function () {
-            if (!canceled) {
-                console.log(NAME, &#x27;async is running its callbakcFn&#x27;);
-                callbackFn();
-                // in case host._afterAsyncFn is defined: invoke it, to identify that later has been executed
-                invokeAfterFn &amp;&amp; host._afterAsyncFn &amp;&amp; host._afterAsyncFn();
-            }
-        });
+        // if not available, then don&#x27;t invoke the afterFn:
+        !global._setTimeout &amp;&amp; (invokeAfterFn=false);
+
+        if (typeof callbackFn===&#x27;function&#x27;) {
+            callback = function () {
+                if (!canceled) {
+                    console.log(NAME, &#x27;async is running its callbakcFn&#x27;);
+                    callbackFn();
+                }
+            };
+            invokeAfterFn ? _asynchronizer(callback) : _asynchronizerSilent(callback);
+        }
 
         return {
             cancel: function () {
@@ -281,6 +308,9 @@
      * called before the callback function, the callback function won&#x27;t be called.
     **/
     module.exports.async = _async;
+    module.exports.asyncSilent = function() {
+        return _async.call(this, arguments[0], false);
+    };
 
     /**
      * Invokes the callbackFn after a timeout (asynchronous). If the function
@@ -303,11 +333,12 @@
      * @param [invokeAfterFn=true] {boolean} set to false to prevent the _afterSyncFn to be invoked
      * @return {object} a timer object. Call the cancel() method on this object to stop the timer.
     */
-    module.exports.later = function (callbackFn, timeout, periodic, invokeAfterFn) {
+    _later = function (callbackFn, timeout, periodic, invokeAfterFn) {
         console.log(NAME, &#x27;later --&gt; timeout: &#x27;+timeout+&#x27;ms | periodic: &#x27;+periodic);
-        var host = this || global,
-            canceled = false;
+        var canceled = false;
         invokeAfterFn = (typeof invokeAfterFn === &#x27;boolean&#x27;) ? invokeAfterFn : true;
+        // if not available, then don&#x27;t invoke the afterFn:
+        !global._setTimeout &amp;&amp; (invokeAfterFn=false);
         if (!timeout) {
             return _async(callbackFn);
         }
@@ -320,9 +351,9 @@
                 if (!canceled) {
                     console.log(NAME, &#x27;later is running its callbakcFn&#x27;);
                     callbackFn();
-                    secondtimeout &amp;&amp; (secondairId=setInterval(wrapperInterval, interval));
-                    // in case host._afterAsyncFn is defined: invoke it, to identify that later has been executed
-                    invokeAfterFn &amp;&amp; host._afterAsyncFn &amp;&amp; host._afterAsyncFn();
+                    if (secondtimeout) {
+                        secondairId = invokeAfterFn ? global.setInterval(wrapperInterval, interval) : global._setInterval(wrapperInterval, interval);
+                    }
                     // break closure inside returned object:
                     id = null;
                 }
@@ -334,12 +365,19 @@
                 if (!canceled) {
                     console.log(NAME, &#x27;later is running its callbakcFn&#x27;);
                     callbackFn();
-                    // in case host._afterAsyncFn is defined: invoke it, to identify that later has been executed
-                    invokeAfterFn &amp;&amp; host._afterAsyncFn &amp;&amp; host._afterAsyncFn();
                 }
             },
             id;
-        (typeof callbackFn===&#x27;function&#x27;) &amp;&amp; (id=(interval &amp;&amp; !secondtimeout) ? setInterval(wrapperInterval, timeout) : setTimeout(wrapper, timeout));
+        if (typeof callbackFn===&#x27;function&#x27;) {
+/*jshint boss:true */
+            if (id=(interval &amp;&amp; !secondtimeout)) {
+/*jshint boss:false */
+                invokeAfterFn ? global.setInterval(wrapperInterval, timeout) : global._setInterval(wrapperInterval, timeout);
+            }
+            else {
+                invokeAfterFn ? global.setTimeout(wrapper, timeout) : global._setTimeout(wrapper, timeout);
+            }
+        }
 
         return {
             cancel: function() {
@@ -352,6 +390,15 @@
             }
         };
     };
+
+    module.exports.later = _later;
+
+    module.exports.laterSilent = function() {
+        var args = arguments;
+        args[3] = false;
+        return _later.apply(this, args);
+    };
+
 
 }(typeof global !== &#x27;undefined&#x27; ? global : /* istanbul ignore next */ this));
 

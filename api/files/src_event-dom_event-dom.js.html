@@ -239,6 +239,7 @@ var NAME = &#x27;[event-dom]: &#x27;,
     EV_ATTRIBUTE_REMOVED = UI+ATTRIBUTE+REMOVE,
     EV_ATTRIBUTE_CHANGED = UI+ATTRIBUTE+CHANGE,
     EV_ATTRIBUTE_INSERTED = UI+ATTRIBUTE+INSERT,
+    mutationEventsDefined = false,
 
     /*
      * Internal hash containing all DOM-events that are listened for (at &#x60;document&#x60;).
@@ -314,19 +315,21 @@ module.exports = function (window) {
         // this stage is runned during subscription
         var outsideEvent = REGEXP_UI_OUTSIDE.test(customEvent),
             selector = subscriber.f,
+            context = subscriber.o,
+            isCustomElement = subscriber.o._isCustomElement,
             nodeid, byExactId;
 
         console.log(NAME, &#x27;_domSelToFunc type of selector = &#x27;+typeof selector);
         // note: selector could still be a function: in case another subscriber
         // already changed it.
-        if (!selector || (typeof selector === &#x27;function&#x27;)) {
-            subscriber.n || (subscriber.n=DOCUMENT);
+        if ((!selector &amp;&amp; !isCustomElement) || (typeof selector === &#x27;function&#x27;)) {
+            subscriber.n || (subscriber.n = isCustomElement ? context : DOCUMENT);
             return true;
         }
+        selector || (selector=&#x27;&#x27;);
 
         nodeid = selector.match(REGEXP_EXTRACT_NODE_ID);
-        nodeid ? (subscriber.nId=nodeid[1]) : (subscriber.n=DOCUMENT);
-
+        nodeid ? (subscriber.nId=nodeid[1]) : (subscriber.n=isCustomElement ? context : DOCUMENT);
         byExactId = REGEXP_NODE_ID.test(selector);
 
         subscriber.f = function(e) {
@@ -334,38 +337,47 @@ module.exports = function (window) {
             console.log(NAME, &#x27;_domSelToFunc inside filter. selector: &#x27;+selector);
             var node = e.target,
                 vnode = node.vnode,
-                character1 = selector.substr(1),
+                character1 = selector &amp;&amp; selector.substr(1),
                 match = false;
-            // e.target is the most deeply node in the dom-tree that caught the event
-            // our listener uses &#x60;selector&#x60; which might be a node higher up the tree.
-            // we will reset e.target to this node (if there is a match)
-            // note that e.currentTarget will always be &#x60;document&#x60; --&gt; we&#x27;re not interested in that
-            // also, we don&#x27;t check for &#x60;node&#x60;, but for node.matchesSelector: the highest level &#x60;document&#x60;
-            // is not null, yet it doesn;t have .matchesSelector so it would fail
-            if (vnode) {
-                // we go through the vdom
-                while (vnode &amp;&amp; !match) {
-                    console.log(NAME, &#x27;_domSelToFunc inside filter check match using the vdom&#x27;);
-                    match = byExactId ? (vnode.id===character1) : vnode.matchesSelector(selector);
-                    // if there is a match, then set
-                    // e.target to the target that matches the selector
-                    if (match &amp;&amp; !outsideEvent) {
-                        subscriber.t = vnode.domNode;
-                    }
-                    vnode = vnode.vParent;
+            if (!subscriber.o._isCustomElement || subscriber.o.contains(node)) {
+                if (selector===&#x27;&#x27;) {
+                    match = true;
                 }
-            }
-            else {
-                // we go through the dom
-                while (node.matchesSelector &amp;&amp; !match) {
-                    console.log(NAME, &#x27;_domSelToFunc inside filter check match using the dom&#x27;);
-                    match = byExactId ? (node.id===character1) : node.matchesSelector(selector);
-                    // if there is a match, then set
-                    // e.target to the target that matches the selector
-                    if (match &amp;&amp; !outsideEvent) {
-                        subscriber.t = node;
+                else {
+                    // e.target is the most deeply node in the dom-tree that caught the event
+                    // our listener uses &#x60;selector&#x60; which might be a node higher up the tree.
+                    // we will reset e.target to this node (if there is a match)
+                    // note that e.currentTarget will always be &#x60;document&#x60; --&gt; we&#x27;re not interested in that
+                    // also, we don&#x27;t check for &#x60;node&#x60;, but for node.matchesSelector: the highest level &#x60;document&#x60;
+                    // is not null, yet it doesn;t have .matchesSelector so it would fail
+                    if (vnode) {
+                        // we go through the vdom
+                        if (!vnode.removedFromDOM) {
+                            while (vnode &amp;&amp; !match) {
+                                console.log(NAME, &#x27;_domSelToFunc inside filter check match using the vdom&#x27;);
+                                match = byExactId ? (vnode.id===character1) : vnode.matchesSelector(selector);
+                                // if there is a match, then set
+                                // e.target to the target that matches the selector
+                                if (match &amp;&amp; !outsideEvent) {
+                                    subscriber.t = vnode.domNode;
+                                }
+                                vnode = vnode.vParent;
+                            }
+                        }
                     }
-                    node = node.parentNode;
+                    else {
+                        // we go through the dom
+                        while (node.matchesSelector &amp;&amp; !match) {
+                            console.log(NAME, &#x27;_domSelToFunc inside filter check match using the dom&#x27;);
+                            match = byExactId ? (node.id===character1) : node.matchesSelector(selector);
+                            // if there is a match, then set
+                            // e.target to the target that matches the selector
+                            if (match &amp;&amp; !outsideEvent) {
+                                subscriber.t = node;
+                            }
+                            node = node.parentNode;
+                        }
+                    }
                 }
             }
             console.log(NAME, &#x27;_domSelToFunc filter returns &#x27;+(!outsideEvent ? match : !match));
@@ -639,6 +651,15 @@ module.exports = function (window) {
 
     _setupMutationListener = function() {
         DOCUMENT.hasMutationSubs = true;
+        if (!mutationEventsDefined) {
+            Event.defineEvent(EV_REMOVED).unPreventable().noRender();
+            Event.defineEvent(EV_INSERTED).unPreventable().noRender();
+            Event.defineEvent(EV_CONTENT_CHANGE).unPreventable().noRender();
+            Event.defineEvent(EV_ATTRIBUTE_REMOVED).unPreventable().noRender();
+            Event.defineEvent(EV_ATTRIBUTE_CHANGED).unPreventable().noRender();
+            Event.defineEvent(EV_ATTRIBUTE_INSERTED).unPreventable().noRender();
+            mutationEventsDefined = true;
+        }
     };
 
     /*
@@ -733,6 +754,7 @@ module.exports = function (window) {
     // making HTMLElement to be able to emit using event-emitter:
     (function(HTMLElementPrototype) {
         HTMLElementPrototype.merge(Event.Emitter(&#x27;UI&#x27;));
+        HTMLElementPrototype._isCustomElement = true;
     }(window.HTMLElement.prototype));
 
 

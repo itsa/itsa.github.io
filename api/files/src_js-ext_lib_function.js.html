@@ -263,19 +263,33 @@ defineProperties(Function.prototype, {
      * @chainable
      */
     mergePrototypes: function (map, force) {
-        var proto = this.prototype;
-
-        var names = Object.keys(map || {}),
+        var instance = this,
+            proto = instance.prototype,
+            names = Object.keys(map || {}),
             l = names.length,
             i = -1,
-            name;
+            name, nameInProto;
         while (++i &lt; l) {
             name = names[i];
-            if (!force &amp;&amp; name in proto) continue;
-            proto[name] = map[name];
+            nameInProto = (name in proto);
+            if (!nameInProto || force) {
+                // if nameInProto: set the property, but also backup for chaining using $orig
+                if (typeof map[name] === &#x27;function&#x27;) {
+/*jshint -W083 */
+                    proto[name] = (function (original, methodName) {
+                        return function () {
+/*jshint +W083 */
+                            instance.$orig[methodName] = original;
+                            return map[methodName].apply(this, arguments);
+                        };
+                    })(proto[name] || NOOP, name);
+                }
+                else {
+                    proto[name] = map[name];
+                }
+            }
         }
-        return this;
-
+        return instance;
     },
 
     /**
@@ -334,40 +348,6 @@ defineProperties(Function.prototype, {
 
         constructor.mergePrototypes(prototypes, true);
         return constructor;
-    },
-
-    /**
-     * Overwrites the given prototype functions with the ones given in
-     * the hashmap while still providing a means of calling the original
-     * overridden method.
-     *
-     * The patching function will receive a reference to the original method
-     * prepended to the arguments the original would have received.
-     *
-     * @method patch
-     * @param map {Object} Hash map of method names to their new implementation.
-     * @chainable
-    */
-    patch: function (map) {
-        var proto = this.prototype;
-
-        var names = Object.keys(map || {}),
-            l = names.length,
-            i = -1,
-            name;
-        while (++i &lt; l) {
-            name = names[i];
-            /*jshint -W083 */
-            proto[name] = (function (original) {
-                return function () {
-                    /*jshint +W083 */
-                    var a = Array.prototype.slice.call(arguments, 0);
-                    a.unshift(original || NOOP);
-                    return map[name].apply(this, a);
-                };
-            })(proto[name]);
-        }
-        return this;
     },
 
     /**
