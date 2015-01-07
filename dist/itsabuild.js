@@ -12080,8 +12080,10 @@ module.exports = function (window) {
 },{"js-ext/lib/object.js":33,"polyfill":42}],44:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
-	later: require('./lib/timers.js').later,
-	async: require('./lib/timers.js').async
+    later: require('./lib/timers.js').later,
+    laterSilent: require('./lib/timers.js').laterSilent,
+    async: require('./lib/timers.js').async,
+    asyncSilent: require('./lib/timers.js').asyncSilent
 };
 },{"./lib/idgenerator.js":45,"./lib/timers.js":46}],45:[function(require,module,exports){
 "use strict";
