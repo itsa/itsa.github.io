@@ -333,8 +333,8 @@ module.exports = function (window) {
                                     attributeValue = &#x27;&#x27;;
                                     if (attributeisString) {
                                         i++;
-                                        while ((character!==&#x27;\\&#x27;) &amp;&amp; (++i&lt;len) &amp;&amp; (character=htmlString[i]) &amp;&amp; (character!==stringMarker)) {
-                                            attributeValue += character;
+                                        while ((++i&lt;len) &amp;&amp; (character=htmlString[i]) &amp;&amp; ((character!==stringMarker) || (htmlString[i-1]===&#x27;\\&#x27;))) {
+                                            ((htmlString[i+1]!==stringMarker) || (character!==&#x27;\\&#x27;)) &amp;&amp; (attributeValue+=character);
                                         }
                                     }
                                     else {
