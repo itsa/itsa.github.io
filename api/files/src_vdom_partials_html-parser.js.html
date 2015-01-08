@@ -476,7 +476,8 @@ module.exports = function (window) {
                             vnode.isVoid = false;
                         }
                         else {
-                            (vnode.isVoid=!(new RegExp(&#x27;&lt;/&#x27;+tag+&#x27;&gt;$&#x27;, &#x27;i&#x27;)).test(htmlString)) ? (voidElements[tag]=true) : (nonVoidElements[tag]=true);
+                            vnode.isVoid = ((tag[0]===&#x27;I&#x27;) &amp;&amp; (tag[1]===&#x27;-&#x27;)) ? false : !(new RegExp(&#x27;&lt;/&#x27;+tag+&#x27;&gt;&#x27;, &#x27;i&#x27;)).test(htmlString);
+                            vnode.isVoid ? (voidElements[tag]=true) : (nonVoidElements[tag]=true);
                         }
                         insideTagDefinition = true;
                     }

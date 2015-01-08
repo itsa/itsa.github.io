@@ -8100,6 +8100,7 @@ require('js-ext/lib/object.js');
                     e._unPreventable = customEventDefinition.unPreventable;
                     e._unHaltable = customEventDefinition.unHaltable;
                     e._unRenderPreventable = customEventDefinition.unRenderPreventable;
+                    e._noRender = customEventDefinition.noRender;
                     customEventDefinition.unSilencable && (e.status.unSilencable = true);
                 }
                 if (payload) {
@@ -8145,7 +8146,7 @@ require('js-ext/lib/object.js');
                     // then we reset e.target to its original:
                     e.sourceTarget && (e.target=e.sourceTarget);
                     instance._final.some(function(finallySubscriber) {
-                        !e.silent && finallySubscriber(e);
+                        !e.silent && !e._noRender && !e.status.renderPrevented  && finallySubscriber(e);
                         if (e.status.unSilencable && e.silent) {
                             console.warn(NAME, ' event '+e.emitter+':'+e.type+' cannot made silent: this customEvent is defined as unSilencable');
                             e.silent = false;
@@ -12339,9 +12340,13 @@ module.exports.idGenerator = function(namespace, start) {
 	module.exports.later = _later;
 
 	module.exports.laterSilent = function() {
-		var args = arguments;
-		args[3] = false;
-		return _later.apply(this, args);
+		var args = arguments,
+			newArgs = [];
+		newArgs[0] = args[0];
+		newArgs[1] = args[1];
+		newArgs[2] = args[2];
+		newArgs[3] = false;
+		return _later.apply(this, newArgs);
 	};
 
 
@@ -18506,7 +18511,8 @@ module.exports = function (window) {
                             vnode.isVoid = false;
                         }
                         else {
-                            (vnode.isVoid=!(new RegExp('</'+tag+'>$', 'i')).test(htmlString)) ? (voidElements[tag]=true) : (nonVoidElements[tag]=true);
+                            vnode.isVoid = ((tag[0]==='I') && (tag[1]==='-')) ? false : !(new RegExp('</'+tag+'>', 'i')).test(htmlString);
+                            vnode.isVoid ? (voidElements[tag]=true) : (nonVoidElements[tag]=true);
                         }
                         insideTagDefinition = true;
                     }
