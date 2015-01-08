@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>lib/array.js - Itsa</title>
+    <title>src/js-ext/lib/json.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -194,52 +194,40 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>lib_array.js Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: src/js-ext/lib/json.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ *
+ * Pollyfils for often used functionality for Arrays
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module js-ext
+ * @submodule lib/array.js
+ * @class Array
+ *
+ */
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/src_js-ext_lib_json.js.html#l1"><code>src&#x2F;js-ext&#x2F;lib&#x2F;json.js:1</code></a>
-        </div>
-    
+&quot;use strict&quot;;
 
-    
-</div>
+require(&#x27;polyfill/polyfill-base.js&#x27;);
 
-
-
-<div class="box intro">
-    <p>Pollyfils for often used functionality for Arrays
-<i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
- New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
-
-</div>
-
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
-
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="../classes/Array.html">
-                        Array
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+JSON.stringifyAttr = function(obj, quotes) {
+    var regexp, replacement;
+    if (quotes) {
+        regexp = /&quot;/g;
+        replacement = &#x27;&amp;quot;&#x27;;
+    }
+    else {
+        regexp = /&#x27;/g;
+        replacement = &#x27;&amp;apos;&#x27;;
+    }
+    return this.stringify(obj).replace(regexp, replacement);
+};
+    </pre>
 </div>
 
                     </div>
