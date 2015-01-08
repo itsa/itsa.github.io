@@ -8920,7 +8920,7 @@ module.exports = function (window) {
         // or re-rendering itags which don't have the attribute-data.
         // otherwise, a refocus on the container will set the focus to the nearest item
         focusContainerNode.setData('fm-lastitem-bkp', index);
-        node.setData('fm-tabindex', 'true');
+        node.setData('fm-tabindex', true);
 
         node.setAttrs([
             {name: 'tabIndex', value: '0'},
@@ -9037,7 +9037,7 @@ module.exports = function (window) {
                 do {
                     // we also need to set the appropriate nodeData, so that when the itags re-render,
                     // they don't reset this particular information
-                    node.setData(FOCUSSED);
+                    node.setData(FOCUSSED, true);
                     node.setClass(FOCUSSED, null, null, true);
                     node = (node===body) ? null : node.getParent();
                 } while (node);
@@ -20664,7 +20664,7 @@ module.exports = function (window) {
                                 // first: we might need to set the class `focussed` when the attributeData says so:
                                 // this happens when an itag gets rerendered: its renderFn doesn't know if any elements
                                 // were focussed
-                                if (oldChild.hasData('focussed') && !newChild.hasClass('focussed')) {
+                                if (oldChild._data && oldChild._data.focussed && !newChild.hasClass('focussed')) {
                                     newChild.classNames.push('focussed');
                                     if (newChild.attrs[CLASS]) {
                                         newChild.attrs[CLASS] = newChild.attrs[CLASS] + ' focussed';
@@ -20673,7 +20673,7 @@ module.exports = function (window) {
                                         newChild.attrs[CLASS] = 'focussed';
                                     }
                                 }
-                                if (oldChild.getData('fm-tabindex')==='true') {
+                                if (oldChild._data && oldChild._data['fm-tabindex']) {
                                     // node has the tabindex set by the focusmanager,
                                     // but that info might got lost with re-rendering of the new element
                                     newChild.attrs.tabIndex = '0';

@@ -327,7 +327,7 @@ module.exports = function (window) {
         // or re-rendering itags which don&#x27;t have the attribute-data.
         // otherwise, a refocus on the container will set the focus to the nearest item
         focusContainerNode.setData(&#x27;fm-lastitem-bkp&#x27;, index);
-        node.setData(&#x27;fm-tabindex&#x27;, &#x27;true&#x27;);
+        node.setData(&#x27;fm-tabindex&#x27;, true);
 
         node.setAttrs([
             {name: &#x27;tabIndex&#x27;, value: &#x27;0&#x27;},
@@ -444,7 +444,7 @@ module.exports = function (window) {
                 do {
                     // we also need to set the appropriate nodeData, so that when the itags re-render,
                     // they don&#x27;t reset this particular information
-                    node.setData(FOCUSSED);
+                    node.setData(FOCUSSED, true);
                     node.setClass(FOCUSSED, null, null, true);
                     node = (node===body) ? null : node.getParent();
                 } while (node);
