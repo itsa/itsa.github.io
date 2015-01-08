@@ -1778,13 +1778,15 @@ module.exports = function (window) {
                 prevVal = attrs[attributeName];
             // don&#x27;t check by !== --&gt; value isn&#x27;t parsed into a String yet
 
+            if (prevVal &amp;&amp; ((value===undefined) || (value===null))) {
+                instance._removeAttr(attributeName);
+                return instance;
+            }
+            // attribute-values are always Strings:
+            value = String(value);
+            // attribute-values will be stored without &amp;quot; or &amp;apos;
+            value = value.replace(/&amp;quot;/g, &#x27;&quot;&#x27;).replace(/&amp;apos;/g, &quot;&#x27;&quot;);
             if (prevVal!=value) {
-                if ((value===undefined) || (value===null)) {
-                    instance._removeAttr(attributeName);
-                    return instance;
-                }
-                // attribute-values are always Strings:
-                value = String(value);
                 attrs[attributeName] = value;
                 // in case of STYLE attribute --&gt; special treatment
                 if (attributeName===STYLE) {
@@ -1815,7 +1817,8 @@ module.exports = function (window) {
                     instance.id = value;
                     nodeids[value] = instance.domNode;
                 }
-                instance.domNode._setAttribute(attributeName, value);
+                // when set in the dom --&gt; quotes need to be set as &amp;quot;
+                instance.domNode._setAttribute(attributeName, value.replace(/&quot;/g, &#x27;&amp;quot;&#x27;));
                 instance._emit(prevVal ? EV_ATTRIBUTE_CHANGED : EV_ATTRIBUTE_INSERTED, attributeName, value, prevVal);
             }
             return instance;
