@@ -1939,7 +1939,7 @@ module.exports = function (window) {
                                 // this happens when an itag gets rerendered: its renderFn doesn&#x27;t know if any elements
                                 // were focussed
                                 if (oldChild._data &amp;&amp; oldChild._data.focussed &amp;&amp; !newChild.hasClass(&#x27;focussed&#x27;)) {
-                                    newChild.classNames.push(&#x27;focussed&#x27;);
+                                    newChild.classNames.focussed = true;
                                     if (newChild.attrs[CLASS]) {
                                         newChild.attrs[CLASS] = newChild.attrs[CLASS] + &#x27; focussed&#x27;;
                                     }
