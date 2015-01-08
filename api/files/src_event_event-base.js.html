@@ -1084,6 +1084,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
                     e._unPreventable = customEventDefinition.unPreventable;
                     e._unHaltable = customEventDefinition.unHaltable;
                     e._unRenderPreventable = customEventDefinition.unRenderPreventable;
+                    e._noRender = customEventDefinition.noRender;
                     customEventDefinition.unSilencable &amp;&amp; (e.status.unSilencable = true);
                 }
                 if (payload) {
@@ -1129,7 +1130,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
                     // then we reset e.target to its original:
                     e.sourceTarget &amp;&amp; (e.target=e.sourceTarget);
                     instance._final.some(function(finallySubscriber) {
-                        !e.silent &amp;&amp; finallySubscriber(e);
+                        !e.silent &amp;&amp; !e._noRender &amp;&amp; !e.status.renderPrevented  &amp;&amp; finallySubscriber(e);
                         if (e.status.unSilencable &amp;&amp; e.silent) {
                             console.warn(NAME, &#x27; event &#x27;+e.emitter+&#x27;:&#x27;+e.type+&#x27; cannot made silent: this customEvent is defined as unSilencable&#x27;);
                             e.silent = false;
