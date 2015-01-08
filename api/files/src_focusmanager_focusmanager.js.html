@@ -228,7 +228,8 @@ var NAME = &#x27;[focusmanager]: &#x27;,
     DEFAULT_KEYDOWN = &#x27;9&#x27;,
     FM_SELECTION = &#x27;fm-selection&#x27;,
     FM_SELECTION_START = FM_SELECTION+&#x27;start&#x27;,
-    FM_SELECTION_END = FM_SELECTION+&#x27;end&#x27;;
+    FM_SELECTION_END = FM_SELECTION+&#x27;end&#x27;,
+    FOCUSSED = &#x27;focussed&#x27;;
 
 module.exports = function (window) {
 
@@ -315,17 +316,23 @@ module.exports = function (window) {
     markAsFocussed = function(focusContainerNode, node) {
         console.log(NAME+&#x27;markAsFocussed&#x27;);
         var selector = getFocusManagerSelector(focusContainerNode),
-            index;
+            index = focusContainerNode.getAll(selector).indexOf(node) || 0;
+        // we also need to set the appropriate nodeData, so that when the itags re-render,
+        // they don&#x27;t reset this particular information
+        focusContainerNode.getAll(&#x27;[fm-lastitem]&#x27;)
+                          .removeAttrs([&#x27;fm-lastitem&#x27;, &#x27;tabIndex&#x27;], true)
+                          .removeData(&#x27;fm-tabindex&#x27;);
 
-        focusContainerNode.getAll(&#x27;[fm-lastitem]&#x27;).removeAttr(&#x27;fm-lastitem&#x27;);
+        // also store the lastitem&#x27;s index --&gt; in case the node gets removed,
+        // or re-rendering itags which don&#x27;t have the attribute-data.
+        // otherwise, a refocus on the container will set the focus to the nearest item
+        focusContainerNode.setData(&#x27;fm-lastitem-bkp&#x27;, index);
+        node.setData(&#x27;fm-tabindex&#x27;, &#x27;true&#x27;);
+
         node.setAttrs([
             {name: &#x27;tabIndex&#x27;, value: &#x27;0&#x27;},
             {name: &#x27;fm-lastitem&#x27;, value: true}
         ]);
-        // also store the lastitem&#x27;s index --&gt; in case the node gets removed,
-        // a refocus on the container will set the focus to the nearest item
-        index = focusContainerNode.getAll(selector).indexOf(node) || 0;
-        focusContainerNode.setAttr(&#x27;fm-lastitem-bpk&#x27;, index);
     };
 
     searchFocusNode = function(initialNode) {
@@ -351,7 +358,7 @@ module.exports = function (window) {
                         // set &#x60;selector&#x60; right now: we might use it later on even when index is undefined
                         selector = getFocusManagerSelector(focusContainerNode);
                         // look at the lastitemindex of the focuscontainer
-                        index = focusContainerNode.getAttr(&#x27;fm-lastitem-bpk&#x27;);
+                        index = focusContainerNode.getData(&#x27;fm-lastitem-bkp&#x27;);
                         if (index!==undefined) {
                             allFocusableNodes = focusContainerNode.getAll(selector);
                             focusNode = allFocusableNodes[index];
@@ -419,9 +426,11 @@ module.exports = function (window) {
             var node = e.target,
                 body = DOCUMENT.body;
             if (node &amp;&amp; node.removeAttr) {
-                node.removeAttr(&#x27;tabIndex&#x27;);
                 do {
-                    node.removeClass(&#x27;focussed&#x27;);
+                    // we also need to set the appropriate nodeData, so that when the itags re-render,
+                    // they don&#x27;t reset this particular information
+                    node.removeData(FOCUSSED);
+                    node.removeClass(FOCUSSED, null, null, true);
                     node = (node===body) ? null : node.getParent();
                 } while (node);
             }
@@ -433,7 +442,10 @@ module.exports = function (window) {
                 body = DOCUMENT.body;
             if (node &amp;&amp; node.setClass) {
                 do {
-                    node.setClass(&#x27;focussed&#x27;);
+                    // we also need to set the appropriate nodeData, so that when the itags re-render,
+                    // they don&#x27;t reset this particular information
+                    node.setData(FOCUSSED);
+                    node.setClass(FOCUSSED, null, null, true);
                     node = (node===body) ? null : node.getParent();
                 } while (node);
             }

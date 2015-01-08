@@ -5485,7 +5485,7 @@ module.exports = function (window) {
     return DD_Object;
 
 };
-},{"./css/drag-drop.css":10,"drag":13,"event-dom":14,"js-ext":30,"polyfill/polyfill-base.js":42,"useragent":43,"vdom":57,"window-ext":58}],12:[function(require,module,exports){
+},{"./css/drag-drop.css":10,"drag":13,"event-dom":14,"js-ext":30,"polyfill/polyfill-base.js":43,"useragent":44,"vdom":58,"window-ext":59}],12:[function(require,module,exports){
 module.exports=require(10)
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],13:[function(require,module,exports){
 "use strict";
@@ -6136,7 +6136,7 @@ module.exports = function (window) {
 
     return DD_Object;
 };
-},{"./css/drag.css":12,"event-dom":14,"js-ext":30,"polyfill":42,"useragent":43,"vdom":57,"window-ext":58}],14:[function(require,module,exports){
+},{"./css/drag.css":12,"event-dom":14,"js-ext":30,"polyfill":43,"useragent":44,"vdom":58,"window-ext":59}],14:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6746,7 +6746,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":21,"js-ext/lib/array.js":31,"js-ext/lib/object.js":33,"js-ext/lib/string.js":35,"polyfill/polyfill-base.js":42,"utils":44,"vdom":57}],15:[function(require,module,exports){
+},{"event":21,"js-ext/lib/array.js":31,"js-ext/lib/object.js":34,"js-ext/lib/string.js":36,"polyfill/polyfill-base.js":43,"utils":45,"vdom":58}],15:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6847,7 +6847,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":14,"js-ext/lib/object.js":33}],16:[function(require,module,exports){
+},{"../event-dom.js":14,"js-ext/lib/object.js":34}],16:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7108,7 +7108,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":14,"js-ext/lib/object.js":33,"utils":44,"vdom":57}],17:[function(require,module,exports){
+},{"../event-dom.js":14,"js-ext/lib/object.js":34,"utils":45,"vdom":58}],17:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8521,7 +8521,7 @@ require('js-ext/lib/object.js');
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/lib/function.js":32,"js-ext/lib/object.js":33,"polyfill/polyfill-base.js":42}],19:[function(require,module,exports){
+},{"js-ext/lib/function.js":32,"js-ext/lib/object.js":34,"polyfill/polyfill-base.js":43}],19:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8821,7 +8821,8 @@ var NAME = '[focusmanager]: ',
     DEFAULT_KEYDOWN = '9',
     FM_SELECTION = 'fm-selection',
     FM_SELECTION_START = FM_SELECTION+'start',
-    FM_SELECTION_END = FM_SELECTION+'end';
+    FM_SELECTION_END = FM_SELECTION+'end',
+    FOCUSSED = 'focussed';
 
 module.exports = function (window) {
 
@@ -8908,17 +8909,23 @@ module.exports = function (window) {
     markAsFocussed = function(focusContainerNode, node) {
         console.log(NAME+'markAsFocussed');
         var selector = getFocusManagerSelector(focusContainerNode),
-            index;
+            index = focusContainerNode.getAll(selector).indexOf(node) || 0;
+        // we also need to set the appropriate nodeData, so that when the itags re-render,
+        // they don't reset this particular information
+        focusContainerNode.getAll('[fm-lastitem]')
+                          .removeAttrs(['fm-lastitem', 'tabIndex'], true)
+                          .removeData('fm-tabindex');
 
-        focusContainerNode.getAll('[fm-lastitem]').removeAttr('fm-lastitem');
+        // also store the lastitem's index --> in case the node gets removed,
+        // or re-rendering itags which don't have the attribute-data.
+        // otherwise, a refocus on the container will set the focus to the nearest item
+        focusContainerNode.setData('fm-lastitem-bkp', index);
+        node.setData('fm-tabindex', 'true');
+
         node.setAttrs([
             {name: 'tabIndex', value: '0'},
             {name: 'fm-lastitem', value: true}
         ]);
-        // also store the lastitem's index --> in case the node gets removed,
-        // a refocus on the container will set the focus to the nearest item
-        index = focusContainerNode.getAll(selector).indexOf(node) || 0;
-        focusContainerNode.setAttr('fm-lastitem-bpk', index);
     };
 
     searchFocusNode = function(initialNode) {
@@ -8944,7 +8951,7 @@ module.exports = function (window) {
                         // set `selector` right now: we might use it later on even when index is undefined
                         selector = getFocusManagerSelector(focusContainerNode);
                         // look at the lastitemindex of the focuscontainer
-                        index = focusContainerNode.getAttr('fm-lastitem-bpk');
+                        index = focusContainerNode.getData('fm-lastitem-bkp');
                         if (index!==undefined) {
                             allFocusableNodes = focusContainerNode.getAll(selector);
                             focusNode = allFocusableNodes[index];
@@ -9012,9 +9019,11 @@ module.exports = function (window) {
             var node = e.target,
                 body = DOCUMENT.body;
             if (node && node.removeAttr) {
-                node.removeAttr('tabIndex');
                 do {
-                    node.removeClass('focussed');
+                    // we also need to set the appropriate nodeData, so that when the itags re-render,
+                    // they don't reset this particular information
+                    node.removeData(FOCUSSED);
+                    node.removeClass(FOCUSSED, null, null, true);
                     node = (node===body) ? null : node.getParent();
                 } while (node);
             }
@@ -9026,7 +9035,10 @@ module.exports = function (window) {
                 body = DOCUMENT.body;
             if (node && node.setClass) {
                 do {
-                    node.setClass('focussed');
+                    // we also need to set the appropriate nodeData, so that when the itags re-render,
+                    // they don't reset this particular information
+                    node.setData(FOCUSSED);
+                    node.setClass(FOCUSSED, null, null, true);
                     node = (node===body) ? null : node.getParent();
                 } while (node);
             }
@@ -9118,7 +9130,7 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"event-dom":14,"js-ext/lib/object.js":33,"polyfill":42,"utils":44,"vdom":57}],23:[function(require,module,exports){
+},{"event-dom":14,"js-ext/lib/object.js":34,"polyfill":43,"utils":45,"vdom":58}],23:[function(require,module,exports){
 
 "use strict";
 
@@ -9245,7 +9257,7 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"../io.js":27,"js-ext/lib/object.js":33,"xmldom":3}],24:[function(require,module,exports){
+},{"../io.js":27,"js-ext/lib/object.js":34,"xmldom":3}],24:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -9371,7 +9383,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":27,"js-ext/lib/object.js":33}],25:[function(require,module,exports){
+},{"../io.js":27,"js-ext/lib/object.js":34}],25:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9807,7 +9819,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":27,"js-ext/lib/object.js":33,"js-ext/lib/string.js":35,"polyfill/polyfill-base.js":42}],26:[function(require,module,exports){
+},{"../io.js":27,"js-ext/lib/object.js":34,"js-ext/lib/string.js":36,"polyfill/polyfill-base.js":43}],26:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10270,7 +10282,7 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":30,"polyfill/polyfill-base.js":42}],28:[function(require,module,exports){
+},{"js-ext":30,"polyfill/polyfill-base.js":43}],28:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -10365,7 +10377,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":31,"../lib/function.js":32,"../lib/object.js":33,"polyfill/lib/weakmap.js":40}],29:[function(require,module,exports){
+},{"../lib/array.js":31,"../lib/function.js":32,"../lib/object.js":34,"polyfill/lib/weakmap.js":41}],29:[function(require,module,exports){
 module.exports = {
     'abstract': true,
     'arguments': true,
@@ -10439,8 +10451,9 @@ require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
 require('./lib/array.js');
+require('./lib/json.js');
 require('./lib/promise.js');
-},{"./lib/array.js":31,"./lib/function.js":32,"./lib/object.js":33,"./lib/promise.js":34,"./lib/string.js":35}],31:[function(require,module,exports){
+},{"./lib/array.js":31,"./lib/function.js":32,"./lib/json.js":33,"./lib/object.js":34,"./lib/promise.js":35,"./lib/string.js":36}],31:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -10591,7 +10604,7 @@ var cloneObj = function(obj) {
      };
 
 }(Array.prototype));
-},{"polyfill/polyfill-base.js":42}],32:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":43}],32:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -10792,7 +10805,37 @@ defineProperties(Function.prototype, {
 defineProperty(Object.prototype, 'createClass', function () {
 	return Function.prototype.subClass.apply(this, arguments);
 });
-},{"polyfill/polyfill-base.js":42}],33:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":43}],33:[function(require,module,exports){
+/**
+ *
+ * Pollyfils for often used functionality for Arrays
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module js-ext
+ * @submodule lib/array.js
+ * @class Array
+ *
+ */
+
+"use strict";
+
+require('polyfill/polyfill-base.js');
+
+JSON.stringifyAttr = function(obj, quotes) {
+    var regexp, replacement;
+    if (quotes) {
+        regexp = /"/g;
+        replacement = '&quot;';
+    }
+    else {
+        regexp = /'/g;
+        replacement = '&apos;';
+    }
+    return this.stringify(obj).replace(regexp, replacement);
+};
+},{"polyfill/polyfill-base.js":43}],34:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -11077,7 +11120,7 @@ defineProperties(Object.prototype, {
             keys = Object.keys(this),
             l = keys.length,
             i = -1,
-            key, attr, value;
+            key, value;
         // loop through the members:
         while (++i < l) {
             key = keys[i];
@@ -11185,7 +11228,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"polyfill/polyfill-base.js":42}],34:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":43}],35:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11490,7 +11533,7 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill":42}],35:[function(require,module,exports){
+},{"polyfill":43}],36:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -11722,7 +11765,7 @@ Promise.manage = function (callbackFn) {
 
 }(String.prototype));
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 "use strict";
 
 /*
@@ -11772,7 +11815,7 @@ module.exports = function (window) {
 
     return transition;
 };
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
@@ -11814,7 +11857,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -11883,7 +11926,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -11907,7 +11950,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/Gozala/1269991
 
@@ -12017,7 +12060,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -12036,10 +12079,10 @@ module.exports = function (window) {
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":39,"./lib/window.console.js":41}],43:[function(require,module,exports){
+},{"./lib/matchesselector.js":40,"./lib/window.console.js":42}],44:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12078,7 +12121,7 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"js-ext/lib/object.js":33,"polyfill":42}],44:[function(require,module,exports){
+},{"js-ext/lib/object.js":34,"polyfill":43}],45:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
@@ -12086,7 +12129,7 @@ module.exports = {
     async: require('./lib/timers.js').async,
     asyncSilent: require('./lib/timers.js').asyncSilent
 };
-},{"./lib/idgenerator.js":45,"./lib/timers.js":46}],45:[function(require,module,exports){
+},{"./lib/idgenerator.js":46,"./lib/timers.js":47}],46:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -12143,7 +12186,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"polyfill/polyfill-base.js":42}],46:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":43}],47:[function(require,module,exports){
 (function (global){
 /**
  * Collection of various utility functions.
@@ -12353,9 +12396,9 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"polyfill/polyfill-base.js":42}],47:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":43}],48:[function(require,module,exports){
 var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n.itsa-invisible,\n.itsa-invisible-relative {\n    visibility: hidden !important;\n    z-index: -1;\n}\n\n.itsa-invisible *,\n.itsa-invisible-relative * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n.itsa-hidden {\n    visibility: hidden !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],48:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],49:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12651,7 +12694,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/lib/object.js":33,"js-ext/lib/string.js":35,"polyfill":42,"polyfill/extra/transition.js":36,"polyfill/extra/vendorCSS.js":38}],49:[function(require,module,exports){
+},{"js-ext/lib/object.js":34,"js-ext/lib/string.js":36,"polyfill":43,"polyfill/extra/transition.js":37,"polyfill/extra/vendorCSS.js":39}],50:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12776,11 +12819,30 @@ module.exports = function (window) {
             *
             * @method removeAttr
             * @param attributeName {String}
-            * @return {Boolean} Whether the HtmlElement has the attribute set.
+            * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
+            * @chainable
             * @since 0.0.1
             */
-            removeAttr: function(/* attributeName */) {
+            removeAttr: function(/* attributeName, silent */) {
                 return forEach(this, 'removeAttr', arguments);
+            },
+
+           /**
+            * For all vElements of the ElementArray:
+             * Removes multiple attributes on the Element.
+             * The argument should be one ore more AttributeNames.
+             *
+             * @example
+             * instance.removeAttrs(['tabIndex', 'style']);
+             *
+             * @method removeAttrs
+             * @param attributeData {Array|String}
+             * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
+            * @chainable
+            * @since 0.0.1
+            */
+            removeAttrs: function(/* attributeData, silent */) {
+                return forEach(this, 'removeAttrs', arguments);
             },
 
            /**
@@ -12881,11 +12943,33 @@ module.exports = function (window) {
             * @method setAttr
             * @param attributeName {String}
             * @param value {Any} the value that belongs to `key`
+            * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
             * @chainable
             * @since 0.0.1
            */
-            setAttr: function(/* attributeName, value */) {
+            setAttr: function(/* attributeData, silent */) {
                 return forEach(this, 'setAttr', arguments);
+            },
+
+           /**
+            * For all vElements of the ElementArray:
+             * Sets multiple attributes on the Element with the specified value.
+             * The argument should be one ore more Objects with the properties: `name` and `value`
+             *
+             * @example
+             * instance.setAttrs([
+             *                      {name: 'tabIndex', value: '0'},
+             *                      {name: 'style', value: 'color: #000;'}
+             *                  ]);
+             *
+             * @method setAttrs
+             * @param attributeData {Array|Object}
+             * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
+            * @chainable
+            * @since 0.0.1
+           */
+            setAttrs: function(/* attributeName, value, silent */) {
+                return forEach(this, 'setAttrs', arguments);
             },
 
            /**
@@ -13036,7 +13120,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/lib/object.js":33,"polyfill":42}],50:[function(require,module,exports){
+},{"js-ext/lib/object.js":34,"polyfill":43}],51:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13168,7 +13252,7 @@ module.exports = function (window) {
 
     return ElementPlugin;
 };
-},{"js-ext/lib/object.js":33,"js-ext/lib/string.js":35,"polyfill":42}],51:[function(require,module,exports){
+},{"js-ext/lib/object.js":34,"js-ext/lib/string.js":36,"polyfill":43}],52:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13878,7 +13962,7 @@ module.exports = function (window) {
 
 
 
-},{"./vdom-ns.js":55,"js-ext/lib/object.js":33,"js-ext/lib/string.js":35,"polyfill":42}],52:[function(require,module,exports){
+},{"./vdom-ns.js":56,"js-ext/lib/object.js":34,"js-ext/lib/string.js":36,"polyfill":43}],53:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -16132,11 +16216,14 @@ module.exports = function (window) {
         *
         * @method removeAttr
         * @param attributeName {String}
+        * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.removeAttr = function(/* attributeName */) {
-            this.removeAttribute.apply(this, arguments);
+        ElementPrototype.removeAttr = function(attributeName, silent) {
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
+            this.removeAttribute(attributeName);
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
             return this;
         };
 
@@ -16149,15 +16236,18 @@ module.exports = function (window) {
          *
          * @method removeAttrs
          * @param attributeData {Array|String}
+         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
          * @chainable
          * @since 0.0.1
         */
-        ElementPrototype.removeAttrs = function(attributeData) {
+        ElementPrototype.removeAttrs = function(attributeData, silent) {
             var instance = this;
             Array.isArray(attributeData) || (attributeData=[attributeData]);
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             attributeData.forEach(function(item) {
                 instance.removeAttribute(item);
             });
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
             return instance;
         };
 
@@ -16200,6 +16290,7 @@ module.exports = function (window) {
         *        Setting this parameter, will calculate the true css of the transitioned properties and set this temporarely inline, to fix the issue.
         *        Don't use it when not needed, it has a slightly performancehit.
         *        No need to set when `returnPromise` is set --> returnPromise always handles the transitionFix.
+        * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         * @return {Promise|this} In case `returnPromise` is set, a Promise returns with the next handles:
         *        <ul>
         *            <li>cancel() {Promise}</li>
@@ -16210,11 +16301,22 @@ module.exports = function (window) {
         *        These handles resolve with the `elapsed-time` as first argument of the callbackFn
         * @since 0.0.1
         */
-        ElementPrototype.removeClass = function(className, returnPromise, transitionFix) {
+        ElementPrototype.removeClass = function(className, returnPromise, transitionFix, silent) {
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             var instance = this,
                 transPromise = (returnPromise || transitionFix) && getClassTransPromise(instance, REMOVE, className),
                 returnValue = returnPromise ? transPromise : instance;
             transPromise || instance.getClassList().remove(className);
+            if (silent && DOCUMENT.suppressMutationEvents) {
+                if (returnValue===instance) {
+                    DOCUMENT.suppressMutationEvents(false);
+                }
+                else {
+                    returnValue.finally(function() {
+                        DOCUMENT.suppressMutationEvents(false);
+                    });
+                }
+            }
             return returnValue;
         };
 
@@ -16550,6 +16652,7 @@ module.exports = function (window) {
         *        Setting this parameter, will calculate the true css of the transitioned properties and set this temporarely inline, to fix the issue.
         *        Don't use it when not needed, it has a slightly performancehit.
         *        No need to set when `returnPromise` is set --> returnPromise always handles the transitionFix.
+        * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         * @return {Promise|this} In case `returnPromise` is set, a Promise returns with the next handles:
         *        <ul>
         *            <li>cancel() {Promise}</li>
@@ -16560,7 +16663,8 @@ module.exports = function (window) {
         *        These handles resolve with the `elapsed-time` as first argument of the callbackFn
         * @since 0.0.1
         */
-        ElementPrototype.replaceClass = function(prevClassName, newClassName, force, returnPromise, transitionFix) {
+        ElementPrototype.replaceClass = function(prevClassName, newClassName, force, returnPromise, transitionFix, silent) {
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             var instance = this,
                 transPromise = (returnPromise || transitionFix) && getClassTransPromise(instance, REPLACE, newClassName, prevClassName, force),
                 returnValue;
@@ -16568,6 +16672,16 @@ module.exports = function (window) {
                 returnValue = returnPromise ? transPromise : instance;
                 transPromise || instance.removeClass(prevClassName).setClass(newClassName);
                 return returnValue;
+            }
+            if (silent && DOCUMENT.suppressMutationEvents) {
+                if (returnValue===instance) {
+                    DOCUMENT.suppressMutationEvents(false);
+                }
+                else {
+                    returnValue.finally(function() {
+                        DOCUMENT.suppressMutationEvents(false);
+                    });
+                }
             }
             return returnPromise ? window.Promise.resolve() : instance;
         };
@@ -16597,12 +16711,15 @@ module.exports = function (window) {
          * @method setAttr
          * @param attributeName {String}
          * @param value {Any} the value that belongs to `key`
+         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
          * @chainable
          * @since 0.0.1
         */
-        ElementPrototype.setAttr = function(/* attributeName, value */) {
+        ElementPrototype.setAttr = function(attributeName, value, silent) {
             var instance = this;
-            instance.setAttribute.apply(instance, arguments);
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
+            instance.setAttribute(attributeName, value);
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
             return instance;
         };
 
@@ -16635,15 +16752,18 @@ module.exports = function (window) {
          *
          * @method setAttrs
          * @param attributeData {Array|Object}
+         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
          * @chainable
          * @since 0.0.1
         */
-        ElementPrototype.setAttrs = function(attributeData) {
+        ElementPrototype.setAttrs = function(attributeData, silent) {
             var instance = this;
             Array.isArray(attributeData) || (attributeData=[attributeData]);
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             attributeData.forEach(function(item) {
                 instance.setAttribute(item.name, item.value);
             });
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
             return instance;
         };
 
@@ -16658,6 +16778,7 @@ module.exports = function (window) {
         *        Setting this parameter, will calculate the true css of the transitioned properties and set this temporarely inline, to fix the issue.
         *        Don't use it when not needed, it has a slightly performancehit.
         *        No need to set when `returnPromise` is set --> returnPromise always handles the transitionFix.
+        * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         * @return {Promise|this} In case `returnPromise` is set, a Promise returns with the next handles:
         *        <ul>
         *            <li>cancel() {Promise}</li>
@@ -16668,11 +16789,22 @@ module.exports = function (window) {
         *        These handles resolve with the `elapsed-time` as first argument of the callbackFn
         * @since 0.0.1
         */
-        ElementPrototype.setClass = function(className, returnPromise, transitionFix) {
+        ElementPrototype.setClass = function(className, returnPromise, transitionFix, silent) {
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             var instance = this,
                 transPromise = (returnPromise || transitionFix) && getClassTransPromise(instance, SET, className),
                 returnValue = returnPromise ? transPromise : instance;
             transPromise || instance.getClassList().add(className);
+            if (silent && DOCUMENT.suppressMutationEvents) {
+                if (returnValue===instance) {
+                    DOCUMENT.suppressMutationEvents(false);
+                }
+                else {
+                    returnValue.finally(function() {
+                        DOCUMENT.suppressMutationEvents(false);
+                    });
+                }
+            }
             return returnValue;
         };
 
@@ -17545,6 +17677,7 @@ module.exports = function (window) {
         *        Setting this parameter, will calculate the true css of the transitioned properties and set this temporarely inline, to fix the issue.
         *        Don't use it when not needed, it has a slightly performancehit.
         *        No need to set when `returnPromise` is set --> returnPromise always handles the transitionFix.
+        * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         * @return {Promise|this} In case `returnPromise` is set, a Promise returns with the next handles:
         *        <ul>
         *            <li>cancel() {Promise}</li>
@@ -17555,11 +17688,22 @@ module.exports = function (window) {
         *        These handles resolve with the `elapsed-time` as first argument of the callbackFn
         * @since 0.0.1
         */
-        ElementPrototype.toggleClass = function(className, forceState, returnPromise, transitionFix) {
+        ElementPrototype.toggleClass = function(className, forceState, returnPromise, transitionFix, silent) {
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             var instance = this,
                 transPromise = (returnPromise || transitionFix) && getClassTransPromise(instance, TOGGLE, className, forceState),
                 returnValue = returnPromise ? transPromise : instance;
             transPromise || instance.getClassList().toggle(className, forceState);
+            if (silent && DOCUMENT.suppressMutationEvents) {
+                if (returnValue===instance) {
+                    DOCUMENT.suppressMutationEvents(false);
+                }
+                else {
+                    returnValue.finally(function() {
+                        DOCUMENT.suppressMutationEvents(false);
+                    });
+                }
+            }
             return returnValue;
         };
 
@@ -18232,7 +18376,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":47,"./attribute-extractor.js":48,"./element-array.js":49,"./html-parser.js":53,"./node-parser.js":54,"./vdom-ns.js":55,"./vnode.js":56,"js-ext/lib/object.js":33,"js-ext/lib/promise.js":34,"js-ext/lib/string.js":35,"polyfill":42,"polyfill/extra/transition.js":36,"polyfill/extra/transitionend.js":37,"polyfill/extra/vendorCSS.js":38,"utils":44,"window-ext":58}],53:[function(require,module,exports){
+},{"../css/element.css":48,"./attribute-extractor.js":49,"./element-array.js":50,"./html-parser.js":54,"./node-parser.js":55,"./vdom-ns.js":56,"./vnode.js":57,"js-ext/lib/object.js":34,"js-ext/lib/promise.js":35,"js-ext/lib/string.js":36,"polyfill":43,"polyfill/extra/transition.js":37,"polyfill/extra/transitionend.js":38,"polyfill/extra/vendorCSS.js":39,"utils":45,"window-ext":59}],54:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18558,7 +18702,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":48,"./vdom-ns.js":55,"js-ext/lib/object.js":33,"polyfill":42}],54:[function(require,module,exports){
+},{"./attribute-extractor.js":49,"./vdom-ns.js":56,"js-ext/lib/object.js":34,"polyfill":43}],55:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18677,7 +18821,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":48,"./vdom-ns.js":55,"./vnode.js":56,"js-ext/lib/object.js":33,"polyfill":42}],55:[function(require,module,exports){
+},{"./attribute-extractor.js":49,"./vdom-ns.js":56,"./vnode.js":57,"js-ext/lib/object.js":34,"polyfill":43}],56:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -18779,7 +18923,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/lib/object.js":33,"polyfill":42}],56:[function(require,module,exports){
+},{"js-ext/lib/object.js":34,"polyfill":43}],57:[function(require,module,exports){
 "use strict";
 
 /**
@@ -20517,11 +20661,27 @@ module.exports = function (window) {
                             }
                             else {
                                 // same tag --> only update what is needed
-                                oldChild.attrs = newChild.attrs;
+                                // first: we might need to set the class `focussed` when the attributeData says so:
+                                // this happens when an itag gets rerendered: its renderFn doesn't know if any elements
+                                // were focussed
+                                if (oldChild.hasData('focussed') && !newChild.hasClass('focussed')) {
+                                    newChild.classNames.push('focussed');
+                                    if (newChild.attrs[CLASS]) {
+                                        newChild.attrs[CLASS] = newChild.attrs[CLASS] + ' focussed';
+                                    }
+                                    else {
+                                        newChild.attrs[CLASS] = 'focussed';
+                                    }
+                                }
+                                if (oldChild.getData('fm-tabindex')==='true') {
+                                    // node has the tabindex set by the focusmanager,
+                                    // but that info might got lost with re-rendering of the new element
+                                    newChild.attrs.tabIndex = '0';
+                                }
                                 oldChild._setAttrs(newChild.attrs);
                                 // next: sync the vChildNodes:
                                 oldChild._setChildNodes(newChild.vChildNodes);
-                                // reset ref. to the domNode, for it might heva been changed by newChild:
+                                // reset ref. to the domNode, for it might have been changed by newChild:
                                 oldChild.id && (nodeids[oldChild.id]=childDomNode);
                                 newVChildNodes[i] = oldChild;
                             }
@@ -21128,7 +21288,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":48,"./html-parser.js":53,"./vdom-ns.js":55,"js-ext/extra/lightmap.js":28,"js-ext/lib/array.js":31,"js-ext/lib/object.js":33,"js-ext/lib/string.js":35,"polyfill":42,"utils/lib/timers.js":46}],57:[function(require,module,exports){
+},{"./attribute-extractor.js":49,"./html-parser.js":54,"./vdom-ns.js":56,"js-ext/extra/lightmap.js":28,"js-ext/lib/array.js":31,"js-ext/lib/object.js":34,"js-ext/lib/string.js":36,"polyfill":43,"utils/lib/timers.js":47}],58:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -21171,13 +21331,13 @@ module.exports = function (window) {
 
     return vdom;
 };
-},{"./partials/element-plugin.js":50,"./partials/extend-document.js":51,"./partials/extend-element.js":52,"./partials/node-parser.js":54,"js-ext/lib/object.js":33}],58:[function(require,module,exports){
+},{"./partials/element-plugin.js":51,"./partials/extend-document.js":52,"./partials/extend-element.js":53,"./partials/node-parser.js":55,"js-ext/lib/object.js":34}],59:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":59}],59:[function(require,module,exports){
+},{"./lib/sizes.js":60}],60:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -21280,7 +21440,7 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/lib/object.js":33}],"itsa":[function(require,module,exports){
+},{"js-ext/lib/object.js":34}],"itsa":[function(require,module,exports){
 (function (global){
 /**
  * The ITSA module is an aggregator for all the individual modules that the library uses.
@@ -21460,4 +21620,4 @@ module.exports = function (window) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"css":9,"drag-drop":11,"event":21,"event-dom/extra/hover.js":15,"event-dom/extra/valuechange.js":16,"event-mobile":17,"focusmanager":22,"io/extra/io-cors-ie9.js":23,"io/extra/io-stream.js":24,"io/extra/io-transfer.js":25,"io/extra/io-xml.js":26,"js-ext":30,"js-ext/extra/reserved-words.js":29,"node-win":undefined,"polyfill":42,"useragent":43,"utils":44,"vdom":57,"window-ext":58}]},{},[]);
+},{"css":9,"drag-drop":11,"event":21,"event-dom/extra/hover.js":15,"event-dom/extra/valuechange.js":16,"event-mobile":17,"focusmanager":22,"io/extra/io-cors-ie9.js":23,"io/extra/io-stream.js":24,"io/extra/io-transfer.js":25,"io/extra/io-xml.js":26,"js-ext":30,"js-ext/extra/reserved-words.js":29,"node-win":undefined,"polyfill":43,"useragent":44,"utils":45,"vdom":58,"window-ext":59}]},{},[]);
