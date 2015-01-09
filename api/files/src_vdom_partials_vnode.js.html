@@ -1913,6 +1913,7 @@ module.exports = function (window) {
                 childDomNode = oldChild.domNode;
                 if (i &lt; newLength) {
                     newChild = newVChildNodes[i];
+                    newChild.vParent || (newChild.vParent=instance);
 /*jshint boss:true */
                     switch (nodeswitch=NODESWITCH[oldChild.nodeType][newChild.nodeType]) {
 /*jshint boss:false */
