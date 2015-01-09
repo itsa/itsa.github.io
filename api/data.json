@@ -16270,6 +16270,15 @@
             "description": "Removes the Element from the DOM.\nAlias for thisNode.parentNode.removeChild(thisNode);",
             "itemtype": "method",
             "name": "remove",
+            "params": [
+                {
+                    "name": "silent",
+                    "description": "prevent node-mutation events by the Event-module to emit",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
             "return": {
                 "description": "the DOM-node that was removed. You could re-insert it at a later time.",
                 "type": "Node"
@@ -16281,7 +16290,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2246,
+            "line": 2249,
             "description": "Removes the attribute from the Element.\n\nAlias for removeAttribute() BUT is chainable instead (removeAttribute is not).",
             "itemtype": "method",
             "name": "removeAttr",
@@ -16307,7 +16316,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2264,
+            "line": 2267,
             "description": "Removes multiple attributes on the Element.\nThe argument should be one ore more AttributeNames.",
             "example": [
                 "\ninstance.removeAttrs(['tabIndex', 'style']);"
@@ -16336,7 +16345,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2288,
+            "line": 2291,
             "description": "Removes the attribute from the Element.\n\nUse removeAttr() to be able to chain.",
             "itemtype": "method",
             "name": "removeAttr",
@@ -16354,7 +16363,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2302,
+            "line": 2305,
             "description": "Removes the Element's child-Node from the DOM.",
             "itemtype": "method",
             "name": "removeChild",
@@ -16375,7 +16384,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2316,
+            "line": 2319,
             "description": "Removes a className from the Element.",
             "itemtype": "method",
             "name": "removeClass",
@@ -16415,7 +16424,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2357,
+            "line": 2360,
             "description": "Removes data specified by `key` that was set by using `setData()`.\nWhen no arguments are passed, all node-data (key-value pairs) will be removed.",
             "itemtype": "method",
             "name": "removeData",
@@ -16441,7 +16450,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2387,
+            "line": 2390,
             "description": "Removes the Elment's `id`.",
             "itemtype": "method",
             "name": "removeId",
@@ -16453,7 +16462,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2398,
+            "line": 2401,
             "description": "Removes a css-property (inline) out of the Element.\nNo need to use camelCase.",
             "itemtype": "method",
             "name": "removeInlineStyle",
@@ -16484,7 +16493,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2414,
+            "line": 2417,
             "description": "Removes multiple css-properties (inline) out of the Element. You need to supply an Array of Objects, with the properties:\n       <ul>\n           <li>property  {String}</li>\n           <li>pseudo  {String}</li>\n       <ul>\nNo need to use camelCase.",
             "itemtype": "method",
             "name": "removeInlineStyles",
@@ -16509,7 +16518,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2575,
+            "line": 2578,
             "description": "Removes a subtype `transform`-css-property of (inline) out of the Element.\nThis way you can sefely remove partial `transform`-properties while remaining the\nother inline `transform` css=properties.\n\nSee more about tranform-properties: https://developer.mozilla.org/en-US/docs/Web/CSS/transform",
             "itemtype": "method",
             "name": "removeInlineTransition",
@@ -16534,7 +16543,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2592,
+            "line": 2595,
             "description": "Removes multiple subtype `transform`-css-property of (inline) out of the Element.\nThis way you can sefely remove partial `transform`-properties while remaining the\nother inline `transform` css=properties.\nYou need to supply an Array of Objects, with the properties:\n       <ul>\n           <li>property  {String}</li>\n           <li>pseudo  {String}</li>\n       <ul>\n\nSee more about tranform-properties: https://developer.mozilla.org/en-US/docs/Web/CSS/transform",
             "itemtype": "method",
             "name": "removeInlineTransitions",
@@ -16553,7 +16562,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2639,
+            "line": 2642,
             "description": "Replaces the Element with a new Element.",
             "itemtype": "method",
             "name": "replace",
@@ -16581,7 +16590,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2660,
+            "line": 2663,
             "description": "Replaces the Element's child-Element with a new Element.",
             "itemtype": "method",
             "name": "replaceChild",
@@ -16614,7 +16623,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2675,
+            "line": 2678,
             "description": "Replaces the className of the Element with a new className.\nIf the previous className is not available, the new className is set nevertheless.",
             "itemtype": "method",
             "name": "replaceClass",
@@ -16664,7 +16673,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2723,
+            "line": 2726,
             "description": "Scrolls the content of the Element into the specified scrollposition.\nOnly available when the Element has overflow.",
             "itemtype": "method",
             "name": "scrollTo",
@@ -16688,7 +16697,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2740,
+            "line": 2743,
             "description": "Sets the attribute on the Element with the specified value.\n\nAlias for setAttribute(), BUT differs in a way that setAttr is chainable, setAttribute is not.",
             "itemtype": "method",
             "name": "setAttr",
@@ -16719,7 +16728,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2760,
+            "line": 2763,
             "description": "Sets the attribute on the Element with the specified value.\n\nAlias for setAttr(), BUT differs in a way that setAttr is chainable, setAttribute is not.",
             "itemtype": "method",
             "name": "setAttribute",
@@ -16741,7 +16750,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2777,
+            "line": 2780,
             "description": "Sets multiple attributes on the Element with the specified value.\nThe argument should be one ore more Objects with the properties: `name` and `value`",
             "example": [
                 "\ninstance.setAttrs([\n                     {name: 'tabIndex', value: '0'},\n                     {name: 'style', value: 'color: #000;'}\n                 ]);"
@@ -16770,7 +16779,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2804,
+            "line": 2807,
             "description": "Adds a class to the Element. If the class already exists it won't be duplicated.",
             "itemtype": "method",
             "name": "setClass",
@@ -16810,7 +16819,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2845,
+            "line": 2848,
             "description": "Stores arbitary `data` at the Element (actually at vnode). This has nothing to do with node-attributes whatsoever,\nit is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.",
             "itemtype": "method",
             "name": "setData",
@@ -16840,7 +16849,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2871,
+            "line": 2874,
             "description": "Sets the innerHTML of both the vnode as well as the representing dom-node.\nGoes through the vdom, so it's superfast.\n\nUse this method instead of `innerHTML`\n\nSyncs with the DOM.",
             "itemtype": "method",
             "name": "setHTML",
@@ -16866,7 +16875,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2893,
+            "line": 2896,
             "description": "Sets the Elments `id`",
             "itemtype": "method",
             "name": "setId",
@@ -16885,7 +16894,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2905,
+            "line": 2908,
             "description": "Sets a css-property (inline) for the Element.\n\nNote1: Do not use vendor-specific properties, but general (like `transform` instead of `-webkit-transform`)\n       This method will use the appropriate css-property.\nNote2: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "setInlineStyle",
@@ -16924,7 +16933,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2929,
+            "line": 2932,
             "description": "Sets multiple css-properties (inline) for the Element at once.\n\nNote1: Do not use vendor-specific properties, but general (like `transform` instead of `-webkit-transform`)\n       This method will use the appropriate css-property.\nNote2: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "setInlineStyles",
@@ -16952,7 +16961,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3110,
+            "line": 3113,
             "description": "Sets a transform-css-property (inline) for the Element.\n\nSee more about transitions: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transitions",
             "itemtype": "method",
             "name": "setStyle",
@@ -16993,7 +17002,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3129,
+            "line": 3132,
             "description": "Sets a transform-css-property (inline) for the Element.\n\nSee more about transitions: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transitions",
             "itemtype": "method",
             "name": "setStyle",
@@ -17018,7 +17027,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3176,
+            "line": 3179,
             "description": "Gets or sets the outerHTML of both the Element as well as the representing dom-node.\nGoes through the vdom, so it's superfast.\n\nUse this property instead of `outerHTML`\n\nSyncs with the DOM.",
             "itemtype": "method",
             "name": "setOuterHTML",
@@ -17044,7 +17053,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3198,
+            "line": 3201,
             "description": "Sets the innerContent of the Element as plain text.\nGoes through the vdom, so it's superfast.\n\nUse this method instead of `textContent`\n\nSyncs with the DOM.",
             "itemtype": "method",
             "name": "setText",
@@ -17070,7 +17079,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3220,
+            "line": 3223,
             "description": "Sets the value of the following Elements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>\n</ul>\n\nWill emit a `valuechange`-event when a new value is set and ITSA's `event`-module is active.",
             "itemtype": "method",
             "name": "setValue",
@@ -17089,7 +17098,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3267,
+            "line": 3270,
             "itemtype": "event",
             "name": "valuechange",
             "params": [
@@ -17110,7 +17119,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3276,
+            "line": 3279,
             "description": "Set the position of an html element in page coordinates.\nThe element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).\n\nIf the Element has the attribute `xy-constrian` set, then its position cannot exceed any matching container it lies within.",
             "itemtype": "method",
             "name": "setXY",
@@ -17150,7 +17159,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3431,
+            "line": 3434,
             "description": "Shows a previously hidden node.\nShows immediately without `fade`, or will fade-in when fade is specified.",
             "itemtype": "method",
             "name": "show",
@@ -17173,7 +17182,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3490,
+            "line": 3493,
             "description": "Transitions one ore more properties of the Element.",
             "itemtype": "method",
             "name": "toggleClass",
@@ -17201,7 +17210,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3702,
+            "line": 3705,
             "description": "Toggles the className of the Element.",
             "itemtype": "method",
             "name": "toggleClass",
@@ -17246,7 +17255,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3746,
+            "line": 3749,
             "description": "Gets or set the height of the element in pixels. Included are padding and border, not any margins.\nBy setting the argument `overflow` you get the total height, included the invisible overflow.\n\nThe getter is calculating through `offsetHeight`, the setter will set inline css-style for the height.\n\nValues are numbers without unity.",
             "itemtype": "property",
             "name": "height",
@@ -17258,7 +17267,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3773,
+            "line": 3776,
             "description": "Gets the x-position (in the DOCUMENT) of the element in pixels.\nDOCUMENT-related: regardless of the window's scroll-position.",
             "itemtype": "property",
             "name": "left",
@@ -17269,7 +17278,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3789,
+            "line": 3792,
             "description": "Gets the y-position (in the DOCUMENT) of the element in pixels.\nDOCUMENT-related: regardless of the window's scroll-position.",
             "itemtype": "property",
             "name": "top",
@@ -17280,7 +17289,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3805,
+            "line": 3808,
             "description": "Gets or set the width of the element in pixels. Included are padding and border, not any margins.\nBy setting the argument `overflow` you get the total width, included the invisible overflow.\n\nThe getter is calculating through `offsetHeight`, the setter will set inline css-style for the width.\n\nValues are numbers without unity.",
             "itemtype": "property",
             "name": "width",
@@ -17292,7 +17301,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3911,
+            "line": 3914,
             "description": "Returns the specified attribute of the specified element, as an Attr node.",
             "itemtype": "method",
             "name": "getAttributeNode",
@@ -17306,7 +17315,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3918,
+            "line": 3921,
             "description": "Returns a text rectangle object that encloses a group of text rectangles. The returned value is\na TextRectangle object which is the union of the rectangles returned by getClientRects() for the element,\ni.e., the CSS border-boxes associated with the element.\n\nThe returned value is a TextRectangle object, which contains read-only left, top, right and bottom properties\ndescribing the border-box in pixels. top and left are relative to the top-left of the viewport.",
             "itemtype": "method",
             "name": "getBoundingClientRect",
@@ -17320,7 +17329,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3930,
+            "line": 3933,
             "description": "Returns a collection of rectangles that indicate the bounding rectangles for each box in a client.\n\nThe returned value is a collection of ClientRect objects, one for each CSS border box associated with the element.\nEach ClientRect object contains read-only left, top, right and bottom properties describing the border box, in pixels,\nwith the top-left relative to the top-left of the viewport. For tables with captions,\nthe caption is included even though it's outside the border box of the table.",
             "itemtype": "method",
             "name": "getClientRects",
@@ -17334,7 +17343,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3942,
+            "line": 3945,
             "description": "Returns a new NodeIterator object with this Element as root.\n\nThe NodeIterator is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.",
             "itemtype": "method",
             "name": "createNodeIterator",
@@ -17363,7 +17372,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3960,
+            "line": 3963,
             "description": "Returns an HTMLCollection of all Elements within this Element, that match their classes with the supplied `classNames` argument.\nTo match multiple different classes, separate them with a `comma`.\n\ngetElementsByClassName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByClassName",
@@ -17384,7 +17393,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3973,
+            "line": 3976,
             "description": "Returns an HTMLCollection of all Elements within this Element, that match their `name`-attribute with the supplied `name` argument.\n\ngetElementsByName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByName",
@@ -17405,7 +17414,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3986,
+            "line": 3989,
             "description": "Returns an HTMLCollection of all Elements within this Element, that match their `name`-attribute with the supplied `name` argument.\n\ngetElementsByTagName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByTagName",
@@ -17426,7 +17435,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3998,
+            "line": 4001,
             "description": "Inserts the Element into the DOM tree at a specified position.",
             "itemtype": "method",
             "name": "insertAdjacentElement",
@@ -17448,7 +17457,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4012,
+            "line": 4015,
             "description": "Parses the specified text as HTML and inserts the resulting nodes into the DOM tree at a specified position.",
             "itemtype": "method",
             "name": "insertAdjacentHTML",
@@ -17470,7 +17479,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4026,
+            "line": 4029,
             "description": "Inserts the text into the DOM tree as a TextNode at a specified position.",
             "itemtype": "method",
             "name": "insertAdjacentText",
@@ -17492,7 +17501,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4040,
+            "line": 4043,
             "description": "Removes the attribute specified by an attributeNode from the Element.",
             "itemtype": "method",
             "name": "removeAttributeNode",
@@ -17510,7 +17519,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4048,
+            "line": 4051,
             "description": "Scrolls the element into view.",
             "itemtype": "method",
             "name": "scrollIntoView",
@@ -17520,7 +17529,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4054,
+            "line": 4057,
             "description": "Sets the attribute on the Element specified by `attributeNode`",
             "itemtype": "method",
             "name": "setAttributeNode",
@@ -17537,7 +17546,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4063,
+            "line": 4066,
             "description": "Fired when a static `script` element  finishes executing its script. Does not fire if the element is added dynamically, eg with appendChild().",
             "itemtype": "event",
             "name": "afterscriptexecute",
@@ -17547,7 +17556,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4070,
+            "line": 4073,
             "description": "Fired when the code in a `script` element declared in an HTML document is about to start executing. Does not fire if the element is added dynamically, eg with appendChild().",
             "itemtype": "event",
             "name": "beforescriptexecute",
@@ -17557,7 +17566,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4078,
+            "line": 4081,
             "description": "sets or returns an accesskey for an element. An accesskey specifies a shortcut key to activate/focus an element.\nNote: The way of accessing the shortcut key is varying in different browsers: http://www.w3schools.com/jsref/prop_html_accesskey.asp",
             "itemtype": "property",
             "name": "accessKey",
@@ -17568,7 +17577,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4087,
+            "line": 4090,
             "description": "Returns a live collection of all attribute nodes registered to the specified node.\nIt is a NamedNodeMap, not an Array, so it has no Array methods and the Attr nodes' indexes may differ among browsers.\nTo be more specific, attributes is a key/value pair of strings that represents any information regarding that attribute.\n\nPrefer to use `getAttrs()` which is much quicker, but doesn't return a life-list.",
             "itemtype": "property",
             "name": "attributes",
@@ -17579,7 +17588,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4098,
+            "line": 4101,
             "description": "The absolute base URL of a node.",
             "itemtype": "property",
             "name": "baseURI",
@@ -17591,7 +17600,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4106,
+            "line": 4109,
             "description": "Returns the number of children (child Elements)",
             "itemtype": "property",
             "name": "childElementCount",
@@ -17603,7 +17612,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4114,
+            "line": 4117,
             "description": "Returns a live collection of childNodes of the given element, either Element, TextNode or CommentNode",
             "itemtype": "property",
             "name": "childNodes",
@@ -17615,7 +17624,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4122,
+            "line": 4125,
             "description": "Returns a live collection of child Element's of the given element.",
             "itemtype": "property",
             "name": "children",
@@ -17627,7 +17636,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4130,
+            "line": 4133,
             "description": "Gets and sets the value of the class attribute of the specified element.",
             "itemtype": "property",
             "name": "className",
@@ -17638,7 +17647,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4137,
+            "line": 4140,
             "description": "Returns the inner height of an element in pixels, including padding but not the horizontal scrollbar height, border, or margin.",
             "itemtype": "property",
             "name": "clientHeight",
@@ -17650,7 +17659,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4145,
+            "line": 4148,
             "description": "The width of the left border of an element in pixels. It includes the width of the vertical scrollbar if the text direction of the element is right–to–left\nand if there is an overflow causing a left vertical scrollbar to be rendered. clientLeft does not include the left margin or the left padding.",
             "itemtype": "property",
             "name": "clientLeft",
@@ -17662,7 +17671,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4154,
+            "line": 4157,
             "description": "The width of the top border of an element in pixels. It does not include the top margin or padding.",
             "itemtype": "property",
             "name": "clientTop",
@@ -17674,7 +17683,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4162,
+            "line": 4165,
             "description": "Returns the inner width of an element in pixels, including padding but not the vertical scrollbar height, border, or margin.",
             "itemtype": "property",
             "name": "clientWidth",
@@ -17686,7 +17695,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4170,
+            "line": 4173,
             "description": "Reference to the first childNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nBetter work with Elements only:  use `firstElementChild` instead, which returns the first Element-child.",
             "itemtype": "property",
             "name": "firstChild",
@@ -17699,7 +17708,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4181,
+            "line": 4184,
             "description": "Reference to the first Element-child, which is an Element (nodeType===1).",
             "itemtype": "property",
             "name": "firstElementChild",
@@ -17711,7 +17720,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4189,
+            "line": 4192,
             "description": "Gets or sets the element's attribute `href`. Only applies for the `a`-element.",
             "itemtype": "property",
             "name": "href",
@@ -17722,7 +17731,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4196,
+            "line": 4199,
             "description": "Gets or sets the element's identifier (attribute id).",
             "itemtype": "property",
             "name": "id",
@@ -17733,7 +17742,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4203,
+            "line": 4206,
             "description": "Reference to the last childNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nBetter use `lastElementChild` instead, which returns the last Element-child.",
             "itemtype": "property",
             "name": "lastChild",
@@ -17746,7 +17755,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4214,
+            "line": 4217,
             "description": "Reference to the last Element-child, where the related dom-node is an Element (nodeType===1).",
             "itemtype": "property",
             "name": "lastElementChild",
@@ -17758,7 +17767,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4222,
+            "line": 4225,
             "description": "Gets or sets the `name` property of a Element; it only applies to the following elements:\n`a`, `applet`, `button`, `form`, `frame`, `iframe`, `img`, `input`, `map`, `meta`, `object`, `param`, `select`, and `textarea`.",
             "itemtype": "property",
             "name": "name",
@@ -17769,7 +17778,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4230,
+            "line": 4233,
             "description": "Returns the Element immediately following the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs an Element (nodeType===1).",
             "itemtype": "property",
             "name": "nextElementSibling",
@@ -17781,7 +17790,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4239,
+            "line": 4242,
             "description": "Returns the Element immediately following the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nDo not use this, but use `lastElementChild` instead, which returns the next Element-child.",
             "itemtype": "property",
             "name": "nextElementSibling",
@@ -17794,7 +17803,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4251,
+            "line": 4254,
             "description": "Elements tag-name",
             "itemtype": "property",
             "name": "nodeName",
@@ -17806,7 +17815,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4259,
+            "line": 4262,
             "description": "Elements nodetype: 1==Element, 3==TextNode, 8===CommentNode",
             "itemtype": "property",
             "name": "nodeType",
@@ -17818,7 +17827,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4267,
+            "line": 4270,
             "description": "Value/text for non-Element Nodes",
             "itemtype": "property",
             "name": "nodeValue",
@@ -17830,7 +17839,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4275,
+            "line": 4278,
             "description": "The exact width of the Element on the screen.\nIncluded borders and padding (no margin).\n\nReturns a number without unity.\n\nBetter use `width` --> it's an alias, but has a setter as well",
             "itemtype": "property",
             "name": "offsetWidth",
@@ -17843,7 +17852,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4289,
+            "line": 4292,
             "description": "The exact height of the Element on the screen.\nIncluded borders and padding (no margin).\n\nReturns a number without unity.\n\nBetter use `height` --> it's an alias, but has a setter as well",
             "itemtype": "property",
             "name": "offsetHeight",
@@ -17855,7 +17864,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4302,
+            "line": 4305,
             "description": "Returns the Element's parent Element.\n\nSame as `parentNode`",
             "itemtype": "property",
             "name": "parentElement",
@@ -17866,7 +17875,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4311,
+            "line": 4314,
             "description": "Returns the Element's parent Element.\n\nSame as `parentElement`",
             "itemtype": "property",
             "name": "parentNode",
@@ -17877,7 +17886,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4320,
+            "line": 4323,
             "description": "Returns the Element immediately preceding the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs an Element (nodeType===1).",
             "itemtype": "property",
             "name": "previousElementSibling",
@@ -17889,7 +17898,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4329,
+            "line": 4332,
             "description": "Returns the Element immediately preceding the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nDo not use this, but use `previousElementSibling` instead, which returns the previous Element-child.",
             "itemtype": "property",
             "name": "previousSibling",
@@ -17902,7 +17911,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4342,
+            "line": 4345,
             "description": "A measurement of the height of an element's content, including content not visible on the screen due to overflow.\nThe scrollHeight value is equal to the minimum clientHeight the element would require in order to fit all the content in the viewpoint\nwithout using a vertical scrollbar. It includes the element padding but not its margin.\n\nReturns a number without unity.",
             "itemtype": "property",
             "name": "scrollHeight",
@@ -17914,7 +17923,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4354,
+            "line": 4357,
             "description": "Gets or sets the number of pixels that an element's content is scrolled to the left.",
             "itemtype": "property",
             "name": "scrollLeft",
@@ -17925,7 +17934,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4361,
+            "line": 4364,
             "description": "Gets or sets the number of pixels that the content of an element is scrolled upward. An element's scrollTop is a measurement\nof the distance of an element's top to its topmost visible content. When an element content does not generate a vertical scrollbar,\nthen its scrollTop value defaults to 0.",
             "itemtype": "property",
             "name": "scrollTop",
@@ -17936,7 +17945,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4370,
+            "line": 4373,
             "description": "Returns either the width in pixels of the content of an element or the width of the element itself, whichever is greater.\nIf the element is wider than its content area (for example, if there are scroll bars for scrolling through the content),\nthe scrollWidth is larger than the clientWidth.\n\nReturns a number without unity.",
             "itemtype": "property",
             "name": "scrollWidth",
@@ -17948,7 +17957,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4382,
+            "line": 4385,
             "description": "Gets or sets the element's attribute `type`. Only applies for the `script`, `img` and `style`-elements.",
             "itemtype": "property",
             "name": "src",
@@ -17959,7 +17968,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4389,
+            "line": 4392,
             "description": "Gets or sets the element's attribute `style`.",
             "itemtype": "property",
             "name": "style",
@@ -17970,7 +17979,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4396,
+            "line": 4399,
             "description": "Gets or sets the element's attribute `type`. Only applies for the `input`-element.",
             "itemtype": "property",
             "name": "type",
@@ -17981,7 +17990,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4403,
+            "line": 4406,
             "description": "Gets or sets the value of an input or select Element.\n\nNote it is highly preferable to use getValue() and setValue().",
             "itemtype": "property",
             "name": "value",

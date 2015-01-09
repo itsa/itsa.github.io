@@ -8913,7 +8913,7 @@ module.exports = function (window) {
         // we also need to set the appropriate nodeData, so that when the itags re-render,
         // they don't reset this particular information
         focusContainerNode.getAll('[fm-lastitem]')
-                          .removeAttrs(['fm-lastitem', 'tabIndex'], true)
+                          .removeAttrs(['fm-lastitem', 'tabindex'], true)
                           .removeData('fm-tabindex');
 
         // also store the lastitem's index --> in case the node gets removed,
@@ -8923,7 +8923,7 @@ module.exports = function (window) {
         node.setData('fm-tabindex', true);
 
         node.setAttrs([
-            {name: 'tabIndex', value: '0'},
+            {name: 'tabindex', value: '0'},
             {name: 'fm-lastitem', value: true}
         ]);
     };
@@ -10823,17 +10823,12 @@ defineProperty(Object.prototype, 'createClass', function () {
 
 require('polyfill/polyfill-base.js');
 
-JSON.stringifyAttr = function(obj, quotes) {
-    var regexp, replacement;
-    if (quotes) {
-        regexp = /"/g;
-        replacement = '&quot;';
-    }
-    else {
-        regexp = /'/g;
-        replacement = '&apos;';
-    }
-    return this.stringify(obj).replace(regexp, replacement);
+var REVIVER = function(key, value) {
+    return ((typeof value==='string') && value.toDate()) || value;
+};
+
+JSON.parseWithDate = function(stringifiedObj) {
+    return this.parse(obj, REVIVER);
 };
 },{"polyfill/polyfill-base.js":43}],34:[function(require,module,exports){
 /**
@@ -16198,14 +16193,17 @@ module.exports = function (window) {
         * Alias for thisNode.parentNode.removeChild(thisNode);
         *
         * @method remove
+        * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         * @return {Node} the DOM-node that was removed. You could re-insert it at a later time.
         * @since 0.0.1
         */
-        ElementPrototype.remove = function() {
+        ElementPrototype.remove = function(silent) {
             var instance = this,
                 vnode = instance.vnode,
                 vParent = vnode.vParent;
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             vParent && vParent._removeChild(vnode);
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
             return instance;
         };
 
@@ -18538,7 +18536,7 @@ module.exports = function (window) {
 
                         extractStyle = extractor.extractStyle(vnode.attrs.style);
                         extractStyle.attrStyle && (vnode.attrs.style=extractStyle.attrStyle);
-                        vnode.styles = extractClass.styles;
+                        vnode.styles = extractStyle.styles;
 
                     }
 
@@ -20676,7 +20674,7 @@ module.exports = function (window) {
                                 if (oldChild._data && oldChild._data['fm-tabindex']) {
                                     // node has the tabindex set by the focusmanager,
                                     // but that info might got lost with re-rendering of the new element
-                                    newChild.attrs.tabIndex = '0';
+                                    newChild.attrs.tabindex = '0';
                                 }
                                 oldChild._setAttrs(newChild.attrs);
                                 // next: sync the vChildNodes:

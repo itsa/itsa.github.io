@@ -215,17 +215,12 @@
 
 require(&#x27;polyfill/polyfill-base.js&#x27;);
 
-JSON.stringifyAttr = function(obj, quotes) {
-    var regexp, replacement;
-    if (quotes) {
-        regexp = /&quot;/g;
-        replacement = &#x27;&amp;quot;&#x27;;
-    }
-    else {
-        regexp = /&#x27;/g;
-        replacement = &#x27;&amp;apos;&#x27;;
-    }
-    return this.stringify(obj).replace(regexp, replacement);
+var REVIVER = function(key, value) {
+    return ((typeof value===&#x27;string&#x27;) &amp;&amp; value.toDate()) || value;
+};
+
+JSON.parseWithDate = function(stringifiedObj) {
+    return this.parse(obj, REVIVER);
 };
     </pre>
 </div>

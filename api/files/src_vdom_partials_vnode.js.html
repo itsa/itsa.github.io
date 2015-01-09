@@ -1950,7 +1950,7 @@ module.exports = function (window) {
                                 if (oldChild._data &amp;&amp; oldChild._data[&#x27;fm-tabindex&#x27;]) {
                                     // node has the tabindex set by the focusmanager,
                                     // but that info might got lost with re-rendering of the new element
-                                    newChild.attrs.tabIndex = &#x27;0&#x27;;
+                                    newChild.attrs.tabindex = &#x27;0&#x27;;
                                 }
                                 oldChild._setAttrs(newChild.attrs);
                                 // next: sync the vChildNodes:
