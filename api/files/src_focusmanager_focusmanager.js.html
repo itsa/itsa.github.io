@@ -256,7 +256,7 @@ module.exports = function (window) {
     nextFocusNode = function(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, downwards) {
         console.log(NAME+&#x27;nextFocusNode&#x27;);
         var keys, lastIndex, i, specialKeysMatch, specialKey, len, enterPressedOnInput, primaryButtons,
-            inputType, foundNode, formNode, primaryonenter;
+            inputType, foundNode, formNode, primaryonenter, noloop;
         keys = actionkey.split(&#x27;+&#x27;);
         len = keys.length;
         lastIndex = len - 1;
@@ -303,11 +303,13 @@ module.exports = function (window) {
             }
         }
         if (specialKeysMatch) {
+            noloop = focusContainerNode.getAttr(&#x27;fm-noloop&#x27;);
+            noloop = noloop &amp;&amp; (noloop.toLowerCase()===&#x27;true&#x27;);
             if (downwards) {
-                return sourceNode.next(selector) || sourceNode.first(selector);
+                return sourceNode.next(selector) || (noloop ? sourceNode.last(selector) : sourceNode.first(selector));
             }
             else {
-                return sourceNode.previous(selector) || sourceNode.last(selector);
+                return sourceNode.previous(selector) || (noloop ? sourceNode.first(selector) : sourceNode.last(selector));
             }
         }
         return false;
@@ -524,12 +526,22 @@ module.exports = function (window) {
 
     window._ITSAmodules.FocusManager = FocusManager = nodePlugin.definePlugin(&#x27;fm&#x27;, {manage: &#x27;true&#x27;});
 
+    /**
+     * In case of a manual focus (node.focus()) the node will fire an &#x60;manualfocus&#x60;-event
+     * which can be prevented.
+     * @event manualfocus
+    */
+    Event.defineEvent(&#x27;UI:manualfocus&#x27;)
+         .defaultFn(function(e) {
+             e.target._focus();
+         });
+
     (function(HTMLElementPrototype) {
 
         HTMLElementPrototype._focus = HTMLElementPrototype.focus;
         HTMLElementPrototype.focus = function() {
             console.log(NAME+&#x27;focus&#x27;);
-            searchFocusNode(this)._focus();
+            searchFocusNode(this).emit(&#x27;manualfocus&#x27;);
         };
 
     }(window.HTMLElement.prototype));
