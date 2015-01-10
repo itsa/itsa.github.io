@@ -118,6 +118,9 @@ Can be set to a proper `keyCode`, optional prepended by one or more `special-key
 
 The `keydown` property manages the key that makes the focus going downward.
 
+###noloop###
+To prevent looping through the focussable items. By default the focusmanager will loop: set this attribute to prevent this.
+
 
 
 #Element-options#

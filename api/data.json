@@ -10695,6 +10695,15 @@
             "submodule": "event-mobile"
         },
         {
+            "file": "src/focusmanager/focusmanager.js",
+            "line": 329,
+            "description": "In case of a manual focus (node.focus()) the node will fire an `manualfocus`-event\nwhich can be prevented.",
+            "itemtype": "event",
+            "name": "manualfocus",
+            "class": "FocusManager",
+            "module": "focusmanager"
+        },
+        {
             "file": "src/io/extra/io-assets.js",
             "line": 38,
             "description": "Creates a `<style>` tag to load the CSS file at the given url.",
