@@ -811,7 +811,7 @@
             "module": "js-ext",
             "namespace": "",
             "file": "src/js-ext/lib/function.js",
-            "line": 43,
+            "line": 49,
             "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "lib/object.js": {
@@ -1231,7 +1231,7 @@
             "submodule": "lib/function.js",
             "namespace": "",
             "file": "src/js-ext/lib/function.js",
-            "line": 43,
+            "line": 49,
             "description": "Pollyfils for often used functionality for Function"
         },
         "Object": {
@@ -11854,7 +11854,7 @@
         },
         {
             "file": "src/js-ext/lib/function.js",
-            "line": 50,
+            "line": 56,
             "description": "Merges the given map of properties into the `prototype` of the Class.\n**Not** to be used on instances.\n\nThe members in the hash map will become members with\ninstances of the merged class.\n\nBy default, this method will not override existing prototype members,\nunless the second argument `force` is true.",
             "itemtype": "method",
             "name": "mergePrototypes",
@@ -11877,7 +11877,7 @@
         },
         {
             "file": "src/js-ext/lib/function.js",
-            "line": 95,
+            "line": 104,
             "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
             "example": [
                 "\n\n\tvar Circle = Shape.subClass(\n\t\tfunction (x, y, r) {\n\t\t\tthis.r = r;\n\t\t\tCircle.$super.constructor.call(this, x, y);\n\t\t},\n\t\t{\n\t\t\tarea: function () {\n\t\t\t\treturn this.r * this.r * Math.PI;\n\t\t\t}\n\t\t}\n\t);"
@@ -11907,7 +11907,7 @@
         },
         {
             "file": "src/js-ext/lib/function.js",
-            "line": 153,
+            "line": 165,
             "description": "Sets the context of which the function will be execute. in the\nsupplied object's context, optionally adding any additional\nsupplied parameters to the end of the arguments the function\nis executed with.",
             "itemtype": "method",
             "name": "rbind",
@@ -11935,7 +11935,7 @@
         },
         {
             "file": "src/js-ext/lib/function.js",
-            "line": 189,
+            "line": 221,
             "description": "Returns a base class with the given constructor and prototype methods",
             "itemtype": "method",
             "name": "createClass",

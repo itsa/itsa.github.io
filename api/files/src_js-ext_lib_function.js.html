@@ -218,27 +218,33 @@ require(&#x27;polyfill/polyfill-base.js&#x27;);
 // Define configurable, writable and non-enumerable props
 // if they don&#x27;t exist.
 var defineProperty = function (object, name, method, force) {
-    if (!force &amp;&amp; (name in object)) {
-        return;
-    }
-    Object.defineProperty(object, name, {
-        configurable: true,
-        enumerable: false,
-        writable: true,
-        value: method
-    });
-};
-var defineProperties = function (object, map, force) {
-    var names = Object.keys(map),
-        l = names.length,
-        i = -1,
-        name;
-    while (++i &lt; l) {
-        name = names[i];
-        defineProperty(object, name, map[name], force);
-    }
-};
-var NOOP = function () {};
+        if (!force &amp;&amp; (name in object)) {
+            return;
+        }
+        Object.defineProperty(object, name, {
+            configurable: true,
+            enumerable: false,
+            writable: true,
+            value: method
+        });
+    },
+    defineProperties = function (object, map, force) {
+        var names = Object.keys(map),
+            l = names.length,
+            i = -1,
+            name;
+        while (++i &lt; l) {
+            name = names[i];
+            defineProperty(object, name, map[name], force);
+        }
+    },
+    NOOP = function () {},
+    REPLACE_CLASS_METHODS = {
+        destroy: &#x27;_destroy&#x27;
+    },
+    PROTECTED_CLASS_METHODS = {
+        _destroy: true
+    };
 
 /**
  * Pollyfils for often used functionality for Function
@@ -264,25 +270,28 @@ defineProperties(Function.prototype, {
      */
     mergePrototypes: function (map, force) {
         var instance = this,
-            proto = instance.prototype,
+            proto = instance.isItag ? instance.$proto : instance.prototype,
             names = Object.keys(map || {}),
             l = names.length,
             i = -1,
-            name, nameInProto;
+            replaceMap = arguments[2] || REPLACE_CLASS_METHODS, // hidden feature, used by itags
+            protectedMap = arguments[3] || PROTECTED_CLASS_METHODS, // hidden feature, used by itags
+            name, nameInProto, finalName;
         while (++i &lt; l) {
             name = names[i];
-            nameInProto = (name in proto);
-            if (!nameInProto || force) {
+            finalName = replaceMap[name] || name;
+            nameInProto = (finalName in proto);
+            if (!protectedMap[name] &amp;&amp; (!nameInProto || force)) {
                 // if nameInProto: set the property, but also backup for chaining using $orig
                 if (typeof map[name] === &#x27;function&#x27;) {
 /*jshint -W083 */
-                    proto[name] = (function (original, methodName) {
+                    proto[finalName] = (function (original, methodName, methodFinalName) {
                         return function () {
 /*jshint +W083 */
-                            instance.$orig[methodName] = original;
+                            instance.$orig[methodFinalName] = original;
                             return map[methodName].apply(this, arguments);
                         };
-                    })(proto[name] || NOOP, name);
+                    })(proto[name] || NOOP, name, finalName);
                 }
                 else {
                     proto[name] = map[name];
@@ -324,6 +333,9 @@ defineProperties(Function.prototype, {
      * @return the new class.
      */
     subClass: function (constructor, prototypes) {
+console.warn(&#x27;original subClass&#x27;);
+console.warn(constructor);
+console.warn(prototypes);
 
         if ((arguments.length === 1) &amp;&amp; (typeof constructor !== &#x27;function&#x27;)) {
             prototypes = constructor;
@@ -385,6 +397,26 @@ defineProperties(Function.prototype, {
         );
     }
 });
+
+/*
+Object._BaseClass = function() {
+    return Function.prototype.subClass.apply({}, NOOP);
+};
+
+                    .mergePrototypes({
+                        _destroy: NOOP,
+                        destroy: function() {
+                            this._destroy();
+                            var instance = this;
+                                superDestroy;
+                            if (!instanced._destroyed) {
+                                superDestroy(instance);
+                                Object.protectedProp(instance, &#x27;_destroyed&#x27;, true);
+                            }
+                        }
+                    }, true, {}, {}); // need to pass 4 arguments, to make these members stored
+*/
+
 
 /**
  * Returns a base class with the given constructor and prototype methods

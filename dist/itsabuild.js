@@ -10312,80 +10312,88 @@ module.exports = function (window) {
 
     "use strict";
 
+    var LightMap;
+
     require('../lib/function.js');
     require('../lib/array.js');
     require('../lib/object.js');
     require('polyfill/lib/weakmap.js');
 
-    var LightMap;
-
-    global.LightMap = LightMap = Object.createClass(
-        function() {
-            Object.protectedProp(this, '_array', []);
-            Object.protectedProp(this, '_map', new global.WeakMap());
-        },
-        {
-            each: function(fn, context) {
-                var instance = this,
-                    array = instance._array,
-                    l = array.length,
-                    i = -1,
-                    obj, value;
-                while (++i < l) {
-                    obj = array[i];
-                    value = instance.get(obj); // read from WeakMap
-                    fn.call(context, value, obj, instance);
-                }
-                return instance;
+    if (!global.LightMap) {
+        global.LightMap = LightMap = Object.createClass(
+            function() {
+                Object.protectedProp(this, '_array', []);
+                Object.protectedProp(this, '_map', new global.WeakMap());
             },
-            some: function(fn, context) {
-                var instance = this,
-                    array = instance._array,
-                    l = array.length,
-                    i = -1,
-                    obj, value;
-                while (++i < l) {
-                    obj = array[i];
-                    value = instance.get(obj); // read from WeakMap
-                    if (fn.call(context, value, obj, instance)) {
-                        return true;
+            {
+                // DO NOT use `each` for it seems to run Object.each!
+                forEach: function(fn, context) {
+                    var instance = this,
+                        array = instance._array,
+                        l = array.length,
+                        i = -1,
+                        obj, value;
+                    while (++i < l) {
+                        obj = array[i];
+                        value = instance.get(obj); // read from WeakMap
+                        fn.call(context, value, obj, instance);
                     }
+                    return instance;
+                },
+                // DO NOT use `some` for it seems to run Object.some!
+                forSome: function(fn, context) {
+                    var instance = this,
+                        array = instance._array,
+                        l = array.length,
+                        i = -1,
+                        obj, value;
+                    while (++i < l) {
+                        obj = array[i];
+                        value = instance.get(obj); // read from WeakMap
+                        if (fn.call(context, value, obj, instance)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                clear: function() {
+                    var instance = this,
+                        array = instance._array;
+                    array.forEach(function(key) {
+                        instance.delete(key, true);
+                    });
+                    array.length = 0;
+                },
+                has: function(object) {
+                    return this._map.has(object);
+                },
+                get: function(key, fallback) {
+                    return this._map.get(key, fallback);
+                },
+                set: function (key, value) {
+                    var instance = this,
+                        array = instance._array,
+                        map = instance._map;
+                    map.set(key, value);
+                    array.contains(key) || array.push(key);
+                    return instance;
+                },
+                // DO NOT use `size` for it seems to run Object.size!
+                mapSize: function (key, value) {
+                    return this._array.length;
+                },
+                'delete': function (key) {
+                    var instance = this,
+                        array = instance._array,
+                        map = instance._map,
+                        silent = arguments[1], // hidden feature used by `clear()`
+                        returnValue = map.delete(key);
+                    silent || array.remove(key);
+                    return returnValue;
                 }
-                return false;
-            },
-            clear: function() {
-                var instance = this,
-                    array = instance._array;
-                array.forEach(function(key) {
-                    instance.delete(key, true);
-                });
-                array.length = 0;
-            },
-            has: function(object) {
-                return this._map.has(object);
-            },
-            get: function(key, fallback) {
-                return this._map.get(key, fallback);
-            },
-            set: function (key, value) {
-                var instance = this,
-                    array = instance._array,
-                    map = instance._map;
-                map.set(key, value);
-                array.contains(key) || array.push(key);
-                return instance;
-            },
-            'delete': function (key) {
-                var instance = this,
-                    array = instance._array,
-                    map = instance._map,
-                    silent = arguments[1], // hidden feature used by `clear()`
-                    returnValue = map.delete(key);
-                silent || array.remove(key);
-                return returnValue;
             }
-        }
-    );
+        );
+    }
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
@@ -10637,27 +10645,33 @@ require('polyfill/polyfill-base.js');
 // Define configurable, writable and non-enumerable props
 // if they don't exist.
 var defineProperty = function (object, name, method, force) {
-	if (!force && (name in object)) {
-		return;
-	}
-	Object.defineProperty(object, name, {
-		configurable: true,
-		enumerable: false,
-		writable: true,
-		value: method
-	});
-};
-var defineProperties = function (object, map, force) {
-	var names = Object.keys(map),
-		l = names.length,
-		i = -1,
-		name;
-	while (++i < l) {
-		name = names[i];
-		defineProperty(object, name, map[name], force);
-	}
-};
-var NOOP = function () {};
+		if (!force && (name in object)) {
+			return;
+		}
+		Object.defineProperty(object, name, {
+			configurable: true,
+			enumerable: false,
+			writable: true,
+			value: method
+		});
+	},
+	defineProperties = function (object, map, force) {
+		var names = Object.keys(map),
+			l = names.length,
+			i = -1,
+			name;
+		while (++i < l) {
+			name = names[i];
+			defineProperty(object, name, map[name], force);
+		}
+	},
+	NOOP = function () {},
+	REPLACE_CLASS_METHODS = {
+		destroy: '_destroy'
+	},
+	PROTECTED_CLASS_METHODS = {
+		_destroy: true
+	};
 
 /**
  * Pollyfils for often used functionality for Function
@@ -10683,26 +10697,29 @@ defineProperties(Function.prototype, {
 	 */
 	mergePrototypes: function (map, force) {
 		var instance = this,
-		    proto = instance.prototype,
+		    proto = instance.isItag ? instance.$proto : instance.prototype,
 		    names = Object.keys(map || {}),
 			l = names.length,
 			i = -1,
-			name, nameInProto;
+			replaceMap = arguments[2] || REPLACE_CLASS_METHODS, // hidden feature, used by itags
+			protectedMap = arguments[3] || PROTECTED_CLASS_METHODS, // hidden feature, used by itags
+			name, nameInProto, finalName;
 		while (++i < l) {
 			name = names[i];
-			nameInProto = (name in proto);
-			if (!nameInProto || force) {
+            finalName = replaceMap[name] || name;
+			nameInProto = (finalName in proto);
+            if (!protectedMap[name] && (!nameInProto || force)) {
 				// if nameInProto: set the property, but also backup for chaining using $orig
-				if (typeof map[name] === 'function') {
+                if (typeof map[name] === 'function') {
 /*jshint -W083 */
-					proto[name] = (function (original, methodName) {
-						return function () {
+                    proto[finalName] = (function (original, methodName, methodFinalName) {
+                        return function () {
 /*jshint +W083 */
-							instance.$orig[methodName] = original;
-							return map[methodName].apply(this, arguments);
-						};
-					})(proto[name] || NOOP, name);
-				}
+                            instance.$orig[methodFinalName] = original;
+                            return map[methodName].apply(this, arguments);
+                        };
+                    })(proto[name] || NOOP, name, finalName);
+                }
 				else {
 					proto[name] = map[name];
 				}
@@ -10743,6 +10760,9 @@ defineProperties(Function.prototype, {
 	 * @return the new class.
 	 */
 	subClass: function (constructor, prototypes) {
+console.warn('original subClass');
+console.warn(constructor);
+console.warn(prototypes);
 
 		if ((arguments.length === 1) && (typeof constructor !== 'function')) {
 			prototypes = constructor;
@@ -10804,6 +10824,26 @@ defineProperties(Function.prototype, {
 		);
 	}
 });
+
+/*
+Object._BaseClass = function() {
+	return Function.prototype.subClass.apply({}, NOOP);
+};
+
+					.mergePrototypes({
+						_destroy: NOOP,
+						destroy: function() {
+							this._destroy();
+						    var instance = this;
+						        superDestroy;
+						    if (!instanced._destroyed) {
+						        superDestroy(instance);
+						        Object.protectedProp(instance, '_destroyed', true);
+						    }
+						}
+					}, true, {}, {}); // need to pass 4 arguments, to make these members stored
+*/
+
 
 /**
  * Returns a base class with the given constructor and prototype methods
