@@ -220,7 +220,7 @@ var REVIVER = function(key, value) {
 };
 
 JSON.parseWithDate = function(stringifiedObj) {
-    return this.parse(obj, REVIVER);
+    return this.parse(stringifiedObj, REVIVER);
 };
     </pre>
 </div>

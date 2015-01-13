@@ -220,7 +220,11 @@
  * @since 0.0.1
 */
 
-var Event = require(&#x27;./index.js&#x27;);
+require(&#x27;js-ext/lib/object.js&#x27;);
+require(&#x27;js-ext/lib/function.js&#x27;);
+
+var Event = require(&#x27;./index.js&#x27;),
+    filterFn, ClassListener;
 
 Event.Listener = {
     /**
@@ -343,6 +347,122 @@ Event.Listener = {
         return Event.onceBefore(customEvent, callback, this, filter, prepend);
     }
 };
+
+filterFn = function(e) {
+    return e.target===this;
+};
+
+ClassListener = {
+    /**
+     * Is automaticly available for Classes.
+     * Subscribes to a customEvent on behalf of the class-instance and will only
+     * be executed when the emitter is the instance itself.
+     *
+     * The callback will be executed &#x60;after&#x60; the defaultFn.
+     *
+     * @method selfAfter
+     * @param customEvent {String|Array} the custom-event (or Array of events) to subscribe to. CustomEvents should
+     *        have the syntax: &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used for both &#x60;emitterName&#x60; as well as &#x60;eventName&#x60;.
+     *        If &#x60;emitterName&#x60; is not defined, &#x60;UI&#x60; is assumed.
+     * @param callback {Function} subscriber:will be invoked when the event occurs. An &#x60;eventobject&#x60; will be passed
+     *        as its only argument.
+     * @param [prepend=false] {Boolean} whether the subscriber should be the first in the list of after-subscribers.
+     * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the subscriber
+     * @since 0.0.1
+    */
+    selfAfter: function (customEvent, callback, prepend) {
+        return Event.after(customEvent, callback, this, filterFn.bind(this), prepend);
+    },
+
+    /**
+     * Is automaticly available for Classes.
+     * Subscribes to a customEvent on behalf of the class-instance and will only
+     * be executed when the emitter is the instance itself.
+     *
+     * The callback will be executed &#x60;before&#x60; the defaultFn.
+     *
+     * @method selfBefore
+     * @param customEvent {String|Array} the custom-event (or Array of events) to subscribe to. CustomEvents should
+     *        have the syntax: &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used for both &#x60;emitterName&#x60; as well as &#x60;eventName&#x60;.
+     *        If &#x60;emitterName&#x60; is not defined, &#x60;UI&#x60; is assumed.
+     * @param callback {Function} subscriber:will be invoked when the event occurs. An &#x60;eventobject&#x60; will be passed
+     *        as its only argument.
+     * @param [prepend=false] {Boolean} whether the subscriber should be the first in the list of before-subscribers.
+     * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the subscriber
+     * @since 0.0.1
+    */
+    selfBefore: function (customEvent, callback, prepend) {
+        return Event.before(customEvent, callback, this, filterFn.bind(this), prepend);
+    },
+
+    /**
+     * Is automaticly available for Classes.
+     * Subscribes to a customEvent on behalf of the class-instance and will only
+     * be executed when the emitter is the instance itself.
+     *
+     * The callback will be executed &#x60;after&#x60; the defaultFn.
+     * The subscriber will be automaticly removed once the callback executed the first time.
+     * No need to &#x60;detach()&#x60; (unless you want to undescribe before the first event)
+     *
+     * @method selfOnceAfter
+     * @param customEvent {String|Array} the custom-event (or Array of events) to subscribe to. CustomEvents should
+     *        have the syntax: &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used for both &#x60;emitterName&#x60; as well as &#x60;eventName&#x60;.
+     *        If &#x60;emitterName&#x60; is not defined, &#x60;UI&#x60; is assumed.
+     * @param callback {Function} subscriber:will be invoked when the event occurs. An &#x60;eventobject&#x60; will be passed
+     *        as its only argument.
+     * @param [prepend=false] {Boolean} whether the subscriber should be the first in the list of after-subscribers.
+     * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the subscriber
+     * @since 0.0.1
+    */
+    selfOnceAfter: function (customEvent, callback, prepend) {
+        return Event.onceAfter(customEvent, callback, this, filterFn.bind(this), prepend);
+    },
+
+    /**
+     * Is automaticly available for Classes.
+     * Subscribes to a customEvent on behalf of the class-instance and will only
+     * be executed when the emitter is the instance itself.
+     *
+     * The callback will be executed &#x60;before&#x60; the defaultFn.
+     * The subscriber will be automaticly removed once the callback executed the first time.
+     * No need to &#x60;detach()&#x60; (unless you want to undescribe before the first event)
+     *
+     * @method selfOnceBefore
+     * @param customEvent {String|Array} the custom-event (or Array of events) to subscribe to. CustomEvents should
+     *        have the syntax: &#x60;emitterName:eventName&#x60;. Wildcard &#x60;*&#x60; may be used for both &#x60;emitterName&#x60; as well as &#x60;eventName&#x60;.
+     *        If &#x60;emitterName&#x60; is not defined, &#x60;UI&#x60; is assumed.
+     * @param callback {Function} subscriber:will be invoked when the event occurs. An &#x60;eventobject&#x60; will be passed
+     *        as its only argument.
+     * @param [prepend=false] {Boolean} whether the subscriber should be the first in the list of before-subscribers.
+     * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the subscriber
+     * @since 0.0.1
+    */
+    selfOnceBefore: function (customEvent, callback, prepend) {
+        return Event.onceBefore(customEvent, callback, this, filterFn.bind(this), prepend);
+    }
+};
+
+// because we also have js-ext/lib/function, we patch Object.BaseClass to make it an eventlistener that auto cleanup:
+Object.BaseClass.mergePrototypes(Event.Listener)
+                .mergePrototypes(ClassListener)
+                .mergePrototypes({
+                    destroy: function() {
+                        var instance = this,
+                            superDestroy;
+                        if (!instance._destroyed) {
+                            superDestroy = function(constructor) {
+                                // don&#x27;t call &#x60;hasOwnProperty&#x60; directly on obj --&gt; it might have been overruled
+                                Object.prototype.hasOwnProperty.call(constructor.prototype, &#x27;_destroy&#x27;) &amp;&amp; constructor.prototype._destroy.call(instance);
+                                if (constructor.$super) {
+                                    superDestroy(constructor.$super.constructor);
+                                }
+                            };
+                            instance.detachAll();
+                            superDestroy(instance.constructor);
+                            Object.protectedProp(instance, &#x27;_destroyed&#x27;, true);
+                        }
+                    }
+                }, true, {}, {});
     </pre>
 </div>
 

@@ -245,11 +245,20 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/js-ext/lib/function.js": {
-            "name": "src/js-ext/lib/function.js",
+        "src/js-ext/lib/function kopie.js": {
+            "name": "src/js-ext/lib/function kopie.js",
             "modules": {
                 "lib/function.js": 1
             },
+            "classes": {},
+            "fors": {
+                "Object": 1
+            },
+            "namespaces": {}
+        },
+        "src/js-ext/lib/function.js": {
+            "name": "src/js-ext/lib/function.js",
+            "modules": {},
             "classes": {
                 "Function": 1
             },
@@ -811,7 +820,7 @@
             "module": "js-ext",
             "namespace": "",
             "file": "src/js-ext/lib/function.js",
-            "line": 49,
+            "line": 77,
             "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "lib/object.js": {
@@ -1231,7 +1240,7 @@
             "submodule": "lib/function.js",
             "namespace": "",
             "file": "src/js-ext/lib/function.js",
-            "line": 49,
+            "line": 77,
             "description": "Pollyfils for often used functionality for Function"
         },
         "Object": {
@@ -10406,7 +10415,7 @@
         },
         {
             "file": "src/event/event-listener.js",
-            "line": 26,
+            "line": 30,
             "description": "Subscribes to a customEvent on behalf of the object who calls this method.\nThe callback will be executed `after` the defaultFn.",
             "itemtype": "method",
             "name": "after",
@@ -10446,7 +10455,7 @@
         },
         {
             "file": "src/event/event-listener.js",
-            "line": 49,
+            "line": 53,
             "description": "Subscribes to a customEvent on behalf of the object who calls this method.\nThe callback will be executed `before` the defaultFn.",
             "itemtype": "method",
             "name": "before",
@@ -10486,7 +10495,7 @@
         },
         {
             "file": "src/event/event-listener.js",
-            "line": 72,
+            "line": 76,
             "description": "Detaches (unsubscribes) the listener from the specified customEvent,\non behalf of the object who calls this method.",
             "itemtype": "method",
             "name": "detach",
@@ -10504,7 +10513,7 @@
         },
         {
             "file": "src/event/event-listener.js",
-            "line": 85,
+            "line": 89,
             "description": "Detaches (unsubscribes) the listener from all customevents,\non behalf of the object who calls this method.",
             "itemtype": "method",
             "name": "detachAll",
@@ -10515,7 +10524,7 @@
         },
         {
             "file": "src/event/event-listener.js",
-            "line": 96,
+            "line": 100,
             "description": "Subscribes to a customEvent on behalf of the object who calls this method.\nThe callback will be executed `after` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "itemtype": "method",
             "name": "onceAfter",
@@ -10555,7 +10564,7 @@
         },
         {
             "file": "src/event/event-listener.js",
-            "line": 121,
+            "line": 125,
             "description": "Subscribes to a customEvent on behalf of the object who calls this method.\nThe callback will be executed `before` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "itemtype": "method",
             "name": "onceBefore",
@@ -10575,6 +10584,142 @@
                     "description": "to filter the event.\n       Use a String if you want to filter DOM-events by a `selector`\n       Use a function if you want to filter by any other means. If the function returns a trully value, the\n       subscriber gets invoked. The function gets the `eventobject` as its only argument and the context is\n       the subscriber.",
                     "type": "String|Function",
                     "optional": true
+                },
+                {
+                    "name": "prepend",
+                    "description": "whether the subscriber should be the first in the list of before-subscribers.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "handler with a `detach()`-method which can be used to detach the subscriber",
+                "type": "Object"
+            },
+            "since": "0.0.1",
+            "class": "Event.Listener",
+            "module": "event",
+            "submodule": "event-listener"
+        },
+        {
+            "file": "src/event/event-listener.js",
+            "line": 156,
+            "description": "Is automaticly available for Classes.\nSubscribes to a customEvent on behalf of the class-instance and will only\nbe executed when the emitter is the instance itself.\n\nThe callback will be executed `after` the defaultFn.",
+            "itemtype": "method",
+            "name": "selfAfter",
+            "params": [
+                {
+                    "name": "customEvent",
+                    "description": "the custom-event (or Array of events) to subscribe to. CustomEvents should\n       have the syntax: `emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`.\n       If `emitterName` is not defined, `UI` is assumed.",
+                    "type": "String|Array"
+                },
+                {
+                    "name": "callback",
+                    "description": "subscriber:will be invoked when the event occurs. An `eventobject` will be passed\n       as its only argument.",
+                    "type": "Function"
+                },
+                {
+                    "name": "prepend",
+                    "description": "whether the subscriber should be the first in the list of after-subscribers.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "handler with a `detach()`-method which can be used to detach the subscriber",
+                "type": "Object"
+            },
+            "since": "0.0.1",
+            "class": "Event.Listener",
+            "module": "event",
+            "submodule": "event-listener"
+        },
+        {
+            "file": "src/event/event-listener.js",
+            "line": 177,
+            "description": "Is automaticly available for Classes.\nSubscribes to a customEvent on behalf of the class-instance and will only\nbe executed when the emitter is the instance itself.\n\nThe callback will be executed `before` the defaultFn.",
+            "itemtype": "method",
+            "name": "selfBefore",
+            "params": [
+                {
+                    "name": "customEvent",
+                    "description": "the custom-event (or Array of events) to subscribe to. CustomEvents should\n       have the syntax: `emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`.\n       If `emitterName` is not defined, `UI` is assumed.",
+                    "type": "String|Array"
+                },
+                {
+                    "name": "callback",
+                    "description": "subscriber:will be invoked when the event occurs. An `eventobject` will be passed\n       as its only argument.",
+                    "type": "Function"
+                },
+                {
+                    "name": "prepend",
+                    "description": "whether the subscriber should be the first in the list of before-subscribers.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "handler with a `detach()`-method which can be used to detach the subscriber",
+                "type": "Object"
+            },
+            "since": "0.0.1",
+            "class": "Event.Listener",
+            "module": "event",
+            "submodule": "event-listener"
+        },
+        {
+            "file": "src/event/event-listener.js",
+            "line": 198,
+            "description": "Is automaticly available for Classes.\nSubscribes to a customEvent on behalf of the class-instance and will only\nbe executed when the emitter is the instance itself.\n\nThe callback will be executed `after` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
+            "itemtype": "method",
+            "name": "selfOnceAfter",
+            "params": [
+                {
+                    "name": "customEvent",
+                    "description": "the custom-event (or Array of events) to subscribe to. CustomEvents should\n       have the syntax: `emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`.\n       If `emitterName` is not defined, `UI` is assumed.",
+                    "type": "String|Array"
+                },
+                {
+                    "name": "callback",
+                    "description": "subscriber:will be invoked when the event occurs. An `eventobject` will be passed\n       as its only argument.",
+                    "type": "Function"
+                },
+                {
+                    "name": "prepend",
+                    "description": "whether the subscriber should be the first in the list of after-subscribers.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "handler with a `detach()`-method which can be used to detach the subscriber",
+                "type": "Object"
+            },
+            "since": "0.0.1",
+            "class": "Event.Listener",
+            "module": "event",
+            "submodule": "event-listener"
+        },
+        {
+            "file": "src/event/event-listener.js",
+            "line": 221,
+            "description": "Is automaticly available for Classes.\nSubscribes to a customEvent on behalf of the class-instance and will only\nbe executed when the emitter is the instance itself.\n\nThe callback will be executed `before` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
+            "itemtype": "method",
+            "name": "selfOnceBefore",
+            "params": [
+                {
+                    "name": "customEvent",
+                    "description": "the custom-event (or Array of events) to subscribe to. CustomEvents should\n       have the syntax: `emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`.\n       If `emitterName` is not defined, `UI` is assumed.",
+                    "type": "String|Array"
+                },
+                {
+                    "name": "callback",
+                    "description": "subscriber:will be invoked when the event occurs. An `eventobject` will be passed\n       as its only argument.",
+                    "type": "Function"
                 },
                 {
                     "name": "prepend",
@@ -11853,7 +11998,7 @@
             "submodule": "lib/array.js"
         },
         {
-            "file": "src/js-ext/lib/function.js",
+            "file": "src/js-ext/lib/function kopie.js",
             "line": 56,
             "description": "Merges the given map of properties into the `prototype` of the Class.\n**Not** to be used on instances.\n\nThe members in the hash map will become members with\ninstances of the merged class.\n\nBy default, this method will not override existing prototype members,\nunless the second argument `force` is true.",
             "itemtype": "method",
@@ -11876,7 +12021,7 @@
             "submodule": "lib/function.js"
         },
         {
-            "file": "src/js-ext/lib/function.js",
+            "file": "src/js-ext/lib/function kopie.js",
             "line": 104,
             "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
             "example": [
@@ -11906,8 +12051,117 @@
             "submodule": "lib/function.js"
         },
         {
+            "file": "src/js-ext/lib/function kopie.js",
+            "line": 162,
+            "description": "Sets the context of which the function will be execute. in the\nsupplied object's context, optionally adding any additional\nsupplied parameters to the end of the arguments the function\nis executed with.",
+            "itemtype": "method",
+            "name": "rbind",
+            "params": [
+                {
+                    "name": "context",
+                    "description": "the execution context.\n       The value is ignored if the bound function is constructed using the new operator.",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "args*",
+                    "description": "args* 0..n arguments to append to the end of\n       arguments collection supplied to the function.",
+                    "type": "Any",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "the wrapped function.",
+                "type": "Function"
+            },
+            "class": "Function",
+            "module": "js-ext",
+            "submodule": "lib/function.js"
+        },
+        {
+            "file": "src/js-ext/lib/function kopie.js",
+            "line": 218,
+            "description": "Returns a base class with the given constructor and prototype methods",
+            "itemtype": "method",
+            "name": "createClass",
+            "params": [
+                {
+                    "name": "constructor",
+                    "description": "constructor for the class",
+                    "type": "Function",
+                    "optional": true
+                },
+                {
+                    "name": "prototype",
+                    "description": "Hash map of prototype members of the new class",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "the new class",
+                "type": "Function"
+            },
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "lib/function.js"
+        },
+        {
             "file": "src/js-ext/lib/function.js",
-            "line": 165,
+            "line": 84,
+            "description": "Merges the given map of properties into the `prototype` of the Class.\n**Not** to be used on instances.\n\nThe members in the hash map will become members with\ninstances of the merged class.\n\nBy default, this method will not override existing prototype members,\nunless the second argument `force` is true.",
+            "itemtype": "method",
+            "name": "mergePrototypes",
+            "params": [
+                {
+                    "name": "map",
+                    "description": "Hash map of properties to add to the prototype of this object",
+                    "type": "Object"
+                },
+                {
+                    "name": "force",
+                    "description": "If true, existing members will be overwritten",
+                    "type": "Boolean"
+                }
+            ],
+            "chainable": 1,
+            "class": "Function",
+            "module": "js-ext",
+            "submodule": "lib/function.js"
+        },
+        {
+            "file": "src/js-ext/lib/function.js",
+            "line": 135,
+            "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
+            "example": [
+                "\n\n\tvar Circle = Shape.subClass(\n\t\tfunction (x, y, r) {\n\t\t\tthis.r = r;\n\t\t\tCircle.$super.constructor.call(this, x, y);\n\t\t},\n\t\t{\n\t\t\tarea: function () {\n\t\t\t\treturn this.r * this.r * Math.PI;\n\t\t\t}\n\t\t}\n\t);"
+            ],
+            "itemtype": "method",
+            "name": "subClass",
+            "params": [
+                {
+                    "name": "constructor",
+                    "description": "The function that will serve as constructor for the new class.\n       If `undefined` defaults to `Object.constructor`",
+                    "type": "Function",
+                    "optional": true
+                },
+                {
+                    "name": "prototypes",
+                    "description": "Hash map of properties to be added to the prototype of the new class.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "the new class."
+            },
+            "class": "Function",
+            "module": "js-ext",
+            "submodule": "lib/function.js"
+        },
+        {
+            "file": "src/js-ext/lib/function.js",
+            "line": 193,
             "description": "Sets the context of which the function will be execute. in the\nsupplied object's context, optionally adding any additional\nsupplied parameters to the end of the arguments the function\nis executed with.",
             "itemtype": "method",
             "name": "rbind",
@@ -11935,7 +12189,7 @@
         },
         {
             "file": "src/js-ext/lib/function.js",
-            "line": 221,
+            "line": 255,
             "description": "Returns a base class with the given constructor and prototype methods",
             "itemtype": "method",
             "name": "createClass",
@@ -11953,6 +12207,36 @@
                     "optional": true
                 }
             ],
+            "static": 1,
+            "return": {
+                "description": "the new class",
+                "type": "Function"
+            },
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "lib/function.js"
+        },
+        {
+            "file": "src/js-ext/lib/function.js",
+            "line": 267,
+            "description": "Returns a base class with the given constructor and prototype methods",
+            "itemtype": "method",
+            "name": "createClass",
+            "params": [
+                {
+                    "name": "constructor",
+                    "description": "constructor for the class",
+                    "type": "Function",
+                    "optional": true
+                },
+                {
+                    "name": "prototype",
+                    "description": "Hash map of prototype members of the new class",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "static": 1,
             "return": {
                 "description": "the new class",
                 "type": "Function"

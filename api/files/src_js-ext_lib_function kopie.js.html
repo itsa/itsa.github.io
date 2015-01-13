@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/js-ext/lib/function.js - Itsa</title>
+    <title>src/js-ext/lib/function kopie.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -194,7 +194,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/js-ext/lib/function.js</h1>
+                        <h1 class="file-heading">File: src/js-ext/lib/function kopie.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -217,16 +217,7 @@ require(&#x27;polyfill/polyfill-base.js&#x27;);
 
 // Define configurable, writable and non-enumerable props
 // if they don&#x27;t exist.
-var NAME = &#x27;[Function]: &#x27;,
-    defineProtectedProperty = function (object, name, method) {
-        Object.defineProperty(object, name, {
-            configurable: false,
-            enumerable: false,
-            writable: false,
-            value: method
-        });
-    },
-    defineProperty = function (object, name, method, force) {
+var defineProperty = function (object, name, method, force) {
         if (!force &amp;&amp; (name in object)) {
             return;
         }
@@ -253,26 +244,7 @@ var NAME = &#x27;[Function]: &#x27;,
     },
     PROTECTED_CLASS_METHODS = {
         _destroy: true
-    },
-    PROTO_RESERVERD_NAMES = {
-        constructor: true,
-        prototype: true,
-        toSource: true,
-        toString: true,
-        toLocaleString: true,
-        valueOf: true,
-        watch: true,
-        unwatch: true,
-        hasOwnProperty: true,
-        isPrototypeOf: true,
-        propertyIsEnumerable: true,
-        __defineGetter__: true,
-        __defineSetter__: true,
-        __lookupGetter__: true,
-        __lookupSetter__: true,
-        __proto__: true
-    },
-    BASE_MEMBERS, createBaseClass, BaseClass;
+    };
 
 /**
  * Pollyfils for often used functionality for Function
@@ -309,7 +281,7 @@ defineProperties(Function.prototype, {
             name = names[i];
             finalName = replaceMap[name] || name;
             nameInProto = (finalName in proto);
-            if (!PROTO_RESERVERD_NAMES[name] &amp;&amp; !protectedMap[name] &amp;&amp; (!nameInProto || force)) {
+            if (!protectedMap[name] &amp;&amp; (!nameInProto || force)) {
                 // if nameInProto: set the property, but also backup for chaining using $orig
                 if (typeof map[name] === &#x27;function&#x27;) {
 /*jshint -W083 */
@@ -324,9 +296,6 @@ defineProperties(Function.prototype, {
                 else {
                     proto[name] = map[name];
                 }
-            }
-            else {
-                console.warn(NAME+&#x27;mergePrototypes is not allowed to set the property: &#x27;+name);
             }
         }
         return instance;
@@ -426,30 +395,24 @@ defineProperties(Function.prototype, {
     }
 });
 
-BASE_MEMBERS = {
-    _destroy: NOOP,
-    destroy: function() {
-        var instance = this,
-            superDestroy;
-        if (!instance._destroyed) {
-            superDestroy = function(constructor) {
-                // don&#x27;t call &#x60;hasOwnProperty&#x60; directly on obj --&gt; it might have been overruled
-                Object.prototype.hasOwnProperty.call(constructor.prototype, &#x27;_destroy&#x27;) &amp;&amp; constructor.prototype._destroy.call(instance);
-                if (constructor.$super) {
-                    superDestroy(constructor.$super.constructor);
-                }
-            };
-            // instance.detachAll();  &lt;-- is what Event will add
-            superDestroy(instance.constructor);
-            defineProtectedProperty(instance, &#x27;_destroyed&#x27;, true);
-        }
-    }
+/*
+Object._BaseClass = function() {
+    return Function.prototype.subClass.apply({}, NOOP);
 };
 
-createBaseClass = function () {
-    var StartClass = function() {};
-    return Function.prototype.subClass.apply(StartClass, arguments);
-};
+                    .mergePrototypes({
+                        _destroy: NOOP,
+                        destroy: function() {
+                            this._destroy();
+                            var instance = this;
+                                superDestroy;
+                            if (!instanced._destroyed) {
+                                superDestroy(instance);
+                                Object.protectedProp(instance, &#x27;_destroyed&#x27;, true);
+                            }
+                        }
+                    }, true, {}, {}); // need to pass 4 arguments, to make these members stored
+*/
 
 
 /**
@@ -459,23 +422,11 @@ createBaseClass = function () {
  * @method createClass
  * @param [constructor] {Function} constructor for the class
  * @param [prototype] {Object} Hash map of prototype members of the new class
- * @static
  * @return {Function} the new class
 */
-defineProtectedProperty(Object, &#x27;BaseClass&#x27;, createBaseClass().mergePrototypes(BASE_MEMBERS, true, {}, {}));
-
-/**
- * Returns a base class with the given constructor and prototype methods
- *
- * @for Object
- * @method createClass
- * @param [constructor] {Function} constructor for the class
- * @param [prototype] {Object} Hash map of prototype members of the new class
- * @static
- * @return {Function} the new class
-*/
-defineProtectedProperty(Object, &#x27;createClass&#x27;, Object.BaseClass.subClass.bind(Object.BaseClass));
-
+defineProperty(Object.prototype, &#x27;createClass&#x27;, function () {
+    return Function.prototype.subClass.apply(this, arguments);
+});
     </pre>
 </div>
 

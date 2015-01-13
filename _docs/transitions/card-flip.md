@@ -155,7 +155,7 @@ Flip the card by clicking on it. <span class="status"></span>
 ```
 
 ```js
-<script src="../../dist/itsabuild.js"></script>
+<script src="itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa'),
         card = document.getElement('#card'),
