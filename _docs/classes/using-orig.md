@@ -2,7 +2,7 @@
 module: js-ext
 functionality: Classes
 maintainer: Marco Asbreuk
-title: Using $orig
+title: Redefine prototypes
 intro: ""
 ---
 

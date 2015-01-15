@@ -2,7 +2,7 @@
 module: js-ext
 functionality: Classes
 maintainer: Marco Asbreuk
-title: Invoke super methods
+title: Redefine super-Class
 intro: "This example shows how to flip a card. Most is done by setting the right css-classes. The transition gets activated by setting a transform-style on the card-div. <br><br>By clicking on the card it gets flipped. There also is some logic that can reverse flipping, even during a transition."
 ---
 
