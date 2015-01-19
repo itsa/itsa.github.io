@@ -11420,6 +11420,8 @@ require('../lib/object.js');
 
     });
 
+    global._ITSAmodules.Classes = Classes = {};
+
     BASE_MEMBERS = {
         _destroy: NOOP,
         destroy: function(notChained) {
@@ -11534,8 +11536,6 @@ require('../lib/object.js');
         var InitClass = function() {};
         return Function.prototype.subClass.apply(InitClass, arguments);
     };
-
-    global._ITSAmodules.Classes = Classes = {};
 
     /**
      * Returns a base class with the given constructor and prototype methods
