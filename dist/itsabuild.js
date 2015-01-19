@@ -4407,18 +4407,634 @@ if(typeof require == 'function'){
 
 
 },{}],6:[function(require,module,exports){
+(function (process,global){
+/*
+Copyright 2013 Yahoo! Inc. All rights reserved.
+Licensed under the BSD License.
+http://yuilibrary.com/license/
+*/
+
+/*jslint expr: true */
+/*global define */
+
+(function (global, factory) {
+    var built = factory();
+    /* istanbul ignore else */
+    if (typeof module === 'object' && module) {
+        module.exports = built;
+    }
+    /* istanbul ignore next */
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
+    }
+    global.PromisePolyfill = built;
+    global.Promise || (global.Promise = built);
+}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this, function () {
+
+    function isArray(obj) {
+        return Object.prototype.toString.call(obj) === '[object Array]';
+    }
+
+    function assign(obj, props) {
+        for (var prop in props) {
+            /* istanbul ignore else */
+            if (props.hasOwnProperty(prop)) {
+                obj[prop] = props[prop];
+            }
+        }
+    }
+
+    /**
+    A promise represents a value that may not yet be available. Promises allow
+    you to chain asynchronous operations, write synchronous looking code and
+    handle errors throughout the process.
+
+    This constructor takes a function as a parameter where you can insert the logic
+    that fulfills or rejects this promise. The fulfillment value and the rejection
+    reason can be any JavaScript value. It's encouraged that rejection reasons be
+    error objects
+
+    <pre><code>
+    var fulfilled = new Promise(function (resolve) {
+        resolve('I am a fulfilled promise');
+    });
+
+    var rejected = new Promise(function (resolve, reject) {
+        reject(new Error('I am a rejected promise'));
+    });
+    </code></pre>
+
+    @class Promise
+    @constructor
+    @param {Function} fn A function where to insert the logic that resolves this
+            promise. Receives `resolve` and `reject` functions as parameters.
+            This function is called synchronously.
+    **/
+    function Promise(fn) {
+        if (!(this instanceof Promise)) {
+            Promise._log('Promises should always be created with new Promise(). This will throw an error in the future', 'error');
+            return new Promise(fn);
+        }
+
+        var resolver = new Promise.Resolver(this);
+
+        /**
+        A reference to the resolver object that handles this promise
+
+        @property _resolver
+        @type Object
+        @private
+        */
+        this._resolver = resolver;
+
+        try {
+            fn(function (value) {
+                resolver.resolve(value);
+            }, function (reason) {
+                resolver.reject(reason);
+            });
+        } catch (e) {
+            resolver.reject(e);
+        }
+    }
+
+    assign(Promise.prototype, {
+        /**
+        Schedule execution of a callback to either or both of "fulfill" and
+        "reject" resolutions for this promise. The callbacks are wrapped in a new
+        promise and that promise is returned.  This allows operation chaining ala
+        `functionA().then(functionB).then(functionC)` where `functionA` returns
+        a promise, and `functionB` and `functionC` _may_ return promises.
+
+        Asynchronicity of the callbacks is guaranteed.
+
+        @method then
+        @param {Function} [callback] function to execute if the promise
+                    resolves successfully
+        @param {Function} [errback] function to execute if the promise
+                    resolves unsuccessfully
+        @return {Promise} A promise wrapping the resolution of either "resolve" or
+                    "reject" callback
+        **/
+        then: function (callback, errback) {
+            // using this.constructor allows for customized promises to be
+            // returned instead of plain ones
+            var resolve, reject,
+                promise = new this.constructor(function (res, rej) {
+                    resolve = res;
+                    reject = rej;
+                });
+
+            this._resolver._addCallbacks(
+                typeof callback === 'function' ?
+                    Promise._makeCallback(promise, resolve, reject, callback) : resolve,
+                typeof errback === 'function' ?
+                    Promise._makeCallback(promise, resolve, reject, errback) : reject
+            );
+
+            return promise;
+        },
+
+        /*
+        A shorthand for `promise.then(undefined, callback)`.
+
+        Returns a new promise and the error callback gets the same treatment as in
+        `then`: errors get caught and turned into rejections, and the return value
+        of the callback becomes the fulfilled value of the returned promise.
+
+        @method catch
+        @param [Function] errback Callback to be called in case this promise is
+                            rejected
+        @return {Promise} A new promise modified by the behavior of the error
+                            callback
+        */
+        'catch': function (errback) {
+            return this.then(undefined, errback);
+        }
+    });
+
+    /**
+    Wraps the callback in another function to catch exceptions and turn them
+    into rejections.
+
+    @method _makeCallback
+    @param {Promise} promise Promise that will be affected by this callback
+    @param {Function} fn Callback to wrap
+    @return {Function}
+    @static
+    @private
+    **/
+    Promise._makeCallback = function (promise, resolve, reject, fn) {
+        // callbacks and errbacks only get one argument
+        return function (valueOrReason) {
+            var result;
+
+            // Promises model exception handling through callbacks
+            // making both synchronous and asynchronous errors behave
+            // the same way
+            try {
+                // Use the argument coming in to the callback/errback from the
+                // resolution of the parent promise.
+                // The function must be called as a normal function, with no
+                // special value for |this|, as per Promises A+
+                result = fn(valueOrReason);
+            } catch (e) {
+                // calling return only to stop here
+                reject(e);
+                return;
+            }
+
+            if (result === promise) {
+                reject(new TypeError('Cannot resolve a promise with itself'));
+                return;
+            }
+
+            resolve(result);
+        };
+    };
+
+    /**
+    Logs a message. This method is designed to be overwritten with  YUI's `log`
+    function.
+
+    @method _log
+    @param {String} msg Message to log
+    @param {String} type Log level. One of 'error', 'warn', 'info'.
+    @static
+    @private
+    **/
+    Promise._log = function (msg, type) { /* istanbul ignore else */ if (typeof console !== 'undefined') { console[type](msg); } };
+
+    /*
+    Ensures that a certain value is a promise. If it is not a promise, it wraps it
+    in one.
+
+    This method can be copied or inherited in subclasses. In that case it will
+    check that the value passed to it is an instance of the correct class.
+    This means that `PromiseSubclass.resolve()` will always return instances of
+    `PromiseSubclass`.
+
+    @method resolve
+    @param {Any} Any object that may or may not be a promise
+    @return {Promise}
+    @static
+    */
+    Promise.resolve = function (value) {
+        if (value && value.constructor === this) {
+            return value;
+        }
+        /*jshint newcap: false */
+        return new this(function (resolve) {
+        /*jshint newcap: true */
+            resolve(value);
+        });
+    };
+
+    /*
+    A shorthand for creating a rejected promise.
+
+    @method reject
+    @param {Any} reason Reason for the rejection of this promise. Usually an Error
+        Object
+    @return {Promise} A rejected promise
+    @static
+    */
+    Promise.reject = function (reason) {
+        /*jshint newcap: false */
+        var promise = new this(function () {});
+       /*jshint newcap: true */
+
+       // Do not go through resolver.reject() because an immediately rejected promise
+       // always has no callbacks which would trigger an unnecessary warnihg
+       promise._resolver._result = reason;
+       promise._resolver._status = 'rejected';
+
+       return promise;
+    };
+
+    /*
+    Returns a promise that is resolved or rejected when all values are resolved or
+    any is rejected. This is useful for waiting for the resolution of multiple
+    promises, such as reading multiple files in Node.js or making multiple XHR
+    requests in the browser.
+
+    @method all
+    @param {Any[]} values An array of any kind of values, promises or not. If a value is not
+    @return [Promise] A promise for an array of all the fulfillment values
+    @static
+    */
+    Promise.all = function (values) {
+        var Promise = this;
+        return new Promise(function (resolve, reject) {
+            if (!isArray(values)) {
+                reject(new TypeError('Promise.all expects an array of values or promises'));
+                return;
+            }
+
+            var remaining = values.length,
+                i         = 0,
+                length    = values.length,
+                results   = [];
+
+            function oneDone(index) {
+                return function (value) {
+                    results[index] = value;
+
+                    remaining--;
+
+                    if (!remaining) {
+                        resolve(results);
+                    }
+                };
+            }
+
+            if (length < 1) {
+                return resolve(results);
+            }
+
+            for (; i < length; i++) {
+                Promise.resolve(values[i]).then(oneDone(i), reject);
+            }
+        });
+    };
+
+    /*
+    Returns a promise that is resolved or rejected when any of values is either
+    resolved or rejected. Can be used for providing early feedback in the UI
+    while other operations are still pending.
+
+    @method race
+    @param {Any[]} values An array of values or promises
+    @return {Promise}
+    @static
+    */
+    Promise.race = function (values) {
+        var Promise = this;
+        return new Promise(function (resolve, reject) {
+            if (!isArray(values)) {
+                reject(new TypeError('Promise.race expects an array of values or promises'));
+                return;
+            }
+            
+            // just go through the list and resolve and reject at the first change
+            // This abuses the fact that calling resolve/reject multiple times
+            // doesn't change the state of the returned promise
+            for (var i = 0, count = values.length; i < count; i++) {
+                Promise.resolve(values[i]).then(resolve, reject);
+            }
+        });
+    };
+
+    /**
+    Forces a function to be run asynchronously, but as fast as possible. In Node.js
+    this is achieved using `setImmediate` or `process.nextTick`. In YUI this is
+    replaced with `Y.soon`.
+
+    @method async
+    @param {Function} callback The function to call asynchronously
+    @static
+    **/
+    /* istanbul ignore next */
+    Promise.async = typeof setImmediate !== 'undefined' ?
+                        function (fn) {setImmediate(fn);} :
+                    typeof process !== 'undefined' && process.nextTick ?
+                        process.nextTick :
+                    function (fn) {setTimeout(fn, 0);};
+
+    /**
+    Represents an asynchronous operation. Provides a
+    standard API for subscribing to the moment that the operation completes either
+    successfully (`fulfill()`) or unsuccessfully (`reject()`).
+
+    @class Promise.Resolver
+    @constructor
+    @param {Promise} promise The promise instance this resolver will be handling
+    **/
+    function Resolver(promise) {
+        /**
+        List of success callbacks
+
+        @property _callbacks
+        @type Array
+        @private
+        **/
+        this._callbacks = [];
+
+        /**
+        List of failure callbacks
+
+        @property _errbacks
+        @type Array
+        @private
+        **/
+        this._errbacks = [];
+
+        /**
+        The promise for this Resolver.
+
+        @property promise
+        @type Promise
+        @deprecated
+        **/
+        this.promise = promise;
+
+        /**
+        The status of the operation. This property may take only one of the following
+        values: 'pending', 'fulfilled' or 'rejected'.
+
+        @property _status
+        @type String
+        @default 'pending'
+        @private
+        **/
+        this._status = 'pending';
+
+        /**
+        This value that this promise represents.
+
+        @property _result
+        @type Any
+        @private
+        **/
+        this._result = null;
+    }
+
+    assign(Resolver.prototype, {
+        /**
+        Resolves the promise, signaling successful completion of the
+        represented operation. All "onFulfilled" subscriptions are executed and passed
+        the value provided to this method. After calling `fulfill()`, `reject()` and
+        `notify()` are disabled.
+
+        @method fulfill
+        @param {Any} value Value to pass along to the "onFulfilled" subscribers
+        **/
+        fulfill: function (value) {
+            var status = this._status;
+
+            if (status === 'pending' || status === 'accepted') {
+                this._result = value;
+                this._status = 'fulfilled';
+            }
+
+            if (this._status === 'fulfilled') {
+                this._notify(this._callbacks, this._result);
+
+                // Reset the callback list so that future calls to fulfill()
+                // won't call the same callbacks again. Promises keep a list
+                // of callbacks, they're not the same as events. In practice,
+                // calls to fulfill() after the first one should not be made by
+                // the user but by then()
+                this._callbacks = [];
+
+                // Once a promise gets fulfilled it can't be rejected, so
+                // there is no point in keeping the list. Remove it to help
+                // garbage collection
+                this._errbacks = null;
+            }
+        },
+
+        /**
+        Resolves the promise, signaling *un*successful completion of the
+        represented operation. All "onRejected" subscriptions are executed with
+        the value provided to this method. After calling `reject()`, `resolve()`
+        and `notify()` are disabled.
+
+        @method reject
+        @param {Any} value Value to pass along to the "reject" subscribers
+        **/
+        reject: function (reason) {
+            var status = this._status;
+
+            if (status === 'pending' || status === 'accepted') {
+                this._result = reason;
+                this._status = 'rejected';
+                if (!this._errbacks.length) {Promise._log('Promise rejected but no error handlers were registered to it', 'info');}
+            }
+
+            if (this._status === 'rejected') {
+                this._notify(this._errbacks, this._result);
+
+                // See fulfill()
+                this._callbacks = null;
+                this._errbacks = [];
+            }
+        },
+
+        /*
+        Given a certain value A passed as a parameter, this method resolves the
+        promise to the value A.
+
+        If A is a promise, `resolve` will cause the resolver to adopt the state of A
+        and once A is resolved, it will resolve the resolver's promise as well.
+        This behavior "flattens" A by calling `then` recursively and essentially
+        disallows promises-for-promises.
+
+        This is the default algorithm used when using the function passed as the
+        first argument to the promise initialization function. This means that
+        the following code returns a promise for the value 'hello world':
+
+            var promise1 = new Promise(function (resolve) {
+                resolve('hello world');
+            });
+            var promise2 = new Promise(function (resolve) {
+                resolve(promise1);
+            });
+            promise2.then(function (value) {
+                assert(value === 'hello world'); // true
+            });
+
+        @method resolve
+        @param [Any] value A regular JS value or a promise
+        */
+        resolve: function (value) {
+            if (this._status === 'pending') {
+                this._status = 'accepted';
+                this._value = value;
+
+                if ((this._callbacks && this._callbacks.length) ||
+                    (this._errbacks && this._errbacks.length)) {
+                    this._unwrap(this._value);
+                }
+            }
+        },
+
+        /**
+        If `value` is a promise or a thenable, it will be unwrapped by
+        recursively calling its `then` method. If not, the resolver will be
+        fulfilled with `value`.
+
+        This method is called when the promise's `then` method is called and
+        not in `resolve` to allow for lazy promises to be accepted and not
+        resolved immediately.
+
+        @method _unwrap
+        @param {Any} value A promise, thenable or regular value
+        @private
+        **/
+        _unwrap: function (value) {
+            var self = this, unwrapped = false, then;
+
+            if (!value || (typeof value !== 'object' &&
+                typeof value !== 'function')) {
+                self.fulfill(value);
+                return;
+            }
+
+            try {
+                then = value.then;
+
+                if (typeof then === 'function') {
+                    then.call(value, function (value) {
+                        if (!unwrapped) {
+                            unwrapped = true;
+                            self._unwrap(value);
+                        }
+                    }, function (reason) {
+                        if (!unwrapped) {
+                            unwrapped = true;
+                            self.reject(reason);
+                        }
+                    });
+                } else {
+                    self.fulfill(value);
+                }
+            } catch (e) {
+                if (!unwrapped) {
+                    self.reject(e);
+                }
+            }
+        },
+
+        /**
+        Schedule execution of a callback to either or both of "resolve" and
+        "reject" resolutions of this resolver. If the resolver is not pending,
+        the correct callback gets called automatically.
+
+        @method _addCallbacks
+        @param {Function} [callback] function to execute if the Resolver
+                    resolves successfully
+        @param {Function} [errback] function to execute if the Resolver
+                    resolves unsuccessfully
+        **/
+        _addCallbacks: function (callback, errback) {
+            var callbackList = this._callbacks,
+                errbackList  = this._errbacks;
+
+            // Because the callback and errback are represented by a Resolver, it
+            // must be fulfilled or rejected to propagate through the then() chain.
+            // The same logic applies to resolve() and reject() for fulfillment.
+            if (callbackList) {
+                callbackList.push(callback);
+            }
+            if (errbackList) {
+                errbackList.push(errback);
+            }
+
+            switch (this._status) {
+                case 'accepted':
+                    this._unwrap(this._value);
+                    break;
+                case 'fulfilled':
+                    this.fulfill(this._result);
+                    break;
+                case 'rejected':
+                    this.reject(this._result);
+                    break;
+            }
+        },
+
+        /**
+        Executes an array of callbacks from a specified context, passing a set of
+        arguments.
+
+        @method _notify
+        @param {Function[]} subs The array of subscriber callbacks
+        @param {Any} result Value to pass the callbacks
+        @protected
+        **/
+        _notify: function (subs, result) {
+            // Since callback lists are reset synchronously, the subs list never
+            // changes after _notify() receives it. Avoid calling Y.soon() for
+            // an empty list
+            if (subs.length) {
+                // Calling all callbacks after Promise.async to guarantee
+                // asynchronicity. Because setTimeout can cause unnecessary
+                // delays that *can* become noticeable in some situations
+                // (especially in Node.js)
+                Promise.async(function () {
+                    var i, len;
+
+                    for (i = 0, len = subs.length; i < len; ++i) {
+                        subs[i](result);
+                    }
+                });
+            }
+        }
+
+    });
+
+    Promise.Resolver = Resolver;
+
+    return Promise;
+
+}));
+
+
+}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"_process":69}],7:[function(require,module,exports){
 var css = "*:focus {\n    outline: 0;\n}\n\na[target=\"_blank\"]:focus {\n    outline: 1px solid #129fea;\n}\n\n/* because we think the padding and margin should always be part of the size,\n   we define \"box-sizing: border-box\" for all elements */\n\n* {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],7:[function(require,module,exports){
-var css = ".pure-menu.pure-menu-open {\n    z-index: 3; /* prevent graph from crossing the menuarea */\n}\n\n.pure-button.pure-button-bordered,\n.pure-button.pure-button-bordered[disabled] {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;\n}\n\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.4) inset;\n}\n\n/* restore pure-button:active */\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button:active:focus,\n.pure-button.pure-button-active:focus {\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4) inset, 0 0 10px rgba(0, 0, 0, 0.3) inset;\n}\n\n.pure-button.pure-button-rounded {\n    border-radius: 0.3em;\n}\n\n.pure-button.pure-button-heavyrounded {\n    border-radius: 0.5em;\n}\n\n.pure-button.pure-button-oval {\n    border-radius: 50%;\n}\n\n.pure-button.pure-button-halfoval {\n    border-radius: 25%;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],8:[function(require,module,exports){
-var css = "/*!\nPure v0.5.0\nCopyright 2014 Yahoo! Inc. All rights reserved.\nLicensed under the BSD License.\nhttps://github.com/yahoo/pure/blob/master/LICENSE.md\n*/\n/*!\nnormalize.css v^3.0 | MIT License | git.io/normalize\nCopyright (c) Nicolas Gallagher and Jonathan Neal\n*/\n/*! normalize.css v3.0.2 | MIT License | git.io/normalize */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS text size adjust after orientation change, without disabling\n *    user zoom.\n */\n\nhtml {\n  font-family: sans-serif; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * Improve readability when focused and also mouse hovered in all browsers.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  -moz-box-sizing: content-box;\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit; /* 1 */\n  font: inherit; /* 2 */\n  margin: 0; /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n  cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome\n *    (include `-moz` to future-proof).\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  -moz-box-sizing: content-box;\n  -webkit-box-sizing: content-box; /* 2 */\n  box-sizing: content-box;\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}\n\n/*csslint important:false*/\n\n/* ==========================================================================\n   Pure Base Extras\n   ========================================================================== */\n\n/**\n * Extra rules that Pure adds on top of Normalize.css\n */\n\n/**\n * Always hide an element when it has the `hidden` HTML attribute.\n */\n\n[hidden] {\n    display: none !important;\n}\n\n/**\n * Add this class to an image to make it fit within it's fluid parent wrapper while maintaining\n * aspect ratio.\n */\n.pure-img {\n    max-width: 100%;\n    height: auto;\n    display: block;\n}\n\n/*csslint regex-selectors:false, known-properties:false, duplicate-properties:false*/\n\n.pure-g {\n    letter-spacing: -0.31em; /* Webkit: collapse white-space between units */\n    *letter-spacing: normal; /* reset IE < 8 */\n    *word-spacing: -0.43em; /* IE < 8: collapse white-space between units */\n    text-rendering: optimizespeed; /* Webkit: fixes text-rendering: optimizeLegibility */\n\n    /*\n    Sets the font stack to fonts known to work properly with the above letter\n    and word spacings. See: https://github.com/yahoo/pure/issues/41/\n\n    The following font stack makes Pure Grids work on all known environments.\n\n    * FreeSans: Ships with many Linux distros, including Ubuntu\n\n    * Arimo: Ships with Chrome OS. Arimo has to be defined before Helvetica and\n      Arial to get picked up by the browser, even though neither is available\n      in Chrome OS.\n\n    * Droid Sans: Ships with all versions of Android.\n\n    * Helvetica, Arial, sans-serif: Common font stack on OS X and Windows.\n    */\n    font-family: FreeSans, Arimo, \"Droid Sans\", Helvetica, Arial, sans-serif;\n\n    /*\n    Use flexbox when possible to avoid `letter-spacing` side-effects.\n\n    NOTE: Firefox (as of 25) does not currently support flex-wrap, so the\n    `-moz-` prefix version is omitted.\n    */\n\n    display: -webkit-flex;\n    -webkit-flex-flow: row wrap;\n\n    /* IE10 uses display: flexbox */\n    display: -ms-flexbox;\n    -ms-flex-flow: row wrap;\n}\n\n/* Opera as of 12 on Windows needs word-spacing.\n   The \".opera-only\" selector is used to prevent actual prefocus styling\n   and is not required in markup.\n*/\n.opera-only :-o-prefocus,\n.pure-g {\n    word-spacing: -0.43em;\n}\n\n.pure-u {\n    display: inline-block;\n    *display: inline; /* IE < 8: fake inline-block */\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n/*\nResets the font family back to the OS/browser's default sans-serif font,\nthis the same font stack that Normalize.css sets for the `body`.\n*/\n.pure-g [class *= \"pure-u\"] {\n    font-family: sans-serif;\n}\n\n.pure-u-1,\n.pure-u-1-1,\n.pure-u-1-2,\n.pure-u-1-3,\n.pure-u-2-3,\n.pure-u-1-4,\n.pure-u-3-4,\n.pure-u-1-5,\n.pure-u-2-5,\n.pure-u-3-5,\n.pure-u-4-5,\n.pure-u-5-5,\n.pure-u-1-6,\n.pure-u-5-6,\n.pure-u-1-8,\n.pure-u-3-8,\n.pure-u-5-8,\n.pure-u-7-8,\n.pure-u-1-12,\n.pure-u-5-12,\n.pure-u-7-12,\n.pure-u-11-12,\n.pure-u-1-24,\n.pure-u-2-24,\n.pure-u-3-24,\n.pure-u-4-24,\n.pure-u-5-24,\n.pure-u-6-24,\n.pure-u-7-24,\n.pure-u-8-24,\n.pure-u-9-24,\n.pure-u-10-24,\n.pure-u-11-24,\n.pure-u-12-24,\n.pure-u-13-24,\n.pure-u-14-24,\n.pure-u-15-24,\n.pure-u-16-24,\n.pure-u-17-24,\n.pure-u-18-24,\n.pure-u-19-24,\n.pure-u-20-24,\n.pure-u-21-24,\n.pure-u-22-24,\n.pure-u-23-24,\n.pure-u-24-24 {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n.pure-u-1-24 {\n    width: 4.1667%;\n    *width: 4.1357%;\n}\n\n.pure-u-1-12,\n.pure-u-2-24 {\n    width: 8.3333%;\n    *width: 8.3023%;\n}\n\n.pure-u-1-8,\n.pure-u-3-24 {\n    width: 12.5000%;\n    *width: 12.4690%;\n}\n\n.pure-u-1-6,\n.pure-u-4-24 {\n    width: 16.6667%;\n    *width: 16.6357%;\n}\n\n.pure-u-1-5 {\n    width: 20%;\n    *width: 19.9690%;\n}\n\n.pure-u-5-24 {\n    width: 20.8333%;\n    *width: 20.8023%;\n}\n\n.pure-u-1-4,\n.pure-u-6-24 {\n    width: 25%;\n    *width: 24.9690%;\n}\n\n.pure-u-7-24 {\n    width: 29.1667%;\n    *width: 29.1357%;\n}\n\n.pure-u-1-3,\n.pure-u-8-24 {\n    width: 33.3333%;\n    *width: 33.3023%;\n}\n\n.pure-u-3-8,\n.pure-u-9-24 {\n    width: 37.5000%;\n    *width: 37.4690%;\n}\n\n.pure-u-2-5 {\n    width: 40%;\n    *width: 39.9690%;\n}\n\n.pure-u-5-12,\n.pure-u-10-24 {\n    width: 41.6667%;\n    *width: 41.6357%;\n}\n\n.pure-u-11-24 {\n    width: 45.8333%;\n    *width: 45.8023%;\n}\n\n.pure-u-1-2,\n.pure-u-12-24 {\n    width: 50%;\n    *width: 49.9690%;\n}\n\n.pure-u-13-24 {\n    width: 54.1667%;\n    *width: 54.1357%;\n}\n\n.pure-u-7-12,\n.pure-u-14-24 {\n    width: 58.3333%;\n    *width: 58.3023%;\n}\n\n.pure-u-3-5 {\n    width: 60%;\n    *width: 59.9690%;\n}\n\n.pure-u-5-8,\n.pure-u-15-24 {\n    width: 62.5000%;\n    *width: 62.4690%;\n}\n\n.pure-u-2-3,\n.pure-u-16-24 {\n    width: 66.6667%;\n    *width: 66.6357%;\n}\n\n.pure-u-17-24 {\n    width: 70.8333%;\n    *width: 70.8023%;\n}\n\n.pure-u-3-4,\n.pure-u-18-24 {\n    width: 75%;\n    *width: 74.9690%;\n}\n\n.pure-u-19-24 {\n    width: 79.1667%;\n    *width: 79.1357%;\n}\n\n.pure-u-4-5 {\n    width: 80%;\n    *width: 79.9690%;\n}\n\n.pure-u-5-6,\n.pure-u-20-24 {\n    width: 83.3333%;\n    *width: 83.3023%;\n}\n\n.pure-u-7-8,\n.pure-u-21-24 {\n    width: 87.5000%;\n    *width: 87.4690%;\n}\n\n.pure-u-11-12,\n.pure-u-22-24 {\n    width: 91.6667%;\n    *width: 91.6357%;\n}\n\n.pure-u-23-24 {\n    width: 95.8333%;\n    *width: 95.8023%;\n}\n\n.pure-u-1,\n.pure-u-1-1,\n.pure-u-5-5,\n.pure-u-24-24 {\n    width: 100%;\n}\n.pure-button {\n    /* Structure */\n    display: inline-block;\n    *display: inline; /*IE 6/7*/\n    zoom: 1;\n    line-height: normal;\n    white-space: nowrap;\n    vertical-align: baseline;\n    text-align: center;\n    cursor: pointer;\n    -webkit-user-drag: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n}\n\n/* Firefox: Get rid of the inner focus border */\n.pure-button::-moz-focus-inner {\n    padding: 0;\n    border: 0;\n}\n\n/*csslint outline-none:false*/\n\n.pure-button {\n    font-family: inherit;\n    font-size: 100%;\n    *font-size: 90%; /*IE 6/7 - To reduce IE's oversized button text*/\n    *overflow: visible; /*IE 6/7 - Because of IE's overly large left/right padding on buttons */\n    padding: 0.5em 1em;\n    color: #444; /* rgba not supported (IE 8) */\n    color: rgba(0, 0, 0, 0.80); /* rgba supported */\n    *color: #444; /* IE 6 & 7 */\n    border: 1px solid #999;  /*IE 6/7/8*/\n    border: none rgba(0, 0, 0, 0);  /*IE9 + everything else*/\n    background-color: #E6E6E6;\n    text-decoration: none;\n    border-radius: 2px;\n}\n\n.pure-button-hover,\n.pure-button:hover,\n.pure-button:focus {\n    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000',GradientType=0);\n    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), color-stop(40%, rgba(0,0,0, 0.05)), to(rgba(0,0,0, 0.10)));\n    background-image: -webkit-linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n    background-image: -moz-linear-gradient(top, rgba(0,0,0, 0.05) 0%, rgba(0,0,0, 0.10));\n    background-image: -o-linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n    background-image: linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n}\n.pure-button:focus {\n    outline: 0;\n}\n.pure-button-active,\n.pure-button:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset, 0 0 6px rgba(0,0,0, 0.20) inset;\n}\n\n.pure-button[disabled],\n.pure-button-disabled,\n.pure-button-disabled:hover,\n.pure-button-disabled:focus,\n.pure-button-disabled:active {\n    border: none;\n    background-image: none;\n    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);\n    filter: alpha(opacity=40);\n    -khtml-opacity: 0.40;\n    -moz-opacity: 0.40;\n    opacity: 0.40;\n    cursor: not-allowed;\n    box-shadow: none;\n}\n\n.pure-button-hidden {\n    display: none;\n}\n\n/* Firefox: Get rid of the inner focus border */\n.pure-button::-moz-focus-inner{\n    padding: 0;\n    border: 0;\n}\n\n.pure-button-primary,\n.pure-button-selected,\na.pure-button-primary,\na.pure-button-selected {\n    background-color: rgb(0, 120, 231);\n    color: #fff;\n}\n\n.pure-form input[type=\"text\"],\n.pure-form input[type=\"password\"],\n.pure-form input[type=\"email\"],\n.pure-form input[type=\"url\"],\n.pure-form input[type=\"date\"],\n.pure-form input[type=\"month\"],\n.pure-form input[type=\"time\"],\n.pure-form input[type=\"datetime\"],\n.pure-form input[type=\"datetime-local\"],\n.pure-form input[type=\"week\"],\n.pure-form input[type=\"number\"],\n.pure-form input[type=\"search\"],\n.pure-form input[type=\"tel\"],\n.pure-form input[type=\"color\"],\n.pure-form select,\n.pure-form textarea {\n    padding: 0.5em 0.6em;\n    display: inline-block;\n    border: 1px solid #ccc;\n    box-shadow: inset 0 1px 3px #ddd;\n    border-radius: 4px;\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type]) {\n    padding: 0.5em 0.6em;\n    display: inline-block;\n    border: 1px solid #ccc;\n    box-shadow: inset 0 1px 3px #ddd;\n    border-radius: 4px;\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n\n/* Chrome (as of v.32/34 on OS X) needs additional room for color to display. */\n/* May be able to remove this tweak as color inputs become more standardized across browsers. */\n.pure-form input[type=\"color\"] {\n    padding: 0.2em 0.5em;\n}\n\n\n.pure-form input[type=\"text\"]:focus,\n.pure-form input[type=\"password\"]:focus,\n.pure-form input[type=\"email\"]:focus,\n.pure-form input[type=\"url\"]:focus,\n.pure-form input[type=\"date\"]:focus,\n.pure-form input[type=\"month\"]:focus,\n.pure-form input[type=\"time\"]:focus,\n.pure-form input[type=\"datetime\"]:focus,\n.pure-form input[type=\"datetime-local\"]:focus,\n.pure-form input[type=\"week\"]:focus,\n.pure-form input[type=\"number\"]:focus,\n.pure-form input[type=\"search\"]:focus,\n.pure-form input[type=\"tel\"]:focus,\n.pure-form input[type=\"color\"]:focus,\n.pure-form select:focus,\n.pure-form textarea:focus {\n    outline: 0;\n    outline: thin dotted \\9; /* IE6-9 */\n    border-color: #129FEA;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type]):focus {\n    outline: 0;\n    outline: thin dotted \\9; /* IE6-9 */\n    border-color: #129FEA;\n}\n\n.pure-form input[type=\"file\"]:focus,\n.pure-form input[type=\"radio\"]:focus,\n.pure-form input[type=\"checkbox\"]:focus {\n    outline: thin dotted #333;\n    outline: 1px auto #129FEA;\n}\n.pure-form .pure-checkbox,\n.pure-form .pure-radio {\n    margin: 0.5em 0;\n    display: block;\n}\n\n.pure-form input[type=\"text\"][disabled],\n.pure-form input[type=\"password\"][disabled],\n.pure-form input[type=\"email\"][disabled],\n.pure-form input[type=\"url\"][disabled],\n.pure-form input[type=\"date\"][disabled],\n.pure-form input[type=\"month\"][disabled],\n.pure-form input[type=\"time\"][disabled],\n.pure-form input[type=\"datetime\"][disabled],\n.pure-form input[type=\"datetime-local\"][disabled],\n.pure-form input[type=\"week\"][disabled],\n.pure-form input[type=\"number\"][disabled],\n.pure-form input[type=\"search\"][disabled],\n.pure-form input[type=\"tel\"][disabled],\n.pure-form input[type=\"color\"][disabled],\n.pure-form select[disabled],\n.pure-form textarea[disabled] {\n    cursor: not-allowed;\n    background-color: #eaeded;\n    color: #cad2d3;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type])[disabled] {\n    cursor: not-allowed;\n    background-color: #eaeded;\n    color: #cad2d3;\n}\n.pure-form input[readonly],\n.pure-form select[readonly],\n.pure-form textarea[readonly] {\n    background: #eee; /* menu hover bg color */\n    color: #777; /* menu text color */\n    border-color: #ccc;\n}\n\n.pure-form input:focus:invalid,\n.pure-form textarea:focus:invalid,\n.pure-form select:focus:invalid {\n    color: #b94a48;\n    border-color: #ee5f5b;\n}\n.pure-form input:focus:invalid:focus,\n.pure-form textarea:focus:invalid:focus,\n.pure-form select:focus:invalid:focus {\n    border-color: #e9322d;\n}\n.pure-form input[type=\"file\"]:focus:invalid:focus,\n.pure-form input[type=\"radio\"]:focus:invalid:focus,\n.pure-form input[type=\"checkbox\"]:focus:invalid:focus {\n    outline-color: #e9322d;\n}\n.pure-form select {\n    border: 1px solid #ccc;\n    background-color: white;\n}\n.pure-form select[multiple] {\n    height: auto;\n}\n.pure-form label {\n    margin: 0.5em 0 0.2em;\n}\n.pure-form fieldset {\n    margin: 0;\n    padding: 0.35em 0 0.75em;\n    border: 0;\n}\n.pure-form legend {\n    display: block;\n    width: 100%;\n    padding: 0.3em 0;\n    margin-bottom: 0.3em;\n    color: #333;\n    border-bottom: 1px solid #e5e5e5;\n}\n\n.pure-form-stacked input[type=\"text\"],\n.pure-form-stacked input[type=\"password\"],\n.pure-form-stacked input[type=\"email\"],\n.pure-form-stacked input[type=\"url\"],\n.pure-form-stacked input[type=\"date\"],\n.pure-form-stacked input[type=\"month\"],\n.pure-form-stacked input[type=\"time\"],\n.pure-form-stacked input[type=\"datetime\"],\n.pure-form-stacked input[type=\"datetime-local\"],\n.pure-form-stacked input[type=\"week\"],\n.pure-form-stacked input[type=\"number\"],\n.pure-form-stacked input[type=\"search\"],\n.pure-form-stacked input[type=\"tel\"],\n.pure-form-stacked input[type=\"color\"],\n.pure-form-stacked select,\n.pure-form-stacked label,\n.pure-form-stacked textarea {\n    display: block;\n    margin: 0.25em 0;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form-stacked input:not([type]) {\n    display: block;\n    margin: 0.25em 0;\n}\n.pure-form-aligned input,\n.pure-form-aligned textarea,\n.pure-form-aligned select,\n/* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n.pure-form-aligned .pure-help-inline,\n.pure-form-message-inline {\n    display: inline-block;\n    *display: inline;\n    *zoom: 1;\n    vertical-align: middle;\n}\n.pure-form-aligned textarea {\n    vertical-align: top;\n}\n\n/* Aligned Forms */\n.pure-form-aligned .pure-control-group {\n    margin-bottom: 0.5em;\n}\n.pure-form-aligned .pure-control-group label {\n    text-align: right;\n    display: inline-block;\n    vertical-align: middle;\n    width: 10em;\n    margin: 0 1em 0 0;\n}\n.pure-form-aligned .pure-controls {\n    margin: 1.5em 0 0 10em;\n}\n\n/* Rounded Inputs */\n.pure-form input.pure-input-rounded,\n.pure-form .pure-input-rounded {\n    border-radius: 2em;\n    padding: 0.5em 1em;\n}\n\n/* Grouped Inputs */\n.pure-form .pure-group fieldset {\n    margin-bottom: 10px;\n}\n.pure-form .pure-group input {\n    display: block;\n    padding: 10px;\n    margin: 0;\n    border-radius: 0;\n    position: relative;\n    top: -1px;\n}\n.pure-form .pure-group input:focus {\n    z-index: 2;\n}\n.pure-form .pure-group input:first-child {\n    top: 1px;\n    border-radius: 4px 4px 0 0;\n}\n.pure-form .pure-group input:last-child {\n    top: -2px;\n    border-radius: 0 0 4px 4px;\n}\n.pure-form .pure-group button {\n    margin: 0.35em 0;\n}\n\n.pure-form .pure-input-1 {\n    width: 100%;\n}\n.pure-form .pure-input-2-3 {\n    width: 66%;\n}\n.pure-form .pure-input-1-2 {\n    width: 50%;\n}\n.pure-form .pure-input-1-3 {\n    width: 33%;\n}\n.pure-form .pure-input-1-4 {\n    width: 25%;\n}\n\n/* Inline help for forms */\n/* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n.pure-form .pure-help-inline,\n.pure-form-message-inline {\n    display: inline-block;\n    padding-left: 0.3em;\n    color: #666;\n    vertical-align: middle;\n    font-size: 0.875em;\n}\n\n/* Block help for forms */\n.pure-form-message {\n    display: block;\n    color: #666;\n    font-size: 0.875em;\n}\n\n@media only screen and (max-width : 480px) {\n    .pure-form button[type=\"submit\"] {\n        margin: 0.7em 0 0;\n    }\n\n    .pure-form input:not([type]),\n    .pure-form input[type=\"text\"],\n    .pure-form input[type=\"password\"],\n    .pure-form input[type=\"email\"],\n    .pure-form input[type=\"url\"],\n    .pure-form input[type=\"date\"],\n    .pure-form input[type=\"month\"],\n    .pure-form input[type=\"time\"],\n    .pure-form input[type=\"datetime\"],\n    .pure-form input[type=\"datetime-local\"],\n    .pure-form input[type=\"week\"],\n    .pure-form input[type=\"number\"],\n    .pure-form input[type=\"search\"],\n    .pure-form input[type=\"tel\"],\n    .pure-form input[type=\"color\"],\n    .pure-form label {\n        margin-bottom: 0.3em;\n        display: block;\n    }\n\n    .pure-group input:not([type]),\n    .pure-group input[type=\"text\"],\n    .pure-group input[type=\"password\"],\n    .pure-group input[type=\"email\"],\n    .pure-group input[type=\"url\"],\n    .pure-group input[type=\"date\"],\n    .pure-group input[type=\"month\"],\n    .pure-group input[type=\"time\"],\n    .pure-group input[type=\"datetime\"],\n    .pure-group input[type=\"datetime-local\"],\n    .pure-group input[type=\"week\"],\n    .pure-group input[type=\"number\"],\n    .pure-group input[type=\"search\"],\n    .pure-group input[type=\"tel\"],\n    .pure-group input[type=\"color\"] {\n        margin-bottom: 0;\n    }\n\n    .pure-form-aligned .pure-control-group label {\n        margin-bottom: 0.3em;\n        text-align: left;\n        display: block;\n        width: 100%;\n    }\n\n    .pure-form-aligned .pure-controls {\n        margin: 1.5em 0 0 0;\n    }\n\n    /* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n    .pure-form .pure-help-inline,\n    .pure-form-message-inline,\n    .pure-form-message {\n        display: block;\n        font-size: 0.75em;\n        /* Increased bottom padding to make it group with its related input element. */\n        padding: 0.2em 0 0.8em;\n    }\n}\n\n/*csslint adjoining-classes:false, outline-none:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n.pure-menu ul {\n    position: absolute;\n    visibility: hidden;\n}\n\n.pure-menu.pure-menu-open {\n    visibility: visible;\n    z-index: 2;\n    width: 100%;\n}\n\n.pure-menu ul {\n    left: -10000px;\n    list-style: none;\n    margin: 0;\n    padding: 0;\n    top: -10000px;\n    z-index: 1;\n}\n\n.pure-menu > ul { position: relative; }\n\n.pure-menu-open > ul {\n    left: 0;\n    top: 0;\n    visibility: visible;\n}\n\n.pure-menu-open > ul:focus {\n    outline: 0;\n}\n\n.pure-menu li { position: relative; }\n\n.pure-menu a,\n.pure-menu .pure-menu-heading {\n    display: block;\n    color: inherit;\n    line-height: 1.5em;\n    padding: 5px 20px;\n    text-decoration: none;\n    white-space: nowrap;\n}\n\n.pure-menu.pure-menu-horizontal > .pure-menu-heading {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    margin: 0;\n    vertical-align: middle;\n}\n.pure-menu.pure-menu-horizontal > ul {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    vertical-align: middle;\n}\n\n.pure-menu li a { padding: 5px 20px; }\n\n.pure-menu-can-have-children > .pure-menu-label:after {\n    content: '\\25B8';\n    float: right;\n    /* These specific fonts have the Unicode char we need. */\n    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'DejaVu Sans', sans-serif;\n    margin-right: -20px;\n    margin-top: -1px;\n}\n\n.pure-menu-can-have-children > .pure-menu-label {\n    padding-right: 30px;\n}\n\n.pure-menu-separator {\n    background-color: #dfdfdf;\n    display: block;\n    height: 1px;\n    font-size: 0;\n    margin: 7px 2px;\n    overflow: hidden;\n}\n\n.pure-menu-hidden {\n    display: none;\n}\n\n/* FIXED MENU */\n.pure-menu-fixed {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n}\n\n\n/* HORIZONTAL MENU CODE */\n\n/* Initial menus should be inline-block so that they are horizontal */\n.pure-menu-horizontal li {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    vertical-align: middle;\n}\n\n/* Submenus should still be display: block; */\n.pure-menu-horizontal li li {\n    display: block;\n}\n\n/* Content after should be down arrow */\n.pure-menu-horizontal > .pure-menu-children > .pure-menu-can-have-children > .pure-menu-label:after {\n    content: \"\\25BE\";\n}\n/*Add extra padding to elements that have the arrow so that the hover looks nice */\n.pure-menu-horizontal > .pure-menu-children > .pure-menu-can-have-children > .pure-menu-label {\n    padding-right: 30px;\n}\n\n/* Adjusting separator for vertical menus */\n.pure-menu-horizontal li.pure-menu-separator {\n    height: 50%;\n    width: 1px;\n    margin: 0 7px;\n}\n\n/* Submenus should be horizontal separator again */\n.pure-menu-horizontal li li.pure-menu-separator {\n    height: 1px;\n    width: auto;\n    margin: 7px 2px;\n}\n\n\n/*csslint adjoining-classes:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n/* MAIN MENU STYLING */\n\n.pure-menu.pure-menu-open,\n.pure-menu.pure-menu-horizontal li .pure-menu-children {\n    background: #fff; /* Old browsers */\n    border: 1px solid #b7b7b7;\n}\n\n/* remove borders for horizontal menus */\n.pure-menu.pure-menu-horizontal,\n.pure-menu.pure-menu-horizontal .pure-menu-heading {\n    border: none;\n}\n\n\n/* LINK STYLES */\n\n.pure-menu a {\n    border: 1px solid transparent;\n    border-left: none;\n    border-right: none;\n\n}\n\n.pure-menu a,\n.pure-menu .pure-menu-can-have-children > li:after {\n    color: #777;\n}\n\n.pure-menu .pure-menu-can-have-children > li:hover:after {\n    color: #fff;\n}\n\n/* Focus style for a dropdown menu-item when the parent has been opened */\n.pure-menu .pure-menu-open {\n    background: #dedede;\n}\n\n\n.pure-menu li a:hover,\n.pure-menu li a:focus {\n    background: #eee;\n}\n\n/* DISABLED STATES */\n.pure-menu li.pure-menu-disabled a:hover,\n.pure-menu li.pure-menu-disabled a:focus {\n    background: #fff;\n    color: #bfbfbf;\n}\n\n.pure-menu .pure-menu-disabled > a {\n    background-image: none;\n    border-color: transparent;\n    cursor: default;\n}\n\n.pure-menu .pure-menu-disabled > a,\n.pure-menu .pure-menu-can-have-children.pure-menu-disabled > a:after {\n    color: #bfbfbf;\n}\n\n/* HEADINGS */\n.pure-menu .pure-menu-heading {\n    color: #565d64;\n    text-transform: uppercase;\n    font-size: 90%;\n    margin-top: 0.5em;\n    border-bottom-width: 1px;\n    border-bottom-style: solid;\n    border-bottom-color: #dfdfdf;\n}\n\n/* ACTIVE MENU ITEM */\n.pure-menu .pure-menu-selected a {\n    color: #000;\n}\n\n/* FIXED MENU */\n.pure-menu.pure-menu-open.pure-menu-fixed {\n    border: none;\n    border-bottom: 1px solid #b7b7b7;\n}\n\n/*csslint box-model:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n\n.pure-paginator {\n\n    /* `pure-g` Grid styles */\n    letter-spacing: -0.31em; /* Webkit: collapse white-space between units */\n    *letter-spacing: normal; /* reset IE < 8 */\n    *word-spacing: -0.43em; /* IE < 8: collapse white-space between units */\n    text-rendering: optimizespeed; /* Webkit: fixes text-rendering: optimizeLegibility */\n\n    /* `pure-paginator` Specific styles */\n    list-style: none;\n    margin: 0;\n    padding: 0;\n}\n.opera-only :-o-prefocus,\n.pure-paginator {\n    word-spacing: -0.43em;\n}\n\n/* `pure-u` Grid styles */\n.pure-paginator li {\n    display: inline-block;\n    *display: inline; /* IE < 8: fake inline-block */\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n\n.pure-paginator .pure-button {\n    border-radius: 0;\n    padding: 0.8em 1.4em;\n    vertical-align: top;\n    height: 1.1em;\n}\n.pure-paginator .pure-button:focus,\n.pure-paginator .pure-button:active {\n    outline-style: none;\n}\n.pure-paginator .prev,\n.pure-paginator .next {\n    color: #C0C1C3;\n    text-shadow: 0 -1px 0 rgba(0,0,0, 0.45);\n}\n.pure-paginator .prev {\n    border-radius: 2px 0 0 2px;\n}\n.pure-paginator .next {\n    border-radius: 0 2px 2px 0;\n}\n\n@media (max-width: 480px) {\n    .pure-menu-horizontal {\n        width: 100%;\n    }\n\n    .pure-menu-children li {\n        display: block;\n        border-bottom: 1px solid black;\n    }\n}\n\n.pure-table {\n    /* Remove spacing between table cells (from Normalize.css) */\n    border-collapse: collapse;\n    border-spacing: 0;\n    empty-cells: show;\n    border: 1px solid #cbcbcb;\n}\n\n.pure-table caption {\n    color: #000;\n    font: italic 85%/1 arial, sans-serif;\n    padding: 1em 0;\n    text-align: center;\n}\n\n.pure-table td,\n.pure-table th {\n    border-left: 1px solid #cbcbcb;/*  inner column border */\n    border-width: 0 0 0 1px;\n    font-size: inherit;\n    margin: 0;\n    overflow: visible; /*to make ths where the title is really long work*/\n    padding: 0.5em 1em; /* cell padding */\n}\n.pure-table td:first-child,\n.pure-table th:first-child {\n    border-left-width: 0;\n}\n\n.pure-table thead {\n    background: #e0e0e0;\n    color: #000;\n    text-align: left;\n    vertical-align: bottom;\n}\n\n/*\nstriping:\n   even - #fff (white)\n   odd  - #f2f2f2 (light gray)\n*/\n.pure-table td {\n    background-color: transparent;\n}\n.pure-table-odd td {\n    background-color: #f2f2f2;\n}\n\n/* nth-child selector for modern browsers */\n.pure-table-striped tr:nth-child(2n-1) td {\n    background-color: #f2f2f2;\n}\n\n/* BORDERED TABLES */\n.pure-table-bordered td {\n    border-bottom: 1px solid #cbcbcb;\n}\n.pure-table-bordered tbody > tr:last-child > td {\n    border-bottom-width: 0;\n}\n\n\n/* HORIZONTAL BORDERED TABLES */\n\n.pure-table-horizontal td,\n.pure-table-horizontal th {\n    border-width: 0 0 1px 0;\n    border-bottom: 1px solid #cbcbcb;\n}\n.pure-table-horizontal tbody > tr:last-child > td {\n    border-bottom-width: 0;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+var css = ".pure-menu.pure-menu-open {\n    z-index: 3; /* prevent graph from crossing the menuarea */\n}\n\n.pure-button.pure-button-bordered,\n.pure-button.pure-button-bordered[disabled] {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;\n}\n\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.4) inset;\n}\n\n/* restore pure-button:active */\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button:active:focus,\n.pure-button.pure-button-active:focus {\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4) inset, 0 0 10px rgba(0, 0, 0, 0.3) inset;\n}\n\n.pure-button.pure-button-rounded {\n    border-radius: 0.3em;\n}\n\n.pure-button.pure-button-heavyrounded {\n    border-radius: 0.5em;\n}\n\n.pure-button.pure-button-oval {\n    border-radius: 50%;\n}\n\n.pure-button.pure-button-halfoval {\n    border-radius: 25%;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],9:[function(require,module,exports){
+var css = "/*!\nPure v0.5.0\nCopyright 2014 Yahoo! Inc. All rights reserved.\nLicensed under the BSD License.\nhttps://github.com/yahoo/pure/blob/master/LICENSE.md\n*/\n/*!\nnormalize.css v^3.0 | MIT License | git.io/normalize\nCopyright (c) Nicolas Gallagher and Jonathan Neal\n*/\n/*! normalize.css v3.0.2 | MIT License | git.io/normalize */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS text size adjust after orientation change, without disabling\n *    user zoom.\n */\n\nhtml {\n  font-family: sans-serif; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * Improve readability when focused and also mouse hovered in all browsers.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  -moz-box-sizing: content-box;\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit; /* 1 */\n  font: inherit; /* 2 */\n  margin: 0; /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n  cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome\n *    (include `-moz` to future-proof).\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  -moz-box-sizing: content-box;\n  -webkit-box-sizing: content-box; /* 2 */\n  box-sizing: content-box;\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}\n\n/*csslint important:false*/\n\n/* ==========================================================================\n   Pure Base Extras\n   ========================================================================== */\n\n/**\n * Extra rules that Pure adds on top of Normalize.css\n */\n\n/**\n * Always hide an element when it has the `hidden` HTML attribute.\n */\n\n[hidden] {\n    display: none !important;\n}\n\n/**\n * Add this class to an image to make it fit within it's fluid parent wrapper while maintaining\n * aspect ratio.\n */\n.pure-img {\n    max-width: 100%;\n    height: auto;\n    display: block;\n}\n\n/*csslint regex-selectors:false, known-properties:false, duplicate-properties:false*/\n\n.pure-g {\n    letter-spacing: -0.31em; /* Webkit: collapse white-space between units */\n    *letter-spacing: normal; /* reset IE < 8 */\n    *word-spacing: -0.43em; /* IE < 8: collapse white-space between units */\n    text-rendering: optimizespeed; /* Webkit: fixes text-rendering: optimizeLegibility */\n\n    /*\n    Sets the font stack to fonts known to work properly with the above letter\n    and word spacings. See: https://github.com/yahoo/pure/issues/41/\n\n    The following font stack makes Pure Grids work on all known environments.\n\n    * FreeSans: Ships with many Linux distros, including Ubuntu\n\n    * Arimo: Ships with Chrome OS. Arimo has to be defined before Helvetica and\n      Arial to get picked up by the browser, even though neither is available\n      in Chrome OS.\n\n    * Droid Sans: Ships with all versions of Android.\n\n    * Helvetica, Arial, sans-serif: Common font stack on OS X and Windows.\n    */\n    font-family: FreeSans, Arimo, \"Droid Sans\", Helvetica, Arial, sans-serif;\n\n    /*\n    Use flexbox when possible to avoid `letter-spacing` side-effects.\n\n    NOTE: Firefox (as of 25) does not currently support flex-wrap, so the\n    `-moz-` prefix version is omitted.\n    */\n\n    display: -webkit-flex;\n    -webkit-flex-flow: row wrap;\n\n    /* IE10 uses display: flexbox */\n    display: -ms-flexbox;\n    -ms-flex-flow: row wrap;\n}\n\n/* Opera as of 12 on Windows needs word-spacing.\n   The \".opera-only\" selector is used to prevent actual prefocus styling\n   and is not required in markup.\n*/\n.opera-only :-o-prefocus,\n.pure-g {\n    word-spacing: -0.43em;\n}\n\n.pure-u {\n    display: inline-block;\n    *display: inline; /* IE < 8: fake inline-block */\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n/*\nResets the font family back to the OS/browser's default sans-serif font,\nthis the same font stack that Normalize.css sets for the `body`.\n*/\n.pure-g [class *= \"pure-u\"] {\n    font-family: sans-serif;\n}\n\n.pure-u-1,\n.pure-u-1-1,\n.pure-u-1-2,\n.pure-u-1-3,\n.pure-u-2-3,\n.pure-u-1-4,\n.pure-u-3-4,\n.pure-u-1-5,\n.pure-u-2-5,\n.pure-u-3-5,\n.pure-u-4-5,\n.pure-u-5-5,\n.pure-u-1-6,\n.pure-u-5-6,\n.pure-u-1-8,\n.pure-u-3-8,\n.pure-u-5-8,\n.pure-u-7-8,\n.pure-u-1-12,\n.pure-u-5-12,\n.pure-u-7-12,\n.pure-u-11-12,\n.pure-u-1-24,\n.pure-u-2-24,\n.pure-u-3-24,\n.pure-u-4-24,\n.pure-u-5-24,\n.pure-u-6-24,\n.pure-u-7-24,\n.pure-u-8-24,\n.pure-u-9-24,\n.pure-u-10-24,\n.pure-u-11-24,\n.pure-u-12-24,\n.pure-u-13-24,\n.pure-u-14-24,\n.pure-u-15-24,\n.pure-u-16-24,\n.pure-u-17-24,\n.pure-u-18-24,\n.pure-u-19-24,\n.pure-u-20-24,\n.pure-u-21-24,\n.pure-u-22-24,\n.pure-u-23-24,\n.pure-u-24-24 {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n.pure-u-1-24 {\n    width: 4.1667%;\n    *width: 4.1357%;\n}\n\n.pure-u-1-12,\n.pure-u-2-24 {\n    width: 8.3333%;\n    *width: 8.3023%;\n}\n\n.pure-u-1-8,\n.pure-u-3-24 {\n    width: 12.5000%;\n    *width: 12.4690%;\n}\n\n.pure-u-1-6,\n.pure-u-4-24 {\n    width: 16.6667%;\n    *width: 16.6357%;\n}\n\n.pure-u-1-5 {\n    width: 20%;\n    *width: 19.9690%;\n}\n\n.pure-u-5-24 {\n    width: 20.8333%;\n    *width: 20.8023%;\n}\n\n.pure-u-1-4,\n.pure-u-6-24 {\n    width: 25%;\n    *width: 24.9690%;\n}\n\n.pure-u-7-24 {\n    width: 29.1667%;\n    *width: 29.1357%;\n}\n\n.pure-u-1-3,\n.pure-u-8-24 {\n    width: 33.3333%;\n    *width: 33.3023%;\n}\n\n.pure-u-3-8,\n.pure-u-9-24 {\n    width: 37.5000%;\n    *width: 37.4690%;\n}\n\n.pure-u-2-5 {\n    width: 40%;\n    *width: 39.9690%;\n}\n\n.pure-u-5-12,\n.pure-u-10-24 {\n    width: 41.6667%;\n    *width: 41.6357%;\n}\n\n.pure-u-11-24 {\n    width: 45.8333%;\n    *width: 45.8023%;\n}\n\n.pure-u-1-2,\n.pure-u-12-24 {\n    width: 50%;\n    *width: 49.9690%;\n}\n\n.pure-u-13-24 {\n    width: 54.1667%;\n    *width: 54.1357%;\n}\n\n.pure-u-7-12,\n.pure-u-14-24 {\n    width: 58.3333%;\n    *width: 58.3023%;\n}\n\n.pure-u-3-5 {\n    width: 60%;\n    *width: 59.9690%;\n}\n\n.pure-u-5-8,\n.pure-u-15-24 {\n    width: 62.5000%;\n    *width: 62.4690%;\n}\n\n.pure-u-2-3,\n.pure-u-16-24 {\n    width: 66.6667%;\n    *width: 66.6357%;\n}\n\n.pure-u-17-24 {\n    width: 70.8333%;\n    *width: 70.8023%;\n}\n\n.pure-u-3-4,\n.pure-u-18-24 {\n    width: 75%;\n    *width: 74.9690%;\n}\n\n.pure-u-19-24 {\n    width: 79.1667%;\n    *width: 79.1357%;\n}\n\n.pure-u-4-5 {\n    width: 80%;\n    *width: 79.9690%;\n}\n\n.pure-u-5-6,\n.pure-u-20-24 {\n    width: 83.3333%;\n    *width: 83.3023%;\n}\n\n.pure-u-7-8,\n.pure-u-21-24 {\n    width: 87.5000%;\n    *width: 87.4690%;\n}\n\n.pure-u-11-12,\n.pure-u-22-24 {\n    width: 91.6667%;\n    *width: 91.6357%;\n}\n\n.pure-u-23-24 {\n    width: 95.8333%;\n    *width: 95.8023%;\n}\n\n.pure-u-1,\n.pure-u-1-1,\n.pure-u-5-5,\n.pure-u-24-24 {\n    width: 100%;\n}\n.pure-button {\n    /* Structure */\n    display: inline-block;\n    *display: inline; /*IE 6/7*/\n    zoom: 1;\n    line-height: normal;\n    white-space: nowrap;\n    vertical-align: baseline;\n    text-align: center;\n    cursor: pointer;\n    -webkit-user-drag: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n}\n\n/* Firefox: Get rid of the inner focus border */\n.pure-button::-moz-focus-inner {\n    padding: 0;\n    border: 0;\n}\n\n/*csslint outline-none:false*/\n\n.pure-button {\n    font-family: inherit;\n    font-size: 100%;\n    *font-size: 90%; /*IE 6/7 - To reduce IE's oversized button text*/\n    *overflow: visible; /*IE 6/7 - Because of IE's overly large left/right padding on buttons */\n    padding: 0.5em 1em;\n    color: #444; /* rgba not supported (IE 8) */\n    color: rgba(0, 0, 0, 0.80); /* rgba supported */\n    *color: #444; /* IE 6 & 7 */\n    border: 1px solid #999;  /*IE 6/7/8*/\n    border: none rgba(0, 0, 0, 0);  /*IE9 + everything else*/\n    background-color: #E6E6E6;\n    text-decoration: none;\n    border-radius: 2px;\n}\n\n.pure-button-hover,\n.pure-button:hover,\n.pure-button:focus {\n    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000',GradientType=0);\n    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), color-stop(40%, rgba(0,0,0, 0.05)), to(rgba(0,0,0, 0.10)));\n    background-image: -webkit-linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n    background-image: -moz-linear-gradient(top, rgba(0,0,0, 0.05) 0%, rgba(0,0,0, 0.10));\n    background-image: -o-linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n    background-image: linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n}\n.pure-button:focus {\n    outline: 0;\n}\n.pure-button-active,\n.pure-button:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset, 0 0 6px rgba(0,0,0, 0.20) inset;\n}\n\n.pure-button[disabled],\n.pure-button-disabled,\n.pure-button-disabled:hover,\n.pure-button-disabled:focus,\n.pure-button-disabled:active {\n    border: none;\n    background-image: none;\n    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);\n    filter: alpha(opacity=40);\n    -khtml-opacity: 0.40;\n    -moz-opacity: 0.40;\n    opacity: 0.40;\n    cursor: not-allowed;\n    box-shadow: none;\n}\n\n.pure-button-hidden {\n    display: none;\n}\n\n/* Firefox: Get rid of the inner focus border */\n.pure-button::-moz-focus-inner{\n    padding: 0;\n    border: 0;\n}\n\n.pure-button-primary,\n.pure-button-selected,\na.pure-button-primary,\na.pure-button-selected {\n    background-color: rgb(0, 120, 231);\n    color: #fff;\n}\n\n.pure-form input[type=\"text\"],\n.pure-form input[type=\"password\"],\n.pure-form input[type=\"email\"],\n.pure-form input[type=\"url\"],\n.pure-form input[type=\"date\"],\n.pure-form input[type=\"month\"],\n.pure-form input[type=\"time\"],\n.pure-form input[type=\"datetime\"],\n.pure-form input[type=\"datetime-local\"],\n.pure-form input[type=\"week\"],\n.pure-form input[type=\"number\"],\n.pure-form input[type=\"search\"],\n.pure-form input[type=\"tel\"],\n.pure-form input[type=\"color\"],\n.pure-form select,\n.pure-form textarea {\n    padding: 0.5em 0.6em;\n    display: inline-block;\n    border: 1px solid #ccc;\n    box-shadow: inset 0 1px 3px #ddd;\n    border-radius: 4px;\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type]) {\n    padding: 0.5em 0.6em;\n    display: inline-block;\n    border: 1px solid #ccc;\n    box-shadow: inset 0 1px 3px #ddd;\n    border-radius: 4px;\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n\n/* Chrome (as of v.32/34 on OS X) needs additional room for color to display. */\n/* May be able to remove this tweak as color inputs become more standardized across browsers. */\n.pure-form input[type=\"color\"] {\n    padding: 0.2em 0.5em;\n}\n\n\n.pure-form input[type=\"text\"]:focus,\n.pure-form input[type=\"password\"]:focus,\n.pure-form input[type=\"email\"]:focus,\n.pure-form input[type=\"url\"]:focus,\n.pure-form input[type=\"date\"]:focus,\n.pure-form input[type=\"month\"]:focus,\n.pure-form input[type=\"time\"]:focus,\n.pure-form input[type=\"datetime\"]:focus,\n.pure-form input[type=\"datetime-local\"]:focus,\n.pure-form input[type=\"week\"]:focus,\n.pure-form input[type=\"number\"]:focus,\n.pure-form input[type=\"search\"]:focus,\n.pure-form input[type=\"tel\"]:focus,\n.pure-form input[type=\"color\"]:focus,\n.pure-form select:focus,\n.pure-form textarea:focus {\n    outline: 0;\n    outline: thin dotted \\9; /* IE6-9 */\n    border-color: #129FEA;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type]):focus {\n    outline: 0;\n    outline: thin dotted \\9; /* IE6-9 */\n    border-color: #129FEA;\n}\n\n.pure-form input[type=\"file\"]:focus,\n.pure-form input[type=\"radio\"]:focus,\n.pure-form input[type=\"checkbox\"]:focus {\n    outline: thin dotted #333;\n    outline: 1px auto #129FEA;\n}\n.pure-form .pure-checkbox,\n.pure-form .pure-radio {\n    margin: 0.5em 0;\n    display: block;\n}\n\n.pure-form input[type=\"text\"][disabled],\n.pure-form input[type=\"password\"][disabled],\n.pure-form input[type=\"email\"][disabled],\n.pure-form input[type=\"url\"][disabled],\n.pure-form input[type=\"date\"][disabled],\n.pure-form input[type=\"month\"][disabled],\n.pure-form input[type=\"time\"][disabled],\n.pure-form input[type=\"datetime\"][disabled],\n.pure-form input[type=\"datetime-local\"][disabled],\n.pure-form input[type=\"week\"][disabled],\n.pure-form input[type=\"number\"][disabled],\n.pure-form input[type=\"search\"][disabled],\n.pure-form input[type=\"tel\"][disabled],\n.pure-form input[type=\"color\"][disabled],\n.pure-form select[disabled],\n.pure-form textarea[disabled] {\n    cursor: not-allowed;\n    background-color: #eaeded;\n    color: #cad2d3;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type])[disabled] {\n    cursor: not-allowed;\n    background-color: #eaeded;\n    color: #cad2d3;\n}\n.pure-form input[readonly],\n.pure-form select[readonly],\n.pure-form textarea[readonly] {\n    background: #eee; /* menu hover bg color */\n    color: #777; /* menu text color */\n    border-color: #ccc;\n}\n\n.pure-form input:focus:invalid,\n.pure-form textarea:focus:invalid,\n.pure-form select:focus:invalid {\n    color: #b94a48;\n    border-color: #ee5f5b;\n}\n.pure-form input:focus:invalid:focus,\n.pure-form textarea:focus:invalid:focus,\n.pure-form select:focus:invalid:focus {\n    border-color: #e9322d;\n}\n.pure-form input[type=\"file\"]:focus:invalid:focus,\n.pure-form input[type=\"radio\"]:focus:invalid:focus,\n.pure-form input[type=\"checkbox\"]:focus:invalid:focus {\n    outline-color: #e9322d;\n}\n.pure-form select {\n    border: 1px solid #ccc;\n    background-color: white;\n}\n.pure-form select[multiple] {\n    height: auto;\n}\n.pure-form label {\n    margin: 0.5em 0 0.2em;\n}\n.pure-form fieldset {\n    margin: 0;\n    padding: 0.35em 0 0.75em;\n    border: 0;\n}\n.pure-form legend {\n    display: block;\n    width: 100%;\n    padding: 0.3em 0;\n    margin-bottom: 0.3em;\n    color: #333;\n    border-bottom: 1px solid #e5e5e5;\n}\n\n.pure-form-stacked input[type=\"text\"],\n.pure-form-stacked input[type=\"password\"],\n.pure-form-stacked input[type=\"email\"],\n.pure-form-stacked input[type=\"url\"],\n.pure-form-stacked input[type=\"date\"],\n.pure-form-stacked input[type=\"month\"],\n.pure-form-stacked input[type=\"time\"],\n.pure-form-stacked input[type=\"datetime\"],\n.pure-form-stacked input[type=\"datetime-local\"],\n.pure-form-stacked input[type=\"week\"],\n.pure-form-stacked input[type=\"number\"],\n.pure-form-stacked input[type=\"search\"],\n.pure-form-stacked input[type=\"tel\"],\n.pure-form-stacked input[type=\"color\"],\n.pure-form-stacked select,\n.pure-form-stacked label,\n.pure-form-stacked textarea {\n    display: block;\n    margin: 0.25em 0;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form-stacked input:not([type]) {\n    display: block;\n    margin: 0.25em 0;\n}\n.pure-form-aligned input,\n.pure-form-aligned textarea,\n.pure-form-aligned select,\n/* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n.pure-form-aligned .pure-help-inline,\n.pure-form-message-inline {\n    display: inline-block;\n    *display: inline;\n    *zoom: 1;\n    vertical-align: middle;\n}\n.pure-form-aligned textarea {\n    vertical-align: top;\n}\n\n/* Aligned Forms */\n.pure-form-aligned .pure-control-group {\n    margin-bottom: 0.5em;\n}\n.pure-form-aligned .pure-control-group label {\n    text-align: right;\n    display: inline-block;\n    vertical-align: middle;\n    width: 10em;\n    margin: 0 1em 0 0;\n}\n.pure-form-aligned .pure-controls {\n    margin: 1.5em 0 0 10em;\n}\n\n/* Rounded Inputs */\n.pure-form input.pure-input-rounded,\n.pure-form .pure-input-rounded {\n    border-radius: 2em;\n    padding: 0.5em 1em;\n}\n\n/* Grouped Inputs */\n.pure-form .pure-group fieldset {\n    margin-bottom: 10px;\n}\n.pure-form .pure-group input {\n    display: block;\n    padding: 10px;\n    margin: 0;\n    border-radius: 0;\n    position: relative;\n    top: -1px;\n}\n.pure-form .pure-group input:focus {\n    z-index: 2;\n}\n.pure-form .pure-group input:first-child {\n    top: 1px;\n    border-radius: 4px 4px 0 0;\n}\n.pure-form .pure-group input:last-child {\n    top: -2px;\n    border-radius: 0 0 4px 4px;\n}\n.pure-form .pure-group button {\n    margin: 0.35em 0;\n}\n\n.pure-form .pure-input-1 {\n    width: 100%;\n}\n.pure-form .pure-input-2-3 {\n    width: 66%;\n}\n.pure-form .pure-input-1-2 {\n    width: 50%;\n}\n.pure-form .pure-input-1-3 {\n    width: 33%;\n}\n.pure-form .pure-input-1-4 {\n    width: 25%;\n}\n\n/* Inline help for forms */\n/* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n.pure-form .pure-help-inline,\n.pure-form-message-inline {\n    display: inline-block;\n    padding-left: 0.3em;\n    color: #666;\n    vertical-align: middle;\n    font-size: 0.875em;\n}\n\n/* Block help for forms */\n.pure-form-message {\n    display: block;\n    color: #666;\n    font-size: 0.875em;\n}\n\n@media only screen and (max-width : 480px) {\n    .pure-form button[type=\"submit\"] {\n        margin: 0.7em 0 0;\n    }\n\n    .pure-form input:not([type]),\n    .pure-form input[type=\"text\"],\n    .pure-form input[type=\"password\"],\n    .pure-form input[type=\"email\"],\n    .pure-form input[type=\"url\"],\n    .pure-form input[type=\"date\"],\n    .pure-form input[type=\"month\"],\n    .pure-form input[type=\"time\"],\n    .pure-form input[type=\"datetime\"],\n    .pure-form input[type=\"datetime-local\"],\n    .pure-form input[type=\"week\"],\n    .pure-form input[type=\"number\"],\n    .pure-form input[type=\"search\"],\n    .pure-form input[type=\"tel\"],\n    .pure-form input[type=\"color\"],\n    .pure-form label {\n        margin-bottom: 0.3em;\n        display: block;\n    }\n\n    .pure-group input:not([type]),\n    .pure-group input[type=\"text\"],\n    .pure-group input[type=\"password\"],\n    .pure-group input[type=\"email\"],\n    .pure-group input[type=\"url\"],\n    .pure-group input[type=\"date\"],\n    .pure-group input[type=\"month\"],\n    .pure-group input[type=\"time\"],\n    .pure-group input[type=\"datetime\"],\n    .pure-group input[type=\"datetime-local\"],\n    .pure-group input[type=\"week\"],\n    .pure-group input[type=\"number\"],\n    .pure-group input[type=\"search\"],\n    .pure-group input[type=\"tel\"],\n    .pure-group input[type=\"color\"] {\n        margin-bottom: 0;\n    }\n\n    .pure-form-aligned .pure-control-group label {\n        margin-bottom: 0.3em;\n        text-align: left;\n        display: block;\n        width: 100%;\n    }\n\n    .pure-form-aligned .pure-controls {\n        margin: 1.5em 0 0 0;\n    }\n\n    /* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n    .pure-form .pure-help-inline,\n    .pure-form-message-inline,\n    .pure-form-message {\n        display: block;\n        font-size: 0.75em;\n        /* Increased bottom padding to make it group with its related input element. */\n        padding: 0.2em 0 0.8em;\n    }\n}\n\n/*csslint adjoining-classes:false, outline-none:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n.pure-menu ul {\n    position: absolute;\n    visibility: hidden;\n}\n\n.pure-menu.pure-menu-open {\n    visibility: visible;\n    z-index: 2;\n    width: 100%;\n}\n\n.pure-menu ul {\n    left: -10000px;\n    list-style: none;\n    margin: 0;\n    padding: 0;\n    top: -10000px;\n    z-index: 1;\n}\n\n.pure-menu > ul { position: relative; }\n\n.pure-menu-open > ul {\n    left: 0;\n    top: 0;\n    visibility: visible;\n}\n\n.pure-menu-open > ul:focus {\n    outline: 0;\n}\n\n.pure-menu li { position: relative; }\n\n.pure-menu a,\n.pure-menu .pure-menu-heading {\n    display: block;\n    color: inherit;\n    line-height: 1.5em;\n    padding: 5px 20px;\n    text-decoration: none;\n    white-space: nowrap;\n}\n\n.pure-menu.pure-menu-horizontal > .pure-menu-heading {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    margin: 0;\n    vertical-align: middle;\n}\n.pure-menu.pure-menu-horizontal > ul {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    vertical-align: middle;\n}\n\n.pure-menu li a { padding: 5px 20px; }\n\n.pure-menu-can-have-children > .pure-menu-label:after {\n    content: '\\25B8';\n    float: right;\n    /* These specific fonts have the Unicode char we need. */\n    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'DejaVu Sans', sans-serif;\n    margin-right: -20px;\n    margin-top: -1px;\n}\n\n.pure-menu-can-have-children > .pure-menu-label {\n    padding-right: 30px;\n}\n\n.pure-menu-separator {\n    background-color: #dfdfdf;\n    display: block;\n    height: 1px;\n    font-size: 0;\n    margin: 7px 2px;\n    overflow: hidden;\n}\n\n.pure-menu-hidden {\n    display: none;\n}\n\n/* FIXED MENU */\n.pure-menu-fixed {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n}\n\n\n/* HORIZONTAL MENU CODE */\n\n/* Initial menus should be inline-block so that they are horizontal */\n.pure-menu-horizontal li {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    vertical-align: middle;\n}\n\n/* Submenus should still be display: block; */\n.pure-menu-horizontal li li {\n    display: block;\n}\n\n/* Content after should be down arrow */\n.pure-menu-horizontal > .pure-menu-children > .pure-menu-can-have-children > .pure-menu-label:after {\n    content: \"\\25BE\";\n}\n/*Add extra padding to elements that have the arrow so that the hover looks nice */\n.pure-menu-horizontal > .pure-menu-children > .pure-menu-can-have-children > .pure-menu-label {\n    padding-right: 30px;\n}\n\n/* Adjusting separator for vertical menus */\n.pure-menu-horizontal li.pure-menu-separator {\n    height: 50%;\n    width: 1px;\n    margin: 0 7px;\n}\n\n/* Submenus should be horizontal separator again */\n.pure-menu-horizontal li li.pure-menu-separator {\n    height: 1px;\n    width: auto;\n    margin: 7px 2px;\n}\n\n\n/*csslint adjoining-classes:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n/* MAIN MENU STYLING */\n\n.pure-menu.pure-menu-open,\n.pure-menu.pure-menu-horizontal li .pure-menu-children {\n    background: #fff; /* Old browsers */\n    border: 1px solid #b7b7b7;\n}\n\n/* remove borders for horizontal menus */\n.pure-menu.pure-menu-horizontal,\n.pure-menu.pure-menu-horizontal .pure-menu-heading {\n    border: none;\n}\n\n\n/* LINK STYLES */\n\n.pure-menu a {\n    border: 1px solid transparent;\n    border-left: none;\n    border-right: none;\n\n}\n\n.pure-menu a,\n.pure-menu .pure-menu-can-have-children > li:after {\n    color: #777;\n}\n\n.pure-menu .pure-menu-can-have-children > li:hover:after {\n    color: #fff;\n}\n\n/* Focus style for a dropdown menu-item when the parent has been opened */\n.pure-menu .pure-menu-open {\n    background: #dedede;\n}\n\n\n.pure-menu li a:hover,\n.pure-menu li a:focus {\n    background: #eee;\n}\n\n/* DISABLED STATES */\n.pure-menu li.pure-menu-disabled a:hover,\n.pure-menu li.pure-menu-disabled a:focus {\n    background: #fff;\n    color: #bfbfbf;\n}\n\n.pure-menu .pure-menu-disabled > a {\n    background-image: none;\n    border-color: transparent;\n    cursor: default;\n}\n\n.pure-menu .pure-menu-disabled > a,\n.pure-menu .pure-menu-can-have-children.pure-menu-disabled > a:after {\n    color: #bfbfbf;\n}\n\n/* HEADINGS */\n.pure-menu .pure-menu-heading {\n    color: #565d64;\n    text-transform: uppercase;\n    font-size: 90%;\n    margin-top: 0.5em;\n    border-bottom-width: 1px;\n    border-bottom-style: solid;\n    border-bottom-color: #dfdfdf;\n}\n\n/* ACTIVE MENU ITEM */\n.pure-menu .pure-menu-selected a {\n    color: #000;\n}\n\n/* FIXED MENU */\n.pure-menu.pure-menu-open.pure-menu-fixed {\n    border: none;\n    border-bottom: 1px solid #b7b7b7;\n}\n\n/*csslint box-model:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n\n.pure-paginator {\n\n    /* `pure-g` Grid styles */\n    letter-spacing: -0.31em; /* Webkit: collapse white-space between units */\n    *letter-spacing: normal; /* reset IE < 8 */\n    *word-spacing: -0.43em; /* IE < 8: collapse white-space between units */\n    text-rendering: optimizespeed; /* Webkit: fixes text-rendering: optimizeLegibility */\n\n    /* `pure-paginator` Specific styles */\n    list-style: none;\n    margin: 0;\n    padding: 0;\n}\n.opera-only :-o-prefocus,\n.pure-paginator {\n    word-spacing: -0.43em;\n}\n\n/* `pure-u` Grid styles */\n.pure-paginator li {\n    display: inline-block;\n    *display: inline; /* IE < 8: fake inline-block */\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n\n.pure-paginator .pure-button {\n    border-radius: 0;\n    padding: 0.8em 1.4em;\n    vertical-align: top;\n    height: 1.1em;\n}\n.pure-paginator .pure-button:focus,\n.pure-paginator .pure-button:active {\n    outline-style: none;\n}\n.pure-paginator .prev,\n.pure-paginator .next {\n    color: #C0C1C3;\n    text-shadow: 0 -1px 0 rgba(0,0,0, 0.45);\n}\n.pure-paginator .prev {\n    border-radius: 2px 0 0 2px;\n}\n.pure-paginator .next {\n    border-radius: 0 2px 2px 0;\n}\n\n@media (max-width: 480px) {\n    .pure-menu-horizontal {\n        width: 100%;\n    }\n\n    .pure-menu-children li {\n        display: block;\n        border-bottom: 1px solid black;\n    }\n}\n\n.pure-table {\n    /* Remove spacing between table cells (from Normalize.css) */\n    border-collapse: collapse;\n    border-spacing: 0;\n    empty-cells: show;\n    border: 1px solid #cbcbcb;\n}\n\n.pure-table caption {\n    color: #000;\n    font: italic 85%/1 arial, sans-serif;\n    padding: 1em 0;\n    text-align: center;\n}\n\n.pure-table td,\n.pure-table th {\n    border-left: 1px solid #cbcbcb;/*  inner column border */\n    border-width: 0 0 0 1px;\n    font-size: inherit;\n    margin: 0;\n    overflow: visible; /*to make ths where the title is really long work*/\n    padding: 0.5em 1em; /* cell padding */\n}\n.pure-table td:first-child,\n.pure-table th:first-child {\n    border-left-width: 0;\n}\n\n.pure-table thead {\n    background: #e0e0e0;\n    color: #000;\n    text-align: left;\n    vertical-align: bottom;\n}\n\n/*\nstriping:\n   even - #fff (white)\n   odd  - #f2f2f2 (light gray)\n*/\n.pure-table td {\n    background-color: transparent;\n}\n.pure-table-odd td {\n    background-color: #f2f2f2;\n}\n\n/* nth-child selector for modern browsers */\n.pure-table-striped tr:nth-child(2n-1) td {\n    background-color: #f2f2f2;\n}\n\n/* BORDERED TABLES */\n.pure-table-bordered td {\n    border-bottom: 1px solid #cbcbcb;\n}\n.pure-table-bordered tbody > tr:last-child > td {\n    border-bottom-width: 0;\n}\n\n\n/* HORIZONTAL BORDERED TABLES */\n\n.pure-table-horizontal td,\n.pure-table-horizontal th {\n    border-width: 0 0 1px 0;\n    border-bottom: 1px solid #cbcbcb;\n}\n.pure-table-horizontal tbody > tr:last-child > td {\n    border-bottom-width: 0;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],10:[function(require,module,exports){
 require('./css/default.css');
 require('./css/purecss-0.5.0.css');
 require('./css/pure-finetuned.css');
-},{"./css/default.css":6,"./css/pure-finetuned.css":7,"./css/purecss-0.5.0.css":8}],10:[function(require,module,exports){
+},{"./css/default.css":7,"./css/pure-finetuned.css":8,"./css/purecss-0.5.0.css":9}],11:[function(require,module,exports){
 var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 999 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],11:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],12:[function(require,module,exports){
 "use strict";
 
 /**
@@ -4582,6 +5198,7 @@ var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -khtml-user-select
 var DRAG = 'drag',
     DROP = 'drop',
     NAME = '['+DRAG+'-'+DROP+']: ',
+    createHashMap = require('js-ext/extra/hashmap.js').createMap,
     COPY = 'copy',
     DROPZONE = DROP+'zone',
     SOURCE = 'source',
@@ -4646,7 +5263,7 @@ require('./css/drag-drop.css');
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.DragDrop) {
         return window._ITSAmodules.DragDrop; // DragDrop was already created
@@ -5475,7 +6092,7 @@ module.exports = function (window) {
     };
 
     DD_Object = window._ITSAmodules.DragDrop = {
-        DD: DragModule.DD.merge(DD, true),
+        DD: DragModule.DD.merge(DD, {force: true}),
         Plugins: {
             nodeDD: DragModule.Plugins.nodeDD,
             nodeDropzone: nodePlugin.definePlugin('dd', {dropzone: 'true'})
@@ -5485,9 +6102,9 @@ module.exports = function (window) {
     return DD_Object;
 
 };
-},{"./css/drag-drop.css":10,"drag":13,"event-dom":14,"js-ext":30,"polyfill/polyfill-base.js":43,"useragent":44,"vdom":58,"window-ext":59}],12:[function(require,module,exports){
-module.exports=require(10)
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],13:[function(require,module,exports){
+},{"./css/drag-drop.css":11,"drag":14,"event-dom":15,"js-ext":33,"js-ext/extra/hashmap.js":30,"polyfill/polyfill-base.js":50,"useragent":52,"vdom":66,"window-ext":67}],13:[function(require,module,exports){
+module.exports=require(11)
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],14:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5508,6 +6125,7 @@ module.exports=require(10)
 */
 
 var NAME = '[drag]: ',
+    createHashMap = require('js-ext/extra/hashmap.js').createMap,
     DRAG = 'drag',
     DROP = 'drop',
     DRAGGABLE = DRAG+'gable',
@@ -5559,7 +6177,7 @@ require('./css/drag.css');
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.Drag) {
         return window._ITSAmodules.Drag; // Drag was already created
@@ -5768,20 +6386,20 @@ module.exports = function (window) {
                 ddProps = instance.ddProps,
                 emitterName = e.emitter,
                 moveEv, x, y, byExactId, match, constrainNode, winConstrained, winScrollLeft, winScrollTop,
-                inlineLeft, inlineTop, xOrig, yOrig;
+                xOrig, yOrig;
 
             // define ddProps --> internal object with data about the draggable instance
             ddProps.dragNode = dragNode;
             ddProps.x = x = dragNode.left;
             ddProps.y = y = dragNode.top;
-            ddProps.inlineLeft = inlineLeft = dragNode.getInlineStyle(LEFT);
-            ddProps.inlineTop = inlineTop = dragNode.getInlineStyle(TOP);
+            ddProps.inlineLeft = dragNode.getInlineStyle(LEFT);
+            ddProps.inlineTop = dragNode.getInlineStyle(TOP);
             ddProps.winConstrained = winConstrained = (constrain===WINDOW);
             ddProps.xMouseLast = x;
             ddProps.yMouseLast = y;
 
             if (constrain) {
-                if (ddProps.winConstrained) {
+                if (winConstrained) {
                     ddProps.winScrollLeft = winScrollLeft = window.getScrollLeft();
                     ddProps.winScrollTop = winScrollTop = window.getScrollTop();
                     ddProps.constrain = {
@@ -6008,7 +6626,7 @@ module.exports = function (window) {
                 e.yMouseOrigin = e.clientY + window.getScrollTop();
 
                 //set the emitterName:
-                emitterName = e.target.getAttr(DD_EMITTER) || UI,
+                emitterName = e.target.getAttr(DD_EMITTER) || UI;
                 // now we can start the eventcycle by emitting emitterName:dd:
                 /**
                 * Emitted when a draggable Element's drag-cycle starts. You can use a `before`-subscriber to specify
@@ -6136,7 +6754,7 @@ module.exports = function (window) {
 
     return DD_Object;
 };
-},{"./css/drag.css":12,"event-dom":14,"js-ext":30,"polyfill":43,"useragent":44,"vdom":58,"window-ext":59}],14:[function(require,module,exports){
+},{"./css/drag.css":13,"event-dom":15,"js-ext":33,"js-ext/extra/hashmap.js":30,"polyfill":50,"useragent":52,"vdom":66,"window-ext":67}],15:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6160,6 +6778,7 @@ module.exports = function (window) {
 var NAME = '[event-dom]: ',
     Event = require('event'),
     laterSilent = require('utils').laterSilent,
+    createHashMap = require('js-ext/extra/hashmap.js').createMap,
     OUTSIDE = 'outside',
     REGEXP_NODE_ID = /^#\S+$/,
     REGEXP_EXTRACT_NODE_ID = /#(\S+)/,
@@ -6209,7 +6828,7 @@ module.exports = function (window) {
 
     require('vdom')(window);
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.EventDom) {
         return Event; // Event was already extended
@@ -6746,7 +7365,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":21,"js-ext/lib/array.js":31,"js-ext/lib/object.js":34,"js-ext/lib/string.js":36,"polyfill/polyfill-base.js":43,"utils":45,"vdom":58}],15:[function(require,module,exports){
+},{"event":22,"js-ext/extra/hashmap.js":30,"js-ext/lib/array.js":35,"js-ext/lib/object.js":38,"js-ext/lib/string.js":40,"polyfill/polyfill-base.js":50,"utils":53,"vdom":66}],16:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6775,13 +7394,14 @@ module.exports = function (window) {
 */
 
 
-var NAME = '[event-hover]: ';
+var NAME = '[event-hover]: ',
+    createHashMap = require('js-ext/extra/hashmap.js').createMap;
 
 require('js-ext/lib/object.js');
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.EventHover) {
         return window._ITSAmodules.EventHover; // EventHover was already created
@@ -6847,7 +7467,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":14,"js-ext/lib/object.js":34}],16:[function(require,module,exports){
+},{"../event-dom.js":15,"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38}],17:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6879,6 +7499,7 @@ require('vdom');
 require('js-ext/lib/object.js');
 
 var NAME = '[event-valuechange]: ',
+    createHashMap = require('js-ext/extra/hashmap.js').createMap,
     VALUE = 'value',
     DATA_KEY = 'valueChange',
     UTILS = require('utils'),
@@ -6897,7 +7518,7 @@ var NAME = '[event-valuechange]: ',
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.EventValueChange) {
         return window._ITSAmodules.EventValueChange; // EventValueChange was already created
@@ -7108,7 +7729,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":14,"js-ext/lib/object.js":34,"utils":45,"vdom":58}],17:[function(require,module,exports){
+},{"../event-dom.js":15,"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"utils":53,"vdom":66}],18:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7212,7 +7833,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event-dom":14,"hammerjs":2}],18:[function(require,module,exports){
+},{"event-dom":15,"hammerjs":2}],19:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -7229,8 +7850,9 @@ module.exports = function (window) {
 */
 
 require('polyfill/polyfill-base.js');
-require('js-ext/lib/function.js');
 require('js-ext/lib/object.js');
+
+var createHashMap = require('js-ext/extra/hashmap.js').createMap;
 
 // to prevent multiple Event instances
 // (which might happen: http://nodejs.org/docs/latest/api/modules.html#modules_module_caching_caveats)
@@ -7241,7 +7863,7 @@ require('js-ext/lib/object.js');
 
     "use strict";
 
-    global._ITSAmodules || Object.protectedProp(global, '_ITSAmodules', {});
+    global._ITSAmodules || Object.protectedProp(global, '_ITSAmodules', createHashMap());
     global._ITSAmodules.Event || (global._ITSAmodules.Event = factory());
 
     module.exports = global._ITSAmodules.Event;
@@ -7272,14 +7894,6 @@ require('js-ext/lib/object.js');
          * ':save'
          */
         REGEXP_EVENTNAME_WITH_SEMICOLON = /:((?:\w|-)+)$/,
-        DEFINE_IMMUTAL_PROPERTY = function (obj, property, value) {
-            Object.defineProperty(obj, property, {
-                configurable: false,
-                enumerable: false,
-                writable: false,
-                value: value // `writable` is false means we cannot chance the value-reference, but we can change {} or [] its members
-            });
-        },
         Event;
 
     Event = {
@@ -8342,7 +8956,7 @@ require('js-ext/lib/object.js');
          */
         _setEventObjProperty: function (property, value) {
             console.log(NAME, '_setEventObjProperty');
-            DEFINE_IMMUTAL_PROPERTY(this._defaultEventObj, property, value);
+            Object.protectedProp(this._defaultEventObj, property, value);
             return this;
         }
 
@@ -8429,7 +9043,7 @@ require('js-ext/lib/object.js');
      * @private
      * @since 0.0.1
     */
-    DEFINE_IMMUTAL_PROPERTY(Event, '_subs', {});
+    Object.protectedProp(Event, '_subs', {});
 
     /**
      * Internal list of finalize-subscribers which are invoked at the finalization-cycle, which happens after the after-subscribers.
@@ -8441,7 +9055,7 @@ require('js-ext/lib/object.js');
      * @private
      * @since 0.0.1
     */
-    DEFINE_IMMUTAL_PROPERTY(Event, '_final', []);
+    Object.protectedProp(Event, '_final', []);
 
     /**
      * Object that acts as the prototype of the eventobject.
@@ -8457,7 +9071,7 @@ require('js-ext/lib/object.js');
      * @private
      * @since 0.0.1
     */
-    DEFINE_IMMUTAL_PROPERTY(Event, '_defaultEventObj', {});
+    Object.protectedProp(Event, '_defaultEventObj', {});
 
     /**
      * Objecthash containing all detach-notifiers, keyed by customEvent name.
@@ -8484,7 +9098,7 @@ require('js-ext/lib/object.js');
      * @private
      * @since 0.0.1
     */
-    DEFINE_IMMUTAL_PROPERTY(Event, '_detachNotifiers', {});
+    Object.protectedProp(Event, '_detachNotifiers', {});
 
     /**
      * Objecthash containing all notifiers, keyed by customEvent name.
@@ -8511,7 +9125,7 @@ require('js-ext/lib/object.js');
      * @private
      * @since 0.0.1
     */
-    DEFINE_IMMUTAL_PROPERTY(Event, '_notifiers', {});
+    Object.protectedProp(Event, '_notifiers', {});
 
     Event._setEventObjProperty('halt', function(reason) {this.status.ok || this._unHaltable || (this.status.halted = (reason || true));})
          ._setEventObjProperty('preventDefault', function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPrevented = (reason || true));})
@@ -8521,7 +9135,7 @@ require('js-ext/lib/object.js');
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/lib/function.js":32,"js-ext/lib/object.js":34,"polyfill/polyfill-base.js":43}],19:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"polyfill/polyfill-base.js":50}],20:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8640,7 +9254,7 @@ Event.Emitter = function(emitterName) {
     Event.defineEmitter(newEmitter, emitterName);
     return newEmitter;
 };
-},{"./index.js":21}],20:[function(require,module,exports){
+},{"./index.js":22}],21:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8664,9 +9278,9 @@ Event.Emitter = function(emitterName) {
 */
 
 require('js-ext/lib/object.js');
-require('js-ext/lib/function.js');
 
 var Event = require('./index.js'),
+    Classes = require("js-ext/extra/classes.js"),
     filterFn, ClassListener;
 
 Event.Listener = {
@@ -8795,7 +9409,7 @@ filterFn = function(e) {
     return e.target===this;
 };
 
-ClassListener = {
+Event._CE_listener = ClassListener = {
     /**
      * Is automaticly available for Classes.
      * Subscribes to a customEvent on behalf of the class-instance and will only
@@ -8882,35 +9496,35 @@ ClassListener = {
     */
     selfOnceBefore: function (customEvent, callback, prepend) {
         return Event.onceBefore(customEvent, callback, this, filterFn.bind(this), prepend);
+    },
+
+    destroy: function() {
+        var instance = this,
+            superDestroy;
+        if (!instance._destroyed) {
+            superDestroy = function(constructor) {
+                // don't call `hasOwnProperty` directly on obj --> it might have been overruled
+                Object.prototype.hasOwnProperty.call(constructor.prototype, '_destroy') && constructor.prototype._destroy.call(instance);
+                if (constructor.$$super) {
+                    instance.__classCarier__ = constructor.$$super.constructor;
+                    superDestroy(constructor.$$super.constructor);
+                }
+            };
+            superDestroy(instance.constructor);
+            instance.detachAll();
+            Object.protectedProp(instance, '_destroyed', true);
+        }
     }
 };
 
-// because we also have js-ext/lib/function, we patch Object.BaseClass to make it an eventlistener that auto cleanup:
-Object.BaseClass.mergePrototypes(Event.Listener)
-                .mergePrototypes(ClassListener)
-                .mergePrototypes({
-                    destroy: function() {
-                        var instance = this,
-                            superDestroy;
-                        if (!instance._destroyed) {
-                            superDestroy = function(constructor) {
-                                // don't call `hasOwnProperty` directly on obj --> it might have been overruled
-                                Object.prototype.hasOwnProperty.call(constructor.prototype, '_destroy') && constructor.prototype._destroy.call(instance);
-                                if (constructor.$super) {
-                                    superDestroy(constructor.$super.constructor);
-                                }
-                            };
-                            instance.detachAll();
-                            superDestroy(instance.constructor);
-                            Object.protectedProp(instance, '_destroyed', true);
-                        }
-                    }
-                }, true, {}, {});
-},{"./index.js":21,"js-ext/lib/function.js":32,"js-ext/lib/object.js":34}],21:[function(require,module,exports){
+// Patching Classes.BaseClass to make it an eventlistener that auto cleans-up:
+Classes.BaseClass.mergePrototypes(Event.Listener, true)
+                 .mergePrototypes(ClassListener, true, {}, {});
+},{"./index.js":22,"js-ext/extra/classes.js":29,"js-ext/lib/object.js":38}],22:[function(require,module,exports){
 module.exports = require('./event-base.js');
 require('./event-emitter.js');
 require('./event-listener.js');
-},{"./event-base.js":18,"./event-emitter.js":19,"./event-listener.js":20}],22:[function(require,module,exports){
+},{"./event-base.js":19,"./event-emitter.js":20,"./event-listener.js":21}],23:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -8930,13 +9544,14 @@ require('polyfill');
 
 var NAME = '[focusmanager]: ',
     async = require('utils').async,
+    createHashMap = require('js-ext/extra/hashmap.js').createMap,
     DEFAULT_SELECTOR = 'input, button, select, textarea, .focusable',
-    SPECIAL_KEYS = {
+    SPECIAL_KEYS = createHashMap({
         shift: 'shiftKey',
         ctrl: 'ctrlKey',
         cmd: 'metaKey',
         alt: 'altKey'
-    },
+    }),
     DEFAULT_KEYUP = 'shift+9',
     DEFAULT_KEYDOWN = '9',
     FM_SELECTION = 'fm-selection',
@@ -8949,7 +9564,7 @@ module.exports = function (window) {
     var DOCUMENT = window.document,
         nodePlugin, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed, getFocusManagerSelector, setupEvents;
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
 /*jshint boss:true */
     if (FocusManager=window._ITSAmodules.FocusManager) {
@@ -9262,7 +9877,7 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"event-dom":14,"js-ext/lib/object.js":34,"polyfill":43,"utils":45,"vdom":58}],23:[function(require,module,exports){
+},{"event-dom":15,"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"polyfill":50,"utils":53,"vdom":66}],24:[function(require,module,exports){
 
 "use strict";
 
@@ -9288,23 +9903,24 @@ module.exports = function (window) {
 require('js-ext/lib/object.js');
 
 var NAME = '[io-cors-ie9]: ',
+    createHashMap = require('js-ext/extra/hashmap.js').createMap,
     XmlDOMParser = require('xmldom').DOMParser,
     UNKNOW_ERROR = 'Unknown XDR-error', // XDR doesn't specify the error
     REGEXP_EXTRACT_URL = new RegExp("^((([a-z][a-z0-9-.]*):\/\/)?(([^\/?#:]+)(:(\\d+))?)?)?(\/?[a-z0-9-._~%!$&'()*+,;=@]+(\/[a-z0-9-._~%!$&'()*+,;=:@]+)*\/?|\/)?([#?](.*)|$)", "i"),
     currentDomain,
-    BODY_METHODS = {
+    BODY_METHODS = createHashMap({
         POST: 1,
         PUT: 1
-    },
-    VALID_XDR_METHODS = {
+    }),
+    VALID_XDR_METHODS = createHashMap({
         GET: 1,
         POST: 1
-    };
+    });
 
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.IO_Cors) {
         return window._ITSAmodules.IO_Cors; // IO_Cors was already created
@@ -9389,17 +10005,18 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"../io.js":27,"js-ext/lib/object.js":34,"xmldom":3}],24:[function(require,module,exports){
+},{"../io.js":28,"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"xmldom":3}],25:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
 
 var NAME = '[io-stream]: ',
+    createHashMap = require('js-ext/extra/hashmap.js').createMap,
     UNKNOW_ERROR = 'Unknown XDR-error'; // XDR doesn't specify the error
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.IO_Stream) {
         return window._ITSAmodules.IO_Stream; // IO_Stream was already created
@@ -9515,7 +10132,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":27,"js-ext/lib/object.js":34}],25:[function(require,module,exports){
+},{"../io.js":28,"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38}],26:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9540,9 +10157,29 @@ require('js-ext/lib/string.js');
 require('js-ext/lib/object.js');
 require('polyfill/polyfill-base.js');
 
+/*jshint proto:true */
 var NAME = '[io-transfer]: ',
+    createHashMap = require('js-ext/extra/hashmap.js').createMap,
+    PROTO_SUPPORTED = !!Object.__proto__,
     REVIVER = function(key, value) {
         return ((typeof value==='string') && value.toDate()) || value;
+    },
+    REVIVER_PROTOTYPED = function(key, value, proto, parseProtoCheck, reviveDate) {
+        if (reviveDate && (typeof value==='string')) {
+            return value.toDate() || value;
+        }
+        if (!Object.isObject(value)) {
+            return value;
+        }
+        // only first level of objects can be given the specified prototype
+        if ((typeof parseProtoCheck === 'function') && !parseProtoCheck(value)) {
+            return value;
+        }
+        if (PROTO_SUPPORTED) {
+            value.__proto__ = proto;
+            return value;
+        }
+        return value.deepClone(null, proto);
     },
     MIME_JSON = 'application/json',
     CONTENT_TYPE = 'Content-Type',
@@ -9550,10 +10187,11 @@ var NAME = '[io-transfer]: ',
     REGEXP_ARRAY = /^( )*\[/,
     REGEXP_OBJECT = /^( )*{/,
     REGEXP_REMOVE_LAST_COMMA = /^(.*),( )*$/;
+/*jshint proto:false */
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.IO_Transfer) {
         return window._ITSAmodules.IO_Transfer; // IO_Transfer was already created
@@ -9679,6 +10317,10 @@ module.exports = function (window) {
      *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
      *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
      *    @param [options.parseJSONDate=false] {boolean} Whether the server returns JSON-stringified data which has Date-objects.
+     *    @param [options.parseProto] {Object} to set the prototype of any object.
+     *    @param [options.parseProtoCheck] {Function} to determine in what case the specified `parseProto` should be set as the prototype.
+     *            The function accepts the `object` as argument and should return a trully value in order to set the prototype.
+     *            When not specified, `parseProto` will always be applied (if `parseProto`is defined)
      * @return {Promise}
      * on success:
         * Object received data
@@ -9704,6 +10346,9 @@ module.exports = function (window) {
                 console.log(NAME, 'read returns with: '+JSON.stringify(xhrResponse.responseText));
                 // xhrResponse.responseText should be 'application/json' --> if it is not,
                 // JSON.parse throws an error, but that's what we want: the Promise would reject
+                if (options.parseProto) {
+                    return JSON.parse(xhrResponse.responseText, REVIVER_PROTOTYPED.rbind(null, options.parseProto, options.parseProtoCheck, options.parseJSONDate));
+                }
                 return JSON.parse(xhrResponse.responseText, (options.parseJSONDate) ? REVIVER : null);
             }
         );
@@ -9844,10 +10489,12 @@ module.exports = function (window) {
      *    @param [options.headers] {Object} HTTP request headers.
      *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
      *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
+     *    @param [options.parseJSONDate=false] {boolean} Whether the server returns JSON-stringified data which has Date-objects.
      * @return {Promise}
      * on success:
         * response {Object|String} any response you want the server to return.
-                   If the server send back a JSON-stringified object, it will be parsed to return as a full object
+                   If the server send back a JSON-stringified object,
+                   it will be parsed to return as a full object
                    You could set `options.parseJSONDate` true, it you want ISO8601-dates to be parsed as trully Date-objects
      * on failure an Error object
         * reason {Error}
@@ -9915,9 +10562,13 @@ module.exports = function (window) {
      *    @param [options.headers] {Object} HTTP request headers.
      *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
      *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
+     *    @param [options.parseJSONDate=false] {boolean} Whether the server returns JSON-stringified data which has Date-objects.
      * @return {Promise}
      * on success:
-        * xhr {XMLHttpRequest|XDomainRequest} xhr-response
+        * response {Object|String} any response you want the server to return.
+                   If the server send back a JSON-stringified object,
+                   it will be parsed to return as a full object
+                   You could set `options.parseJSONDate` true, it you want ISO8601-dates to be parsed as trully Date-objects
      * on failure an Error object
         * reason {Error}
     */
@@ -9951,7 +10602,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":27,"js-ext/lib/object.js":34,"js-ext/lib/string.js":36,"polyfill/polyfill-base.js":43}],26:[function(require,module,exports){
+},{"../io.js":28,"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"js-ext/lib/string.js":40,"polyfill/polyfill-base.js":50}],27:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9975,11 +10626,12 @@ module.exports = function (window) {
 require('js-ext');
 
 var NAME = '[io-xml]: ',
-    REGEXP_XML = /(?: )*(<\?xml (?:.)*\?>)(?: )*(<(?:\w)+>)/;
+    REGEXP_XML = /(?: )*(<\?xml (?:.)*\?>)(?: )*(<(?:\w)+>)/,
+    createHashMap = require('js-ext/extra/hashmap.js').createMap;
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.IO_XML) {
         return window._ITSAmodules.IO_XML; // IO_XML was already created
@@ -10102,7 +10754,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":27,"js-ext":30}],27:[function(require,module,exports){
+},{"../io.js":28,"js-ext":33,"js-ext/extra/hashmap.js":30}],28:[function(require,module,exports){
 (function (global){
 /**
  * Provides core IO-functionality.
@@ -10122,11 +10774,12 @@ require('js-ext');
 
 var NAME = '[io]: ',
     GET = 'GET',
+    createHashMap = require('js-ext/extra/hashmap.js').createMap,
     DEF_REQ_TIMEOUT = 300000, // don't create an ever-lasting request: always quit after 5 minutes
-    BODY_METHODS = {
+    BODY_METHODS = createHashMap({
         POST: 1,
         PUT: 1
-    },
+    }),
     CONTENT_TYPE = 'Content-Type',
     MIME_JSON = 'application/json',
     DEF_CONTENT_TYPE_POST = 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -10146,7 +10799,7 @@ module.exports = function (window) {
     // into some other IO-instance than which is used.
     var Glob = (typeof global !== 'undefined' ? global : /* istanbul ignore next */ this);
 
-    Glob._ITSAmodules || Object.protectedProp(Glob, '_ITSAmodules', {});
+    Glob._ITSAmodules || Object.protectedProp(Glob, '_ITSAmodules', createHashMap());
 
     if (Glob._ITSAmodules.IO) {
         return Glob._ITSAmodules.IO;
@@ -10414,7 +11067,532 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":30,"polyfill/polyfill-base.js":43}],28:[function(require,module,exports){
+},{"js-ext":33,"js-ext/extra/hashmap.js":30,"polyfill/polyfill-base.js":50}],29:[function(require,module,exports){
+(function (global){
+/**
+ *
+ * Pollyfils for often used functionality for Functions
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module js-ext
+ * @submodule lib/function.js
+ * @class Function
+ *
+*/
+
+require('polyfill/polyfill-base.js');
+require('../lib/object.js');
+
+(function (global) {
+
+    "use strict";
+
+    var NAME = '[Classes]: ',
+        createHashMap = require('js-ext/extra/hashmap.js').createMap,
+        DEFAULT_CHAIN_CONSTRUCT, defineProperty, defineProperties,
+        NOOP, REPLACE_CLASS_METHODS, PROTECTED_CLASS_METHODS, PROTO_RESERVERD_NAMES,
+        BASE_MEMBERS, createBaseClass, Classes, coreMethods;
+
+    global._ITSAmodules || Object.protectedProp(global, '_ITSAmodules', createHashMap());
+
+    if (global._ITSAmodules.Classes) {
+        return global._ITSAmodules.Classes; // Classes was already created
+    }
+
+    // Define configurable, writable and non-enumerable props
+    // if they don't exist.
+
+    DEFAULT_CHAIN_CONSTRUCT = true;
+    defineProperty = function (object, name, method, force) {
+        if (!force && (name in object)) {
+            return;
+        }
+        Object.defineProperty(object, name, {
+            configurable: true,
+            enumerable: false,
+            writable: true,
+            value: method
+        });
+    };
+    defineProperties = function (object, map, force) {
+        var names = Object.keys(map),
+            l = names.length,
+            i = -1,
+            name;
+        while (++i < l) {
+            name = names[i];
+            defineProperty(object, name, map[name], force);
+        }
+    };
+    NOOP = function () {};
+    REPLACE_CLASS_METHODS = createHashMap({
+        destroy: '_destroy'
+    });
+    PROTECTED_CLASS_METHODS = createHashMap({
+        _destroy: true,
+        $super: true,
+        $superProp: true,
+        $orig: true
+    });
+/*jshint proto:true */
+/* jshint -W001 */
+    PROTO_RESERVERD_NAMES = createHashMap({
+        constructor: true,
+        prototype: true,
+        toSource: true,
+        toString: true,
+        toLocaleString: true,
+        valueOf: true,
+        watch: true,
+        unwatch: true,
+        hasOwnProperty: true,
+        isPrototypeOf: true,
+        propertyIsEnumerable: true,
+        __defineGetter__: true,
+        __defineSetter__: true,
+        __lookupGetter__: true,
+        __lookupSetter__: true,
+        __proto__: true
+    });
+/* jshint +W001 */
+/*jshint proto:false */
+
+    /**
+     * Pollyfils for often used functionality for Function
+     * @class Function
+    */
+
+    defineProperties(Function.prototype, {
+
+        /**
+         * Merges the given map of properties into the `prototype` of the Class.
+         *
+         * **Note1 ** to be used on instances --> ONLY on Classes
+         * **Note2 ** properties with getters and/or unwritable will NOT be merged
+         *
+         * The members in the hash map will become members with
+         * instances of the merged class.
+         *
+         * By default, this method will not override existing prototype members,
+         * unless the second argument `force` is true.
+         *
+         * @method mergePrototypes
+         * @param map {Object} Hash map of properties to add to the prototype of this object
+         * @param force {Boolean}  If true, existing members will be overwritten
+         * @chainable
+         */
+        mergePrototypes: function (map, force) {
+            var instance, proto, names, l, i, replaceMap, protectedMap, name, nameInProto, finalName, propDescriptor;
+            if (!map) {
+                return;
+            }
+            instance = this; // the Class
+            proto = instance.prototype;
+            names = Object.getOwnPropertyNames(map);
+            l = names.length;
+            i = -1;
+            replaceMap = arguments[2] || REPLACE_CLASS_METHODS; // hidden feature, used by itags
+            protectedMap = arguments[3] || PROTECTED_CLASS_METHODS; // hidden feature, used by itags
+            while (++i < l) {
+                name = names[i];
+                finalName = replaceMap[name] || name;
+                nameInProto = (finalName in proto);
+                if (!PROTO_RESERVERD_NAMES[name] && !protectedMap[name] && (!nameInProto || force)) {
+                    // if nameInProto: set the property, but also backup for chaining using $$orig
+
+
+
+                    propDescriptor = Object.getOwnPropertyDescriptor(map, name);
+                    if (!propDescriptor.writable) {
+                        console.warn(NAME+'mergePrototypes will set property of '+NAME+'without its property-descriptor: for it is an unwritable property.');
+                        proto[finalName] = map[name];
+                    }
+                    else {
+
+                        // adding map[name] into $$orig:
+
+                        instance.$$orig[finalName] || (instance.$$orig[finalName]=[]);
+                        instance.$$orig[finalName][instance.$$orig[finalName].length] = map[name];
+
+
+
+                        if (typeof map[name] === 'function') {
+        /*jshint -W083 */
+                            propDescriptor.value = (function (originalMethodName, finalMethodName) {
+                                return function () {
+        /*jshint +W083 */
+                                    // this.$own = prot;
+                                    // this.$origMethods = instance.$$orig[finalMethodName];
+                                    var context = this,
+                                        classCarierBkp = context.__classCarier__,
+                                        methodClassCarierBkp = context.__methodClassCarier__,
+                                        origPropBkp = context.__origProp__,
+                                        returnValue;
+
+                                    context.__methodClassCarier__ = instance;
+
+                                    context.__classCarier__ = null;
+
+                                    context.__origProp__ = finalMethodName;
+                                    returnValue = map[originalMethodName].apply(context, arguments);
+                                    context.__origProp__ = origPropBkp;
+
+                                    context.__classCarier__ = classCarierBkp;
+
+                                    context.__methodClassCarier__ = methodClassCarierBkp;
+
+                                    return returnValue;
+
+                                };
+                            })(name, finalName);
+                        }
+
+
+                        Object.defineProperty(proto, finalName, propDescriptor);
+                    }
+
+
+
+
+                    // if (typeof map[name] === 'function') {
+    /*jshint -W083 */
+                        // proto[finalName] = (function (original, methodName, methodFinalName) {
+                            // return function () {
+    /*jshint +W083 */
+                                // instance.$$orig[methodFinalName] = original;
+                                // return map[methodName].apply(this, arguments);
+                            // };
+                        // })(proto[name] || NOOP, name, finalName);
+                    // }
+                    // else {
+                        // proto[name] = map[name];
+                    // }
+
+
+
+
+                }
+                else {
+                    console.warn(NAME+'mergePrototypes is not allowed to set the property: '+name);
+                }
+            }
+            return instance;
+        },
+
+        /**
+         * Merges the given map of properties into the `prototype` of the Class.
+         *
+         * **Note1 ** to be used on instances --> ONLY on Classes
+         * **Note2 ** properties with getters and/or unwritable will NOT be merged
+         *
+         * The members in the hash map will become members with
+         * instances of the merged class.
+         *
+         * By default, this method will not override existing prototype members,
+         * unless the second argument `force` is true.
+         *
+         * @method removePrototypes
+         * @param map {Object} Hash map of properties to add to the prototype of this object
+         * @param force {Boolean}  If true, existing members will be overwritten
+         * @chainable
+         */
+        removePrototypes: function (properties) {
+            var instance = this,
+                proto = instance.isItag ? instance.$proto : instance.prototype;
+            Array.isArray(properties) || (properties=[properties]);
+            properties.forEach(function(prop) {
+                delete proto[prop];
+            });
+        },
+
+        /**
+         * Returns a newly created class inheriting from this class
+         * using the given `constructor` with the
+         * prototypes listed in `prototypes` merged in.
+         *
+         *
+         * The newly created class has the `$$super` static property
+         * available to access all of is ancestor's instance methods.
+         *
+         * Further methods can be added via the [mergePrototypes](#method_mergePrototypes).
+         *
+         * @example
+         *
+         *  var Circle = Shape.subClass(
+         *      function (x, y, r) {
+         *          // arguments will automaticly be passed through to Shape's constructor
+         *          this.r = r;
+         *      },
+         *      {
+         *          area: function () {
+         *              return this.r * this.r * Math.PI;
+         *          }
+         *      }
+         *  );
+         *
+         * @method subClass
+         * @param [constructor] {Function} The function that will serve as constructor for the new class.
+         *        If `undefined` defaults to `Object.constructor`
+         * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
+         * @param [chainConstruct=true] {Boolean} Whether -during instance creation- to automaticly construct in the complete hierarchy with the given constructor arguments.
+         * @return the new class.
+         */
+        subClass: function (constructor, prototypes, chainConstruct) {
+
+            var instance = this,
+                constructorClosure = {},
+                baseProt, proto;
+            if (typeof constructor === 'boolean') {
+                constructor = null;
+                prototypes = null;
+                chainConstruct = constructor;
+            }
+
+            else {
+                if (Object.isObject(constructor)) {
+                    chainConstruct = prototypes;
+                    prototypes = constructor;
+                    constructor = null;
+                }
+
+                if (typeof prototypes === 'boolean') {
+                    chainConstruct = prototypes;
+                    prototypes = null;
+                }
+            }
+
+            (typeof chainConstruct === 'boolean') || (chainConstruct=DEFAULT_CHAIN_CONSTRUCT);
+
+            if (!constructor) {
+                if (chainConstruct) {
+                    constructor = NOOP;
+                }
+                else {
+                    constructor = (function(originalConstructor) {
+                        return function() {
+                            var context = this;
+
+                            context.__classCarier__ = constructorClosure.constructor;
+                            context.__origProp__ = 'constructor';
+                            originalConstructor.apply(context, arguments);
+
+                        };
+                    })(instance);
+                }
+            }
+            if (chainConstruct) {
+                constructor = (function(originalConstructor) {
+                    return function() {
+                        var context = this;
+
+                        context.__classCarier__ = constructorClosure.constructor.$$super.constructor;
+
+                        context.__origProp__ = 'constructor';
+                        context.__classCarier__.apply(context, arguments);
+
+                        context.$origMethods = constructorClosure.constructor.$$orig.constructor;
+
+                        context.__classCarier__ = constructorClosure.constructor;
+
+                        context.__origProp__ = 'constructor';
+                        originalConstructor.apply(context, arguments);
+
+                    };
+                })(constructor);
+            }
+
+            baseProt = instance.prototype;
+            proto = Object.create(baseProt);
+            constructor.prototype = proto;
+
+            proto.constructor = constructor;
+            constructor.$$chainConstructed = chainConstruct ? true : false;
+            constructor.$$super = baseProt;
+            constructor.$$orig = {
+                constructor: constructor
+            };
+            constructorClosure.constructor = constructor;
+            prototypes && constructor.mergePrototypes(prototypes, true);
+            return constructor;
+        }
+
+    });
+
+    BASE_MEMBERS = {
+        _destroy: NOOP,
+        destroy: function(notChained) {
+            var instance = this,
+                superDestroy;
+            if (!instance._destroyed) {
+                superDestroy = function(constructor) {
+                    // don't call `hasOwnProperty` directly on obj --> it might have been overruled
+                    Object.prototype.hasOwnProperty.call(constructor.prototype, '_destroy') && constructor.prototype._destroy.call(instance);
+                    if (!notChained && constructor.$$super) {
+                        instance.__classCarier__ = constructor.$$super.constructor;
+                        superDestroy(constructor.$$super.constructor);
+                    }
+                };
+                // instance.detachAll();  <-- is what Event will add
+                superDestroy(instance.constructor);
+                Object.protectedProp(instance, '_destroyed', true);
+            }
+        }
+    };
+
+    coreMethods = Classes.coreMethods = {
+        $super: {
+            get: function() {
+                var instance = this;
+                instance.__classCarier__ || (instance.__classCarier__= instance.__methodClassCarier__);
+                instance.__$superCarierStart__ || (instance.__$superCarierStart__=instance.__classCarier__);
+                instance.__classCarier__ = instance.__classCarier__.$$super.constructor;
+                return instance;
+            }
+        },
+        $superProp: {
+            value: function(/* func, *args */) {
+                var instance = this,
+                    classCarierReturn = instance.__$superCarierStart__ || instance.__classCarier__ || instance.__methodClassCarier__,
+                    currentClassCarier = instance.__classCarier__ || instance.__methodClassCarier__,
+                    args = arguments,
+                    superClass, superPrototype, firstArg, returnValue;
+
+                instance.__$superCarierStart__ = null;
+                if (args.length === 0) {
+                    instance.__classCarier__ = classCarierReturn;
+                    return;
+                }
+
+                superClass = currentClassCarier.$$super.constructor,
+                superPrototype = superClass.prototype,
+                firstArg = Array.prototype.shift.apply(args); // will decrease the length of args with one
+                if ((firstArg==='constructor') && currentClassCarier.$$chainConstructed) {
+                    console.warn('the constructor of this Class cannot be invoked manually, because it is chainConstructed');
+                    return currentClassCarier;
+                }
+                if (typeof superPrototype[firstArg] === 'function') {
+                    instance.__classCarier__ = superClass;
+                    returnValue = superPrototype[firstArg].apply(instance, args);
+                }
+                instance.__classCarier__ = classCarierReturn;
+                return returnValue || superPrototype[firstArg];
+            }
+        },
+        $orig: {
+            value: function() {
+                var instance = this,
+                    classCarierReturn = instance.__$superCarierStart__,
+                    currentClassCarier = instance.__classCarier__ || instance.__methodClassCarier__,
+                    args = arguments,
+                    propertyName = instance.__origProp__,
+                    returnValue, origArray, orig, item;
+
+                instance.__$superCarierStart__ = null;
+
+                origArray = currentClassCarier.$$orig[propertyName];
+
+                instance.__origPos__ || (instance.__origPos__ = []);
+
+                // every class can have its own overruled $orig for even the same method
+                // first: seek for the item that matches propertyName/classRef:
+                instance.__origPos__.some(function(element) {
+                    if ((element.propertyName===propertyName) && (element.classRef===currentClassCarier)) {
+                        item = element;
+                    }
+                    return item;
+                });
+
+                if (!item) {
+                    item = {
+                        propertyName: propertyName,
+                        classRef: currentClassCarier,
+                        position: origArray.length-1
+                    };
+                    instance.__origPos__.push(item);
+                }
+                if (item.position===0) {
+                    return undefined;
+                }
+                item.position--;
+                orig = origArray[item.position];
+                if (typeof orig === 'function') {
+                    instance.__classCarier__ = currentClassCarier;
+                    returnValue = orig.apply(instance, args);
+                }
+                instance.__classCarier__ = classCarierReturn;
+
+                item.position++;
+
+                return returnValue || orig;
+            }
+        }
+    };
+
+    createBaseClass = function () {
+        var InitClass = function() {};
+        return Function.prototype.subClass.apply(InitClass, arguments);
+    };
+
+    global._ITSAmodules.Classes = Classes = {};
+
+    /**
+     * Returns a base class with the given constructor and prototype methods
+     *
+     * @for Object
+     * @method createClass
+     * @param [constructor] {Function} constructor for the class
+     * @param [prototype] {Object} Hash map of prototype members of the new class
+     * @static
+     * @return {Function} the new class
+    */
+    Object.protectedProp(Classes, 'BaseClass', createBaseClass().mergePrototypes(BASE_MEMBERS, true, {}, {}));
+
+    // because `mergePrototypes` cannot merge object-getters, we will add the getter `$super` manually:
+    Object.defineProperties(Classes.BaseClass.prototype, coreMethods);
+
+    /**
+     * Returns a base class with the given constructor and prototype methods
+     *
+     * @for Object
+     * @method createClass
+     * @param [constructor] {Function} constructor for the class
+     * @param [prototype] {Object} Hash map of prototype members of the new class
+     * @static
+     * @return {Function} the new class
+    */
+    Object.protectedProp(Classes, 'createClass', Classes.BaseClass.subClass.bind(Classes.BaseClass));
+
+    module.exports = Classes;
+
+}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../lib/object.js":38,"js-ext/extra/hashmap.js":30,"polyfill/polyfill-base.js":50}],30:[function(require,module,exports){
+"use strict";
+
+var merge = function (source, target) {
+        var keys = Object.keys(source),
+            l = keys.length,
+            i = -1,
+            key;
+        while (++i < l) {
+            key = keys[i];
+            target[key] = source[key];
+        }
+    },
+    hashMap = function(members) {
+        // important to set the prototype to `null` --> this will exclude any Object.prototype members
+        var obj = Object.create(null);
+        members && merge(members, obj);
+        return obj;
+    };
+
+module.exports = {
+    createMap: hashMap
+};
+},{}],31:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -10428,94 +11606,95 @@ module.exports = function (window) {
  * @class String
  *
  */
-(function (global) {
 
-    "use strict";
+"use strict";
 
-    var LightMap;
+var LightMap,
+    Classes = require("./classes.js");
 
-    require('../lib/function.js');
-    require('../lib/array.js');
-    require('../lib/object.js');
-    require('polyfill/lib/weakmap.js');
+require('../lib/array.js');
+require('../lib/object.js');
+require('polyfill/lib/weakmap.js');
 
-    if (!global.LightMap) {
-        global.LightMap = LightMap = Object.createClass(
-            function() {
-                Object.protectedProp(this, '_array', []);
-                Object.protectedProp(this, '_map', new global.WeakMap());
-            },
-            {
-                each: function(fn, context) {
-                    var instance = this,
-                        array = instance._array,
-                        l = array.length,
-                        i = -1,
-                        obj, value;
-                    while (++i < l) {
-                        obj = array[i];
-                        value = instance.get(obj); // read from WeakMap
-                        fn.call(context, value, obj, instance);
-                    }
-                    return instance;
-                },
-                some: function(fn, context) {
-                    var instance = this,
-                        array = instance._array,
-                        l = array.length,
-                        i = -1,
-                        obj, value;
-                    while (++i < l) {
-                        obj = array[i];
-                        value = instance.get(obj); // read from WeakMap
-                        if (fn.call(context, value, obj, instance)) {
-                            return true;
-                        }
-                    }
-                    return false;
-                },
-                clear: function() {
-                    var instance = this,
-                        array = instance._array;
-                    array.forEach(function(key) {
-                        instance.delete(key, true);
-                    });
-                    array.length = 0;
-                },
-                has: function(object) {
-                    return this._map.has(object);
-                },
-                get: function(key, fallback) {
-                    return this._map.get(key, fallback);
-                },
-                set: function (key, value) {
-                    var instance = this,
-                        array = instance._array,
-                        map = instance._map;
-                    map.set(key, value);
-                    array.contains(key) || array.push(key);
-                    return instance;
-                },
-                size: function (key, value) {
-                    return this._array.length;
-                },
-                'delete': function (key) {
-                    var instance = this,
-                        array = instance._array,
-                        map = instance._map,
-                        silent = arguments[1], // hidden feature used by `clear()`
-                        returnValue = map.delete(key);
-                    silent || array.remove(key);
-                    return returnValue;
+LightMap = Classes.createClass(
+    function() {
+        Object.protectedProp(this, '_array', []);
+        Object.protectedProp(this, '_map', new global.WeakMap());
+    },
+    {
+        each: function(fn, context) {
+            var instance = this,
+                array = instance._array,
+                l = array.length,
+                i = -1,
+                obj, value;
+            while (++i < l) {
+                obj = array[i];
+                value = instance.get(obj); // read from WeakMap
+                fn.call(context, value, obj, instance);
+            }
+            return instance;
+        },
+        some: function(fn, context) {
+            var instance = this,
+                array = instance._array,
+                l = array.length,
+                i = -1,
+                obj, value;
+            while (++i < l) {
+                obj = array[i];
+                value = instance.get(obj); // read from WeakMap
+                if (fn.call(context, value, obj, instance)) {
+                    return true;
                 }
             }
-        );
+            return false;
+        },
+        clear: function() {
+            var instance = this,
+                array = instance._array;
+            array.forEach(function(key) {
+                instance.delete(key, true);
+            });
+            array.length = 0;
+        },
+        has: function(object) {
+            return this._map.has(object);
+        },
+        get: function(key, fallback) {
+            return this._map.get(key, fallback);
+        },
+        set: function (key, value) {
+            var instance = this,
+                array = instance._array,
+                map = instance._map;
+            map.set(key, value);
+            array.contains(key) || array.push(key);
+            return instance;
+        },
+        size: function () {
+            return this._array.length;
+        },
+        'delete': function (key) {
+            var instance = this,
+                array = instance._array,
+                map = instance._map,
+                silent = arguments[1], // hidden feature used by `clear()`
+                returnValue = map.delete(key);
+            silent || array.remove(key);
+            return returnValue;
+        }
     }
+);
 
-}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
+module.exports = LightMap;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":31,"../lib/function.js":32,"../lib/object.js":34,"polyfill/lib/weakmap.js":41}],29:[function(require,module,exports){
-module.exports = {
+},{"../lib/array.js":35,"../lib/object.js":38,"./classes.js":29,"polyfill/lib/weakmap.js":48}],32:[function(require,module,exports){
+"use strict";
+
+var createHashMap = require('./hashmap.js').createMap;
+
+module.exports = createHashMap({
     'abstract': true,
     'arguments': true,
     'assert': true,
@@ -10582,15 +11761,30 @@ module.exports = {
     'while': true,
     'with': true,
     'yield': true
-};
-},{}],30:[function(require,module,exports){
+});
+},{"./hashmap.js":30}],33:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
 require('./lib/array.js');
 require('./lib/json.js');
 require('./lib/promise.js');
-},{"./lib/array.js":31,"./lib/function.js":32,"./lib/json.js":33,"./lib/object.js":34,"./lib/promise.js":35,"./lib/string.js":36}],31:[function(require,module,exports){
+},{"./lib/array.js":35,"./lib/function.js":36,"./lib/json.js":37,"./lib/object.js":38,"./lib/promise.js":39,"./lib/string.js":40}],34:[function(require,module,exports){
+"use strict";
+
+require('./lib/function.js');
+require('./lib/object.js');
+require('./lib/string.js');
+require('./lib/array.js');
+require('./lib/json.js');
+require('./lib/promise.js');
+
+module.exports = {
+    createHashMap: require('./extra/hashmap.js').createHashMap,
+    Classes: require('./extra/classes.js'),
+    LightMap: require('./extra/lightmap.js')
+};
+},{"./extra/classes.js":29,"./extra/hashmap.js":30,"./extra/lightmap.js":31,"./lib/array.js":35,"./lib/function.js":36,"./lib/json.js":37,"./lib/object.js":38,"./lib/promise.js":39,"./lib/string.js":40}],35:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -10741,7 +11935,7 @@ var cloneObj = function(obj) {
      };
 
 }(Array.prototype));
-},{"polyfill/polyfill-base.js":43}],32:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":50}],36:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -10759,181 +11953,9 @@ var cloneObj = function(obj) {
 
 require('polyfill/polyfill-base.js');
 
-// Define configurable, writable and non-enumerable props
-// if they don't exist.
-var NAME = '[Function]: ',
-	defineProtectedProperty = function (object, name, method) {
-		Object.defineProperty(object, name, {
-			configurable: false,
-			enumerable: false,
-			writable: false,
-			value: method
-		});
-	},
-    defineProperty = function (object, name, method, force) {
-		if (!force && (name in object)) {
-			return;
-		}
-		Object.defineProperty(object, name, {
-			configurable: true,
-			enumerable: false,
-			writable: true,
-			value: method
-		});
-	},
-	defineProperties = function (object, map, force) {
-		var names = Object.keys(map),
-			l = names.length,
-			i = -1,
-			name;
-		while (++i < l) {
-			name = names[i];
-			defineProperty(object, name, map[name], force);
-		}
-	},
-	NOOP = function () {},
-	REPLACE_CLASS_METHODS = {
-		destroy: '_destroy'
-	},
-	PROTECTED_CLASS_METHODS = {
-		_destroy: true
-	},
-	PROTO_RESERVERD_NAMES = {
-		constructor: true,
-		prototype: true,
-		toSource: true,
-		toString: true,
-		toLocaleString: true,
-		valueOf: true,
-		watch: true,
-		unwatch: true,
-		hasOwnProperty: true,
-		isPrototypeOf: true,
-		propertyIsEnumerable: true,
-		__defineGetter__: true,
-		__defineSetter__: true,
-		__lookupGetter__: true,
-		__lookupSetter__: true,
-		__proto__: true
-	},
-	BASE_MEMBERS, createBaseClass, BaseClass;
+var NAME = '[Function]: ';
 
-/**
- * Pollyfils for often used functionality for Function
- * @class Function
-*/
-
-defineProperties(Function.prototype, {
-
-	/**
-	 * Merges the given map of properties into the `prototype` of the Class.
-	 * **Not** to be used on instances.
-	 *
-	 * The members in the hash map will become members with
-	 * instances of the merged class.
-	 *
-	 * By default, this method will not override existing prototype members,
-	 * unless the second argument `force` is true.
-	 *
-	 * @method mergePrototypes
-	 * @param map {Object} Hash map of properties to add to the prototype of this object
-	 * @param force {Boolean}  If true, existing members will be overwritten
-	 * @chainable
-	 */
-	mergePrototypes: function (map, force) {
-		var instance = this,
-		    proto = instance.isItag ? instance.$proto : instance.prototype,
-		    names = Object.keys(map || {}),
-			l = names.length,
-			i = -1,
-			replaceMap = arguments[2] || REPLACE_CLASS_METHODS, // hidden feature, used by itags
-			protectedMap = arguments[3] || PROTECTED_CLASS_METHODS, // hidden feature, used by itags
-			name, nameInProto, finalName;
-		while (++i < l) {
-			name = names[i];
-            finalName = replaceMap[name] || name;
-			nameInProto = (finalName in proto);
-            if (!PROTO_RESERVERD_NAMES[name] && !protectedMap[name] && (!nameInProto || force)) {
-				// if nameInProto: set the property, but also backup for chaining using $orig
-                if (typeof map[name] === 'function') {
-/*jshint -W083 */
-                    proto[finalName] = (function (original, methodName, methodFinalName) {
-                        return function () {
-/*jshint +W083 */
-                            instance.$orig[methodFinalName] = original;
-                            return map[methodName].apply(this, arguments);
-                        };
-                    })(proto[name] || NOOP, name, finalName);
-                }
-				else {
-					proto[name] = map[name];
-				}
-			}
-			else {
-				console.warn(NAME+'mergePrototypes is not allowed to set the property: '+name);
-			}
-		}
-		return instance;
-	},
-
-	/**
-	 * Returns a newly created class inheriting from this class
-	 * using the given `constructor` with the
-	 * prototypes listed in `prototypes` merged in.
-	 *
-	 *
-	 * The newly created class has the `$super` static property
-	 * available to access all of is ancestor's instance methods.
-	 *
-	 * Further methods can be added via the [mergePrototypes](#method_mergePrototypes).
-	 *
-	 * @example
-	 *
-	 * 	var Circle = Shape.subClass(
-	 * 		function (x, y, r) {
-	 * 			this.r = r;
-	 * 			Circle.$super.constructor.call(this, x, y);
-	 * 		},
-	 * 		{
-	 * 			area: function () {
-	 * 				return this.r * this.r * Math.PI;
-	 * 			}
-	 * 		}
-	 * 	);
-	 *
-	 * @method subClass
-	 * @param [constructor] {Function} The function that will serve as constructor for the new class.
-	 *        If `undefined` defaults to `Object.constructor`
-	 * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
-	 * @return the new class.
-	 */
-	subClass: function (constructor, prototypes) {
-
-		if ((arguments.length === 1) && (typeof constructor !== 'function')) {
-			prototypes = constructor;
-			constructor = null;
-		}
-
-
-		constructor = constructor || function (ancestor) {
-			return function () {
-				ancestor.apply(this, arguments);
-			};
-		}(this);
-
-
-		var baseProt = this.prototype,
-			rp = Object.create(baseProt);
-		constructor.prototype = rp;
-
-		rp.constructor = constructor;
-		constructor.$super = baseProt;
-		constructor.$orig = {};
-
-		constructor.mergePrototypes(prototypes, true);
-		return constructor;
-	},
-
+(function(FunctionPrototype) {
 	/**
 	 * Sets the context of which the function will be execute. in the
 	 * supplied object's context, optionally adding any additional
@@ -10947,7 +11969,8 @@ defineProperties(Function.prototype, {
 	 *        arguments collection supplied to the function.
 	 * @return {function} the wrapped function.
 	 */
-	rbind: function (context /*, args* */ ) {
+	FunctionPrototype.rbind = function (context /*, args* */ ) {
+		console.log(NAME+'rbind');
 		var thisFunction = this,
 			arrayArgs,
 			slice = Array.prototype.slice;
@@ -10967,60 +11990,11 @@ defineProperties(Function.prototype, {
 				return thisFunction.apply(context, arguments);
 			}
 		);
-	}
-});
+	};
 
-BASE_MEMBERS = {
-	_destroy: NOOP,
-	destroy: function() {
-	    var instance = this,
-	        superDestroy;
-	    if (!instance._destroyed) {
-	        superDestroy = function(constructor) {
-	            // don't call `hasOwnProperty` directly on obj --> it might have been overruled
-	            Object.prototype.hasOwnProperty.call(constructor.prototype, '_destroy') && constructor.prototype._destroy.call(instance);
-	            if (constructor.$super) {
-	                superDestroy(constructor.$super.constructor);
-	            }
-	        };
-	        // instance.detachAll();  <-- is what Event will add
-	        superDestroy(instance.constructor);
-	        defineProtectedProperty(instance, '_destroyed', true);
-	    }
-	}
-};
+}(Function.prototype));
 
-createBaseClass = function () {
-	var StartClass = function() {};
-	return Function.prototype.subClass.apply(StartClass, arguments);
-};
-
-
-/**
- * Returns a base class with the given constructor and prototype methods
- *
- * @for Object
- * @method createClass
- * @param [constructor] {Function} constructor for the class
- * @param [prototype] {Object} Hash map of prototype members of the new class
- * @static
- * @return {Function} the new class
-*/
-defineProtectedProperty(Object, 'BaseClass', createBaseClass().mergePrototypes(BASE_MEMBERS, true, {}, {}));
-
-/**
- * Returns a base class with the given constructor and prototype methods
- *
- * @for Object
- * @method createClass
- * @param [constructor] {Function} constructor for the class
- * @param [prototype] {Object} Hash map of prototype members of the new class
- * @static
- * @return {Function} the new class
-*/
-defineProtectedProperty(Object, 'createClass', Object.BaseClass.subClass.bind(Object.BaseClass));
-
-},{"polyfill/polyfill-base.js":43}],33:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":50}],37:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -11045,7 +12019,7 @@ var REVIVER = function(key, value) {
 JSON.parseWithDate = function(stringifiedObj) {
     return this.parse(stringifiedObj, REVIVER);
 };
-},{"polyfill/polyfill-base.js":43}],34:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":50}],38:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -11063,7 +12037,8 @@ JSON.parseWithDate = function(stringifiedObj) {
 
 require('polyfill/polyfill-base.js');
 
-var TYPES = {
+var createHashMap = require('js-ext/extra/hashmap.js').createMap,
+    TYPES = createHashMap({
        'undefined' : true,
        'number' : true,
        'boolean' : true,
@@ -11074,72 +12049,71 @@ var TYPES = {
        '[object Date]' : true,
        '[object Error]' : true,
        '[object Promise]' : true
-   },
-
-// Define configurable, writable and non-enumerable props
-// if they don't exist.
-defineProperty = function (object, name, method, force) {
-    if (!force && (name in object)) {
-        return;
-    }
-    Object.defineProperty(object, name, {
-        configurable: true,
-        enumerable: false,
-        writable: true,
-        value: method
-    });
-},
-defineProperties = function (object, map, force) {
-    var names = Object.keys(map),
-        l = names.length,
-        i = -1,
-        name;
-    while (++i < l) {
-        name = names[i];
-        defineProperty(object, name, map[name], force);
-    }
-},
-
-_each = function (obj, fn, context) {
-    var keys = Object.keys(obj),
-        l = keys.length,
-        i = -1,
-        key;
-    while (++i < l) {
-        key = keys[i];
-        fn.call(context, obj[key], key, obj);
-    }
-    return obj;
-},
-
-cloneObj = function(obj) {
-    var copy, i, len, value;
-
-    // Handle Array
-    if (obj instanceof Array) {
-        copy = [];
-        len = obj.length;
-        for (i=0; i<len; i++) {
-            value = obj[i];
-            copy[i] = ((value===null) || (typeof value!=='object')) ? value : cloneObj(value);
+    }),
+    // Define configurable, writable and non-enumerable props
+    // if they don't exist.
+    defineProperty = function (object, name, method, force) {
+        if (!force && (name in object)) {
+            return;
         }
+        Object.defineProperty(object, name, {
+            configurable: true,
+            enumerable: false,
+            writable: true,
+            value: method
+        });
+    },
+    defineProperties = function (object, map, force) {
+        var names = Object.keys(map),
+            l = names.length,
+            i = -1,
+            name;
+        while (++i < l) {
+            name = names[i];
+            defineProperty(object, name, map[name], force);
+        }
+    },
+
+    _each = function (obj, fn, context) {
+        var keys = Object.keys(obj),
+            l = keys.length,
+            i = -1,
+            key;
+        while (++i < l) {
+            key = keys[i];
+            fn.call(context, obj[key], key, obj);
+        }
+        return obj;
+    },
+
+    cloneObj = function(obj, descriptors) {
+        var copy, i, len, value;
+
+        // Handle Array
+        if (obj instanceof Array) {
+            copy = [];
+            len = obj.length;
+            for (i=0; i<len; i++) {
+                value = obj[i];
+                copy[i] = ((value===null) || (typeof value!=='object')) ? value : cloneObj(value, descriptors);
+            }
+            return copy;
+        }
+
+        // Handle Date
+        if (obj instanceof Date) {
+            copy = new Date();
+            copy.setTime(obj.getTime());
+            return copy;
+        }
+
+        // Handle Object
+        else if (obj instanceof Object) {
+            copy = obj.deepClone(descriptors);
+        }
+
         return copy;
-    }
-
-    // Handle Date
-    if (obj instanceof Date) {
-        copy = new Date();
-        copy.setTime(obj.getTime());
-        return copy;
-    }
-
-    // Handle Object
-    else if (obj instanceof Object) {
-        copy = obj.deepClone();
-    }
-
-    return copy;
-};
+    };
 
 /**
  * Pollyfils for often used functionality for objects
@@ -11233,7 +12207,7 @@ defineProperties(Object.prototype, {
         return m;
     },
     /**
-     * Returns the keys of the object.
+     * Returns the keys of the object: the enumerable properties.
      *
      * @method keys
      * @return {Array} Keys of the object
@@ -11241,6 +12215,17 @@ defineProperties(Object.prototype, {
     keys: function () {
         return Object.keys(this);
     },
+    /**
+     * Checks whether the given property is a key: an enumerable property.
+     *
+     * @method hasKey
+     * @param property {String} the property to check for
+     * @return {Boolean} Keys of the object
+     */
+    hasKey: function (property) {
+        return this.hasOwnProperty(property) && this.propertyIsEnumerable(property);
+    },
+
     /**
      * Returns the number of keys of the object
      *
@@ -11289,17 +12274,30 @@ defineProperties(Object.prototype, {
      * Fast, mostly useful for plain hash maps.
      *
      * @method shallowClone
+     * @param [options.descriptors=false] {Boolean} If true, the full descriptors will be set. This takes more time, but avoids any info to be lost.
      * @return {Object} shallow copy of the original
      */
-    shallowClone: function () {
-        var m = {},
-            keys = Object.keys(this),
+    shallowClone: function (descriptors) {
+        var instance = this,
+            m = Object.create(Object.getPrototypeOf(instance)),
+            keys = Object.getOwnPropertyNames(instance),
             l = keys.length,
             i = -1,
-            key;
+            key, propDescriptor;
         while (++i < l) {
             key = keys[i];
-            m[key] = this[key];
+            if (descriptors) {
+                propDescriptor = Object.getOwnPropertyDescriptor(instance, key);
+                if (!propDescriptor.writable) {
+                    m[key] = instance[key];
+                }
+                else {
+                    Object.defineProperty(m, key, propDescriptor);
+                }
+            }
+            else {
+                m[key] = instance[key];
+            }
         }
         return m;
     },
@@ -11321,25 +12319,42 @@ defineProperties(Object.prototype, {
     /**
      * Returns a deep copy of the object.
      * Only handles members of primary types, Dates, Arrays and Objects.
+     * Will clone all the properties, also the non-enumerable.
      *
      * @method deepClone
+     * @param [descriptors=false] {Boolean} If true, the full descriptors will be set. This takes more time, but avoids any info to be lost.
+     * @param [proto] {Object} Another prototype for the new object.
      * @return {Object} deep-copy of the original
      */
-    deepClone: function () {
-        var m = {},
-            keys = Object.keys(this),
+    deepClone: function (descriptors, proto) {
+        var instance = this,
+            m = Object.create(proto || Object.getPrototypeOf(instance)),
+            keys = Object.getOwnPropertyNames(instance),
             l = keys.length,
             i = -1,
-            key, value;
+            key, value, propDescriptor;
         // loop through the members:
         while (++i < l) {
             key = keys[i];
-            value = this[key];
-            m[key] = ((value===null) || (typeof value!=='object')) ? value : cloneObj(value);
+            value = instance[key];
+            if (descriptors) {
+                propDescriptor = Object.getOwnPropertyDescriptor(instance, key);
+                if (propDescriptor.writable) {
+                    Object.defineProperty(m, key, propDescriptor);
+                }
+                else {
+                    m[key] = value;
+                }
+                if ((value!==null) && (typeof value==='object') && ((typeof propDescriptor.get)!=='function') && ((typeof propDescriptor.set)!=='function') ) {
+                    m[key] = cloneObj(value, true);
+                }
+            }
+            else {
+                m[key] = ((value===null) || (typeof value!=='object')) ? value : cloneObj(value);
+            }
         }
         return m;
     },
-
     /**
      * Transforms the object into an array with  'key/value' objects
      *
@@ -11372,18 +12387,44 @@ defineProperties(Object.prototype, {
      *
      * @method merge
      * @param obj {Object} Object with the properties to be added to the original object
-     * @param force {Boolean} If true, the properties in `obj` will override those of the same name
+     * @param [options] {Object}
+     * @param [options.force=false] {Boolean} If true, the properties in `obj` will override those of the same name
      *        in the original object
+     * @param [options.full=false] {Boolean} If true, also any non-enumerable properties will be merged
+     * @param [options.descriptors=false] {Boolean} If true, the full descriptors will be set. This takes more time, but avoids any info to be lost.
      * @chainable
      */
-    merge: function (obj, force) {
-        var m = this;
-        if (obj && obj.each) obj.each(function (value, key) {
-            if (force || !(key in m)) {
-                m[key] = obj[key];
+    merge: function (obj, options) {
+        var instance = this,
+            i = -1,
+            keys, l, key, force, descriptors, propDescriptor;
+        if (!Object.isObject(obj)) {
+            return instance;
+        }
+        options || (options={});
+        keys = options.full ? Object.getOwnPropertyNames(obj) : Object.keys(obj);
+        l = keys.length;
+        force = options.force;
+        descriptors = options.descriptors;
+        // we cannot use obj.each --> obj might be an object defined through Object.create(null) and missing Object.prototype!
+        while (++i < l) {
+            key = keys[i];
+            if (force || !(key in instance)) {
+                if (descriptors) {
+                    propDescriptor = Object.getOwnPropertyDescriptor(obj, key);
+                    if (!propDescriptor.writable) {
+                        instance[key] = obj[key];
+                    }
+                    else {
+                        Object.defineProperty(instance, key, propDescriptor);
+                    }
+                }
+                else {
+                    instance[key] = obj[key];
+                }
             }
-        });
-        return m;
+        }
+        return instance;
     }
 
 });
@@ -11438,7 +12479,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"polyfill/polyfill-base.js":43}],35:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":30,"polyfill/polyfill-base.js":50}],39:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11743,7 +12784,7 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill":43}],36:[function(require,module,exports){
+},{"polyfill":50}],40:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -11800,9 +12841,10 @@ Promise.manage = function (callbackFn) {
      * @param [caseInsensitive=false] {Boolean} whether to ignore case-sensivity
      * @return {Boolean} whether the string ends with `test`
      */
-    String.endsWith || (StringPrototype.endsWith=function(test, caseInsensitive) {
+     // NOTE: we ALWAYS set this method --> ES6 native `startsWiths` lacks the second argument
+    StringPrototype.endsWith=function(test, caseInsensitive) {
         return (new RegExp(test+'$', caseInsensitive ? 'i': '')).test(this);
-    });
+    };
 
     /**
      * Checks if the string can be parsed into a number when using `parseInt()`
@@ -11825,9 +12867,10 @@ Promise.manage = function (callbackFn) {
      * @param [caseInsensitive=false] {Boolean} whether to ignore case-sensivity
      * @return {Boolean} whether the string starts with `test`
      */
-    String.startsWith || (StringPrototype.startsWith=function(test, caseInsensitive) {
+     // NOTE: we ALWAYS set this method --> ES6 native `startsWiths` lacks the second argument
+    StringPrototype.startsWith=function(test, caseInsensitive) {
         return (new RegExp('^'+test, caseInsensitive ? 'i': '')).test(this);
-    });
+    };
 
     /**
      * Performs `{placeholder}` substitution on a string. The object passed
@@ -11975,7 +13018,30 @@ Promise.manage = function (callbackFn) {
 
 }(String.prototype));
 
-},{}],37:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
+"use strict";
+
+var merge = function (source, target) {
+        var keys = Object.keys(source),
+            l = keys.length,
+            i = -1,
+            key;
+        while (++i < l) {
+            key = keys[i];
+            target[key] = source[key];
+        }
+    },
+    hashMap = function(members) {
+        // important to set the prototype to `null` --> this will exclude any Object.prototype members
+        var obj = Object.create(null);
+        merge(members, obj);
+        return obj;
+    };
+
+module.exports = {
+    createMap: hashMap
+};
+},{}],42:[function(require,module,exports){
 "use strict";
 
 /*
@@ -11983,6 +13049,9 @@ Promise.manage = function (callbackFn) {
  *
  * `transform`, `-webkit-transform`, `-moz-transform`, `-ms-transform`, `-o-transform` or `undefined` when not supported
  */
+
+// CAUTIOUS: need a copy of hashmap --> we cannot use js-ext/extra/hashap.js for that would lead to circular references!
+var createHashMap = require('../bin/local-hashmap.js').createMap;
 
 module.exports = function (window) {
 
@@ -11992,7 +13061,7 @@ module.exports = function (window) {
             configurable: false,
             enumerable: false,
             writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
+            value: createHashMap() // `writable` is false means we cannot chance the value-reference, but we can change {} its members
         });
     }
 
@@ -12025,8 +13094,11 @@ module.exports = function (window) {
 
     return transition;
 };
-},{}],38:[function(require,module,exports){
+},{"../bin/local-hashmap.js":41}],43:[function(require,module,exports){
 "use strict";
+
+// CAUTIOUS: need a copy of hashmap --> we cannot use js-ext/extra/hashap.js for that would lead to circular references!
+var createHashMap = require('../bin/local-hashmap.js').createMap;
 
 module.exports = function (window) {
 
@@ -12036,7 +13108,7 @@ module.exports = function (window) {
             configurable: false,
             enumerable: false,
             writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
+            value: createHashMap() // `writable` is false means we cannot chance the value-reference, but we can change {} its members
         });
     }
 
@@ -12067,7 +13139,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{}],39:[function(require,module,exports){
+},{"../bin/local-hashmap.js":41}],44:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -12082,7 +13154,9 @@ var toCamelCase = function(input) {
             return group.toUpperCase();
         });
     },
-    UNDEFINED = 'undefined';
+    UNDEFINED = 'undefined',
+    // CAUTIOUS: need a copy of hashmap --> we cannot use js-ext/extra/hashap.js for that would lead to circular references!
+    createHashMap = require('../bin/local-hashmap.js').createMap;
 
 module.exports = function (window) {
 
@@ -12092,7 +13166,7 @@ module.exports = function (window) {
             configurable: false,
             enumerable: false,
             writable: false,
-            value: {} // `writable` is false means we cannot chance the value-reference, but we can change {} its members
+            value: createHashMap() // `writable` is false means we cannot chance the value-reference, but we can change {} its members
         });
     }
 
@@ -12136,7 +13210,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],40:[function(require,module,exports){
+},{"../bin/local-hashmap.js":41}],45:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -12160,7 +13234,595 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],41:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
+(function (global){
+/*
+ * Copyright 2012 The Polymer Authors. All rights reserved.
+ * Use of this source code is goverened by a BSD-style
+ * license that can be found in the LICENSE file.
+ */
+
+(function(global) {
+  "use strict";
+
+  var registrationsTable = new global.WeakMap(),
+      uidCounter = 0,
+      currentRecord, recordWithOldValue,
+      setImmediate, setImmediateQueue, sentinel, queue, isScheduled, scheduledObservers;
+
+  // As much as we would like to use the native implementation, IE
+  // (all versions) suffers a rather annoying bug where it will drop or defer
+  // callbacks when heavy DOM operations are being performed concurrently.
+  //
+  // For a thorough discussion on this, see:
+  // http://codeforhire.com/2013/09/21/setimmediate-and-messagechannel-broken-on-internet-explorer-10/
+  if (/Trident/.test(global.navigator.userAgent)) {
+      // Sadly, this bug also affects postMessage and MessageQueues.
+      //
+      // We would like to use the onreadystatechange hack for IE <= 10, but it is
+      // dangerous in the polyfilled environment due to requiring that the
+      // observed script element be in the document.
+      setImmediate = setTimeout;
+
+  // If some other browser ever implements it, let's prefer their native
+  // implementation:
+  } else if (global.setImmediate) {
+      setImmediate = global.setImmediate;
+  } else {
+      // Otherwise, we fall back to postMessage as a means of emulating the next
+      // task semantics of setImmediate.
+      setImmediateQueue = [];
+      sentinel = String(Math.random());
+      global.addEventListener('message', function(e) {
+          if (e.data === sentinel) {
+              queue = setImmediateQueue;
+              setImmediateQueue = [];
+              queue.forEach(function(func) {
+                 func();
+              });
+          }
+      });
+      setImmediate = function(func) {
+          setImmediateQueue.push(func);
+          global.postMessage(sentinel, '*');
+      };
+  }
+
+  // This is used to ensure that we never schedule 2 callas to setImmediate
+  isScheduled = false;
+
+  // Keep track of observers that needs to be notified next time.
+  scheduledObservers = [];
+
+  /**
+   * Schedules |dispatchCallback| to be called in the future.
+   * @param {MutationObserver} observer
+   */
+  function scheduleCallback(observer) {
+      scheduledObservers.push(observer);
+      if (!isScheduled) {
+          isScheduled = true;
+          setImmediate(dispatchCallbacks);
+      }
+  }
+
+  function wrapIfNeeded(node) {
+      return (global.ShadowDOMPolyfill && global.ShadowDOMPolyfill.wrapIfNeeded(node)) || node;
+  }
+
+  function dispatchCallbacks() {
+      // http://dom.spec.whatwg.org/#mutation-observers
+
+      var observers = scheduledObservers,
+          anyNonEmpty = false;
+
+      isScheduled = false; // Used to allow a new setImmediate call above.
+
+      scheduledObservers = [];
+      // Sort observers based on their creation UID (incremental).
+      observers.sort(function(o1, o2) {
+          return o1.uid_ - o2.uid_;
+      });
+
+      observers.forEach(function(observer) {
+          // 2.1, 2.2
+          var queue = observer.takeRecords();
+          // 2.3. Remove all transient registered observers whose observer is mo.
+          removeTransientObserversFor(observer);
+
+          // 2.4
+          if (queue.length) {
+              observer.callback_(queue, observer);
+              anyNonEmpty = true;
+          }
+      });
+
+      // 3.
+      if (anyNonEmpty) {
+          dispatchCallbacks();
+      }
+  }
+
+  function removeTransientObserversFor(observer) {
+      observer.nodes_.forEach(function(node) {
+          var registrations = registrationsTable.get(node);
+          if (!registrations) {
+              return;
+          }
+          registrations.forEach(function(registration) {
+              if (registration.observer === observer) {
+                  registration.removeTransientObservers();
+              }
+          });
+      });
+  }
+
+  /**
+   * This function is used for the "For each registered observer observer (with
+   * observer's options as options) in target's list of registered observers,
+   * run these substeps:" and the "For each ancestor ancestor of target, and for
+   * each registered observer observer (with options options) in ancestor's list
+   * of registered observers, run these substeps:" part of the algorithms. The
+   * |options.subtree| is checked to ensure that the callback is called
+   * correctly.
+   *
+   * @param {Node} target
+   * @param {function(MutationObserverInit):MutationRecord} callback
+   */
+  function forEachAncestorAndObserverEnqueueRecord(target, callback) {
+      var node, registration, registrations, j, options, record;
+      for (node = target; node; node = node.parentNode) {
+          registrations = registrationsTable.get(node);
+
+          if (registrations) {
+              for (j = 0; j < registrations.length; j++) {
+                  registration = registrations[j];
+                  options = registration.options;
+
+                  // Only target ignores subtree.
+                  if ((node !== target) && !options.subtree) {
+                      continue;
+                  }
+
+                  record = callback(options);
+                  if (record) {
+                      registration.enqueue(record);
+                  }
+              }
+          }
+        }
+  }
+
+  /**
+   * The class that maps to the DOM MutationObserver interface.
+   * @param {Function} callback.
+   * @constructor
+   */
+  function JsMutationObserver(callback) {
+      var instance = this;
+      instance.callback_ = callback;
+      instance.nodes_ = [];
+      instance.records_ = [];
+      instance.uid_ = ++uidCounter;
+  }
+
+  JsMutationObserver.prototype = {
+      observe: function(target, options) {
+          var registrations, registration, i;
+          target = wrapIfNeeded(target);
+
+          if (
+              // 1.1
+              (!options.childList && !options.attributes && !options.characterData) ||
+
+              // 1.2
+              (options.attributeOldValue && !options.attributes) ||
+
+              // 1.3
+              (options.attributeFilter && options.attributeFilter.length && !options.attributes) ||
+
+              // 1.4
+              (options.characterDataOldValue && !options.characterData)) {
+
+              throw new SyntaxError();
+          }
+
+          registrations = registrationsTable.get(target);
+          if (!registrations) {
+              registrationsTable.set(target, registrations = []);
+          }
+
+          // 2
+          // If target's list of registered observers already includes a registered
+          // observer associated with the context object, replace that registered
+          // observer's options with options.
+          for (i = 0; i < registrations.length; i++) {
+              if (registrations[i].observer === this) {
+                  registration = registrations[i];
+                  registration.removeListeners();
+                  registration.options = options;
+                  break;
+              }
+          }
+
+          // 3.
+          // Otherwise, add a new registered observer to target's list of registered
+          // observers with the context object as the observer and options as the
+          // options, and add target to context object's list of nodes on which it
+          // is registered.
+          if (!registration) {
+              registration = new Registration(this, target, options);
+              registrations.push(registration);
+              this.nodes_.push(target);
+          }
+
+          registration.addListeners();
+      },
+
+      disconnect: function() {
+          var instance = this,
+              len = instance.nodes_.length,
+              i, k, node, registrations, registration;
+          for (k=0; k<len; k++) {
+              node = instance.nodes_[k];
+              registrations = registrationsTable.get(node);
+              for (i = 0; i < registrations.length; i++) {
+                  registration = registrations[i];
+                  if (registration.observer === instance) {
+                      registration.removeListeners();
+                      registrations.splice(i, 1);
+                      // Each node can only have one registered observer associated with
+                      // this observer.
+                      break;
+                  }
+              }
+          }
+          instance.records_ = [];
+      },
+
+      takeRecords: function() {
+          var copyOfRecords = this.records_;
+          this.records_ = [];
+          return copyOfRecords;
+      }
+  };
+
+  /**
+   * @param {string} type
+   * @param {Node} target
+   * @constructor
+   */
+  function MutationRecord(type, target) {
+      var instance = this;
+      instance.type = type;
+      instance.target = target;
+      instance.addedNodes = [];
+      instance.removedNodes = [];
+      instance.previousSibling = null;
+      instance.nextSibling = null;
+      instance.attributeName = null;
+      instance.attributeNamespace = null;
+      instance.oldValue = null;
+  }
+
+  function copyMutationRecord(original) {
+      var record = new MutationRecord(original.type, original.target);
+      record.addedNodes = original.addedNodes.slice();
+      record.removedNodes = original.removedNodes.slice();
+      record.previousSibling = original.previousSibling;
+      record.nextSibling = original.nextSibling;
+      record.attributeName = original.attributeName;
+      record.attributeNamespace = original.attributeNamespace;
+      record.oldValue = original.oldValue;
+      return record;
+  }
+
+  // We keep track of the two (possibly one) records used in a single mutation.
+
+  /**
+   * Creates a record without |oldValue| and caches it as |currentRecord| for
+   * later use.
+   * @param {string} oldValue
+   * @return {MutationRecord}
+   */
+  function getRecord(type, target) {
+      currentRecord = new MutationRecord(type, target);
+      return currentRecord;
+  }
+
+  /**
+   * Gets or creates a record with |oldValue| based in the |currentRecord|
+   * @param {string} oldValue
+   * @return {MutationRecord}
+   */
+  function getRecordWithOldValue(oldValue) {
+      if (recordWithOldValue) {
+          return recordWithOldValue;
+      }
+      recordWithOldValue = copyMutationRecord(currentRecord);
+      recordWithOldValue.oldValue = oldValue;
+      return recordWithOldValue;
+  }
+
+  function clearRecords() {
+      currentRecord = recordWithOldValue = undefined;
+  }
+
+  /**
+   * @param {MutationRecord} record
+   * @return {boolean} Whether the record represents a record from the current
+   * mutation event.
+   */
+  function recordRepresentsCurrentMutation(record) {
+      return (record === recordWithOldValue) || (record === currentRecord);
+  }
+
+  /**
+   * Selects which record, if any, to replace the last record in the queue.
+   * This returns |null| if no record should be replaced.
+   *
+   * @param {MutationRecord} lastRecord
+   * @param {MutationRecord} newRecord
+   * @param {MutationRecord}
+   */
+  function selectRecord(lastRecord, newRecord) {
+      if (lastRecord === newRecord) {
+          return lastRecord;
+      }
+
+      // Check if the the record we are adding represents the same record. If
+      // so, we keep the one with the oldValue in it.
+      if (recordWithOldValue && recordRepresentsCurrentMutation(lastRecord)) {
+          return recordWithOldValue;
+      }
+
+      return null;
+  }
+
+  /**
+   * Class used to represent a registered observer.
+   * @param {MutationObserver} observer
+   * @param {Node} target
+   * @param {MutationObserverInit} options
+   * @constructor
+   */
+  function Registration(observer, target, options) {
+      var instance = this;
+      instance.observer = observer;
+      instance.target = target;
+      instance.options = options;
+      instance.transientObservedNodes = [];
+  }
+
+  Registration.prototype = {
+      enqueue: function(record) {
+          var records = this.observer.records_,
+              length = records.length,
+              lastRecord, recordToReplaceLast;
+
+          // There are cases where we replace the last record with the new record.
+          // For example if the record represents the same mutation we need to use
+          // the one with the oldValue. If we get same record (this can happen as we
+          // walk up the tree) we ignore the new record.
+          if (records.length > 0) {
+              lastRecord = records[length - 1];
+              recordToReplaceLast = selectRecord(lastRecord, record);
+              if (recordToReplaceLast) {
+                  records[length - 1] = recordToReplaceLast;
+                  return;
+              }
+          } else {
+              scheduleCallback(this.observer);
+          }
+
+          records[length] = record;
+      },
+
+      changeListeners_: function(node, remove) {
+          var instance = this,
+              options = instance.options;
+          if (options.attributes) {
+              remove ? node.removeEventListener('DOMAttrModified', instance, true) : node.addEventListener('DOMAttrModified', instance, true);
+          }
+
+          if (options.characterData) {
+              remove ? node.removeEventListener('DOMCharacterDataModified', instance, true) : node.addEventListener('DOMCharacterDataModified', instance, true);
+          }
+
+          if (options.childList) {
+              remove ? node.removeEventListener('DOMNodeInserted', instance, true) : node.addEventListener('DOMNodeInserted', instance, true);
+          }
+
+          if (options.childList || options.subtree) {
+              remove ? node.removeEventListener('DOMNodeRemoved', instance, true) : node.addEventListener('DOMNodeRemoved', instance, true);
+          }
+      },
+
+      addListeners: function() {
+          this.changeListeners_(this.target);
+      },
+
+      removeListeners: function() {
+          this.changeListeners_(this.target, true);
+      },
+
+      /**
+       * Adds a transient observer on node. The transient observer gets removed
+       * next time we deliver the change records.
+       * @param {Node} node
+       */
+      addTransientObserver: function(node) {
+          var instance = this,
+              registrations;
+          // Don't add transient observers on the target itself. We already have all
+          // the required listeners set up on the target.
+          if (node === instance.target) {
+              return;
+          }
+
+          instance.changeListeners_(node);
+          instance.transientObservedNodes.push(node);
+          registrations = registrationsTable.get(node);
+          if (!registrations) {
+              registrationsTable.set(node, registrations = []);
+          }
+
+          // We know that registrations does not contain this because we already
+          // checked if node === this.target.
+          registrations.push(instance);
+      },
+
+      removeTransientObservers: function() {
+          var instance = this,
+              transientObservedNodes = instance.transientObservedNodes,
+              len = transientObservedNodes.length,
+              registrations, i, k, node;
+          instance.transientObservedNodes = [];
+
+          for (k=0; k<len; k++) {
+              node = transientObservedNodes[k];
+              // Transient observers are never added to the target.
+              instance.changeListeners_(node, true);
+
+              registrations = registrationsTable.get(node);
+              for (i = 0; i < registrations.length; i++) {
+                  if (registrations[i] === instance) {
+                      registrations.splice(i, 1);
+                      // Each node can only have one registered observer associated with
+                      // this observer.
+                      break;
+                  }
+              }
+          }
+      },
+
+      handleEvent: function(e) {
+          var name, namespace, target, record, changedNode, addedNodes, removedNodes, previousSibling, nextSibling, oldValue;
+          // Stop propagation since we are managing the propagation manually.
+          // This means that other mutation events on the page will not work
+          // correctly but that is by design.
+          e.stopImmediatePropagation();
+
+          switch (e.type) {
+              case 'DOMAttrModified':
+                  // http://dom.spec.whatwg.org/#concept-mo-queue-attributes
+
+                  name = e.attrName;
+                  namespace = e.relatedNode.namespaceURI;
+                  target = e.target;
+
+                  // 1.
+                  record = getRecord('attributes', target);
+                  record.attributeName = name;
+                  record.attributeNamespace = namespace;
+
+                  // 2.
+                  oldValue = (e.attrChange === global.MutationEvent.ADDITION) ? null : e.prevValue;
+
+                  forEachAncestorAndObserverEnqueueRecord(target, function(options) {
+                      // 3.1, 4.2
+                      if (!options.attributes) {
+                          return;
+                      }
+
+                      // 3.2, 4.3
+                      if (options.attributeFilter && options.attributeFilter.length &&
+                          (options.attributeFilter.indexOf(name) === -1) &&
+                          (options.attributeFilter.indexOf(namespace) === -1)) {
+                          return;
+                      }
+                      // 3.3, 4.4
+                      if (options.attributeOldValue) {
+                          return getRecordWithOldValue(oldValue);
+                      }
+
+                      // 3.4, 4.5
+                      return record;
+                  });
+
+                  break;
+
+              case 'DOMCharacterDataModified':
+                  // http://dom.spec.whatwg.org/#concept-mo-queue-characterdata
+                  target = e.target;
+
+                  // 1.
+                  record = getRecord('characterData', target);
+
+                  // 2.
+                  oldValue = e.prevValue;
+
+                  forEachAncestorAndObserverEnqueueRecord(target, function(options) {
+                      // 3.1, 4.2
+                      if (!options.characterData) {
+                          return;
+                      }
+
+                      // 3.2, 4.3
+                      if (options.characterDataOldValue) {
+                          return getRecordWithOldValue(oldValue);
+                      }
+
+                      // 3.3, 4.4
+                      return record;
+                  });
+
+                  break;
+
+              case 'DOMNodeRemoved':
+                  this.addTransientObserver(e.target);
+                  // Fall through.
+                  /* falls through */
+              case 'DOMNodeInserted':
+                  // http://dom.spec.whatwg.org/#concept-mo-queue-childlist
+                  target = e.relatedNode;
+                  changedNode = e.target;
+                  if (e.type === 'DOMNodeInserted') {
+                      addedNodes = [changedNode];
+                      removedNodes = [];
+                  } else {
+
+                      addedNodes = [];
+                      removedNodes = [changedNode];
+                  }
+                  previousSibling = changedNode.previousSibling;
+                  nextSibling = changedNode.nextSibling;
+
+                  // 1.
+                  record = getRecord('childList', target);
+                  record.addedNodes = addedNodes;
+                  record.removedNodes = removedNodes;
+                  record.previousSibling = previousSibling;
+                  record.nextSibling = nextSibling;
+
+                  forEachAncestorAndObserverEnqueueRecord(target, function(options) {
+                      // 2.1, 3.2
+                      if (!options.childList) {
+                         return;
+                      }
+
+                      // 2.2, 3.3
+                      return record;
+                  });
+
+          }
+
+          clearRecords();
+      }
+  };
+
+  global.JsMutationObserver = JsMutationObserver;
+
+  if (!global.MutationObserver) {
+      global.MutationObserver = JsMutationObserver;
+  }
+
+
+}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],47:[function(require,module,exports){
+require('ypromise');
+},{"ypromise":6}],48:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/Gozala/1269991
 
@@ -12270,7 +13932,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],42:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -12289,10 +13951,15 @@ module.exports = function (window) {
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],43:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":40,"./lib/window.console.js":42}],44:[function(require,module,exports){
+},{"./lib/matchesselector.js":45,"./lib/window.console.js":49}],51:[function(require,module,exports){
+require('./polyfill-base.js');
+require('./lib/promise.js');
+require('./lib/weakmap.js');
+require('./lib/mutationobserver.js'); // needs weakmap
+},{"./lib/mutationobserver.js":46,"./lib/promise.js":47,"./lib/weakmap.js":48,"./polyfill-base.js":50}],52:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12310,14 +13977,15 @@ require('./lib/matchesselector.js');
 require('polyfill');
 require('js-ext/lib/object.js');
 
-var NAME = '[useragent]: ';
+var NAME = '[useragent]: ',
+    createHashMap = require('js-ext/extra/hashmap.js').createMap;
 
 module.exports = function (window) {
 
     var UserAgent,
         navigator = window.navigator;
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
 /*jshint boss:true */
     if (UserAgent=window._ITSAmodules.UserAgent) {
@@ -12331,7 +13999,7 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"js-ext/lib/object.js":34,"polyfill":43}],45:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"polyfill":50}],53:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
@@ -12339,13 +14007,14 @@ module.exports = {
     async: require('./lib/timers.js').async,
     asyncSilent: require('./lib/timers.js').asyncSilent
 };
-},{"./lib/idgenerator.js":46,"./lib/timers.js":47}],46:[function(require,module,exports){
+},{"./lib/idgenerator.js":54,"./lib/timers.js":55}],54:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
 
-var UNDEFINED_NS = '__undefined__';
-var namespaces = {};
+var UNDEFINED_NS = '__undefined__',
+    createHashMap = require('js-ext/extra/hashmap.js').createMap,
+    namespaces = createHashMap();
 
 /**
  * Collection of various utility functions.
@@ -12396,7 +14065,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"polyfill/polyfill-base.js":43}],47:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":30,"polyfill/polyfill-base.js":50}],55:[function(require,module,exports){
 (function (global){
 /**
  * Collection of various utility functions.
@@ -12606,9 +14275,9 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"polyfill/polyfill-base.js":43}],48:[function(require,module,exports){
-var css = "var css = \".itsa-notrans, .itsa-notrans2,\\n.itsa-notrans:before, .itsa-notrans2:before,\\n.itsa-notrans:after, .itsa-notrans2:after {\\n    -webkit-transition: none !important;\\n    -moz-transition: none !important;\\n    -ms-transition: none !important;\\n    -o-transition: all 0s !important; /* opera doesn't support none */\\n    transition: none !important;\\n}\\n\\n.itsa-no-overflow {\\n    overflow: hidden !important;\\n}\\n\\n.itsa-invisible {\\n    position: absolute !important;\\n}\\n\\n.itsa-invisible-relative {\\n    position: relative !important;\\n}\\n\\n/* don't set visibility to hidden --> you cannot set a focus on those items */\\n.itsa-invisible,\\n.itsa-invisible-relative {\\n    opacity: 0 !important;\\n}\\n\\n.itsa-invisible *,\\n.itsa-invisible-relative * {\\n    opacity: 0 !important;\\n}\\n\\n.itsa-transparent {\\n    opacity: 0;\\n}\\n\\n/* don't set visibility to hidden --> you cannot set a focus on those items */\\n.itsa-hidden {\\n    opacity: 0 !important;\\n    position: absolute !important;\\n    left: -9999px !important;\\n    top: -9999px !important;\\n    z-index: -9;\\n}\\n\\n.itsa-hidden * {\\n    opacity: 0 !important;\\n}\\n\\n.itsa-block {\\n    display: block !important;\\n}\\n\\n.itsa-borderbox {\\n    -webkit-box-sizing: border-box;\\n    -moz-box-sizing: border-box;\\n    box-sizing: border-box;\\n}\"; (require(\"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify\"))(css); module.exports = css;"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],49:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":50}],56:[function(require,module,exports){
+var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible-relative {\n    opacity: 0 !important;\n}\n\n.itsa-invisible *,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],57:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12628,19 +14297,21 @@ require('js-ext/lib/string.js');
 require('js-ext/lib/object.js');
 require('polyfill');
 
+var createHashMap = require('js-ext/extra/hashmap.js').createMap;
+
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.AttributeExtractor) {
         return window._ITSAmodules.AttributeExtractor; // AttributeExtractor was already created
     }
 
     var SUPPORT_INLINE_PSEUDO_STYLES = false, // current browsers don't support this. When tey do, set this value `true`
-        END_OF_VALUE = {
+        END_OF_VALUE = createHashMap({
             ';': true,
             '}': true
-        },
+        }),
         VENDOR_CSS = require('polyfill/extra/vendorCSS.js')(window),
         generateVendorCSSProp = VENDOR_CSS.generator,
         VENDOR_CSS_PROPERTIES = VENDOR_CSS.cssProps,
@@ -12904,7 +14575,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/lib/object.js":34,"js-ext/lib/string.js":36,"polyfill":43,"polyfill/extra/transition.js":37,"polyfill/extra/vendorCSS.js":39}],50:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"js-ext/lib/string.js":40,"polyfill":50,"polyfill/extra/transition.js":42,"polyfill/extra/vendorCSS.js":44}],58:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12925,9 +14596,11 @@ module.exports = function (window) {
 require('polyfill');
 require('js-ext/lib/object.js');
 
+var createHashMap = require('js-ext/extra/hashmap.js').createMap;
+
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.ElementArray) {
         return window._ITSAmodules.ElementArray; // ElementArray was already created
@@ -13330,7 +15003,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/lib/object.js":34,"polyfill":43}],51:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"polyfill":50}],59:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13352,7 +15025,8 @@ require('js-ext/lib/object.js');
 require('js-ext/lib/string.js');
 require('polyfill');
 
-var fromCamelCase = function(input) {
+var createHashMap = require('js-ext/extra/hashmap.js').createMap,
+    fromCamelCase = function(input) {
         return input.replace(/[a-z]([A-Z])/g, function(match, group) {
             return match[0]+'-'+group.toLowerCase();
         });
@@ -13360,7 +15034,7 @@ var fromCamelCase = function(input) {
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.ElementPlugin) {
         return window._ITSAmodules.ElementPlugin; // ElementPlugin was already created
@@ -13414,7 +15088,7 @@ module.exports = function (window) {
         setup: function (hostElement, config) {
             var instance = this,
                 attrs = instance.defaults.shallowClone();
-            attrs.merge(config, true);
+            attrs.merge(config, {force: true});
             attrs.each(
                 function(value, key) {
                     key = fromCamelCase(key);
@@ -13462,7 +15136,7 @@ module.exports = function (window) {
 
     return ElementPlugin;
 };
-},{"js-ext/lib/object.js":34,"js-ext/lib/string.js":36,"polyfill":43}],52:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"js-ext/lib/string.js":40,"polyfill":50}],60:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13483,9 +15157,11 @@ require('polyfill');
 require('js-ext/lib/object.js');
 require('js-ext/lib/string.js');
 
+var createHashMap = require('js-ext/extra/hashmap.js').createMap;
+
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.ExtendDocument) {
         return; // ExtendDocument was already created
@@ -14172,7 +15848,7 @@ module.exports = function (window) {
 
 
 
-},{"./vdom-ns.js":56,"js-ext/lib/object.js":34,"js-ext/lib/string.js":36,"polyfill":43}],53:[function(require,module,exports){
+},{"./vdom-ns.js":64,"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"js-ext/lib/string.js":40,"polyfill":50}],61:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -14197,9 +15873,11 @@ require('js-ext/lib/string.js');
 require('js-ext/lib/promise.js');
 require('polyfill');
 
+var createHashMap = require('js-ext/extra/hashmap.js').createMap;
+
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.ExtendElement) {
         return; // ExtendElement was already created
@@ -14267,15 +15945,16 @@ module.exports = function (window) {
         REMOVE = 'remove',
         _STARTSTYLE = '_startStyle',
         setupObserver,
-        SIBLING_MATCH_CHARACTER = {
+        SIBLING_MATCH_CHARACTER = createHashMap({
             '+': true,
             '~': true
-        },
-        NON_CLONABLE_STYLES = {
+        }),
+        NON_CLONABLE_STYLES = createHashMap({
             absolute: true,
             hidden: true,
             block: true
-        },
+        }),
+        // CSS_PROPS_TO_CALCULATE should not be a hashMap, but an object --> we need to iterate with .each
         CSS_PROPS_TO_CALCULATE = { // http://www.w3.org/TR/css3-transitions/#animatable-css
             backgroundColor: true,
             backgroundPositionX: true,
@@ -14323,8 +16002,8 @@ module.exports = function (window) {
             zIndex: true
         },
         // CSS_PROPS_TO_CALCULATE.transform is set later on by the vendor specific transform-property
-        htmlToVFragments = function(html) {
-            var vnodes = htmlToVNodes(html, vNodeProto),
+        htmlToVFragments = function(html, nameSpace) {
+            var vnodes = htmlToVNodes(html, vNodeProto, nameSpace),
                 len = vnodes.length,
                 vnode, i, bkpAttrs, bkpVChildNodes;
             for (i=0; i<len; i++) {
@@ -15114,7 +16793,7 @@ module.exports = function (window) {
                 vRefElement = refElement.vnode.vNext;
                 refElement = vRefElement && vRefElement.domNode;
             }
-            (typeof content===STRING) && (content=htmlToVFragments(content));
+            (typeof content===STRING) && (content=htmlToVFragments(content, vnode.ns));
             if (content.isFragment) {
                 vnodes = content.vnodes;
                 len = vnodes.length;
@@ -16256,7 +17935,7 @@ module.exports = function (window) {
                 vRefElement = vChildNodes && vChildNodes[0];
                 refElement = vRefElement && vRefElement.domNode;
             }
-            (typeof content===STRING) && (content=htmlToVFragments(content));
+            (typeof content===STRING) && (content=htmlToVFragments(content, vnode.ns));
             if (content.isFragment) {
                 vnodes = content.vnodes;
                 len = vnodes.length;
@@ -16476,6 +18155,18 @@ module.exports = function (window) {
         ElementPrototype._removeAttribute = ElementPrototype.removeAttribute;
         ElementPrototype.removeAttribute = function(attributeName) {
             this.vnode._removeAttr(attributeName);
+        };
+
+       /**
+         * Removes the attribute of the Elementinside a specified namespace
+         *
+         * @method removeAttributeNS
+         * @param nameSpace {String} the namespace where to attribuyte should be set in
+         * @param attributeName {String}
+        */
+        ElementPrototype._removeAttributeNS = ElementPrototype.removeAttributeNS;
+        ElementPrototype.removeAttributeNS = function(nameSpace, attributeName) {
+            this.removeAttribute((nameSpace ? nameSpace+':' : '')+attributeName);
         };
 
         /**
@@ -16951,6 +18642,19 @@ module.exports = function (window) {
                 vnode = instance.vnode;
             (value==='') && (value=null);
             ((value!==null) && (value!==undefined)) ? vnode._setAttr(attributeName, value) : vnode._removeAttr(attributeName);
+        };
+
+       /**
+         * Sets the attribute on the Element with the specified value inside a specified namespace
+         *
+         * @method setAttributeNS
+         * @param nameSpace {String} the namespace where to attribuyte should be set in
+         * @param attributeName {String}
+         * @param value {String} the value for the attributeName
+        */
+        ElementPrototype._setAttributeNS = ElementPrototype.setAttributeNS;
+        ElementPrototype.setAttributeNS = function(nameSpace, attributeName, value) {
+            this.setAttribute((nameSpace ? nameSpace+':' : '')+attributeName, value);
         };
 
        /**
@@ -18561,7 +20265,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":48,"./attribute-extractor.js":49,"./element-array.js":50,"./html-parser.js":54,"./node-parser.js":55,"./vdom-ns.js":56,"./vnode.js":57,"js-ext/lib/object.js":34,"js-ext/lib/promise.js":35,"js-ext/lib/string.js":36,"polyfill":43,"polyfill/extra/transition.js":37,"polyfill/extra/transitionend.js":38,"polyfill/extra/vendorCSS.js":39,"utils":45,"window-ext":59}],54:[function(require,module,exports){
+},{"../css/element.css":56,"./attribute-extractor.js":57,"./element-array.js":58,"./html-parser.js":62,"./node-parser.js":63,"./vdom-ns.js":64,"./vnode.js":65,"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"js-ext/lib/promise.js":39,"js-ext/lib/string.js":40,"polyfill":50,"polyfill/extra/transition.js":42,"polyfill/extra/transitionend.js":43,"polyfill/extra/vendorCSS.js":44,"utils":53,"window-ext":67}],62:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18580,9 +20284,11 @@ for (j=0; j<len2; j++) {
 require('polyfill');
 require('js-ext/lib/object.js');
 
+var createHashMap = require('js-ext/extra/hashmap.js').createMap;
+
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.HtmlParser) {
         return window._ITSAmodules.HtmlParser; // HtmlParser was already created
@@ -18591,10 +20297,11 @@ module.exports = function (window) {
     var NS = require('./vdom-ns.js')(window),
         extractor = require('./attribute-extractor.js')(window),
         DOCUMENT = window.document,
+        xmlNS = NS.xmlNS,
         voidElements = NS.voidElements,
         nonVoidElements = NS.nonVoidElements,
 
-        TAG_OR_ATTR_START_CHARACTERS = {
+        TAG_OR_ATTR_START_CHARACTERS = createHashMap({
             a: true,
             b: true,
             c: true,
@@ -18647,16 +20354,16 @@ module.exports = function (window) {
             X: true,
             Y: true,
             Z: true
-        },
-        STARTTAG_OR_ATTR_VALUE_ENDS_CHARACTERS = {
+        }),
+        STARTTAG_OR_ATTR_VALUE_ENDS_CHARACTERS = createHashMap({
             ' ': true,
             '>': true
-        },
-        ATTRUBUTE_NAME_ENDS_CHARACTER = {
+        }),
+        ATTRUBUTE_NAME_ENDS_CHARACTER = createHashMap({
             ' ': true,
             '=': true,
             '>': true
-        },
+        }),
 
         /**
          * Transforms html-text into a vnodes-Array.
@@ -18666,11 +20373,11 @@ module.exports = function (window) {
          * @return {Array} array with `vnodes`
          * @since 0.0.1
          */
-        htmlToVNodes = window._ITSAmodules.HtmlParser = function(htmlString, vNodeProto) {
+        htmlToVNodes = window._ITSAmodules.HtmlParser = function(htmlString, vNodeProto, nameSpace) {
             var i = 0,
                 len = htmlString.length,
                 vnodes = [],
-                parentVNode = arguments[2], // private pass through-argument, only available when internal looped
+                parentVNode = arguments[3], // private pass through-argument, only available when internal looped
                 insideTagDefinition, insideComment, innerText, endTagCount, stringMarker, attributeisString, attribute, attributeValue,
                 j, character, character2, vnode, tag, isBeginTag, isEndTag, scriptVNode, extractClass, extractStyle;
             while (i<len) {
@@ -18766,6 +20473,7 @@ module.exports = function (window) {
                         if (NS.SCRIPT_OR_STYLE_TAG[vnode.tag]) {
                             // CREATE INNER TEXTNODE
                             scriptVNode = Object.create(vNodeProto);
+                            scriptVNode.ns = nameSpace;
                             scriptVNode.nodeType = 3;
                             scriptVNode.domNode = DOCUMENT.createTextNode(innerText);
                             // create circular reference:
@@ -18775,7 +20483,7 @@ module.exports = function (window) {
                             vnode.vChildNodes = [scriptVNode];
                         }
                         else {
-                            vnode.vChildNodes = (innerText!=='') ? htmlToVNodes(innerText, vNodeProto, vnode) : [];
+                            vnode.vChildNodes = (innerText!=='') ? htmlToVNodes(innerText, vNodeProto, vnode.ns, vnode) : [];
                         }
                     }
                     else {
@@ -18818,6 +20526,7 @@ module.exports = function (window) {
                             vnodes[vnodes.length] = vnode;
                         }
                         vnode = Object.create(vNodeProto);
+                        vnode.ns = nameSpace;
                         vnode.nodeType = 1;
                         vnode.vParent = parentVNode;
                         vnode.tag = '';
@@ -18829,7 +20538,9 @@ module.exports = function (window) {
                         }
 
                         tag = vnode.tag;
-                        vnode.domNode = DOCUMENT.createElement(tag);
+                        vnode.ns = xmlNS[tag] || nameSpace;
+                        vnode.domNode = vnode.ns ? DOCUMENT.createElementNS(vnode.ns, tag.toLowerCase()) : DOCUMENT.createElement(tag);
+
                         // create circular reference:
                         vnode.domNode._vnode = vnode;
                         // check if it is a void-tag, but only need to do the regexp once per tag-element:
@@ -18854,6 +20565,7 @@ module.exports = function (window) {
                             vnodes[vnodes.length] = vnode;
                         }
                         vnode = Object.create(vNodeProto);
+                        vnode.ns = nameSpace;
                         vnode.nodeType = 8;
                         vnode.text = '';
                         vnode.vParent = parentVNode;
@@ -18865,6 +20577,7 @@ module.exports = function (window) {
                         if (!vnode) {
                             // no current vnode --> create a TextNode:
                             vnode = Object.create(vNodeProto);
+                            vnode.ns = nameSpace;
                             vnode.nodeType = 3;
                             vnode.text = '';
                             vnode.vParent = parentVNode;
@@ -18887,7 +20600,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":49,"./vdom-ns.js":56,"js-ext/lib/object.js":34,"polyfill":43}],55:[function(require,module,exports){
+},{"./attribute-extractor.js":57,"./vdom-ns.js":64,"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"polyfill":50}],63:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18905,9 +20618,11 @@ module.exports = function (window) {
 require('polyfill');
 require('js-ext/lib/object.js');
 
+var createHashMap = require('js-ext/extra/hashmap.js').createMap;
+
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.NodeParser) {
         return window._ITSAmodules.NodeParser; // NodeParser was already created
@@ -18915,6 +20630,7 @@ module.exports = function (window) {
 
     var NS = require('./vdom-ns.js')(window),
         extractor = require('./attribute-extractor.js')(window),
+        xmlNS = NS.xmlNS,
         voidElements = NS.voidElements,
         nonVoidElements = NS.nonVoidElements,
         vNodeProto = require('./vnode.js')(window),
@@ -18941,12 +20657,14 @@ module.exports = function (window) {
             // create circular reference:
             vnode.domNode._vnode = vnode;
 
+            parentVNode && (vnode.ns=parentVNode.ns);
             vnode.nodeType = nodeType;
             vnode.vParent = parentVNode;
 
             if (nodeType===1) {
                 // ElementNode
                 tag = vnode.tag = domNode.nodeName; // is always uppercase
+                vnode.ns = xmlNS[tag] || vnode.ns;
 
                 vnode.attrs = {};
 
@@ -19006,7 +20724,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":49,"./vdom-ns.js":56,"./vnode.js":57,"js-ext/lib/object.js":34,"polyfill":43}],56:[function(require,module,exports){
+},{"./attribute-extractor.js":57,"./vdom-ns.js":64,"./vnode.js":65,"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"polyfill":50}],64:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -19027,16 +20745,18 @@ module.exports = function (window) {
 require('js-ext/lib/object.js');
 require('polyfill');
 
+var createHashMap = require('js-ext/extra/hashmap.js').createMap;
+
 module.exports = function (window) {
     var NS;
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.VDOM_NS) {
         return window._ITSAmodules.VDOM_NS; // VDOM_NS was already created
     }
 
-    NS = window._ITSAmodules.VDOM_NS = {};
+    NS = window._ITSAmodules.VDOM_NS = createHashMap();
 
     /**
      * Reference to the VElement of document.body (gets its value as soon as it gets refered to)
@@ -19046,8 +20766,15 @@ module.exports = function (window) {
      * @type VElement
      * @since 0.0.1
      */
-     NS.body = null;
+    NS.body = null;
 
+    NS.xmlNS = createHashMap({
+        SVG: 'http://www.w3.org/2000/svg',
+        XBL: 'http://www.mozilla.org/xbl',
+        XUL: 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul',
+        MATH: 'http://www.w3.org/1998/Math/MathML',
+        XLINK: 'http://www.w3.org/1999/xlink'
+    });
 
     /**
      * A hash with all node'ids (of all the domnodes that have an id). The value is a reference to an VElement.
@@ -19057,7 +20784,7 @@ module.exports = function (window) {
      * @type Object
      * @since 0.0.1
      */
-    NS.nodeids || (NS.nodeids={});
+    NS.nodeids || (NS.nodeids=createHashMap());
 
     /**
      * A hash with all encountered non-void Elements
@@ -19067,7 +20794,7 @@ module.exports = function (window) {
      * @type Object
      * @since 0.0.1
      */
-    NS.nonVoidElements || (NS.nonVoidElements={});
+    NS.nonVoidElements || (NS.nonVoidElements=createHashMap());
 
     /**
      * A hash to identify what tagNames are equal to `SCRIPT` or `STYLE`.
@@ -19077,10 +20804,10 @@ module.exports = function (window) {
      * @type Object
      * @since 0.0.1
      */
-    NS.SCRIPT_OR_STYLE_TAG = {
+    NS.SCRIPT_OR_STYLE_TAG = createHashMap({
         SCRIPT: true,
         STYLE: true
-    };
+    });
 
     /**
      * A hash with all nodeTypes that should be captured by the vDOM.
@@ -19090,11 +20817,11 @@ module.exports = function (window) {
      * @type Object
      * @since 0.0.1
      */
-    NS.VALID_NODE_TYPES = {
+    NS.VALID_NODE_TYPES = createHashMap({
         1: true,
         3: true,
         8: true
-    };
+    });
 
     /**
      * A hash with all encountered void Elements
@@ -19104,11 +20831,11 @@ module.exports = function (window) {
      * @type Object
      * @since 0.0.1
      */
-    NS.voidElements || (NS.voidElements={});
+    NS.voidElements || (NS.voidElements=createHashMap());
 
     return NS;
 };
-},{"js-ext/lib/object.js":34,"polyfill":43}],57:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"polyfill":50}],65:[function(require,module,exports){
 "use strict";
 
 /**
@@ -19133,12 +20860,13 @@ module.exports = function (window) {
 require('js-ext/lib/array.js');
 require('js-ext/lib/object.js');
 require('js-ext/lib/string.js');
-require('js-ext/extra/lightmap.js');
 require('polyfill');
+
+var createHashMap = require('js-ext/extra/hashmap.js').createMap;
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.VNode) {
         return window._ITSAmodules.VNode; // VNODE was already created
@@ -19147,8 +20875,10 @@ module.exports = function (window) {
     var NS = require('./vdom-ns.js')(window),
         extractor = require('./attribute-extractor.js')(window),
         DOCUMENT = window.document,
-        MUTATION_EVENTS = new window.LightMap(),
+        LightMap = require('js-ext/extra/lightmap.js'),
+        MUTATION_EVENTS = new LightMap(),
         BATCH_WILL_RUN = false,
+        xmlNS = NS.xmlNS,
         nodeids = NS.nodeids,
         htmlToVNodes = require('./html-parser.js')(window),
         timers = require('utils/lib/timers.js'),
@@ -19175,28 +20905,28 @@ module.exports = function (window) {
         EV_ATTRIBUTE_REMOVED = ATTRIBUTE+REMOVE,
         EV_ATTRIBUTE_CHANGED = ATTRIBUTE+CHANGE,
         EV_ATTRIBUTE_INSERTED = ATTRIBUTE+INSERT,
-        SPLIT_CHARACTER = {
+        SPLIT_CHARACTER = createHashMap({
             ' ': true,
             '>': true,
             '+': true, // only select the element when it is immediately preceded by the former element
             '~': true  // only the element when it has the former element as a sibling. (just like `+`, but less strict)
-        },
-        STORABLE_SPLIT_CHARACTER = {
+        }),
+        STORABLE_SPLIT_CHARACTER = createHashMap({
             '>': true,
             '+': true,
             '~': true
-        },
-        SIBLING_MATCH_CHARACTER = {
+        }),
+        SIBLING_MATCH_CHARACTER = createHashMap({
             '+': true,
             '~': true
-        },
-        ATTR_DETAIL_SPECIFIERS = {
+        }),
+        ATTR_DETAIL_SPECIFIERS = createHashMap({
             '^': true, // “begins with” selector
             '$': true, // “ends with” selector
             '*': true, // “contains” selector (might be a substring)
             '~': true, // “contains” selector as a separate word, separated by spaces
             '|': true // “contains” selector as a separate word, separated by `|`
-        },
+        }),
         /**
          * Object to gain quick access to attribute-name end-tokens.
          *
@@ -19209,7 +20939,7 @@ module.exports = function (window) {
          * @protected
          * @since 0.0.1
          */
-        END_ATTRIBUTENAME = {
+        END_ATTRIBUTENAME = createHashMap({
             '=': true,
             ']': true,
             '^': true, // “begins with” selector
@@ -19217,7 +20947,7 @@ module.exports = function (window) {
             '*': true, // “contains” selector (might be a substring)
             '~': true, // “contains” selector as a separate word, separated by spaces
             '|': true // “contains” selector as a separate word, separated by `|`
-        },
+        }),
         /**
          * Object to gain quick access to different changes of Element nodeType changes.
          *
@@ -19243,23 +20973,23 @@ module.exports = function (window) {
          * @protected
          * @since 0.0.1
          */
-        NODESWITCH = {
-            1: {
+        NODESWITCH = createHashMap({
+            1: createHashMap({
                 1: 1, // oldNodeType==Element, newNodeType==Element
                 3: 2, // oldNodeType==Element, newNodeType==TextNode
                 8: 3  // oldNodeType==Element, newNodeType==Comment
-            },
-            3: {
+            }),
+            3: createHashMap({
                 1: 4, // oldNodeType==TextNode, newNodeType==Element
                 3: 5, // oldNodeType==TextNode, newNodeType==TextNode
                 8: 6  // oldNodeType==TextNode, newNodeType==Comment
-            },
-            8: {
+            }),
+            8: createHashMap({
                 1: 7, // oldNodeType==Comment, newNodeType==Element
                 3: 8, // oldNodeType==Comment, newNodeType==TextNode
                 8: 9  // oldNodeType==Comment, newNodeType==Comment
-            }
-        },
+            })
+        }),
         /**
          * Object to gain quick access to selector start-tokens.
          *
@@ -19273,12 +21003,12 @@ module.exports = function (window) {
          * @protected
          * @since 0.0.1
          */
-        SELECTOR_IDENTIFIERS = {
+        SELECTOR_IDENTIFIERS = createHashMap({
             '#': 1,
             '.': 2,
             '[': 3,
             ':': 4
-        },
+        }),
         PSEUDO_FIRST_CHILD = ':first-child',
         PSEUDO_FIRST_OF_TYPE = ':first-of-type',
         PSEUDO_LAST_CHILD = ':last-child',
@@ -19309,7 +21039,7 @@ module.exports = function (window) {
          * @protected
          * @since 0.0.1
          */
-        PSEUDO_REQUIRED_CHILDREN = {},
+        PSEUDO_REQUIRED_CHILDREN = createHashMap(),
         _matchesSelectorItem, _matchesOneSelector, _findElementSibling, vNodeProto, _markRemoved,
         _splitSelector, _findNodeSibling, _matchNthChild, _batchEmit, _emitDestroyChildren;
         PSEUDO_REQUIRED_CHILDREN[PSEUDO_FIRST_CHILD] = true;
@@ -20602,7 +22332,8 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         _removeAttr: function(attributeName) {
-            var instance = this;
+            var instance = this,
+                attributeNameSplitted, ns;
             if (instance.attrs[attributeName]!==undefined) {
                 delete instance.attrs[attributeName];
                 // in case of STYLE attribute --> special treatment
@@ -20613,8 +22344,16 @@ module.exports = function (window) {
                     delete nodeids[instance.id];
                     delete instance.id;
                 }
-                instance.domNode._removeAttribute(attributeName);
                 instance._emit(EV_ATTRIBUTE_REMOVED, attributeName);
+                if (attributeName.indexOf(':')!==-1) {
+                    attributeNameSplitted = attributeName.split(':');
+                    ns = attributeNameSplitted[0];
+                    attributeName = attributeNameSplitted[1];
+                    instance.domNode._removeAttributeNS(xmlNS[ns.toUpperCase()] || ns, attributeName);
+                }
+                else {
+                    instance.domNode._removeAttribute(attributeName);
+                }
             }
             return instance;
         },
@@ -20686,7 +22425,8 @@ module.exports = function (window) {
             var instance = this,
                 extractStyle, extractClass,
                 attrs = instance.attrs,
-                prevVal = attrs[attributeName];
+                prevVal = attrs[attributeName],
+                attributeNameSplitted, ns;
             // don't check by !== --> value isn't parsed into a String yet
 
             if (prevVal && ((value===undefined) || (value===null))) {
@@ -20728,9 +22468,20 @@ module.exports = function (window) {
                     instance.id = value;
                     nodeids[value] = instance.domNode;
                 }
-                // when set in the dom --> quotes need to be set as &quot;
-                instance.domNode._setAttribute(attributeName, value.replace(/"/g, '&quot;'));
+
                 instance._emit(prevVal ? EV_ATTRIBUTE_CHANGED : EV_ATTRIBUTE_INSERTED, attributeName, value, prevVal);
+
+                // when set in the dom --> quotes need to be set as &quot;
+                value = value.replace(/"/g, '&quot;');
+                if (attributeName.indexOf(':')!==-1) {
+                    attributeNameSplitted = attributeName.split(':');
+                    ns = attributeNameSplitted[0];
+                    attributeName = attributeNameSplitted[1];
+                    instance.domNode._setAttributeNS(xmlNS[ns.toUpperCase()] || ns, attributeName, value);
+                }
+                else {
+                    instance.domNode._setAttribute(attributeName, value);
+                }
             }
             return instance;
         },
@@ -21089,7 +22840,7 @@ module.exports = function (window) {
                 return html;
             },
             set: function(v) {
-                this._setChildNodes(htmlToVNodes(v, vNodeProto));
+                this._setChildNodes(htmlToVNodes(v, vNodeProto, this.ns));
             }
         },
 
@@ -21142,6 +22893,7 @@ module.exports = function (window) {
                     attrs.each(function(value, key) {
                         html += ' '+key+'="'+value+'"';
                     });
+                    instance.isVoid && (html += '/');
                     html += '>';
                     if (!instance.isVoid) {
                         html += instance.innerHTML + '</' + instance.tag.toLowerCase() + '>';
@@ -21162,7 +22914,7 @@ module.exports = function (window) {
                 index = vChildNodes.indexOf(instance);
                 isLastChildNode = (index===(vChildNodes.length-1));
                 isLastChildNode || (refDomNode=vChildNodes[index+1].domNode);
-                vnodes = htmlToVNodes(v, vNodeProto, vParent);
+                vnodes = htmlToVNodes(v, vNodeProto, vParent.ns, vParent);
                 len = vnodes.length;
                 if (len>0) {
                     // the first vnode will replace the current instance:
@@ -21474,14 +23226,16 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":49,"./html-parser.js":54,"./vdom-ns.js":56,"js-ext/extra/lightmap.js":28,"js-ext/lib/array.js":31,"js-ext/lib/object.js":34,"js-ext/lib/string.js":36,"polyfill":43,"utils/lib/timers.js":47}],58:[function(require,module,exports){
+},{"./attribute-extractor.js":57,"./html-parser.js":62,"./vdom-ns.js":64,"js-ext/extra/hashmap.js":30,"js-ext/extra/lightmap.js":31,"js-ext/lib/array.js":35,"js-ext/lib/object.js":38,"js-ext/lib/string.js":40,"polyfill":50,"utils/lib/timers.js":55}],66:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
 
+var createHashMap = require('js-ext/extra/hashmap.js').createMap;
+
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.VDOM) {
         return window._ITSAmodules.VDOM; // VDOM was already created
@@ -21517,20 +23271,21 @@ module.exports = function (window) {
 
     return vdom;
 };
-},{"./partials/element-plugin.js":51,"./partials/extend-document.js":52,"./partials/extend-element.js":53,"./partials/node-parser.js":55,"js-ext/lib/object.js":34}],59:[function(require,module,exports){
+},{"./partials/element-plugin.js":59,"./partials/extend-document.js":60,"./partials/extend-element.js":61,"./partials/node-parser.js":63,"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38}],67:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":60}],60:[function(require,module,exports){
+},{"./lib/sizes.js":68}],68:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
+var createHashMap = require('js-ext/extra/hashmap.js').createMap;
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', {});
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.WindowSizes) {
         return; // WindowSizes was already created
@@ -21626,7 +23381,72 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/lib/object.js":34}],"itsa":[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38}],69:[function(require,module,exports){
+// shim for using process in browser
+
+var process = module.exports = {};
+
+process.nextTick = (function () {
+    var canSetImmediate = typeof window !== 'undefined'
+    && window.setImmediate;
+    var canPost = typeof window !== 'undefined'
+    && window.postMessage && window.addEventListener
+    ;
+
+    if (canSetImmediate) {
+        return function (f) { return window.setImmediate(f) };
+    }
+
+    if (canPost) {
+        var queue = [];
+        window.addEventListener('message', function (ev) {
+            var source = ev.source;
+            if ((source === window || source === null) && ev.data === 'process-tick') {
+                ev.stopPropagation();
+                if (queue.length > 0) {
+                    var fn = queue.shift();
+                    fn();
+                }
+            }
+        }, true);
+
+        return function nextTick(fn) {
+            queue.push(fn);
+            window.postMessage('process-tick', '*');
+        };
+    }
+
+    return function nextTick(fn) {
+        setTimeout(fn, 0);
+    };
+})();
+
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+}
+
+// TODO(shtylman)
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+
+},{}],"itsa":[function(require,module,exports){
 (function (global){
 /**
  * The ITSA module is an aggregator for all the individual modules that the library uses.
@@ -21695,8 +23515,14 @@ module.exports = function (window) {
      * @param config {Object} Configuration options for the ITSA Library
      * @return self {Object}
     */
+
+    require('css');
+    require('polyfill/polyfill.js'); // want the full version
+
+    var jsExt = require('js-ext/js-ext.js'); // want the full version: include it at the top, so that object.merge is available
+
     var ITSA = function (config) {
-        ITSA._config.merge(config, true);
+        ITSA._config.merge(config, {force: true});
         return ITSA;
     };
     /**
@@ -21718,10 +23544,32 @@ module.exports = function (window) {
 
     };
 
+    /**
+     * Reference to `Classes` in [js-ext/extra/classes.js](../modules/js-ext.html)
+     *
+     * @property Classes
+     * @type Object
+     * @static
+    */
 
-    require('css');
-    require('polyfill');
-    require('js-ext');
+    /**
+     * Reference to the `LightMap`-Class in [js-ext/extra/lightmap.js](../modules/js-ext.html)
+     *
+     * @property LightMap
+     * @type Class
+     * @static
+    */
+
+    /**
+     * Reference to the `createHashMap` function in [js-ext/extra/hashmap.js](../modules/js-ext.html)
+     *
+     * @property createHashMap
+     * @type function
+     * @static
+    */
+
+    // Note: we can only merge them after je-ext is required --> ITSA.merge is only then available
+    ITSA.merge(jsExt);
     require('window-ext')(window);
 
     var fakedom = window.navigator.userAgent==='fake',
@@ -21731,7 +23579,6 @@ module.exports = function (window) {
             debug: true,
             base: '/build'
         },
-        EVENT_NAME_TIMERS_EXECUTION = 'timers:asyncfunc',
         dragdrop;
 
     /**
@@ -21785,25 +23632,9 @@ module.exports = function (window) {
     */
     ITSA.Event = Event;
 
-    // Now we setup `_afterAsyncFn` --> the `timers` module uses this:
-    // whenever `async() or `later() is called, it will invoke `_afterAsyncFn` if it is defined
-    // By define it in a way that an event is emitted, we make sure the vDOM will be re-rendered.
-    // this event cannot be prevented, halted or preventRendered --> if the user wants to prevent
-    // vDOM-rendering, the last argument of `async9)` or `later()` should be used.
-    ITSA.Event.defineEvent(EVENT_NAME_TIMERS_EXECUTION)
-              .unHaltable()
-              .unPreventable()
-              .unRenderPreventable()
-              .unSilencable();
-    ITSA._afterAsyncFn = function() {
-        console.log('[ITSA]: ', ' emitting '+EVENT_NAME_TIMERS_EXECUTION+' through ITSA._afterAsyncFn()');
-        // emittng a `dummy`-event which will re-render the dDOM:
-        ITSA.Event.emit(EVENT_NAME_TIMERS_EXECUTION);
-    };
-
     module.exports = ITSA;
 
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"css":9,"drag-drop":11,"event":21,"event-dom/extra/hover.js":15,"event-dom/extra/valuechange.js":16,"event-mobile":17,"focusmanager":22,"io/extra/io-cors-ie9.js":23,"io/extra/io-stream.js":24,"io/extra/io-transfer.js":25,"io/extra/io-xml.js":26,"js-ext":30,"js-ext/extra/reserved-words.js":29,"node-win":undefined,"polyfill":43,"useragent":44,"utils":45,"vdom":58,"window-ext":59}]},{},[]);
+},{"css":10,"drag-drop":12,"event":22,"event-dom/extra/hover.js":16,"event-dom/extra/valuechange.js":17,"event-mobile":18,"focusmanager":23,"io/extra/io-cors-ie9.js":24,"io/extra/io-stream.js":25,"io/extra/io-transfer.js":26,"io/extra/io-xml.js":27,"js-ext/extra/reserved-words.js":32,"js-ext/js-ext.js":34,"node-win":undefined,"polyfill/polyfill.js":51,"useragent":52,"utils":53,"vdom":66,"window-ext":67}]},{},[]);

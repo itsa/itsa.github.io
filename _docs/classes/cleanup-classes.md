@@ -81,7 +81,7 @@ Click on the buttons to make the users speak or be silent.
         container = document.getElement('#cont'),
         MasterContainer, ChildContainer, containerInstance;
 
-    MasterContainer = Object.createClass(
+    MasterContainer = ITSA.Classes.createClass(
         function() {
             container.append('<div id="masternode"></div>');
         },
@@ -95,8 +95,7 @@ Click on the buttons to make the users speak or be silent.
 
     ChildContainer = MasterContainer.subClass(
         function() {
-            // the constructor does not automaticly invoke its superclass!
-            ChildContainer.$super.constructor.call(this);
+            // the constructor does automaticly invoke its superclass!
             container.append('<div id="childnode"></div>');
         },
         {
@@ -125,7 +124,7 @@ Click on the buttons to make the users speak or be silent.
         container = document.getElement('#cont'),
         MasterContainer, ChildContainer, containerInstance;
 
-    MasterContainer = Object.createClass(
+    MasterContainer = ITSA.Classes.createClass(
         function() {
             container.append('<div id="masternode"></div>');
         },
@@ -139,8 +138,7 @@ Click on the buttons to make the users speak or be silent.
 
     ChildContainer = MasterContainer.subClass(
         function() {
-            // the constructor does not automaticly invoke its superclass!
-            ChildContainer.$super.constructor.call(this);
+            // the constructor does automaticly invoke its superclass!
             container.append('<div id="childnode"></div>');
         },
         {

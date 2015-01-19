@@ -361,6 +361,7 @@
 var DRAG = &#x27;drag&#x27;,
     DROP = &#x27;drop&#x27;,
     NAME = &#x27;[&#x27;+DRAG+&#x27;-&#x27;+DROP+&#x27;]: &#x27;,
+    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
     COPY = &#x27;copy&#x27;,
     DROPZONE = DROP+&#x27;zone&#x27;,
     SOURCE = &#x27;source&#x27;,
@@ -425,7 +426,7 @@ require(&#x27;./css/drag-drop.css&#x27;);
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
     if (window._ITSAmodules.DragDrop) {
         return window._ITSAmodules.DragDrop; // DragDrop was already created
@@ -1254,7 +1255,7 @@ module.exports = function (window) {
     };
 
     DD_Object = window._ITSAmodules.DragDrop = {
-        DD: DragModule.DD.merge(DD, true),
+        DD: DragModule.DD.merge(DD, {force: true}),
         Plugins: {
             nodeDD: DragModule.Plugins.nodeDD,
             nodeDropzone: nodePlugin.definePlugin(&#x27;dd&#x27;, {dropzone: &#x27;true&#x27;})

@@ -217,19 +217,21 @@ require(&#x27;js-ext/lib/string.js&#x27;);
 require(&#x27;js-ext/lib/object.js&#x27;);
 require(&#x27;polyfill&#x27;);
 
+var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
+
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
     if (window._ITSAmodules.AttributeExtractor) {
         return window._ITSAmodules.AttributeExtractor; // AttributeExtractor was already created
     }
 
     var SUPPORT_INLINE_PSEUDO_STYLES = false, // current browsers don&#x27;t support this. When tey do, set this value &#x60;true&#x60;
-        END_OF_VALUE = {
+        END_OF_VALUE = createHashMap({
             &#x27;;&#x27;: true,
             &#x27;}&#x27;: true
-        },
+        }),
         VENDOR_CSS = require(&#x27;polyfill/extra/vendorCSS.js&#x27;)(window),
         generateVendorCSSProp = VENDOR_CSS.generator,
         VENDOR_CSS_PROPERTIES = VENDOR_CSS.cssProps,

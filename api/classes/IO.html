@@ -454,7 +454,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_io_io.js.html#l61"><code>src&#x2F;io&#x2F;io.js:61</code></a>
+        <a href="../files/src_io_io.js.html#l62"><code>src&#x2F;io&#x2F;io.js:62</code></a>
         
         </p>
 
@@ -743,7 +743,7 @@ This method is the standard way of doing xhr-requests without processing streams
             
         
         
-        <a href="../files/src_io_extra_io-stream.js.html#l69"><code>src&#x2F;io&#x2F;extra&#x2F;io-stream.js:69</code></a>
+        <a href="../files/src_io_extra_io-stream.js.html#l70"><code>src&#x2F;io&#x2F;extra&#x2F;io-stream.js:70</code></a>
         
         </p>
 
@@ -867,7 +867,7 @@ xhr.onerror()  // only XMLHttpRequest2</p>
             
         
         
-        <a href="../files/src_io_extra_io-stream.js.html#l101"><code>src&#x2F;io&#x2F;extra&#x2F;io-stream.js:101</code></a>
+        <a href="../files/src_io_extra_io-stream.js.html#l102"><code>src&#x2F;io&#x2F;extra&#x2F;io-stream.js:102</code></a>
         
         </p>
 
@@ -1004,7 +1004,7 @@ xhr.onerror()  // only XMLHttpRequest2</p>
             
         
         
-        <a href="../files/src_io_io.js.html#l142"><code>src&#x2F;io&#x2F;io.js:142</code></a>
+        <a href="../files/src_io_io.js.html#l143"><code>src&#x2F;io&#x2F;io.js:143</code></a>
         
         </p>
 
@@ -1141,7 +1141,7 @@ xhr.onerror()  // only XMLHttpRequest2</p>
             
         
         
-        <a href="../files/src_io_io.js.html#l172"><code>src&#x2F;io&#x2F;io.js:172</code></a>
+        <a href="../files/src_io_io.js.html#l173"><code>src&#x2F;io&#x2F;io.js:173</code></a>
         
         </p>
 
@@ -1273,7 +1273,7 @@ xhr.ontimeout()  // only XMLHttpRequest2</p>
             
         
         
-        <a href="../files/src_io_io.js.html#l216"><code>src&#x2F;io&#x2F;io.js:216</code></a>
+        <a href="../files/src_io_io.js.html#l217"><code>src&#x2F;io&#x2F;io.js:217</code></a>
         
         </p>
 
@@ -1394,7 +1394,7 @@ xhr.ontimeout()  // only XMLHttpRequest2</p>
             
         
         
-        <a href="../files/src_io_extra_io-transfer.js.html#l380"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:380</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l410"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:410</code></a>
         
         </p>
 
@@ -1572,6 +1572,21 @@ It will be rejected if a timeout occurs (see <code>options.timeout</code>), or i
                                 
                             </li>
                             
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[parseJSONDate=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Whether the server returns JSON-stringified data which has Date-objects.</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
                         </ul>
                     
                 </li>
@@ -1590,7 +1605,10 @@ It will be rejected if a timeout occurs (see <code>options.timeout</code>), or i
                         <span class="type"><a href="../classes/Promise.html" class="crosslink">Promise</a></span>:
                     
                     <p>on success:
-xhr {XMLHttpRequest|XDomainRequest} xhr-response
+response {Object|String} any response you want the server to return.
+                  If the server send back a JSON-stringified object,
+                  it will be parsed to return as a full object
+                  You could set <code>options.parseJSONDate</code> true, it you want ISO8601-dates to be parsed as trully Date-objects
 on failure an Error object
 reason {Error}</p>
 
@@ -1663,7 +1681,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_extra_io-transfer.js.html#l92"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:92</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l113"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:113</code></a>
         
         </p>
 
@@ -1898,7 +1916,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_extra_io-assets.js.html#l38"><code>src&#x2F;io&#x2F;extra&#x2F;io-assets.js:38</code></a>
+        <a href="../files/src_io_extra_io-assets.js.html#l40"><code>src&#x2F;io&#x2F;extra&#x2F;io-assets.js:40</code></a>
         
         </p>
 
@@ -2081,7 +2099,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_extra_io-assets.js.html#l56"><code>src&#x2F;io&#x2F;extra&#x2F;io-assets.js:56</code></a>
+        <a href="../files/src_io_extra_io-assets.js.html#l58"><code>src&#x2F;io&#x2F;extra&#x2F;io-assets.js:58</code></a>
         
         </p>
 
@@ -2270,7 +2288,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_extra_io-transfer.js.html#l246"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:246</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l274"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:274</code></a>
         
         </p>
 
@@ -2545,7 +2563,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_extra_io-transfer.js.html#l136"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:136</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l157"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:157</code></a>
         
         </p>
 
@@ -2704,6 +2722,38 @@ Note2: CORS is supported, as long as the responseserver is set up to:
                                 
                             </li>
                             
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[parseProto]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>to set the prototype of any object.</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[parseProtoCheck]</code>
+                                    <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>to determine in what case the specified <code>parseProto</code> should be set as the prototype.
+           The function accepts the <code>object</code> as argument and should return a trully value in order to set the prototype.
+           When not specified, <code>parseProto</code> will always be applied (if <code>parseProto</code>is defined)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
                         </ul>
                     
                 </li>
@@ -2789,7 +2839,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_extra_io-jsonp.js.html#l39"><code>src&#x2F;io&#x2F;extra&#x2F;io-jsonp.js:39</code></a>
+        <a href="../files/src_io_extra_io-jsonp.js.html#l41"><code>src&#x2F;io&#x2F;extra&#x2F;io-jsonp.js:41</code></a>
         
         </p>
 
@@ -2976,7 +3026,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_extra_io-xml.js.html#l80"><code>src&#x2F;io&#x2F;extra&#x2F;io-xml.js:80</code></a>
+        <a href="../files/src_io_extra_io-xml.js.html#l81"><code>src&#x2F;io&#x2F;extra&#x2F;io-xml.js:81</code></a>
         
         </p>
 
@@ -3274,7 +3324,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_io.js.html#l237"><code>src&#x2F;io&#x2F;io.js:237</code></a>
+        <a href="../files/src_io_io.js.html#l238"><code>src&#x2F;io&#x2F;io.js:238</code></a>
         
         </p>
 
@@ -3538,7 +3588,7 @@ This method is the standard way of doing xhr-requests without processing streams
             
         
         
-        <a href="../files/src_io_extra_io-transfer.js.html#l294"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:294</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l322"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:322</code></a>
         
         </p>
 
@@ -3702,6 +3752,21 @@ Note3: If the server response JSON-stringified data, the Promise resolves with a
                                 
                             </li>
                             
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[parseJSONDate=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Whether the server returns JSON-stringified data which has Date-objects.</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
                         </ul>
                     
                 </li>
@@ -3721,7 +3786,8 @@ Note3: If the server response JSON-stringified data, the Promise resolves with a
                     
                     <p>on success:
 response {Object|String} any response you want the server to return.
-                  If the server send back a JSON-stringified object, it will be parsed to return as a full object
+                  If the server send back a JSON-stringified object,
+                  it will be parsed to return as a full object
                   You could set <code>options.parseJSONDate</code> true, it you want ISO8601-dates to be parsed as trully Date-objects
 on failure an Error object
 reason {Error}</p>
@@ -3795,7 +3861,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_extra_io-transfer.js.html#l198"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:198</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l226"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:226</code></a>
         
         </p>
 

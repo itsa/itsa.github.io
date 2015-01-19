@@ -3,7 +3,7 @@ module: js-ext
 functionality: Classes
 maintainer: Marco Asbreuk
 title: New classes
-intro: "New Classes always need to be set up through <b>Object.createClass()</b>. You can choose to pass an <b>constructor-function</b> as the first argument --> this function gets invoked for every instance that is created - <b>this</b> references the instance-context. The second argument (or the first when there is no constructor defined) will define the properties at the prototype."
+intro: "New Classes always need to be set up through <b>ITSA.Classes.createClass()</b>. You can choose to pass an <b>constructor-function</b> as the first argument --> this function gets invoked for every instance that is created - <b>this</b> references the instance-context. The second argument (or the first when there is no constructor defined) will define the properties at the prototype."
 ---
 
 <style type="text/css">
@@ -35,15 +35,15 @@ intro: "New Classes always need to be set up through <b>Object.createClass()</b>
         FirstClass, SecondClass, ThirdClass, FourthClass,
         one, two, twoCopy, three, four;
 
-    FirstClass = Object.createClass();
+    FirstClass = ITSA.Classes.createClass();
 
-    SecondClass = Object.createClass(
+    SecondClass = ITSA.Classes.createClass(
         function(x) {
             this.x = x;
         }
     );
 
-    ThirdClass = Object.createClass(
+    ThirdClass = ITSA.Classes.createClass(
         {
             multiply: function(value, multiplier) {
                 return value*multiplier;
@@ -51,7 +51,7 @@ intro: "New Classes always need to be set up through <b>Object.createClass()</b>
         }
     );
 
-    FourthClass = Object.createClass(
+    FourthClass = ITSA.Classes.createClass(
         function(x) {
             this.x = x;
         },
@@ -87,15 +87,15 @@ intro: "New Classes always need to be set up through <b>Object.createClass()</b>
         FirstClass, SecondClass, ThirdClass, FourthClass,
         one, two, twoCopy, three, four;
 
-    FirstClass = Object.createClass();
+    FirstClass = ITSA.Classes.createClass();
 
-    SecondClass = Object.createClass(
+    SecondClass = ITSA.Classes.createClass(
         function(x) {
             this.x = x;
         }
     );
 
-    ThirdClass = Object.createClass(
+    ThirdClass = ITSA.Classes.createClass(
         {
             multiply: function(value, multiplier) {
                 return value*multiplier;
@@ -103,7 +103,7 @@ intro: "New Classes always need to be set up through <b>Object.createClass()</b>
         }
     );
 
-    FourthClass = Object.createClass(
+    FourthClass = ITSA.Classes.createClass(
         function(x) {
             this.x = x;
         },

@@ -74,7 +74,7 @@ Event is meant to be used as a delegated eventsystem: all events bubble up to Ev
 
 ####eventsubscription using Classes####
 ```js
-var Members = Object.createClass(null, Event.Listener),
+var Members = ITSA.Classes.createClass(null, Event.Listener),
     myMembers = new Members();
 myMembers.after('PersonalProfile:save', function(e) {
     alert('personal profile is saved');
@@ -152,7 +152,7 @@ if (eventobject.status.ok) {
 As the examples above show: the `context` within the subscribers equals the object that did the subscription. This becomes very handy when you create Class-instances. The subscribers still get executed within the object-instance's context:
 
 ```js
-var MyMembers = Object.createClass(
+var MyMembers = ITSA.Classes.createClass(
     // Constructor:
     function (config) {
          this.after('click', this.onClick, '#buttonGo');
@@ -467,7 +467,7 @@ The filter-argument can be a String-type of Function. In case of a String, a `cs
 
 ####Listening to specific emitter####
 ```js
-var MyClass = Object.createClass(
+var MyClass = ITSA.Classes.createClass(
     // Constructor:
     function (config) {
          this.after('Person:save', this.onPersonSave, this.onPersonSaveFilter);
@@ -580,7 +580,7 @@ Customevents can be defined by using the `defineEvent()`-method, which is availa
 
 ####define a customEvent through Event####
 ```js
-Profile = Object.createClass(null, ITSA.Event.Emitter('PersonalProfile'));
+Profile = ITSA.Classes.createClass(null, ITSA.Event.Emitter('PersonalProfile'));
 myProfile = new Profile({name: 'Marco'});
 
 myProfile.defineEvent('save') // defines "PersonalProfile:save"

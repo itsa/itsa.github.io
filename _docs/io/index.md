@@ -141,6 +141,8 @@ ITSA.IO.send('/send', data).then(
 ###io.read()###
 Use io.read() to read data into an object. The Promise will return an object-type, by JSON-parse the serverdata automaticly. Use the second argument (object-type) to specify the arguments that will be transfered into a querystring together with the GET-request. This cannot be a deep-object.
 
+By default, `object` will be created with `Object.prototype` as their prototype. However, by specify `options.parseProto` (type = object), you can specify the prototype. To avoid any object to be created with `parseProto` as its prototype, you might also use `parseProtoCheck`, which is a function, recieving the object as argument. A truthy returnvalue would set `parseProto`, an untruthy won't.
+
 **Note:** Make sure the server responses a JSON-object and having the Content-Type set to `application/json`:
 
 ####io.read()####
@@ -157,6 +159,29 @@ ITSA.IO.read('/getData', {id: 25}).then(
 * request Content-Type: **not applicable**
 * response-data: **Requested object JSON stringified**
 * response Content-Type: **application/json**
+
+####io.read() with different prototype####
+```js
+// the next ITSA.IO.read() method will make the request: '/getData?id=25'
+var myproto = {
+    sayHello: function() {return 'hello';}
+};
+ITSA.IO.read(
+    '/getData',
+    {id: 25},
+    {
+        parseProto: myproto,
+        parseProtoCheck: function(obj) {
+            // note: object.hasKey is made available by the module js-ext/lib/object.js
+            return obj.hasKey('person');
+        }
+    }
+).then(
+    function(data) {
+        // `data` is an object
+    }
+);
+```
 
 ###io.delete()###
 Use io.delete() to delete a data-structure on the server. Use the second argument (object-type) to specify the arguments that will be transfered into a querystring together with the GET-request. This cannot be a deep-object.

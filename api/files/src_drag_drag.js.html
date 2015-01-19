@@ -218,6 +218,7 @@
 */
 
 var NAME = &#x27;[drag]: &#x27;,
+    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
     DRAG = &#x27;drag&#x27;,
     DROP = &#x27;drop&#x27;,
     DRAGGABLE = DRAG+&#x27;gable&#x27;,
@@ -269,7 +270,7 @@ require(&#x27;./css/drag.css&#x27;);
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
     if (window._ITSAmodules.Drag) {
         return window._ITSAmodules.Drag; // Drag was already created
@@ -478,20 +479,20 @@ module.exports = function (window) {
                 ddProps = instance.ddProps,
                 emitterName = e.emitter,
                 moveEv, x, y, byExactId, match, constrainNode, winConstrained, winScrollLeft, winScrollTop,
-                inlineLeft, inlineTop, xOrig, yOrig;
+                xOrig, yOrig;
 
             // define ddProps --&gt; internal object with data about the draggable instance
             ddProps.dragNode = dragNode;
             ddProps.x = x = dragNode.left;
             ddProps.y = y = dragNode.top;
-            ddProps.inlineLeft = inlineLeft = dragNode.getInlineStyle(LEFT);
-            ddProps.inlineTop = inlineTop = dragNode.getInlineStyle(TOP);
+            ddProps.inlineLeft = dragNode.getInlineStyle(LEFT);
+            ddProps.inlineTop = dragNode.getInlineStyle(TOP);
             ddProps.winConstrained = winConstrained = (constrain===WINDOW);
             ddProps.xMouseLast = x;
             ddProps.yMouseLast = y;
 
             if (constrain) {
-                if (ddProps.winConstrained) {
+                if (winConstrained) {
                     ddProps.winScrollLeft = winScrollLeft = window.getScrollLeft();
                     ddProps.winScrollTop = winScrollTop = window.getScrollTop();
                     ddProps.constrain = {
@@ -718,7 +719,7 @@ module.exports = function (window) {
                 e.yMouseOrigin = e.clientY + window.getScrollTop();
 
                 //set the emitterName:
-                emitterName = e.target.getAttr(DD_EMITTER) || UI,
+                emitterName = e.target.getAttr(DD_EMITTER) || UI;
                 // now we can start the eventcycle by emitting emitterName:dd:
                 /**
                 * Emitted when a draggable Element&#x27;s drag-cycle starts. You can use a &#x60;before&#x60;-subscriber to specify

@@ -3,7 +3,7 @@ module: js-ext
 functionality: Classes
 maintainer: Marco Asbreuk
 title: Inherit classes
-intro: "This example shows how to inherit Classes. Every master-class should be defined using </b>Object.createClass()</b>. From that point out, Classes can be inherited by using <b>subClass</b> of the parent-Class."
+intro: "This example shows how to inherit Classes. Every master-class should be defined using </b>ITSA.Classes.createClass()</b>. From that point out, Classes can be inherited by using <b>subClass</b> of the parent-Class."
 ---
 
 <style type="text/css">
@@ -48,7 +48,7 @@ Click on the buttons to make the users speak or be silent.
         container = document.getElement('#cont'),
         MasterClass, SubClass, SubSubClass, master, sub, subsub;
 
-    MasterClass = Object.createClass(
+    MasterClass = ITSA.Classes.createClass(
         function(x) {
             this.x = x;
         },
@@ -61,9 +61,7 @@ Click on the buttons to make the users speak or be silent.
 
     SubClass = MasterClass.subClass(
         function(x, y) {
-            // the constructor does not automaticly invoke its superclass!
-            // therefore we invoke: SubSubClass.$super.constructor.call
-            SubClass.$super.constructor.call(this, x);
+            // the constructor automaticly invoke its superclass!
             this.y = y;
         },
         {
@@ -75,9 +73,7 @@ Click on the buttons to make the users speak or be silent.
 
     SubSubClass = SubClass.subClass(
         function(x, y, z) {
-            // the constructor does not automaticly invoke its superclass!
-            // therefore we invoke: SubSubClass.$super.constructor.call
-            SubSubClass.$super.constructor.call(this, x, y);
+            // the constructor automaticly invoke its superclass!
             this.z = z;
         },
         {
@@ -112,7 +108,7 @@ Click on the buttons to make the users speak or be silent.
         container = document.getElement('#cont'),
         MasterClass, SubClass, SubSubClass, master, sub, subsub;
 
-    MasterClass = Object.createClass(
+    MasterClass = ITSA.Classes.createClass(
         function(x) {
             this.x = x;
         },
@@ -125,9 +121,7 @@ Click on the buttons to make the users speak or be silent.
 
     SubClass = MasterClass.subClass(
         function(x, y) {
-            // the constructor does not automaticly invoke its superclass!
-            // therefore we invoke: SubSubClass.$super.constructor.call
-            SubClass.$super.constructor.call(this, x);
+            // the constructor automaticly invoke its superclass!
             this.y = y;
         },
         {
@@ -139,9 +133,7 @@ Click on the buttons to make the users speak or be silent.
 
     SubSubClass = SubClass.subClass(
         function(x, y, z) {
-            // the constructor does not automaticly invoke its superclass!
-            // therefore we invoke: SubSubClass.$super.constructor.call
-            SubSubClass.$super.constructor.call(this, x, y);
+            // the constructor automaticly invoke its superclass!
             this.z = z;
         },
         {

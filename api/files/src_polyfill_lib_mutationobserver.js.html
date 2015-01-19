@@ -207,7 +207,7 @@
 (function(global) {
   &quot;use strict&quot;;
 
-  var registrationsTable = new WeakMap(),
+  var registrationsTable = new global.WeakMap(),
       uidCounter = 0,
       currentRecord, recordWithOldValue,
       setImmediate, setImmediateQueue, sentinel, queue, isScheduled, scheduledObservers;

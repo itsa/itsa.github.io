@@ -213,8 +213,9 @@
 */
 
 require(&#x27;polyfill/polyfill-base.js&#x27;);
-require(&#x27;js-ext/lib/function.js&#x27;);
 require(&#x27;js-ext/lib/object.js&#x27;);
+
+var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
 
 // to prevent multiple Event instances
 // (which might happen: http://nodejs.org/docs/latest/api/modules.html#modules_module_caching_caveats)
@@ -225,7 +226,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
 
     &quot;use strict&quot;;
 
-    global._ITSAmodules || Object.protectedProp(global, &#x27;_ITSAmodules&#x27;, {});
+    global._ITSAmodules || Object.protectedProp(global, &#x27;_ITSAmodules&#x27;, createHashMap());
     global._ITSAmodules.Event || (global._ITSAmodules.Event = factory());
 
     module.exports = global._ITSAmodules.Event;
@@ -256,14 +257,6 @@ require(&#x27;js-ext/lib/object.js&#x27;);
          * &#x27;:save&#x27;
          */
         REGEXP_EVENTNAME_WITH_SEMICOLON = /:((?:\w|-)+)$/,
-        DEFINE_IMMUTAL_PROPERTY = function (obj, property, value) {
-            Object.defineProperty(obj, property, {
-                configurable: false,
-                enumerable: false,
-                writable: false,
-                value: value // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {} or [] its members
-            });
-        },
         Event;
 
     Event = {
@@ -1326,7 +1319,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
          */
         _setEventObjProperty: function (property, value) {
             console.log(NAME, &#x27;_setEventObjProperty&#x27;);
-            DEFINE_IMMUTAL_PROPERTY(this._defaultEventObj, property, value);
+            Object.protectedProp(this._defaultEventObj, property, value);
             return this;
         }
 
@@ -1413,7 +1406,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
      * @private
      * @since 0.0.1
     */
-    DEFINE_IMMUTAL_PROPERTY(Event, &#x27;_subs&#x27;, {});
+    Object.protectedProp(Event, &#x27;_subs&#x27;, {});
 
     /**
      * Internal list of finalize-subscribers which are invoked at the finalization-cycle, which happens after the after-subscribers.
@@ -1425,7 +1418,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
      * @private
      * @since 0.0.1
     */
-    DEFINE_IMMUTAL_PROPERTY(Event, &#x27;_final&#x27;, []);
+    Object.protectedProp(Event, &#x27;_final&#x27;, []);
 
     /**
      * Object that acts as the prototype of the eventobject.
@@ -1441,7 +1434,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
      * @private
      * @since 0.0.1
     */
-    DEFINE_IMMUTAL_PROPERTY(Event, &#x27;_defaultEventObj&#x27;, {});
+    Object.protectedProp(Event, &#x27;_defaultEventObj&#x27;, {});
 
     /**
      * Objecthash containing all detach-notifiers, keyed by customEvent name.
@@ -1468,7 +1461,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
      * @private
      * @since 0.0.1
     */
-    DEFINE_IMMUTAL_PROPERTY(Event, &#x27;_detachNotifiers&#x27;, {});
+    Object.protectedProp(Event, &#x27;_detachNotifiers&#x27;, {});
 
     /**
      * Objecthash containing all notifiers, keyed by customEvent name.
@@ -1495,7 +1488,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
      * @private
      * @since 0.0.1
     */
-    DEFINE_IMMUTAL_PROPERTY(Event, &#x27;_notifiers&#x27;, {});
+    Object.protectedProp(Event, &#x27;_notifiers&#x27;, {});
 
     Event._setEventObjProperty(&#x27;halt&#x27;, function(reason) {this.status.ok || this._unHaltable || (this.status.halted = (reason || true));})
          ._setEventObjProperty(&#x27;preventDefault&#x27;, function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPrevented = (reason || true));})

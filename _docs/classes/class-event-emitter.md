@@ -2,14 +2,18 @@
 module: js-ext
 functionality: Classes
 maintainer: Marco Asbreuk
-title: Events listener on classes
-intro: "This example shows how Classes have event-listeners (at their prototype). By default, Classes don't have event-emitter method: they need to be set up per Class, or you could emit using ITSA.Event.emit(). If we would have used the after-listener, then both instances would react on the <b>president.*</b>-events. Because we listen through the <b>selfAfter</b>-events (only for Class-instances), we make sure the instance reacts only when e.target equals itself."
+title: Events emitter on classes
+intro: "This example shows how Classes can have an event-emitter (at their prototype)."
 ---
 
 <style type="text/css">
-    #btn1, #btn2 {
+    #btn {
         display: block;
         min-width: 10em;
+    }
+    #circlecont {
+        display: block;
+        margin-top: 1em;
     }
     #cont {
         border: solid 1px #000;
@@ -23,9 +27,9 @@ intro: "This example shows how Classes have event-listeners (at their prototype)
 
 Click on the buttons to make the users speak or be silent.
 
-<button id="btn1" class="pure-button pure-button-bordered">Bill Clinton</button>
-<button id="btn2" class="pure-button pure-button-bordered">Barack Obama</button>
+<button id="btn" class="pure-button pure-button-bordered">Draw circle</button>
 
+<div id="circlecont"></div>
 <div id="cont"></div>
 
 
@@ -81,43 +85,38 @@ Click on the buttons to make the users speak or be silent.
 </script>
 ```
 
-<script src="../../dist/itsabuild-min.js"></script>
+<script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa'),
+        circleContainer = document.getElement('#circlecont'),
         container = document.getElement('#cont'),
-        User, user1, user2;
+        Circle, circle;
 
-    User = ITSA.Classes.createClass(
-        function(name) {
-            this.name = name;
-            this.selfAfter('president:speak', this.sayHello);
-            this.selfAfter('president:besilent', this.sayGoodBye);
-            this.isSpeaking = false;
-        },
-        {
-            sayHello: function() {
-                container.setHTML(this.name+' says Hello');
-            },
-            sayGoodBye: function() {
-                container.setHTML('Bye bye, '+this.name+' is leaving');
+    Circle = ITSA.Classes.createClass(
+        function (x, y, r) {
+            this.x = x || 0;
+            this.y = y || 0;
+            this.r = r || 1;
+        },{
+            draw: function () {
+                circleContainer.setHTML('<svg width="100" height="100">'+
+                    '<a xlink:href="http://itsasbreuk.nl">'+
+                '<circle fill="red" stroke-width="3" stroke="black" r="40" cy="50" cx="50"/>'+
+                '</a>'+
+                '</svg>');
+                this.emit('drawn');
             }
         }
-    );
+    ).mergePrototypes(ITSA.Event.Emitter('circle'));
 
-    User.mergePrototypes(ITSA.Event.Emitter('president'));
-
-    user1 = new User('Bill Clinton');
-    user2 = new User('Barack Obama');
+    circle = new Circle(50, 50, 40);
 
     ITSA.Event.after('click', function(e) {
-        var user = (e.target.getId()==='btn1') ? user1 : user2;
-        if (user.isSpeaking) {
-            user.emit('besilent');
-        }
-        else {
-            user.emit('speak');
-        }
-        user.isSpeaking = !user.isSpeaking;
-    }, '#btn1, #btn2');
+        circle.draw();
+    }, '#btn');
+
+    ITSA.Event.after('circle:drawn', function(e) {
+        container.setHTML('The circle is drawn!');
+    });
 
 </script>

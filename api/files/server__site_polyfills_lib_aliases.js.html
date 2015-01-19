@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/js-ext/lib/function kopie.js - Itsa</title>
+    <title>server/_site/polyfills/lib/aliases.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -194,239 +194,158 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/js-ext/lib/function kopie.js</h1>
+                        <h1 class="file-heading">File: server/_site/polyfills/lib/aliases.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-/**
- *
- * Pollyfils for often used functionality for Functions
- *
- * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * @module js-ext
- * @submodule lib/function.js
- * @class Function
- *
-*/
-
+/* jshint node:true*/
 &quot;use strict&quot;;
-
-require(&#x27;polyfill/polyfill-base.js&#x27;);
-
-// Define configurable, writable and non-enumerable props
-// if they don&#x27;t exist.
-var defineProperty = function (object, name, method, force) {
-        if (!force &amp;&amp; (name in object)) {
-            return;
-        }
-        Object.defineProperty(object, name, {
-            configurable: true,
-            enumerable: false,
-            writable: true,
-            value: method
-        });
-    },
-    defineProperties = function (object, map, force) {
-        var names = Object.keys(map),
-            l = names.length,
-            i = -1,
-            name;
-        while (++i &lt; l) {
-            name = names[i];
-            defineProperty(object, name, map[name], force);
-        }
-    },
-    NOOP = function () {},
-    REPLACE_CLASS_METHODS = {
-        destroy: &#x27;_destroy&#x27;
-    },
-    PROTECTED_CLASS_METHODS = {
-        _destroy: true
-    };
-
 /**
- * Pollyfils for often used functionality for Function
- * @class Function
-*/
-
-defineProperties(Function.prototype, {
-
-    /**
-     * Merges the given map of properties into the &#x60;prototype&#x60; of the Class.
-     * **Not** to be used on instances.
-     *
-     * The members in the hash map will become members with
-     * instances of the merged class.
-     *
-     * By default, this method will not override existing prototype members,
-     * unless the second argument &#x60;force&#x60; is true.
-     *
-     * @method mergePrototypes
-     * @param map {Object} Hash map of properties to add to the prototype of this object
-     * @param force {Boolean}  If true, existing members will be overwritten
-     * @chainable
-     */
-    mergePrototypes: function (map, force) {
-        var instance = this,
-            proto = instance.isItag ? instance.$proto : instance.prototype,
-            names = Object.keys(map || {}),
-            l = names.length,
-            i = -1,
-            replaceMap = arguments[2] || REPLACE_CLASS_METHODS, // hidden feature, used by itags
-            protectedMap = arguments[3] || PROTECTED_CLASS_METHODS, // hidden feature, used by itags
-            name, nameInProto, finalName;
-        while (++i &lt; l) {
-            name = names[i];
-            finalName = replaceMap[name] || name;
-            nameInProto = (finalName in proto);
-            if (!protectedMap[name] &amp;&amp; (!nameInProto || force)) {
-                // if nameInProto: set the property, but also backup for chaining using $orig
-                if (typeof map[name] === &#x27;function&#x27;) {
-/*jshint -W083 */
-                    proto[finalName] = (function (original, methodName, methodFinalName) {
-                        return function () {
-/*jshint +W083 */
-                            instance.$orig[methodFinalName] = original;
-                            return map[methodName].apply(this, arguments);
-                        };
-                    })(proto[name] || NOOP, name, finalName);
-                }
-                else {
-                    proto[name] = map[name];
-                }
-            }
-        }
-        return instance;
-    },
-
-    /**
-     * Returns a newly created class inheriting from this class
-     * using the given &#x60;constructor&#x60; with the
-     * prototypes listed in &#x60;prototypes&#x60; merged in.
-     *
-     *
-     * The newly created class has the &#x60;$super&#x60; static property
-     * available to access all of is ancestor&#x27;s instance methods.
-     *
-     * Further methods can be added via the [mergePrototypes](#method_mergePrototypes).
-     *
-     * @example
-     *
-     *     var Circle = Shape.subClass(
-     *         function (x, y, r) {
-     *             this.r = r;
-     *             Circle.$super.constructor.call(this, x, y);
-     *         },
-     *         {
-     *             area: function () {
-     *                 return this.r * this.r * Math.PI;
-     *             }
-     *         }
-     *     );
-     *
-     * @method subClass
-     * @param [constructor] {Function} The function that will serve as constructor for the new class.
-     *        If &#x60;undefined&#x60; defaults to &#x60;Object.constructor&#x60;
-     * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
-     * @return the new class.
-     */
-    subClass: function (constructor, prototypes) {
-
-        if ((arguments.length === 1) &amp;&amp; (typeof constructor !== &#x27;function&#x27;)) {
-            prototypes = constructor;
-            constructor = null;
-        }
-
-
-        constructor = constructor || function (ancestor) {
-            return function () {
-                ancestor.apply(this, arguments);
-            };
-        }(this);
-
-
-        var baseProt = this.prototype,
-            rp = Object.create(baseProt);
-        constructor.prototype = rp;
-
-        rp.constructor = constructor;
-        constructor.$super = baseProt;
-        constructor.$orig = {};
-
-        constructor.mergePrototypes(prototypes, true);
-        return constructor;
-    },
-
-    /**
-     * Sets the context of which the function will be execute. in the
-     * supplied object&#x27;s context, optionally adding any additional
-     * supplied parameters to the end of the arguments the function
-     * is executed with.
-     *
-     * @method rbind
-     * @param [context] {Object} the execution context.
-     *        The value is ignored if the bound function is constructed using the new operator.
-     * @param [args*] {any} args* 0..n arguments to append to the end of
-     *        arguments collection supplied to the function.
-     * @return {function} the wrapped function.
-     */
-    rbind: function (context /*, args* */ ) {
-        var thisFunction = this,
-            arrayArgs,
-            slice = Array.prototype.slice;
-        context || (context = this);
-        if (arguments.length &gt; 1) {
-            // removing &#x60;context&#x60; (first item) by slicing it out:
-            arrayArgs = slice.call(arguments, 1);
-        }
-
-        return (arrayArgs ?
-            function () {
-                // over here, &#x60;arguments&#x60; will be the &quot;new&quot; arguments when the final function is called!
-                return thisFunction.apply(context, slice.call(arguments, 0).concat(arrayArgs));
-            } :
-            function () {
-                // over here, &#x60;arguments&#x60; will be the &quot;new&quot; arguments when the final function is called!
-                return thisFunction.apply(context, arguments);
-            }
-        );
-    }
-});
-
-/*
-Object._BaseClass = function() {
-    return Function.prototype.subClass.apply({}, NOOP);
-};
-
-                    .mergePrototypes({
-                        _destroy: NOOP,
-                        destroy: function() {
-                            this._destroy();
-                            var instance = this;
-                                superDestroy;
-                            if (!instanced._destroyed) {
-                                superDestroy(instance);
-                                Object.protectedProp(instance, &#x27;_destroyed&#x27;, true);
-                            }
-                        }
-                    }, true, {}, {}); // need to pass 4 arguments, to make these members stored
-*/
-
-
-/**
- * Returns a base class with the given constructor and prototype methods
+ * Apply a function to each element in the array and concatenate the result
+ * of the function into a new array.
  *
- * @for Object
- * @method createClass
- * @param [constructor] {Function} constructor for the class
- * @param [prototype] {Object} Hash map of prototype members of the new class
- * @return {Function} the new class
-*/
-defineProperty(Object.prototype, &#x27;createClass&#x27;, function () {
-    return Function.prototype.subClass.apply(this, arguments);
-});
+ * @example The difference between map and flatMap
+ * &gt; [0, 1, 2].map(function(val) {return [val + 1, val + 2]; });
+ * [ [ 1, 2 ], [ 2, 3 ], [ 3, 4 ] ]
+ *
+ * &gt; flatMap([0, 1, 2], function(val) { return [val + 1, val + 2]; });
+ * [ 1, 2, 2, 3, 3, 4 ]
+ */
+function flatMap(array, func) {
+    return Array.prototype.concat.apply([], array.map(func));
+}
+/**
+ * The AliasResolver provides the logic used for expanding and resolving
+ * polyfill identifiers using more than one mechanism (if required).
+ *
+ * A polyfill identifier is an object with at least a &#x27;name&#x27; and &#x27;flags&#x27;
+ * property, where the &#x27;name&#x27; is the string identifying a polyfill and
+ * &#x27;flags&#x27; is an array containing any flags that should be applied with
+ * the polyfill (and subsequently to any aliased polyfills).
+ *
+ *  e.g: { name: &quot;modernizr:es5&quot;, flags: [&quot;always&quot;] }
+ */
+module.exports = (function() {
+
+    /** An array of functions that map a string identifier (e.g. an alias) to an array of
+     * potentially alternate string identifiers (e.g. expanded names the alias refers to)
+     *
+     * The key point is that each is invoked in sequence with the result of
+     * the previous function as an argument.
+     */
+    var polyfillNameResolverFunctions = [];
+
+    /**
+     * Run a name resolver function over each polyfill identifier in an array,
+     * remove duplicates after the resolution and keep track of aliases and
+     * flags.
+     *
+     * @param {array}    polyfillIdentifiers          A list of polyfill identifiers to expand.
+     * @param {Function} polyfillNameResolverFunction The identifier name resolver function to use in
+     *                                                the resolution process.
+     *
+     * @return {array} An expanded list of polyfill identifiers
+     */
+    function applyResolverToIdentifiers(polyfillIdentifiers, polyfillNameResolverFunction) {
+
+        var expandedPolyfills = flatMap(polyfillIdentifiers, function(polyfillIdentifier) {
+            var polyfillIdentifierNames = polyfillNameResolverFunction(polyfillIdentifier.name);
+
+            // If the resolver function returns null, undefined or anything else that
+            // is not an array of size &gt; 0, just return the polyfillIdentifier
+            // to be handled by subsequent steps.
+            if (!Array.isArray(polyfillIdentifierNames) || polyfillIdentifierNames.length === 0) {
+                return polyfillIdentifier;
+            }
+
+            // For each polyfill identifier name, apply the aliases and flags
+            // and return an array of Polyfill Identifier Objects
+            return polyfillIdentifierNames.map(function(name) {
+                // It is possible that the name of an alias may also be the
+                // name of a polyfill.  In this case avoid setting an alias of
+                // itself
+                var aliasOf = polyfillIdentifier.aliasOf || (polyfillIdentifier.name === name ? [] : [polyfillIdentifier.name]);
+
+                return {
+                    name: name,
+                    flags: polyfillIdentifier.flags,
+                    aliasOf: aliasOf
+                };
+            });
+        });
+
+        // Remove duplicates: When removing duplicates, if one is found -&gt;
+        // concat the flags and the aliasOf fields.
+        var polyfillSet = {};
+        expandedPolyfills.forEach(function(polyfill) {
+            if (!polyfillSet[polyfill.name]) {
+                polyfillSet[polyfill.name] = polyfill;
+            } else {
+                var aliasOf = polyfillSet[polyfill.name].aliasOf;
+                var flags = polyfillSet[polyfill.name].flags;
+
+                if (aliasOf &amp;&amp; polyfill.aliasOf) {
+                    polyfillSet[polyfill.name].aliasOf =  aliasOf.concat(polyfill.aliasOf);
+                } else if (polyfill.aliasOf) {
+                    polyfillSet[polyfill.name].aliasOf =  polyfill.aliasOf;
+                }
+
+                if (flags &amp;&amp; polyfill.flags) {
+                    polyfillSet[polyfill.name].flags   = flags.concat(polyfill.flags);
+                } else if (polyfill.flags) {
+                    polyfillSet[polyfill.name].flags   = polyfill.flags;
+
+                }
+            }
+        });
+
+        // Get the object&#x27;s values (kind of like an imaginary Object.values function) as
+        // an array
+        var arrayOfPolyfills = Object.keys(polyfillSet).map(function(key) { return polyfillSet[key]; });
+
+        return arrayOfPolyfills;
+    }
+
+    return {
+        /**
+         * Resolve an array of polyfill identifiers by iteratively invoking the
+         * resolver functions on each element.
+         *
+         * @param {array} polyfillIdentifiers The polyfill identifier objects
+         *                                    to resolve. A polyfill identifier is
+         *                                    an object with a &#x27;name&#x27; property as a string
+         *                                    and a &#x27;flags&#x27; property as an array
+         *
+         * @returns {array} An resolved list of resolved polyfill identifiers.
+         */
+        resolvePolyfills: function(polyfillIdentifiers) {
+            var currentPolyfillIdentifiers = polyfillIdentifiers;
+
+            polyfillNameResolverFunctions.forEach(function(resolverFunction) {
+                currentPolyfillIdentifiers = applyResolverToIdentifiers(currentPolyfillIdentifiers, resolverFunction);
+            });
+
+            return currentPolyfillIdentifiers;
+        },
+        /** Add a resolution function to the end of the alias resolution
+         * logic.
+         *
+         * @param {Function} A function that takes a single string argument
+         *                   and returns an array of string elements
+         *                   representing the expanded identifiers/aliases.
+         */
+        addResolver: function(resolverFunction) {
+            polyfillNameResolverFunctions.push(resolverFunction);
+            return this;
+        },
+        clearResolvers: function() {
+            polyfillNameResolverFunctions = [];
+        }
+    };
+}());
+
+
+
     </pre>
 </div>
 

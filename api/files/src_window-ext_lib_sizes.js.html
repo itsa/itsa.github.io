@@ -201,10 +201,11 @@
 &quot;use strict&quot;;
 
 require(&#x27;js-ext/lib/object.js&#x27;);
+var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
     if (window._ITSAmodules.WindowSizes) {
         return; // WindowSizes was already created

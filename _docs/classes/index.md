@@ -6,153 +6,281 @@ version: 0.0.1
 modulesize: 1.69
 dependencies: "polyfill"
 maintainer: Marco Asbreuk
-title: Transitions
-intro: "CSS-transitions managable by Promises with extra handles."
-firstpar: get-started-onlywindow
+title: Classes
+intro: "Using Classes in a very flexible and easy way."
+firstpar: get-started
 ---
 
 
 
 #The Basics#
 
-Transitions are happening through CSS-transitions. This is available in every modern browser and IE10+. The transitions are delivers by the `vdom`-module. There are serveral sugar methods and setting classes that have a transition can be managed. All transition-methods return a `Promise`.
+####Native way to create Classes####
+To create a class in JavaScript, the would use code like this:
 
-Transitions have a lot of pitfalls. This module uses a `transition-fix` to handle these. For example: `auto` width and height will transition properly. Also, the Promise will be resolved as soon as the transition has finished, even if several properties have different duration, or when the `transitionend`-events get messy (which happen in webkit with shorthand properties).
-
-
-
-#How to start a transition#
-
-The cleanest way to start a transition is by using classes. The methods `setClass` and `toggleClass` can (optionally) return a Promise by which class-transitions can be managed.
-
-However, when the highest level of management is needed, you should use the method node.`transition`. This has a slightly better way of management, because it can revert transitions halfway (which cannot be done with class-transitions). Also, `transition` should be used with *non-vendor* css-properties: the properties are automaticly set into the proper vendor-specific properties. Using classes, you will need to define vendor specific properties in the styles.
-
-
-##Transitioning with classes##
-
-There are four node-methods which can return a `Promise`:
-
-* setClass()
-* removeClass()
-* toggleClass()
-* replaceClass()
-
-By setting the second argument `true`, the method will return a Promise and the transition is guaranteed to process well.
-
-####Example Promised setClass:
-
-```css
-.big {
-    height: 300px;
-    width: 600px;
-    -webkit-transition: all 3s;
-    -moz-transition: all 3s;
-    -ms-transition: all 3s;
-    -o-transition: all 3s;
-    transition: all 3s;
+```js
+var Shape = function (x, y) {
+    this.x = x || 0;
+    this.y = y || 0;
 }
+
+Shape.prototype.move = function (x, y) {
+    this.x += x;
+    this.y += y;
+};
+
+var shape = new Shape(10, 20);
 ```
 
-```js
-transPromise = someNode.setClass('big', true);
+This module replaces this native way in easier and more flexible Classes:
 
-transPromise.then(
-    function() {
-        // the transition has finished here
+
+#Create new Classes#
+
+ITSA creates new Classes by `ITSA.Classes.createClass()`. This returns an instantiatable Class. Technically, it returns a sub-class of Function with the given constructor and prototype members.
+
+
+##createClass##
+
+####Example defining new Class####
+
+```js
+var Shape = ITSA.Classes.createClass(function (x, y) {
+    this.x = x || 0;
+    this.y = y || 0;
+},{
+    move: function (x, y) {
+        this.x += x;
+        this.y += y;
     }
-);
+});
+```
+
+###initiate new instance###
+
+Any `Class` can be iniatiated with `new Classname`. It is <u>very important</u> to use the `new` keyword, otherwise very unexpected things may happen:
+
+####Example defining new Class####
+
+```js
+var myShape = new Shape(5, 10);
+myShape.move(20, 30);
+```
+
+Multiple instances are completely independent from each other:
+####Example defining new instances####
+
+```js
+var shape1 = new Shape(5, 10),
+    shape2 = new Shape(50, 70);
+
+shape1.move(20, 30);
+// shape1 --> (20,30)
+// shape2 --> (50,70)
 ```
 
 
-In case you don't need a `Promise`, but need the `transition-fix` for a proper transition, you can use the firth argument:
+##subClass##
 
+Any `Class` can be subclassed with 'subClass()`. The subclass has its own constructor and optional extra members. By default, the constructor of the inherited Class gets invoked with the same arguments as what this constructor recieves:
+
+
+####Example defining subClass####
 ```js
-someNode.setClass('big', false, true);
-```
-
-
-To achieve a proper transition, a `transition-fix` is used. Temporarely, the right css-properties are set `inline` during the transition. Once the transition is finished, they will be removed, leaving only the classname (and former inline css) behind.
-
-
-##Transitioning with node.transition()##
-
-Node.`transition()` is a specialized method for fine grained transitions. The css-properties will be set inline, even after transition. You can see it as node.`setInlineStyles()` but also specifying the transition.
-
-
-####Example node.transition():
-
-```js
-myTrans = [
-    {property: 'width', value: '600px', duration: 5},
-    {property: 'height', value: '250px', duration: 10, delay: 2},
-    {property: 'background-color', value: '#00F', duration: 15}
-];
-
-transPromise = someNode.transition(myTrans);
-
-transPromise.then(
-    function() {
-        // the transition has finished here
-    }
-);
-```
-
-
-##Chaining transitions##
-
-Because both class-transition as well as node-transitions return `Promise`, they can be easily chained:
-
-####Example chaining class-transition:####
-
-```js
-transPromise = someNode.setClass('big', true).then(
-   someNode.setClass.bind(someNode, 'blue', true)
-);
-
-transPromise.then(
-    function() {
-        // the transition has finished here
-    }
-);
-```
-
-
-
-##Extra managability##
-
-All `transitioned Promises` (explained above) have extra methods (handles) to manage the transition before it gets ready. All of theze methods (except `unfreeze()`) return a Promise themselves, with the `elasped-time` as argument. These methods are:
-
-
-###cancel()###
-
-Will cancel the transition and revert into the initial state at once.
-
-
-###freeze()###
-
-Will freeze (halt) the transition. You can unfreeze it later on.
-
-
-###unfreeze()###
-
-Will unfreeze (continue) a frozen transition.
-
-
-###finish()###
-
-Will finish the transition at once, disregarding any further transition.
-
-
-####Example####
-```js
-    transPromise = myNode.toggleClass(['blue', 'big'], null, true);
-    transPromise.freeze().then(
-        function(elapsed) {
-            // `elapsed` is the time in ms that was ran until the promise got frozen
+var Circle = Shape.subClass(
+    function (x, y, r) {
+        // under the hood, Shape's constructor gets invoked with the arguments: (x, y, r)
+        // before continuing the following code:
+        this.r = r || 1;
+    },{
+        area: function () {
+            return this.r * this.r * Math.PI;
         }
-    );
+    }
+);
 ```
 
-#About IE9#
+####Example defining new instances####
 
-IE9 <u>does not support transitions</u>u>. Using the transitions of the `vdom`-module with IE9 will make the transision to finish immediately.
+```js
+var circle1 = new Circle(5, 10, 1),
+    circle2 = new Circle(50, 70, 2);
+
+circle1.area(); // <-- 3,14
+circle2.area(); // <-- 12,57
+```
+
+If you don't want the inherited Class's constructor to be invoked, you can set the 3th argument <b>false</b>. In most cases, you probably want to invoke the inherited constructor manually by using `this.$superProp('constructor', arg1, arg2, ...)`.
+
+
+#Access to super-Class properties#
+
+####Example redefine constructor####
+```js
+var Circle = Shape.subClass(
+    function (radius, x, y) {
+        // we will manually invoke the super-constructor
+        this.$superProp('constructor', x, y);
+        this.radius = radius || 1;
+    }, null, true
+);
+```
+
+###access parent properties###
+
+When subClassing, it is easy to access properties of its parent by invoke `this.$superProp(propertyName, args)`. Any property can be invoked: when it's a method, you can pass through its arguments as from the second argument-position. <u>`$superProp` is avialabe on the context `"this"`</u>.
+
+When a `constructor` needs to be subClassed, you can use: `this.$superProp('constructor', args)`. Be sure you set the firth argument `false` in order to be able to manually invoke the super-constructor.
+
+####Example redefine constructor####
+```js
+var Circle = Shape.subClass(
+    function (radius, x, y) {
+        // we will manually invoke the super-constructor
+        this.$superProp('constructor', x, y);
+        this.radius = radius || 1;
+    }, null, true
+);
+```
+
+##access ancestor properties##
+
+If you want to access properties that lie higher in the Class-tree (higer than `parent`), you can use `this.$super.$superProp()` or multiple `$super` parts.  <u>`$super` is avialabe on the context `"this"`</u>.
+
+####Example redefine properties higher up the chain####
+```js
+var Rectangle = Shape.subClass(
+    function (x, y, l, h) {
+        this.l = l || 0;
+        this.h = h || 0;
+    }
+);
+var Square = Rectangle.subClass(
+    function (x, y, l) {
+        this;$super.$superProp('constructor', x, y);
+        this.l = l || 0;
+    }, null, true
+);
+```
+
+
+#Reconfigure Classes#
+
+Existing Classes cannot have their constructor or their inherited Class being redefined (just define a new Class in those cases). However, they can have their prototype-properties being redefined, extended, or removed.
+
+
+##mergePrototypes##
+
+It allows to add extra methods to a given class.  This is helpful when common functionality needs to be added to multiple classes, without having to inherit from it.  For example, the previous example could have been made like this:
+
+####Example mergePrototypes####
+
+```js
+var movable = {
+    move: function (x, y) {
+        this.x += x;
+        this.y += y;
+    },
+    moveX: function (x) {
+        this.x += x;
+    },
+    moveY: function (y) {
+        this.y += y;
+    }
+};
+
+var Circle = ITSA.Classes.createClass(
+    function (x, y, r) {
+        this.r = r || 1;
+    },{
+        area: function () {
+            return this.r * this.r * Math.PI;
+        }
+    }
+).mergePrototypes(movable);
+```
+
+The merged methods will not overwrite existing methods unless the second argument is set to `true` to force the overwrite.
+
+##Using $orig in mergePrototypes##
+
+If the merged methods override existing ones, the original method will be available in the `$orig` property, <u>which is avialabe on the context `"this"`</u>.  This allows plugins that can be refer to the original methods. All arguments you pass into `$orig()` will be passed through to its original method.
+
+It is possible to redefine the same method in descendent subClasses by using $orig() over and over again. All original methods will be available.
+
+####Example mergePrototypes with usage $orig()####
+```js
+var ClassA = ITSA.Classes.createClass({
+    method: function (a) {
+        return a + 'a';
+    }
+}).mergePrototypes({
+    method: function (b) {
+        return this.$orig(b) + 'b';
+    }
+}, true);
+
+var a = new ClassA();
+console.log(a.method('1'));
+// prints "1ab"
+```
+
+##RemovePrototypes##
+
+####Example removePrototypes####
+
+```js
+var Circle = ITSA.Classes.createClass(
+    function (x, y, r) {
+        this.r = r || 1;
+    },{
+        area: function () {
+            return this.r * this.r * Math.PI;
+        }
+    }
+);
+
+var c = new Circle(5);
+C.removePrototypes('area');
+
+c.area(); // <-- will throw an error: method `area` does not exist
+```
+
+
+#Events#
+
+##Event-listener##
+
+When the `event-module` is loaded, all Classes become an Event-listener (for more info on event-listeners: see the module `Event`). This behaviour is added to the Base-Class which all Classes inherit. The Event-listener makes the following properties available:
+
+###after###
+###onceAfter###
+###before###
+###onceBefore###
+###selfAfter###
+###selfOnceAfter###
+###selfBefore###
+###selfOnceBefore###
+
+The methods named `selfxxx` make it posible to invoke the subscriber only when `e.target` equals the `instance`. This avoids unwanted interaction: see the examples.
+
+##Event-emitter##
+
+To make any Class an Event-emitter, you should merge `Event.Emitter()` at the prototype by yourself. This cannot be done by the module, because Event-emitters need an emittername, which is Class-specific.
+
+####Example setting up Class Event-Emitter####
+
+```js
+var Circle = ITSA.Classes.createClass(
+    function (x, y, r) {
+        this.r = r || 1;
+    },{
+        area: function () {
+            return this.r * this.r * Math.PI;
+        }
+    }
+).mergePrototypes(Event.Emitter('circle'));
+
+var c = new Circle(5);
+c.emit('drawn'); // <-- will fire the 'circle:drawn'-event
+```

@@ -223,11 +223,13 @@
 
 require(&#x27;js-ext/lib/object.js&#x27;);
 
+var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
+
 module.exports = function (window) {
 
     var IO = require(&#x27;../io.js&#x27;)(window);
 
-    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
     if (window._ITSAmodules.IO_Assets) {
         return IO; // IO_Assets was already created

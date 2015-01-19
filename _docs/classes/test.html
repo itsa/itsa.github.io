@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+</head>
+<body>
+<svg id="s" xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ width="300"
+ height="300"></svg>
+<script>
+  var ns = 'http://www.w3.org/2000/svg';
+
+  // var svgnode = document.createElementNS(ns, 'SVG');
+  // svgnode.setAttribute('width', 200);
+  // svgnode.setAttribute('height', 200);
+
+  var svgnode = document.getElementById('s');
+  var circlenode = document.createElementNS(ns, 'circle');
+  circlenode.setAttribute('fill', 'red');
+  circlenode.setAttribute('stroke-width', '3');
+  circlenode.setAttribute('stroke', 'black');
+  circlenode.setAttribute('r', '40');
+  circlenode.setAttribute('cx', '50');
+  circlenode.setAttribute('cy', '50');
+
+  // document.body.appendChild(svgnode);
+  svgnode.appendChild(circlenode);
+document.body.appendChild(document.createTextNode('x'));
+  </script>
+</body>
+</html>

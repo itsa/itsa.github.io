@@ -2,39 +2,90 @@
 module: js-ext
 functionality: Classes
 maintainer: Marco Asbreuk
-title: Invoke super methods
-intro: "This example shows how to flip a card. Most is done by setting the right css-classes. The transition gets activated by setting a transform-style on the card-div. <br><br>By clicking on the card it gets flipped. There also is some logic that can reverse flipping, even during a transition."
+title: Using $super and $superProp
+intro: "This example shows how to inherit Classes. Every master-class should be defined using </b>ITSA.Classes.createClass()</b>. From that point out, Classes can be inherited by using <b>subClass</b> of the parent-Class."
 ---
 
 <style type="text/css">
-
+    #btn {
+        display: block;
+        min-width: 12em;
+    }
+    #cont {
+        border: solid 1px #000;
+        padding: 1em;
+        min-width: 10em;
+        min-height: 3em;
+        display: block;
+        margin-top: 1em;
+    }
 </style>
 
-Flip the card by clicking on it. <span class="status"></span>
+Click on the buttons to make the users speak or be silent.
 
-<div class="container3D">
-</div>
+<button id="btn" class="pure-button pure-button-bordered">Print Info</button>
+
+<div id="cont"></div>
 
 
 <p class="spaced">Code-example:</p>
 
-```css
-<style type="text/css">
-
-</style>
-```
-
 ```html
 <body>
-
+    <button id="btn">Print Info</button>
+    <div id="cont"></div>
 </body>
 ```
 
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
+    var ITSA = require('itsa'),
+        container = document.getElement('#cont'),
+        A, B, C, D, d;
 
+    A = ITSA.Classes.createClass(
+        function(x) {
+            this.x = x;
+            this.rendered = true;
+        },
+        {
+            getInfo: function() {
+                return 'I am Class A, x='+this.x+', y='+this.y+', rendered='+this.rendered;
+            }
+        }
+    );
+
+    B = A.subClass(
+        function(x, y) {
+            // the constructor automaticly invoke its superclass with all arguments.
+            // however, we are going to overrule and invoke it without arguments
+            // which will lead into NO x-value set
+            this.$superProp('constructor');
+            this.y = y;
+        },
+        {
+            getInfo: function() {
+                return 'I am Class B';
+            }
+        },
+        false
+    );
+
+    C = B.subClass({
+            getInfo: function() {
+                return this.$super.$superProp('getInfo');
+            }
+        }
+    );
+
+    D = C.subClass();
+
+    d = new D(10, 20);
+
+    ITSA.Event.after('click', function(e) {
+        container.setHTML(d.getInfo());
+    }, '#btn');
 
 </script>
 ```
@@ -42,37 +93,50 @@ Flip the card by clicking on it. <span class="status"></span>
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa'),
-        card = document.getElement('#card'),
-        statusNode = document.getElement('span.status'),
-        DURATION = 2, // sec
-        front = true,
-        promise, doFlip;
+        container = document.getElement('#cont'),
+        A, B, C, D, d;
 
-    doFlip = function(e) {
-        var deg, runningPromise;
-        statusNode.setText('started flipping...');
-        front = !front;
-        deg = front ? 0.1 : -179.9;
-        runningPromise = (promise && !promise.isFulfilled) ? promise.freeze() : Promise.resolve();
-        runningPromise.then(
-            function(elapsed) {
-                var duration = elapsed ? (elapsed/1000) : DURATION;
-                promise = card.transition({property: 'transform', value: 'rotateY('+deg+'deg)', duration: duration}, true);
-                promise.then(function() {
-                    if (!promise.frozen) {
-                        statusNode.setText('ready!');
-                        if (front) {
-                            card.removeInlineStyle('transform');
-                        }
-                        else {
-                            card.setInlineStyle('transform', 'rotateY(-180deg)');
-                        }
-                    }
-                });
+    A = ITSA.Classes.createClass(
+        function(x) {
+            this.x = x;
+            this.rendered = true;
+        },
+        {
+            getInfo: function() {
+                return 'I am Class A, x='+this.x+', y='+this.y+', rendered='+this.rendered;
             }
-        );
-    };
+        }
+    );
 
-    ITSA.Event.after('tap', doFlip, '.container3D');
+    B = A.subClass(
+        function(x, y) {
+            // the constructor automaticly invoke its superclass with all arguments.
+            // however, we are going to overrule and invoke it without arguments
+            // which will lead into NO x-value set
+            this.$superProp('constructor');
+            this.y = y;
+        },
+        {
+            getInfo: function() {
+                return 'I am Class B';
+            }
+        },
+        false
+    );
+
+    C = B.subClass({
+            getInfo: function() {
+                return this.$super.$superProp('getInfo');
+            }
+        }
+    );
+
+    D = C.subClass();
+
+    d = new D(10, 20);
+
+    ITSA.Event.after('click', function(e) {
+        container.setHTML(d.getInfo());
+    }, '#btn');
 
 </script>

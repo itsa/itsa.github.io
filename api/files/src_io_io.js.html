@@ -216,11 +216,12 @@ require(&#x27;js-ext&#x27;);
 
 var NAME = &#x27;[io]: &#x27;,
     GET = &#x27;GET&#x27;,
+    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
     DEF_REQ_TIMEOUT = 300000, // don&#x27;t create an ever-lasting request: always quit after 5 minutes
-    BODY_METHODS = {
+    BODY_METHODS = createHashMap({
         POST: 1,
         PUT: 1
-    },
+    }),
     CONTENT_TYPE = &#x27;Content-Type&#x27;,
     MIME_JSON = &#x27;application/json&#x27;,
     DEF_CONTENT_TYPE_POST = &#x27;application/x-www-form-urlencoded; charset=UTF-8&#x27;,
@@ -240,7 +241,7 @@ module.exports = function (window) {
     // into some other IO-instance than which is used.
     var Glob = (typeof global !== &#x27;undefined&#x27; ? global : /* istanbul ignore next */ this);
 
-    Glob._ITSAmodules || Object.protectedProp(Glob, &#x27;_ITSAmodules&#x27;, {});
+    Glob._ITSAmodules || Object.protectedProp(Glob, &#x27;_ITSAmodules&#x27;, createHashMap());
 
     if (Glob._ITSAmodules.IO) {
         return Glob._ITSAmodules.IO;
