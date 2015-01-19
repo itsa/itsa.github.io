@@ -215,9 +215,11 @@
 require(&#x27;polyfill&#x27;);
 require(&#x27;js-ext/lib/object.js&#x27;);
 
+var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
+
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
     if (window._ITSAmodules.NodeParser) {
         return window._ITSAmodules.NodeParser; // NodeParser was already created
@@ -225,6 +227,7 @@ module.exports = function (window) {
 
     var NS = require(&#x27;./vdom-ns.js&#x27;)(window),
         extractor = require(&#x27;./attribute-extractor.js&#x27;)(window),
+        xmlNS = NS.xmlNS,
         voidElements = NS.voidElements,
         nonVoidElements = NS.nonVoidElements,
         vNodeProto = require(&#x27;./vnode.js&#x27;)(window),
@@ -251,12 +254,14 @@ module.exports = function (window) {
             // create circular reference:
             vnode.domNode._vnode = vnode;
 
+            parentVNode &amp;&amp; (vnode.ns=parentVNode.ns);
             vnode.nodeType = nodeType;
             vnode.vParent = parentVNode;
 
             if (nodeType===1) {
                 // ElementNode
                 tag = vnode.tag = domNode.nodeName; // is always uppercase
+                vnode.ns = xmlNS[tag] || vnode.ns;
 
                 vnode.attrs = {};
 

@@ -215,12 +215,13 @@
 require(&#x27;js-ext/lib/array.js&#x27;);
 
 var xmlhttprequest = require(&#x27;./lib/XMLHttpRequest.js&#x27;).XMLHttpRequest,
+    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
     xmlDOMParser = require(&#x27;xmldom&#x27;).DOMParser,
     Url = require(&#x27;url&#x27;),
-    used = {},
+    used = createHashMap(),
     vNodeParser = /(?:(^|#|\.)([^#\.\[\]]+))|(\[.+?\])/g,
     count, doc, win, getHTML, reset;
-    EventTypes = {
+    EventTypes = createHashMap({
         MouseEvents: function () {
             this.initMouseEvent = function (type, bubbles, cancelable, view, detail,
                     screenX, screenY, clientX, clientY,
@@ -246,7 +247,7 @@ var xmlhttprequest = require(&#x27;./lib/XMLHttpRequest.js&#x27;).XMLHttpRequest
                 };
             };
         }
-    };
+    });
 
 count = function (method) {
     if (!used[method]) {

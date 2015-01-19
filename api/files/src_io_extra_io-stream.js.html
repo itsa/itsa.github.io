@@ -203,11 +203,12 @@
 require(&#x27;js-ext/lib/object.js&#x27;);
 
 var NAME = &#x27;[io-stream]: &#x27;,
+    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
     UNKNOW_ERROR = &#x27;Unknown XDR-error&#x27;; // XDR doesn&#x27;t specify the error
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
     if (window._ITSAmodules.IO_Stream) {
         return window._ITSAmodules.IO_Stream; // IO_Stream was already created

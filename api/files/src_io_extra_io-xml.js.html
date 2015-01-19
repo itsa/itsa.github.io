@@ -221,11 +221,12 @@
 require(&#x27;js-ext&#x27;);
 
 var NAME = &#x27;[io-xml]: &#x27;,
-    REGEXP_XML = /(?: )*(&lt;\?xml (?:.)*\?&gt;)(?: )*(&lt;(?:\w)+&gt;)/;
+    REGEXP_XML = /(?: )*(&lt;\?xml (?:.)*\?&gt;)(?: )*(&lt;(?:\w)+&gt;)/,
+    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
     if (window._ITSAmodules.IO_XML) {
         return window._ITSAmodules.IO_XML; // IO_XML was already created

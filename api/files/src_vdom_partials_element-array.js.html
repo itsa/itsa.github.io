@@ -218,9 +218,11 @@
 require(&#x27;polyfill&#x27;);
 require(&#x27;js-ext/lib/object.js&#x27;);
 
+var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
+
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
     if (window._ITSAmodules.ElementArray) {
         return window._ITSAmodules.ElementArray; // ElementArray was already created

@@ -254,9 +254,10 @@
      * @param [caseInsensitive=false] {Boolean} whether to ignore case-sensivity
      * @return {Boolean} whether the string ends with &#x60;test&#x60;
      */
-    String.endsWith || (StringPrototype.endsWith=function(test, caseInsensitive) {
+     // NOTE: we ALWAYS set this method --&gt; ES6 native &#x60;startsWiths&#x60; lacks the second argument
+    StringPrototype.endsWith=function(test, caseInsensitive) {
         return (new RegExp(test+&#x27;$&#x27;, caseInsensitive ? &#x27;i&#x27;: &#x27;&#x27;)).test(this);
-    });
+    };
 
     /**
      * Checks if the string can be parsed into a number when using &#x60;parseInt()&#x60;
@@ -279,9 +280,10 @@
      * @param [caseInsensitive=false] {Boolean} whether to ignore case-sensivity
      * @return {Boolean} whether the string starts with &#x60;test&#x60;
      */
-    String.startsWith || (StringPrototype.startsWith=function(test, caseInsensitive) {
+     // NOTE: we ALWAYS set this method --&gt; ES6 native &#x60;startsWiths&#x60; lacks the second argument
+    StringPrototype.startsWith=function(test, caseInsensitive) {
         return (new RegExp(&#x27;^&#x27;+test, caseInsensitive ? &#x27;i&#x27;: &#x27;&#x27;)).test(this);
-    });
+    };
 
     /**
      * Performs &#x60;{placeholder}&#x60; substitution on a string. The object passed

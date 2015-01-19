@@ -222,12 +222,13 @@
 require(&#x27;js-ext/lib/array.js&#x27;);
 require(&#x27;js-ext/lib/object.js&#x27;);
 require(&#x27;js-ext/lib/string.js&#x27;);
-require(&#x27;js-ext/extra/lightmap.js&#x27;);
 require(&#x27;polyfill&#x27;);
+
+var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
     if (window._ITSAmodules.VNode) {
         return window._ITSAmodules.VNode; // VNODE was already created
@@ -236,8 +237,10 @@ module.exports = function (window) {
     var NS = require(&#x27;./vdom-ns.js&#x27;)(window),
         extractor = require(&#x27;./attribute-extractor.js&#x27;)(window),
         DOCUMENT = window.document,
-        MUTATION_EVENTS = new window.LightMap(),
+        LightMap = require(&#x27;js-ext/extra/lightmap.js&#x27;),
+        MUTATION_EVENTS = new LightMap(),
         BATCH_WILL_RUN = false,
+        xmlNS = NS.xmlNS,
         nodeids = NS.nodeids,
         htmlToVNodes = require(&#x27;./html-parser.js&#x27;)(window),
         timers = require(&#x27;utils/lib/timers.js&#x27;),
@@ -264,28 +267,28 @@ module.exports = function (window) {
         EV_ATTRIBUTE_REMOVED = ATTRIBUTE+REMOVE,
         EV_ATTRIBUTE_CHANGED = ATTRIBUTE+CHANGE,
         EV_ATTRIBUTE_INSERTED = ATTRIBUTE+INSERT,
-        SPLIT_CHARACTER = {
+        SPLIT_CHARACTER = createHashMap({
             &#x27; &#x27;: true,
             &#x27;&gt;&#x27;: true,
             &#x27;+&#x27;: true, // only select the element when it is immediately preceded by the former element
             &#x27;~&#x27;: true  // only the element when it has the former element as a sibling. (just like &#x60;+&#x60;, but less strict)
-        },
-        STORABLE_SPLIT_CHARACTER = {
+        }),
+        STORABLE_SPLIT_CHARACTER = createHashMap({
             &#x27;&gt;&#x27;: true,
             &#x27;+&#x27;: true,
             &#x27;~&#x27;: true
-        },
-        SIBLING_MATCH_CHARACTER = {
+        }),
+        SIBLING_MATCH_CHARACTER = createHashMap({
             &#x27;+&#x27;: true,
             &#x27;~&#x27;: true
-        },
-        ATTR_DETAIL_SPECIFIERS = {
+        }),
+        ATTR_DETAIL_SPECIFIERS = createHashMap({
             &#x27;^&#x27;: true, // “begins with” selector
             &#x27;$&#x27;: true, // “ends with” selector
             &#x27;*&#x27;: true, // “contains” selector (might be a substring)
             &#x27;~&#x27;: true, // “contains” selector as a separate word, separated by spaces
             &#x27;|&#x27;: true // “contains” selector as a separate word, separated by &#x60;|&#x60;
-        },
+        }),
         /**
          * Object to gain quick access to attribute-name end-tokens.
          *
@@ -298,7 +301,7 @@ module.exports = function (window) {
          * @protected
          * @since 0.0.1
          */
-        END_ATTRIBUTENAME = {
+        END_ATTRIBUTENAME = createHashMap({
             &#x27;=&#x27;: true,
             &#x27;]&#x27;: true,
             &#x27;^&#x27;: true, // “begins with” selector
@@ -306,7 +309,7 @@ module.exports = function (window) {
             &#x27;*&#x27;: true, // “contains” selector (might be a substring)
             &#x27;~&#x27;: true, // “contains” selector as a separate word, separated by spaces
             &#x27;|&#x27;: true // “contains” selector as a separate word, separated by &#x60;|&#x60;
-        },
+        }),
         /**
          * Object to gain quick access to different changes of Element nodeType changes.
          *
@@ -332,23 +335,23 @@ module.exports = function (window) {
          * @protected
          * @since 0.0.1
          */
-        NODESWITCH = {
-            1: {
+        NODESWITCH = createHashMap({
+            1: createHashMap({
                 1: 1, // oldNodeType==Element, newNodeType==Element
                 3: 2, // oldNodeType==Element, newNodeType==TextNode
                 8: 3  // oldNodeType==Element, newNodeType==Comment
-            },
-            3: {
+            }),
+            3: createHashMap({
                 1: 4, // oldNodeType==TextNode, newNodeType==Element
                 3: 5, // oldNodeType==TextNode, newNodeType==TextNode
                 8: 6  // oldNodeType==TextNode, newNodeType==Comment
-            },
-            8: {
+            }),
+            8: createHashMap({
                 1: 7, // oldNodeType==Comment, newNodeType==Element
                 3: 8, // oldNodeType==Comment, newNodeType==TextNode
                 8: 9  // oldNodeType==Comment, newNodeType==Comment
-            }
-        },
+            })
+        }),
         /**
          * Object to gain quick access to selector start-tokens.
          *
@@ -362,12 +365,12 @@ module.exports = function (window) {
          * @protected
          * @since 0.0.1
          */
-        SELECTOR_IDENTIFIERS = {
+        SELECTOR_IDENTIFIERS = createHashMap({
             &#x27;#&#x27;: 1,
             &#x27;.&#x27;: 2,
             &#x27;[&#x27;: 3,
             &#x27;:&#x27;: 4
-        },
+        }),
         PSEUDO_FIRST_CHILD = &#x27;:first-child&#x27;,
         PSEUDO_FIRST_OF_TYPE = &#x27;:first-of-type&#x27;,
         PSEUDO_LAST_CHILD = &#x27;:last-child&#x27;,
@@ -398,7 +401,7 @@ module.exports = function (window) {
          * @protected
          * @since 0.0.1
          */
-        PSEUDO_REQUIRED_CHILDREN = {},
+        PSEUDO_REQUIRED_CHILDREN = createHashMap(),
         _matchesSelectorItem, _matchesOneSelector, _findElementSibling, vNodeProto, _markRemoved,
         _splitSelector, _findNodeSibling, _matchNthChild, _batchEmit, _emitDestroyChildren;
         PSEUDO_REQUIRED_CHILDREN[PSEUDO_FIRST_CHILD] = true;
@@ -1029,7 +1032,7 @@ module.exports = function (window) {
     };
 
     _batchEmit = function() {
-        MUTATION_EVENTS.forEach(function (mutationEvents, vnode) {
+        MUTATION_EVENTS.each(function (mutationEvents, vnode) {
             var domNode = vnode.domNode;
             if (mutationEvents[EV_REMOVED]) {
                 domNode.emit(EV_REMOVED);
@@ -1691,7 +1694,8 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         _removeAttr: function(attributeName) {
-            var instance = this;
+            var instance = this,
+                attributeNameSplitted, ns;
             if (instance.attrs[attributeName]!==undefined) {
                 delete instance.attrs[attributeName];
                 // in case of STYLE attribute --&gt; special treatment
@@ -1702,8 +1706,16 @@ module.exports = function (window) {
                     delete nodeids[instance.id];
                     delete instance.id;
                 }
-                instance.domNode._removeAttribute(attributeName);
                 instance._emit(EV_ATTRIBUTE_REMOVED, attributeName);
+                if (attributeName.indexOf(&#x27;:&#x27;)!==-1) {
+                    attributeNameSplitted = attributeName.split(&#x27;:&#x27;);
+                    ns = attributeNameSplitted[0];
+                    attributeName = attributeNameSplitted[1];
+                    instance.domNode._removeAttributeNS(xmlNS[ns.toUpperCase()] || ns, attributeName);
+                }
+                else {
+                    instance.domNode._removeAttribute(attributeName);
+                }
             }
             return instance;
         },
@@ -1775,7 +1787,8 @@ module.exports = function (window) {
             var instance = this,
                 extractStyle, extractClass,
                 attrs = instance.attrs,
-                prevVal = attrs[attributeName];
+                prevVal = attrs[attributeName],
+                attributeNameSplitted, ns;
             // don&#x27;t check by !== --&gt; value isn&#x27;t parsed into a String yet
 
             if (prevVal &amp;&amp; ((value===undefined) || (value===null))) {
@@ -1817,9 +1830,20 @@ module.exports = function (window) {
                     instance.id = value;
                     nodeids[value] = instance.domNode;
                 }
-                // when set in the dom --&gt; quotes need to be set as &amp;quot;
-                instance.domNode._setAttribute(attributeName, value.replace(/&quot;/g, &#x27;&amp;quot;&#x27;));
+
                 instance._emit(prevVal ? EV_ATTRIBUTE_CHANGED : EV_ATTRIBUTE_INSERTED, attributeName, value, prevVal);
+
+                // when set in the dom --&gt; quotes need to be set as &amp;quot;
+                value = value.replace(/&quot;/g, &#x27;&amp;quot;&#x27;);
+                if (attributeName.indexOf(&#x27;:&#x27;)!==-1) {
+                    attributeNameSplitted = attributeName.split(&#x27;:&#x27;);
+                    ns = attributeNameSplitted[0];
+                    attributeName = attributeNameSplitted[1];
+                    instance.domNode._setAttributeNS(xmlNS[ns.toUpperCase()] || ns, attributeName, value);
+                }
+                else {
+                    instance.domNode._setAttribute(attributeName, value);
+                }
             }
             return instance;
         },
@@ -2178,7 +2202,7 @@ module.exports = function (window) {
                 return html;
             },
             set: function(v) {
-                this._setChildNodes(htmlToVNodes(v, vNodeProto));
+                this._setChildNodes(htmlToVNodes(v, vNodeProto, this.ns));
             }
         },
 
@@ -2231,6 +2255,7 @@ module.exports = function (window) {
                     attrs.each(function(value, key) {
                         html += &#x27; &#x27;+key+&#x27;=&quot;&#x27;+value+&#x27;&quot;&#x27;;
                     });
+                    instance.isVoid &amp;&amp; (html += &#x27;/&#x27;);
                     html += &#x27;&gt;&#x27;;
                     if (!instance.isVoid) {
                         html += instance.innerHTML + &#x27;&lt;/&#x27; + instance.tag.toLowerCase() + &#x27;&gt;&#x27;;
@@ -2251,7 +2276,7 @@ module.exports = function (window) {
                 index = vChildNodes.indexOf(instance);
                 isLastChildNode = (index===(vChildNodes.length-1));
                 isLastChildNode || (refDomNode=vChildNodes[index+1].domNode);
-                vnodes = htmlToVNodes(v, vNodeProto, vParent);
+                vnodes = htmlToVNodes(v, vNodeProto, vParent.ns, vParent);
                 len = vnodes.length;
                 if (len&gt;0) {
                     // the first vnode will replace the current instance:

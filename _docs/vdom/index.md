@@ -82,6 +82,57 @@ e.changed = [
 ```
 
 
+#Elements in different NS#
+
+Some elements live in their own namespace, for example `svg` (http://www.w3.org/2000/svg). When working with this vdom, <u>you don't need to bother</u>. In other words: it s completely legal to use the next code:
+
+####Example inserting svg###
+```js
+var body = ITSA.getElement('body');
+body.setHTML('<svg width="100" height="100">'+
+                 '<circle fill="red" stroke-width="3" stroke="black" r="40" cy="50" cx="50"/>'+
+             '</svg>');
+```
+
+In this example, the element `svg` is created inside the namespace 'http://www.w3.org/2000/svg'. Internally, the `vdom` has the next translation-table to get the right namespace for some elements:
+
+* svg --> http://www.w3.org/2000/svg
+* xbl --> http://www.mozilla.org/xbl
+* xul --> http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul
+* math --> http://www.w3.org/1998/Math/MathML
+* xlink --> http://www.w3.org/1999/xlink
+
+
+
+##Using href for svg##
+In XML and therefore SVG, <u>there is no magic `href`-attribute that can create links</u>. Instead you have to use a technology called `XLink` to provide this functionality. In practice, the xlink prefix is defined, followed by a colon (:) and the attribute-name. The attribute-value is then set to the standard `xlink` namespace. This accounts for all attributes, not only `href`.
+
+It is even easier not to define the full namespace, but make usage of the vdom's namespace translation-table:
+
+####Example inserting svg with xlink:href and xlink:title###
+```js
+var body = ITSA.getElement('body');
+body.setHTML('<svg width="100" height="100">'+
+                '<a xlink:href="http://itsa.io" xlink:title="ITSA modules">'+
+                     '<circle fill="red" stroke-width="3" stroke="black" r="40" cy="50" cx="50"/>'+
+                '</a>'+
+             '</svg>');
+```
+
+####Example set attrbute xlink:href and xlink:title with javascript###
+```js
+var body = ITSA.getElement('body'),
+    svgAnchor;
+body.setHTML('<svg width="100" height="100">'+
+                '<a>'+
+                     '<circle fill="red" stroke-width="3" stroke="black" r="40" cy="50" cx="50"/>'+
+                '</a>'+
+             '</svg>');
+
+svgAnchor = body.getElement('svg a');
+svgAnchor.setAttr('xlink:href', 'href="http://itsa.io'); // is correct
+svgAnchor.setAttributeNS('xlink', 'title', 'ITSA modules'); // is correct
+```
 
 #Useful API#
 

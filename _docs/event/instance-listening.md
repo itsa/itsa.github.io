@@ -15,7 +15,7 @@ Code-example:
 <script>
     var ITSA = require('itsa');
     // create Class "Members" and merge ITSA.Event.Listener to the prototype:
-    var Members = Object.createClass(null, ITSA.Event.Listener),
+    var Members = ITSA.Classes.createClass(null, ITSA.Event.Listener),
         myMembers = new Members();
     myMembers.after('PersonalProfile:save', function(e) {
         alert('personal profile is saved');
@@ -35,7 +35,7 @@ Code-example:
 <script>
     var ITSA = require('itsa');
     // create Class "Members" and merge ITSA.Event.Listener to the prototype:
-    var Members = Object.createClass(null, ITSA.Event.Listener),
+    var Members = ITSA.Classes.createClass(null, ITSA.Event.Listener),
         myMembers = new Members();
     myMembers.after('PersonalProfile:save', function(e) {
         alert('personal profile is saved');

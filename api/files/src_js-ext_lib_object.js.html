@@ -215,7 +215,8 @@
 
 require(&#x27;polyfill/polyfill-base.js&#x27;);
 
-var TYPES = {
+var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
+    TYPES = createHashMap({
        &#x27;undefined&#x27; : true,
        &#x27;number&#x27; : true,
        &#x27;boolean&#x27; : true,
@@ -226,72 +227,71 @@ var TYPES = {
        &#x27;[object Date]&#x27; : true,
        &#x27;[object Error]&#x27; : true,
        &#x27;[object Promise]&#x27; : true
-   },
-
-// Define configurable, writable and non-enumerable props
-// if they don&#x27;t exist.
-defineProperty = function (object, name, method, force) {
-    if (!force &amp;&amp; (name in object)) {
-        return;
-    }
-    Object.defineProperty(object, name, {
-        configurable: true,
-        enumerable: false,
-        writable: true,
-        value: method
-    });
-},
-defineProperties = function (object, map, force) {
-    var names = Object.keys(map),
-        l = names.length,
-        i = -1,
-        name;
-    while (++i &lt; l) {
-        name = names[i];
-        defineProperty(object, name, map[name], force);
-    }
-},
-
-_each = function (obj, fn, context) {
-    var keys = Object.keys(obj),
-        l = keys.length,
-        i = -1,
-        key;
-    while (++i &lt; l) {
-        key = keys[i];
-        fn.call(context, obj[key], key, obj);
-    }
-    return obj;
-},
-
-cloneObj = function(obj) {
-    var copy, i, len, value;
-
-    // Handle Array
-    if (obj instanceof Array) {
-        copy = [];
-        len = obj.length;
-        for (i=0; i&lt;len; i++) {
-            value = obj[i];
-            copy[i] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value);
+    }),
+    // Define configurable, writable and non-enumerable props
+    // if they don&#x27;t exist.
+    defineProperty = function (object, name, method, force) {
+        if (!force &amp;&amp; (name in object)) {
+            return;
         }
+        Object.defineProperty(object, name, {
+            configurable: true,
+            enumerable: false,
+            writable: true,
+            value: method
+        });
+    },
+    defineProperties = function (object, map, force) {
+        var names = Object.keys(map),
+            l = names.length,
+            i = -1,
+            name;
+        while (++i &lt; l) {
+            name = names[i];
+            defineProperty(object, name, map[name], force);
+        }
+    },
+
+    _each = function (obj, fn, context) {
+        var keys = Object.keys(obj),
+            l = keys.length,
+            i = -1,
+            key;
+        while (++i &lt; l) {
+            key = keys[i];
+            fn.call(context, obj[key], key, obj);
+        }
+        return obj;
+    },
+
+    cloneObj = function(obj, descriptors) {
+        var copy, i, len, value;
+
+        // Handle Array
+        if (obj instanceof Array) {
+            copy = [];
+            len = obj.length;
+            for (i=0; i&lt;len; i++) {
+                value = obj[i];
+                copy[i] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value, descriptors);
+            }
+            return copy;
+        }
+
+        // Handle Date
+        if (obj instanceof Date) {
+            copy = new Date();
+            copy.setTime(obj.getTime());
+            return copy;
+        }
+
+        // Handle Object
+        else if (obj instanceof Object) {
+            copy = obj.deepClone(descriptors);
+        }
+
         return copy;
-    }
-
-    // Handle Date
-    if (obj instanceof Date) {
-        copy = new Date();
-        copy.setTime(obj.getTime());
-        return copy;
-    }
-
-    // Handle Object
-    else if (obj instanceof Object) {
-        copy = obj.deepClone();
-    }
-
-    return copy;
-};
+    };
 
 /**
  * Pollyfils for often used functionality for objects
@@ -385,7 +385,7 @@ defineProperties(Object.prototype, {
         return m;
     },
     /**
-     * Returns the keys of the object.
+     * Returns the keys of the object: the enumerable properties.
      *
      * @method keys
      * @return {Array} Keys of the object
@@ -393,6 +393,17 @@ defineProperties(Object.prototype, {
     keys: function () {
         return Object.keys(this);
     },
+    /**
+     * Checks whether the given property is a key: an enumerable property.
+     *
+     * @method hasKey
+     * @param property {String} the property to check for
+     * @return {Boolean} Keys of the object
+     */
+    hasKey: function (property) {
+        return this.hasOwnProperty(property) &amp;&amp; this.propertyIsEnumerable(property);
+    },
+
     /**
      * Returns the number of keys of the object
      *
@@ -441,17 +452,30 @@ defineProperties(Object.prototype, {
      * Fast, mostly useful for plain hash maps.
      *
      * @method shallowClone
+     * @param [options.descriptors=false] {Boolean} If true, the full descriptors will be set. This takes more time, but avoids any info to be lost.
      * @return {Object} shallow copy of the original
      */
-    shallowClone: function () {
-        var m = {},
-            keys = Object.keys(this),
+    shallowClone: function (descriptors) {
+        var instance = this,
+            m = Object.create(Object.getPrototypeOf(instance)),
+            keys = Object.getOwnPropertyNames(instance),
             l = keys.length,
             i = -1,
-            key;
+            key, propDescriptor;
         while (++i &lt; l) {
             key = keys[i];
-            m[key] = this[key];
+            if (descriptors) {
+                propDescriptor = Object.getOwnPropertyDescriptor(instance, key);
+                if (!propDescriptor.writable) {
+                    m[key] = instance[key];
+                }
+                else {
+                    Object.defineProperty(m, key, propDescriptor);
+                }
+            }
+            else {
+                m[key] = instance[key];
+            }
         }
         return m;
     },
@@ -473,25 +497,42 @@ defineProperties(Object.prototype, {
     /**
      * Returns a deep copy of the object.
      * Only handles members of primary types, Dates, Arrays and Objects.
+     * Will clone all the properties, also the non-enumerable.
      *
      * @method deepClone
+     * @param [descriptors=false] {Boolean} If true, the full descriptors will be set. This takes more time, but avoids any info to be lost.
+     * @param [proto] {Object} Another prototype for the new object.
      * @return {Object} deep-copy of the original
      */
-    deepClone: function () {
-        var m = {},
-            keys = Object.keys(this),
+    deepClone: function (descriptors, proto) {
+        var instance = this,
+            m = Object.create(proto || Object.getPrototypeOf(instance)),
+            keys = Object.getOwnPropertyNames(instance),
             l = keys.length,
             i = -1,
-            key, value;
+            key, value, propDescriptor;
         // loop through the members:
         while (++i &lt; l) {
             key = keys[i];
-            value = this[key];
-            m[key] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value);
+            value = instance[key];
+            if (descriptors) {
+                propDescriptor = Object.getOwnPropertyDescriptor(instance, key);
+                if (propDescriptor.writable) {
+                    Object.defineProperty(m, key, propDescriptor);
+                }
+                else {
+                    m[key] = value;
+                }
+                if ((value!==null) &amp;&amp; (typeof value===&#x27;object&#x27;) &amp;&amp; ((typeof propDescriptor.get)!==&#x27;function&#x27;) &amp;&amp; ((typeof propDescriptor.set)!==&#x27;function&#x27;) ) {
+                    m[key] = cloneObj(value, true);
+                }
+            }
+            else {
+                m[key] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value);
+            }
         }
         return m;
     },
-
     /**
      * Transforms the object into an array with  &#x27;key/value&#x27; objects
      *
@@ -524,18 +565,44 @@ defineProperties(Object.prototype, {
      *
      * @method merge
      * @param obj {Object} Object with the properties to be added to the original object
-     * @param force {Boolean} If true, the properties in &#x60;obj&#x60; will override those of the same name
+     * @param [options] {Object}
+     * @param [options.force=false] {Boolean} If true, the properties in &#x60;obj&#x60; will override those of the same name
      *        in the original object
+     * @param [options.full=false] {Boolean} If true, also any non-enumerable properties will be merged
+     * @param [options.descriptors=false] {Boolean} If true, the full descriptors will be set. This takes more time, but avoids any info to be lost.
      * @chainable
      */
-    merge: function (obj, force) {
-        var m = this;
-        if (obj &amp;&amp; obj.each) obj.each(function (value, key) {
-            if (force || !(key in m)) {
-                m[key] = obj[key];
+    merge: function (obj, options) {
+        var instance = this,
+            i = -1,
+            keys, l, key, force, descriptors, propDescriptor;
+        if (!Object.isObject(obj)) {
+            return instance;
+        }
+        options || (options={});
+        keys = options.full ? Object.getOwnPropertyNames(obj) : Object.keys(obj);
+        l = keys.length;
+        force = options.force;
+        descriptors = options.descriptors;
+        // we cannot use obj.each --&gt; obj might be an object defined through Object.create(null) and missing Object.prototype!
+        while (++i &lt; l) {
+            key = keys[i];
+            if (force || !(key in instance)) {
+                if (descriptors) {
+                    propDescriptor = Object.getOwnPropertyDescriptor(obj, key);
+                    if (!propDescriptor.writable) {
+                        instance[key] = obj[key];
+                    }
+                    else {
+                        Object.defineProperty(instance, key, propDescriptor);
+                    }
+                }
+                else {
+                    instance[key] = obj[key];
+                }
             }
-        });
-        return m;
+        }
+        return instance;
     }
 
 });

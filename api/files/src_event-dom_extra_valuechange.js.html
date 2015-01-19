@@ -229,6 +229,7 @@ require(&#x27;vdom&#x27;);
 require(&#x27;js-ext/lib/object.js&#x27;);
 
 var NAME = &#x27;[event-valuechange]: &#x27;,
+    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
     VALUE = &#x27;value&#x27;,
     DATA_KEY = &#x27;valueChange&#x27;,
     UTILS = require(&#x27;utils&#x27;),
@@ -247,7 +248,7 @@ var NAME = &#x27;[event-valuechange]: &#x27;,
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, {});
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
     if (window._ITSAmodules.EventValueChange) {
         return window._ITSAmodules.EventValueChange; // EventValueChange was already created
