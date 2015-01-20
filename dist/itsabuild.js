@@ -11097,8 +11097,11 @@ require('../lib/object.js');
 
     global._ITSAmodules || Object.protectedProp(global, '_ITSAmodules', createHashMap());
 
-    if (global._ITSAmodules.Classes) {
-        return global._ITSAmodules.Classes; // Classes was already created
+/*jshint boss:true */
+    if (Classes=global._ITSAmodules.Classes) {
+/*jshint boss:false */
+        module.exports = Classes; // Classes was already created
+        return;
     }
 
     // Define configurable, writable and non-enumerable props
@@ -11617,8 +11620,11 @@ var LightMap, Classes,
 
     global._ITSAmodules || Object.protectedProp(global, '_ITSAmodules', createHashMap());
 
-    if (global._ITSAmodules.LightMap) {
-        return global._ITSAmodules.LightMap; // LightMap was already created
+/*jshint boss:true */
+    if (LightMap=global._ITSAmodules.LightMap) {
+/*jshint boss:false */
+        module.exports = LightMap; // LightMap was already created
+        return;
     }
 
     require('../lib/array.js');
