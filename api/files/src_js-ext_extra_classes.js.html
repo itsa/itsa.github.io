@@ -221,7 +221,7 @@ require(&#x27;../lib/object.js&#x27;);
     var NAME = &#x27;[Classes]: &#x27;,
         createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
         DEFAULT_CHAIN_CONSTRUCT, defineProperty, defineProperties,
-        NOOP, REPLACE_CLASS_METHODS, PROTECTED_CLASS_METHODS, PROTO_RESERVERD_NAMES,
+        NOOP, REPLACE_CLASS_METHODS, PROTECTED_CLASS_METHODS, PROTO_RESERVED_NAMES,
         BASE_MEMBERS, createBaseClass, Classes, coreMethods;
 
     global._ITSAmodules || Object.protectedProp(global, &#x27;_ITSAmodules&#x27;, createHashMap());
@@ -263,22 +263,15 @@ require(&#x27;../lib/object.js&#x27;);
         destroy: &#x27;_destroy&#x27;
     });
     PROTECTED_CLASS_METHODS = createHashMap({
-        _destroy: true,
         $super: true,
         $superProp: true,
         $orig: true
     });
 /*jshint proto:true */
 /* jshint -W001 */
-    PROTO_RESERVERD_NAMES = createHashMap({
+    PROTO_RESERVED_NAMES = createHashMap({
         constructor: true,
         prototype: true,
-        toSource: true,
-        toString: true,
-        toLocaleString: true,
-        valueOf: true,
-        watch: true,
-        unwatch: true,
         hasOwnProperty: true,
         isPrototypeOf: true,
         propertyIsEnumerable: true,
@@ -326,30 +319,23 @@ require(&#x27;../lib/object.js&#x27;);
             l = names.length;
             i = -1;
             replaceMap = arguments[2] || REPLACE_CLASS_METHODS; // hidden feature, used by itags
+
             protectedMap = arguments[3] || PROTECTED_CLASS_METHODS; // hidden feature, used by itags
             while (++i &lt; l) {
                 name = names[i];
                 finalName = replaceMap[name] || name;
                 nameInProto = (finalName in proto);
-                if (!PROTO_RESERVERD_NAMES[name] &amp;&amp; !protectedMap[name] &amp;&amp; (!nameInProto || force)) {
+                if (!PROTO_RESERVED_NAMES[finalName] &amp;&amp; !protectedMap[finalName] &amp;&amp; (!nameInProto || force)) {
                     // if nameInProto: set the property, but also backup for chaining using $$orig
-
-
-
                     propDescriptor = Object.getOwnPropertyDescriptor(map, name);
                     if (!propDescriptor.writable) {
                         console.warn(NAME+&#x27;mergePrototypes will set property of &#x27;+NAME+&#x27;without its property-descriptor: for it is an unwritable property.&#x27;);
                         proto[finalName] = map[name];
                     }
                     else {
-
                         // adding map[name] into $$orig:
-
                         instance.$$orig[finalName] || (instance.$$orig[finalName]=[]);
                         instance.$$orig[finalName][instance.$$orig[finalName].length] = map[name];
-
-
-
                         if (typeof map[name] === &#x27;function&#x27;) {
         /*jshint -W083 */
                             propDescriptor.value = (function (originalMethodName, finalMethodName) {
@@ -380,31 +366,8 @@ require(&#x27;../lib/object.js&#x27;);
                                 };
                             })(name, finalName);
                         }
-
-
                         Object.defineProperty(proto, finalName, propDescriptor);
                     }
-
-
-
-
-                    // if (typeof map[name] === &#x27;function&#x27;) {
-    /*jshint -W083 */
-                        // proto[finalName] = (function (original, methodName, methodFinalName) {
-                            // return function () {
-    /*jshint +W083 */
-                                // instance.$$orig[methodFinalName] = original;
-                                // return map[methodName].apply(this, arguments);
-                            // };
-                        // })(proto[name] || NOOP, name, finalName);
-                    // }
-                    // else {
-                        // proto[name] = map[name];
-                    // }
-
-
-
-
                 }
                 else {
                     console.warn(NAME+&#x27;mergePrototypes is not allowed to set the property: &#x27;+name);
@@ -431,12 +394,12 @@ require(&#x27;../lib/object.js&#x27;);
          * @chainable
          */
         removePrototypes: function (properties) {
-            var instance = this,
-                proto = instance.isItag ? instance.$proto : instance.prototype;
+            var proto = this.prototype;
             Array.isArray(properties) || (properties=[properties]);
             properties.forEach(function(prop) {
                 delete proto[prop];
             });
+            return this;
         },
 
         /**
@@ -581,11 +544,13 @@ require(&#x27;../lib/object.js&#x27;);
                 var instance = this;
                 instance.__classCarier__ || (instance.__classCarier__= instance.__methodClassCarier__);
                 instance.__$superCarierStart__ || (instance.__$superCarierStart__=instance.__classCarier__);
-                instance.__classCarier__ = instance.__classCarier__.$$super.constructor;
+                instance.__classCarier__ = instance.__classCarier__ &amp;&amp; instance.__classCarier__.$$super.constructor;
                 return instance;
             }
         },
         $superProp: {
+            configurable: true,
+            writable: true,
             value: function(/* func, *args */) {
                 var instance = this,
                     classCarierReturn = instance.__$superCarierStart__ || instance.__classCarier__ || instance.__methodClassCarier__,
@@ -615,6 +580,8 @@ require(&#x27;../lib/object.js&#x27;);
             }
         },
         $orig: {
+            configurable: true,
+            writable: true,
             value: function() {
                 var instance = this,
                     classCarierReturn = instance.__$superCarierStart__,

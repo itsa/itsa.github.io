@@ -11092,7 +11092,7 @@ require('../lib/object.js');
     var NAME = '[Classes]: ',
         createHashMap = require('js-ext/extra/hashmap.js').createMap,
         DEFAULT_CHAIN_CONSTRUCT, defineProperty, defineProperties,
-        NOOP, REPLACE_CLASS_METHODS, PROTECTED_CLASS_METHODS, PROTO_RESERVERD_NAMES,
+        NOOP, REPLACE_CLASS_METHODS, PROTECTED_CLASS_METHODS, PROTO_RESERVED_NAMES,
         BASE_MEMBERS, createBaseClass, Classes, coreMethods;
 
     global._ITSAmodules || Object.protectedProp(global, '_ITSAmodules', createHashMap());
@@ -11134,22 +11134,15 @@ require('../lib/object.js');
         destroy: '_destroy'
     });
     PROTECTED_CLASS_METHODS = createHashMap({
-        _destroy: true,
         $super: true,
         $superProp: true,
         $orig: true
     });
 /*jshint proto:true */
 /* jshint -W001 */
-    PROTO_RESERVERD_NAMES = createHashMap({
+    PROTO_RESERVED_NAMES = createHashMap({
         constructor: true,
         prototype: true,
-        toSource: true,
-        toString: true,
-        toLocaleString: true,
-        valueOf: true,
-        watch: true,
-        unwatch: true,
         hasOwnProperty: true,
         isPrototypeOf: true,
         propertyIsEnumerable: true,
@@ -11197,30 +11190,23 @@ require('../lib/object.js');
             l = names.length;
             i = -1;
             replaceMap = arguments[2] || REPLACE_CLASS_METHODS; // hidden feature, used by itags
+
             protectedMap = arguments[3] || PROTECTED_CLASS_METHODS; // hidden feature, used by itags
             while (++i < l) {
                 name = names[i];
                 finalName = replaceMap[name] || name;
                 nameInProto = (finalName in proto);
-                if (!PROTO_RESERVERD_NAMES[name] && !protectedMap[name] && (!nameInProto || force)) {
+                if (!PROTO_RESERVED_NAMES[finalName] && !protectedMap[finalName] && (!nameInProto || force)) {
                     // if nameInProto: set the property, but also backup for chaining using $$orig
-
-
-
                     propDescriptor = Object.getOwnPropertyDescriptor(map, name);
                     if (!propDescriptor.writable) {
                         console.warn(NAME+'mergePrototypes will set property of '+NAME+'without its property-descriptor: for it is an unwritable property.');
                         proto[finalName] = map[name];
                     }
                     else {
-
                         // adding map[name] into $$orig:
-
                         instance.$$orig[finalName] || (instance.$$orig[finalName]=[]);
                         instance.$$orig[finalName][instance.$$orig[finalName].length] = map[name];
-
-
-
                         if (typeof map[name] === 'function') {
         /*jshint -W083 */
                             propDescriptor.value = (function (originalMethodName, finalMethodName) {
@@ -11251,31 +11237,8 @@ require('../lib/object.js');
                                 };
                             })(name, finalName);
                         }
-
-
                         Object.defineProperty(proto, finalName, propDescriptor);
                     }
-
-
-
-
-                    // if (typeof map[name] === 'function') {
-    /*jshint -W083 */
-                        // proto[finalName] = (function (original, methodName, methodFinalName) {
-                            // return function () {
-    /*jshint +W083 */
-                                // instance.$$orig[methodFinalName] = original;
-                                // return map[methodName].apply(this, arguments);
-                            // };
-                        // })(proto[name] || NOOP, name, finalName);
-                    // }
-                    // else {
-                        // proto[name] = map[name];
-                    // }
-
-
-
-
                 }
                 else {
                     console.warn(NAME+'mergePrototypes is not allowed to set the property: '+name);
@@ -11302,12 +11265,12 @@ require('../lib/object.js');
          * @chainable
          */
         removePrototypes: function (properties) {
-            var instance = this,
-                proto = instance.isItag ? instance.$proto : instance.prototype;
+            var proto = this.prototype;
             Array.isArray(properties) || (properties=[properties]);
             properties.forEach(function(prop) {
                 delete proto[prop];
             });
+            return this;
         },
 
         /**
@@ -11452,11 +11415,13 @@ require('../lib/object.js');
                 var instance = this;
                 instance.__classCarier__ || (instance.__classCarier__= instance.__methodClassCarier__);
                 instance.__$superCarierStart__ || (instance.__$superCarierStart__=instance.__classCarier__);
-                instance.__classCarier__ = instance.__classCarier__.$$super.constructor;
+                instance.__classCarier__ = instance.__classCarier__ && instance.__classCarier__.$$super.constructor;
                 return instance;
             }
         },
         $superProp: {
+            configurable: true,
+            writable: true,
             value: function(/* func, *args */) {
                 var instance = this,
                     classCarierReturn = instance.__$superCarierStart__ || instance.__classCarier__ || instance.__methodClassCarier__,
@@ -11486,6 +11451,8 @@ require('../lib/object.js');
             }
         },
         $orig: {
+            configurable: true,
+            writable: true,
             value: function() {
                 var instance = this,
                     classCarierReturn = instance.__$superCarierStart__,
@@ -11798,7 +11765,7 @@ require('./lib/json.js');
 require('./lib/promise.js');
 
 module.exports = {
-    createHashMap: require('./extra/hashmap.js').createHashMap,
+    createHashMap: require('./extra/hashmap.js').createMap,
     Classes: require('./extra/classes.js'),
     LightMap: require('./extra/lightmap.js')
 };
