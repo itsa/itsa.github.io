@@ -192,8 +192,6 @@ These <u>do work</u>, but they update their vnode's asynchronously. So, if you q
 ###getAttr###
 ###getInlineStyle###
 ###getInlineTransition###
-###getTransform###
-not available yet
 
 ###getTransition###
 ###getId###
@@ -205,8 +203,6 @@ not available yet
 ###hasChildren###
 ###hasInlineStyle###
 ###hasInlineTransition###
-###hasTransform###
-not available yet
 
 ###hasTransition###
 ###contains###
@@ -215,6 +211,8 @@ not available yet
 ###inDOM###
 ###hasFocus###
 ###hasFocusInside###
+###hasFocusInside###
+###isItag###
 
 
 ##Storing private data##
