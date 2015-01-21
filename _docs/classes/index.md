@@ -166,8 +166,42 @@ var Square = Rectangle.subClass(
 
 #Reconfigure Classes#
 
-Existing Classes cannot have their constructor or their inherited Class being redefined (just define a new Class in those cases). However, they can have their prototype-properties being redefined, extended, or removed.
+Existing Classes cannot have their inherited (parent) Class being redefined (just define a new Class in those cases). However, they can have their constructor redefined, or prototype-properties being redefined, extended, or removed.
 
+
+##setConstructor##
+
+Re-defines the constructor of an existing Class. From the point this change is made, any new instance will use this constructor. This also counts for sub-classes. `setConstructor` accepts the new constructor as its first argument, and optional a second boolean argument to specify if the constructor should be chained (invoking its parent constructor automaticly).
+
+####Example setConstructor####
+
+```js
+var ClassA, ClassB, ClassC, c;
+
+ClassA = Classes.createClass(function(x) {
+    this.x = x;
+});
+ClassB = ClassA.subClass(function(x, y) {
+    this.y = y;
+}, false);
+ClassC = ClassB.subClass(function(x, y, z) {
+    this.z = z;
+});
+
+c = new B(1,2,3);
+// c.x === undefined
+// c.y === 2
+// c.z === 3
+
+B.setConstructor(function(x, y) {
+    this.y = 3*y;
+});
+
+c = new B(1,2,3);
+// c.x === 1
+// c.y === 6
+// c.z === 3
+```
 
 ##mergePrototypes##
 
