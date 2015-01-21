@@ -309,7 +309,7 @@
             
                 <li class="arg">
                     
-                        <code>map</code>
+                        <code>prototypes</code>
                     
                 </li>
             
@@ -361,10 +361,10 @@
     </div>
 
     <div class="description">
-        <p>Merges the given map of properties into the <code>prototype</code> of the Class.</p>
+        <p>Merges the given prototypes of properties into the <code>prototype</code> of the Class.</p>
 <p><strong>Note1 </strong> to be used on instances --&gt; ONLY on Classes
 <strong>Note2 </strong> properties with getters and/or unwritable will NOT be merged</p>
-<p>The members in the hash map will become members with
+<p>The members in the hash prototypes will become members with
 instances of the merged class.</p>
 <p>By default, this method will not override existing prototype members,
 unless the second argument <code>force</code> is true.</p>
@@ -379,14 +379,14 @@ unless the second argument <code>force</code> is true.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">map</code>
+                        <code class="param-name">prototypes</code>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>Hash map of properties to add to the prototype of this object</p>
+                        <p>Hash prototypes of properties to add to the prototype of this object</p>
 
                     </div>
 
@@ -564,13 +564,7 @@ is executed with.</p>
             
                 <li class="arg">
                     
-                        <code>map</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>force</code>
+                        <code>properties</code>
                     
                 </li>
             
@@ -616,13 +610,7 @@ is executed with.</p>
     </div>
 
     <div class="description">
-        <p>Merges the given map of properties into the <code>prototype</code> of the Class.</p>
-<p><strong>Note1 </strong> to be used on instances --&gt; ONLY on Classes
-<strong>Note2 </strong> properties with getters and/or unwritable will NOT be merged</p>
-<p>The members in the hash map will become members with
-instances of the merged class.</p>
-<p>By default, this method will not override existing prototype members,
-unless the second argument <code>force</code> is true.</p>
+        <p>Removes the specified prototypes from the Class.</p>
 
     </div>
 
@@ -634,30 +622,14 @@ unless the second argument <code>force</code> is true.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">map</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <code class="param-name">properties</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>Hash map of properties to add to the prototype of this object</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">force</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>If true, existing members will be overwritten</p>
+                        <p>Hash of properties to be removed from the Class</p>
 
                     </div>
 
@@ -730,7 +702,7 @@ unless the second argument <code>force</code> is true.</p>
             
         
         
-        <a href="../files/src_js-ext_extra_classes.js.html#l205"><code>src&#x2F;js-ext&#x2F;extra&#x2F;classes.js:205</code></a>
+        <a href="../files/src_js-ext_extra_classes.js.html#l198"><code>src&#x2F;js-ext&#x2F;extra&#x2F;classes.js:198</code></a>
         
         </p>
 
@@ -871,7 +843,7 @@ unless the second argument <code>force</code> is true.</p>
             
         
         
-        <a href="../files/src_js-ext_extra_classes.js.html#l227"><code>src&#x2F;js-ext&#x2F;extra&#x2F;classes.js:227</code></a>
+        <a href="../files/src_js-ext_extra_classes.js.html#l220"><code>src&#x2F;js-ext&#x2F;extra&#x2F;classes.js:220</code></a>
         
         </p>
 

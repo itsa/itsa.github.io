@@ -9546,12 +9546,13 @@ var NAME = '[focusmanager]: ',
     async = require('utils').async,
     createHashMap = require('js-ext/extra/hashmap.js').createMap,
     DEFAULT_SELECTOR = 'input, button, select, textarea, .focusable',
-    SPECIAL_KEYS = createHashMap({
+    // SPECIAL_KEYS needs to be a native Object --> we need .some()
+    SPECIAL_KEYS = {
         shift: 'shiftKey',
         ctrl: 'ctrlKey',
         cmd: 'metaKey',
         alt: 'altKey'
-    }),
+    },
     DEFAULT_KEYUP = 'shift+9',
     DEFAULT_KEYDOWN = '9',
     FM_SELECTION = 'fm-selection',
@@ -11163,30 +11164,30 @@ require('../lib/object.js');
     defineProperties(Function.prototype, {
 
         /**
-         * Merges the given map of properties into the `prototype` of the Class.
+         * Merges the given prototypes of properties into the `prototype` of the Class.
          *
          * **Note1 ** to be used on instances --> ONLY on Classes
          * **Note2 ** properties with getters and/or unwritable will NOT be merged
          *
-         * The members in the hash map will become members with
+         * The members in the hash prototypes will become members with
          * instances of the merged class.
          *
          * By default, this method will not override existing prototype members,
          * unless the second argument `force` is true.
          *
          * @method mergePrototypes
-         * @param map {Object} Hash map of properties to add to the prototype of this object
+         * @param prototypes {Object} Hash prototypes of properties to add to the prototype of this object
          * @param force {Boolean}  If true, existing members will be overwritten
          * @chainable
          */
-        mergePrototypes: function (map, force) {
+        mergePrototypes: function (prototypes, force) {
             var instance, proto, names, l, i, replaceMap, protectedMap, name, nameInProto, finalName, propDescriptor;
-            if (!map) {
+            if (!prototypes) {
                 return;
             }
             instance = this; // the Class
             proto = instance.prototype;
-            names = Object.getOwnPropertyNames(map);
+            names = Object.getOwnPropertyNames(prototypes);
             l = names.length;
             i = -1;
             replaceMap = arguments[2] || REPLACE_CLASS_METHODS; // hidden feature, used by itags
@@ -11198,16 +11199,16 @@ require('../lib/object.js');
                 nameInProto = (finalName in proto);
                 if (!PROTO_RESERVED_NAMES[finalName] && !protectedMap[finalName] && (!nameInProto || force)) {
                     // if nameInProto: set the property, but also backup for chaining using $$orig
-                    propDescriptor = Object.getOwnPropertyDescriptor(map, name);
+                    propDescriptor = Object.getOwnPropertyDescriptor(prototypes, name);
                     if (!propDescriptor.writable) {
                         console.warn(NAME+'mergePrototypes will set property of '+name+'without its property-descriptor: for it is an unwritable property.');
-                        proto[finalName] = map[name];
+                        proto[finalName] = prototypes[name];
                     }
                     else {
-                        // adding map[name] into $$orig:
+                        // adding prototypes[name] into $$orig:
                         instance.$$orig[finalName] || (instance.$$orig[finalName]=[]);
-                        instance.$$orig[finalName][instance.$$orig[finalName].length] = map[name];
-                        if (typeof map[name] === 'function') {
+                        instance.$$orig[finalName][instance.$$orig[finalName].length] = prototypes[name];
+                        if (typeof prototypes[name] === 'function') {
         /*jshint -W083 */
                             propDescriptor.value = (function (originalMethodName, finalMethodName) {
                                 return function () {
@@ -11225,7 +11226,7 @@ require('../lib/object.js');
                                     context.__classCarier__ = null;
 
                                     context.__origProp__ = finalMethodName;
-                                    returnValue = map[originalMethodName].apply(context, arguments);
+                                    returnValue = prototypes[originalMethodName].apply(context, arguments);
                                     context.__origProp__ = origPropBkp;
 
                                     context.__classCarier__ = classCarierBkp;
@@ -11248,26 +11249,19 @@ require('../lib/object.js');
         },
 
         /**
-         * Merges the given map of properties into the `prototype` of the Class.
+         * Removes the specified prototypes from the Class.
          *
-         * **Note1 ** to be used on instances --> ONLY on Classes
-         * **Note2 ** properties with getters and/or unwritable will NOT be merged
-         *
-         * The members in the hash map will become members with
-         * instances of the merged class.
-         *
-         * By default, this method will not override existing prototype members,
-         * unless the second argument `force` is true.
          *
          * @method removePrototypes
-         * @param map {Object} Hash map of properties to add to the prototype of this object
-         * @param force {Boolean}  If true, existing members will be overwritten
+         * @param properties {String|Array} Hash of properties to be removed from the Class
          * @chainable
          */
         removePrototypes: function (properties) {
-            var proto = this.prototype;
+            var proto = this.prototype,
+                replaceMap = arguments[1] || REPLACE_CLASS_METHODS; // hidden feature, used by itags
             Array.isArray(properties) || (properties=[properties]);
             properties.forEach(function(prop) {
+                prop = replaceMap[prop] || prop;
                 delete proto[prop];
             });
             return this;
