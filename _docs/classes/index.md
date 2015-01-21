@@ -115,18 +115,7 @@ If you don't want the inherited Class's constructor to be invoked, you can set t
 
 #Access to super-Class properties#
 
-####Example redefine constructor####
-```js
-var Circle = Shape.subClass(
-    function (radius, x, y) {
-        // we will manually invoke the super-constructor
-        this.$superProp('constructor', x, y);
-        this.radius = radius || 1;
-    }, null, true
-);
-```
-
-###access parent properties###
+##access parent properties##
 
 When subClassing, it is easy to access properties of its parent by invoke `this.$superProp(propertyName, args)`. Any property can be invoked: when it's a method, you can pass through its arguments as from the second argument-position. <u>`$superProp` is avialabe on the context `"this"`</u>.
 
@@ -139,7 +128,7 @@ var Circle = Shape.subClass(
         // we will manually invoke the super-constructor
         this.$superProp('constructor', x, y);
         this.radius = radius || 1;
-    }, null, true
+    }, null, false
 );
 ```
 
@@ -159,7 +148,7 @@ var Square = Rectangle.subClass(
     function (x, y, l) {
         this;$super.$superProp('constructor', x, y);
         this.l = l || 0;
-    }, null, true
+    }, null, false
 );
 ```
 

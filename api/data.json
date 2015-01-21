@@ -10839,7 +10839,7 @@
         },
         {
             "file": "src/focusmanager/focusmanager.js",
-            "line": 330,
+            "line": 331,
             "description": "In case of a manual focus (node.focus()) the node will fire an `manualfocus`-event\nwhich can be prevented.",
             "itemtype": "event",
             "name": "manualfocus",
@@ -11940,13 +11940,13 @@
         {
             "file": "src/js-ext/extra/classes.js",
             "line": 94,
-            "description": "Merges the given map of properties into the `prototype` of the Class.\n\n**Note1 ** to be used on instances --> ONLY on Classes\n**Note2 ** properties with getters and/or unwritable will NOT be merged\n\nThe members in the hash map will become members with\ninstances of the merged class.\n\nBy default, this method will not override existing prototype members,\nunless the second argument `force` is true.",
+            "description": "Merges the given prototypes of properties into the `prototype` of the Class.\n\n**Note1 ** to be used on instances --> ONLY on Classes\n**Note2 ** properties with getters and/or unwritable will NOT be merged\n\nThe members in the hash prototypes will become members with\ninstances of the merged class.\n\nBy default, this method will not override existing prototype members,\nunless the second argument `force` is true.",
             "itemtype": "method",
             "name": "mergePrototypes",
             "params": [
                 {
-                    "name": "map",
-                    "description": "Hash map of properties to add to the prototype of this object",
+                    "name": "prototypes",
+                    "description": "Hash prototypes of properties to add to the prototype of this object",
                     "type": "Object"
                 },
                 {
@@ -11963,19 +11963,14 @@
         {
             "file": "src/js-ext/extra/classes.js",
             "line": 179,
-            "description": "Merges the given map of properties into the `prototype` of the Class.\n\n**Note1 ** to be used on instances --> ONLY on Classes\n**Note2 ** properties with getters and/or unwritable will NOT be merged\n\nThe members in the hash map will become members with\ninstances of the merged class.\n\nBy default, this method will not override existing prototype members,\nunless the second argument `force` is true.",
+            "description": "Removes the specified prototypes from the Class.",
             "itemtype": "method",
             "name": "removePrototypes",
             "params": [
                 {
-                    "name": "map",
-                    "description": "Hash map of properties to add to the prototype of this object",
-                    "type": "Object"
-                },
-                {
-                    "name": "force",
-                    "description": "If true, existing members will be overwritten",
-                    "type": "Boolean"
+                    "name": "properties",
+                    "description": "Hash of properties to be removed from the Class",
+                    "type": "String|Array"
                 }
             ],
             "chainable": 1,
@@ -11985,7 +11980,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 205,
+            "line": 198,
             "description": "Redefines the constructor fo the Class",
             "itemtype": "method",
             "name": "setConstructor",
@@ -12017,7 +12012,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 227,
+            "line": 220,
             "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
             "example": [
                 "\n\n var Circle = Shape.subClass(\n     function (x, y, r) {\n         // arguments will automaticly be passed through to Shape's constructor\n         this.r = r;\n     },\n     {\n         area: function () {\n             return this.r * this.r * Math.PI;\n         }\n     }\n );"
@@ -12054,7 +12049,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 445,
+            "line": 438,
             "description": "Returns a base class with the given constructor and prototype methods",
             "itemtype": "method",
             "name": "createClass",
@@ -12083,7 +12078,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 460,
+            "line": 453,
             "description": "Returns a base class with the given constructor and prototype methods",
             "itemtype": "method",
             "name": "createClass",
