@@ -11986,6 +11986,38 @@
         {
             "file": "src/js-ext/extra/classes.js",
             "line": 205,
+            "description": "Redefines the constructor fo the Class",
+            "itemtype": "method",
+            "name": "setConstructor",
+            "params": [
+                {
+                    "name": "constructorFn",
+                    "description": "The function that will serve as the new constructor for the class.\n       If `undefined` defaults to `NOOP`",
+                    "type": "Function",
+                    "optional": true
+                },
+                {
+                    "name": "prototypes",
+                    "description": "Hash map of properties to be added to the prototype of the new class.",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "chainConstruct",
+                    "description": "Whether -during instance creation- to automaticly construct in the complete hierarchy with the given constructor arguments.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
+                }
+            ],
+            "chainable": 1,
+            "class": "Function",
+            "module": "js-ext",
+            "submodule": "lib/function.js"
+        },
+        {
+            "file": "src/js-ext/extra/classes.js",
+            "line": 227,
             "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
             "example": [
                 "\n\n var Circle = Shape.subClass(\n     function (x, y, r) {\n         // arguments will automaticly be passed through to Shape's constructor\n         this.r = r;\n     },\n     {\n         area: function () {\n             return this.r * this.r * Math.PI;\n         }\n     }\n );"
@@ -11995,7 +12027,7 @@
             "params": [
                 {
                     "name": "constructor",
-                    "description": "The function that will serve as constructor for the new class.\n       If `undefined` defaults to `Object.constructor`",
+                    "description": "The function that will serve as constructor for the new class.\n       If `undefined` defaults to `NOOP`",
                     "type": "Function",
                     "optional": true
                 },
@@ -12022,7 +12054,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 439,
+            "line": 445,
             "description": "Returns a base class with the given constructor and prototype methods",
             "itemtype": "method",
             "name": "createClass",
@@ -12051,7 +12083,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 454,
+            "line": 460,
             "description": "Returns a base class with the given constructor and prototype methods",
             "itemtype": "method",
             "name": "createClass",

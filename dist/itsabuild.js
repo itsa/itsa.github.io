@@ -11200,7 +11200,7 @@ require('../lib/object.js');
                     // if nameInProto: set the property, but also backup for chaining using $$orig
                     propDescriptor = Object.getOwnPropertyDescriptor(map, name);
                     if (!propDescriptor.writable) {
-                        console.warn(NAME+'mergePrototypes will set property of '+NAME+'without its property-descriptor: for it is an unwritable property.');
+                        console.warn(NAME+'mergePrototypes will set property of '+name+'without its property-descriptor: for it is an unwritable property.');
                         proto[finalName] = map[name];
                     }
                     else {
@@ -11274,6 +11274,28 @@ require('../lib/object.js');
         },
 
         /**
+         * Redefines the constructor fo the Class
+         *
+         * @method setConstructor
+         * @param [constructorFn] {Function} The function that will serve as the new constructor for the class.
+         *        If `undefined` defaults to `NOOP`
+         * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
+         * @param [chainConstruct=true] {Boolean} Whether -during instance creation- to automaticly construct in the complete hierarchy with the given constructor arguments.
+         * @chainable
+         */
+        setConstructor: function(constructorFn, chainConstruct) {
+            var instance = this;
+            if (typeof constructorFn==='boolean') {
+                chainConstruct = constructorFn;
+                constructorFn = null;
+            }
+            (typeof chainConstruct === 'boolean') || (chainConstruct=DEFAULT_CHAIN_CONSTRUCT);
+            instance.$$constrFn = constructorFn || NOOP;
+            instance.$$chainConstructed = chainConstruct ? true : false;
+            return instance;
+        },
+
+        /**
          * Returns a newly created class inheriting from this class
          * using the given `constructor` with the
          * prototypes listed in `prototypes` merged in.
@@ -11300,7 +11322,7 @@ require('../lib/object.js');
          *
          * @method subClass
          * @param [constructor] {Function} The function that will serve as constructor for the new class.
-         *        If `undefined` defaults to `Object.constructor`
+         *        If `undefined` defaults to `NOOP`
          * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
          * @param [chainConstruct=true] {Boolean} Whether -during instance creation- to automaticly construct in the complete hierarchy with the given constructor arguments.
          * @return the new class.
@@ -11309,7 +11331,7 @@ require('../lib/object.js');
 
             var instance = this,
                 constructorClosure = {},
-                baseProt, proto;
+                baseProt, proto, constrFn;
             if (typeof constructor === 'boolean') {
                 constructor = null;
                 prototypes = null;
@@ -11331,43 +11353,26 @@ require('../lib/object.js');
 
             (typeof chainConstruct === 'boolean') || (chainConstruct=DEFAULT_CHAIN_CONSTRUCT);
 
-            if (!constructor) {
-                if (chainConstruct) {
-                    constructor = NOOP;
-                }
-                else {
-                    constructor = (function(originalConstructor) {
-                        return function() {
-                            var context = this;
+            constrFn = constructor || NOOP;
+            constructor = function() {
+                constructorClosure.constructor.$$constrFn.apply(this, arguments);
+            };
 
-                            context.__classCarier__ = constructorClosure.constructor;
-                            context.__origProp__ = 'constructor';
-                            originalConstructor.apply(context, arguments);
-
-                        };
-                    })(instance);
-                }
-            }
-            if (chainConstruct) {
-                constructor = (function(originalConstructor) {
-                    return function() {
-                        var context = this;
-
+            constructor = (function(originalConstructor) {
+                return function() {
+                    var context = this;
+                    if (constructorClosure.constructor.$$chainConstructed) {
                         context.__classCarier__ = constructorClosure.constructor.$$super.constructor;
-
                         context.__origProp__ = 'constructor';
                         context.__classCarier__.apply(context, arguments);
-
                         context.$origMethods = constructorClosure.constructor.$$orig.constructor;
+                    }
+                    context.__classCarier__ = constructorClosure.constructor;
+                    context.__origProp__ = 'constructor';
+                    originalConstructor.apply(context, arguments);
 
-                        context.__classCarier__ = constructorClosure.constructor;
-
-                        context.__origProp__ = 'constructor';
-                        originalConstructor.apply(context, arguments);
-
-                    };
-                })(constructor);
-            }
+                };
+            })(constructor);
 
             baseProt = instance.prototype;
             proto = Object.create(baseProt);
@@ -11379,6 +11384,7 @@ require('../lib/object.js');
             constructor.$$orig = {
                 constructor: constructor
             };
+            constructor.$$constrFn = constrFn;
             constructorClosure.constructor = constructor;
             prototypes && constructor.mergePrototypes(prototypes, true);
             return constructor;
