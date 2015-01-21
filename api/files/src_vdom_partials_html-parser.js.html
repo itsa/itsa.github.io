@@ -470,6 +470,7 @@ module.exports = function (window) {
                         }
 
                         tag = vnode.tag;
+                        vnode.isItag = ((tag[0]===&#x27;I&#x27;) &amp;&amp; (tag[1]===&#x27;-&#x27;));
                         vnode.ns = xmlNS[tag] || nameSpace;
                         vnode.domNode = vnode.ns ? DOCUMENT.createElementNS(vnode.ns, tag.toLowerCase()) : DOCUMENT.createElement(tag);
 
@@ -483,7 +484,7 @@ module.exports = function (window) {
                             vnode.isVoid = false;
                         }
                         else {
-                            vnode.isVoid = ((tag[0]===&#x27;I&#x27;) &amp;&amp; (tag[1]===&#x27;-&#x27;)) ? false : !(new RegExp(&#x27;&lt;/&#x27;+tag+&#x27;&gt;&#x27;, &#x27;i&#x27;)).test(htmlString);
+                            vnode.isVoid = vnode.isItag ? false : !(new RegExp(&#x27;&lt;/&#x27;+tag+&#x27;&gt;&#x27;, &#x27;i&#x27;)).test(htmlString);
                             vnode.isVoid ? (voidElements[tag]=true) : (nonVoidElements[tag]=true);
                         }
                         insideTagDefinition = true;

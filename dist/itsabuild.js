@@ -9567,6 +9567,7 @@ module.exports = function (window) {
 
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
+    require('window-ext')(window);
 /*jshint boss:true */
     if (FocusManager=window._ITSAmodules.FocusManager) {
 /*jshint boss:false */
@@ -9862,7 +9863,14 @@ module.exports = function (window) {
     */
     Event.defineEvent('UI:manualfocus')
          .defaultFn(function(e) {
-             e.target._focus();
+             var node = e.target,
+                 leftScroll = window.getScrollLeft(),
+                 topScroll = window.getScrollTop();
+             node._focus();
+             // reset winscroll:
+             window.scrollTo(leftScroll, topScroll);
+             // make sure the node is inside the viewport:
+             // node.forceIntoView();
          });
 
     (function(HTMLElementPrototype) {
@@ -9878,7 +9886,7 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"event-dom":15,"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"polyfill":50,"utils":53,"vdom":66}],24:[function(require,module,exports){
+},{"event-dom":15,"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"polyfill":50,"utils":53,"vdom":66,"window-ext":67}],24:[function(require,module,exports){
 
 "use strict";
 
@@ -15232,21 +15240,21 @@ module.exports = function (window) {
     };
 
     /**
-     * Returns the an Array with all Elements that have a tagName `i-parcel-*`
+     * Returns the an Array with all itag-Elements
      *
-     * @method getParcels
+     * @method getItags
      * @return {Array}
      *
      */
-    DOCUMENT.getParcels = function() {
+    DOCUMENT.getItags = function() {
         var instance = this,
             findChildren;
-        // i-parcel elements can only exists when the window.ITAGS are defined (by itags.core)
+        // i-tag elements can only exists when the window.ITAGS are defined (by itags.core)
         if (!window.ITAGS) {
             return [];
         }
-        if (instance._parcelList) {
-            return instance._parcelList;
+        if (instance._itagList) {
+            return instance._itagList;
         }
         // when not returned: it would be the first time --> we setup the current list
         // the quickest way is by going through the vdom and inspect the tagNames ourselves:
@@ -15256,13 +15264,13 @@ module.exports = function (window) {
                 i, vChild;
             for (i=0; i<len; i++) {
                 vChild = vChildren[i];
-                vChild.tag.startsWith('I-PARCEL-') && (DOCUMENT._parcelList[DOCUMENT._parcelList.length]=vChild.domNode);
+                vChild.isItag && (DOCUMENT._itagList[DOCUMENT._itagList.length]=vChild.domNode);
                 findChildren(vChild);
             }
         };
-        Object.protectedProp(instance, '_parcelList', []);
+        Object.protectedProp(instance, '_itagList', []);
         findChildren(instance.getElement('body').vnode);
-        return instance._parcelList;
+        return instance._itagList;
     };
 
     /**
@@ -17092,7 +17100,7 @@ module.exports = function (window) {
         * @since 0.0.2
         */
         ElementPrototype.forceIntoView = function(notransition, rectangle) {
-            // TODO: 'notransition' can be calculated with this.getTransition(left) this.getTransition(left) and this.getTransform(translateX) and this.getTransform(translateY)
+            // TODO: 'notransition' can be calculated with this.getTransition(left) this.getTransition(left)
             // TODO: transitioned: http://wibblystuff.blogspot.nl/2014/04/in-page-smooth-scroll-using-css3.html
             console.log(NAME, 'forceIntoView');
             var instance = this,
@@ -17803,6 +17811,17 @@ module.exports = function (window) {
         ElementPrototype._insertBefore = ElementPrototype.insertBefore;
         ElementPrototype.insertBefore = function(domNode, refDomNode, escape) {
             return this.prepend(domNode, escape, refDomNode);
+        };
+
+        /**
+         * Whether the element is an Itag-element
+         *
+         * @method isItag
+         * @return {Boolean}
+         * @since 0.0.1
+         */
+        ElementPrototype.isItag = function() {
+            return this.vnode.isItag;
         };
 
         /**
@@ -20523,6 +20542,7 @@ module.exports = function (window) {
                         }
 
                         tag = vnode.tag;
+                        vnode.isItag = ((tag[0]==='I') && (tag[1]==='-'));
                         vnode.ns = xmlNS[tag] || nameSpace;
                         vnode.domNode = vnode.ns ? DOCUMENT.createElementNS(vnode.ns, tag.toLowerCase()) : DOCUMENT.createElement(tag);
 
@@ -20536,7 +20556,7 @@ module.exports = function (window) {
                             vnode.isVoid = false;
                         }
                         else {
-                            vnode.isVoid = ((tag[0]==='I') && (tag[1]==='-')) ? false : !(new RegExp('</'+tag+'>', 'i')).test(htmlString);
+                            vnode.isVoid = vnode.isItag ? false : !(new RegExp('</'+tag+'>', 'i')).test(htmlString);
                             vnode.isVoid ? (voidElements[tag]=true) : (nonVoidElements[tag]=true);
                         }
                         insideTagDefinition = true;
@@ -20649,6 +20669,7 @@ module.exports = function (window) {
             if (nodeType===1) {
                 // ElementNode
                 tag = vnode.tag = domNode.nodeName; // is always uppercase
+                vnode.isItag = ((tag[0]==='I') && (tag[1]==='-'));
                 vnode.ns = xmlNS[tag] || vnode.ns;
 
                 vnode.attrs = {};
@@ -21949,7 +21970,7 @@ module.exports = function (window) {
                 (size===instance.vChildNodes.length) || (domNode=instance.vChildNodes[instance.vChildNodes.length-1].domNode);
             }
             if (VNode.nodeType===1) {
-                DOCUMENT._parcelList && VNode.tag.startsWith('I-PARCEL-') && !DOCUMENT._parcelList.contains(domNode) && DOCUMENT._parcelList.push(domNode);
+                DOCUMENT._itagList && VNode.isItag && !DOCUMENT._itagList.contains(domNode) && DOCUMENT._itagList.push(domNode);
                 VNode._emit(EV_INSERTED);
             }
             return domNode;
@@ -22023,9 +22044,9 @@ module.exports = function (window) {
                 later(function() {
                     instance._cleanData();
                     if (instance.nodeType===1) {
-                        // if vnode is part of DOCUMENT._parcelList then remove it
-                        if (DOCUMENT._parcelList && instance.tag.startsWith('I-PARCEL-')) {
-                            DOCUMENT._parcelList.remove(instance.domNode);
+                        // if vnode is part of DOCUMENT._itagList then remove it
+                        if (DOCUMENT._itagList && instance.isItag) {
+                            DOCUMENT._itagList.remove(instance.domNode);
                         }
                         // _destroy all its vChildNodes
                         if (vChildNodes) {
@@ -22196,7 +22217,7 @@ module.exports = function (window) {
                 instance.domNode._insertBefore(domNode, refVNode.domNode);
                 (newVNode.nodeType===3) && instance._normalize();
                 if (newVNode.nodeType===1) {
-                    DOCUMENT._parcelList && newVNode.tag.startsWith('I-PARCEL-') && !DOCUMENT._parcelList.contains(domNode) && DOCUMENT._parcelList.push(domNode);
+                    DOCUMENT._itagList && newVNode.isItag && !DOCUMENT._itagList.contains(domNode) && DOCUMENT._itagList.push(domNode);
                     newVNode._emit(EV_INSERTED);
                 }
             }
@@ -22578,7 +22599,7 @@ module.exports = function (window) {
                                 newChild._setChildNodes(bkpChildNodes);
                                 newChild.id && (nodeids[newChild.id]=newChild.domNode);
                                 oldChild._replaceAtParent(newChild);
-                                DOCUMENT._parcelList && newChild.tag.startsWith('I-PARCEL-') && !DOCUMENT._parcelList.contains(newChild.domNode) && DOCUMENT._parcelList.push(newChild.domNode);
+                                DOCUMENT._itagList && newChild.isItag && !DOCUMENT._itagList.contains(newChild.domNode) && DOCUMENT._itagList.push(newChild.domNode);
                                 newChild._emit(EV_INSERTED);
                             }
                             else {
@@ -22629,10 +22650,10 @@ module.exports = function (window) {
                             newChild._setAttrs(bkpAttrs);
                             newChild._setChildNodes(bkpChildNodes);
                             newChild.id && (nodeids[newChild.id]=newChild.domNode);
-                            oldChild.isVoid = newChild.isVoid;
-                            delete oldChild.text;
+oldChild.isVoid = newChild.isVoid;
+delete oldChild.text;
                             instance._emit(EV_CONTENT_CHANGE);
-                            DOCUMENT._parcelList && newChild.tag.startsWith('I-PARCEL-') && !DOCUMENT._parcelList.contains(newChild.domNode) && DOCUMENT._parcelList.push(newChild.domNode);
+                            DOCUMENT._itagList && newChild.isItag && !DOCUMENT._itagList.contains(newChild.domNode) && DOCUMENT._itagList.push(newChild.domNode);
                             newChild._emit(EV_INSERTED);
                             break;
                         case 5: // oldNodeType==TextNode, newNodeType==TextNode
@@ -22682,7 +22703,7 @@ module.exports = function (window) {
                         domNode._appendChild(newChild.domNode);
                         newChild._setAttrs(bkpAttrs);
                         newChild._setChildNodes(bkpChildNodes);
-                        DOCUMENT._parcelList && newChild.tag.startsWith('I-PARCEL-') && !DOCUMENT._parcelList.contains(newChild.domNode) && DOCUMENT._parcelList.push(newChild.domNode);
+                        DOCUMENT._itagList && newChild.isItag && !DOCUMENT._itagList.contains(newChild.domNode) && DOCUMENT._itagList.push(newChild.domNode);
                         newChild._emit(EV_INSERTED);
                         break;
                     case 3: // TextNode
@@ -22919,7 +22940,7 @@ module.exports = function (window) {
                             // vnode.vChildNodes = bkpChildNodes;
                             vnode.id && (nodeids[vnode.id]=vnode.domNode);
                             instance._replaceAtParent(vnode);
-                            DOCUMENT._parcelList && vnode.tag.startsWith('I-PARCEL-') && !DOCUMENT._parcelList.contains(vnode.domNode) && DOCUMENT._parcelList.push(vnode.domNode);
+                            DOCUMENT._itagList && vnode.isItag && !DOCUMENT._itagList.contains(vnode.domNode) && DOCUMENT._itagList.push(vnode.domNode);
                             vnode._emit(EV_INSERTED);
                         }
                         else {
@@ -22932,7 +22953,7 @@ module.exports = function (window) {
                         vnode.domNode.nodeValue = vnode.text;
                         vParent.domNode._replaceChild(vnode.domNode, instance.domNode);
                         instance._replaceAtParent(vnode);
-                        DOCUMENT._parcelList && vnode.tag.startsWith('I-PARCEL-') && !DOCUMENT._parcelList.contains(vnode.domNode) && DOCUMENT._parcelList.push(vnode.domNode);
+                        DOCUMENT._itagList && vnode.isItag && !DOCUMENT._itagList.contains(vnode.domNode) && DOCUMENT._itagList.push(vnode.domNode);
                         vnode._emit(EV_INSERTED);
                     }
                 }
@@ -22945,7 +22966,7 @@ module.exports = function (window) {
                             vnode.attrs = {}; // reset, to force defined by `_setAttrs`
                             vnode.vChildNodes = []; // reset to current state, to force defined by `_setAttrs`
                             isLastChildNode ? vParent.domNode._appendChild(vnode.domNode) : vParent.domNode._insertBefore(vnode.domNode, refDomNode);
-                            DOCUMENT._parcelList && vnode.tag.startsWith('I-PARCEL-') && !DOCUMENT._parcelList.contains(vnode.domNode) && DOCUMENT._parcelList.push(vnode.domNode);
+                            DOCUMENT._itagList && vnode.isItag && !DOCUMENT._itagList.contains(vnode.domNode) && DOCUMENT._itagList.push(vnode.domNode);
                             vnode._emit(EV_INSERTED);
                             vnode._setAttrs(bkpAttrs);
                             vnode._setChildNodes(bkpChildNodes);
