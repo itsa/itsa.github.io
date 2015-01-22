@@ -2055,6 +2055,7 @@ module.exports = function (window) {
                 hidePromise = instance.getData(&#x27;_hideNodeBusy&#x27;),
                 originalOpacity, hasOriginalOpacity, promise, freezedOpacity, fromOpacity;
 
+            instance.setData(&#x27;nodeShowed&#x27;, false); // for any routine who wants to know
             originalOpacity = instance.getData(&#x27;_showNodeOpacity&#x27;);
             if (!originalOpacity &amp;&amp; !showPromise &amp;&amp; !hidePromise) {
                 originalOpacity = parseFloat(instance.getInlineStyle(&#x27;opacity&#x27;));
@@ -2063,6 +2064,10 @@ module.exports = function (window) {
             hasOriginalOpacity = !!originalOpacity;
 
             showPromise &amp;&amp; showPromise.freeze();
+            if (showPromise) {
+                showPromise.freeze();
+                instance.removeData(&#x27;_showNodeBusy&#x27;);
+            }
             hidePromise &amp;&amp; hidePromise.freeze();
 
             if (duration) {
@@ -3686,6 +3691,7 @@ module.exports = function (window) {
                 hidePromise = instance.getData(&#x27;_hideNodeBusy&#x27;),
                 originalOpacity, hasOriginalOpacity, promise, freezedOpacity, finalValue;
 
+            instance.setData(&#x27;nodeShowed&#x27;, true); // for any routine who wants to know
             originalOpacity = instance.getData(&#x27;_showNodeOpacity&#x27;);
             if (!originalOpacity &amp;&amp; !showPromise &amp;&amp; !hidePromise) {
                 originalOpacity = instance.getInlineStyle(&#x27;opacity&#x27;);
@@ -3694,7 +3700,10 @@ module.exports = function (window) {
             hasOriginalOpacity = !!originalOpacity;
 
             showPromise &amp;&amp; showPromise.freeze();
-            hidePromise &amp;&amp; hidePromise.freeze();
+            if (hidePromise) {
+                hidePromise.freeze();
+                instance.removeData(&#x27;_hideNodeBusy&#x27;);
+            }
 
             if (duration) {
 
@@ -3704,10 +3713,8 @@ module.exports = function (window) {
                 finalValue = (forceFull || !hasOriginalOpacity) ? 1 : originalOpacity;
                 if (showPromise || hidePromise) {
                     freezedOpacity = instance.getInlineStyle(&#x27;opacity&#x27;);
-console.warn(&#x27;freezedOpacity &#x27;+freezedOpacity);
                     duration = (finalValue&gt;0) ? Math.min(1, ((finalValue-freezedOpacity)/finalValue))*duration : 0;
                 }
-console.warn(instance.getInlineStyle(&#x27;opacity&#x27;)+&#x27; | &#x27;+finalValue +&#x27; | &#x27;+ duration);
                 promise = instance.transition({property: &#x27;opacity&#x27;, value: finalValue, duration: duration});
                 instance.setData(&#x27;_showNodeBusy&#x27;, promise);
 
