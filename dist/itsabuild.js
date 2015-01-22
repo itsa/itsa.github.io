@@ -6991,13 +6991,13 @@ module.exports = function (window) {
         // eventobject = eventobject from our Eventsystem, which get returned by calling `emit()`
 
         subscribers = _getSubscribers(e, true, subs, wildcard_named_subs, named_wildcard_subs, wildcard_wildcard_subs);
-        eventobject = Event._emit(e.target, customEvent, e, subscribers, [], _preProcessor);
+        eventobject = Event._emit(e.target, customEvent, e, subscribers, [], _preProcessor, false, true);
 
         // now check outside subscribers
         subsOutside = allSubscribers[customEvent+OUTSIDE];
         wildcard_named_subsOutside = allSubscribers['*:'+eventName+OUTSIDE];
         subscribers = _getSubscribers(e, true, subsOutside, wildcard_named_subsOutside);
-        eventobjectOutside = Event._emit(e.target, customEvent+OUTSIDE, e, subscribers, [], _preProcessor);
+        eventobjectOutside = Event._emit(e.target, customEvent+OUTSIDE, e, subscribers, [], _preProcessor, false, true);
 
         // if eventobject was preventdefaulted or halted: take appropriate action on
         // the original dom-event. Note: only the original event can caused this, not the outsideevent
@@ -8669,12 +8669,13 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
          *                       It is meant to manipulate the eventobject, something that `event-dom` needs to do
          *                       This function expects 2 arguments: `subscriber` and `eventobject`.
          *                       <b>should not be used</b> other than by any submodule like `event-dom`.
-         * @param [keepPayload] {Boolean} whether `payload` should be used as the ventobject instead of creating a new
+         * @param [keepPayload=false] {Boolean} whether `payload` should be used as the ventobject instead of creating a new
          *                      eventobject and merge payload. <b>should not be used</b> other than by any submodule like `event-dom`.
+         * @param [noFinalize=false] {Boolean} To supress finalization
          * @return {Object|undefined} eventobject or undefined when the event was halted or preventDefaulted.
          * @since 0.0.1
          */
-        _emit: function (emitter, customEvent, payload, beforeSubscribers, afterSubscribers, preProcessor, keepPayload) {
+        _emit: function (emitter, customEvent, payload, beforeSubscribers, afterSubscribers, preProcessor, keepPayload, noFinalize) {
             // NOTE: emit() needs to be synchronous! otherwise we wouldn't be able
             // to preventDefault DOM-events in time.
             var instance = this,
@@ -8759,7 +8760,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                     // in case any subscriber changed e.target inside its filter (event-dom does this),
                     // then we reset e.target to its original:
                     e.sourceTarget && (e.target=e.sourceTarget);
-                    instance._final.some(function(finallySubscriber) {
+                    noFinalize || instance._final.some(function(finallySubscriber) {
                         !e.silent && !e._noRender && !e.status.renderPrevented  && finallySubscriber(e);
                         if (e.status.unSilencable && e.silent) {
                             console.warn(NAME, ' event '+e.emitter+':'+e.type+' cannot made silent: this customEvent is defined as unSilencable');
@@ -14269,7 +14270,7 @@ module.exports.idGenerator = function(namespace, start) {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"polyfill/polyfill-base.js":50}],56:[function(require,module,exports){
-var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible-relative {\n    opacity: 0 !important;\n}\n\n.itsa-invisible *,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],57:[function(require,module,exports){
 "use strict";
 
@@ -15914,6 +15915,7 @@ module.exports = function (window) {
         NO_TRANS2 = NO_TRANS+'2', // needed to prevent removal of NO_TRANS when still needed `notrans`
         INVISIBLE = ITSA_+'invisible',
         INVISIBLE_RELATIVE = INVISIBLE+'-relative',
+        INVISIBLE_UNFOCUSABLE = INVISIBLE+'-unfocusable',
         HIDDEN = ITSA_+'hidden',
         REGEXP_NODE_ID = /^#\S+$/,
         LEFT = 'left',
@@ -16336,7 +16338,7 @@ module.exports = function (window) {
 
             finalNode = node.cloneNode(true);
             finalNode.setClass(NO_TRANS2);
-            finalNode.setClass(INVISIBLE);
+            finalNode.setClass(INVISIBLE_UNFOCUSABLE);
             node.setData(bkpNodeData, finalNode);
 
             startStyle = node.getData(_STARTSTYLE);
@@ -17701,7 +17703,7 @@ module.exports = function (window) {
 
             originalOpacity = instance.getData('_showNodeOpacity');
             if (!originalOpacity && !showPromise && !hidePromise) {
-                originalOpacity = instance.getInlineStyle('opacity');
+                originalOpacity = parseFloat(instance.getInlineStyle('opacity'));
                 instance.setData('_showNodeOpacity', originalOpacity);
             }
             hasOriginalOpacity = !!originalOpacity;
@@ -18117,9 +18119,7 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         ElementPrototype.removeAttr = function(attributeName, silent) {
-            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
-            this.removeAttribute(attributeName);
-            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
+            this.removeAttribute(attributeName, silent);
             return this;
         };
 
@@ -18139,11 +18139,9 @@ module.exports = function (window) {
         ElementPrototype.removeAttrs = function(attributeData, silent) {
             var instance = this;
             Array.isArray(attributeData) || (attributeData=[attributeData]);
-            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             attributeData.forEach(function(item) {
-                instance.removeAttribute(item);
+                instance.removeAttribute(item, silent);
             });
-            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
             return instance;
         };
 
@@ -18154,11 +18152,14 @@ module.exports = function (window) {
         *
         * @method removeAttr
         * @param attributeName {String}
+        * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         * @since 0.0.1
         */
         ElementPrototype._removeAttribute = ElementPrototype.removeAttribute;
-        ElementPrototype.removeAttribute = function(attributeName) {
+        ElementPrototype.removeAttribute = function(attributeName, silent) {
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             this.vnode._removeAttr(attributeName);
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
         };
 
        /**
@@ -18167,10 +18168,11 @@ module.exports = function (window) {
          * @method removeAttributeNS
          * @param nameSpace {String} the namespace where to attribuyte should be set in
          * @param attributeName {String}
+         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         */
         ElementPrototype._removeAttributeNS = ElementPrototype.removeAttributeNS;
-        ElementPrototype.removeAttributeNS = function(nameSpace, attributeName) {
-            this.removeAttribute((nameSpace ? nameSpace+':' : '')+attributeName);
+        ElementPrototype.removeAttributeNS = function(nameSpace, attributeName, silent) {
+            this.removeAttribute((nameSpace ? nameSpace+':' : '')+attributeName, silent);
         };
 
         /**
@@ -18371,8 +18373,8 @@ module.exports = function (window) {
                 clonedElement = instance.cloneNode(true);
                 toStylesExact = vnodeStyles.deepClone();
                 clonedElement.vnode.styles = toStylesExact;
+                clonedElement.setClass(INVISIBLE_UNFOCUSABLE);
                 clonedElement.setAttr(STYLE, clonedElement.vnode.serializeStyles());
-                clonedElement.setClass(INVISIBLE);
                 DOCUMENT.body.append(clonedElement);
                 // clonedElement has `vnodeStyles`, but we change them into `toStylesExact`
 
@@ -18625,9 +18627,7 @@ module.exports = function (window) {
         */
         ElementPrototype.setAttr = function(attributeName, value, silent) {
             var instance = this;
-            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
-            instance.setAttribute(attributeName, value);
-            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
+            instance.setAttribute(attributeName, value, silent);
             return instance;
         };
 
@@ -18639,13 +18639,16 @@ module.exports = function (window) {
          * @method setAttribute
          * @param attributeName {String}
          * @param value {String} the value for the attributeName
+         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         */
         ElementPrototype._setAttribute = ElementPrototype.setAttribute;
-        ElementPrototype.setAttribute = function(attributeName, value) {
+        ElementPrototype.setAttribute = function(attributeName, value, silent) {
             var instance = this,
                 vnode = instance.vnode;
             (value==='') && (value=null);
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             ((value!==null) && (value!==undefined)) ? vnode._setAttr(attributeName, value) : vnode._removeAttr(attributeName);
+            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
         };
 
        /**
@@ -18655,10 +18658,11 @@ module.exports = function (window) {
          * @param nameSpace {String} the namespace where to attribuyte should be set in
          * @param attributeName {String}
          * @param value {String} the value for the attributeName
+         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         */
         ElementPrototype._setAttributeNS = ElementPrototype.setAttributeNS;
-        ElementPrototype.setAttributeNS = function(nameSpace, attributeName, value) {
-            this.setAttribute((nameSpace ? nameSpace+':' : '')+attributeName, value);
+        ElementPrototype.setAttributeNS = function(nameSpace, attributeName, value, silent) {
+            this.setAttribute((nameSpace ? nameSpace+':' : '')+attributeName, value, silent);
         };
 
        /**
@@ -18680,11 +18684,9 @@ module.exports = function (window) {
         ElementPrototype.setAttrs = function(attributeData, silent) {
             var instance = this;
             Array.isArray(attributeData) || (attributeData=[attributeData]);
-            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             attributeData.forEach(function(item) {
-                instance.setAttribute(item.name, item.value);
+                instance.setAttribute(item.name, item.value, silent);
             });
-            silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(false);
             return instance;
         };
 
@@ -18925,7 +18927,7 @@ module.exports = function (window) {
                 });
 
                 // clonedElement has `vnodeStyles`, but we change them into `toStylesExact`
-                clonedElement.setClass(INVISIBLE);
+                clonedElement.setClass(INVISIBLE_UNFOCUSABLE);
                 clonedElement.setAttr(STYLE, clonedElement.vnode.serializeStyles());
                 DOCUMENT.body.append(clonedElement);
 
@@ -19324,7 +19326,7 @@ module.exports = function (window) {
         * @return {this|Promise} fulfilled when the element is ready showing up, or rejected when hidden again (using node.hide) before fully showed.
         * @since 0.0.1
         */
-        ElementPrototype.show = function(duration, forceFull) {
+ElementPrototype.show = function(duration, forceFull) {
             var instance = this,
                 showPromise = instance.getData('_showNodeBusy'),
                 hidePromise = instance.getData('_hideNodeBusy'),
@@ -19411,13 +19413,15 @@ module.exports = function (window) {
         */
         ElementPrototype.transition = function(to, from) {
             var instance = this,
-                currentInlineTransition, transitions, transitionRun, transitionError, promise, resolveHandle, initialStyle, time1,
+                currentInlineTransition, transitions, transitionRun, transitionError, promise, resolveHandle, initialStyle, time1, intermediateInvoked,
                 initialProperties, cleanup, getCurrentProperties, manipulated, getNoTransProp, transpromise, endIntermediate, time2;
 
             to || (to={});
             Array.isArray(to) || (to=[to]);
             to = getVendorCSS(to);
+            transitions = Array.isArray(to) ? to.deepClone() : [to.shallowClone()];
             time1 = Date.now();
+            // transitions = Array.isArray(to) ? to.deepClone() : [to.shallowClone()];
             cleanup = function() {
                 currentInlineTransition = instance.getData('_bkpTransition');
                 currentInlineTransition ? instance.setInlineStyle(TRANSITION, currentInlineTransition) : instance.removeInlineStyle(TRANSITION);
@@ -19457,8 +19461,8 @@ module.exports = function (window) {
                 });
                 return props;
             };
-
             endIntermediate = function(type) {
+                intermediateInvoked = true;
                 if (!promise.isFulfilled) {
                     manipulated = true;
                     instance.setInlineTransitions(getNoTransProp());
@@ -19494,8 +19498,10 @@ module.exports = function (window) {
                         writable: false,
                         value: true
                     });
-                    transpromise.reject(); // prevent transitionpromise to set its own final values after finishing
-                    resolveHandle();
+                    // prevent transitionpromise to set its own final values after finishing
+                    // but only if it is already available:
+                    transpromise && transpromise.reject();
+                    resolveHandle && resolveHandle();
                 }
                 time2 || (time2=Date.now());
                 return new window.Promise(function(resolve) {
@@ -19506,6 +19512,10 @@ module.exports = function (window) {
             };
             promise = new window.Promise(function(resolve, reject) {
                 async(function() {
+                    if (intermediateInvoked) {
+                        reject();
+                        return;
+                    }
                     resolveHandle = resolve;
                     transitionRun = idGenerator('nodeTransition');
                     // only make ready on the last run
@@ -19528,7 +19538,6 @@ module.exports = function (window) {
 
                     // we could use the `to` object and pass into `setInlineTransitions` directly,
                     // however, in case `duration` is not specified, we will define them to 1 sec.
-                    transitions = Array.isArray(to) ? to.deepClone() : [to.shallowClone()];
 
                     // CAUTIOUS: the sum of `duration`+`delay` determines when the transition will be ready.
                     // This leads into separate transitions, we must prevent the promise to fulfill on the
@@ -22038,16 +22047,16 @@ module.exports = function (window) {
 
                 // mark all its vChildNodes so we can see if the node is in the DOM
                 _markRemoved(instance);
+                // if vnode is part of DOCUMENT._itagList then remove it
+                if (DOCUMENT._itagList && instance.isItag) {
+                    DOCUMENT._itagList.remove(instance.domNode);
+                }
 
                 // The definite cleanup needs to be done after a timeout:
                 // someone might need to handle the Element when removed (fe to cleanup specific things)
                 later(function() {
                     instance._cleanData();
                     if (instance.nodeType===1) {
-                        // if vnode is part of DOCUMENT._itagList then remove it
-                        if (DOCUMENT._itagList && instance.isItag) {
-                            DOCUMENT._itagList.remove(instance.domNode);
-                        }
                         // _destroy all its vChildNodes
                         if (vChildNodes) {
                             len = vChildNodes.length;
@@ -22340,6 +22349,10 @@ module.exports = function (window) {
         _removeAttr: function(attributeName) {
             var instance = this,
                 attributeNameSplitted, ns;
+            if (instance._unchangableAttrs && instance._unchangableAttrs[attributeName]) {
+                console.warn('Not allowed to remove the attribute '+attributeName);
+                return instance;
+            }
             if (instance.attrs[attributeName]!==undefined) {
                 delete instance.attrs[attributeName];
                 // in case of STYLE attribute --> special treatment
@@ -22433,8 +22446,12 @@ module.exports = function (window) {
                 attrs = instance.attrs,
                 prevVal = attrs[attributeName],
                 attributeNameSplitted, ns;
-            // don't check by !== --> value isn't parsed into a String yet
 
+            if (instance._unchangableAttrs && instance._unchangableAttrs[attributeName]) {
+                console.warn('Not allowed to set the attribute '+attributeName);
+                return instance;
+            }
+            // don't check by !== --> value isn't parsed into a String yet
             if (prevVal && ((value===undefined) || (value===null))) {
                 instance._removeAttr(attributeName);
                 return instance;
@@ -22650,8 +22667,8 @@ module.exports = function (window) {
                             newChild._setAttrs(bkpAttrs);
                             newChild._setChildNodes(bkpChildNodes);
                             newChild.id && (nodeids[newChild.id]=newChild.domNode);
-oldChild.isVoid = newChild.isVoid;
-delete oldChild.text;
+                            // oldChild.isVoid = newChild.isVoid;
+                            // delete oldChild.text;
                             instance._emit(EV_CONTENT_CHANGE);
                             DOCUMENT._itagList && newChild.isItag && !DOCUMENT._itagList.contains(newChild.domNode) && DOCUMENT._itagList.push(newChild.domNode);
                             newChild._emit(EV_INSERTED);
@@ -22720,6 +22737,10 @@ delete oldChild.text;
             instance.vChildNodes = newVChildNodes;
             needNormalize && instance._normalize();
             return instance;
+        },
+
+        _setUnchangableAttrs: function(unchangableObj) {
+            this._unchangableAttrs = unchangableObj;
         }
 
     };

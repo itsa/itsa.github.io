@@ -1032,12 +1032,13 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
          *                       It is meant to manipulate the eventobject, something that &#x60;event-dom&#x60; needs to do
          *                       This function expects 2 arguments: &#x60;subscriber&#x60; and &#x60;eventobject&#x60;.
          *                       &lt;b&gt;should not be used&lt;/b&gt; other than by any submodule like &#x60;event-dom&#x60;.
-         * @param [keepPayload] {Boolean} whether &#x60;payload&#x60; should be used as the ventobject instead of creating a new
+         * @param [keepPayload=false] {Boolean} whether &#x60;payload&#x60; should be used as the ventobject instead of creating a new
          *                      eventobject and merge payload. &lt;b&gt;should not be used&lt;/b&gt; other than by any submodule like &#x60;event-dom&#x60;.
+         * @param [noFinalize=false] {Boolean} To supress finalization
          * @return {Object|undefined} eventobject or undefined when the event was halted or preventDefaulted.
          * @since 0.0.1
          */
-        _emit: function (emitter, customEvent, payload, beforeSubscribers, afterSubscribers, preProcessor, keepPayload) {
+        _emit: function (emitter, customEvent, payload, beforeSubscribers, afterSubscribers, preProcessor, keepPayload, noFinalize) {
             // NOTE: emit() needs to be synchronous! otherwise we wouldn&#x27;t be able
             // to preventDefault DOM-events in time.
             var instance = this,
@@ -1122,7 +1123,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
                     // in case any subscriber changed e.target inside its filter (event-dom does this),
                     // then we reset e.target to its original:
                     e.sourceTarget &amp;&amp; (e.target=e.sourceTarget);
-                    instance._final.some(function(finallySubscriber) {
+                    noFinalize || instance._final.some(function(finallySubscriber) {
                         !e.silent &amp;&amp; !e._noRender &amp;&amp; !e.status.renderPrevented  &amp;&amp; finallySubscriber(e);
                         if (e.status.unSilencable &amp;&amp; e.silent) {
                             console.warn(NAME, &#x27; event &#x27;+e.emitter+&#x27;:&#x27;+e.type+&#x27; cannot made silent: this customEvent is defined as unSilencable&#x27;);
