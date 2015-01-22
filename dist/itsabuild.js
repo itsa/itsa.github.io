@@ -10785,6 +10785,7 @@ require('js-ext');
 var NAME = '[io]: ',
     GET = 'GET',
     createHashMap = require('js-ext/extra/hashmap.js').createMap,
+    asyncSilent = require('utils').asyncSilent,
     DEF_REQ_TIMEOUT = 300000, // don't create an ever-lasting request: always quit after 5 minutes
     BODY_METHODS = createHashMap({
         POST: 1,
@@ -11063,9 +11064,57 @@ module.exports = function (window) {
             });
 
             instance._initXHR(xhr, options, promise);
+
+            // to make any routine informed for the end of xhr.
+            // to make sure they get informed after aother routines have handled the response,
+            // we go async
+            promise.then(function() {
+                asyncSilent(function() {
+                    instance._final.forEach(function(finallySubscriber) {
+                        finallySubscriber(xhr);
+                    });
+                });
+            });
+
             return promise;
+        },
+
+        /**
+         * Adds a subscriber to the finalization-cycle, which happens after the xhr finishes.
+         * Only gets invoked on fulfilled io.
+         *
+         * @method finalize
+         * @param finallySubscriber {Function} callback to be invoked
+         *        Function recieves `xhr` as its only argument
+         * @return {Object} handler with a `detach()`-method which can be used to detach the subscriber
+         * @since 0.0.1
+         */
+        finalize: function (finallySubscriber) {
+            console.log(NAME, 'finalize');
+            var finalHash = this._final;
+            finalHash.push(finallySubscriber);
+            return {
+                detach: function() {
+                    console.log(NAME, 'detach finalizer');
+                    var index = finalHash.indexOf(finallySubscriber);
+                    (index===-1) || finalHash.splice(index, 1);
+                }
+            };
         }
+
     };
+
+    /**
+     * Internal list of finalize-subscribers which are invoked at the end of a successful xhr,
+     * Is an array of function-references.
+     *
+     * @property _final
+     * @default []
+     * @type Array
+     * @private
+     * @since 0.0.1
+    */
+    Object.protectedProp(IO, '_final', []);
 
     IO._xhrInitList = [
         IO._setReadyHandle,
@@ -11077,7 +11126,7 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":33,"js-ext/extra/hashmap.js":30,"polyfill/polyfill-base.js":50}],29:[function(require,module,exports){
+},{"js-ext":33,"js-ext/extra/hashmap.js":30,"polyfill/polyfill-base.js":50,"utils":53}],29:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -17701,6 +17750,7 @@ module.exports = function (window) {
                 hidePromise = instance.getData('_hideNodeBusy'),
                 originalOpacity, hasOriginalOpacity, promise, freezedOpacity, fromOpacity;
 
+            instance.setData('nodeShowed', false); // for any routine who wants to know
             originalOpacity = instance.getData('_showNodeOpacity');
             if (!originalOpacity && !showPromise && !hidePromise) {
                 originalOpacity = parseFloat(instance.getInlineStyle('opacity'));
@@ -17709,6 +17759,10 @@ module.exports = function (window) {
             hasOriginalOpacity = !!originalOpacity;
 
             showPromise && showPromise.freeze();
+            if (showPromise) {
+                showPromise.freeze();
+                instance.removeData('_showNodeBusy');
+            }
             hidePromise && hidePromise.freeze();
 
             if (duration) {
@@ -19332,6 +19386,7 @@ module.exports = function (window) {
                 hidePromise = instance.getData('_hideNodeBusy'),
                 originalOpacity, hasOriginalOpacity, promise, freezedOpacity, finalValue;
 
+            instance.setData('nodeShowed', true); // for any routine who wants to know
             originalOpacity = instance.getData('_showNodeOpacity');
             if (!originalOpacity && !showPromise && !hidePromise) {
                 originalOpacity = instance.getInlineStyle('opacity');
@@ -19340,7 +19395,10 @@ module.exports = function (window) {
             hasOriginalOpacity = !!originalOpacity;
 
             showPromise && showPromise.freeze();
-            hidePromise && hidePromise.freeze();
+            if (hidePromise) {
+                hidePromise.freeze();
+                instance.removeData('_hideNodeBusy');
+            }
 
             if (duration) {
 
@@ -19350,10 +19408,8 @@ module.exports = function (window) {
                 finalValue = (forceFull || !hasOriginalOpacity) ? 1 : originalOpacity;
                 if (showPromise || hidePromise) {
                     freezedOpacity = instance.getInlineStyle('opacity');
-console.warn('freezedOpacity '+freezedOpacity);
                     duration = (finalValue>0) ? Math.min(1, ((finalValue-freezedOpacity)/finalValue))*duration : 0;
                 }
-console.warn(instance.getInlineStyle('opacity')+' | '+finalValue +' | '+ duration);
                 promise = instance.transition({property: 'opacity', value: finalValue, duration: duration});
                 instance.setData('_showNodeBusy', promise);
 
