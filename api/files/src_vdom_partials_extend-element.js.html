@@ -269,6 +269,7 @@ module.exports = function (window) {
         NO_TRANS2 = NO_TRANS+&#x27;2&#x27;, // needed to prevent removal of NO_TRANS when still needed &#x60;notrans&#x60;
         INVISIBLE = ITSA_+&#x27;invisible&#x27;,
         INVISIBLE_RELATIVE = INVISIBLE+&#x27;-relative&#x27;,
+        INVISIBLE_UNFOCUSABLE = INVISIBLE+&#x27;-unfocusable&#x27;,
         HIDDEN = ITSA_+&#x27;hidden&#x27;,
         REGEXP_NODE_ID = /^#\S+$/,
         LEFT = &#x27;left&#x27;,
@@ -691,7 +692,7 @@ module.exports = function (window) {
 
             finalNode = node.cloneNode(true);
             finalNode.setClass(NO_TRANS2);
-            finalNode.setClass(INVISIBLE);
+            finalNode.setClass(INVISIBLE_UNFOCUSABLE);
             node.setData(bkpNodeData, finalNode);
 
             startStyle = node.getData(_STARTSTYLE);
@@ -2056,7 +2057,7 @@ module.exports = function (window) {
 
             originalOpacity = instance.getData(&#x27;_showNodeOpacity&#x27;);
             if (!originalOpacity &amp;&amp; !showPromise &amp;&amp; !hidePromise) {
-                originalOpacity = instance.getInlineStyle(&#x27;opacity&#x27;);
+                originalOpacity = parseFloat(instance.getInlineStyle(&#x27;opacity&#x27;));
                 instance.setData(&#x27;_showNodeOpacity&#x27;, originalOpacity);
             }
             hasOriginalOpacity = !!originalOpacity;
@@ -2472,9 +2473,7 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         ElementPrototype.removeAttr = function(attributeName, silent) {
-            silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(true);
-            this.removeAttribute(attributeName);
-            silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(false);
+            this.removeAttribute(attributeName, silent);
             return this;
         };
 
@@ -2494,11 +2493,9 @@ module.exports = function (window) {
         ElementPrototype.removeAttrs = function(attributeData, silent) {
             var instance = this;
             Array.isArray(attributeData) || (attributeData=[attributeData]);
-            silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(true);
             attributeData.forEach(function(item) {
-                instance.removeAttribute(item);
+                instance.removeAttribute(item, silent);
             });
-            silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(false);
             return instance;
         };
 
@@ -2509,11 +2506,14 @@ module.exports = function (window) {
         *
         * @method removeAttr
         * @param attributeName {String}
+        * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         * @since 0.0.1
         */
         ElementPrototype._removeAttribute = ElementPrototype.removeAttribute;
-        ElementPrototype.removeAttribute = function(attributeName) {
+        ElementPrototype.removeAttribute = function(attributeName, silent) {
+            silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(true);
             this.vnode._removeAttr(attributeName);
+            silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(false);
         };
 
        /**
@@ -2522,10 +2522,11 @@ module.exports = function (window) {
          * @method removeAttributeNS
          * @param nameSpace {String} the namespace where to attribuyte should be set in
          * @param attributeName {String}
+         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         */
         ElementPrototype._removeAttributeNS = ElementPrototype.removeAttributeNS;
-        ElementPrototype.removeAttributeNS = function(nameSpace, attributeName) {
-            this.removeAttribute((nameSpace ? nameSpace+&#x27;:&#x27; : &#x27;&#x27;)+attributeName);
+        ElementPrototype.removeAttributeNS = function(nameSpace, attributeName, silent) {
+            this.removeAttribute((nameSpace ? nameSpace+&#x27;:&#x27; : &#x27;&#x27;)+attributeName, silent);
         };
 
         /**
@@ -2726,8 +2727,8 @@ module.exports = function (window) {
                 clonedElement = instance.cloneNode(true);
                 toStylesExact = vnodeStyles.deepClone();
                 clonedElement.vnode.styles = toStylesExact;
+                clonedElement.setClass(INVISIBLE_UNFOCUSABLE);
                 clonedElement.setAttr(STYLE, clonedElement.vnode.serializeStyles());
-                clonedElement.setClass(INVISIBLE);
                 DOCUMENT.body.append(clonedElement);
                 // clonedElement has &#x60;vnodeStyles&#x60;, but we change them into &#x60;toStylesExact&#x60;
 
@@ -2980,9 +2981,7 @@ module.exports = function (window) {
         */
         ElementPrototype.setAttr = function(attributeName, value, silent) {
             var instance = this;
-            silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(true);
-            instance.setAttribute(attributeName, value);
-            silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(false);
+            instance.setAttribute(attributeName, value, silent);
             return instance;
         };
 
@@ -2994,13 +2993,16 @@ module.exports = function (window) {
          * @method setAttribute
          * @param attributeName {String}
          * @param value {String} the value for the attributeName
+         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         */
         ElementPrototype._setAttribute = ElementPrototype.setAttribute;
-        ElementPrototype.setAttribute = function(attributeName, value) {
+        ElementPrototype.setAttribute = function(attributeName, value, silent) {
             var instance = this,
                 vnode = instance.vnode;
             (value===&#x27;&#x27;) &amp;&amp; (value=null);
+            silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(true);
             ((value!==null) &amp;&amp; (value!==undefined)) ? vnode._setAttr(attributeName, value) : vnode._removeAttr(attributeName);
+            silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(false);
         };
 
        /**
@@ -3010,10 +3012,11 @@ module.exports = function (window) {
          * @param nameSpace {String} the namespace where to attribuyte should be set in
          * @param attributeName {String}
          * @param value {String} the value for the attributeName
+         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
         */
         ElementPrototype._setAttributeNS = ElementPrototype.setAttributeNS;
-        ElementPrototype.setAttributeNS = function(nameSpace, attributeName, value) {
-            this.setAttribute((nameSpace ? nameSpace+&#x27;:&#x27; : &#x27;&#x27;)+attributeName, value);
+        ElementPrototype.setAttributeNS = function(nameSpace, attributeName, value, silent) {
+            this.setAttribute((nameSpace ? nameSpace+&#x27;:&#x27; : &#x27;&#x27;)+attributeName, value, silent);
         };
 
        /**
@@ -3035,11 +3038,9 @@ module.exports = function (window) {
         ElementPrototype.setAttrs = function(attributeData, silent) {
             var instance = this;
             Array.isArray(attributeData) || (attributeData=[attributeData]);
-            silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(true);
             attributeData.forEach(function(item) {
-                instance.setAttribute(item.name, item.value);
+                instance.setAttribute(item.name, item.value, silent);
             });
-            silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(false);
             return instance;
         };
 
@@ -3280,7 +3281,7 @@ module.exports = function (window) {
                 });
 
                 // clonedElement has &#x60;vnodeStyles&#x60;, but we change them into &#x60;toStylesExact&#x60;
-                clonedElement.setClass(INVISIBLE);
+                clonedElement.setClass(INVISIBLE_UNFOCUSABLE);
                 clonedElement.setAttr(STYLE, clonedElement.vnode.serializeStyles());
                 DOCUMENT.body.append(clonedElement);
 
@@ -3679,7 +3680,7 @@ module.exports = function (window) {
         * @return {this|Promise} fulfilled when the element is ready showing up, or rejected when hidden again (using node.hide) before fully showed.
         * @since 0.0.1
         */
-        ElementPrototype.show = function(duration, forceFull) {
+ElementPrototype.show = function(duration, forceFull) {
             var instance = this,
                 showPromise = instance.getData(&#x27;_showNodeBusy&#x27;),
                 hidePromise = instance.getData(&#x27;_hideNodeBusy&#x27;),
@@ -3766,13 +3767,15 @@ module.exports = function (window) {
         */
         ElementPrototype.transition = function(to, from) {
             var instance = this,
-                currentInlineTransition, transitions, transitionRun, transitionError, promise, resolveHandle, initialStyle, time1,
+                currentInlineTransition, transitions, transitionRun, transitionError, promise, resolveHandle, initialStyle, time1, intermediateInvoked,
                 initialProperties, cleanup, getCurrentProperties, manipulated, getNoTransProp, transpromise, endIntermediate, time2;
 
             to || (to={});
             Array.isArray(to) || (to=[to]);
             to = getVendorCSS(to);
+            transitions = Array.isArray(to) ? to.deepClone() : [to.shallowClone()];
             time1 = Date.now();
+            // transitions = Array.isArray(to) ? to.deepClone() : [to.shallowClone()];
             cleanup = function() {
                 currentInlineTransition = instance.getData(&#x27;_bkpTransition&#x27;);
                 currentInlineTransition ? instance.setInlineStyle(TRANSITION, currentInlineTransition) : instance.removeInlineStyle(TRANSITION);
@@ -3812,8 +3815,8 @@ module.exports = function (window) {
                 });
                 return props;
             };
-
             endIntermediate = function(type) {
+                intermediateInvoked = true;
                 if (!promise.isFulfilled) {
                     manipulated = true;
                     instance.setInlineTransitions(getNoTransProp());
@@ -3849,8 +3852,10 @@ module.exports = function (window) {
                         writable: false,
                         value: true
                     });
-                    transpromise.reject(); // prevent transitionpromise to set its own final values after finishing
-                    resolveHandle();
+                    // prevent transitionpromise to set its own final values after finishing
+                    // but only if it is already available:
+                    transpromise &amp;&amp; transpromise.reject();
+                    resolveHandle &amp;&amp; resolveHandle();
                 }
                 time2 || (time2=Date.now());
                 return new window.Promise(function(resolve) {
@@ -3861,6 +3866,10 @@ module.exports = function (window) {
             };
             promise = new window.Promise(function(resolve, reject) {
                 async(function() {
+                    if (intermediateInvoked) {
+                        reject();
+                        return;
+                    }
                     resolveHandle = resolve;
                     transitionRun = idGenerator(&#x27;nodeTransition&#x27;);
                     // only make ready on the last run
@@ -3883,7 +3892,6 @@ module.exports = function (window) {
 
                     // we could use the &#x60;to&#x60; object and pass into &#x60;setInlineTransitions&#x60; directly,
                     // however, in case &#x60;duration&#x60; is not specified, we will define them to 1 sec.
-                    transitions = Array.isArray(to) ? to.deepClone() : [to.shallowClone()];
 
                     // CAUTIOUS: the sum of &#x60;duration&#x60;+&#x60;delay&#x60; determines when the transition will be ready.
                     // This leads into separate transitions, we must prevent the promise to fulfill on the

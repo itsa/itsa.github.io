@@ -1394,16 +1394,16 @@ module.exports = function (window) {
 
                 // mark all its vChildNodes so we can see if the node is in the DOM
                 _markRemoved(instance);
+                // if vnode is part of DOCUMENT._itagList then remove it
+                if (DOCUMENT._itagList &amp;&amp; instance.isItag) {
+                    DOCUMENT._itagList.remove(instance.domNode);
+                }
 
                 // The definite cleanup needs to be done after a timeout:
                 // someone might need to handle the Element when removed (fe to cleanup specific things)
                 later(function() {
                     instance._cleanData();
                     if (instance.nodeType===1) {
-                        // if vnode is part of DOCUMENT._itagList then remove it
-                        if (DOCUMENT._itagList &amp;&amp; instance.isItag) {
-                            DOCUMENT._itagList.remove(instance.domNode);
-                        }
                         // _destroy all its vChildNodes
                         if (vChildNodes) {
                             len = vChildNodes.length;
@@ -1696,6 +1696,10 @@ module.exports = function (window) {
         _removeAttr: function(attributeName) {
             var instance = this,
                 attributeNameSplitted, ns;
+            if (instance._unchangableAttrs &amp;&amp; instance._unchangableAttrs[attributeName]) {
+                console.warn(&#x27;Not allowed to remove the attribute &#x27;+attributeName);
+                return instance;
+            }
             if (instance.attrs[attributeName]!==undefined) {
                 delete instance.attrs[attributeName];
                 // in case of STYLE attribute --&gt; special treatment
@@ -1789,8 +1793,12 @@ module.exports = function (window) {
                 attrs = instance.attrs,
                 prevVal = attrs[attributeName],
                 attributeNameSplitted, ns;
-            // don&#x27;t check by !== --&gt; value isn&#x27;t parsed into a String yet
 
+            if (instance._unchangableAttrs &amp;&amp; instance._unchangableAttrs[attributeName]) {
+                console.warn(&#x27;Not allowed to set the attribute &#x27;+attributeName);
+                return instance;
+            }
+            // don&#x27;t check by !== --&gt; value isn&#x27;t parsed into a String yet
             if (prevVal &amp;&amp; ((value===undefined) || (value===null))) {
                 instance._removeAttr(attributeName);
                 return instance;
@@ -2006,8 +2014,8 @@ module.exports = function (window) {
                             newChild._setAttrs(bkpAttrs);
                             newChild._setChildNodes(bkpChildNodes);
                             newChild.id &amp;&amp; (nodeids[newChild.id]=newChild.domNode);
-oldChild.isVoid = newChild.isVoid;
-delete oldChild.text;
+                            // oldChild.isVoid = newChild.isVoid;
+                            // delete oldChild.text;
                             instance._emit(EV_CONTENT_CHANGE);
                             DOCUMENT._itagList &amp;&amp; newChild.isItag &amp;&amp; !DOCUMENT._itagList.contains(newChild.domNode) &amp;&amp; DOCUMENT._itagList.push(newChild.domNode);
                             newChild._emit(EV_INSERTED);
@@ -2076,6 +2084,10 @@ delete oldChild.text;
             instance.vChildNodes = newVChildNodes;
             needNormalize &amp;&amp; instance._normalize();
             return instance;
+        },
+
+        _setUnchangableAttrs: function(unchangableObj) {
+            this._unchangableAttrs = unchangableObj;
         }
 
     };

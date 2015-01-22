@@ -1245,7 +1245,7 @@ the Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will 
             
         
         
-        <a href="../files/src_event_event-base.js.html#l938"><code>src&#x2F;event&#x2F;event-base.js:938</code></a>
+        <a href="../files/src_event_event-base.js.html#l939"><code>src&#x2F;event&#x2F;event-base.js:939</code></a>
         
         </p>
 
@@ -1422,7 +1422,7 @@ the Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will 
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1053"><code>src&#x2F;event&#x2F;event-base.js:1053</code></a>
+        <a href="../files/src_event_event-base.js.html#l1054"><code>src&#x2F;event&#x2F;event-base.js:1054</code></a>
         
         </p>
 
@@ -1564,7 +1564,7 @@ If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l988"><code>src&#x2F;event&#x2F;event-base.js:988</code></a>
+        <a href="../files/src_event_event-base.js.html#l989"><code>src&#x2F;event&#x2F;event-base.js:989</code></a>
         
         </p>
 
@@ -1719,7 +1719,7 @@ If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1108"><code>src&#x2F;event&#x2F;event-base.js:1108</code></a>
+        <a href="../files/src_event_event-base.js.html#l1109"><code>src&#x2F;event&#x2F;event-base.js:1109</code></a>
         
         </p>
 
@@ -2724,7 +2724,13 @@ unless you force to assign with <code>.forceAssign()</code></p>
             
                 <li class="arg">
                     
-                        <code class="optional">[keepPayload]</code>
+                        <code class="optional">[keepPayload=false]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[noFinalize=false]</code>
                     
                 </li>
             
@@ -2931,7 +2937,7 @@ If payload.silent is set true, the subscribers are not getting invoked: only the
             
                 <li class="param">
                     
-                        <code class="param-name optional">[keepPayload]</code>
+                        <code class="param-name optional">[keepPayload=false]</code>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
                         <span class="flag optional" title="This parameter is optional.">optional</span>
                     
@@ -2941,6 +2947,23 @@ If payload.silent is set true, the subscribers are not getting invoked: only the
                     <div class="param-description">
                         <p>whether <code>payload</code> should be used as the ventobject instead of creating a new
                      eventobject and merge payload. <b>should not be used</b> other than by any submodule like <code>event-dom</code>.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[noFinalize=false]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>To supress finalization</p>
 
                     </div>
 
@@ -4468,7 +4491,7 @@ When <code>emitterName</code> is not set, ALL event-definitions will be removed.
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1128"><code>src&#x2F;event&#x2F;event-base.js:1128</code></a>
+        <a href="../files/src_event_event-base.js.html#l1129"><code>src&#x2F;event&#x2F;event-base.js:1129</code></a>
         
         </p>
 
@@ -4536,7 +4559,7 @@ which has a structure like this:</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1160"><code>src&#x2F;event&#x2F;event-base.js:1160</code></a>
+        <a href="../files/src_event_event-base.js.html#l1161"><code>src&#x2F;event&#x2F;event-base.js:1161</code></a>
         
         </p>
 
@@ -4628,7 +4651,7 @@ Every item that gets in the array consist by itself of 3 properties:
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1223"><code>src&#x2F;event&#x2F;event-base.js:1223</code></a>
+        <a href="../files/src_event_event-base.js.html#l1224"><code>src&#x2F;event&#x2F;event-base.js:1224</code></a>
         
         </p>
 
@@ -4686,7 +4709,7 @@ To add more methods, you can use <code>_setEventObjProperty</code></p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1239"><code>src&#x2F;event&#x2F;event-base.js:1239</code></a>
+        <a href="../files/src_event_event-base.js.html#l1240"><code>src&#x2F;event&#x2F;event-base.js:1240</code></a>
         
         </p>
 
@@ -4754,7 +4777,7 @@ This list is maintained by <code>notifyDetach</code> and <code>unNotifyDetach</c
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1211"><code>src&#x2F;event&#x2F;event-base.js:1211</code></a>
+        <a href="../files/src_event_event-base.js.html#l1212"><code>src&#x2F;event&#x2F;event-base.js:1212</code></a>
         
         </p>
 
@@ -4808,7 +4831,7 @@ Is an array of function-references.</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1266"><code>src&#x2F;event&#x2F;event-base.js:1266</code></a>
+        <a href="../files/src_event_event-base.js.html#l1267"><code>src&#x2F;event&#x2F;event-base.js:1267</code></a>
         
         </p>
 
