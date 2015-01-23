@@ -2381,6 +2381,12 @@ Should be used when manipulating the dom from within the vnode itself (to preven
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code class="optional">[force=false]</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -2469,6 +2475,23 @@ Should be used when manipulating the dom from within the vnode itself (to preven
                     
                 </li>
             
+                <li class="param">
+                    
+                        <code class="param-name optional">[force=false]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>force the attribute to be set, even if restrictions would deny it</p>
+
+                    </div>
+
+                    
+                </li>
+            
             </ul>
         </div>
     
@@ -2525,7 +2548,7 @@ Should be used when manipulating the dom from within the vnode itself (to preven
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l1659"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1659</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1660"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1660</code></a>
         
         </p>
 
@@ -2539,7 +2562,8 @@ Should be used when manipulating the dom from within the vnode itself (to preven
 
     <div class="description">
         <p>Redefines the attributes of both the vnode as well as its related dom-node. The new
-definition replaces any previous attributes (without touching unmodified attributes).</p>
+definition replaces any previous attributes (without touching unmodified attributes).
+the <code>is</code> attribute cannot be changed.</p>
 <p>Syncs the new vnode&#39;s attributes with the dom.</p>
 
     </div>
@@ -2622,7 +2646,7 @@ definition replaces any previous attributes (without touching unmodified attribu
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l1715"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1715</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1727"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1727</code></a>
         
         </p>
 
@@ -3765,7 +3789,7 @@ separated by a <code>comma</code>. For example: &quot;#myid li.red blue&quot; is
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l1898"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1898</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1916"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1916</code></a>
         
         </p>
 
@@ -3812,7 +3836,7 @@ separated by a <code>comma</code>. For example: &quot;#myid li.red blue&quot; is
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l1906"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1906</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1924"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1924</code></a>
         
         </p>
 
@@ -3859,7 +3883,7 @@ separated by a <code>comma</code>. For example: &quot;#myid li.red blue&quot; is
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l1966"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1966</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1984"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1984</code></a>
         
         </p>
 
@@ -3960,7 +3984,7 @@ separated by a <code>comma</code>. For example: &quot;#myid li.red blue&quot; is
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l1914"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1914</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1932"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1932</code></a>
         
         </p>
 
@@ -4007,7 +4031,7 @@ separated by a <code>comma</code>. For example: &quot;#myid li.red blue&quot; is
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l1983"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1983</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2001"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2001</code></a>
         
         </p>
 
@@ -4055,7 +4079,7 @@ separated by a <code>comma</code>. For example: &quot;#myid li.red blue&quot; is
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l1922"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1922</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1940"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1940</code></a>
         
         </p>
 
@@ -4170,7 +4194,7 @@ For TextNodes and CommentNodes, this property is <code>undefined</code>.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l1931"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1931</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1949"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1949</code></a>
         
         </p>
 
@@ -4217,7 +4241,7 @@ For TextNodes and CommentNodes, this property is <code>undefined</code>.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2021"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2021</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2039"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2039</code></a>
         
         </p>
 
@@ -4265,7 +4289,7 @@ For TextNodes and CommentNodes, this property is <code>undefined</code>.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2048"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2048</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2066"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2066</code></a>
         
         </p>
 
@@ -4430,7 +4454,7 @@ For TextNodes and CommentNodes, this property is <code>undefined</code>.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l1939"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1939</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1957"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1957</code></a>
         
         </p>
 
@@ -4477,7 +4501,7 @@ For TextNodes and CommentNodes, this property is <code>undefined</code>.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l1947"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1947</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1965"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1965</code></a>
         
         </p>
 
@@ -4526,7 +4550,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2152"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2152</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2170"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2170</code></a>
         
         </p>
 
@@ -4574,7 +4598,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l1958"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1958</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1976"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1976</code></a>
         
         </p>
 
@@ -4621,7 +4645,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2191"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2191</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2209"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2209</code></a>
         
         </p>
 
@@ -4668,7 +4692,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2217"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2217</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2235"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2235</code></a>
         
         </p>
 
@@ -4715,7 +4739,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2234"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2234</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2252"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2252</code></a>
         
         </p>
 
@@ -4762,7 +4786,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2247"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2247</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2265"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2265</code></a>
         
         </p>
 
@@ -4809,7 +4833,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2264"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2264</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2282"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2282</code></a>
         
         </p>
 
@@ -4856,7 +4880,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2277"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2277</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2295"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2295</code></a>
         
         </p>
 
@@ -4903,7 +4927,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2294"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2294</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2312"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2312</code></a>
         
         </p>
 
@@ -4950,7 +4974,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2308"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2308</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2326"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2326</code></a>
         
         </p>
 
@@ -4997,7 +5021,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2325"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2325</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2343"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2343</code></a>
         
         </p>
 
@@ -5044,7 +5068,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2347"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2347</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2365"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2365</code></a>
         
         </p>
 
@@ -5091,7 +5115,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2360"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2360</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2378"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2378</code></a>
         
         </p>
 
@@ -5138,7 +5162,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l1974"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1974</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l1992"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:1992</code></a>
         
         </p>
 
@@ -5185,7 +5209,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2339"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2339</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2357"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2357</code></a>
         
         </p>
 
@@ -5232,7 +5256,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2373"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2373</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2391"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2391</code></a>
         
         </p>
 
@@ -5279,7 +5303,7 @@ Equals dom-node.nodeValue.</p>
             
         
         
-        <a href="../files/src_vdom_partials_vnode.js.html#l2386"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2386</code></a>
+        <a href="../files/src_vdom_partials_vnode.js.html#l2404"><code>src&#x2F;vdom&#x2F;partials&#x2F;vnode.js:2404</code></a>
         
         </p>
 

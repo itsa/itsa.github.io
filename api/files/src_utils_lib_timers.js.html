@@ -220,6 +220,11 @@
     var NAME = &#x27;[utils-timers]: &#x27;,
         _asynchronizer, _async, _asynchronizerSilent, _later;
 
+    // make _setTimeout and _setInterval available, so the code always works
+    // both methods may be overruled by itags
+    global._setTimeout = global.setTimeout;
+    global._setInterval = global.setInterval;
+
     /**
      * Forces a function to be run asynchronously, but as fast as possible. In Node.js
      * this is achieved using &#x60;setImmediate&#x60; or &#x60;process.nextTick&#x60;.

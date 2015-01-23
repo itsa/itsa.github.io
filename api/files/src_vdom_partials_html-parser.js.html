@@ -311,7 +311,8 @@ module.exports = function (window) {
                 vnodes = [],
                 parentVNode = arguments[3], // private pass through-argument, only available when internal looped
                 insideTagDefinition, insideComment, innerText, endTagCount, stringMarker, attributeisString, attribute, attributeValue,
-                j, character, character2, vnode, tag, isBeginTag, isEndTag, scriptVNode, extractClass, extractStyle;
+                j, character, character2, vnode, tag, isBeginTag, isEndTag, scriptVNode, extractClass, extractStyle, tagdefinition, is;
+
             while (i&lt;len) {
                 character = htmlString[i];
                 character2 = htmlString[i+1];
@@ -351,6 +352,8 @@ module.exports = function (window) {
                                 else {
                                     attributeValue = &quot;&quot;;
                                 }
+                                // always store the &#x60;is&#x60; attribute in lowercase:
+                                (attribute.length===2) &amp;&amp; (attribute.toLowerCase()===&#x27;is&#x27;) &amp;&amp; (attribute=&#x27;is&#x27;);
                                 vnode.attrs[attribute] = attributeValue;
                             }
                         }
@@ -421,6 +424,16 @@ module.exports = function (window) {
                     else {
                         i++; // compensate for the &#x27;&gt;&#x27;
                     }
+
+                    //vnode.domNode can only be set after inspecting the attributes --&gt; there might be an &#x60;is&#x60; attribute
+                    tagdefinition = tag.toLowerCase();
+                    if ((is=vnode.attrs.is) &amp;&amp; !is.contains(&#x27;-&#x27;)) {
+                        tagdefinition = tag + &#x27;:&#x27; + is;
+                    }
+                    vnode.domNode = vnode.ns ? DOCUMENT.createElementNS(vnode.ns, tagdefinition) : DOCUMENT.createElement(tagdefinition);
+                    // create circular reference:
+                    vnode.domNode._vnode = vnode;
+
                     vnodes[vnodes.length] = vnode;
                     // reset vnode to force create a new one
                     vnode = null;
@@ -472,10 +485,9 @@ module.exports = function (window) {
                         tag = vnode.tag;
                         vnode.isItag = ((tag[0]===&#x27;I&#x27;) &amp;&amp; (tag[1]===&#x27;-&#x27;));
                         vnode.ns = xmlNS[tag] || nameSpace;
-                        vnode.domNode = vnode.ns ? DOCUMENT.createElementNS(vnode.ns, tag.toLowerCase()) : DOCUMENT.createElement(tag);
 
-                        // create circular reference:
-                        vnode.domNode._vnode = vnode;
+                        //vnode.domNode can only be set after inspecting the attributes --&gt; there might be an &#x60;is&#x60; attribute
+
                         // check if it is a void-tag, but only need to do the regexp once per tag-element:
                         if (voidElements[tag]) {
                             vnode.isVoid = true;
