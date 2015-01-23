@@ -8682,7 +8682,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                 allCustomEvents = instance._ce,
                 allSubscribers = instance._subs,
                 customEventDefinition, extract, emitterName, eventName, subs, wildcard_named_subs,
-                named_wildcard_subs, wildcard_wildcard_subs, e, invokeSubs, key;
+                named_wildcard_subs, wildcard_wildcard_subs, e, invokeSubs, key, subscribedSize;
 
             (customEvent.indexOf(':') !== -1) || (customEvent = emitter._emitterName+':'+customEvent);
             console.log(NAME, 'customEvent.emit: '+customEvent);
@@ -8760,14 +8760,22 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                     // in case any subscriber changed e.target inside its filter (event-dom does this),
                     // then we reset e.target to its original:
                     e.sourceTarget && (e.target=e.sourceTarget);
-                    noFinalize || instance._final.some(function(finallySubscriber) {
-                        !e.silent && !e._noRender && !e.status.renderPrevented  && finallySubscriber(e);
-                        if (e.status.unSilencable && e.silent) {
-                            console.warn(NAME, ' event '+e.emitter+':'+e.type+' cannot made silent: this customEvent is defined as unSilencable');
-                            e.silent = false;
+                    if (!noFinalize) {
+                        subscribedSize = 0;
+                        beforeSubscribers && (subscribedSize+=beforeSubscribers.length);
+                        afterSubscribers && (subscribedSize+=afterSubscribers.length);
+                        if (!beforeSubscribers || !afterSubscribers) {
+                            subscribedSize += subs.length + named_wildcard_subs.length + wildcard_named_subs.length + wildcard_wildcard_subs;
                         }
-                        return e.silent;
-                    });
+                        (subscribedSize>0) && instance._final.some(function(finallySubscriber) {
+                            !e.silent && !e._noRender && !e.status.renderPrevented  && finallySubscriber(e);
+                            if (e.status.unSilencable && e.silent) {
+                                console.warn(NAME, ' event '+e.emitter+':'+e.type+' cannot made silent: this customEvent is defined as unSilencable');
+                                e.silent = false;
+                            }
+                            return e.silent;
+                        });
+                    }
                 }
             }
             return e;
@@ -11239,7 +11247,7 @@ require('../lib/object.js');
          * @chainable
          */
         mergePrototypes: function (prototypes, force) {
-            var instance, proto, names, l, i, replaceMap, protectedMap, name, nameInProto, finalName, propDescriptor;
+            var instance, proto, names, l, i, replaceMap, protectedMap, name, nameInProto, finalName, propDescriptor, extraInfo;
             if (!prototypes) {
                 return;
             }
@@ -11300,7 +11308,11 @@ require('../lib/object.js');
                     }
                 }
                 else {
-                    console.warn(NAME+'mergePrototypes is not allowed to set the property: '+name);
+                    extraInfo = '';
+                    nameInProto && (extraInfo = 'property is already available (you might force it to be set)');
+                    PROTO_RESERVED_NAMES[finalName] && (extraInfo = 'property is a protected property');
+                    protectedMap[finalName] && (extraInfo = 'property is a private property');
+                    console.warn(NAME+'mergePrototypes is not allowed to set the property: '+name+' --> '+extraInfo);
                 }
             }
             return instance;
@@ -14131,6 +14143,11 @@ module.exports.idGenerator = function(namespace, start) {
 
 	var NAME = '[utils-timers]: ',
 	    _asynchronizer, _async, _asynchronizerSilent, _later;
+
+    // make _setTimeout and _setInterval available, so the code always works
+    // both methods may be overruled by itags
+    global._setTimeout = global.setTimeout;
+    global._setInterval = global.setInterval;
 
 	/**
 	 * Forces a function to be run asynchronously, but as fast as possible. In Node.js
@@ -16966,7 +16983,7 @@ module.exports = function (window) {
             if (otherElement===this) {
                 return true;
             }
-            return this.vnode.contains(otherElement.vnode);
+            return this.vnode.contains(otherElement.vnode, true);
         };
 
         /**
@@ -18076,7 +18093,7 @@ module.exports = function (window) {
                     for (j=0; (j<len2) && !found; j++) {
                         vChildNode = vChildren[j];
                         vChildNode.matchesSelector(selectors, thisvnode) && (found=vChildNode.domNode);
-                        found || inspectChildren(vChildNode);
+                        found || vChildNode.isItag || inspectChildren(vChildNode); // not dive into itags
                     }
                 };
             while (!firstCharacter && (++i<len)) {
@@ -18111,7 +18128,7 @@ module.exports = function (window) {
                     for (j=0; j<len2; j++) {
                         vChildNode = vChildren[j];
                         vChildNode.matchesSelector(selectors, thisvnode) && (found[found.length]=vChildNode.domNode);
-                        inspectChildren(vChildNode);
+                        vChildNode.isItag || inspectChildren(vChildNode); // not dive into itags
                     }
                 };
             while (!firstCharacter && (++i<len)) {
@@ -20449,7 +20466,8 @@ module.exports = function (window) {
                 vnodes = [],
                 parentVNode = arguments[3], // private pass through-argument, only available when internal looped
                 insideTagDefinition, insideComment, innerText, endTagCount, stringMarker, attributeisString, attribute, attributeValue,
-                j, character, character2, vnode, tag, isBeginTag, isEndTag, scriptVNode, extractClass, extractStyle;
+                j, character, character2, vnode, tag, isBeginTag, isEndTag, scriptVNode, extractClass, extractStyle, tagdefinition, is;
+
             while (i<len) {
                 character = htmlString[i];
                 character2 = htmlString[i+1];
@@ -20489,6 +20507,8 @@ module.exports = function (window) {
                                 else {
                                     attributeValue = "";
                                 }
+                                // always store the `is` attribute in lowercase:
+                                (attribute.length===2) && (attribute.toLowerCase()==='is') && (attribute='is');
                                 vnode.attrs[attribute] = attributeValue;
                             }
                         }
@@ -20559,6 +20579,16 @@ module.exports = function (window) {
                     else {
                         i++; // compensate for the '>'
                     }
+
+                    //vnode.domNode can only be set after inspecting the attributes --> there might be an `is` attribute
+                    tagdefinition = tag.toLowerCase();
+                    if ((is=vnode.attrs.is) && !is.contains('-')) {
+                        tagdefinition = tag + ':' + is;
+                    }
+                    vnode.domNode = vnode.ns ? DOCUMENT.createElementNS(vnode.ns, tagdefinition) : DOCUMENT.createElement(tagdefinition);
+                    // create circular reference:
+                    vnode.domNode._vnode = vnode;
+
                     vnodes[vnodes.length] = vnode;
                     // reset vnode to force create a new one
                     vnode = null;
@@ -20610,10 +20640,9 @@ module.exports = function (window) {
                         tag = vnode.tag;
                         vnode.isItag = ((tag[0]==='I') && (tag[1]==='-'));
                         vnode.ns = xmlNS[tag] || nameSpace;
-                        vnode.domNode = vnode.ns ? DOCUMENT.createElementNS(vnode.ns, tag.toLowerCase()) : DOCUMENT.createElement(tag);
 
-                        // create circular reference:
-                        vnode.domNode._vnode = vnode;
+                        //vnode.domNode can only be set after inspecting the attributes --> there might be an `is` attribute
+
                         // check if it is a void-tag, but only need to do the regexp once per tag-element:
                         if (voidElements[tag]) {
                             vnode.isVoid = true;
@@ -20716,7 +20745,8 @@ module.exports = function (window) {
          */
         domNodeToVNode = window._ITSAmodules.NodeParser = function(domNode, parentVNode) {
             var nodeType = domNode.nodeType,
-                vnode, attributes, attr, i, len, childNodes, domChildNode, vChildNodes, tag, childVNode, extractClass, extractStyle;
+                vnode, attributes, attr, i, len, childNodes, domChildNode, vChildNodes, tag,
+                childVNode, extractClass, extractStyle, attributeName;
             if (!NS.VALID_NODE_TYPES[nodeType]) {
                 // only process ElementNodes, TextNodes and CommentNodes
                 return;
@@ -20744,7 +20774,9 @@ module.exports = function (window) {
                 len = attributes.length;
                 for (i=0; i<len; i++) {
                     attr = attributes[i];
-                    vnode.attrs[attr.name] = String(attr.value);
+                    // always store the `is` attribute in lowercase:
+                    attributeName = ((attr.name.length===2) && (attr.name.toLowerCase()==='is')) ? 'is' : attr.name;
+                    vnode.attrs[attributeName] = String(attr.value);
                 }
 
                 vnode.id = vnode.attrs.id;
@@ -21795,11 +21827,11 @@ module.exports = function (window) {
         * @return {Boolean} whether the vnode's domNode is equal, or contains the specified Element.
         * @since 0.0.1
         */
-        contains: function(otherVNode) {
+        contains: function(otherVNode, noItagSearch) {
             if (otherVNode && otherVNode.destroyed) {
                 return false;
             }
-            while (otherVNode && (otherVNode!==this)) {
+            while (otherVNode && (otherVNode!==this) && (!noItagSearch || !otherVNode.isItag)) {
                 otherVNode = otherVNode.vParent;
             }
             return (otherVNode===this);
@@ -22406,7 +22438,7 @@ module.exports = function (window) {
         _removeAttr: function(attributeName) {
             var instance = this,
                 attributeNameSplitted, ns;
-            if (instance._unchangableAttrs && instance._unchangableAttrs[attributeName]) {
+            if ((instance._unchangableAttrs && instance._unchangableAttrs[attributeName]) || ((attributeName.length===2) && (attributeName.toLowerCase()==='is'))) {
                 console.warn('Not allowed to remove the attribute '+attributeName);
                 return instance;
             }
@@ -22493,18 +22525,19 @@ module.exports = function (window) {
         * @method _setAttr
         * @param attributeName {String}
         * @param value {String} the value for the attributeName
+        * @param [force=false] {Boolean} force the attribute to be set, even if restrictions would deny it
         * @private
         * @chainable
         * @since 0.0.1
         */
-        _setAttr: function(attributeName, value) {
+        _setAttr: function(attributeName, value, force) {
             var instance = this,
                 extractStyle, extractClass,
                 attrs = instance.attrs,
                 prevVal = attrs[attributeName],
                 attributeNameSplitted, ns;
 
-            if (instance._unchangableAttrs && instance._unchangableAttrs[attributeName]) {
+            if (!force && ((instance._unchangableAttrs && instance._unchangableAttrs[attributeName]) || ((attributeName.length===2) && (attributeName.toLowerCase()==='is')))) {
                 console.warn('Not allowed to set the attribute '+attributeName);
                 return instance;
             }
@@ -22569,6 +22602,7 @@ module.exports = function (window) {
        /**
         * Redefines the attributes of both the vnode as well as its related dom-node. The new
         * definition replaces any previous attributes (without touching unmodified attributes).
+        * the `is` attribute cannot be changed.
         *
         * Syncs the new vnode's attributes with the dom.
         *
@@ -22599,6 +22633,16 @@ module.exports = function (window) {
                     attr = newAttrs[i];
                     attrsObj[attr.name] = attr.value;
                 }
+            }
+
+            if (attrs.is) {
+                attrsObj.is = attrs.is;
+            }
+            else {
+                delete attrsObj.is;
+                delete attrsObj.Is;
+                delete attrsObj.iS;
+                delete attrsObj.IS;
             }
 
             // first _remove the attributes that are no longer needed.
@@ -22660,7 +22704,9 @@ module.exports = function (window) {
                     switch (nodeswitch=NODESWITCH[oldChild.nodeType][newChild.nodeType]) {
 /*jshint boss:false */
                         case 1: // oldNodeType==Element, newNodeType==Element
-                            if ((oldChild.tag!==newChild.tag) || ((oldChild.tag==='SCRIPT') && (oldChild.text!==newChild.text))) {
+                            if ((oldChild.tag!==newChild.tag) ||
+                                ((oldChild.tag===newChild.tag) && oldChild.isItag && (oldChild.attrs.is!==newChild.attrs.is)) ||
+                                ((oldChild.tag==='SCRIPT') && (oldChild.text!==newChild.text))) {
                                 // new tag --> completely replace
                                 bkpAttrs = newChild.attrs;
                                 bkpChildNodes = newChild.vChildNodes;
@@ -22678,29 +22724,33 @@ module.exports = function (window) {
                             }
                             else {
                                 // same tag --> only update what is needed
-                                // first: we might need to set the class `focussed` when the attributeData says so:
-                                // this happens when an itag gets rerendered: its renderFn doesn't know if any elements
-                                // were focussed
-                                if (oldChild._data && oldChild._data.focussed && !newChild.hasClass('focussed')) {
-                                    newChild.classNames.focussed = true;
-                                    if (newChild.attrs[CLASS]) {
-                                        newChild.attrs[CLASS] = newChild.attrs[CLASS] + ' focussed';
+                                // NOTE: when this._unchangableAttrs exists, an itag-element syncs its UI -->
+                                // In those cases we shouldn't refresh any descendent itag-elements, for they rerender by themselves
+                                if (!oldChild.isItag || !this._unchangableAttrs) {
+                                    // first: we might need to set the class `focussed` when the attributeData says so:
+                                    // this happens when an itag gets rerendered: its renderFn doesn't know if any elements
+                                    // were focussed
+                                    if (oldChild._data && oldChild._data.focussed && !newChild.hasClass('focussed')) {
+                                        newChild.classNames.focussed = true;
+                                        if (newChild.attrs[CLASS]) {
+                                            newChild.attrs[CLASS] = newChild.attrs[CLASS] + ' focussed';
+                                        }
+                                        else {
+                                            newChild.attrs[CLASS] = 'focussed';
+                                        }
                                     }
-                                    else {
-                                        newChild.attrs[CLASS] = 'focussed';
+                                    if (oldChild._data && oldChild._data['fm-tabindex']) {
+                                        // node has the tabindex set by the focusmanager,
+                                        // but that info might got lost with re-rendering of the new element
+                                        newChild.attrs.tabindex = '0';
                                     }
+                                    oldChild._setAttrs(newChild.attrs);
+                                    // next: sync the vChildNodes:
+                                    oldChild._setChildNodes(newChild.vChildNodes);
+                                    // reset ref. to the domNode, for it might have been changed by newChild:
+                                    oldChild.id && (nodeids[oldChild.id]=childDomNode);
+                                    newVChildNodes[i] = oldChild;
                                 }
-                                if (oldChild._data && oldChild._data['fm-tabindex']) {
-                                    // node has the tabindex set by the focusmanager,
-                                    // but that info might got lost with re-rendering of the new element
-                                    newChild.attrs.tabindex = '0';
-                                }
-                                oldChild._setAttrs(newChild.attrs);
-                                // next: sync the vChildNodes:
-                                oldChild._setChildNodes(newChild.vChildNodes);
-                                // reset ref. to the domNode, for it might have been changed by newChild:
-                                oldChild.id && (nodeids[oldChild.id]=childDomNode);
-                                newVChildNodes[i] = oldChild;
                             }
                             break;
                         case 2: // oldNodeType==Element, newNodeType==TextNode

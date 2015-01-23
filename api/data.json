@@ -10131,7 +10131,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 939,
+            "line": 947,
             "description": "Does the actual invocation of a subscriber.",
             "itemtype": "method",
             "name": "_invokeSubs",
@@ -10173,7 +10173,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 989,
+            "line": 997,
             "description": "Removes a subscriber from the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`.",
             "static": 1,
             "itemtype": "method",
@@ -10209,7 +10209,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1054,
+            "line": 1062,
             "description": "Removes subscribers from the multiple customevents. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -10234,7 +10234,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1109,
+            "line": 1117,
             "description": "Adds a property to the default eventobject's prototype which passes through all eventcycles.\nGoes through Object.defineProperty with configurable, enumerable and writable\nall set to false.",
             "itemtype": "method",
             "name": "_setEventObjProperty",
@@ -10259,7 +10259,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1129,
+            "line": 1137,
             "description": "Objecthash containing all defined custom-events\nwhich has a structure like this:\n\n_ce = {\n    'UI:click': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    },\n    'redmodel:save': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -10273,7 +10273,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1161,
+            "line": 1169,
             "description": "Objecthash containing all defined before and after subscribers\nwhich has a structure like this (`b` represents `before` and `a` represents `after`)\nEvery item that gets in the array consist by itself of 3 properties:\n                                                         subscriberitem = {\n                                                             o: listener,\n                                                             cb: callbackFn(e),\n                                                             f: filter\n                                                         };\n\n_subs = {\n    'UI:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    '*:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    'redmodel:save': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -10287,7 +10287,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1212,
+            "line": 1220,
             "description": "Internal list of finalize-subscribers which are invoked at the finalization-cycle, which happens after the after-subscribers.\nIs an array of function-references.",
             "itemtype": "property",
             "name": "_final",
@@ -10301,7 +10301,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1224,
+            "line": 1232,
             "description": "Object that acts as the prototype of the eventobject.\nTo add more methods, you can use `_setEventObjProperty`",
             "itemtype": "property",
             "name": "_defaultEventObj",
@@ -10315,7 +10315,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1240,
+            "line": 1248,
             "description": "Objecthash containing all detach-notifiers, keyed by customEvent name.\nThis list is maintained by `notifyDetach` and `unNotifyDetach`\n\n_detachNotifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_detachNotifiers",
@@ -10329,7 +10329,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1267,
+            "line": 1275,
             "description": "Objecthash containing all notifiers, keyed by customEvent name.\nThis list is maintained by `notify` and `unNotify`\n\n_notifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_notifiers",
@@ -12005,7 +12005,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 179,
+            "line": 183,
             "description": "Removes the specified prototypes from the Class.",
             "itemtype": "method",
             "name": "removePrototypes",
@@ -12023,7 +12023,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 198,
+            "line": 202,
             "description": "Redefines the constructor fo the Class",
             "itemtype": "method",
             "name": "setConstructor",
@@ -12055,7 +12055,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 220,
+            "line": 224,
             "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
             "example": [
                 "\n\n var Circle = Shape.subClass(\n     function (x, y, r) {\n         // arguments will automaticly be passed through to Shape's constructor\n         this.r = r;\n     },\n     {\n         area: function () {\n             return this.r * this.r * Math.PI;\n         }\n     }\n );"
@@ -12092,7 +12092,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 438,
+            "line": 442,
             "description": "Returns a base class with the given constructor and prototype methods",
             "itemtype": "method",
             "name": "createClass",
@@ -12121,7 +12121,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 453,
+            "line": 457,
             "description": "Returns a base class with the given constructor and prototype methods",
             "itemtype": "method",
             "name": "createClass",
@@ -13553,7 +13553,7 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 23,
+            "line": 28,
             "description": "Forces a function to be run asynchronously, but as fast as possible. In Node.js\nthis is achieved using `setImmediate` or `process.nextTick`.",
             "itemtype": "method",
             "name": "_asynchronizer",
@@ -13572,7 +13572,7 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 42,
+            "line": 47,
             "description": "Forces a function to be run asynchronously, but as fast as possible. In Node.js\nthis is achieved using `setImmediate` or `process.nextTick`.",
             "itemtype": "method",
             "name": "_asynchronizerSilent",
@@ -13591,7 +13591,7 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 59,
+            "line": 64,
             "description": "Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function\nrequires a specific execution context or arguments, wrap it with Function.bind.\n\nI.async returns an object with a cancel method.  If the cancel method is\ncalled before the callback function, the callback function won't be called.",
             "itemtype": "method",
             "name": "async",
@@ -13618,7 +13618,7 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 96,
+            "line": 101,
             "description": "Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function\nrequires a specific execution context or arguments, wrap it with Function.bind.\n\nI.async returns an object with a cancel method.  If the cancel method is\ncalled before the callback function, the callback function won't be called.",
             "itemtype": "method",
             "name": "async",
@@ -13645,7 +13645,7 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 114,
+            "line": 119,
             "description": "Invokes the callbackFn after a timeout (asynchronous). If the function\nrequires a specific execution context or arguments, wrap it with Function.bind.\n\nTo invoke the callback function periodic, set 'periodic' either 'true', or specify a second timeout.\nIf number, then periodic is considered 'true' but with a perdiod defined by 'periodic',\nwhich means: the first timer executes after 'timeout' and next timers after 'period'.\n\nI.later returns an object with a cancel method.  If the cancel() method is\ncalled before the callback function, the callback function won't be called.",
             "itemtype": "method",
             "name": "later",
@@ -19426,6 +19426,13 @@
                     "name": "value",
                     "description": "the value for the attributeName",
                     "type": "String"
+                },
+                {
+                    "name": "force",
+                    "description": "force the attribute to be set, even if restrictions would deny it",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
                 }
             ],
             "access": "private",
@@ -19438,8 +19445,8 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1659,
-            "description": "Redefines the attributes of both the vnode as well as its related dom-node. The new\ndefinition replaces any previous attributes (without touching unmodified attributes).\n\nSyncs the new vnode's attributes with the dom.",
+            "line": 1660,
+            "description": "Redefines the attributes of both the vnode as well as its related dom-node. The new\ndefinition replaces any previous attributes (without touching unmodified attributes).\nthe `is` attribute cannot be changed.\n\nSyncs the new vnode's attributes with the dom.",
             "itemtype": "method",
             "name": "_setAttrs",
             "params": [
@@ -19459,7 +19466,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1715,
+            "line": 1727,
             "description": "Redefines the childNodes of both the vnode as well as its related dom-node. The new\ndefinition replaces any previous nodes. (without touching unmodified nodes).\n\nSyncs the new vnode's childNodes with the dom.",
             "itemtype": "method",
             "name": "_setChildNodes",
@@ -19480,7 +19487,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1898,
+            "line": 1916,
             "description": "A hash of all the `attributes` of the vnode's representing dom-node.",
             "itemtype": "property",
             "name": "attrs",
@@ -19492,7 +19499,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1906,
+            "line": 1924,
             "description": "Hash with all the classes of the vnode. Every class represents a key, all values are set `true`.",
             "itemtype": "property",
             "name": "classNames",
@@ -19504,7 +19511,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1914,
+            "line": 1932,
             "description": "The `id` of the vnode's representing dom-node (if any).",
             "itemtype": "property",
             "name": "id",
@@ -19516,7 +19523,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1922,
+            "line": 1940,
             "description": "Tells whether tag is a void Element. Examples are: `br`, `img` and `input`. Non-void Elements are f.e. `div` and `table`.\nFor TextNodes and CommentNodes, this property is `undefined`.",
             "itemtype": "property",
             "name": "isVoid",
@@ -19528,7 +19535,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1931,
+            "line": 1949,
             "description": "The `nodeType` of the vnode's representing dom-node (1===ElementNode, 3===TextNode, 8===CommentNode).",
             "itemtype": "property",
             "name": "nodeType",
@@ -19540,7 +19547,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1939,
+            "line": 1957,
             "description": "The `tag` of the vnode's representing dom-node (allways uppercase).",
             "itemtype": "property",
             "name": "tag",
@@ -19552,7 +19559,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1947,
+            "line": 1965,
             "description": "The `content` of the vnode's representing dom-node, in case it is a TextNode or CommentNode.\nEquals dom-node.nodeValue.\n\nIs `undefined` for ElementNodes.",
             "itemtype": "property",
             "name": "text",
@@ -19564,7 +19571,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1958,
+            "line": 1976,
             "description": "Hash with all the childNodes (vnodes). vChildNodes are any kind of vnodes (nodeType===1, 3 or 8)",
             "itemtype": "property",
             "name": "vChildNodes",
@@ -19576,7 +19583,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1966,
+            "line": 1984,
             "description": "The underlying `dom-node` that the vnode represents.",
             "itemtype": "property",
             "name": "domNode",
@@ -19588,7 +19595,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1974,
+            "line": 1992,
             "description": "vnode's parentNode (defined as a vnode itself).",
             "itemtype": "property",
             "name": "vParent",
@@ -19600,7 +19607,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1983,
+            "line": 2001,
             "description": "Gets or sets the innerHTML of both the vnode as well as the representing dom-node.\n\nThe setter syncs with the DOM.",
             "itemtype": "property",
             "name": "innerHTML",
@@ -19612,7 +19619,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2021,
+            "line": 2039,
             "description": "Gets or sets the innerHTML of both the vnode as well as the representing dom-node.\n\nThe setter syncs with the DOM.",
             "itemtype": "property",
             "name": "nodeValue",
@@ -19624,7 +19631,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2048,
+            "line": 2066,
             "description": "Gets or sets the outerHTML of both the vnode as well as the representing dom-node.\n\nThe setter syncs with the DOM.",
             "itemtype": "property",
             "name": "outerHTML",
@@ -19636,7 +19643,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2152,
+            "line": 2170,
             "description": "Gets or sets the innerContent of the Node as plain text.\n\nThe setter syncs with the DOM.",
             "itemtype": "property",
             "name": "textContent",
@@ -19648,7 +19655,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2191,
+            "line": 2209,
             "description": "Hash with all the children (vnodes). vChildren are vnodes that have a representing dom-node that is an HtmlElement (nodeType===1)",
             "itemtype": "property",
             "name": "vChildren",
@@ -19660,7 +19667,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2217,
+            "line": 2235,
             "description": "Reference to the first of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vFirst",
@@ -19672,7 +19679,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2234,
+            "line": 2252,
             "description": "Reference to the first vChildNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vFirstChild",
@@ -19684,7 +19691,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2247,
+            "line": 2265,
             "description": "Reference to the first of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "property",
             "name": "vFirstElement",
@@ -19696,7 +19703,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2264,
+            "line": 2282,
             "description": "Reference to the first vChild, where the related dom-node an Element (nodeType===1).",
             "itemtype": "property",
             "name": "vFirstElementChild",
@@ -19708,7 +19715,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2277,
+            "line": 2295,
             "description": "Reference to the last of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vLast",
@@ -19720,7 +19727,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2294,
+            "line": 2312,
             "description": "Reference to the last vChildNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vLastChild",
@@ -19732,7 +19739,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2308,
+            "line": 2326,
             "description": "Reference to the last of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "property",
             "name": "vLastElement",
@@ -19744,7 +19751,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2325,
+            "line": 2343,
             "description": "Reference to the last vChild, where the related dom-node an Element (nodeType===1).",
             "itemtype": "property",
             "name": "vLastElementChild",
@@ -19756,7 +19763,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2339,
+            "line": 2357,
             "description": "the Parent vnode",
             "itemtype": "property",
             "name": "vParent",
@@ -19768,7 +19775,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2347,
+            "line": 2365,
             "description": "Reference to the next of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vNext",
@@ -19780,7 +19787,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2360,
+            "line": 2378,
             "description": "Reference to the next of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "property",
             "name": "vNextElement",
@@ -19792,7 +19799,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2373,
+            "line": 2391,
             "description": "Reference to the previous of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vPrevious",
@@ -19804,7 +19811,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2386,
+            "line": 2404,
             "description": "Reference to the previous of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "property",
             "name": "vPreviousElement",

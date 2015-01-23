@@ -1085,11 +1085,11 @@ module.exports = function (window) {
         * @return {Boolean} whether the vnode&#x27;s domNode is equal, or contains the specified Element.
         * @since 0.0.1
         */
-        contains: function(otherVNode) {
+        contains: function(otherVNode, noItagSearch) {
             if (otherVNode &amp;&amp; otherVNode.destroyed) {
                 return false;
             }
-            while (otherVNode &amp;&amp; (otherVNode!==this)) {
+            while (otherVNode &amp;&amp; (otherVNode!==this) &amp;&amp; (!noItagSearch || !otherVNode.isItag)) {
                 otherVNode = otherVNode.vParent;
             }
             return (otherVNode===this);
@@ -1696,7 +1696,7 @@ module.exports = function (window) {
         _removeAttr: function(attributeName) {
             var instance = this,
                 attributeNameSplitted, ns;
-            if (instance._unchangableAttrs &amp;&amp; instance._unchangableAttrs[attributeName]) {
+            if ((instance._unchangableAttrs &amp;&amp; instance._unchangableAttrs[attributeName]) || ((attributeName.length===2) &amp;&amp; (attributeName.toLowerCase()===&#x27;is&#x27;))) {
                 console.warn(&#x27;Not allowed to remove the attribute &#x27;+attributeName);
                 return instance;
             }
@@ -1783,18 +1783,19 @@ module.exports = function (window) {
         * @method _setAttr
         * @param attributeName {String}
         * @param value {String} the value for the attributeName
+        * @param [force=false] {Boolean} force the attribute to be set, even if restrictions would deny it
         * @private
         * @chainable
         * @since 0.0.1
         */
-        _setAttr: function(attributeName, value) {
+        _setAttr: function(attributeName, value, force) {
             var instance = this,
                 extractStyle, extractClass,
                 attrs = instance.attrs,
                 prevVal = attrs[attributeName],
                 attributeNameSplitted, ns;
 
-            if (instance._unchangableAttrs &amp;&amp; instance._unchangableAttrs[attributeName]) {
+            if (!force &amp;&amp; ((instance._unchangableAttrs &amp;&amp; instance._unchangableAttrs[attributeName]) || ((attributeName.length===2) &amp;&amp; (attributeName.toLowerCase()===&#x27;is&#x27;)))) {
                 console.warn(&#x27;Not allowed to set the attribute &#x27;+attributeName);
                 return instance;
             }
@@ -1859,6 +1860,7 @@ module.exports = function (window) {
        /**
         * Redefines the attributes of both the vnode as well as its related dom-node. The new
         * definition replaces any previous attributes (without touching unmodified attributes).
+        * the &#x60;is&#x60; attribute cannot be changed.
         *
         * Syncs the new vnode&#x27;s attributes with the dom.
         *
@@ -1889,6 +1891,16 @@ module.exports = function (window) {
                     attr = newAttrs[i];
                     attrsObj[attr.name] = attr.value;
                 }
+            }
+
+            if (attrs.is) {
+                attrsObj.is = attrs.is;
+            }
+            else {
+                delete attrsObj.is;
+                delete attrsObj.Is;
+                delete attrsObj.iS;
+                delete attrsObj.IS;
             }
 
             // first _remove the attributes that are no longer needed.
@@ -1950,7 +1962,9 @@ module.exports = function (window) {
                     switch (nodeswitch=NODESWITCH[oldChild.nodeType][newChild.nodeType]) {
 /*jshint boss:false */
                         case 1: // oldNodeType==Element, newNodeType==Element
-                            if ((oldChild.tag!==newChild.tag) || ((oldChild.tag===&#x27;SCRIPT&#x27;) &amp;&amp; (oldChild.text!==newChild.text))) {
+                            if ((oldChild.tag!==newChild.tag) ||
+                                ((oldChild.tag===newChild.tag) &amp;&amp; oldChild.isItag &amp;&amp; (oldChild.attrs.is!==newChild.attrs.is)) ||
+                                ((oldChild.tag===&#x27;SCRIPT&#x27;) &amp;&amp; (oldChild.text!==newChild.text))) {
                                 // new tag --&gt; completely replace
                                 bkpAttrs = newChild.attrs;
                                 bkpChildNodes = newChild.vChildNodes;
@@ -1968,29 +1982,33 @@ module.exports = function (window) {
                             }
                             else {
                                 // same tag --&gt; only update what is needed
-                                // first: we might need to set the class &#x60;focussed&#x60; when the attributeData says so:
-                                // this happens when an itag gets rerendered: its renderFn doesn&#x27;t know if any elements
-                                // were focussed
-                                if (oldChild._data &amp;&amp; oldChild._data.focussed &amp;&amp; !newChild.hasClass(&#x27;focussed&#x27;)) {
-                                    newChild.classNames.focussed = true;
-                                    if (newChild.attrs[CLASS]) {
-                                        newChild.attrs[CLASS] = newChild.attrs[CLASS] + &#x27; focussed&#x27;;
+                                // NOTE: when this._unchangableAttrs exists, an itag-element syncs its UI --&gt;
+                                // In those cases we shouldn&#x27;t refresh any descendent itag-elements, for they rerender by themselves
+                                if (!oldChild.isItag || !this._unchangableAttrs) {
+                                    // first: we might need to set the class &#x60;focussed&#x60; when the attributeData says so:
+                                    // this happens when an itag gets rerendered: its renderFn doesn&#x27;t know if any elements
+                                    // were focussed
+                                    if (oldChild._data &amp;&amp; oldChild._data.focussed &amp;&amp; !newChild.hasClass(&#x27;focussed&#x27;)) {
+                                        newChild.classNames.focussed = true;
+                                        if (newChild.attrs[CLASS]) {
+                                            newChild.attrs[CLASS] = newChild.attrs[CLASS] + &#x27; focussed&#x27;;
+                                        }
+                                        else {
+                                            newChild.attrs[CLASS] = &#x27;focussed&#x27;;
+                                        }
                                     }
-                                    else {
-                                        newChild.attrs[CLASS] = &#x27;focussed&#x27;;
+                                    if (oldChild._data &amp;&amp; oldChild._data[&#x27;fm-tabindex&#x27;]) {
+                                        // node has the tabindex set by the focusmanager,
+                                        // but that info might got lost with re-rendering of the new element
+                                        newChild.attrs.tabindex = &#x27;0&#x27;;
                                     }
+                                    oldChild._setAttrs(newChild.attrs);
+                                    // next: sync the vChildNodes:
+                                    oldChild._setChildNodes(newChild.vChildNodes);
+                                    // reset ref. to the domNode, for it might have been changed by newChild:
+                                    oldChild.id &amp;&amp; (nodeids[oldChild.id]=childDomNode);
+                                    newVChildNodes[i] = oldChild;
                                 }
-                                if (oldChild._data &amp;&amp; oldChild._data[&#x27;fm-tabindex&#x27;]) {
-                                    // node has the tabindex set by the focusmanager,
-                                    // but that info might got lost with re-rendering of the new element
-                                    newChild.attrs.tabindex = &#x27;0&#x27;;
-                                }
-                                oldChild._setAttrs(newChild.attrs);
-                                // next: sync the vChildNodes:
-                                oldChild._setChildNodes(newChild.vChildNodes);
-                                // reset ref. to the domNode, for it might have been changed by newChild:
-                                oldChild.id &amp;&amp; (nodeids[oldChild.id]=childDomNode);
-                                newVChildNodes[i] = oldChild;
                             }
                             break;
                         case 2: // oldNodeType==Element, newNodeType==TextNode

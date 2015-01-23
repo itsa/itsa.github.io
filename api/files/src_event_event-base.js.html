@@ -1045,7 +1045,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
                 allCustomEvents = instance._ce,
                 allSubscribers = instance._subs,
                 customEventDefinition, extract, emitterName, eventName, subs, wildcard_named_subs,
-                named_wildcard_subs, wildcard_wildcard_subs, e, invokeSubs, key;
+                named_wildcard_subs, wildcard_wildcard_subs, e, invokeSubs, key, subscribedSize;
 
             (customEvent.indexOf(&#x27;:&#x27;) !== -1) || (customEvent = emitter._emitterName+&#x27;:&#x27;+customEvent);
             console.log(NAME, &#x27;customEvent.emit: &#x27;+customEvent);
@@ -1123,14 +1123,22 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
                     // in case any subscriber changed e.target inside its filter (event-dom does this),
                     // then we reset e.target to its original:
                     e.sourceTarget &amp;&amp; (e.target=e.sourceTarget);
-                    noFinalize || instance._final.some(function(finallySubscriber) {
-                        !e.silent &amp;&amp; !e._noRender &amp;&amp; !e.status.renderPrevented  &amp;&amp; finallySubscriber(e);
-                        if (e.status.unSilencable &amp;&amp; e.silent) {
-                            console.warn(NAME, &#x27; event &#x27;+e.emitter+&#x27;:&#x27;+e.type+&#x27; cannot made silent: this customEvent is defined as unSilencable&#x27;);
-                            e.silent = false;
+                    if (!noFinalize) {
+                        subscribedSize = 0;
+                        beforeSubscribers &amp;&amp; (subscribedSize+=beforeSubscribers.length);
+                        afterSubscribers &amp;&amp; (subscribedSize+=afterSubscribers.length);
+                        if (!beforeSubscribers || !afterSubscribers) {
+                            subscribedSize += subs.length + named_wildcard_subs.length + wildcard_named_subs.length + wildcard_wildcard_subs;
                         }
-                        return e.silent;
-                    });
+                        (subscribedSize&gt;0) &amp;&amp; instance._final.some(function(finallySubscriber) {
+                            !e.silent &amp;&amp; !e._noRender &amp;&amp; !e.status.renderPrevented  &amp;&amp; finallySubscriber(e);
+                            if (e.status.unSilencable &amp;&amp; e.silent) {
+                                console.warn(NAME, &#x27; event &#x27;+e.emitter+&#x27;:&#x27;+e.type+&#x27; cannot made silent: this customEvent is defined as unSilencable&#x27;);
+                                e.silent = false;
+                            }
+                            return e.silent;
+                        });
+                    }
                 }
             }
             return e;
