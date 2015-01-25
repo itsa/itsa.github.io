@@ -16,7 +16,7 @@ firstpar: get-started
 #The Basics#
 
 ####Native way to create Classes####
-To create a class in JavaScript, the would use code like this:
+To create a class in JavaScript, you would use code like this:
 
 ```js
 var Shape = function (x, y) {
@@ -270,6 +270,35 @@ c.area(); // <-- will throw an error: method `area` does not exist
 ```
 
 
+#Destroy Classes#
+
+Class-instances can be destroyed with the method `destroy()`. By default, this is a `NOOP`-method. Whenever a class-instance gets destroyed, <u>every `destroy()` up the chain</u>u> gets invoked. That is, unless you invoke destroy('true'), which does a non-chain destruction. In most cases, you don't need to setup `destroy`. Only when you have set data by closure outside the instance (for example in an array), then you need to clean it up: otherwise there would be a memoryleak. Another feature would be when the class-instantiation would create a dom-node, which you need to remove at destruction.
+
+Note that -when creating the `destroy`-method, you don't need to specify its only argument. Under the hood, `destroy` gets stored as `_destroy`, whereas `Class.destroy(notChained)` is a method on the BaseClass at the highest position of the Class-chain --> this `destroy()` invokes `_destroy` of the whole chain.
+
+####Example using destroy####
+
+```js
+var regArray = [];
+var Registration = ITSA.Classes.createClass(
+    function (data) {
+        this.data  data;
+        regArray.push(data);
+    },{
+        destroy: function () {
+            delete regData[this.data];
+        }
+    }
+);
+
+var registration = new Registration('I got registered');
+// regArray.length === 1
+
+registration.destroy();
+// regArray.length === 0
+
+```
+
 #Events#
 
 ##Event-listener##
@@ -307,3 +336,9 @@ var Circle = ITSA.Classes.createClass(
 var c = new Circle(5);
 c.emit('drawn'); // <-- will fire the 'circle:drawn'-event
 ```
+
+##Detaching listers on destruction##
+
+<u>You don't need to detach any listener you have set on any class-instance.</u>
+
+This is done automaticly when you destroy the class by using `destroy()` - regardless of its first argument. Under the hood, `destroy()` invokes this.`detachAll()` which removes all listeners of the instance.
