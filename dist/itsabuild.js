@@ -11164,8 +11164,8 @@ module.exports = function (window) {
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  * @module js-ext
- * @submodule lib/function.js
- * @class Function
+ * @submodule extra/classes.js
+ * @class Classes
  *
 */
 
@@ -11191,34 +11191,27 @@ require('../lib/object.js');
         return;
     }
 
-    // Define configurable, writable and non-enumerable props
-    // if they don't exist.
-
-    /*
-     * Internal hash containing all DOM-events that are listened for (at `document`).
+    /**
+     * Defines whether Classes should call their constructor in a chained way top-down.
      *
-     * DOMEvents = {
-     *     'click': callbackFn,
-     *     'mousemove': callbackFn,
-     *     'keypress': callbackFn
-     * }
-     *
-     * @property DOMEvents
-     * @default {}
-     * @type Object
-     * @private
+     * @property DEFAULT_CHAIN_CONSTRUCT
+     * @default true
+     * @type Boolean
+     * @protected
      * @since 0.0.1
     */
     DEFAULT_CHAIN_CONSTRUCT = true;
+
     /**
-     * Returns a base class with the given constructor and prototype methods
+     * Sugarmethod for Object.defineProperty creating an unenumerable property
      *
-     * @for Object
-     * @method createClass
-     * @param [constructor] {Function} constructor for the class
-     * @param [prototype] {Object} Hash map of prototype members of the new class
-     * @static
-     * @return {Function} the new class
+     * @method defineProperty
+     * @param [object] {Object} The object to define the property to
+     * @param [name] {String} name of the property
+     * @param [method] {Any} value of the property
+     * @param [force=false] {Boolean} to force assignment when the property already exists
+     * @protected
+     * @since 0.0.1
     */
     defineProperty = function (object, name, method, force) {
         if (!force && (name in object)) {
@@ -11232,14 +11225,14 @@ require('../lib/object.js');
         });
     };
     /**
-     * Returns a base class with the given constructor and prototype methods
+     * Sugarmethod for using defineProperty for multiple properties at once.
      *
-     * @for Object
-     * @method createClass
-     * @param [constructor] {Function} constructor for the class
-     * @param [prototype] {Object} Hash map of prototype members of the new class
-     * @static
-     * @return {Function} the new class
+     * @method defineProperties
+     * @param [object] {Object} The object to define the property to
+     * @param [map] {Object} object to be set
+     * @param [force=false] {Boolean} to force assignment when the property already exists
+     * @protected
+     * @since 0.0.1
     */
     defineProperties = function (object, map, force) {
         var names = Object.keys(map),
@@ -11253,49 +11246,35 @@ require('../lib/object.js');
     };
 
     /**
-     * Returns a base class with the given constructor and prototype methods
+     * Empty function
      *
-     * @for Object
-     * @method createClass
-     * @param [constructor] {Function} constructor for the class
-     * @param [prototype] {Object} Hash map of prototype members of the new class
-     * @static
-     * @return {Function} the new class
+     * @method NOOP
+     * @protected
+     * @since 0.0.1
     */
     NOOP = function () {};
 
-    /*
-     * Internal hash containing all DOM-events that are listened for (at `document`).
+    /**
+     * Internal hash containing the names of members which names should be transformed
      *
-     * DOMEvents = {
-     *     'click': callbackFn,
-     *     'mousemove': callbackFn,
-     *     'keypress': callbackFn
-     * }
-     *
-     * @property DOMEvents
-     * @default {}
+     * @property REPLACE_CLASS_METHODS
+     * @default {destroy: '_destroy'}
      * @type Object
-     * @private
+     * @protected
      * @since 0.0.1
     */
     REPLACE_CLASS_METHODS = createHashMap({
         destroy: '_destroy'
     });
 
-    /*
-     * Internal hash containing all DOM-events that are listened for (at `document`).
+    /**
+     * Internal hash containing protected members: those who cannot be merged into a Class
      *
-     * DOMEvents = {
-     *     'click': callbackFn,
-     *     'mousemove': callbackFn,
-     *     'keypress': callbackFn
-     * }
      *
-     * @property DOMEvents
-     * @default {}
+     * @property PROTECTED_CLASS_METHODS
+     * @default {$super: true, $superProp: true, $orig: true}
      * @type Object
-     * @private
+     * @protected
      * @since 0.0.1
     */
     PROTECTED_CLASS_METHODS = createHashMap({
@@ -11307,18 +11286,14 @@ require('../lib/object.js');
 /*jshint proto:true */
 /* jshint -W001 */
     /*
-     * Internal hash containing all DOM-events that are listened for (at `document`).
+     * Internal hash containing protected members: those who cannot be merged into a Class
      *
-     * DOMEvents = {
-     *     'click': callbackFn,
-     *     'mousemove': callbackFn,
-     *     'keypress': callbackFn
-     * }
-     *
-     * @property DOMEvents
-     * @default {}
+     * @property PROTO_RESERVED_NAMES
+     * @default {constructor: true, prototype: true, hasOwnProperty: true, isPrototypeOf: true,
+     *           propertyIsEnumerable: true, __defineGetter__: true, __defineSetter__: true,
+     *           __lookupGetter__: true, __lookupSetter__: true, __proto__: true}
      * @type Object
-     * @private
+     * @protected
      * @since 0.0.1
     */
     PROTO_RESERVED_NAMES = createHashMap({
@@ -11335,11 +11310,6 @@ require('../lib/object.js');
     });
 /* jshint +W001 */
 /*jshint proto:false */
-
-    /**
-     * Pollyfils for often used functionality for Function
-     * @class Function
-    */
 
     defineProperties(Function.prototype, {
 
@@ -11575,42 +11545,35 @@ require('../lib/object.js');
 
     global._ITSAmodules.Classes = Classes = {};
 
-    /*
-     * Internal hash containing all DOM-events that are listened for (at `document`).
+    /**
+     * Base properties for every Class
      *
-     * DOMEvents = {
-     *     'click': callbackFn,
-     *     'mousemove': callbackFn,
-     *     'keypress': callbackFn
-     * }
      *
-     * @property DOMEvents
-     * @default {}
+     * @property BASE_MEMBERS
      * @type Object
-     * @private
+     * @protected
      * @since 0.0.1
     */
     BASE_MEMBERS = {
-        /**
-         * Returns a base class with the given constructor and prototype methods
-         *
-         * @for Object
-         * @method createClass
-         * @param [constructor] {Function} constructor for the class
-         * @param [prototype] {Object} Hash map of prototype members of the new class
-         * @static
-         * @return {Function} the new class
+       /**
+        * Transformed from `destroy` --> when `destroy` gets invoked, the instance will invoke `_destroy` through the whole chain.
+        * Defaults to `NOOP`, so that it can be always be invoked.
+        *
+        * @method _destroy
+        * @private
+        * @chainable
+        * @since 0.0.1
         */
         _destroy: NOOP,
-        /**
-         * Returns a base class with the given constructor and prototype methods
-         *
-         * @for Object
-         * @method createClass
-         * @param [constructor] {Function} constructor for the class
-         * @param [prototype] {Object} Hash map of prototype members of the new class
-         * @static
-         * @return {Function} the new class
+
+       /**
+        * Calls `_destroy` on through the class-chain on every level (bottom-up).
+        * _destroy gets defined when the itag defines `destroy` --> transformation under the hood.
+        *
+        * @method destroy
+        * @param [notChained=false] {Boolean} set this `true` to prevent calling `destroy` up through the chain
+        * @chainable
+        * @since 0.0.1
         */
         destroy: function(notChained) {
             var instance = this,
@@ -11628,38 +11591,17 @@ require('../lib/object.js');
                 superDestroy(instance.constructor);
                 Object.protectedProp(instance, '_destroyed', true);
             }
+            return instance;
         }
     };
 
-    /*
-     * Internal hash containing all DOM-events that are listened for (at `document`).
-     *
-     * DOMEvents = {
-     *     'click': callbackFn,
-     *     'mousemove': callbackFn,
-     *     'keypress': callbackFn
-     * }
-     *
-     * @property DOMEvents
-     * @default {}
-     * @type Object
-     * @private
-     * @since 0.0.1
-    */
     coreMethods = Classes.coreMethods = {
-        /*
-         * Internal hash containing all DOM-events that are listened for (at `document`).
+        /**
+         * Returns the instance, yet sets an internal flag to a higher Class (1 level up)
          *
-         * DOMEvents = {
-         *     'click': callbackFn,
-         *     'mousemove': callbackFn,
-         *     'keypress': callbackFn
-         * }
-         *
-         * @property DOMEvents
-         * @default {}
-         * @type Object
-         * @private
+         * @property $super
+         * @chainable
+         * @for BaseClass
          * @since 0.0.1
         */
         $super: {
@@ -11671,25 +11613,18 @@ require('../lib/object.js');
                 return instance;
             }
         },
-        /*
-         * Internal hash containing all DOM-events that are listened for (at `document`).
+
+        /**
+         * Calculated value of the specified member at the parent-Class.
          *
-         * DOMEvents = {
-         *     'click': callbackFn,
-         *     'mousemove': callbackFn,
-         *     'keypress': callbackFn
-         * }
-         *
-         * @property DOMEvents
-         * @default {}
-         * @type Object
-         * @private
+         * @method $superProp
+         * @return {Any}
          * @since 0.0.1
         */
         $superProp: {
             configurable: true,
             writable: true,
-            value: function(/* func, *args */) {
+            value: function(/* member, *args */) {
                 var instance = this,
                     classCarierReturn = instance.__$superCarierStart__ || instance.__classCarier__ || instance.__methodClassCarier__,
                     currentClassCarier = instance.__classCarier__ || instance.__methodClassCarier__,
@@ -11717,19 +11652,13 @@ require('../lib/object.js');
                 return returnValue || superPrototype[firstArg];
             }
         },
-        /*
-         * Internal hash containing all DOM-events that are listened for (at `document`).
+
+        /**
+         * Invokes the original method (from inside where $orig is invoked).
+         * Any arguments will be passed through to the original method.
          *
-         * DOMEvents = {
-         *     'click': callbackFn,
-         *     'mousemove': callbackFn,
-         *     'keypress': callbackFn
-         * }
-         *
-         * @property DOMEvents
-         * @default {}
-         * @type Object
-         * @private
+         * @method $orig
+         * @return {Any}
          * @since 0.0.1
         */
         $orig: {
@@ -11784,34 +11713,26 @@ require('../lib/object.js');
         }
     };
 
-    /**
-     * Returns a base class with the given constructor and prototype methods
-     *
-     * @for Object
-     * @method createClass
-     * @param [constructor] {Function} constructor for the class
-     * @param [prototype] {Object} Hash map of prototype members of the new class
-     * @static
-     * @return {Function} the new class
+   /**
+    * Creates the base Class: the highest Class in the hierarchy of all Classes.
+    * Will get extra properties merge into its prototype, which leads into the formation of `BaseClass`.
+    *
+    * @method createBaseClass
+    * @protected
+    * @return {Class}
+    * @for Classes
+    * @since 0.0.1
     */
     createBaseClass = function () {
         var InitClass = function() {};
         return Function.prototype.subClass.apply(InitClass, arguments);
     };
 
-    /*
-     * Internal hash containing all DOM-events that are listened for (at `document`).
+    /**
+     * The base BaseClass: the highest Class in the hierarchy of all Classes.
      *
-     * DOMEvents = {
-     *     'click': callbackFn,
-     *     'mousemove': callbackFn,
-     *     'keypress': callbackFn
-     * }
-     *
-     * @property DOMEvents
-     * @default {}
-     * @type Object
-     * @private
+     * @property BaseClass
+     * @type Class
      * @since 0.0.1
     */
     Object.protectedProp(Classes, 'BaseClass', createBaseClass().mergePrototypes(BASE_MEMBERS, true, {}, {}));
@@ -11822,12 +11743,10 @@ require('../lib/object.js');
     /**
      * Returns a base class with the given constructor and prototype methods
      *
-     * @for Object
      * @method createClass
      * @param [constructor] {Function} constructor for the class
      * @param [prototype] {Object} Hash map of prototype members of the new class
-     * @static
-     * @return {Function} the new class
+     * @return {Class} the new class
     */
     Object.protectedProp(Classes, 'createClass', Classes.BaseClass.subClass.bind(Classes.BaseClass));
 
