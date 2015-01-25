@@ -1125,10 +1125,13 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
                     e.sourceTarget &amp;&amp; (e.target=e.sourceTarget);
                     if (!noFinalize) {
                         subscribedSize = 0;
-                        beforeSubscribers &amp;&amp; (subscribedSize+=beforeSubscribers.length);
-                        afterSubscribers &amp;&amp; (subscribedSize+=afterSubscribers.length);
+                        beforeSubscribers &amp;&amp; (subscribedSize+=beforeSubscribers.size());
+                        afterSubscribers &amp;&amp; (subscribedSize+=afterSubscribers.size());
                         if (!beforeSubscribers || !afterSubscribers) {
-                            subscribedSize += subs.length + named_wildcard_subs.length + wildcard_named_subs.length + wildcard_wildcard_subs;
+                            subs &amp;&amp; (subscribedSize += subs.size());
+                            named_wildcard_subs &amp;&amp; (subscribedSize += named_wildcard_subs.size());
+                            wildcard_named_subs &amp;&amp; (subscribedSize += wildcard_named_subs.size());
+                            wildcard_wildcard_subs &amp;&amp; (subscribedSize += wildcard_wildcard_subs.size());
                         }
                         (subscribedSize&gt;0) &amp;&amp; instance._final.some(function(finallySubscriber) {
                             !e.silent &amp;&amp; !e._noRender &amp;&amp; !e.status.renderPrevented  &amp;&amp; finallySubscriber(e);
