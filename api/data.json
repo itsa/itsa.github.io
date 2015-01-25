@@ -230,11 +230,14 @@
         "src/js-ext/extra/classes.js": {
             "name": "src/js-ext/extra/classes.js",
             "modules": {
-                "lib/function.js": 1
+                "extra/classes.js": 1
             },
-            "classes": {},
+            "classes": {
+                "Classes": 1
+            },
             "fors": {
-                "Object": 1
+                "BaseClass": 1,
+                "Classes": 1
             },
             "namespaces": {}
         },
@@ -258,7 +261,9 @@
         },
         "src/js-ext/lib/function.js": {
             "name": "src/js-ext/lib/function.js",
-            "modules": {},
+            "modules": {
+                "lib/function.js": 1
+            },
             "classes": {
                 "Function": 1
             },
@@ -754,40 +759,46 @@
         "js-ext": {
             "name": "js-ext",
             "submodules": {
-                "lib/function.js": 1,
+                "extra/classes.js": 1,
                 "lib/string.js": 1,
                 "lib/array.js": 1,
+                "lib/function.js": 1,
                 "lib/object.js": 1,
                 "lib/promise.s": 1
             },
             "classes": {
-                "Function": 1,
-                "Object": 1,
+                "Classes": 1,
+                "BaseClass": 1,
                 "String": 1,
                 "Array": 1,
+                "Function": 1,
+                "Object": 1,
                 "Promise": 1
             },
             "fors": {
-                "Object": 1
+                "BaseClass": 1,
+                "Classes": 1
             },
             "namespaces": {},
             "file": "src/js-ext/lib/promise.js",
             "line": 3
         },
-        "lib/function.js": {
-            "name": "lib/function.js",
+        "extra/classes.js": {
+            "name": "extra/classes.js",
             "submodules": {},
             "classes": {
-                "Function": 1
+                "Classes": 1,
+                "BaseClass": 1
             },
             "fors": {
-                "Object": 1
+                "BaseClass": 1,
+                "Classes": 1
             },
             "is_submodule": 1,
             "namespaces": {},
             "module": "js-ext",
             "namespace": "",
-            "file": "src/js-ext/lib/function.js",
+            "file": "src/js-ext/extra/classes.js",
             "line": 1,
             "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
@@ -820,6 +831,21 @@
             "file": "src/js-ext/lib/json.js",
             "line": 1,
             "description": "Pollyfils for often used functionality for Arrays\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        "lib/function.js": {
+            "name": "lib/function.js",
+            "submodules": {},
+            "classes": {
+                "Function": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "js-ext",
+            "namespace": "",
+            "file": "src/js-ext/lib/function.js",
+            "line": 1,
+            "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "lib/object.js": {
             "name": "lib/object.js",
@@ -1196,35 +1222,32 @@
                 "type": "Object"
             }
         },
-        "Function": {
-            "name": "Function",
-            "shortname": "Function",
+        "Classes": {
+            "name": "Classes",
+            "shortname": "Classes",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
             "module": "js-ext",
-            "submodule": "lib/function.js",
+            "submodule": "extra/classes.js",
             "namespace": "",
-            "file": "src/js-ext/lib/function.js",
+            "file": "src/js-ext/extra/classes.js",
             "line": 1,
             "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
-        "Object": {
-            "name": "Object",
-            "shortname": "Object",
+        "BaseClass": {
+            "name": "BaseClass",
+            "shortname": "BaseClass",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
             "module": "js-ext",
-            "submodule": "lib/object.js",
-            "namespace": "",
-            "file": "src/js-ext/lib/object.js",
-            "line": 96,
-            "description": "Pollyfils for often used functionality for objects"
+            "submodule": "extra/classes.js",
+            "namespace": ""
         },
         "String": {
             "name": "String",
@@ -1255,6 +1278,36 @@
             "file": "src/js-ext/lib/json.js",
             "line": 1,
             "description": "Pollyfils for often used functionality for Arrays\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        "Function": {
+            "name": "Function",
+            "shortname": "Function",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "js-ext",
+            "submodule": "lib/function.js",
+            "namespace": "",
+            "file": "src/js-ext/lib/function.js",
+            "line": 1,
+            "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        "Object": {
+            "name": "Object",
+            "shortname": "Object",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "js-ext",
+            "submodule": "lib/object.js",
+            "namespace": "",
+            "file": "src/js-ext/lib/object.js",
+            "line": 96,
+            "description": "Pollyfils for often used functionality for objects"
         },
         "Promise": {
             "name": "Promise",
@@ -11982,94 +12035,139 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 55,
-            "description": "Returns a base class with the given constructor and prototype methods",
-            "itemtype": "method",
-            "name": "createClass",
-            "params": [
-                {
-                    "name": "constructor",
-                    "description": "constructor for the class",
-                    "type": "Function",
-                    "optional": true
-                },
-                {
-                    "name": "prototype",
-                    "description": "Hash map of prototype members of the new class",
-                    "type": "Object",
-                    "optional": true
-                }
-            ],
-            "static": 1,
-            "return": {
-                "description": "the new class",
-                "type": "Function"
-            },
-            "class": "Object",
+            "line": 36,
+            "description": "Defines whether Classes should call their constructor in a chained way top-down.",
+            "itemtype": "property",
+            "name": "DEFAULT_CHAIN_CONSTRUCT",
+            "default": "true",
+            "type": "Boolean",
+            "access": "protected",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Classes",
             "module": "js-ext",
-            "submodule": "lib/function.js"
+            "submodule": "extra/classes.js"
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 76,
-            "description": "Returns a base class with the given constructor and prototype methods",
+            "line": 47,
+            "description": "Sugarmethod for Object.defineProperty creating an unenumerable property",
             "itemtype": "method",
-            "name": "createClass",
+            "name": "defineProperty",
             "params": [
                 {
-                    "name": "constructor",
-                    "description": "constructor for the class",
-                    "type": "Function",
+                    "name": "object",
+                    "description": "The object to define the property to",
+                    "type": "Object",
                     "optional": true
                 },
                 {
-                    "name": "prototype",
-                    "description": "Hash map of prototype members of the new class",
-                    "type": "Object",
-                    "optional": true
-                }
-            ],
-            "static": 1,
-            "return": {
-                "description": "the new class",
-                "type": "Function"
-            },
-            "class": "Object",
-            "module": "js-ext",
-            "submodule": "lib/function.js"
-        },
-        {
-            "file": "src/js-ext/extra/classes.js",
-            "line": 97,
-            "description": "Returns a base class with the given constructor and prototype methods",
-            "itemtype": "method",
-            "name": "createClass",
-            "params": [
-                {
-                    "name": "constructor",
-                    "description": "constructor for the class",
-                    "type": "Function",
+                    "name": "name",
+                    "description": "name of the property",
+                    "type": "String",
                     "optional": true
                 },
                 {
-                    "name": "prototype",
-                    "description": "Hash map of prototype members of the new class",
-                    "type": "Object",
+                    "name": "method",
+                    "description": "value of the property",
+                    "type": "Any",
                     "optional": true
+                },
+                {
+                    "name": "force",
+                    "description": "to force assignment when the property already exists",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
                 }
             ],
-            "static": 1,
-            "return": {
-                "description": "the new class",
-                "type": "Function"
-            },
-            "class": "Object",
+            "access": "protected",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Classes",
             "module": "js-ext",
-            "submodule": "lib/function.js"
+            "submodule": "extra/classes.js"
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 188,
+            "line": 69,
+            "description": "Sugarmethod for using defineProperty for multiple properties at once.",
+            "itemtype": "method",
+            "name": "defineProperties",
+            "params": [
+                {
+                    "name": "object",
+                    "description": "The object to define the property to",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "map",
+                    "description": "object to be set",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "force",
+                    "description": "to force assignment when the property already exists",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "access": "protected",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Classes",
+            "module": "js-ext",
+            "submodule": "extra/classes.js"
+        },
+        {
+            "file": "src/js-ext/extra/classes.js",
+            "line": 90,
+            "description": "Empty function",
+            "itemtype": "method",
+            "name": "NOOP",
+            "access": "protected",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Classes",
+            "module": "js-ext",
+            "submodule": "extra/classes.js"
+        },
+        {
+            "file": "src/js-ext/extra/classes.js",
+            "line": 99,
+            "description": "Internal hash containing the names of members which names should be transformed",
+            "itemtype": "property",
+            "name": "REPLACE_CLASS_METHODS",
+            "default": "{destroy: '_destroy'}",
+            "type": "Object",
+            "access": "protected",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Classes",
+            "module": "js-ext",
+            "submodule": "extra/classes.js"
+        },
+        {
+            "file": "src/js-ext/extra/classes.js",
+            "line": 112,
+            "description": "Internal hash containing protected members: those who cannot be merged into a Class",
+            "itemtype": "property",
+            "name": "PROTECTED_CLASS_METHODS",
+            "default": "{$super: true, $superProp: true, $orig: true}",
+            "type": "Object",
+            "access": "protected",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Classes",
+            "module": "js-ext",
+            "submodule": "extra/classes.js"
+        },
+        {
+            "file": "src/js-ext/extra/classes.js",
+            "line": 158,
             "description": "Merges the given prototypes of properties into the `prototype` of the Class.\n\n**Note1 ** to be used on instances --> ONLY on Classes\n**Note2 ** properties with getters and/or unwritable will NOT be merged\n\nThe members in the hash prototypes will become members with\ninstances of the merged class.\n\nBy default, this method will not override existing prototype members,\nunless the second argument `force` is true.",
             "itemtype": "method",
             "name": "mergePrototypes",
@@ -12086,13 +12184,13 @@
                 }
             ],
             "chainable": 1,
-            "class": "Function",
+            "class": "Classes",
             "module": "js-ext",
-            "submodule": "lib/function.js"
+            "submodule": "extra/classes.js"
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 277,
+            "line": 247,
             "description": "Removes the specified prototypes from the Class.",
             "itemtype": "method",
             "name": "removePrototypes",
@@ -12104,13 +12202,13 @@
                 }
             ],
             "chainable": 1,
-            "class": "Function",
+            "class": "Classes",
             "module": "js-ext",
-            "submodule": "lib/function.js"
+            "submodule": "extra/classes.js"
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 296,
+            "line": 266,
             "description": "Redefines the constructor fo the Class",
             "itemtype": "method",
             "name": "setConstructor",
@@ -12136,13 +12234,13 @@
                 }
             ],
             "chainable": 1,
-            "class": "Function",
+            "class": "Classes",
             "module": "js-ext",
-            "submodule": "lib/function.js"
+            "submodule": "extra/classes.js"
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 318,
+            "line": 288,
             "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
             "example": [
                 "\n\n var Circle = Shape.subClass(\n     function (x, y, r) {\n         // arguments will automaticly be passed through to Shape's constructor\n         this.r = r;\n     },\n     {\n         area: function () {\n             return this.r * this.r * Math.PI;\n         }\n     }\n );"
@@ -12173,13 +12271,133 @@
             "return": {
                 "description": "the new class."
             },
-            "class": "Function",
+            "class": "Classes",
             "module": "js-ext",
-            "submodule": "lib/function.js"
+            "submodule": "extra/classes.js"
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 436,
+            "line": 390,
+            "description": "Base properties for every Class",
+            "itemtype": "property",
+            "name": "BASE_MEMBERS",
+            "type": "Object",
+            "access": "protected",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Classes",
+            "module": "js-ext",
+            "submodule": "extra/classes.js"
+        },
+        {
+            "file": "src/js-ext/extra/classes.js",
+            "line": 400,
+            "description": "Transformed from `destroy` --> when `destroy` gets invoked, the instance will invoke `_destroy` through the whole chain.\nDefaults to `NOOP`, so that it can be always be invoked.",
+            "itemtype": "method",
+            "name": "_destroy",
+            "access": "private",
+            "tagname": "",
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Classes",
+            "module": "js-ext",
+            "submodule": "extra/classes.js"
+        },
+        {
+            "file": "src/js-ext/extra/classes.js",
+            "line": 411,
+            "description": "Calls `_destroy` on through the class-chain on every level (bottom-up).\n_destroy gets defined when the itag defines `destroy` --> transformation under the hood.",
+            "itemtype": "method",
+            "name": "destroy",
+            "params": [
+                {
+                    "name": "notChained",
+                    "description": "set this `true` to prevent calling `destroy` up through the chain",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Classes",
+            "module": "js-ext",
+            "submodule": "extra/classes.js"
+        },
+        {
+            "file": "src/js-ext/extra/classes.js",
+            "line": 441,
+            "description": "Returns the instance, yet sets an internal flag to a higher Class (1 level up)",
+            "itemtype": "property",
+            "name": "$super",
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "BaseClass",
+            "module": "js-ext",
+            "submodule": "extra/classes.js"
+        },
+        {
+            "file": "src/js-ext/extra/classes.js",
+            "line": 459,
+            "description": "Calculated value of the specified member at the parent-Class.",
+            "itemtype": "method",
+            "name": "$superProp",
+            "return": {
+                "description": "",
+                "type": "Any"
+            },
+            "since": "0.0.1",
+            "class": "BaseClass",
+            "module": "js-ext",
+            "submodule": "extra/classes.js"
+        },
+        {
+            "file": "src/js-ext/extra/classes.js",
+            "line": 498,
+            "description": "Invokes the original method (from inside where $orig is invoked).\nAny arguments will be passed through to the original method.",
+            "itemtype": "method",
+            "name": "$orig",
+            "return": {
+                "description": "",
+                "type": "Any"
+            },
+            "since": "0.0.1",
+            "class": "BaseClass",
+            "module": "js-ext",
+            "submodule": "extra/classes.js"
+        },
+        {
+            "file": "src/js-ext/extra/classes.js",
+            "line": 558,
+            "description": "Creates the base Class: the highest Class in the hierarchy of all Classes.\nWill get extra properties merge into its prototype, which leads into the formation of `BaseClass`.",
+            "itemtype": "method",
+            "name": "createBaseClass",
+            "access": "protected",
+            "tagname": "",
+            "return": {
+                "description": "",
+                "type": "Class"
+            },
+            "since": "0.0.1",
+            "class": "Classes",
+            "module": "js-ext",
+            "submodule": "extra/classes.js"
+        },
+        {
+            "file": "src/js-ext/extra/classes.js",
+            "line": 573,
+            "description": "The base BaseClass: the highest Class in the hierarchy of all Classes.",
+            "itemtype": "property",
+            "name": "BaseClass",
+            "type": "Class",
+            "since": "0.0.1",
+            "class": "Classes",
+            "module": "js-ext",
+            "submodule": "extra/classes.js"
+        },
+        {
+            "file": "src/js-ext/extra/classes.js",
+            "line": 585,
             "description": "Returns a base class with the given constructor and prototype methods",
             "itemtype": "method",
             "name": "createClass",
@@ -12197,101 +12415,13 @@
                     "optional": true
                 }
             ],
-            "static": 1,
             "return": {
                 "description": "the new class",
-                "type": "Function"
+                "type": "Class"
             },
-            "class": "Object",
+            "class": "Classes",
             "module": "js-ext",
-            "submodule": "lib/function.js"
-        },
-        {
-            "file": "src/js-ext/extra/classes.js",
-            "line": 447,
-            "description": "Returns a base class with the given constructor and prototype methods",
-            "itemtype": "method",
-            "name": "createClass",
-            "params": [
-                {
-                    "name": "constructor",
-                    "description": "constructor for the class",
-                    "type": "Function",
-                    "optional": true
-                },
-                {
-                    "name": "prototype",
-                    "description": "Hash map of prototype members of the new class",
-                    "type": "Object",
-                    "optional": true
-                }
-            ],
-            "static": 1,
-            "return": {
-                "description": "the new class",
-                "type": "Function"
-            },
-            "class": "Object",
-            "module": "js-ext",
-            "submodule": "lib/function.js"
-        },
-        {
-            "file": "src/js-ext/extra/classes.js",
-            "line": 629,
-            "description": "Returns a base class with the given constructor and prototype methods",
-            "itemtype": "method",
-            "name": "createClass",
-            "params": [
-                {
-                    "name": "constructor",
-                    "description": "constructor for the class",
-                    "type": "Function",
-                    "optional": true
-                },
-                {
-                    "name": "prototype",
-                    "description": "Hash map of prototype members of the new class",
-                    "type": "Object",
-                    "optional": true
-                }
-            ],
-            "static": 1,
-            "return": {
-                "description": "the new class",
-                "type": "Function"
-            },
-            "class": "Object",
-            "module": "js-ext",
-            "submodule": "lib/function.js"
-        },
-        {
-            "file": "src/js-ext/extra/classes.js",
-            "line": 664,
-            "description": "Returns a base class with the given constructor and prototype methods",
-            "itemtype": "method",
-            "name": "createClass",
-            "params": [
-                {
-                    "name": "constructor",
-                    "description": "constructor for the class",
-                    "type": "Function",
-                    "optional": true
-                },
-                {
-                    "name": "prototype",
-                    "description": "Hash map of prototype members of the new class",
-                    "type": "Object",
-                    "optional": true
-                }
-            ],
-            "static": 1,
-            "return": {
-                "description": "the new class",
-                "type": "Function"
-            },
-            "class": "Object",
-            "module": "js-ext",
-            "submodule": "lib/function.js"
+            "submodule": "extra/classes.js"
         },
         {
             "file": "src/js-ext/lib/array.js",

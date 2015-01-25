@@ -272,7 +272,7 @@ c.area(); // <-- will throw an error: method `area` does not exist
 
 #Destroy Classes#
 
-Class-instances can be destroyed with the method `destroy()`. By default, this is a `NOOP`-method. Whenever a class-instance gets destroyed, <u>every `destroy()` up the chain</u>u> gets invoked. That is, unless you invoke destroy('true'), which does a non-chain destruction. In most cases, you don't need to setup `destroy`. Only when you have set data by closure outside the instance (for example in an array), then you need to clean it up: otherwise there would be a memoryleak. Another feature would be when the class-instantiation would create a dom-node, which you need to remove at destruction.
+Class-instances can be destroyed with the method `destroy()`. By default, this is a `NOOP`-method. Whenever a class-instance gets destroyed, <u>every `destroy()` up the chain</u> gets invoked. That is, unless you invoke destroy('true'), which does a non-chain destruction. In most cases, you don't need to setup `destroy`. Only when you have set data by closure outside the instance (for example in an array), then you need to clean it up: otherwise there would be a memoryleak. Another feature would be when the class-instantiation would create a dom-node, which you need to remove at destruction.
 
 Note that -when creating the `destroy`-method, you don't need to specify its only argument. Under the hood, `destroy` gets stored as `_destroy`, whereas `Class.destroy(notChained)` is a method on the BaseClass at the highest position of the Class-chain --> this `destroy()` invokes `_destroy` of the whole chain.
 

@@ -2,6 +2,8 @@ YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
         "Array",
+        "BaseClass",
+        "Classes",
         "DD",
         "Element",
         "ElementArray",
@@ -38,6 +40,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "event-mobile",
         "extend-document",
         "extend-element",
+        "extra/classes.js",
         "focusmanager",
         "html-parser",
         "io",
@@ -126,6 +129,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "extend-element",
             "name": "extend-element",
             "description": "Provides several methods that override native Element-methods to work with the vdom.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "extra/classes.js",
+            "name": "extra_classes.js",
+            "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "focusmanager",
