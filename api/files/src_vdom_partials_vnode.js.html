@@ -1089,7 +1089,7 @@ module.exports = function (window) {
             if (otherVNode &amp;&amp; otherVNode.destroyed) {
                 return false;
             }
-            while (otherVNode &amp;&amp; (otherVNode!==this) &amp;&amp; (!noItagSearch || !otherVNode.isItag)) {
+            while (otherVNode &amp;&amp; (otherVNode!==this) &amp;&amp; (!noItagSearch || !otherVNode.isItag || (otherVNode.tag===&#x27;I-PARCEL&#x27;))) {
                 otherVNode = otherVNode.vParent;
             }
             return (otherVNode===this);

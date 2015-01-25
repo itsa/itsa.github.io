@@ -138,6 +138,9 @@ You should be carefull when it comes down to gesture-events (touch- or pointer-e
 
 Beside native DOM-events, this module enriches some events and adds some custome events for a richer experience:
 
+##click, centerclick and rightclick##
+The `click`- events are splitted into: `click`, `centerclick` and `rightclick`. This means that -when subscribed to a click-event- the subscriber only gets invoked on a `left-mouseclick`.
+
 ##mouseover and mouseout##
 
 ###Native DOM way###

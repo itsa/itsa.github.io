@@ -6791,6 +6791,9 @@ var NAME = '[event-dom]: ',
     INSERT = 'insert',
     CHANGE = 'change',
     ATTRIBUTE = 'attribute',
+    CLICK = 'click',
+    RIGHTCLICK = 'right'+CLICK,
+    CENTERCLICK = 'center'+CLICK,
     EV_REMOVED = UI+NODE+REMOVE,
     EV_INSERTED = UI+NODE+INSERT,
     EV_CONTENT_CHANGE = UI+NODE+'content'+CHANGE,
@@ -6874,7 +6877,9 @@ module.exports = function (window) {
         var outsideEvent = REGEXP_UI_OUTSIDE.test(customEvent),
             selector = subscriber.f,
             context = subscriber.o,
-            isCustomElement = subscriber.o._isCustomElement,
+            vnode = subscriber.o.vnode,
+            isCustomElement = vnode && vnode.isItag,
+            isParcel = isCustomElement && (vnode.tag==='I-PARCEL'),
             nodeid, byExactId;
 
         console.log(NAME, '_domSelToFunc type of selector = '+typeof selector);
@@ -6897,7 +6902,7 @@ module.exports = function (window) {
                 vnode = node.vnode,
                 character1 = selector && selector.substr(1),
                 match = false;
-            if (!subscriber.o._isCustomElement || subscriber.o.contains(node)) {
+            if (!isCustomElement || isParcel || subscriber.o.contains(node)) {
                 if (selector==='') {
                     match = true;
                 }
@@ -6955,7 +6960,7 @@ module.exports = function (window) {
         subscribers.forEach(
             function(subscriber) {
                 console.log(NAME, '_findCurrentTargets for single subscriber. nId: '+subscriber.nId);
-                subscriber.nId && (subscriber.n=DOCUMENT.getElementById(subscriber.nId));
+                subscriber.nId && (subscriber.n=DOCUMENT.getElementById(subscriber.nId, true));
             }
         );
     };
@@ -6973,10 +6978,19 @@ module.exports = function (window) {
     _evCallback = function(e) {
         console.log(NAME, '_evCallback');
         var allSubscribers = Event._subs,
-            eventName = e.type,
-            customEvent = 'UI:'+eventName,
+            eType = e.type,
             eventobject, subs, wildcard_named_subs, named_wildcard_subs, wildcard_wildcard_subs, subsOutside,
-            subscribers, eventobjectOutside, wildcard_named_subsOutside;
+            subscribers, eventobjectOutside, wildcard_named_subsOutside, customEvent, eventName, which;
+
+        eventName = eType;
+        // first: a `click` event might be needed to transformed into `rightclick`:
+        if (eventName===CLICK) {
+            which = e.which;
+            (which===2) && (eventName=CENTERCLICK);
+            (which===3) && (eventName=RIGHTCLICK);
+        }
+
+        customEvent = 'UI:'+eventName;
 
         subs = allSubscribers[customEvent];
         wildcard_named_subs = allSubscribers['*:'+eventName];
@@ -6990,6 +7004,7 @@ module.exports = function (window) {
         // e = eventobject from the DOM-event OR gesture-event
         // eventobject = eventobject from our Eventsystem, which get returned by calling `emit()`
 
+        // now so the work:
         subscribers = _getSubscribers(e, true, subs, wildcard_named_subs, named_wildcard_subs, wildcard_wildcard_subs);
         eventobject = Event._emit(e.target, customEvent, e, subscribers, [], _preProcessor, false, true);
 
@@ -7157,16 +7172,17 @@ module.exports = function (window) {
             return;
         }
 
+        DOMEvents[eventName] = true;
+        outsideEvent && (DOMEvents[eventName+OUTSIDE]=true);
         // one exception: windowresize should listen to the window-object
         if (eventName==='resize') {
             window.addEventListener(eventName, _evCallback);
         }
         else {
+            ((eventName===RIGHTCLICK) || (eventName===CENTERCLICK)) && (eventName=CLICK);
             // important: set the third argument `true` so we listen to the capture-phase.
             DOCUMENT.addEventListener(eventName, _evCallback, true);
         }
-        DOMEvents[eventName] = true;
-        outsideEvent && (DOMEvents[eventName+OUTSIDE]=true);
     };
 
     _setupEvents = function() {
@@ -7255,9 +7271,22 @@ module.exports = function (window) {
     _teardownDomListener = function(customEvent) {
         var customEventWithoutOutside = customEvent.endsWith(OUTSIDE) ? customEvent.substr(0, customEvent.length-7) : customEvent,
             eventSplitted = customEventWithoutOutside.split(':'),
-            eventName = eventSplitted[1];
+            eventName = eventSplitted[1],
+            stillInUse;
 
-        if (!Event._subs[customEventWithoutOutside] && !Event._subs[customEventWithoutOutside+OUTSIDE]) {
+        if ((customEventWithoutOutside===CLICK) || (customEventWithoutOutside===RIGHTCLICK) || (customEventWithoutOutside===CENTERCLICK)) {
+            stillInUse = Event._subs[CLICK] ||
+                         Event._subs[CLICK+OUTSIDE];
+                         Event._subs[RIGHTCLICK] ||
+                         Event._subs[RIGHTCLICK+OUTSIDE],
+                         Event._subs[CENTERCLICK] ||
+                         Event._subs[CENTERCLICK+OUTSIDE];
+            eventName = CLICK;
+        }
+        else {
+            stillInUse = Event._subs[customEventWithoutOutside] || Event._subs[customEventWithoutOutside+OUTSIDE];
+        }
+        if (!stillInUse) {
             console.log(NAME, '_teardownDomListener '+customEvent);
             // remove eventlistener from `document`
             // one exeption: windowresize should listen to the window-object
@@ -7312,14 +7341,7 @@ module.exports = function (window) {
     // making HTMLElement to be able to emit using event-emitter:
     (function(HTMLElementPrototype) {
         HTMLElementPrototype.merge(Event.Emitter('UI'));
-        HTMLElementPrototype._isCustomElement = true;
     }(window.HTMLElement.prototype));
-
-
-
-
-
-
 
 
     // Notify when someone subscribes to an UI:* event
@@ -7335,11 +7357,6 @@ module.exports = function (window) {
     DOCUMENT.suppressMutationEvents = function(suppress) {
         this._suppressMutationEvents = suppress;
     };
-
-
-
-
-
 
     // Event._domCallback is the only method that is added to Event.
     // We need to do this, because `event-mobile` needs access to the same method.
@@ -8762,10 +8779,13 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                     e.sourceTarget && (e.target=e.sourceTarget);
                     if (!noFinalize) {
                         subscribedSize = 0;
-                        beforeSubscribers && (subscribedSize+=beforeSubscribers.length);
-                        afterSubscribers && (subscribedSize+=afterSubscribers.length);
+                        beforeSubscribers && (subscribedSize+=beforeSubscribers.size());
+                        afterSubscribers && (subscribedSize+=afterSubscribers.size());
                         if (!beforeSubscribers || !afterSubscribers) {
-                            subscribedSize += subs.length + named_wildcard_subs.length + wildcard_named_subs.length + wildcard_wildcard_subs;
+                            subs && (subscribedSize += subs.size());
+                            named_wildcard_subs && (subscribedSize += named_wildcard_subs.size());
+                            wildcard_named_subs && (subscribedSize += wildcard_named_subs.size());
+                            wildcard_wildcard_subs && (subscribedSize += wildcard_wildcard_subs.size());
                         }
                         (subscribedSize>0) && instance._final.some(function(finallySubscriber) {
                             !e.silent && !e._noRender && !e.status.renderPrevented  && finallySubscriber(e);
@@ -11174,7 +11194,32 @@ require('../lib/object.js');
     // Define configurable, writable and non-enumerable props
     // if they don't exist.
 
+    /*
+     * Internal hash containing all DOM-events that are listened for (at `document`).
+     *
+     * DOMEvents = {
+     *     'click': callbackFn,
+     *     'mousemove': callbackFn,
+     *     'keypress': callbackFn
+     * }
+     *
+     * @property DOMEvents
+     * @default {}
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
     DEFAULT_CHAIN_CONSTRUCT = true;
+    /**
+     * Returns a base class with the given constructor and prototype methods
+     *
+     * @for Object
+     * @method createClass
+     * @param [constructor] {Function} constructor for the class
+     * @param [prototype] {Object} Hash map of prototype members of the new class
+     * @static
+     * @return {Function} the new class
+    */
     defineProperty = function (object, name, method, force) {
         if (!force && (name in object)) {
             return;
@@ -11186,6 +11231,16 @@ require('../lib/object.js');
             value: method
         });
     };
+    /**
+     * Returns a base class with the given constructor and prototype methods
+     *
+     * @for Object
+     * @method createClass
+     * @param [constructor] {Function} constructor for the class
+     * @param [prototype] {Object} Hash map of prototype members of the new class
+     * @static
+     * @return {Function} the new class
+    */
     defineProperties = function (object, map, force) {
         var names = Object.keys(map),
             l = names.length,
@@ -11196,17 +11251,76 @@ require('../lib/object.js');
             defineProperty(object, name, map[name], force);
         }
     };
+
+    /**
+     * Returns a base class with the given constructor and prototype methods
+     *
+     * @for Object
+     * @method createClass
+     * @param [constructor] {Function} constructor for the class
+     * @param [prototype] {Object} Hash map of prototype members of the new class
+     * @static
+     * @return {Function} the new class
+    */
     NOOP = function () {};
+
+    /*
+     * Internal hash containing all DOM-events that are listened for (at `document`).
+     *
+     * DOMEvents = {
+     *     'click': callbackFn,
+     *     'mousemove': callbackFn,
+     *     'keypress': callbackFn
+     * }
+     *
+     * @property DOMEvents
+     * @default {}
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
     REPLACE_CLASS_METHODS = createHashMap({
         destroy: '_destroy'
     });
+
+    /*
+     * Internal hash containing all DOM-events that are listened for (at `document`).
+     *
+     * DOMEvents = {
+     *     'click': callbackFn,
+     *     'mousemove': callbackFn,
+     *     'keypress': callbackFn
+     * }
+     *
+     * @property DOMEvents
+     * @default {}
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
     PROTECTED_CLASS_METHODS = createHashMap({
         $super: true,
         $superProp: true,
         $orig: true
     });
+
 /*jshint proto:true */
 /* jshint -W001 */
+    /*
+     * Internal hash containing all DOM-events that are listened for (at `document`).
+     *
+     * DOMEvents = {
+     *     'click': callbackFn,
+     *     'mousemove': callbackFn,
+     *     'keypress': callbackFn
+     * }
+     *
+     * @property DOMEvents
+     * @default {}
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
     PROTO_RESERVED_NAMES = createHashMap({
         constructor: true,
         prototype: true,
@@ -11442,7 +11556,10 @@ require('../lib/object.js');
             proto = Object.create(baseProt);
             constructor.prototype = proto;
 
-            proto.constructor = constructor;
+            // webkit doesn't let all objects to have their constructor redefined
+            // when directly assigned. Using `defineProperty will work:
+            Object.defineProperty(proto, 'constructor', {value: constructor});
+
             constructor.$$chainConstructed = chainConstruct ? true : false;
             constructor.$$super = baseProt;
             constructor.$$orig = {
@@ -11458,8 +11575,43 @@ require('../lib/object.js');
 
     global._ITSAmodules.Classes = Classes = {};
 
+    /*
+     * Internal hash containing all DOM-events that are listened for (at `document`).
+     *
+     * DOMEvents = {
+     *     'click': callbackFn,
+     *     'mousemove': callbackFn,
+     *     'keypress': callbackFn
+     * }
+     *
+     * @property DOMEvents
+     * @default {}
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
     BASE_MEMBERS = {
+        /**
+         * Returns a base class with the given constructor and prototype methods
+         *
+         * @for Object
+         * @method createClass
+         * @param [constructor] {Function} constructor for the class
+         * @param [prototype] {Object} Hash map of prototype members of the new class
+         * @static
+         * @return {Function} the new class
+        */
         _destroy: NOOP,
+        /**
+         * Returns a base class with the given constructor and prototype methods
+         *
+         * @for Object
+         * @method createClass
+         * @param [constructor] {Function} constructor for the class
+         * @param [prototype] {Object} Hash map of prototype members of the new class
+         * @static
+         * @return {Function} the new class
+        */
         destroy: function(notChained) {
             var instance = this,
                 superDestroy;
@@ -11479,7 +11631,37 @@ require('../lib/object.js');
         }
     };
 
+    /*
+     * Internal hash containing all DOM-events that are listened for (at `document`).
+     *
+     * DOMEvents = {
+     *     'click': callbackFn,
+     *     'mousemove': callbackFn,
+     *     'keypress': callbackFn
+     * }
+     *
+     * @property DOMEvents
+     * @default {}
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
     coreMethods = Classes.coreMethods = {
+        /*
+         * Internal hash containing all DOM-events that are listened for (at `document`).
+         *
+         * DOMEvents = {
+         *     'click': callbackFn,
+         *     'mousemove': callbackFn,
+         *     'keypress': callbackFn
+         * }
+         *
+         * @property DOMEvents
+         * @default {}
+         * @type Object
+         * @private
+         * @since 0.0.1
+        */
         $super: {
             get: function() {
                 var instance = this;
@@ -11489,6 +11671,21 @@ require('../lib/object.js');
                 return instance;
             }
         },
+        /*
+         * Internal hash containing all DOM-events that are listened for (at `document`).
+         *
+         * DOMEvents = {
+         *     'click': callbackFn,
+         *     'mousemove': callbackFn,
+         *     'keypress': callbackFn
+         * }
+         *
+         * @property DOMEvents
+         * @default {}
+         * @type Object
+         * @private
+         * @since 0.0.1
+        */
         $superProp: {
             configurable: true,
             writable: true,
@@ -11520,6 +11717,21 @@ require('../lib/object.js');
                 return returnValue || superPrototype[firstArg];
             }
         },
+        /*
+         * Internal hash containing all DOM-events that are listened for (at `document`).
+         *
+         * DOMEvents = {
+         *     'click': callbackFn,
+         *     'mousemove': callbackFn,
+         *     'keypress': callbackFn
+         * }
+         *
+         * @property DOMEvents
+         * @default {}
+         * @type Object
+         * @private
+         * @since 0.0.1
+        */
         $orig: {
             configurable: true,
             writable: true,
@@ -11572,11 +11784,6 @@ require('../lib/object.js');
         }
     };
 
-    createBaseClass = function () {
-        var InitClass = function() {};
-        return Function.prototype.subClass.apply(InitClass, arguments);
-    };
-
     /**
      * Returns a base class with the given constructor and prototype methods
      *
@@ -11586,6 +11793,26 @@ require('../lib/object.js');
      * @param [prototype] {Object} Hash map of prototype members of the new class
      * @static
      * @return {Function} the new class
+    */
+    createBaseClass = function () {
+        var InitClass = function() {};
+        return Function.prototype.subClass.apply(InitClass, arguments);
+    };
+
+    /*
+     * Internal hash containing all DOM-events that are listened for (at `document`).
+     *
+     * DOMEvents = {
+     *     'click': callbackFn,
+     *     'mousemove': callbackFn,
+     *     'keypress': callbackFn
+     * }
+     *
+     * @property DOMEvents
+     * @default {}
+     * @type Object
+     * @private
+     * @since 0.0.1
     */
     Object.protectedProp(Classes, 'BaseClass', createBaseClass().mergePrototypes(BASE_MEMBERS, true, {}, {}));
 
@@ -15230,9 +15457,7 @@ module.exports = function (window) {
     // prevent double definition:
     window._ITSAmodules.ExtendDocument = true;
 
-    var NS = require('./vdom-ns.js')(window),
-        nodeids = NS.nodeids,
-        DOCUMENT = window.document;
+    var DOCUMENT = window.document;
 
     // Note: window.document has no prototype
 
@@ -15262,11 +15487,12 @@ module.exports = function (window) {
      *
      * @method contains
      * @param otherElement {Element}
+     * @param [insideItags=false] {Boolean} no deepsearch in iTags --> by default, these elements should be hidden
      * @return {Boolean} whether the Element is inside the dom.
      * @since 0.0.1
      */
-    DOCUMENT.contains = function(otherElement) {
-        return DOCUMENT.documentElement.contains(otherElement);
+    DOCUMENT.contains = function(otherElement, insideItags) {
+        return DOCUMENT.documentElement.contains(otherElement, insideItags);
     };
 
     /**
@@ -15274,11 +15500,12 @@ module.exports = function (window) {
      *
      * @method getAll
      * @param cssSelector {String} css-selector to match
+     * @param [insideItags=false] {Boolean} no deepsearch in iTags --> by default, these elements should be hidden
      * @return {ElementArray} ElementArray of Elements that match the css-selector
      * @since 0.0.1
      */
-    DOCUMENT.getAll = function(cssSelector) {
-        return this.querySelectorAll(cssSelector);
+    DOCUMENT.getAll = function(cssSelector, insideItags) {
+        return this.querySelectorAll(cssSelector, insideItags);
     };
 
     /**
@@ -15287,11 +15514,12 @@ module.exports = function (window) {
      *
      * @method getElement
      * @param cssSelector {String} css-selector to match
+     * @param [insideItags=false] {Boolean} no deepsearch in iTags --> by default, these elements should be hidden
      * @return {Element|null} the Element that was search for
      * @since 0.0.1
      */
-    DOCUMENT.getElement = function(cssSelector) {
-        return ((cssSelector[0]==='#') && (cssSelector.indexOf(' ')===-1)) ? this.getElementById(cssSelector.substr(1)) : this.querySelector(cssSelector);
+    DOCUMENT.getElement = function(cssSelector, insideItags) {
+        return ((cssSelector[0]==='#') && (cssSelector.indexOf(' ')===-1)) ? this.getElementById(cssSelector.substr(1)) : this.querySelector(cssSelector, insideItags);
     };
 
     /**
@@ -15302,8 +15530,8 @@ module.exports = function (window) {
      * @return {Element|null}
      *
      */
-    DOCUMENT.getElementById = function(id) {
-        return nodeids[id] || null; // force `null` instead of `undefined` to be compatible with native getElementById.
+    DOCUMENT.getElementById = function(id, insideItags) {
+        return DOCUMENT.documentElement.getElementById(id, insideItags);
     };
 
     /**
@@ -15908,7 +16136,7 @@ module.exports = function (window) {
 
 
 
-},{"./vdom-ns.js":64,"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"js-ext/lib/string.js":40,"polyfill":50}],61:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":30,"js-ext/lib/object.js":38,"js-ext/lib/string.js":40,"polyfill":50}],61:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -15973,6 +16201,7 @@ module.exports = function (window) {
         DOCUMENT = window.document,
         nodeids = NS.nodeids,
         arrayIndexOf = Array.prototype.indexOf,
+        I_PARCEL = 'I-PARCEL',
         POSITION = 'position',
         ITSA_ = 'itsa-',
         BLOCK = ITSA_+'block',
@@ -16977,13 +17206,14 @@ module.exports = function (window) {
          *
          * @method contains
          * @param otherElement {Element}
+         * @param [insideItags=false] {Boolean} no deepsearch in iTags --> by default, these elements should be hidden
          * @return {Boolean} whether this Element contains OR equals otherElement.
          */
-        ElementPrototype.contains = function(otherElement) {
+        ElementPrototype.contains = function(otherElement, insideItags) {
             if (otherElement===this) {
                 return true;
             }
-            return this.vnode.contains(otherElement.vnode, true);
+            return this.vnode.contains(otherElement.vnode, !insideItags);
         };
 
         /**
@@ -17216,11 +17446,12 @@ module.exports = function (window) {
          *
          * @method getAll
          * @param cssSelector {String} css-selector to match
+         * @param [insideItags=false] {Boolean} no deepsearch in iTags --> by default, these elements should be hidden
          * @return {ElementArray} ElementArray of Elements that match the css-selector
          * @since 0.0.1
          */
-        ElementPrototype.getAll = function(cssSelector) {
-            return this.querySelectorAll(cssSelector);
+        ElementPrototype.getAll = function(cssSelector, insideItags) {
+            return this.querySelectorAll(cssSelector, insideItags);
         };
 
        /**
@@ -17320,11 +17551,12 @@ module.exports = function (window) {
         *
         * @method getElement
         * @param cssSelector {String} css-selector to match
+        * @param [insideItags=false] {Boolean} no deepsearch in iTags --> by default, these elements should be hidden
         * @return {Element|null} the Element that was search for
         * @since 0.0.1
         */
-        ElementPrototype.getElement = function(cssSelector) {
-            return ((cssSelector[0]==='#') && (cssSelector.indexOf(' ')===-1)) ? this.getElementById(cssSelector.substr(1)) : this.querySelector(cssSelector);
+        ElementPrototype.getElement = function(cssSelector, insideItags) {
+            return ((cssSelector[0]==='#') && (cssSelector.indexOf(' ')===-1)) ? this.getElementById(cssSelector.substr(1)) : this.querySelector(cssSelector, insideItags);
         };
 
         /**
@@ -17332,12 +17564,13 @@ module.exports = function (window) {
          *
          * @method getElementById
          * @param id {String} id of the Element
+         * @param [insideItags=false] {Boolean} no deepsearch in iTags --> by default, these elements should be hidden
          * @return {Element|null}
          *
          */
-        ElementPrototype.getElementById = function(id) {
+        ElementPrototype.getElementById = function(id, insideItags) {
             var element = nodeids[id];
-            if (element && !this.contains(element)) {
+            if (element && !this.contains(element, insideItags)) {
                 // outside itself
                 return null;
             }
@@ -17821,7 +18054,7 @@ module.exports = function (window) {
             if (this.vnode.removedFromDOM) {
                 return false;
             }
-            return DOCUMENT.contains(this);
+            return DOCUMENT.contains(this, true);
         };
 
        /**
@@ -18078,9 +18311,10 @@ module.exports = function (window) {
          *
          * @method querySelector
          * @param selectors {String} CSS-selector(s) that should match
+         * @param [insideItags=false] {Boolean} no deepsearch in iTags --> by default, these elements should be hidden
          * @return {Element}
          */
-        ElementPrototype.querySelector = function(selectors) {
+        ElementPrototype.querySelector = function(selectors, insideItags) {
             var found,
                 i = -1,
                 len = selectors.length,
@@ -18093,7 +18327,7 @@ module.exports = function (window) {
                     for (j=0; (j<len2) && !found; j++) {
                         vChildNode = vChildren[j];
                         vChildNode.matchesSelector(selectors, thisvnode) && (found=vChildNode.domNode);
-                        found || vChildNode.isItag || inspectChildren(vChildNode); // not dive into itags
+                        found || (!insideItags && vChildNode.isItag && (vChildNode.tag!==I_PARCEL)) || inspectChildren(vChildNode); // not dive into itags (except from i-parcel)
                     }
                 };
             while (!firstCharacter && (++i<len)) {
@@ -18113,9 +18347,10 @@ module.exports = function (window) {
          *
          * @method querySelectorAll
          * @param selectors {String} CSS-selector(s) that should match
+         * @param [insideItags=false] {Boolean} no deepsearch in iTags --> by default, these elements should be hidden
          * @return {ElementArray} non-life Array (snapshot) with Elements
          */
-        ElementPrototype.querySelectorAll = function(selectors) {
+        ElementPrototype.querySelectorAll = function(selectors, insideItags) {
             var found = ElementArray.createArray(),
                 i = -1,
                 len = selectors.length,
@@ -18128,7 +18363,7 @@ module.exports = function (window) {
                     for (j=0; j<len2; j++) {
                         vChildNode = vChildren[j];
                         vChildNode.matchesSelector(selectors, thisvnode) && (found[found.length]=vChildNode.domNode);
-                        vChildNode.isItag || inspectChildren(vChildNode); // not dive into itags
+                        (!insideItags && vChildNode.isItag && (vChildNode.tag!==I_PARCEL)) || inspectChildren(vChildNode); // not dive into itags
                     }
                 };
             while (!firstCharacter && (++i<len)) {
@@ -21831,7 +22066,7 @@ module.exports = function (window) {
             if (otherVNode && otherVNode.destroyed) {
                 return false;
             }
-            while (otherVNode && (otherVNode!==this) && (!noItagSearch || !otherVNode.isItag)) {
+            while (otherVNode && (otherVNode!==this) && (!noItagSearch || !otherVNode.isItag || (otherVNode.tag==='I-PARCEL'))) {
                 otherVNode = otherVNode.vParent;
             }
             return (otherVNode===this);
