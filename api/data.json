@@ -9545,7 +9545,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 63,
+            "line": 65,
             "description": "Subscribes to a customEvent. The callback will be executed `after` the defaultFn.",
             "static": 1,
             "itemtype": "method",
@@ -9591,7 +9591,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 90,
+            "line": 92,
             "description": "Subscribes to a customEvent. The callback will be executed `before` the defaultFn.",
             "static": 1,
             "itemtype": "method",
@@ -9637,7 +9637,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 117,
+            "line": 119,
             "description": "Defines an emitterName into the instance (emitter).\nThis will add a protected property `_emitterName` to the instance.",
             "static": 1,
             "itemtype": "method",
@@ -9660,7 +9660,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 138,
+            "line": 140,
             "description": "Defines a CustomEvent. If the eventtype already exists, it will not be overridden,\nunless you force to assign with `.forceAssign()`\n\nThe returned object comes with 8 methods which can be invoked chainable:\n\n<ul>\n    <li>defaultFn() --> the default-function of the event</li>\n    <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n    <li>forceAssign() --> overrides any previous definition</li>\n    <li>unHaltable() --> makes the customEvent cannot be halted</li>\n    <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n    <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>\n    <li>unRenderPreventable() --> makes that the customEvent's render cannot be prevented</li>\n    <li>noRender() --> prevents this customEvent from render the dom. Overrules unRenderPreventable()</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -9682,7 +9682,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 236,
+            "line": 238,
             "description": "Detaches (unsubscribes) the listener from the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -9706,7 +9706,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 254,
+            "line": 256,
             "description": "Detaches (unsubscribes) the listener from all customevents.",
             "static": 1,
             "itemtype": "method",
@@ -9724,7 +9724,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 278,
+            "line": 280,
             "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.rendered (optional) --> `true` the vDOM rendered the dom</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n              <li>e.status.renderPrevented (optional) -->  `reason|true` if the event got renderPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n    <li>e.preventRender() --> by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()` or `e.preventRender()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li>\n<ul>",
             "static": 1,
             "itemtype": "method",
@@ -9757,7 +9757,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 339,
+            "line": 341,
             "description": "Adds a subscriber to the finalization-cycle, which happens after the after-subscribers.\nOnly get invoked when the cycle was not preventDefaulted or halted.",
             "itemtype": "method",
             "name": "finalize",
@@ -9778,8 +9778,8 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 362,
-            "description": "Creates a notifier for the customEvent.\nYou can use this to create delayed `defineEvents`. When the customEvent is called, the callback gets invoked\n(even before the subsrcibers). Use this callback for delayed customEvent-definitions.\n\nUse **no** wildcards for the emitterName. You might use wildcards for the eventName. Without wildcards, the\nnotification will be unNotified (callback automaticly detached) on the first time the event occurs.\n\nYou **must** specify the full `emitterName:eventName` syntax.\nThe module `core-event-dom` uses `notify` to auto-define DOM-events (UI:*).",
+            "line": 364,
+            "description": "Creates a notifier for the customEvent.\nYou can use this to create delayed `defineEvents`. When the customEvent is called, the callback gets invoked\n(even before the subsrcibers). Use this callback for delayed customEvent-definitions.\n\nYou may use wildcards for both emitterName and eventName.\n\nYou **must** specify the full `emitterName:eventName` syntax.\nThe module `core-event-dom` uses `notify` to auto-define DOM-events (UI:*).",
             "static": 1,
             "itemtype": "method",
             "name": "notify",
@@ -9814,7 +9814,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 401,
+            "line": 402,
             "description": "Creates a detach-notifier for the customEvent.\nYou can use this to get informed whenever a subscriber detaches.\n\nUse **no** wildcards for the emitterName. You might use wildcards for the eventName. Without wildcards, the\nnotification will be unNotified (callback automaticly detached) on the first time the event occurs.\n\nYou **must** specify the full `emitterName:eventName` syntax.\nThe module `core-event-dom` uses `notify` to auto-define DOM-events (UI:*).",
             "static": 1,
             "itemtype": "method",
@@ -9850,7 +9850,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 439,
+            "line": 440,
             "description": "Subscribes to a customEvent. The callback will be executed `after` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
             "itemtype": "method",
@@ -9896,7 +9896,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 483,
+            "line": 484,
             "description": "Subscribes to a customEvent. The callback will be executed `before` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
             "itemtype": "method",
@@ -9942,7 +9942,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 527,
+            "line": 528,
             "description": "Removes all event-definitions of an emitter, specified by its `emitterName`.\nWhen `emitterName` is not set, ALL event-definitions will be removed.",
             "static": 1,
             "itemtype": "method",
@@ -9961,7 +9961,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 557,
+            "line": 558,
             "description": "Removes the event-definition of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -9979,7 +9979,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 570,
+            "line": 571,
             "description": "unNotifies (unsubscribes) the notifier of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -9997,7 +9997,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 583,
+            "line": 584,
             "description": "unNotifies (unsubscribes) the detach-notifier of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -10015,7 +10015,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 600,
+            "line": 601,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -10067,7 +10067,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 672,
+            "line": 673,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -10119,7 +10119,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 779,
+            "line": 795,
             "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.rendered (optional) --> `true` the vDOM rendered the dom</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n              <li>e.status.renderPrevented (optional) -->  `reason|true` if the event got renderPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n    <li>e.preventRender() --> by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()` or `e.preventRender()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li>\n<ul>",
             "static": 1,
             "itemtype": "method",
@@ -10184,7 +10184,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 950,
+            "line": 966,
             "description": "Does the actual invocation of a subscriber.",
             "itemtype": "method",
             "name": "_invokeSubs",
@@ -10226,7 +10226,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1000,
+            "line": 1016,
             "description": "Removes a subscriber from the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`.",
             "static": 1,
             "itemtype": "method",
@@ -10262,7 +10262,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1065,
+            "line": 1081,
             "description": "Removes subscribers from the multiple customevents. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:click'</li>\n    <li>'click' --> alias for 'UI:click'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -10287,7 +10287,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1120,
+            "line": 1136,
             "description": "Adds a property to the default eventobject's prototype which passes through all eventcycles.\nGoes through Object.defineProperty with configurable, enumerable and writable\nall set to false.",
             "itemtype": "method",
             "name": "_setEventObjProperty",
@@ -10312,7 +10312,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1140,
+            "line": 1156,
             "description": "Objecthash containing all defined custom-events\nwhich has a structure like this:\n\n_ce = {\n    'UI:click': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    },\n    'redmodel:save': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -10326,7 +10326,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1172,
+            "line": 1188,
             "description": "Objecthash containing all defined before and after subscribers\nwhich has a structure like this (`b` represents `before` and `a` represents `after`)\nEvery item that gets in the array consist by itself of 3 properties:\n                                                         subscriberitem = {\n                                                             o: listener,\n                                                             cb: callbackFn(e),\n                                                             f: filter\n                                                         };\n\n_subs = {\n    'UI:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    '*:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    'redmodel:save': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -10340,7 +10340,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1223,
+            "line": 1239,
             "description": "Internal list of finalize-subscribers which are invoked at the finalization-cycle, which happens after the after-subscribers.\nIs an array of function-references.",
             "itemtype": "property",
             "name": "_final",
@@ -10354,7 +10354,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1235,
+            "line": 1251,
             "description": "Object that acts as the prototype of the eventobject.\nTo add more methods, you can use `_setEventObjProperty`",
             "itemtype": "property",
             "name": "_defaultEventObj",
@@ -10368,7 +10368,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1251,
+            "line": 1267,
             "description": "Objecthash containing all detach-notifiers, keyed by customEvent name.\nThis list is maintained by `notifyDetach` and `unNotifyDetach`\n\n_detachNotifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_detachNotifiers",
@@ -10382,7 +10382,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1278,
+            "line": 1294,
             "description": "Objecthash containing all notifiers, keyed by customEvent name.\nThis list is maintained by `notify` and `unNotify`\n\n_notifiers = {\n    'UI:click': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_notifiers",
@@ -10833,7 +10833,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 609,
+            "line": 620,
             "description": "Does the actual transportation from DOM-events into the Eventsystem. It also looks at the response of\nthe Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will be preventDefaulted.",
             "itemtype": "method",
             "name": "_domCallback",
