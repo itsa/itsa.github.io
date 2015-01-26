@@ -434,7 +434,7 @@ module.exports = function (window) {
                     //vnode.domNode can only be set after inspecting the attributes --&gt; there might be an &#x60;is&#x60; attribute
                     tagdefinition = tag.toLowerCase();
                     if ((is=vnode.attrs.is) &amp;&amp; !is.contains(&#x27;-&#x27;)) {
-                        tagdefinition = tag + &#x27;:&#x27; + is;
+                        tagdefinition = tag + &#x27;#&#x27; + is;
                     }
                     vnode.domNode = vnode.ns ? DOCUMENT.createElementNS(vnode.ns, tagdefinition) : DOCUMENT.createElement(tagdefinition);
                     // create circular reference:
