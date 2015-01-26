@@ -1038,18 +1038,19 @@ module.exports = function (window) {
     };
 
     _batchEmit = function() {
+        // we will exactly define the &#x27;UI:&#x27;-event --&gt; Itags will have another emitterName
         MUTATION_EVENTS.each(function (mutationEvents, vnode) {
             var domNode = vnode.domNode;
             if (mutationEvents[EV_REMOVED]) {
-                domNode.emit(EV_REMOVED);
+                domNode.emit(&#x27;UI:&#x27;+EV_REMOVED);
             }
             else if (mutationEvents[EV_INSERTED]) {
-                domNode.emit(EV_INSERTED);
+                domNode.emit(&#x27;UI:&#x27;+EV_INSERTED);
             }
             else {
                 // contentchange and attributechanges can go hand in hand
                 mutationEvents.each(function(value, evt) {
-                    domNode.emit(evt, (evt===EV_CONTENT_CHANGE) ? null : {changed: value});
+                    domNode.emit(&#x27;UI:&#x27;+evt, (evt===EV_CONTENT_CHANGE) ? null : {changed: value});
                 });
             }
         });
