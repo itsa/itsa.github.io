@@ -252,6 +252,7 @@ module.exports = function (window) {
         timers = require(&#x27;utils/lib/timers.js&#x27;),
         async = timers.asyncSilent,
         later = timers.laterSilent,
+        PROTO_SUPPORTED = !!Object.__proto__,
 
         // cleanup memory after 1 minute: removed nodes SHOULD NOT be accessed afterwards
         // because vnode would be recalculated and might be different from before
@@ -263,6 +264,7 @@ module.exports = function (window) {
         CLASS = &#x27;class&#x27;,
         STYLE = &#x27;style&#x27;,
         ID = &#x27;id&#x27;,
+        CLASS_ITAG_RENDERED = &#x27;itag-rendered&#x27;,
         NODE= &#x27;node&#x27;,
         REMOVE = &#x27;remove&#x27;,
         INSERT = &#x27;insert&#x27;,
@@ -409,8 +411,8 @@ module.exports = function (window) {
          * @since 0.0.1
          */
         PSEUDO_REQUIRED_CHILDREN = createHashMap(),
-        _matchesSelectorItem, _matchesOneSelector, _findElementSibling, vNodeProto, _markRemoved,
-        _splitSelector, _findNodeSibling, _matchNthChild, _batchEmit, _emitDestroyChildren;
+        _matchesSelectorItem, _matchesOneSelector, _findElementSibling, vNodeProto, _markRemoved, _tryReplaceChild,
+        _splitSelector, _findNodeSibling, _matchNthChild, _batchEmit, _emitDestroyChildren, _tryRemoveDomNode;
         PSEUDO_REQUIRED_CHILDREN[PSEUDO_FIRST_CHILD] = true;
         PSEUDO_REQUIRED_CHILDREN[PSEUDO_FIRST_OF_TYPE] = true;
         PSEUDO_REQUIRED_CHILDREN[PSEUDO_LAST_CHILD] = true;
@@ -1066,7 +1068,6 @@ module.exports = function (window) {
         for (i=0; i&lt;len; i++) {
             vChild = children[i];
             vChild._emit(EV_REMOVED);
-            _emitDestroyChildren(vChild);
         }
     };
 
@@ -1082,6 +1083,51 @@ module.exports = function (window) {
                     vChildNode &amp;&amp; _markRemoved(vChildNode);
                 }
             }
+        }
+    };
+
+   /**
+    * A safe way to remove a dom-node, even if it is not present.
+    * Will not throw a JS error when the &quot;to be removed&quot; node isn&#x27;t in the dom
+    *
+    * @method _tryRemoveDomNode
+    * @param parentDomNode {DOMNode} the parentNode that holds the node that needs to be removed
+    * @param childDomNode {DOMNode} the node that needs to be removed
+    * @since 0.0.1
+    */
+    _tryRemoveDomNode = function(parentDomNode, childDomNode) {
+        // if vnode is part of DOCUMENT._itagList then remove it
+        if (DOCUMENT._itagList &amp;&amp; childDomNode.isItag &amp;&amp; childDomNode.isItag()) {
+            DOCUMENT._itagList.remove(childDomNode);
+        }
+        try {
+            parentDomNode._removeChild(childDomNode);
+        }
+        catch(err) {}
+    };
+
+   /**
+    * A safe way to replace a dom-node, even if the &quot;to be replaced&quot;-node it is not present.
+    * Will not throw a JS error when the &quot;to be replaced&quot; node isn&#x27;t in the dom. in that case, the new node will
+    * be appended
+    *
+    * @method _tryReplaceChild
+    * @param parentDomNode {DOMNode} the parentNode that holds the node that needs to be removed
+    * @param newChildDomNode {DOMNode} the node that needs to be replaced
+    * @param oldChildDomNode {DOMNode} the node that needs to be inserted
+    * @since 0.0.1
+    */
+    _tryReplaceChild = function(parentDomNode, newChildDomNode, oldChildDomNode) {
+        // if vnode is part of DOCUMENT._itagList then remove it
+        if (DOCUMENT._itagList &amp;&amp; oldChildDomNode.isItag &amp;&amp; oldChildDomNode.isItag()) {
+            DOCUMENT._itagList.remove(oldChildDomNode);
+        }
+        try {
+            parentDomNode._replaceChild(newChildDomNode, oldChildDomNode);
+        }
+        catch(err) {
+           // if the childDomNode isn;t there any more - for whatever reason - the we need to append the newChildNode
+            parentDomNode._appendChild(newChildDomNode);
         }
     };
 
@@ -1310,6 +1356,18 @@ module.exports = function (window) {
 
         //---- private ------------------------------------------------------------------
 
+        _addToTaglist: function() {
+            var instance = this,
+                itagList;
+            if (instance.isItag) {
+                itagList = DOCUMENT.getItags(); // also reads the dom if the list isn&#x27;t build yet
+                instance._data || Object.protectedProp(instance, &#x27;_data&#x27;, {});
+                if (!instance._data.ce_destroyed &amp;&amp; !itagList.contains(instance.domNode)) {
+                    itagList.push(instance.domNode);
+                }
+            }
+        },
+
         /**
          * Adds a vnode to the end of the list of vChildNodes.
          *
@@ -1334,7 +1392,7 @@ module.exports = function (window) {
                 (size===instance.vChildNodes.length) || (domNode=instance.vChildNodes[instance.vChildNodes.length-1].domNode);
             }
             if (VNode.nodeType===1) {
-                DOCUMENT._itagList &amp;&amp; VNode.isItag &amp;&amp; !DOCUMENT._itagList.contains(domNode) &amp;&amp; DOCUMENT._itagList.push(domNode);
+                VNode._addToTaglist();
                 VNode._emit(EV_INSERTED);
             }
             return domNode;
@@ -1389,7 +1447,13 @@ module.exports = function (window) {
                 vChildNodes = instance.vChildNodes,
                 len, i, vChildNode, vParent, treeNodes;
             if (!instance.destroyed) {
-                silent || instance._emit(EV_REMOVED);
+                if (!silent) {
+                    // Because we don&#x27;t wannt to hold down UI-experience (many descendant nodes may be removed),
+                    // we generate EV_REMOVED emission in a future eventcycle:
+                    later(function() {
+                        instance._emit(EV_REMOVED);
+                    }, 5);
+                }
                 Object.protectedProp(instance, &#x27;destroyed&#x27;, true);
 
                 // first: determine the dom-tree, which module &#x60;event-dom&#x60; needs to determine where the node was before it was destroyed:
@@ -1514,6 +1578,8 @@ module.exports = function (window) {
             }
             silent = !!DOCUMENT._suppressMutationEvents;
             if (!silent &amp;&amp; !instance.destroyed) {
+                // Because we don&#x27;t wannt to hold down UI-experience (many descendant nodes may be removed),
+                // we generate EV_REMOVED emission in a future eventcycle:
                 mutationEvents = MUTATION_EVENTS.get(instance) || {};
                 if (attribute) {
                     attrMutations = mutationEvents[evt] || [];
@@ -1538,13 +1604,10 @@ module.exports = function (window) {
                     mutationEvents[evt] = true;
                 }
                 MUTATION_EVENTS.set(instance, mutationEvents);
+
                 // now set all parent to have a nodecontentchange:
-                vParent = instance;
-/*jshint boss:true */
-                while (vParent=vParent.vParent) {
-/*jshint boss:false */
-                    vParent._emit(EV_CONTENT_CHANGE);
-                }
+                vParent = instance.vParent;
+                vParent &amp;&amp; vParent._emit(EV_CONTENT_CHANGE);
 
                 // in case of removal we need to emit EV_REMOVED for all children right now
                 // for they will be actually removed silently after a delay of 1 minute
@@ -1581,7 +1644,7 @@ module.exports = function (window) {
                 instance.domNode._insertBefore(domNode, refVNode.domNode);
                 (newVNode.nodeType===3) &amp;&amp; instance._normalize();
                 if (newVNode.nodeType===1) {
-                    DOCUMENT._itagList &amp;&amp; newVNode.isItag &amp;&amp; !DOCUMENT._itagList.contains(domNode) &amp;&amp; DOCUMENT._itagList.push(domNode);
+                    newVNode._addToTaglist();
                     newVNode._emit(EV_INSERTED);
                 }
             }
@@ -1636,14 +1699,14 @@ module.exports = function (window) {
                     preChildNode = vChildNodes[i-1]; // i will get the value &#x60;-1&#x60; eventually, which leads into undefined preChildNode
                     if (vChildNode.nodeType===3) {
                         if (vChildNode.text===&#x27;&#x27;) {
-                            domNode._removeChild(vChildNode.domNode);
+                            _tryRemoveDomNode(domNode, vChildNode.domNode);
                             vChildNode._destroy();
                             changed = true;
                         }
                         else if (preChildNode &amp;&amp; preChildNode.nodeType===3) {
                             preChildNode.text += vChildNode.text;
                             preChildNode.domNode.nodeValue = unescapeEntities(preChildNode.text);
-                            domNode._removeChild(vChildNode.domNode);
+                            _tryRemoveDomNode(domNode, vChildNode.domNode);
                             vChildNode._destroy();
                             changed = true;
                         }
@@ -1748,7 +1811,7 @@ module.exports = function (window) {
                 hadFocus = domNode.hasFocus() &amp;&amp; (VNode.attrs[&#x27;fm-lastitem&#x27;]===&#x27;true&#x27;),
                 parentVNode = VNode.vParent;
             VNode._destroy();
-            instance.domNode._removeChild(VNode.domNode);
+            _tryRemoveDomNode(instance.domNode, VNode.domNode);
             instance._normalize();
             // now, reset the focus on focusmanager when needed:
             if (hadFocus) {
@@ -1950,7 +2013,7 @@ module.exports = function (window) {
                 vChildNodes = instance.vChildNodes || [],
                 domNode = instance.domNode,
                 forRemoval = [],
-                i, oldChild, newChild, newLength, len, len2, childDomNode, nodeswitch, bkpAttrs, bkpChildNodes, needNormalize;
+                i, oldChild, newChild, newLength, len, len2, childDomNode, nodeswitch, bkpAttrs, bkpChildNodes, needNormalize, itagRendered, prevSuppress;
 
             instance._noSync();
             // first: reset ._vChildren --&gt; by making it empty, its getter will refresh its list on a next call
@@ -1970,6 +2033,7 @@ module.exports = function (window) {
                     switch (nodeswitch=NODESWITCH[oldChild.nodeType][newChild.nodeType]) {
 /*jshint boss:false */
                         case 1: // oldNodeType==Element, newNodeType==Element
+                            // iTagThatNeedsToRender = newChild.tag
                             if ((oldChild.tag!==newChild.tag) ||
                                 ((oldChild.tag===newChild.tag) &amp;&amp; oldChild.isItag &amp;&amp; (oldChild.attrs.is!==newChild.attrs.is)) ||
                                 ((oldChild.tag===&#x27;SCRIPT&#x27;) &amp;&amp; (oldChild.text!==newChild.text))) {
@@ -1977,46 +2041,67 @@ module.exports = function (window) {
                                 bkpAttrs = newChild.attrs;
                                 bkpChildNodes = newChild.vChildNodes;
                                 oldChild.attrs.id &amp;&amp; (delete nodeids[oldChild.attrs.id]);
+                                oldChild.isItag &amp;&amp; oldChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
                                 newChild.attrs = {}; // reset to force defined by &#x60;_setAttrs&#x60;
                                 newChild.vChildNodes = []; // reset , to force defined by &#x60;_setAttrs&#x60;
-                                domNode._replaceChild(newChild.domNode, childDomNode);
+                                _tryReplaceChild(domNode, newChild.domNode, childDomNode);
                                 newChild.vParent = instance;
                                 newChild._setAttrs(bkpAttrs);
                                 newChild._setChildNodes(bkpChildNodes);
                                 newChild.id &amp;&amp; (nodeids[newChild.id]=newChild.domNode);
                                 oldChild._replaceAtParent(newChild);
-                                DOCUMENT._itagList &amp;&amp; newChild.isItag &amp;&amp; !DOCUMENT._itagList.contains(newChild.domNode) &amp;&amp; DOCUMENT._itagList.push(newChild.domNode);
+                                newChild._addToTaglist();
                                 newChild._emit(EV_INSERTED);
                             }
                             else {
                                 // same tag --&gt; only update what is needed
                                 // NOTE: when this._unchangableAttrs exists, an itag-element syncs its UI --&gt;
-                                // In those cases we shouldn&#x27;t refresh any descendent itag-elements, for they rerender by themselves
-                                if (!oldChild.isItag || !this._unchangableAttrs) {
-                                    // first: we might need to set the class &#x60;focussed&#x60; when the attributeData says so:
+                                if (oldChild._data) {
+                                    // we might need to set the class &#x60;itag-rendered&#x60; when the attributeData says so:
+                                    // this happens when an itag gets refreshed with an unrendered definition
+                                    if (oldChild._data.itagRendered &amp;&amp; !newChild.hasClass(&#x27;itag-rendered&#x27;)) {
+                                        newChild.classNames[&#x27;itag-rendered&#x27;] = true;
+                                        if (newChild.attrs[CLASS]) {
+                                            newChild.attrs[CLASS] = newChild.attrs[CLASS] + &#x27; &#x27;+&#x27;itag-rendered&#x27;;
+                                        }
+                                        else {
+                                            newChild.attrs[CLASS] = &#x27;itag-rendered&#x27;;
+                                        }
+                                    }
+                                    // we might need to set the class &#x60;focussed&#x60; when the attributeData says so:
                                     // this happens when an itag gets rerendered: its renderFn doesn&#x27;t know if any elements
                                     // were focussed
-                                    if (oldChild._data &amp;&amp; oldChild._data.focussed &amp;&amp; !newChild.hasClass(&#x27;focussed&#x27;)) {
+                                    if (oldChild._data.focussed &amp;&amp; !newChild.hasClass(&#x27;focussed&#x27;)) {
                                         newChild.classNames.focussed = true;
                                         if (newChild.attrs[CLASS]) {
-                                            newChild.attrs[CLASS] = newChild.attrs[CLASS] + &#x27; focussed&#x27;;
+                                            newChild.attrs[CLASS] = newChild.attrs[CLASS] + &#x27; &#x27; + &#x27;focussed&#x27;;
                                         }
                                         else {
                                             newChild.attrs[CLASS] = &#x27;focussed&#x27;;
                                         }
                                     }
-                                    if (oldChild._data &amp;&amp; oldChild._data[&#x27;fm-tabindex&#x27;]) {
+                                    if (oldChild._data[&#x27;fm-tabindex&#x27;]) {
                                         // node has the tabindex set by the focusmanager,
                                         // but that info might got lost with re-rendering of the new element
                                         newChild.attrs.tabindex = &#x27;0&#x27;;
                                     }
+                                }
+                                if (oldChild.isItag) {
+                                    prevSuppress = DOCUMENT._suppressMutationEvents || false;
+                                    DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(true);
+                                    newChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
+                                    oldChild._setAttrs(newChild.attrs);
+                                    newChild._destroy(true); // destroy through the vnode and removing from DOCUMENT._itagList
+                                    DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(prevSuppress);
+                                }
+                                else {
                                     oldChild._setAttrs(newChild.attrs);
                                     // next: sync the vChildNodes:
                                     oldChild._setChildNodes(newChild.vChildNodes);
-                                    // reset ref. to the domNode, for it might have been changed by newChild:
-                                    oldChild.id &amp;&amp; (nodeids[oldChild.id]=childDomNode);
-                                    newVChildNodes[i] = oldChild;
                                 }
+                                // reset ref. to the domNode, for it might have been changed by newChild:
+                                oldChild.id &amp;&amp; (nodeids[oldChild.id]=childDomNode);
+                                newVChildNodes[i] = oldChild;
                             }
                             break;
                         case 2: // oldNodeType==Element, newNodeType==TextNode
@@ -2024,7 +2109,7 @@ module.exports = function (window) {
                         case 3: // oldNodeType==Element, newNodeType==Comment
                             oldChild.attrs.id &amp;&amp; (delete nodeids[oldChild.attrs.id]);
                             newChild.domNode.nodeValue = unescapeEntities(newChild.text);
-                            domNode._replaceChild(newChild.domNode, childDomNode);
+                            _tryReplaceChild(domNode, newChild.domNode, childDomNode);
                             newChild.vParent = instance;
                             oldChild._replaceAtParent(newChild);
                             instance._emit(EV_CONTENT_CHANGE);
@@ -2036,14 +2121,14 @@ module.exports = function (window) {
                             bkpChildNodes = newChild.vChildNodes;
                             newChild.attrs = {}; // reset, to force defined by &#x60;_setAttrs&#x60;
                             newChild.vChildNodes = []; // reset to current state, to force defined by &#x60;_setAttrs&#x60;
-                            domNode._replaceChild(newChild.domNode, childDomNode);
+                            _tryReplaceChild(domNode, newChild.domNode, childDomNode);
                             newChild._setAttrs(bkpAttrs);
                             newChild._setChildNodes(bkpChildNodes);
                             newChild.id &amp;&amp; (nodeids[newChild.id]=newChild.domNode);
                             // oldChild.isVoid = newChild.isVoid;
                             // delete oldChild.text;
                             instance._emit(EV_CONTENT_CHANGE);
-                            DOCUMENT._itagList &amp;&amp; newChild.isItag &amp;&amp; !DOCUMENT._itagList.contains(newChild.domNode) &amp;&amp; DOCUMENT._itagList.push(newChild.domNode);
+                            newChild._addToTaglist();
                             newChild._emit(EV_INSERTED);
                             break;
                         case 5: // oldNodeType==TextNode, newNodeType==TextNode
@@ -2060,7 +2145,7 @@ module.exports = function (window) {
                                 // case6 and case8 should be treated the same
                         case 8: // oldNodeType==Comment, newNodeType==TextNode
                             newChild.domNode.nodeValue = unescapeEntities(newChild.text);
-                            domNode._replaceChild(newChild.domNode, childDomNode);
+                            _tryReplaceChild(domNode, newChild.domNode, childDomNode);
                             newChild.vParent = oldChild.vParent;
                             instance._emit(EV_CONTENT_CHANGE);
                     }
@@ -2070,7 +2155,7 @@ module.exports = function (window) {
                 }
                 else {
                     // _remove previous definition
-                    domNode._removeChild(oldChild.domNode);
+                    _tryRemoveDomNode(domNode, oldChild.domNode);
                     // the oldChild needs to be removed, however, this cannot be done right now, for it would effect the loop
                     // so we store it inside a hash to remove it later
                     forRemoval[forRemoval.length] = oldChild;
@@ -2094,7 +2179,7 @@ module.exports = function (window) {
                         domNode._appendChild(newChild.domNode);
                         newChild._setAttrs(bkpAttrs);
                         newChild._setChildNodes(bkpChildNodes);
-                        DOCUMENT._itagList &amp;&amp; newChild.isItag &amp;&amp; !DOCUMENT._itagList.contains(newChild.domNode) &amp;&amp; DOCUMENT._itagList.push(newChild.domNode);
+                        newChild._addToTaglist();
                         newChild._emit(EV_INSERTED);
                         break;
                     case 3: // TextNode
@@ -2102,6 +2187,7 @@ module.exports = function (window) {
                         // we need to break through --&gt; no &#x60;break&#x60;
                         /* falls through */
                     default: // TextNode or CommentNode
+                        // newChild.domNode.nodeValue = newChild.text;
                         newChild.domNode.nodeValue = unescapeEntities(newChild.text);
                         domNode._appendChild(newChild.domNode);
                         instance._emit(EV_CONTENT_CHANGE);
@@ -2328,14 +2414,14 @@ module.exports = function (window) {
                             id &amp;&amp; (delete nodeids[id]);
                             vnode.attrs = {}; // reset to force defined by &#x60;_setAttrs&#x60;
                             vnode.vChildNodes = []; // reset , to force defined by &#x60;_setAttrs&#x60;
-                            vParent.domNode._replaceChild(vnode.domNode, instance.domNode);
+                            _tryReplaceChild(vParent.domNode, vnode.domNode, instance.domNode);
                             vnode._setAttrs(bkpAttrs);
                             vnode._setChildNodes(bkpChildNodes);
                             // vnode.attrs = bkpAttrs;
                             // vnode.vChildNodes = bkpChildNodes;
                             vnode.id &amp;&amp; (nodeids[vnode.id]=vnode.domNode);
                             instance._replaceAtParent(vnode);
-                            DOCUMENT._itagList &amp;&amp; vnode.isItag &amp;&amp; !DOCUMENT._itagList.contains(vnode.domNode) &amp;&amp; DOCUMENT._itagList.push(vnode.domNode);
+                            vnode._addToTaglist();
                             vnode._emit(EV_INSERTED);
                         }
                         else {
@@ -2346,9 +2432,9 @@ module.exports = function (window) {
                     else {
                         id &amp;&amp; (delete nodeids[id]);
                         vnode.domNode.nodeValue = unescapeEntities(vnode.text);
-                        vParent.domNode._replaceChild(vnode.domNode, instance.domNode);
+                        _tryReplaceChild(vParent.domNode, vnode.domNode, instance.domNode);
                         instance._replaceAtParent(vnode);
-                        DOCUMENT._itagList &amp;&amp; vnode.isItag &amp;&amp; !DOCUMENT._itagList.contains(vnode.domNode) &amp;&amp; DOCUMENT._itagList.push(vnode.domNode);
+                            vnode._addToTaglist();
                         vnode._emit(EV_INSERTED);
                     }
                 }
@@ -2361,7 +2447,7 @@ module.exports = function (window) {
                             vnode.attrs = {}; // reset, to force defined by &#x60;_setAttrs&#x60;
                             vnode.vChildNodes = []; // reset to current state, to force defined by &#x60;_setAttrs&#x60;
                             isLastChildNode ? vParent.domNode._appendChild(vnode.domNode) : vParent.domNode._insertBefore(vnode.domNode, refDomNode);
-                            DOCUMENT._itagList &amp;&amp; vnode.isItag &amp;&amp; !DOCUMENT._itagList.contains(vnode.domNode) &amp;&amp; DOCUMENT._itagList.push(vnode.domNode);
+                            vnode._addToTaglist();
                             vnode._emit(EV_INSERTED);
                             vnode._setAttrs(bkpAttrs);
                             vnode._setChildNodes(bkpChildNodes);
