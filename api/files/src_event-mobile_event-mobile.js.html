@@ -235,7 +235,7 @@ module.exports = function (window) {
      */
     var Event = require(&#x27;event-dom&#x27;)(window),
         document = window.document,
-        Hammer = require(&#x27;hammerjs&#x27;),
+        Hammer = require(&#x27;./lib/hammer-2.0.4.js&#x27;),
         hammertime = Event.hammertime = new Hammer(document.body),
         singletap, doubletap, tripletap;
 

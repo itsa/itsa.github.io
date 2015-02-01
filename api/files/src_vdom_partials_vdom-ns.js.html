@@ -359,7 +359,7 @@ module.exports = function (window) {
         return str.replace(
             /&amp;(.+?);/g,
             function(str, ent) {
-                return String.fromCharCode( (ent[0]!==&#x27;#&#x27; ? ENTITY_TO_CODE[ent] : ent[1]===&#x27;x&#x27;) ? parseInt(ent.substr(2),16) : parseInt(ent.substr(1)) );
+                return String.fromCharCode( ent[0]!==&#x27;#&#x27; ? ENTITY_TO_CODE[ent] : (ent[1]===&#x27;x&#x27; ? parseInt(ent.substr(2),16) : parseInt(ent.substr(1)) ) );
             }
         );
     };
