@@ -242,7 +242,7 @@ var NAME = &#x27;[focusmanager]: &#x27;,
 module.exports = function (window) {
 
     var DOCUMENT = window.document,
-        nodePlugin, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed, getFocusManagerSelector, setupEvents;
+        nodePlugin, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed, getFocusManagerSelector, setupEvents, defineFocusEvent;
 
     window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
@@ -419,6 +419,7 @@ module.exports = function (window) {
                 }
                 if (focusNode) {
                     e.preventDefaultContinue();
+                    e.preventRender(); // don&#x27;t double render --&gt; focus does this
                     // prevent default action --&gt; we just want to re-focus, but we DO want afterlisteners
                     // to be handled in the after-listener: someone else might want to halt the keydown event.
                     sourceNode.matches(selector) &amp;&amp; (e._focusNode=focusNode);
@@ -429,7 +430,10 @@ module.exports = function (window) {
         Event.after(&#x27;keydown&#x27;, function(e) {
             console.log(NAME+&#x27;after keydown-event&#x27;);
             var focusNode = e._focusNode;
-            focusNode &amp;&amp; focusNode.focus &amp;&amp; focusNode.focus();
+            if (focusNode &amp;&amp; focusNode.focus) {
+                e.preventRender(); // don&#x27;t double render --&gt; focus does this
+                focusNode.focus();
+            }
         });
 
         Event.after(&#x27;blur&#x27;, function(e) {
@@ -466,10 +470,13 @@ module.exports = function (window) {
         Event.after([&#x27;mousedown&#x27;, &#x27;press&#x27;], function(e) {
             console.log(NAME+&#x27;after focus-event&#x27;);
             var node = e.target;
-            node.hasFocus() || node.focus();
+            if (!node.hasFocus()) {
+                e.preventRender(); // don&#x27;t double render --&gt; focus does this
+                node.focus();
+            }
         }, &#x27;button&#x27;);
 
-        Event.after(&#x27;tap&#x27;, function(e) {
+        Event.after([&#x27;tap&#x27;, &#x27;click&#x27;], function(e) {
             console.log(NAME+&#x27;after tap-event&#x27;);
             var focusNode = e.target,
                 focusContainerNode;
@@ -485,6 +492,7 @@ module.exports = function (window) {
                     markAsFocussed(focusContainerNode, focusNode);
                 }
                 else {
+                    e.preventRender(); // don&#x27;t double render --&gt; focus does this
                     focusNode.focus();
                 }
             }
@@ -535,29 +543,35 @@ module.exports = function (window) {
 
     window._ITSAmodules.FocusManager = FocusManager = nodePlugin.definePlugin(&#x27;fm&#x27;, {manage: &#x27;true&#x27;});
 
-    /**
-     * In case of a manual focus (node.focus()) the node will fire an &#x60;manualfocus&#x60;-event
-     * which can be prevented.
-     * @event manualfocus
-    */
-    Event.defineEvent(&#x27;UI:manualfocus&#x27;)
-         .defaultFn(function(e) {
-             var node = e.target,
-                 leftScroll = window.getScrollLeft(),
-                 topScroll = window.getScrollTop();
-             node._focus();
-             // reset winscroll:
-             window.scrollTo(leftScroll, topScroll);
-             // make sure the node is inside the viewport:
-             // node.forceIntoView();
-         });
+    defineFocusEvent = function(customevent) {
+        Event.defineEvent(customevent)
+             .defaultFn(function(e) {
+                 var node = e.target,
+                     leftScroll = window.getScrollLeft(),
+                     topScroll = window.getScrollTop();
+                 node._focus();
+                 // reset winscroll:
+                 window.scrollTo(leftScroll, topScroll);
+                 // make sure the node is inside the viewport:
+                 // node.forceIntoView();
+             });
+    };
 
     (function(HTMLElementPrototype) {
 
         HTMLElementPrototype._focus = HTMLElementPrototype.focus;
         HTMLElementPrototype.focus = function() {
             console.log(NAME+&#x27;focus&#x27;);
-            searchFocusNode(this).emit(&#x27;manualfocus&#x27;);
+            /**
+             * In case of a manual focus (node.focus()) the node will fire an &#x60;manualfocus&#x60;-event
+             * which can be prevented.
+             * @event manualfocus
+            */
+            var focusNode = searchFocusNode(this),
+                emitterName = focusNode._emitterName,
+                customevent = emitterName+&#x27;:manualfocus&#x27;;
+            Event._ce[customevent] || defineFocusEvent(customevent);
+            focusNode.emit(&#x27;manualfocus&#x27;);
         };
 
     }(window.HTMLElement.prototype));
