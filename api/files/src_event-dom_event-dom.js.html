@@ -105,9 +105,13 @@
             
                 <li><a href="../modules/event.html">event</a></li>
             
+                <li><a href="../modules/event-blurnode.html">event-blurnode</a></li>
+            
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-focusnode.html">event-focusnode</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
             
@@ -250,6 +254,7 @@ var NAME = &#x27;[event-dom]: &#x27;,
     EV_ATTRIBUTE_CHANGED = UI+ATTRIBUTE+CHANGE,
     EV_ATTRIBUTE_INSERTED = UI+ATTRIBUTE+INSERT,
     mutationEventsDefined = false,
+    NO_DEEP_SEARCH = {},
 
     /*
      * Internal hash containing all DOM-events that are listened for (at &#x60;document&#x60;).
@@ -329,7 +334,7 @@ module.exports = function (window) {
             vnode = subscriber.o.vnode,
             isCustomElement = vnode &amp;&amp; vnode.isItag,
             isParcel = isCustomElement &amp;&amp; (vnode.tag===&#x27;I-PARCEL&#x27;),
-            nodeid, byExactId;
+            nodeid, byExactId, newTarget, deepSearch;
 
         console.log(NAME, &#x27;_domSelToFunc type of selector = &#x27;+typeof selector);
         // note: selector could still be a function: in case another subscriber
@@ -343,6 +348,8 @@ module.exports = function (window) {
         nodeid = selector.match(REGEXP_EXTRACT_NODE_ID);
         nodeid ? (subscriber.nId=nodeid[1]) : (subscriber.n=isCustomElement ? context : DOCUMENT);
         byExactId = REGEXP_NODE_ID.test(selector);
+
+        deepSearch = !NO_DEEP_SEARCH[customEvent];
 
         subscriber.f = function(e) {
             // this stage is runned when the event happens
@@ -361,35 +368,61 @@ module.exports = function (window) {
                     // we will reset e.target to this node (if there is a match)
                     // note that e.currentTarget will always be &#x60;document&#x60; --&gt; we&#x27;re not interested in that
                     // also, we don&#x27;t check for &#x60;node&#x60;, but for node.matchesSelector: the highest level &#x60;document&#x60;
-                    // is not null, yet it doesn;t have .matchesSelector so it would fail
-                    if (vnode) {
-                        // we go through the vdom
-                        if (!vnode.removedFromDOM) {
-                            while (vnode &amp;&amp; !match) {
-                                console.log(NAME, &#x27;_domSelToFunc inside filter check match using the vdom&#x27;);
-                                match = byExactId ? (vnode.id===character1) : vnode.matchesSelector(selector);
+                    // is not null, yet it doesn&#x27;t have .matchesSelector so it would fail
+                    // we DON&#x27;T want this for the focus and blur event!
+                    if (deepSearch) {
+                        if (vnode) {
+                            // we go through the vdom
+                            if (!vnode.removedFromDOM) {
+                                while (vnode &amp;&amp; !match) {
+                                    console.log(NAME, &#x27;_domSelToFunc inside filter check match using the vdom&#x27;);
+                                    match = byExactId ? (vnode.id===character1) : vnode.matchesSelector(selector);
+                                    // if there is a match, then set
+                                    // e.target to the target that matches the selector
+                                    if (match &amp;&amp; !outsideEvent) {
+                                        subscriber.t = vnode.domNode;
+                                    }
+                                    vnode = vnode.vParent;
+                                }
+                            }
+                        }
+                        else {
+                            // we go through the dom
+                            while (node.matchesSelector &amp;&amp; !match) {
+                                console.log(NAME, &#x27;_domSelToFunc inside filter check match using the dom&#x27;);
+                                match = byExactId ? (node.id===character1) : node.matchesSelector(selector);
                                 // if there is a match, then set
                                 // e.target to the target that matches the selector
                                 if (match &amp;&amp; !outsideEvent) {
-                                    subscriber.t = vnode.domNode;
+                                    subscriber.t = node;
                                 }
-                                vnode = vnode.vParent;
+                                node = node.parentNode;
                             }
                         }
                     }
                     else {
-                        // we go through the dom
-                        while (node.matchesSelector &amp;&amp; !match) {
-                            console.log(NAME, &#x27;_domSelToFunc inside filter check match using the dom&#x27;);
-                            match = byExactId ? (node.id===character1) : node.matchesSelector(selector);
-                            // if there is a match, then set
-                            // e.target to the target that matches the selector
-                            if (match &amp;&amp; !outsideEvent) {
-                                subscriber.t = node;
-                            }
-                            node = node.parentNode;
+                        console.log(NAME, &#x27;_domSelToFunc inside filter check match using the vdom&#x27;);
+                        if (vnode) {
+                            match = byExactId ? (vnode.id===character1) : vnode.matchesSelector(selector);
                         }
+                        else {
+                            match = node.matchesSelector &amp;&amp; (byExactId ? (node.id===character1) : node.matchesSelector(selector));
+                        }
+                        match &amp;&amp; (e.sourceTarget=node);
                     }
+                }
+            }
+            if (outsideEvent &amp;&amp; !match) {
+                // there is a match for the outside-event:
+                // we need to set e.sourceTarget and e.target:
+                newTarget = DOCUMENT.getElement(selector, true);
+                if (newTarget) {
+                    e.sourceTarget = node;
+                    subscriber.t = newTarget;
+                }
+                else {
+                    // make return &#x60;false&#x60; because the selector is not in the dom
+                    match = true;
                 }
             }
             console.log(NAME, &#x27;_domSelToFunc filter returns &#x27;+(!outsideEvent ? match : !match));
@@ -635,6 +668,7 @@ module.exports = function (window) {
     };
 
     _setupEvents = function() {
+        var lastFocussed;
 
         // make sure disabled buttons don&#x27;t work:
         Event.before([&#x27;click&#x27;, &#x27;tap&#x27;], function(e) {
@@ -663,12 +697,25 @@ module.exports = function (window) {
                 var buttonNode = e.target;
                 if (e._buttonPressed) {
                     buttonNode.setClass(PURE_BUTTON_ACTIVE);
+                    e._noRender = true;
                     // even if the node isn&#x27;t in the DOM, we can still try to manipulate it:
                     // the vdom makes sure no errors occur when the node is already removed
                     laterSilent(buttonNode.removeClass.bind(buttonNode, PURE_BUTTON_ACTIVE), TIME_BTN_PRESSED);
                 }
             }
         );
+
+        // fix activeElement on Mac
+        Event.before(&#x27;focus&#x27;, function(e) {
+            // will come here more often because of bubblechain
+            // however, the last pass-through will set the deepest node
+            lastFocussed = e.target;
+        });
+
+        Event.after(&#x27;focus&#x27;, function() {
+            // DOCUMENT._activeElement is used with the patch for DOCUMENT.activeElement its getter
+            DOCUMENT._activeElement = lastFocussed;
+        });
 
     };
 
@@ -818,10 +865,25 @@ module.exports = function (window) {
         this._suppressMutationEvents = suppress;
     };
 
-    // Event._domCallback is the only method that is added to Event.
+    // Event.noDeepDomEvt and Event._domCallback are the only method that is added to Event.
     // We need to do this, because &#x60;event-mobile&#x60; needs access to the same method.
     // We could have done without this method and instead listen for a custom-event to handle
     // Mobile events, however, that would lead into 2 eventcycli which isn&#x27;t performant.
+
+   /**
+    *
+    * @method noDeepDomEvt
+    * @param domEvent {String} the eventName that should be processed without deepsearch
+    * @param e {Object} eventobject
+    * @for Event
+    * @chainable
+    * @since 0.0.1
+    */
+    Event.noDeepDomEvt = function(domEvent) {
+        domEvent.contains(&#x27;:&#x27;) || (domEvent=UI+domEvent);
+        NO_DEEP_SEARCH[domEvent] = true;
+        return this;
+    };
 
    /**
     * Does the actual transportation from DOM-events into the Eventsystem. It also looks at the response of

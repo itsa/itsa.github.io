@@ -105,9 +105,13 @@
             
                 <li><a href="../modules/event.html">event</a></li>
             
+                <li><a href="../modules/event-blurnode.html">event-blurnode</a></li>
+            
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-focusnode.html">event-focusnode</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
             
@@ -209,7 +213,7 @@
  * Wrapped &quot;(function(window, DOCUMENT, exportName, undefined) {&quot;
  * is replaced by wrapped: &quot;module.exports = function (window) {&quot; and &quot;return Hammer;&quot;
  *
- * Created variables: DOCUMENT=window.DOCUMENT and exportName=&#x27;Hammer&#x27;
+ * Created variables: DOCUMENT=window.DOCUMENT
  * replaced &#x27;DOCUMENT&#x27; by DOCUMENT furtheron in the code (ondly while word and case-sensitive)
  *
  * required laterSilent = require(&#x27;utils&#x27;).laterSilent
@@ -219,8 +223,8 @@
 module.exports = function (window) {
 
     &#x27;use strict&#x27;;
+
     var DOCUMENT = window.document,
-        exportName = &#x27;Hammer&#x27;,
         laterSilent = require(&#x27;utils&#x27;).laterSilent,
         VENDOR_PREFIXES = [&#x27;&#x27;, &#x27;webkit&#x27;, &#x27;moz&#x27;, &#x27;MS&#x27;, &#x27;ms&#x27;, &#x27;o&#x27;],
         TEST_ELEMENT = DOCUMENT.createElement(&#x27;div&#x27;),
@@ -542,7 +546,7 @@ module.exports = function (window) {
 
     var SUPPORT_TOUCH = (&#x27;ontouchstart&#x27; in window);
     var SUPPORT_POINTER_EVENTS = prefixed(window, &#x27;PointerEvent&#x27;) !== undefined;
-    var SUPPORT_ONLY_TOUCH = SUPPORT_TOUCH &amp;&amp; MOBILE_REGEX.test(navigator.userAgent);
+    var SUPPORT_ONLY_TOUCH = SUPPORT_TOUCH &amp;&amp; MOBILE_REGEX.test(window.navigator.userAgent);
 
     var INPUT_TYPE_TOUCH = &#x27;touch&#x27;;
     var INPUT_TYPE_PEN = &#x27;pen&#x27;;

@@ -105,9 +105,13 @@
             
                 <li><a href="../modules/event.html">event</a></li>
             
+                <li><a href="../modules/event-blurnode.html">event-blurnode</a></li>
+            
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-focusnode.html">event-focusnode</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
             
@@ -252,7 +256,9 @@ module.exports = function (window) {
         timers = require(&#x27;utils/lib/timers.js&#x27;),
         async = timers.asyncSilent,
         later = timers.laterSilent,
+/*jshint proto:true */
         PROTO_SUPPORTED = !!Object.__proto__,
+/*jshint proto:false */
 
         // cleanup memory after 1 minute: removed nodes SHOULD NOT be accessed afterwards
         // because vnode would be recalculated and might be different from before
@@ -264,7 +270,6 @@ module.exports = function (window) {
         CLASS = &#x27;class&#x27;,
         STYLE = &#x27;style&#x27;,
         ID = &#x27;id&#x27;,
-        CLASS_ITAG_RENDERED = &#x27;itag-rendered&#x27;,
         NODE= &#x27;node&#x27;,
         REMOVE = &#x27;remove&#x27;,
         INSERT = &#x27;insert&#x27;,
@@ -2013,7 +2018,7 @@ module.exports = function (window) {
                 vChildNodes = instance.vChildNodes || [],
                 domNode = instance.domNode,
                 forRemoval = [],
-                i, oldChild, newChild, newLength, len, len2, childDomNode, nodeswitch, bkpAttrs, bkpChildNodes, needNormalize, itagRendered, prevSuppress;
+                i, oldChild, newChild, newLength, len, len2, childDomNode, nodeswitch, bkpAttrs, bkpChildNodes, needNormalize, prevSuppress;
 
             instance._noSync();
             // first: reset ._vChildren --&gt; by making it empty, its getter will refresh its list on a next call
@@ -2041,7 +2046,9 @@ module.exports = function (window) {
                                 bkpAttrs = newChild.attrs;
                                 bkpChildNodes = newChild.vChildNodes;
                                 oldChild.attrs.id &amp;&amp; (delete nodeids[oldChild.attrs.id]);
+/*jshint proto:true */
                                 oldChild.isItag &amp;&amp; oldChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
+/*jshint proto:false */
                                 newChild.attrs = {}; // reset to force defined by &#x60;_setAttrs&#x60;
                                 newChild.vChildNodes = []; // reset , to force defined by &#x60;_setAttrs&#x60;
                                 _tryReplaceChild(domNode, newChild.domNode, childDomNode);
@@ -2089,7 +2096,9 @@ module.exports = function (window) {
                                 if (oldChild.isItag) {
                                     prevSuppress = DOCUMENT._suppressMutationEvents || false;
                                     DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(true);
+/*jshint proto:true */
                                     newChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
+/*jshint proto:false */
                                     oldChild._setAttrs(newChild.attrs);
                                     newChild._destroy(true); // destroy through the vnode and removing from DOCUMENT._itagList
                                     DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(prevSuppress);

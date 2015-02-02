@@ -105,9 +105,13 @@
             
                 <li><a href="../modules/event.html">event</a></li>
             
+                <li><a href="../modules/event-blurnode.html">event-blurnode</a></li>
+            
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-focusnode.html">event-focusnode</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
             
@@ -237,9 +241,16 @@ module.exports = function (window) {
     // prevent double definition:
     window._ITSAmodules.ExtendDocument = true;
 
-    var DOCUMENT = window.document;
+    var DOCUMENT = window.document,
+        activeElementBKP = DOCUMENT.activeElement;
 
     // Note: window.document has no prototype
+
+    Object.defineProperty(DOCUMENT, &#x27;activeElement&#x27;, {
+        get: function() {
+            return DOCUMENT._activeElement || activeElementBKP;
+        }
+    });
 
     /**
      * Returns a newly created TreeWalker object.
@@ -354,14 +365,15 @@ module.exports = function (window) {
      *
      * @method querySelector
      * @param selectors {String} CSS-selector(s) that should match
+     * @param [insideItags=false] {Boolean} no deepsearch in iTags --&gt; by default, these elements should be hidden
      * @return {Element}
      */
-    DOCUMENT.querySelector = function(selectors) {
+    DOCUMENT.querySelector = function(selectors, insideItags) {
         var docElement = DOCUMENT.documentElement;
         if (docElement.matchesSelector(selectors)) {
             return docElement;
         }
-        return docElement.querySelector(selectors);
+        return docElement.querySelector(selectors, insideItags);
     };
 
     /**
@@ -372,11 +384,12 @@ module.exports = function (window) {
      *
      * @method querySelectorAll
      * @param selectors {String} CSS-selector(s) that should match
+     * @param [insideItags=false] {Boolean} no deepsearch in iTags --&gt; by default, these elements should be hidden
      * @return {ElementArray} non-life Array (snapshot) with Elements
      */
-    DOCUMENT.querySelectorAll = function(selectors) {
+    DOCUMENT.querySelectorAll = function(selectors, insideItags) {
         var docElement = DOCUMENT.documentElement,
-            elements = docElement.querySelectorAll(selectors);
+            elements = docElement.querySelectorAll(selectors, insideItags);
         docElement.matchesSelector(selectors) &amp;&amp; elements.shift(docElement);
         return elements;
     };
