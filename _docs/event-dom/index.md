@@ -220,7 +220,19 @@ This adresses changes inside these elements like:
 * cutting or pasting with a keyboard-summoned context menu
 * cutting or pasting from the right-click context menu.
 
-The valuechange-event provides more reliable input notifications and should be used when you want to be notified about changes to these tpe of HtmlElements.
+The valuechange-event provides more reliable input notifications and should be used when you want to be notified about changes to these type of HtmlElements.
+
+
+###focusnode###
+The `focusnode` event happens when the focus gets on any element inside the specified element (or the element itself). When the focus switches between any descendant elements, the `focusnode`-event won't fire again. The `focusnode` event can be used for any node, even when the node itself can't get focus. This is a convenient way for using with container-nodes.
+
+
+###blurnode###
+The `blurnode` event happens when the focus is not inside this node anymore. <u>You cannot listen for the `blur`-event</u>, because `blur` is only available for focussable nodes. Suppose you have a container-node with two input-elements. When the focus changes from input#1 to input#2, then input#1 and container-node will recieve the blur-event. But the focus still lies inside a descendant-node of the container, so `blurnode` won't happen. When the focus is set on an input outside the containernode, `blurnode` will be emitted.
+
+By listening to `blurnode`, the subscriber will only be invoked if the focus really gets out of the node.
+
+**Note** you might thing that the `focusoutside`-event could be used as well, but there is a small difference: when the browser looses the focus, there won't be a `focusoutside` event. But there will be a `blurnode`-event.
 
 
 #Properties of eventobject#

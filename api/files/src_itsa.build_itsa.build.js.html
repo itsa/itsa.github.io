@@ -105,9 +105,13 @@
             
                 <li><a href="../modules/event.html">event</a></li>
             
+                <li><a href="../modules/event-blurnode.html">event-blurnode</a></li>
+            
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-focusnode.html">event-focusnode</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
             
@@ -353,6 +357,8 @@
     if (!fakedom) {
         require(&#x27;event-dom/extra/hover.js&#x27;)(window);
         require(&#x27;event-dom/extra/valuechange.js&#x27;)(window);
+        require(&#x27;event-dom/extra/blurnode.js&#x27;)(window);
+        require(&#x27;event-dom/extra/focusnode.js&#x27;)(window);
         // setup dragdrop:
         dragdrop = require(&#x27;drag-drop&#x27;)(window);
         ITSA.DD = dragdrop.DD;

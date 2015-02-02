@@ -105,9 +105,13 @@
             
                 <li><a href="../modules/event.html">event</a></li>
             
+                <li><a href="../modules/event-blurnode.html">event-blurnode</a></li>
+            
                 <li><a href="../modules/event-dom.html">event-dom</a></li>
             
                 <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-focusnode.html">event-focusnode</a></li>
             
                 <li><a href="../modules/event-hover.html">event-hover</a></li>
             
@@ -467,7 +471,7 @@ module.exports = function (window) {
         });
 
         // focus-fix for keeping focus when a mouse gets down for a longer time
-        Event.after([&#x27;mousedown&#x27;, &#x27;press&#x27;], function(e) {
+        Event.after(&#x27;mousedown&#x27;, function(e) {
             console.log(NAME+&#x27;after focus-event&#x27;);
             var node = e.target;
             if (!node.hasFocus()) {
@@ -476,7 +480,7 @@ module.exports = function (window) {
             }
         }, &#x27;button&#x27;);
 
-        Event.after([&#x27;tap&#x27;, &#x27;click&#x27;], function(e) {
+        Event.after(&#x27;tap&#x27;, function(e) {
             console.log(NAME+&#x27;after tap-event&#x27;);
             var focusNode = e.target,
                 focusContainerNode;
@@ -496,7 +500,7 @@ module.exports = function (window) {
                     focusNode.focus();
                 }
             }
-        });
+        }, null, null, true);
 
         Event.after([&#x27;keypress&#x27;, &#x27;mouseup&#x27;, &#x27;panup&#x27;, &#x27;mousedown&#x27;, &#x27;pandown&#x27;], function(e) {
             console.log(NAME+&#x27;after &#x27;+e.type+&#x27;-event&#x27;);
@@ -560,7 +564,7 @@ module.exports = function (window) {
     (function(HTMLElementPrototype) {
 
         HTMLElementPrototype._focus = HTMLElementPrototype.focus;
-        HTMLElementPrototype.focus = function() {
+        HTMLElementPrototype.focus = function(noRender) {
             console.log(NAME+&#x27;focus&#x27;);
             /**
              * In case of a manual focus (node.focus()) the node will fire an &#x60;manualfocus&#x60;-event
@@ -571,7 +575,7 @@ module.exports = function (window) {
                 emitterName = focusNode._emitterName,
                 customevent = emitterName+&#x27;:manualfocus&#x27;;
             Event._ce[customevent] || defineFocusEvent(customevent);
-            focusNode.emit(&#x27;manualfocus&#x27;);
+            focusNode.emit(&#x27;manualfocus&#x27;, noRender ? {_noRender: true} : null);
         };
 
     }(window.HTMLElement.prototype));

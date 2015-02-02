@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/polyfill/lib/weakmap.js - Itsa</title>
+    <title>src/event-dom/extra/focusnode.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -204,117 +204,110 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/polyfill/lib/weakmap.js</h1>
+                        <h1 class="file-heading">File: src/event-dom/extra/focusnode.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-// based upon https://gist.github.com/Gozala/1269991
+&quot;use strict&quot;;
 
-(function (global) {
-    &quot;use strict&quot;;
-    var defineNamespace, Name, guard;
+/**
+ * Adds the &#x60;focusnode&#x60; event as a DOM-event to event-dom. more about DOM-events:
+ * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @example
+ * Event = require(&#x27;event-dom/focusnode.js&#x27;)(window);
+ *
+ * or
+ *
+ * @example
+ * Event = require(&#x27;event-dom&#x27;)(window);
+ * require(&#x27;event-dom/event-focusnode.js&#x27;)(window);
+ *
+ * @module event
+ * @submodule event-focusnode
+ * @class Event
+ * @since 0.0.2
+*/
 
-    if (!global.WeakMap) {
-        defineNamespace = function(object, namespace) {
-            /**
-            Utility function takes &#x60;object&#x60; and &#x60;namespace&#x60; and overrides &#x60;valueOf&#x60;
-            method of &#x60;object&#x60;, so that when called with a &#x60;namespace&#x60; argument,
-            &#x60;private&#x60; object associated with this &#x60;namespace&#x60; is returned. If argument
-            is different, &#x60;valueOf&#x60; falls back to original &#x60;valueOf&#x60; property.
-            **/
 
-            // Private inherits from &#x60;object&#x60;, so that &#x60;this.foo&#x60; will refer to the
-            // &#x60;object.foo&#x60;. Also, original &#x60;valueOf&#x60; is saved in order to be able to
-            // delegate to it when necessary.
-            var privates = Object.create(object),
-                base = object.valueOf;
-            Object.defineProperty(object, &#x27;valueOf&#x27;, {
-                value: function valueOf(value) {
-                    // If &#x60;this&#x60; or &#x60;namespace&#x60; is not associated with a &#x60;privates&#x60; being
-                    // stored we fallback to original &#x60;valueOf&#x60;, otherwise we return privates.
-                    return ((value !== namespace) || (this !== object)) ? base.apply(this, arguments) : privates;
-                },
-                configurable: true
-            });
-            return privates;
-        };
+var NAME = &#x27;[event-focusnode]: &#x27;,
+    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
 
-        Name = function() {
-            /**
-            Desugared implementation of private names proposal. API is different as
-            it&#x27;s not possible to implement API proposed for harmony with in ES5. In
-            terms of provided functionality it supposed to be same.
-            http://wiki.ecmascript.org/doku.php?id=strawman:private_names
-            **/
+require(&#x27;js-ext/lib/object.js&#x27;);
 
-            var namespace = {};
-            return function name(object) {
-                var privates = object.valueOf(namespace);
-                return (privates !== object) ? privates : defineNamespace(object, namespace);
-            };
-        };
+module.exports = function (window) {
 
-        guard = function(key) {
-            /**
-            Utility function to guard WeakMap methods from keys that are not
-            a non-null objects.
-            **/
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
-            if (key !== Object(key)) {
-                throw new TypeError(&quot;value is not a non-null object&quot;);
-            }
-            return key;
-        };
-
-        global.WeakMap = function() {
-            /**
-            Implementation of harmony &#x60;WeakMaps&#x60;, in ES5. This implementation will
-            work only with keys that have configurable &#x60;valueOf&#x60; property (which is
-            a default for all non-frozen objects).
-            http://wiki.ecmascript.org/doku.php?id=harmony:weak_maps
-            **/
-
-            var privates = new Name();
-
-            return Object.freeze(Object.create(WeakMap.prototype, {
-                has: {
-                    value: function has(object) {
-                        return &#x27;value&#x27; in privates(object);
-                    },
-                    configurable: true,
-                    enumerable: false,
-                    writable: true
-                },
-                get: {
-                    value: function get(key, fallback) {
-                        return privates(guard(key)).value || fallback;
-                    },
-                    configurable: true,
-                    enumerable: false,
-                    writable: true
-                },
-                set: {
-                    value: function set(key, value) {
-                        privates(guard(key)).value = value;
-                        return this;
-                    },
-                    configurable: true,
-                    enumerable: false,
-                    writable: true
-                },
-                &#x27;delete&#x27;: {
-                    value: function set(key) {
-                        return delete privates(guard(key)).value;
-                    },
-                    configurable: true,
-                    enumerable: false,
-                    writable: true
-                }
-            }));
-        };
+    if (window._ITSAmodules.EventFocusNode) {
+        return window._ITSAmodules.EventFocusNode; // EventFocusNode was already created
     }
 
-}(typeof global !== &#x27;undefined&#x27; ? global : /* istanbul ignore next */ this));
+    var Event = require(&#x27;../event-dom.js&#x27;)(window),
+        subscriber, previousVnode,
+
+    /*
+     * Creates the &#x60;focisnode&#x60; event.
+     *
+     * @method setupFocusNode
+     * @private
+     * @since 0.0.2
+     */
+    setupFocusNode = function() {
+        // create only after subscribing to the &#x60;hover&#x60;-event
+        subscriber = Event.after(&#x27;focus&#x27;, function(e) {
+            var targetVnode = e.target.vnode,
+                vnode = targetVnode,
+                alreadyFocussed;
+            if (vnode) {
+                do {
+                    alreadyFocussed = previousVnode &amp;&amp; vnode.contains(previousVnode);
+                    alreadyFocussed || Event.emit(vnode.domNode, &#x27;UI:focusnode&#x27;, e);
+/*jshint boss:true */
+                } while (!alreadyFocussed &amp;&amp; (vnode=vnode.vParent));
+/*jshint boss:false */
+            }
+            previousVnode = targetVnode;
+        });
+    },
+
+    /*
+     * Removes the &#x60;focusnode&#x60; event. Because there are no subscribers anymore.
+     *
+     * @method teardownFocusNode
+     * @private
+     * @since 0.0.2
+     */
+    teardownFocusNode = function() {
+        // check if there aren&#x27;t any subscribers anymore.
+        // in that case, we detach the &#x60;mouseover&#x60; lister because we don&#x27;t want to
+        // loose performance.
+        if (!Event._subs[&#x27;UI:focusnode&#x27;]) {
+            console.log(NAME, &#x27;teardownFocusNode: stop listening for blur-event&#x27;);
+            subscriber.detach();
+            // reinit notifier, because it is a one-time notifier:
+            Event.notify(&#x27;UI:focusnode&#x27;, setupFocusNode, Event, true);
+        }
+    };
+
+    Event.defineEvent(&#x27;UI:focusnode&#x27;)
+         .unPreventable()
+         .noRender();
+
+    Event.notify(&#x27;UI:focusnode&#x27;, setupFocusNode, Event, true);
+    Event.notifyDetach(&#x27;UI:focusnode&#x27;, teardownFocusNode, Event);
+
+    Event.noDeepDomEvt(&#x27;UI:focusnode&#x27;);
+
+    window._ITSAmodules.EventFocusNode = Event;
+
+    return Event;
+};
+
     </pre>
 </div>
 
