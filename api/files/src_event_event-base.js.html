@@ -817,8 +817,8 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
          *
          * &lt;ul&gt;
          *     &lt;li&gt;&#x27;redmodel:save&#x27;&lt;/li&gt;
-         *     &lt;li&gt;&#x27;UI:click&#x27;&lt;/li&gt;
-         *     &lt;li&gt;&#x27;click&#x27; --&gt; alias for &#x27;UI:click&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;UI:tap&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;tap&#x27; --&gt; alias for &#x27;UI:tap&#x27;&lt;/li&gt;
          *     &lt;li&gt;&#x27;&#x60;*&#x60;:click&#x27; --&gt; careful: will listen to both UIs and non-UI- click-events&lt;/li&gt;
          *     &lt;li&gt;&#x27;redmodel:&#x60;*&#x60;&#x27;&lt;/li&gt;
          *     &lt;li&gt;&#x27;&#x60;*&#x60;:&#x60;*&#x60;&#x27;&lt;/li&gt;
@@ -889,8 +889,8 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
          *
          * &lt;ul&gt;
          *     &lt;li&gt;&#x27;redmodel:save&#x27;&lt;/li&gt;
-         *     &lt;li&gt;&#x27;UI:click&#x27;&lt;/li&gt;
-         *     &lt;li&gt;&#x27;click&#x27; --&gt; alias for &#x27;UI:click&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;UI:tap&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;tap&#x27; --&gt; alias for &#x27;UI:tap&#x27;&lt;/li&gt;
          *     &lt;li&gt;&#x27;&#x60;*&#x60;:click&#x27; --&gt; careful: will listen to both UIs and non-UI- click-events&lt;/li&gt;
          *     &lt;li&gt;&#x27;redmodel:&#x60;*&#x60;&#x27;&lt;/li&gt;
          *     &lt;li&gt;&#x27;&#x60;*&#x60;:&#x60;*&#x60;&#x27;&lt;/li&gt;
@@ -1297,8 +1297,8 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
          *
          * &lt;ul&gt;
          *     &lt;li&gt;&#x27;redmodel:save&#x27;&lt;/li&gt;
-         *     &lt;li&gt;&#x27;UI:click&#x27;&lt;/li&gt;
-         *     &lt;li&gt;&#x27;click&#x27; --&gt; alias for &#x27;UI:click&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;UI:tap&#x27;&lt;/li&gt;
+         *     &lt;li&gt;&#x27;tap&#x27; --&gt; alias for &#x27;UI:tap&#x27;&lt;/li&gt;
          *     &lt;li&gt;&#x27;&#x60;*&#x60;:click&#x27; --&gt; careful: will listen to both UIs and non-UI- click-events&lt;/li&gt;
          *     &lt;li&gt;&#x27;redmodel:&#x60;*&#x60;&#x27;&lt;/li&gt;
          *     &lt;li&gt;&#x27;&#x60;*&#x60;:&#x60;*&#x60;&#x27;&lt;/li&gt;
@@ -1368,7 +1368,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
      * which has a structure like this:
      *
      * _ce = {
-     *     &#x27;UI:click&#x27;: {
+     *     &#x27;UI:tap&#x27;: {
      *         preventable: true,
      *         defaultFn: function(){...},
      *         preventedFn: function(){...},
@@ -1406,7 +1406,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
      *                                                          };
      *
      * _subs = {
-     *     &#x27;UI:click&#x27;: {
+     *     &#x27;UI:tap&#x27;: {
      *         b: [
      *             item,
      *             item
@@ -1479,7 +1479,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
      * This list is maintained by &#x60;notifyDetach&#x60; and &#x60;unNotifyDetach&#x60;
      *
      * _detachNotifiers = {
-     *     &#x27;UI:click&#x27;: {
+     *     &#x27;UI:tap&#x27;: {
      *         cb:function() {}
      *         o: {} // context
      *     },
@@ -1506,7 +1506,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
      * This list is maintained by &#x60;notify&#x60; and &#x60;unNotify&#x60;
      *
      * _notifiers = {
-     *     &#x27;UI:click&#x27;: {
+     *     &#x27;UI:tap&#x27;: {
      *         cb:function() {}
      *         o: {} // context
      *     },

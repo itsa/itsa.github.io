@@ -244,6 +244,7 @@ var NAME = &#x27;[event-dom]: &#x27;,
     INSERT = &#x27;insert&#x27;,
     CHANGE = &#x27;change&#x27;,
     ATTRIBUTE = &#x27;attribute&#x27;,
+    TAP = &#x27;tap&#x27;,
     CLICK = &#x27;click&#x27;,
     RIGHTCLICK = &#x27;right&#x27;+CLICK,
     CENTERCLICK = &#x27;center&#x27;+CLICK,
@@ -260,7 +261,7 @@ var NAME = &#x27;[event-dom]: &#x27;,
      * Internal hash containing all DOM-events that are listened for (at &#x60;document&#x60;).
      *
      * DOMEvents = {
-     *     &#x27;click&#x27;: callbackFn,
+     *     &#x27;tap&#x27;: callbackFn,
      *     &#x27;mousemove&#x27;: callbackFn,
      *     &#x27;keypress&#x27;: callbackFn
      * }
@@ -281,7 +282,7 @@ var NAME = &#x27;[event-dom]: &#x27;,
 module.exports = function (window) {
     var DOCUMENT = window.document,
         _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor, _setupEvents, _setupMutationListener, _teardownMutationListener,
-        _setupDomListener, _teardownDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc, MUTATION_EVENTS;
+        _setupDomListener, _teardownDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc, MUTATION_EVENTS, preventClick;
 
     require(&#x27;vdom&#x27;)(window);
 
@@ -294,7 +295,7 @@ module.exports = function (window) {
     MUTATION_EVENTS = [EV_REMOVED, EV_INSERTED, EV_CONTENT_CHANGE, EV_ATTRIBUTE_REMOVED, , EV_ATTRIBUTE_CHANGED, EV_ATTRIBUTE_INSERTED];
 
     /*
-     * Transfprms the selector to a valid function
+     * Transforms the selector to a valid function
      *
      * @method _evCallback
      * @param customEvent {String} the customEvent that is transported to the eventsystem
@@ -471,6 +472,27 @@ module.exports = function (window) {
             (which===2) &amp;&amp; (eventName=CENTERCLICK);
             (which===3) &amp;&amp; (eventName=RIGHTCLICK);
         }
+        if (eventName===&#x27;tap&#x27;) {
+            // prevent the next click-event
+            preventClick = true;
+            e.clientX = e.center.x;
+            e.clientY = e.center.y;
+        }
+        else if (preventClick &amp;&amp; (eventName===CLICK)) {
+            preventClick = false;
+            return;
+        }
+
+        if (eventName===CLICK) {
+            eventName = &#x27;tap&#x27;;
+            e.center = {
+                x: e.clientX,
+                y: e.clientY
+            };
+            e.eventType = 4;
+            e.pointerType = &#x27;mouse&#x27;;
+            e.tapCount = 1;
+        }
 
         customEvent = &#x27;UI:&#x27;+eventName;
 
@@ -629,6 +651,7 @@ module.exports = function (window) {
     _setupDomListener = function(customEvent, subscriber) {
         console.log(NAME, &#x27;_setupDomListener&#x27;);
         var eventSplitted = customEvent.split(&#x27;:&#x27;),
+            emitterName = eventSplitted[0],
             eventName = eventSplitted[1],
             outsideEvent = REGEXP_UI_OUTSIDE.test(eventName);
 
@@ -643,27 +666,38 @@ module.exports = function (window) {
             return;
         }
 
+        // only accept tap-events, yet later on we WILL need to listen for click-events
+        (eventName===CLICK) &amp;&amp; (eventName=TAP);
+
         // now transform the subscriber&#x27;s filter from css-string into a filterfunction
-        _selToFunc(customEvent, subscriber);
+        _selToFunc(emitterName+&#x27;:&#x27;+eventName+(outsideEvent ? OUTSIDE : &#x27;&#x27;), subscriber);
 
         // already registered? then return, also return if someone registered for UI:*
         if (DOMEvents[eventName] || (eventName===&#x27;*&#x27;)) {
             // cautious: one might have registered the event, but not yet the outsideevent.
             // in that case: save this setting:
-            outsideEvent &amp;&amp; (DOMEvents[eventName+OUTSIDE]=true);
+            if (outsideEvent) {
+                DOMEvents[eventName+OUTSIDE] = true;
+                (eventName===TAP) &amp;&amp; (DOMEvents[CLICK+OUTSIDE]=true);
+            }
             return;
         }
 
         DOMEvents[eventName] = true;
-        outsideEvent &amp;&amp; (DOMEvents[eventName+OUTSIDE]=true);
+        if (outsideEvent) {
+            DOMEvents[eventName+OUTSIDE] = true;
+            (eventName===TAP) &amp;&amp; (DOMEvents[CLICK+OUTSIDE]=true);
+        }
         // one exception: windowresize should listen to the window-object
         if (eventName===&#x27;resize&#x27;) {
             window.addEventListener(eventName, _evCallback);
         }
         else {
-            ((eventName===RIGHTCLICK) || (eventName===CENTERCLICK)) &amp;&amp; (eventName=CLICK);
+            ((eventName===RIGHTCLICK) || (eventName===CENTERCLICK)) &amp;&amp; (eventName=TAP);
             // important: set the third argument &#x60;true&#x60; so we listen to the capture-phase.
             DOCUMENT.addEventListener(eventName, _evCallback, true);
+            // listen for both &#x60;tap&#x60; and &#x60;click&#x60; events to happen
+            (eventName===TAP) &amp;&amp; DOCUMENT.addEventListener(CLICK, _evCallback, true);
         }
     };
 
@@ -671,7 +705,7 @@ module.exports = function (window) {
         var lastFocussed;
 
         // make sure disabled buttons don&#x27;t work:
-        Event.before([&#x27;click&#x27;, &#x27;tap&#x27;], function(e) {
+        Event.before([&#x27;tap&#x27;, &#x27;press&#x27;], function(e) {
             e.preventDefault();
         }, &#x27;.pure-button-disabled, button[disabled]&#x27;);
 
