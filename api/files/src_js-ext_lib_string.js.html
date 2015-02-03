@@ -408,8 +408,8 @@
     /**
      * Validates if the String&#x27;s value represents a valid boolean.
      *
-     * @method validateNumber
-     * @return {Boolean} whether the String&#x27;s value is a valid integer number.
+     * @method validateBoolean
+     * @return {Boolean} whether the String&#x27;s value is a valid boolean.
      */
     StringPrototype.validateBoolean = function() {
         var length = this.length,
@@ -419,6 +419,16 @@
         }
         check = this.toUpperCase();
         return ((check===&#x27;TRUE&#x27;) || (check===&#x27;FALSE&#x27;));
+    };
+
+    /**
+     * Validates if the String&#x27;s value represents a valid Date.
+     *
+     * @method validateDate
+     * @return {Boolean} whether the String&#x27;s value is a valid Date object.
+     */
+    StringPrototype.validateDate = function() {
+        return DATEPATTERN.test(this);
     };
 
     /**
