@@ -13491,8 +13491,8 @@ Promise.manage = function (callbackFn) {
     /**
      * Validates if the String's value represents a valid boolean.
      *
-     * @method validateNumber
-     * @return {Boolean} whether the String's value is a valid integer number.
+     * @method validateBoolean
+     * @return {Boolean} whether the String's value is a valid boolean.
      */
     StringPrototype.validateBoolean = function() {
         var length = this.length,
@@ -13502,6 +13502,16 @@ Promise.manage = function (callbackFn) {
         }
         check = this.toUpperCase();
         return ((check==='TRUE') || (check==='FALSE'));
+    };
+
+    /**
+     * Validates if the String's value represents a valid Date.
+     *
+     * @method validateDate
+     * @return {Boolean} whether the String's value is a valid Date object.
+     */
+    StringPrototype.validateDate = function() {
+        return DATEPATTERN.test(this);
     };
 
     /**
@@ -23056,6 +23066,16 @@ module.exports = function (window) {
                 console.warn('Not allowed to remove the attribute '+attributeName);
                 return instance;
             }
+
+            if (instance.isItag && instance._data && instance._data.itagRendered && instance.domNode._attrs[attributeName]) {
+                console.log('Changing element.model-data instead of removing attribute itself for attribute: '+attributeName);
+                if (instance.domNode.model[attributeName]!==undefined) {
+                    delete instance.domNode.model[attributeName];
+                    DOCUMENT.refreshItags && DOCUMENT.refreshItags();
+                }
+                return;
+            }
+
             if (instance.attrs[attributeName]!==undefined) {
                 delete instance.attrs[attributeName];
                 // in case of STYLE attribute --> special treatment
@@ -23149,12 +23169,36 @@ module.exports = function (window) {
                 extractStyle, extractClass,
                 attrs = instance.attrs,
                 prevVal = attrs[attributeName],
-                attributeNameSplitted, ns;
+                attributeNameSplitted, ns, domNode, validValue;
 
             if (!force && ((instance._unchangableAttrs && instance._unchangableAttrs[attributeName]) || ((attributeName.length===2) && (attributeName.toLowerCase()==='is')))) {
                 console.warn('Not allowed to set the attribute '+attributeName);
                 return instance;
             }
+
+            if (instance.isItag && instance._data && instance._data.itagRendered && instance.domNode._attrs[attributeName]) {
+                console.log('Changing element.model-data instead of setting attribute itself for attribute: '+attributeName);
+                switch (value.toLowerCase()) {
+                    case 'boolean':
+                        validValue = value.validateBoolean();
+                        value = (value==='true');
+                        break;
+                    case 'number':
+                        validValue = value.validateFloat();
+                        value = parseFloat(value);
+                        break;
+                    case 'date':
+                        validValue = value.validateDate();
+                        value = value.toDate();
+                        break;
+                }
+                if (validValue) {
+                    instance.domNode.model[attributeName] = value;
+                    DOCUMENT.refreshItags && DOCUMENT.refreshItags();
+                }
+                return;
+            }
+
             // don't check by !== --> value isn't parsed into a String yet
             if (prevVal && ((value===undefined) || (value===null))) {
                 instance._removeAttr(attributeName);
