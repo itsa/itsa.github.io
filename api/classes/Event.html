@@ -705,8 +705,8 @@ If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
 <p>Examples of valid customevents:</p>
 <ul>
     <li>&#39;redmodel:save&#39;</li>
-    <li>&#39;UI:click&#39;</li>
-    <li>&#39;click&#39; --&gt; alias for &#39;UI:click&#39;</li>
+    <li>&#39;UI:tap&#39;</li>
+    <li>&#39;tap&#39; --&gt; alias for &#39;UI:tap&#39;</li>
     <li>&#39;<code>*</code>:click&#39; --&gt; careful: will listen to both UIs and non-UI- click-events</li>
     <li>&#39;redmodel:<code>*</code>&#39;</li>
     <li>&#39;<code>*</code>:<code>*</code>&#39;</li>
@@ -947,8 +947,8 @@ If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
 <p>Examples of valid customevents:</p>
 <ul>
     <li>&#39;redmodel:save&#39;</li>
-    <li>&#39;UI:click&#39;</li>
-    <li>&#39;click&#39; --&gt; alias for &#39;UI:click&#39;</li>
+    <li>&#39;UI:tap&#39;</li>
+    <li>&#39;tap&#39; --&gt; alias for &#39;UI:tap&#39;</li>
     <li>&#39;<code>*</code>:click&#39; --&gt; careful: will listen to both UIs and non-UI- click-events</li>
     <li>&#39;redmodel:<code>*</code>&#39;</li>
     <li>&#39;<code>*</code>:<code>*</code>&#39;</li>
@@ -1140,7 +1140,7 @@ If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
             
         
         
-        <a href="../files/src_event-dom_event-dom.js.html#l678"><code>src&#x2F;event-dom&#x2F;event-dom.js:678</code></a>
+        <a href="../files/src_event-dom_event-dom.js.html#l712"><code>src&#x2F;event-dom&#x2F;event-dom.js:712</code></a>
         
         </p>
 
@@ -1639,8 +1639,8 @@ If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
 <p>Examples of valid customevents:</p>
 <ul>
     <li>&#39;redmodel:save&#39;</li>
-    <li>&#39;UI:click&#39;</li>
-    <li>&#39;click&#39; --&gt; alias for &#39;UI:click&#39;</li>
+    <li>&#39;UI:tap&#39;</li>
+    <li>&#39;tap&#39; --&gt; alias for &#39;UI:tap&#39;</li>
     <li>&#39;<code>*</code>:click&#39; --&gt; careful: will listen to both UIs and non-UI- click-events</li>
     <li>&#39;redmodel:<code>*</code>&#39;</li>
     <li>&#39;<code>*</code>:<code>*</code>&#39;</li>
@@ -3511,7 +3511,7 @@ Only get invoked when the cycle was not preventDefaulted or halted.</p>
             
         
         
-        <a href="../files/src_event-dom_event-dom.js.html#l663"><code>src&#x2F;event-dom&#x2F;event-dom.js:663</code></a>
+        <a href="../files/src_event-dom_event-dom.js.html#l697"><code>src&#x2F;event-dom&#x2F;event-dom.js:697</code></a>
         
         </p>
 
@@ -4781,7 +4781,7 @@ When <code>emitterName</code> is not set, ALL event-definitions will be removed.
         <p>Objecthash containing all defined custom-events
 which has a structure like this:</p>
 <p>_ce = {
-    &#39;UI:click&#39;: {
+    &#39;UI:tap&#39;: {
         preventable: true,
         defaultFn: function(){...},
         preventedFn: function(){...},
@@ -4855,7 +4855,7 @@ Every item that gets in the array consist by itself of 3 properties:
                                                              f: filter
                                                          };</p>
 <p>_subs = {
-    &#39;UI:click&#39;: {
+    &#39;UI:tap&#39;: {
         b: [
             item,
             item
@@ -4999,7 +4999,7 @@ To add more methods, you can use <code>_setEventObjProperty</code></p>
         <p>Objecthash containing all detach-notifiers, keyed by customEvent name.
 This list is maintained by <code>notifyDetach</code> and <code>unNotifyDetach</code></p>
 <p>_detachNotifiers = {
-    &#39;UI:click&#39;: {
+    &#39;UI:tap&#39;: {
         cb:function() {}
         o: {} // context
     },
@@ -5121,7 +5121,7 @@ Is an array of function-references.</p>
         <p>Objecthash containing all notifiers, keyed by customEvent name.
 This list is maintained by <code>notify</code> and <code>unNotify</code></p>
 <p>_notifiers = {
-    &#39;UI:click&#39;: {
+    &#39;UI:tap&#39;: {
         cb:function() {}
         o: {} // context
     },

@@ -138,8 +138,12 @@ You should be carefull when it comes down to gesture-events (touch- or pointer-e
 
 Beside native DOM-events, this module enriches some events and adds some custome events for a richer experience:
 
-##click, centerclick and rightclick##
-The `click`- events are splitted into: `click`, `centerclick` and `rightclick`. This means that -when subscribed to a click-event- the subscriber only gets invoked on a `left-mouseclick`.
+##click becomes tap##
+**There is no `click`-event anymore!!!** Because new browsers support the `tap`-event (which is quiker --> a click-event delays for 300ms on mobile), we basicly got 2 of the same events: `click` and `tap`, where one performs better. That's why we keep it modern: **no click-event will occur** only the `tap`-event.
+
+
+##centerclick and rightclick##
+The native `click`- event is devided into: into: `tap`, `centerclick` and `rightclick`. This means that -when subscribed to a tap-event- the subscriber only gets invoked on a `left-mouseclick` or a true tap-event when on mobile devices. And  on systems where a mouse is present, you can listen for a `rightclick` or `centerclick`-event.
 
 ##mouseover and mouseout##
 

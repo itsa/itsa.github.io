@@ -1776,16 +1776,6 @@ module.exports = function (window) {
                 console.warn(&#x27;Not allowed to remove the attribute &#x27;+attributeName);
                 return instance;
             }
-
-            if (instance.isItag &amp;&amp; instance._data &amp;&amp; instance._data.itagRendered &amp;&amp; instance.domNode._attrs[attributeName]) {
-                console.log(&#x27;Changing element.model-data instead of removing attribute itself for attribute: &#x27;+attributeName);
-                if (instance.domNode.model[attributeName]!==undefined) {
-                    delete instance.domNode.model[attributeName];
-                    DOCUMENT.refreshItags &amp;&amp; DOCUMENT.refreshItags();
-                }
-                return;
-            }
-
             if (instance.attrs[attributeName]!==undefined) {
                 delete instance.attrs[attributeName];
                 // in case of STYLE attribute --&gt; special treatment
@@ -1879,36 +1869,13 @@ module.exports = function (window) {
                 extractStyle, extractClass,
                 attrs = instance.attrs,
                 prevVal = attrs[attributeName],
-                attributeNameSplitted, ns, domNode, validValue;
+                domNode = instance.domNode,
+                attributeNameSplitted, ns;
 
             if (!force &amp;&amp; ((instance._unchangableAttrs &amp;&amp; instance._unchangableAttrs[attributeName]) || ((attributeName.length===2) &amp;&amp; (attributeName.toLowerCase()===&#x27;is&#x27;)))) {
                 console.warn(&#x27;Not allowed to set the attribute &#x27;+attributeName);
                 return instance;
             }
-
-            if (instance.isItag &amp;&amp; instance._data &amp;&amp; instance._data.itagRendered &amp;&amp; instance.domNode._attrs[attributeName]) {
-                console.log(&#x27;Changing element.model-data instead of setting attribute itself for attribute: &#x27;+attributeName);
-                switch (value.toLowerCase()) {
-                    case &#x27;boolean&#x27;:
-                        validValue = value.validateBoolean();
-                        value = (value===&#x27;true&#x27;);
-                        break;
-                    case &#x27;number&#x27;:
-                        validValue = value.validateFloat();
-                        value = parseFloat(value);
-                        break;
-                    case &#x27;date&#x27;:
-                        validValue = value.validateDate();
-                        value = value.toDate();
-                        break;
-                }
-                if (validValue) {
-                    instance.domNode.model[attributeName] = value;
-                    DOCUMENT.refreshItags &amp;&amp; DOCUMENT.refreshItags();
-                }
-                return;
-            }
-
             // don&#x27;t check by !== --&gt; value isn&#x27;t parsed into a String yet
             if (prevVal &amp;&amp; ((value===undefined) || (value===null))) {
                 instance._removeAttr(attributeName);
@@ -1947,7 +1914,7 @@ module.exports = function (window) {
                 else if (attributeName===ID) {
                     instance.id &amp;&amp; (delete nodeids[instance.id]);
                     instance.id = value;
-                    nodeids[value] = instance.domNode;
+                    nodeids[value] = domNode;
                 }
 
                 instance._emit(prevVal ? EV_ATTRIBUTE_CHANGED : EV_ATTRIBUTE_INSERTED, attributeName, value, prevVal);
@@ -1958,10 +1925,10 @@ module.exports = function (window) {
                     attributeNameSplitted = attributeName.split(&#x27;:&#x27;);
                     ns = attributeNameSplitted[0];
                     attributeName = attributeNameSplitted[1];
-                    instance.domNode._setAttributeNS(xmlNS[ns.toUpperCase()] || ns, attributeName, value);
+                    domNode._setAttributeNS(xmlNS[ns.toUpperCase()] || ns, attributeName, value);
                 }
                 else {
-                    instance.domNode._setAttribute(attributeName, value);
+                    domNode._setAttribute(attributeName, value);
                 }
             }
             return instance;

@@ -258,7 +258,7 @@ module.exports = function (window) {
     }
 
     nodePlugin = require(&#x27;vdom&#x27;)(window).Plugins.nodePlugin;
-    Event = require(&#x27;event-dom&#x27;)(window);
+    Event = require(&#x27;event-mobile&#x27;)(window);
 
     getFocusManagerSelector = function(focusContainerNode) {
         var selector = focusContainerNode.getAttr(&#x27;fm-manage&#x27;);
@@ -291,7 +291,7 @@ module.exports = function (window) {
                 });
                 if (foundNode) {
                     async(function() {
-                        Event.emit(foundNode, &#x27;UI:click&#x27;);
+                        Event.emit(foundNode, &#x27;UI:tap&#x27;);
                         // _buttonPressed make event-dom to simulate a pressed button for 200ms
                         Event.emit(foundNode, &#x27;UI:tap&#x27;, {_buttonPressed: true});
                         // if the button is of type &#x60;submit&#x60;, then try to submit the form
@@ -356,9 +356,10 @@ module.exports = function (window) {
             focusNode, alwaysDefault, fmAlwaysDefault, selector, allFocusableNodes, index;
 
         if (focusContainerNode) {
-            if (initialNode.matches(getFocusManagerSelector(focusContainerNode))) {
-                markAsFocussed(focusContainerNode, initialNode);
-                focusNode = initialNode;
+            selector = getFocusManagerSelector(focusContainerNode);
+            focusNode = initialNode.matches(selector) ? initialNode : initialNode.inside(selector);
+            if (focusNode &amp;&amp; focusContainerNode.contains(focusNode)) {
+                markAsFocussed(focusContainerNode, focusNode);
             }
             else {
                 // find the right node that should get focus
@@ -370,8 +371,6 @@ module.exports = function (window) {
                     // search for last item
                     focusNode = focusContainerNode.getElement(&#x27;[fm-lastitem=&quot;true&quot;]&#x27;);
                     if (!focusNode) {
-                        // set &#x60;selector&#x60; right now: we might use it later on even when index is undefined
-                        selector = getFocusManagerSelector(focusContainerNode);
                         // look at the lastitemindex of the focuscontainer
                         index = focusContainerNode.getData(&#x27;fm-lastitem-bkp&#x27;);
                         if (index!==undefined) {
@@ -484,7 +483,6 @@ module.exports = function (window) {
             console.log(NAME+&#x27;after tap-event&#x27;);
             var focusNode = e.target,
                 focusContainerNode;
-
             if (focusNode &amp;&amp; focusNode.inside) {
                 focusContainerNode = focusNode.hasAttr(&#x27;fm-manage&#x27;) ? focusNode : focusNode.inside(&#x27;[fm-manage]&#x27;);
             }
@@ -496,7 +494,7 @@ module.exports = function (window) {
                     markAsFocussed(focusContainerNode, focusNode);
                 }
                 else {
-                    e.preventRender(); // don&#x27;t double render --&gt; focus does this
+                    e.preventRender(); // don&#x27;t double render --&gt; let focus do this
                     focusNode.focus();
                 }
             }
