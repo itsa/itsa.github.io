@@ -119,6 +119,8 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
+                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
+            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -735,6 +737,17 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
             return handler;
         },
 
+        runFinalizers: function(e) {
+            this._final.some(function(finallySubscriber) {
+                !e.silent &amp;&amp; finallySubscriber(e);
+                if (e.status &amp;&amp; e.status.unSilencable &amp;&amp; e.silent) {
+                    console.warn(NAME, &#x27; event &#x27;+e.emitter+&#x27;:&#x27;+e.type+&#x27; cannot made silent: this customEvent is defined as unSilencable&#x27;);
+                    e.silent = false;
+                }
+                return e.silent;
+            });
+        },
+
         /**
          * Removes all event-definitions of an emitter, specified by its &#x60;emitterName&#x60;.
          * When &#x60;emitterName&#x60; is not set, ALL event-definitions will be removed.
@@ -1159,14 +1172,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
                             wildcard_named_subs &amp;&amp; (subscribedSize += wildcard_named_subs.size());
                             wildcard_wildcard_subs &amp;&amp; (subscribedSize += wildcard_wildcard_subs.size());
                         }
-                        (subscribedSize&gt;0) &amp;&amp; instance._final.some(function(finallySubscriber) {
-                            !e.silent &amp;&amp; !e._noRender &amp;&amp; !e.status.renderPrevented  &amp;&amp; finallySubscriber(e);
-                            if (e.status.unSilencable &amp;&amp; e.silent) {
-                                console.warn(NAME, &#x27; event &#x27;+e.emitter+&#x27;:&#x27;+e.type+&#x27; cannot made silent: this customEvent is defined as unSilencable&#x27;);
-                                e.silent = false;
-                            }
-                            return e.silent;
-                        });
+                        (subscribedSize&gt;0) &amp;&amp; instance.runFinalizers(e);
                     }
                 }
             }

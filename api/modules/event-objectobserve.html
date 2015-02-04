@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>html-parser - Itsa</title>
+    <title>event-objectobserve - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -206,7 +206,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>html-parser Module</h1>
+                        <h1>event-objectobserve Module</h1>
 <div class="box clearfix meta">
     
 
@@ -214,25 +214,45 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_vdom_partials_html-parser.js.html#l3"><code>src&#x2F;vdom&#x2F;partials&#x2F;html-parser.js:3</code></a>
+            Defined in: <a href="../files/src_event_extra_objectobserve.js.html#l3"><code>src&#x2F;event&#x2F;extra&#x2F;objectobserve.js:3</code></a>
         </div>
     
 
     
-        <p>Available since 0.0.1</p>
+        <p>Available since 0.0.2</p>
     
 </div>
 
 
 
 <div class="box intro">
-    <p>Exports <code>htmlToVNodes</code> which transforms html-text into vnodes.</p>
+    <p>Adds the <code>objectobserve</code> event, to monitor changes in objects.</p>
 <p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
-<br>
 New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 
 </div>
 
+
+    <div class="example">
+        <h4>Example:</h4>
+        <div class="example-content">
+            <p>Event = require(&#39;event/extra/objectobserve.js&#39;);</p>
+<p>Event.observe(&#39;myEmitterName&#39;, datamodel);
+Event.after(&#39;myEmitterName:datachanged&#39;, function(e) {
+    var datamodel = e.target,
+        emitter = e.emitter;
+});</p>
+<p>or</p>
+<p>Event = require(&#39;event&#39;);
+require(&#39;event/extra/objectobserve.js&#39;);</p>
+<p>Event.observe(&#39;myEmitterName&#39;, datamodel);
+Event.after(&#39;myEmitterName:datachanged&#39;, function(e) {
+    var datamodel = e.target,
+        emitter = e.emitter;
+});</p>
+
+        </div>
+    </div>
 
 
 <div class="yui3-g">

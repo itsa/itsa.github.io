@@ -377,6 +377,42 @@ This is a sort of simulating DOM-events, but not exactly:
 * Emitting this way is not true simulating. Any subscriber does get invoked, but <u>the original default-function does not get invoked</u>.
 
 
+##datachanged-event##
+A special feature (delivered by the module `extra/objectobserve.js`), is the `datachanged`-event. This event gives easy and platform-independent `Object.observe`. It is meant to observe changes of <u>any data-type that can be stringified</u>. To avoid overloading the system, not all data-types are monitored: you need to specify what you want to observe, and you should unobserve when you don't need to observe any longer.
+
+###Event.observe()###
+Starts the observation of a data-object. You need to pass an unique `emitterName` as well: this will be used when the eventsystem emits the `emitterName:datachanged`-event.
+
+To end observing, use the returned handle`.cancel()`, or `Event.unobserve()`
+
+###Event.unobserve()###
+To end the observation of a data-object, defined with `Event.observe`. Needs the emitterName as argument.
+
+####Example datachanged-event####
+```js
+var datamodel = {
+    year: 2015,
+    members: 100
+};
+
+Event.observe('members', datamodel);
+Event.after('members:datachanged', function(e) {
+    var datamodel = e.target,
+        emitter = e.emitter;
+    // process the event...
+    // which will happen when datamodel.members
+    // is set to 150
+});
+
+setTimeout(function() {
+    datamodel.members = 150; // <-- leads to event 'members:datachanged'
+}, 1000);
+```
+
+###Event.unobserveAll()###
+To end the observation of all observers.
+
+
 #Listening for events#
 
 Listening for events can be done using the methods:

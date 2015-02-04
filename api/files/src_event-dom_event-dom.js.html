@@ -119,6 +119,8 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
+                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
+            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -334,7 +336,7 @@ module.exports = function (window) {
             context = subscriber.o,
             vnode = subscriber.o.vnode,
             isCustomElement = vnode &amp;&amp; vnode.isItag,
-            isParcel = isCustomElement &amp;&amp; (vnode.tag===&#x27;I-PARCEL&#x27;),
+            visibleContent = isCustomElement &amp;&amp; !vnode.domNode.contentHidden,
             nodeid, byExactId, newTarget, deepSearch;
 
         console.log(NAME, &#x27;_domSelToFunc type of selector = &#x27;+typeof selector);
@@ -359,7 +361,7 @@ module.exports = function (window) {
                 vnode = node.vnode,
                 character1 = selector &amp;&amp; selector.substr(1),
                 match = false;
-            if (!isCustomElement || isParcel || subscriber.o.contains(node)) {
+            if (!isCustomElement || visibleContent || subscriber.o.contains(node)) {
                 if (selector===&#x27;&#x27;) {
                     match = true;
                 }
@@ -475,8 +477,8 @@ module.exports = function (window) {
         if (eventName===&#x27;tap&#x27;) {
             // prevent the next click-event
             preventClick = true;
-            e.clientX = e.center.x;
-            e.clientY = e.center.y;
+            e.clientX || (e.clientX = e.center &amp;&amp; e.center.x);
+            e.clientY || (e.clientY = e.center &amp;&amp; e.center.y);
         }
         else if (preventClick &amp;&amp; (eventName===CLICK)) {
             preventClick = false;

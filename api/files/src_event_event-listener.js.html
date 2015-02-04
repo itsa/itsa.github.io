@@ -119,6 +119,8 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
+                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
+            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -232,7 +234,7 @@
 
 require(&#x27;js-ext/lib/object.js&#x27;);
 
-var Event = require(&#x27;./index.js&#x27;),
+var Event = require(&#x27;./event-base.js&#x27;),
     Classes = require(&quot;js-ext/extra/classes.js&quot;),
     filterFn, ClassListener;
 
@@ -473,6 +475,8 @@ Event._CE_listener = ClassListener = {
 // Patching Classes.BaseClass to make it an eventlistener that auto cleans-up:
 Classes.BaseClass.mergePrototypes(Event.Listener, true)
                  .mergePrototypes(ClassListener, true, {}, {});
+
+module.exports = Event;
     </pre>
 </div>
 
