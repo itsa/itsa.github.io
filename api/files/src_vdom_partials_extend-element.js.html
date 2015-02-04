@@ -119,6 +119,8 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
+                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
+            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -271,7 +273,6 @@ module.exports = function (window) {
         DOCUMENT = window.document,
         nodeids = NS.nodeids,
         arrayIndexOf = Array.prototype.indexOf,
-        I_PARCEL = &#x27;I-PARCEL&#x27;,
         POSITION = &#x27;position&#x27;,
         ITSA_ = &#x27;itsa-&#x27;,
         BLOCK = ITSA_+&#x27;block&#x27;,
@@ -2400,7 +2401,7 @@ module.exports = function (window) {
                     for (j=0; (j&lt;len2) &amp;&amp; !found; j++) {
                         vChildNode = vChildren[j];
                         vChildNode.matchesSelector(selectors, thisvnode) &amp;&amp; (found=vChildNode.domNode);
-                        found || (!insideItags &amp;&amp; vChildNode.isItag &amp;&amp; (vChildNode.tag!==I_PARCEL)) || inspectChildren(vChildNode); // not dive into itags (except from i-parcel)
+                        found || (!insideItags &amp;&amp; vChildNode.isItag &amp;&amp; vChildNode.domNode.contentHidden) || inspectChildren(vChildNode); // not dive into itags (except from when content is not hidden)
                     }
                 };
             while (!firstCharacter &amp;&amp; (++i&lt;len)) {
@@ -2436,7 +2437,7 @@ module.exports = function (window) {
                     for (j=0; j&lt;len2; j++) {
                         vChildNode = vChildren[j];
                         vChildNode.matchesSelector(selectors, thisvnode) &amp;&amp; (found[found.length]=vChildNode.domNode);
-                        (!insideItags &amp;&amp; vChildNode.isItag &amp;&amp; (vChildNode.tag!==I_PARCEL)) || inspectChildren(vChildNode); // not dive into itags
+                        (!insideItags &amp;&amp; vChildNode.isItag &amp;&amp; vChildNode.domNode.contentHidden) || inspectChildren(vChildNode); // not dive into itags
                     }
                 };
             while (!firstCharacter &amp;&amp; (++i&lt;len)) {
@@ -3510,10 +3511,11 @@ module.exports = function (window) {
         *
         * @method setValue
         * @param val {String} thenew value to be set
+        * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit. Only appropriate for contenteditable nodes.
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.setValue = function(val) {
+        ElementPrototype.setValue = function(val, silent) {
             var instance = this,
                 prevVal = instance.value,
                 contenteditable = instance.vnode.attrs.contenteditable,
@@ -3523,12 +3525,14 @@ module.exports = function (window) {
                 editable = contenteditable &amp;&amp; (contenteditable!==&#x27;false&#x27;),
                 tag, i, option, len, vChildren;
             if (editable) {
-                instance.setHTML(val);
+                // no need to compare with current html --&gt; when vdom is working, only differences are set
+                instance.setHTML(val, silent);
             }
             else {
                 tag = instance.getTagName();
                 if ((tag===&#x27;INPUT&#x27;) || (tag===&#x27;TEXTAREA&#x27;)) {
-                    instance.value = val;
+                    // don&#x27;t update when not needed: we don&#x27;t want to reposition the cursor
+                    (instance.value!==val) &amp;&amp; (instance.value=val);
                 }
                 else if (tag===&#x27;SELECT&#x27;) {
                     vChildren = instance.vnode.vChildren;

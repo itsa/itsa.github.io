@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/event-dom/extra/focusnode.js - Itsa</title>
+    <title>src/event/extra/objectobserve.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -206,110 +206,255 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/event-dom/extra/focusnode.js</h1>
+                        <h1 class="file-heading">File: src/event/extra/objectobserve.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 &quot;use strict&quot;;
 
 /**
- * Adds the &#x60;focusnode&#x60; event as a DOM-event to event-dom. more about DOM-events:
- * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+ * Adds the &#x60;objectobserve&#x60; event, to monitor changes in objects.
  *
  *
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  * @example
- * Event = require(&#x27;event-dom/focusnode.js&#x27;)(window);
+ * Event = require(&#x27;event/extra/objectobserve.js&#x27;);
+ *
+ * Event.observe(&#x27;myEmitterName&#x27;, datamodel);
+ * Event.after(&#x27;myEmitterName:datachanged&#x27;, function(e) {
+ *     var datamodel = e.target,
+ *         emitter = e.emitter;
+ * });
  *
  * or
  *
  * @example
- * Event = require(&#x27;event-dom&#x27;)(window);
- * require(&#x27;event-dom/event-focusnode.js&#x27;)(window);
+ * Event = require(&#x27;event&#x27;);
+ * require(&#x27;event/extra/objectobserve.js&#x27;);
+ *
+ * Event.observe(&#x27;myEmitterName&#x27;, datamodel);
+ * Event.after(&#x27;myEmitterName:datachanged&#x27;, function(e) {
+ *     var datamodel = e.target,
+ *         emitter = e.emitter;
+ * });
  *
  * @module event
- * @submodule event-focusnode
+ * @submodule event-objectobserve
  * @class Event
  * @since 0.0.2
 */
 
-
-var NAME = &#x27;[event-focusnode]: &#x27;,
-    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
-
 require(&#x27;js-ext/lib/object.js&#x27;);
+require(&#x27;./timer-finalize.js&#x27;);
 
 module.exports = function (window) {
 
-    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
+    var NAME = &#x27;[event-objectobserve]: &#x27;,
+        IO = require(&#x27;io&#x27;)(window),
+        NATIVE_OBJECT_OBSERVE = !!Object.observe,
+        Event = require(&#x27;../event-base.js&#x27;),
+        asyncSilent = require(&#x27;utils&#x27;).asyncSilent,
+        definitions = {},
+        callbackFn, checkObjects, observeNative, observePolyfill, unobserveNative, unobservePolyfill, finalizer;
 
-    if (window._ITSAmodules.EventFocusNode) {
-        return window._ITSAmodules.EventFocusNode; // EventFocusNode was already created
-    }
-
-    var Event = require(&#x27;../event-dom.js&#x27;)(window),
-        subscriber, previousVnode,
-
-    /*
-     * Creates the &#x60;focisnode&#x60; event.
+   /**
+     * The function that gets invoked when object-observed objects get changed.
      *
-     * @method setupFocusNode
-     * @private
-     * @since 0.0.2
-     */
-    setupFocusNode = function() {
-        // create only after subscribing to the &#x60;hover&#x60;-event
-        subscriber = Event.after(&#x27;focus&#x27;, function(e) {
-            var targetVnode = e.target.vnode,
-                vnode = targetVnode,
-                alreadyFocussed;
-            if (vnode) {
-                do {
-                    alreadyFocussed = previousVnode &amp;&amp; vnode.contains(previousVnode);
-                    alreadyFocussed || Event.emit(vnode.domNode, &#x27;UI:focusnode&#x27;, e);
-/*jshint boss:true */
-                } while (!alreadyFocussed &amp;&amp; (vnode=vnode.vParent));
-/*jshint boss:false */
-            }
-            previousVnode = targetVnode;
-        });
-    },
+     * @method callbackFn
+     * @param emitterName {String} The emitter-name that was set on the oberver-object
+     * @param obj {Object} the object that was changed
+     * @protected
+     * @since 0.0.1
+    */
+    callbackFn = function(emitterName, obj) {
+        console.info(NAME, &#x27;callbackFn for &#x27;+emitterName);
+        // emit with _objectobserver: we don;t want to fall into a loop:
+        Event.emit(obj, emitterName+&#x27;:datachanged&#x27;, {_objectobserver: true});
+    };
 
-    /*
-     * Removes the &#x60;focusnode&#x60; event. Because there are no subscribers anymore.
+   /**
+     * The function that gets invoked in Event&#x27;s finalizer in case there is no native Object.observe
+     * This function will inspect all registered object for changes and invoke &#x60;callbackFn&#x60; for objects
+     * that have been changed.
      *
-     * @method teardownFocusNode
-     * @private
-     * @since 0.0.2
-     */
-    teardownFocusNode = function() {
-        // check if there aren&#x27;t any subscribers anymore.
-        // in that case, we detach the &#x60;mouseover&#x60; lister because we don&#x27;t want to
-        // loose performance.
-        if (!Event._subs[&#x27;UI:focusnode&#x27;]) {
-            console.log(NAME, &#x27;teardownFocusNode: stop listening for blur-event&#x27;);
-            subscriber.detach();
-            // reinit notifier, because it is a one-time notifier:
-            Event.notify(&#x27;UI:focusnode&#x27;, setupFocusNode, Event, true);
+     * @method checkObjects
+     * @param e {Object} the eventobject
+     * @protected
+     * @since 0.0.1
+    */
+    checkObjects = function(e) {
+        console.info(NAME, &#x27;checkObjects&#x27;);
+        // check for _objectobserver: we don;t want to fall into a loop:
+        if (!e._objectobserver) {
+            definitions.each(function(definition) {
+                var stringified;
+                try {
+                    stringified = JSON.stringify(definition.obj);
+                }
+                catch(err) {
+                    // oops, a difficult object
+                    console.warn(NAME, &#x27;Trying to observe object &#x27;+definition.emitter+&#x27;, but it cannot be stringified: possibly it is cycle referenced. This object will NOT emit datachange-event!!!&#x27;);
+                    stringified = null;
+                }
+                (definition.previous!==stringified) &amp;&amp; callbackFn(definition.emitter, definition.obj);
+                definition.previous = stringified;
+            });
         }
     };
 
-    Event.defineEvent(&#x27;UI:focusnode&#x27;)
-         .unPreventable()
-         .noRender();
+   /**
+     * Sets up the native Object.observe for the specified object.
+     *
+     * @method observeNative
+     * @param emitterName {String} The emitter-name to be set as the &#x60;emitterName&#x60; for the &#x60;datachanged&#x60; events
+     * @param obj {Object} the object that was changed
+     * @protected
+     * @since 0.0.1
+    */
+    observeNative = function(emitterName, obj) {
+        console.info(NAME, &#x27;observeNative for &#x27;+emitterName);
+        var callback = callbackFn.bind(null, emitterName, obj);
+        // first we unobserve any possible previous definitions:
+        unobserveNative(emitterName);
+        // now set a new observer:
+        definitions[emitterName] = {
+            obj: obj,
+            emitter: emitterName,
+            callback: callback
+        };
+        Object.observe(obj, callback);
+    };
 
-    Event.notify(&#x27;UI:focusnode&#x27;, setupFocusNode, Event, true);
-    Event.notifyDetach(&#x27;UI:focusnode&#x27;, teardownFocusNode, Event);
+   /**
+     * Sets up the polyfill for Object.observe for the specified object.
+     * Is not really a polyfill, but an alternative way of inspecting: the specified object
+     * gets registered and with every Event.finalize it will be inspected for changes.
+     *
+     * @method observePolyfill
+     * @param emitterName {String} The emitter-name to be set as the &#x60;emitterName&#x60; for the &#x60;datachanged&#x60; events
+     * @param obj {Object} the object that was changed
+     * @protected
+     * @since 0.0.1
+    */
+    observePolyfill = function(emitterName, obj) {
+        console.info(NAME, &#x27;observePolyfill for &#x27;+emitterName);
+        var stringified;
+        // first we unobserve any possible previous definitions:
+        unobservePolyfill(emitterName);
+        finalizer || (finalizer=Event.finalize(checkObjects));
+        // now set a new observer: be aware that JSON.stringify could throw errors in case of cycle-objects
+        try {
+            stringified = JSON.stringify(obj);
+        }
+        catch(err) {
+            // oops, a difficult object
+            console.warn(NAME, &#x27;Trying to observe object &#x27;+emitterName+&#x27;, but it cannot be stringified: possibly it is cycle referenced. This object will NOT emit datachange-event!!!&#x27;);
+            stringified = null;
+        }
+        definitions[emitterName] = {
+            obj: obj,
+            emitter: emitterName,
+            previous: stringified
+        };
+        // because it could happen that someone sets up the observer and in the SAME eventloop changes the model.
+        // we must prevent the modelchange from being registered.
+        // that&#x27;s why a manual &#x60;checkObjects&#x60; must be ran in a next event-cycle:
+        asyncSilent(checkObjects.bind(null, {}));
+    };
 
-    Event.noDeepDomEvt(&#x27;UI:focusnode&#x27;);
+   /**
+     * Unobserves (unregisters) a native observed object.
+     *
+     * @method unobserveNative
+     * @param emitterName {String} The emitter-name to be set as the &#x60;emitterName&#x60; for the &#x60;datachanged&#x60; events
+     * @protected
+     * @since 0.0.1
+    */
+    unobserveNative = function(emitterName) {
+        console.info(NAME, &#x27;unobserveNative for &#x27;+emitterName);
+        var definition = definitions[emitterName];
+        if (definition) {
+            Object.unobserve(definition.obj, definition.callback);
+            delete definitions[emitterName];
+        }
+    };
 
-    window._ITSAmodules.EventFocusNode = Event;
+   /**
+     * Unobserves (unregisters) a polyfilled observed object.
+     *
+     * @method unobserveNative
+     * @param emitterName {String} The emitter-name to be set as the &#x60;emitterName&#x60; for the &#x60;datachanged&#x60; events
+     * @protected
+     * @since 0.0.1
+    */
+    unobservePolyfill = function(emitterName) {
+        console.info(NAME, &#x27;unobservePolyfill for &#x27;+emitterName);
+        delete definitions[emitterName];
+        if (finalizer &amp;&amp; definitions.isEmpty()) {
+            finalizer.detach();
+            finalizer = null;
+        }
+    };
 
-    return Event;
+   /**
+     * Sets up a Object.observe for the specified object. Either native (Object.observe) or polyfilled,
+     * dependend on the environment.
+     *
+     * @method observePolyfill
+     * @param emitterName {String} The emitter-name to be set as the &#x60;emitterName&#x60; for the &#x60;datachanged&#x60; events
+     * @param obj {Object} the object that was changed
+     * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the observer
+     * @since 0.0.1
+    */
+    Event.observe = function(emitterName, obj) {
+        console.info(NAME, &#x27;observe &#x27;+emitterName);
+        NATIVE_OBJECT_OBSERVE ? observeNative(emitterName, obj) : observePolyfill(emitterName, obj);
+        return {
+            detach: function() {
+                Event.unobserve(emitterName);
+            }
+        };
+    };
+
+   /**
+     * Unobserves (unregisters) a observed object.
+     *
+     * @method unobserveNative
+     * @param emitterName {String} The emitter-name to be set as the &#x60;emitterName&#x60; for the &#x60;datachanged&#x60; events
+     * @chainable
+     * @since 0.0.1
+    */
+    Event.unobserve = function(emitterName) {
+        console.info(NAME, &#x27;unobserve &#x27;+emitterName);
+        NATIVE_OBJECT_OBSERVE ? unobserveNative(emitterName) : unobservePolyfill(emitterName);
+        return this;
+    };
+
+   /**
+     * Unobserves (unregisters) a observed object.
+     *
+     * @method unobserveNative
+     * @chainable
+     * @since 0.0.1
+    */
+    Event.unobserveAll = function() {
+        console.info(NAME, &#x27;unobserveAll&#x27;);
+        definitions.each(function(definition) {
+            Event.unobserve(definition.emitter);
+        });
+        return this;
+    };
+
+    IO.finalize(function() {
+        console.info(NAME, &#x27;IO-finalizer will checkObjects&#x27;);
+        checkObjects({});
+    });
+
+    module.exports = Event;
+
 };
-
     </pre>
 </div>
 

@@ -2636,7 +2636,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":71}],6:[function(require,module,exports){
+},{"_process":73}],6:[function(require,module,exports){
 var css = "*:focus {\n    outline: 0;\n}\n\na[target=\"_blank\"]:focus {\n    outline: 1px solid #129fea;\n}\n\n/* because we think the padding and margin should always be part of the size,\n   we define \"box-sizing: border-box\" for all elements */\n\n* {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],7:[function(require,module,exports){
 var css = ".pure-menu.pure-menu-open {\n    z-index: 3; /* prevent graph from crossing the menuarea */\n}\n\n.pure-button.pure-button-bordered,\n.pure-button.pure-button-bordered[disabled] {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;\n}\n\n.pure-button-active,\n.pure-button:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button.pure-button-bordered.pure-button-active[disabled],\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered[disabled]:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.4) inset, 0 0 6px rgba(0,0,0, 0.2) inset;\n}\n\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.6) inset;\n}\n\n/* restore pure-button:active */\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button:active:focus,\n.pure-button.pure-button-active:focus {\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6) inset, 0 0 10px rgba(0, 0, 0, 0.2) inset;\n}\n\n.pure-button.pure-button-rounded {\n    border-radius: 0.3em;\n}\n\n.pure-button.pure-button-heavyrounded {\n    border-radius: 0.5em;\n}\n\n.pure-button.pure-button-oval {\n    border-radius: 50%;\n}\n\n.pure-button.pure-button-halfoval {\n    border-radius: 25%;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -3716,7 +3716,7 @@ module.exports = function (window) {
     return DD_Object;
 
 };
-},{"./css/drag-drop.css":10,"drag":13,"event-dom":14,"js-ext":35,"js-ext/extra/hashmap.js":32,"polyfill/polyfill-base.js":52,"useragent":54,"vdom":68,"window-ext":69}],12:[function(require,module,exports){
+},{"./css/drag-drop.css":10,"drag":13,"event-dom":14,"js-ext":37,"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":54,"useragent":56,"vdom":70,"window-ext":71}],12:[function(require,module,exports){
 module.exports=require(10)
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],13:[function(require,module,exports){
 "use strict";
@@ -4368,7 +4368,7 @@ module.exports = function (window) {
 
     return DD_Object;
 };
-},{"./css/drag.css":12,"event-dom":14,"js-ext":35,"js-ext/extra/hashmap.js":32,"polyfill":52,"useragent":54,"vdom":68,"window-ext":69}],14:[function(require,module,exports){
+},{"./css/drag.css":12,"event-dom":14,"js-ext":37,"js-ext/extra/hashmap.js":34,"polyfill":54,"useragent":56,"vdom":70,"window-ext":71}],14:[function(require,module,exports){
 "use strict";
 
 /**
@@ -4495,7 +4495,7 @@ module.exports = function (window) {
             context = subscriber.o,
             vnode = subscriber.o.vnode,
             isCustomElement = vnode && vnode.isItag,
-            isParcel = isCustomElement && (vnode.tag==='I-PARCEL'),
+            visibleContent = isCustomElement && !vnode.domNode.contentHidden,
             nodeid, byExactId, newTarget, deepSearch;
 
         console.log(NAME, '_domSelToFunc type of selector = '+typeof selector);
@@ -4520,7 +4520,7 @@ module.exports = function (window) {
                 vnode = node.vnode,
                 character1 = selector && selector.substr(1),
                 match = false;
-            if (!isCustomElement || isParcel || subscriber.o.contains(node)) {
+            if (!isCustomElement || visibleContent || subscriber.o.contains(node)) {
                 if (selector==='') {
                     match = true;
                 }
@@ -4636,8 +4636,8 @@ module.exports = function (window) {
         if (eventName==='tap') {
             // prevent the next click-event
             preventClick = true;
-            e.clientX = e.center.x;
-            e.clientY = e.center.y;
+            e.clientX || (e.clientX = e.center && e.center.x);
+            e.clientY || (e.clientY = e.center && e.center.y);
         }
         else if (preventClick && (eventName===CLICK)) {
             preventClick = false;
@@ -5099,7 +5099,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":24,"js-ext/extra/hashmap.js":32,"js-ext/lib/array.js":37,"js-ext/lib/object.js":40,"js-ext/lib/string.js":42,"polyfill/polyfill-base.js":52,"utils":55,"vdom":68}],15:[function(require,module,exports){
+},{"event":26,"js-ext/extra/hashmap.js":34,"js-ext/lib/array.js":39,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill/polyfill-base.js":54,"utils":57,"vdom":70}],15:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5199,7 +5199,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":14,"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40}],16:[function(require,module,exports){
+},{"../event-dom.js":14,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42}],16:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5300,7 +5300,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":14,"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40}],17:[function(require,module,exports){
+},{"../event-dom.js":14,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42}],17:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5402,7 +5402,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":14,"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40}],18:[function(require,module,exports){
+},{"../event-dom.js":14,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42}],18:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5440,16 +5440,16 @@ var NAME = '[event-valuechange]: ',
     UTILS = require('utils'),
 
     /**
-    Interval (in milliseconds) at which to poll for changes to the value of an
-    element with one or more `valuechange` subscribers when the user is likely
-    to be interacting with it.
-
-    @property POLL_INTERVAL
-    @type Number
-    @default 50
-    @static
+     * Interval (in milliseconds) at which to poll for changes to the value of an
+     * element with one or more `valuechange` subscribers, because of a `right-click paste`
+     * which cannot be determined by the event-system
+     *
+     * @property POLL_INTERVAL
+     * @type Number
+     * @default 250
+     * @static
     **/
-    POLL_INTERVAL = 50;
+    POLL_INTERVAL = 250;
 
 module.exports = function (window) {
 
@@ -5463,6 +5463,8 @@ module.exports = function (window) {
     DOCUMENT = window.document,
     subscriberBlur,
     subscriberFocus,
+    subscriberRemoval,
+    finalizer,
 
     /*
      * Checks if the HtmlElement is editable.
@@ -5511,6 +5513,18 @@ module.exports = function (window) {
             node.setData(DATA_KEY, valueChangeData);
         }
         valueChangeData.prevVal = editable ? node.innerHTML : node[VALUE];
+
+        // both next eventlisteners will detach inside their subscriber:
+        subscriberBlur = Event.after('blur', endFocus);
+        subscriberRemoval = Event.after(
+                                'noderemove',
+                                endFocus,
+                                function(e2) {
+                                    return (e2.target===node);
+                                }
+                            );
+        finalizer && finalizer.detach();
+        finalizer = Event.finalize(checkChanged.bind(null, e));
         startPolling(e);
     },
 
@@ -5525,6 +5539,14 @@ module.exports = function (window) {
     endFocus = function(e) {
         console.log(NAME, 'endFocus');
         stopPolling(e.target);
+        if (finalizer) {
+            finalizer.detach();
+            finalizer = null;
+        }
+        // because we could come here by 2 different events,
+        // we need to detach them both
+        subscriberBlur.detach();
+        subscriberRemoval.detach();
     },
 
     /*
@@ -5537,7 +5559,6 @@ module.exports = function (window) {
     setupValueChange = function() {
         console.log(NAME, 'setupValueChange');
         // create only after subscribing to the `hover`-event
-        subscriberBlur = Event.after('blur', endFocus);
         subscriberFocus = Event.after('focus', startFocus);
         startFocus({target: DOCUMENT.activeElement});
     },
@@ -5560,10 +5581,11 @@ module.exports = function (window) {
         console.log(NAME, 'startPolling');
 
         valueChangeData = node.getData(DATA_KEY);
+
         // cancel previous timer: we don't want multiple timers:
         valueChangeData._pollTimer && valueChangeData._pollTimer.cancel();
         // setup a new timer:
-        valueChangeData._pollTimer = UTILS.later(checkChanged.bind(null, e), POLL_INTERVAL, true);
+        valueChangeData._pollTimer = UTILS.laterSilent(checkChanged.bind(null, e), POLL_INTERVAL, true);
     },
 
 
@@ -5623,7 +5645,8 @@ module.exports = function (window) {
         // loose performance.
         if (!Event._subs['UI:valuechange']) {
             console.log(NAME, 'teardownValueChange: stop setting up blur and focus-event');
-            subscriberBlur.detach();
+            subscriberBlur && subscriberBlur.detach();
+            subscriberRemoval && subscriberRemoval.detach();
             subscriberFocus.detach();
             // also stop any possible action/listeners to a current element:
             endFocus({target: DOCUMENT.activeElement});
@@ -5631,6 +5654,10 @@ module.exports = function (window) {
             Event.notify('UI:valuechange', setupValueChange, Event, true);
         }
     };
+
+    Event.defineEvent('UI:valuechange')
+         .unHaltable()
+         .noRender();
 
     Event.notify('UI:valuechange', setupValueChange, Event, true);
     Event.notifyDetach('UI:valuechange', teardownValueChange, Event);
@@ -5647,9 +5674,7 @@ module.exports = function (window) {
     DOCUMENT._emitVC = function(node, value) {
         console.log(NAME, 'document._emitVC');
         var e = {
-            value: value,
-            currentTarget: DOCUMENT,
-            sourceTarget: node
+            value: value
         };
         /**
         * @event valuechange
@@ -5664,7 +5689,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":14,"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40,"utils":55,"vdom":68}],19:[function(require,module,exports){
+},{"../event-dom.js":14,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"utils":57,"vdom":70}],19:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8159,7 +8184,7 @@ module.exports = function (window) {
 
 };
 
-},{"utils":55}],21:[function(require,module,exports){
+},{"utils":57}],21:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -8688,6 +8713,17 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
             return handler;
         },
 
+        runFinalizers: function(e) {
+            this._final.some(function(finallySubscriber) {
+                !e.silent && finallySubscriber(e);
+                if (e.status && e.status.unSilencable && e.silent) {
+                    console.warn(NAME, ' event '+e.emitter+':'+e.type+' cannot made silent: this customEvent is defined as unSilencable');
+                    e.silent = false;
+                }
+                return e.silent;
+            });
+        },
+
         /**
          * Removes all event-definitions of an emitter, specified by its `emitterName`.
          * When `emitterName` is not set, ALL event-definitions will be removed.
@@ -9112,14 +9148,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                             wildcard_named_subs && (subscribedSize += wildcard_named_subs.size());
                             wildcard_wildcard_subs && (subscribedSize += wildcard_wildcard_subs.size());
                         }
-                        (subscribedSize>0) && instance._final.some(function(finallySubscriber) {
-                            !e.silent && !e._noRender && !e.status.renderPrevented  && finallySubscriber(e);
-                            if (e.status.unSilencable && e.silent) {
-                                console.warn(NAME, ' event '+e.emitter+':'+e.type+' cannot made silent: this customEvent is defined as unSilencable');
-                                e.silent = false;
-                            }
-                            return e.silent;
-                        });
+                        (subscribedSize>0) && instance.runFinalizers(e);
                     }
                 }
             }
@@ -9489,7 +9518,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40,"polyfill/polyfill-base.js":52}],22:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill/polyfill-base.js":54}],22:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9514,7 +9543,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
 
 var NAME = '[event-emitter]: ',
     REGEXP_EMITTER = /^(\w|-|#)+$/,
-    Event = require('./index.js');
+    Event = require('./event-base.js');
 
 Event.Emitter = function(emitterName) {
     var composeCustomevent = function(eventName) {
@@ -9608,7 +9637,9 @@ Event.Emitter = function(emitterName) {
     Event.defineEmitter(newEmitter, emitterName);
     return newEmitter;
 };
-},{"./index.js":24}],23:[function(require,module,exports){
+
+module.exports = Event;
+},{"./event-base.js":21}],23:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9633,7 +9664,7 @@ Event.Emitter = function(emitterName) {
 
 require('js-ext/lib/object.js');
 
-var Event = require('./index.js'),
+var Event = require('./event-base.js'),
     Classes = require("js-ext/extra/classes.js"),
     filterFn, ClassListener;
 
@@ -9874,11 +9905,338 @@ Event._CE_listener = ClassListener = {
 // Patching Classes.BaseClass to make it an eventlistener that auto cleans-up:
 Classes.BaseClass.mergePrototypes(Event.Listener, true)
                  .mergePrototypes(ClassListener, true, {}, {});
-},{"./index.js":24,"js-ext/extra/classes.js":31,"js-ext/lib/object.js":40}],24:[function(require,module,exports){
+
+module.exports = Event;
+},{"./event-base.js":21,"js-ext/extra/classes.js":33,"js-ext/lib/object.js":42}],24:[function(require,module,exports){
+"use strict";
+
+/**
+ * Adds the `objectobserve` event, to monitor changes in objects.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @example
+ * Event = require('event/extra/objectobserve.js');
+ *
+ * Event.observe('myEmitterName', datamodel);
+ * Event.after('myEmitterName:datachanged', function(e) {
+ *     var datamodel = e.target,
+ *         emitter = e.emitter;
+ * });
+ *
+ * or
+ *
+ * @example
+ * Event = require('event');
+ * require('event/extra/objectobserve.js');
+ *
+ * Event.observe('myEmitterName', datamodel);
+ * Event.after('myEmitterName:datachanged', function(e) {
+ *     var datamodel = e.target,
+ *         emitter = e.emitter;
+ * });
+ *
+ * @module event
+ * @submodule event-objectobserve
+ * @class Event
+ * @since 0.0.2
+*/
+
+require('js-ext/lib/object.js');
+require('./timer-finalize.js');
+
+module.exports = function (window) {
+
+    var NAME = '[event-objectobserve]: ',
+        IO = require('io')(window),
+        NATIVE_OBJECT_OBSERVE = !!Object.observe,
+        Event = require('../event-base.js'),
+        asyncSilent = require('utils').asyncSilent,
+        definitions = {},
+        callbackFn, checkObjects, observeNative, observePolyfill, unobserveNative, unobservePolyfill, finalizer;
+
+   /**
+     * The function that gets invoked when object-observed objects get changed.
+     *
+     * @method callbackFn
+     * @param emitterName {String} The emitter-name that was set on the oberver-object
+     * @param obj {Object} the object that was changed
+     * @protected
+     * @since 0.0.1
+    */
+    callbackFn = function(emitterName, obj) {
+        console.info(NAME, 'callbackFn for '+emitterName);
+        // emit with _objectobserver: we don;t want to fall into a loop:
+        Event.emit(obj, emitterName+':datachanged', {_objectobserver: true});
+    };
+
+   /**
+     * The function that gets invoked in Event's finalizer in case there is no native Object.observe
+     * This function will inspect all registered object for changes and invoke `callbackFn` for objects
+     * that have been changed.
+     *
+     * @method checkObjects
+     * @param e {Object} the eventobject
+     * @protected
+     * @since 0.0.1
+    */
+    checkObjects = function(e) {
+        console.info(NAME, 'checkObjects');
+        // check for _objectobserver: we don;t want to fall into a loop:
+        if (!e._objectobserver) {
+            definitions.each(function(definition) {
+                var stringified;
+                try {
+                    stringified = JSON.stringify(definition.obj);
+                }
+                catch(err) {
+                    // oops, a difficult object
+                    console.warn(NAME, 'Trying to observe object '+definition.emitter+', but it cannot be stringified: possibly it is cycle referenced. This object will NOT emit datachange-event!!!');
+                    stringified = null;
+                }
+                (definition.previous!==stringified) && callbackFn(definition.emitter, definition.obj);
+                definition.previous = stringified;
+            });
+        }
+    };
+
+   /**
+     * Sets up the native Object.observe for the specified object.
+     *
+     * @method observeNative
+     * @param emitterName {String} The emitter-name to be set as the `emitterName` for the `datachanged` events
+     * @param obj {Object} the object that was changed
+     * @protected
+     * @since 0.0.1
+    */
+    observeNative = function(emitterName, obj) {
+        console.info(NAME, 'observeNative for '+emitterName);
+        var callback = callbackFn.bind(null, emitterName, obj);
+        // first we unobserve any possible previous definitions:
+        unobserveNative(emitterName);
+        // now set a new observer:
+        definitions[emitterName] = {
+            obj: obj,
+            emitter: emitterName,
+            callback: callback
+        };
+        Object.observe(obj, callback);
+    };
+
+   /**
+     * Sets up the polyfill for Object.observe for the specified object.
+     * Is not really a polyfill, but an alternative way of inspecting: the specified object
+     * gets registered and with every Event.finalize it will be inspected for changes.
+     *
+     * @method observePolyfill
+     * @param emitterName {String} The emitter-name to be set as the `emitterName` for the `datachanged` events
+     * @param obj {Object} the object that was changed
+     * @protected
+     * @since 0.0.1
+    */
+    observePolyfill = function(emitterName, obj) {
+        console.info(NAME, 'observePolyfill for '+emitterName);
+        var stringified;
+        // first we unobserve any possible previous definitions:
+        unobservePolyfill(emitterName);
+        finalizer || (finalizer=Event.finalize(checkObjects));
+        // now set a new observer: be aware that JSON.stringify could throw errors in case of cycle-objects
+        try {
+            stringified = JSON.stringify(obj);
+        }
+        catch(err) {
+            // oops, a difficult object
+            console.warn(NAME, 'Trying to observe object '+emitterName+', but it cannot be stringified: possibly it is cycle referenced. This object will NOT emit datachange-event!!!');
+            stringified = null;
+        }
+        definitions[emitterName] = {
+            obj: obj,
+            emitter: emitterName,
+            previous: stringified
+        };
+        // because it could happen that someone sets up the observer and in the SAME eventloop changes the model.
+        // we must prevent the modelchange from being registered.
+        // that's why a manual `checkObjects` must be ran in a next event-cycle:
+        asyncSilent(checkObjects.bind(null, {}));
+    };
+
+   /**
+     * Unobserves (unregisters) a native observed object.
+     *
+     * @method unobserveNative
+     * @param emitterName {String} The emitter-name to be set as the `emitterName` for the `datachanged` events
+     * @protected
+     * @since 0.0.1
+    */
+    unobserveNative = function(emitterName) {
+        console.info(NAME, 'unobserveNative for '+emitterName);
+        var definition = definitions[emitterName];
+        if (definition) {
+            Object.unobserve(definition.obj, definition.callback);
+            delete definitions[emitterName];
+        }
+    };
+
+   /**
+     * Unobserves (unregisters) a polyfilled observed object.
+     *
+     * @method unobserveNative
+     * @param emitterName {String} The emitter-name to be set as the `emitterName` for the `datachanged` events
+     * @protected
+     * @since 0.0.1
+    */
+    unobservePolyfill = function(emitterName) {
+        console.info(NAME, 'unobservePolyfill for '+emitterName);
+        delete definitions[emitterName];
+        if (finalizer && definitions.isEmpty()) {
+            finalizer.detach();
+            finalizer = null;
+        }
+    };
+
+   /**
+     * Sets up a Object.observe for the specified object. Either native (Object.observe) or polyfilled,
+     * dependend on the environment.
+     *
+     * @method observePolyfill
+     * @param emitterName {String} The emitter-name to be set as the `emitterName` for the `datachanged` events
+     * @param obj {Object} the object that was changed
+     * @return {Object} handler with a `detach()`-method which can be used to detach the observer
+     * @since 0.0.1
+    */
+    Event.observe = function(emitterName, obj) {
+        console.info(NAME, 'observe '+emitterName);
+        NATIVE_OBJECT_OBSERVE ? observeNative(emitterName, obj) : observePolyfill(emitterName, obj);
+        return {
+            detach: function() {
+                Event.unobserve(emitterName);
+            }
+        };
+    };
+
+   /**
+     * Unobserves (unregisters) a observed object.
+     *
+     * @method unobserveNative
+     * @param emitterName {String} The emitter-name to be set as the `emitterName` for the `datachanged` events
+     * @chainable
+     * @since 0.0.1
+    */
+    Event.unobserve = function(emitterName) {
+        console.info(NAME, 'unobserve '+emitterName);
+        NATIVE_OBJECT_OBSERVE ? unobserveNative(emitterName) : unobservePolyfill(emitterName);
+        return this;
+    };
+
+   /**
+     * Unobserves (unregisters) a observed object.
+     *
+     * @method unobserveNative
+     * @chainable
+     * @since 0.0.1
+    */
+    Event.unobserveAll = function() {
+        console.info(NAME, 'unobserveAll');
+        definitions.each(function(definition) {
+            Event.unobserve(definition.emitter);
+        });
+        return this;
+    };
+
+    IO.finalize(function() {
+        console.info(NAME, 'IO-finalizer will checkObjects');
+        checkObjects({});
+    });
+
+    module.exports = Event;
+
+};
+},{"../event-base.js":21,"./timer-finalize.js":25,"io":32,"js-ext/lib/object.js":42,"utils":57}],25:[function(require,module,exports){
+(function (global){
+(function (global) {
+
+    "use strict";
+
+    var NAME = '[event-timer-finalize]: ',
+        createHashMap = require('js-ext/extra/hashmap.js').createMap,
+        Event, setTimeoutBKP, setIntervalBKP, setImmediateBKP;
+
+    global._ITSAmodules || Object.protectedProp(global, '_ITSAmodules', createHashMap());
+
+    if (global._ITSAmodules.EventTimerFinalize) {
+        return;
+    }
+
+    Event = require('../event-base.js');
+    // we patch the global timer functions in order to run `refreshItags` afterwards:
+    setTimeoutBKP = global.setTimeout;
+    setIntervalBKP = global.setInterval;
+
+    global.setTimeout = function() {
+        var args = arguments;
+        args[0] = (function(originalFn) {
+            return function() {
+                var eventObject = {
+                        type: '',
+                        emitter: 'global',
+                        target: global
+                    };
+                originalFn();
+                console.log(NAME, 'setTimeOut will run Event.runFinalizers');
+                Event.runFinalizers(eventObject);
+            };
+        })(args[0]);
+        setTimeoutBKP.apply(this, arguments);
+    };
+
+    global.setInterval = function() {
+        var args = arguments;
+        args[0] = (function(originalFn) {
+            return function() {
+                var eventObject = {
+                        type: '',
+                        emitter: 'global',
+                        target: global
+                    };
+                originalFn();
+                console.log(NAME, 'setInterval will run Event.runFinalizers');
+                Event.runFinalizers(eventObject);
+            };
+        })(args[0]);
+        setIntervalBKP.apply(this, arguments);
+    };
+
+    if (typeof global.setImmediate !== 'undefined') {
+        setImmediateBKP = global.setInterval;
+        global.setImmediate = function() {
+            var args = arguments;
+            args[0] = (function(originalFn) {
+                return function() {
+                    var eventObject = {
+                            type: '',
+                            emitter: 'global',
+                            target: global
+                        };
+                    originalFn();
+                    console.log(NAME, 'setImmediate will run Event.runFinalizers');
+                    Event.runFinalizers(eventObject);
+                };
+            })(args[0]);
+            setImmediateBKP.apply(this, arguments);
+        };
+    }
+
+    global._ITSAmodules.EventTimerFinalize = true;
+
+}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../event-base.js":21,"js-ext/extra/hashmap.js":34}],26:[function(require,module,exports){
 module.exports = require('./event-base.js');
 require('./event-emitter.js');
 require('./event-listener.js');
-},{"./event-base.js":21,"./event-emitter.js":22,"./event-listener.js":23}],25:[function(require,module,exports){
+},{"./event-base.js":21,"./event-emitter.js":22,"./event-listener.js":23}],27:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -10252,7 +10610,7 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"event-mobile":19,"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40,"polyfill":52,"utils":55,"vdom":68,"window-ext":69}],26:[function(require,module,exports){
+},{"event-mobile":19,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":54,"utils":57,"vdom":70,"window-ext":71}],28:[function(require,module,exports){
 
 "use strict";
 
@@ -10380,7 +10738,7 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"../io.js":30,"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40,"xmldom":2}],27:[function(require,module,exports){
+},{"../io.js":32,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"xmldom":2}],29:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -10507,7 +10865,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":30,"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40}],28:[function(require,module,exports){
+},{"../io.js":32,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42}],30:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10977,7 +11335,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":30,"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40,"js-ext/lib/string.js":42,"polyfill/polyfill-base.js":52}],29:[function(require,module,exports){
+},{"../io.js":32,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill/polyfill-base.js":54}],31:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11129,7 +11487,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":30,"js-ext":35,"js-ext/extra/hashmap.js":32}],30:[function(require,module,exports){
+},{"../io.js":32,"js-ext":37,"js-ext/extra/hashmap.js":34}],32:[function(require,module,exports){
 (function (global){
 /**
  * Provides core IO-functionality.
@@ -11491,7 +11849,7 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":35,"js-ext/extra/hashmap.js":32,"polyfill/polyfill-base.js":52,"utils":55}],31:[function(require,module,exports){
+},{"js-ext":37,"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":54,"utils":57}],33:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -12092,7 +12450,7 @@ require('../lib/object.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/object.js":40,"js-ext/extra/hashmap.js":32,"polyfill/polyfill-base.js":52}],32:[function(require,module,exports){
+},{"../lib/object.js":42,"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":54}],34:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -12115,7 +12473,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],33:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -12227,7 +12585,7 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":37,"../lib/object.js":40,"./classes.js":31,"js-ext/extra/hashmap.js":32,"polyfill/lib/weakmap.js":50}],34:[function(require,module,exports){
+},{"../lib/array.js":39,"../lib/object.js":42,"./classes.js":33,"js-ext/extra/hashmap.js":34,"polyfill/lib/weakmap.js":52}],36:[function(require,module,exports){
 "use strict";
 
 var createHashMap = require('./hashmap.js').createMap;
@@ -12300,14 +12658,14 @@ module.exports = createHashMap({
     'with': true,
     'yield': true
 });
-},{"./hashmap.js":32}],35:[function(require,module,exports){
+},{"./hashmap.js":34}],37:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
 require('./lib/array.js');
 require('./lib/json.js');
 require('./lib/promise.js');
-},{"./lib/array.js":37,"./lib/function.js":38,"./lib/json.js":39,"./lib/object.js":40,"./lib/promise.js":41,"./lib/string.js":42}],36:[function(require,module,exports){
+},{"./lib/array.js":39,"./lib/function.js":40,"./lib/json.js":41,"./lib/object.js":42,"./lib/promise.js":43,"./lib/string.js":44}],38:[function(require,module,exports){
 "use strict";
 
 require('./lib/function.js');
@@ -12322,7 +12680,7 @@ module.exports = {
     Classes: require('./extra/classes.js'),
     LightMap: require('./extra/lightmap.js')
 };
-},{"./extra/classes.js":31,"./extra/hashmap.js":32,"./extra/lightmap.js":33,"./lib/array.js":37,"./lib/function.js":38,"./lib/json.js":39,"./lib/object.js":40,"./lib/promise.js":41,"./lib/string.js":42}],37:[function(require,module,exports){
+},{"./extra/classes.js":33,"./extra/hashmap.js":34,"./extra/lightmap.js":35,"./lib/array.js":39,"./lib/function.js":40,"./lib/json.js":41,"./lib/object.js":42,"./lib/promise.js":43,"./lib/string.js":44}],39:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -12473,7 +12831,7 @@ var cloneObj = function(obj) {
      };
 
 }(Array.prototype));
-},{"polyfill/polyfill-base.js":52}],38:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":54}],40:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -12532,7 +12890,7 @@ var NAME = '[Function]: ';
 
 }(Function.prototype));
 
-},{"polyfill/polyfill-base.js":52}],39:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":54}],41:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -12557,7 +12915,7 @@ var REVIVER = function(key, value) {
 JSON.parseWithDate = function(stringifiedObj) {
     return this.parse(stringifiedObj, REVIVER);
 };
-},{"polyfill/polyfill-base.js":52}],40:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":54}],42:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -13017,7 +13375,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"js-ext/extra/hashmap.js":32,"polyfill/polyfill-base.js":52}],41:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":54}],43:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13322,7 +13680,7 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill":52}],42:[function(require,module,exports){
+},{"polyfill":54}],44:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -13566,7 +13924,7 @@ Promise.manage = function (callbackFn) {
 
 }(String.prototype));
 
-},{}],43:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -13589,7 +13947,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],44:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 "use strict";
 
 /*
@@ -13642,7 +14000,7 @@ module.exports = function (window) {
 
     return transition;
 };
-},{"../bin/local-hashmap.js":43}],45:[function(require,module,exports){
+},{"../bin/local-hashmap.js":45}],47:[function(require,module,exports){
 "use strict";
 
 // CAUTIOUS: need a copy of hashmap --> we cannot use js-ext/extra/hashap.js for that would lead to circular references!
@@ -13687,7 +14045,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{"../bin/local-hashmap.js":43}],46:[function(require,module,exports){
+},{"../bin/local-hashmap.js":45}],48:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -13758,7 +14116,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../bin/local-hashmap.js":43}],47:[function(require,module,exports){
+},{"../bin/local-hashmap.js":45}],49:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -13782,7 +14140,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],48:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 (function (global){
 /*
  * Copyright 2012 The Polymer Authors. All rights reserved.
@@ -14368,9 +14726,9 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],49:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 require('ypromise');
-},{"ypromise":5}],50:[function(require,module,exports){
+},{"ypromise":5}],52:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/Gozala/1269991
 
@@ -14480,7 +14838,7 @@ require('ypromise');
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],51:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -14499,15 +14857,15 @@ require('ypromise');
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],52:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":47,"./lib/window.console.js":51}],53:[function(require,module,exports){
+},{"./lib/matchesselector.js":49,"./lib/window.console.js":53}],55:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/promise.js');
 require('./lib/weakmap.js');
 require('./lib/mutationobserver.js'); // needs weakmap
-},{"./lib/mutationobserver.js":48,"./lib/promise.js":49,"./lib/weakmap.js":50,"./polyfill-base.js":52}],54:[function(require,module,exports){
+},{"./lib/mutationobserver.js":50,"./lib/promise.js":51,"./lib/weakmap.js":52,"./polyfill-base.js":54}],56:[function(require,module,exports){
 "use strict";
 
 /**
@@ -14547,7 +14905,7 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40,"polyfill":52}],55:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":54}],57:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
@@ -14555,7 +14913,7 @@ module.exports = {
     async: require('./lib/timers.js').async,
     asyncSilent: require('./lib/timers.js').asyncSilent
 };
-},{"./lib/idgenerator.js":56,"./lib/timers.js":57}],56:[function(require,module,exports){
+},{"./lib/idgenerator.js":58,"./lib/timers.js":59}],58:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -14613,7 +14971,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"js-ext/extra/hashmap.js":32,"polyfill/polyfill-base.js":52}],57:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":54}],59:[function(require,module,exports){
 (function (global){
 /**
  * Collection of various utility functions.
@@ -14828,9 +15186,9 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"polyfill/polyfill-base.js":52}],58:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":54}],60:[function(require,module,exports){
 var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],59:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],61:[function(require,module,exports){
 "use strict";
 
 /**
@@ -15128,7 +15486,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40,"js-ext/lib/string.js":42,"polyfill":52,"polyfill/extra/transition.js":44,"polyfill/extra/vendorCSS.js":46}],60:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":54,"polyfill/extra/transition.js":46,"polyfill/extra/vendorCSS.js":48}],62:[function(require,module,exports){
 "use strict";
 
 /**
@@ -15556,7 +15914,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40,"polyfill":52}],61:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":54}],63:[function(require,module,exports){
 "use strict";
 
 /**
@@ -15689,7 +16047,7 @@ module.exports = function (window) {
 
     return ElementPlugin;
 };
-},{"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40,"js-ext/lib/string.js":42,"polyfill":52}],62:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":54}],64:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16411,7 +16769,7 @@ module.exports = function (window) {
 
 
 
-},{"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40,"js-ext/lib/string.js":42,"polyfill":52}],63:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":54}],65:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -16476,7 +16834,6 @@ module.exports = function (window) {
         DOCUMENT = window.document,
         nodeids = NS.nodeids,
         arrayIndexOf = Array.prototype.indexOf,
-        I_PARCEL = 'I-PARCEL',
         POSITION = 'position',
         ITSA_ = 'itsa-',
         BLOCK = ITSA_+'block',
@@ -18605,7 +18962,7 @@ module.exports = function (window) {
                     for (j=0; (j<len2) && !found; j++) {
                         vChildNode = vChildren[j];
                         vChildNode.matchesSelector(selectors, thisvnode) && (found=vChildNode.domNode);
-                        found || (!insideItags && vChildNode.isItag && (vChildNode.tag!==I_PARCEL)) || inspectChildren(vChildNode); // not dive into itags (except from i-parcel)
+                        found || (!insideItags && vChildNode.isItag && vChildNode.domNode.contentHidden) || inspectChildren(vChildNode); // not dive into itags (except from when content is not hidden)
                     }
                 };
             while (!firstCharacter && (++i<len)) {
@@ -18641,7 +18998,7 @@ module.exports = function (window) {
                     for (j=0; j<len2; j++) {
                         vChildNode = vChildren[j];
                         vChildNode.matchesSelector(selectors, thisvnode) && (found[found.length]=vChildNode.domNode);
-                        (!insideItags && vChildNode.isItag && (vChildNode.tag!==I_PARCEL)) || inspectChildren(vChildNode); // not dive into itags
+                        (!insideItags && vChildNode.isItag && vChildNode.domNode.contentHidden) || inspectChildren(vChildNode); // not dive into itags
                     }
                 };
             while (!firstCharacter && (++i<len)) {
@@ -19715,10 +20072,11 @@ module.exports = function (window) {
         *
         * @method setValue
         * @param val {String} thenew value to be set
+        * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit. Only appropriate for contenteditable nodes.
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.setValue = function(val) {
+        ElementPrototype.setValue = function(val, silent) {
             var instance = this,
                 prevVal = instance.value,
                 contenteditable = instance.vnode.attrs.contenteditable,
@@ -19728,12 +20086,14 @@ module.exports = function (window) {
                 editable = contenteditable && (contenteditable!=='false'),
                 tag, i, option, len, vChildren;
             if (editable) {
-                instance.setHTML(val);
+                // no need to compare with current html --> when vdom is working, only differences are set
+                instance.setHTML(val, silent);
             }
             else {
                 tag = instance.getTagName();
                 if ((tag==='INPUT') || (tag==='TEXTAREA')) {
-                    instance.value = val;
+                    // don't update when not needed: we don't want to reposition the cursor
+                    (instance.value!==val) && (instance.value=val);
                 }
                 else if (tag==='SELECT') {
                     vChildren = instance.vnode.vChildren;
@@ -20878,7 +21238,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":58,"./attribute-extractor.js":59,"./element-array.js":60,"./html-parser.js":64,"./node-parser.js":65,"./vdom-ns.js":66,"./vnode.js":67,"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40,"js-ext/lib/promise.js":41,"js-ext/lib/string.js":42,"polyfill":52,"polyfill/extra/transition.js":44,"polyfill/extra/transitionend.js":45,"polyfill/extra/vendorCSS.js":46,"utils":55,"window-ext":69}],64:[function(require,module,exports){
+},{"../css/element.css":60,"./attribute-extractor.js":61,"./element-array.js":62,"./html-parser.js":66,"./node-parser.js":67,"./vdom-ns.js":68,"./vnode.js":69,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/promise.js":43,"js-ext/lib/string.js":44,"polyfill":54,"polyfill/extra/transition.js":46,"polyfill/extra/transitionend.js":47,"polyfill/extra/vendorCSS.js":48,"utils":57,"window-ext":71}],66:[function(require,module,exports){
 "use strict";
 
 /**
@@ -21228,7 +21588,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":59,"./vdom-ns.js":66,"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40,"polyfill":52}],65:[function(require,module,exports){
+},{"./attribute-extractor.js":61,"./vdom-ns.js":68,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":54}],67:[function(require,module,exports){
 "use strict";
 
 /**
@@ -21357,7 +21717,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":59,"./vdom-ns.js":66,"./vnode.js":67,"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40,"polyfill":52}],66:[function(require,module,exports){
+},{"./attribute-extractor.js":61,"./vdom-ns.js":68,"./vnode.js":69,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":54}],68:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -21529,7 +21889,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40,"polyfill":52}],67:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":54}],69:[function(require,module,exports){
 "use strict";
 
 /**
@@ -22470,7 +22830,7 @@ module.exports = function (window) {
             if (otherVNode && otherVNode.destroyed) {
                 return false;
             }
-            while (otherVNode && (otherVNode!==this) && (!noItagSearch || !otherVNode.isItag || (otherVNode.tag==='I-PARCEL'))) {
+            while (otherVNode && (otherVNode!==this) && (!noItagSearch || !otherVNode.isItag || !otherVNode.domNode.contentHidden)) {
                 otherVNode = otherVNode.vParent;
             }
             return (otherVNode===this);
@@ -22775,10 +23135,10 @@ module.exports = function (window) {
                 len, i, vChildNode, vParent, treeNodes;
             if (!instance.destroyed) {
                 if (!silent) {
-                    // Because we don't wannt to hold down UI-experience (many descendant nodes may be removed),
+                    // Because we don't want to hold down UI-experience (many descendant nodes may be removed),
                     // we generate EV_REMOVED emission in a future eventcycle:
                     later(function() {
-                        instance._emit(EV_REMOVED);
+                        instance._emit(EV_REMOVED, null, null, null, true);
                     }, 5);
                 }
                 Object.protectedProp(instance, 'destroyed', true);
@@ -22825,7 +23185,7 @@ module.exports = function (window) {
             return instance;
         },
 
-        _emit: function(evt, attribute, newValue, prevValue) {
+        _emit: function(evt, attribute, newValue, prevValue, destroyEvt) {
            /**
             * Emitted by every Element that gets inserted.
             *
@@ -22904,7 +23264,7 @@ module.exports = function (window) {
                 return;
             }
             silent = !!DOCUMENT._suppressMutationEvents;
-            if (!silent && !instance.destroyed) {
+            if (!silent && (destroyEvt || !instance.destroyed)) {
                 // Because we don't wannt to hold down UI-experience (many descendant nodes may be removed),
                 // we generate EV_REMOVED emission in a future eventcycle:
                 mutationEvents = MUTATION_EVENTS.get(instance) || {};
@@ -24045,7 +24405,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":59,"./html-parser.js":64,"./vdom-ns.js":66,"js-ext/extra/hashmap.js":32,"js-ext/extra/lightmap.js":33,"js-ext/lib/array.js":37,"js-ext/lib/object.js":40,"js-ext/lib/string.js":42,"polyfill":52,"utils/lib/timers.js":57}],68:[function(require,module,exports){
+},{"./attribute-extractor.js":61,"./html-parser.js":66,"./vdom-ns.js":68,"js-ext/extra/hashmap.js":34,"js-ext/extra/lightmap.js":35,"js-ext/lib/array.js":39,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":54,"utils/lib/timers.js":59}],70:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -24090,13 +24450,13 @@ module.exports = function (window) {
 
     return vdom;
 };
-},{"./partials/element-plugin.js":61,"./partials/extend-document.js":62,"./partials/extend-element.js":63,"./partials/node-parser.js":65,"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40}],69:[function(require,module,exports){
+},{"./partials/element-plugin.js":63,"./partials/extend-document.js":64,"./partials/extend-element.js":65,"./partials/node-parser.js":67,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42}],71:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":70}],70:[function(require,module,exports){
+},{"./lib/sizes.js":72}],72:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -24200,7 +24560,7 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/extra/hashmap.js":32,"js-ext/lib/object.js":40}],71:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42}],73:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -24400,6 +24760,8 @@ process.chdir = function (dir) {
         },
         dragdrop;
 
+    require('event/extra/objectobserve.js')(window);
+
     /**
      * Reference to the `idGenerator` function in [utils](../modules/utils.html)
      *
@@ -24458,4 +24820,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"css":9,"drag-drop":11,"event":24,"event-dom/extra/blurnode.js":15,"event-dom/extra/focusnode.js":16,"event-dom/extra/hover.js":17,"event-dom/extra/valuechange.js":18,"event-mobile":19,"focusmanager":25,"io/extra/io-cors-ie9.js":26,"io/extra/io-stream.js":27,"io/extra/io-transfer.js":28,"io/extra/io-xml.js":29,"js-ext/extra/reserved-words.js":34,"js-ext/js-ext.js":36,"node-win":undefined,"polyfill/polyfill.js":53,"useragent":54,"utils":55,"vdom":68,"window-ext":69}]},{},[]);
+},{"css":9,"drag-drop":11,"event":26,"event-dom/extra/blurnode.js":15,"event-dom/extra/focusnode.js":16,"event-dom/extra/hover.js":17,"event-dom/extra/valuechange.js":18,"event-mobile":19,"event/extra/objectobserve.js":24,"focusmanager":27,"io/extra/io-cors-ie9.js":28,"io/extra/io-stream.js":29,"io/extra/io-transfer.js":30,"io/extra/io-xml.js":31,"js-ext/extra/reserved-words.js":36,"js-ext/js-ext.js":38,"node-win":undefined,"polyfill/polyfill.js":55,"useragent":56,"utils":57,"vdom":70,"window-ext":71}]},{},[]);

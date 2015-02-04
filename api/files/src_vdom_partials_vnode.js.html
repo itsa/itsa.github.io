@@ -119,6 +119,8 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
+                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
+            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -1148,7 +1150,7 @@ module.exports = function (window) {
             if (otherVNode &amp;&amp; otherVNode.destroyed) {
                 return false;
             }
-            while (otherVNode &amp;&amp; (otherVNode!==this) &amp;&amp; (!noItagSearch || !otherVNode.isItag || (otherVNode.tag===&#x27;I-PARCEL&#x27;))) {
+            while (otherVNode &amp;&amp; (otherVNode!==this) &amp;&amp; (!noItagSearch || !otherVNode.isItag || !otherVNode.domNode.contentHidden)) {
                 otherVNode = otherVNode.vParent;
             }
             return (otherVNode===this);
@@ -1453,10 +1455,10 @@ module.exports = function (window) {
                 len, i, vChildNode, vParent, treeNodes;
             if (!instance.destroyed) {
                 if (!silent) {
-                    // Because we don&#x27;t wannt to hold down UI-experience (many descendant nodes may be removed),
+                    // Because we don&#x27;t want to hold down UI-experience (many descendant nodes may be removed),
                     // we generate EV_REMOVED emission in a future eventcycle:
                     later(function() {
-                        instance._emit(EV_REMOVED);
+                        instance._emit(EV_REMOVED, null, null, null, true);
                     }, 5);
                 }
                 Object.protectedProp(instance, &#x27;destroyed&#x27;, true);
@@ -1503,7 +1505,7 @@ module.exports = function (window) {
             return instance;
         },
 
-        _emit: function(evt, attribute, newValue, prevValue) {
+        _emit: function(evt, attribute, newValue, prevValue, destroyEvt) {
            /**
             * Emitted by every Element that gets inserted.
             *
@@ -1582,7 +1584,7 @@ module.exports = function (window) {
                 return;
             }
             silent = !!DOCUMENT._suppressMutationEvents;
-            if (!silent &amp;&amp; !instance.destroyed) {
+            if (!silent &amp;&amp; (destroyEvt || !instance.destroyed)) {
                 // Because we don&#x27;t wannt to hold down UI-experience (many descendant nodes may be removed),
                 // we generate EV_REMOVED emission in a future eventcycle:
                 mutationEvents = MUTATION_EVENTS.get(instance) || {};
