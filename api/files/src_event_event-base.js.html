@@ -1573,7 +1573,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
     Event._setEventObjProperty(&#x27;halt&#x27;, function(reason) {this.status.ok || this._unHaltable || (this.status.halted = (reason || true));})
          ._setEventObjProperty(&#x27;preventDefault&#x27;, function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPrevented = (reason || true));})
          ._setEventObjProperty(&#x27;preventDefaultContinue&#x27;, function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPreventedContinue = (reason || true));})
-         ._setEventObjProperty(&#x27;preventFinalize&#x27;, function(reason) {this.status.ok || this._unFinalizePreventable || (this.status.finalizePrevented = (reason || true));}),
+         ._setEventObjProperty(&#x27;preventFinalize&#x27;, function(reason) {this.status.ok || this._unFinalizePreventable || (this.status.finalizePrevented = (reason || true));})
          ._setEventObjProperty(&#x27;preventRender&#x27;, function(reason) {this.status.ok || this._unRenderPreventable || (this.status.renderPrevented = (reason || true));});
 
     return Event;
