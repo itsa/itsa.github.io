@@ -488,6 +488,15 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_runFinalizers">runFinalizers</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_undefAllEvents">undefAllEvents</a>
 
                                 
@@ -751,7 +760,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_event_event-base.js.html#l612"><code>src&#x2F;event&#x2F;event-base.js:612</code></a>
+        <a href="../files/src_event_event-base.js.html#l640"><code>src&#x2F;event&#x2F;event-base.js:640</code></a>
         
         </p>
 
@@ -993,7 +1002,7 @@ If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l684"><code>src&#x2F;event&#x2F;event-base.js:684</code></a>
+        <a href="../files/src_event_event-base.js.html#l712"><code>src&#x2F;event&#x2F;event-base.js:712</code></a>
         
         </p>
 
@@ -1341,7 +1350,7 @@ the Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will 
             
         
         
-        <a href="../files/src_event_event-base.js.html#l970"><code>src&#x2F;event&#x2F;event-base.js:970</code></a>
+        <a href="../files/src_event_event-base.js.html#l1003"><code>src&#x2F;event&#x2F;event-base.js:1003</code></a>
         
         </p>
 
@@ -1518,7 +1527,7 @@ the Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will 
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1085"><code>src&#x2F;event&#x2F;event-base.js:1085</code></a>
+        <a href="../files/src_event_event-base.js.html#l1118"><code>src&#x2F;event&#x2F;event-base.js:1118</code></a>
         
         </p>
 
@@ -1660,7 +1669,7 @@ If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1020"><code>src&#x2F;event&#x2F;event-base.js:1020</code></a>
+        <a href="../files/src_event_event-base.js.html#l1053"><code>src&#x2F;event&#x2F;event-base.js:1053</code></a>
         
         </p>
 
@@ -1815,7 +1824,7 @@ If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1140"><code>src&#x2F;event&#x2F;event-base.js:1140</code></a>
+        <a href="../files/src_event_event-base.js.html#l1173"><code>src&#x2F;event&#x2F;event-base.js:1173</code></a>
         
         </p>
 
@@ -2713,7 +2722,9 @@ unless you force to assign with <code>.forceAssign()</code></p>
     <li>unPreventable() --&gt; makes the customEvent&#39;s defaultFn cannot be prevented</li>
     <li>unSilencable() --&gt; makes that emitters cannot make this event to perform silently (using e.silent)</li>
     <li>unRenderPreventable() --&gt; makes that the customEvent&#39;s render cannot be prevented</li>
+    <li>unFinalizePreventable() --&gt; makes that the customEvent&#39;s finalizer cannot be prevented</li>
     <li>noRender() --&gt; prevents this customEvent from render the dom. Overrules unRenderPreventable()</li>
+    <li>noFinalize() --&gt; prevents this customEvent from running its finalizer. Overrules unFinalizePreventable()</li>
 </ul>
     </div>
 
@@ -2756,6 +2767,7 @@ unless you force to assign with <code>.forceAssign()</code></p>
 <ul>
      <li>unPreventable() --&gt; makes the customEvent&#39;s defaultFn cannot be prevented</li>
      <li>unRenderPreventable() --&gt; makes that the customEvent&#39;s render cannot be prevented</li>
+     <li>unFinalizePreventable() --&gt; makes that the customEvent&#39;s finalizer cannot be prevented/li&gt;
      <li>forceAssign() --&gt; overrides any previous definition</li>
      <li>defaultFn() --&gt; the default-function of the event</li>
      <li>preventedFn() --&gt; the function that should be invoked when the event is defaultPrevented</li>
@@ -2763,6 +2775,7 @@ unless you force to assign with <code>.forceAssign()</code></p>
      <li>unHaltable() --&gt; makes the customEvent cannot be halted</li>
      <li>unSilencable() --&gt; makes that emitters cannot make this event to perform silently (using e.silent)</li>
      <li>noRender() --&gt; prevents this customEvent from render the dom. Overrules unRenderPreventable()</li>
+     <li>noFinalize() --&gt; prevents this customEvent from running its finalizer. Overrules unFinalizePreventable()</li>
 </ul>
                 
             </div>
@@ -2825,7 +2838,7 @@ unless you force to assign with <code>.forceAssign()</code></p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l238"><code>src&#x2F;event&#x2F;event-base.js:238</code></a>
+        <a href="../files/src_event_event-base.js.html#l251"><code>src&#x2F;event&#x2F;event-base.js:251</code></a>
         
         </p>
 
@@ -2940,7 +2953,7 @@ unless you force to assign with <code>.forceAssign()</code></p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l256"><code>src&#x2F;event&#x2F;event-base.js:256</code></a>
+        <a href="../files/src_event_event-base.js.html#l269"><code>src&#x2F;event&#x2F;event-base.js:269</code></a>
         
         </p>
 
@@ -2983,6 +2996,201 @@ unless you force to assign with <code>.forceAssign()</code></p>
         </div>
     
 
+    
+
+    
+</div>
+
+                
+                    <div id="method_emit" class="method item">
+    <h3 class="name"><code>emit</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[emitter]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>customEvent</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>payload</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | Undefined</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/event.html">event</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_event_event-base.js.html#l293"><code>src&#x2F;event&#x2F;event-base.js:293</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Emits the event <code>eventName</code> on behalf of <code>emitter</code>, which becomes e.target in the eventobject.
+During this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.
+The eventobject is created with at least these properties:</p>
+<ul>
+    <li>e.target --&gt; source that triggered the event (instance or DOM-node), specified by <code>emitter</code></li>
+    <li>e.type --&gt; eventName</li>
+    <li>e.emitter --&gt; emitterName</li>
+    <li>e.status --&gt; status-information:
+         <ul>
+              <li>e.status.ok --&gt; <code>true|false</code> whether the event got executed (not halted or defaultPrevented)</li>
+              <li>e.status.defaultFn (optional) --&gt; <code>true</code> if any defaultFn got invoked</li>
+              <li>e.status.preventedFn (optional) --&gt; <code>true</code> if any preventedFn got invoked</li>
+              <li>e.status.rendered (optional) --&gt; <code>true</code> the vDOM rendered the dom</li>
+              <li>e.status.finalized (optional) --&gt; <code>true</code> ran its finalizer</li>
+              <li>e.status.halted (optional) --&gt; <code>reason|true</code> if the event got halted and optional the why</li>
+              <li>e.status.defaultPrevented (optional) --&gt;  <code>reason|true</code> if the event got defaultPrevented and optional the why</li>
+              <li>e.status.renderPrevented (optional) --&gt;  <code>reason|true</code> if the event got renderPrevented and optional the why</li>
+              <li>e.status.finalizePrevented (optional) --&gt;  <code>reason|true</code> if the event got finalizePrevented and optional the why</li>
+         </ul>
+    </li>
+</ul>
+
+<p>The optional <code>payload</code> is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.
+If payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.</p>
+<p>The eventobject also has these methods:</p>
+<ul>
+    <li>e.halt() --&gt; stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>
+    <li>e.preventDefault() --&gt; instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>
+    <li>e.preventRender() --&gt; by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>
+    <li>e.preventFinalize() --&gt; by default, any event will endup running the finalizer, this can be prevented by calling e.preventFinalize()</li>
+</ul>
+
+<p><ul>
+    <li>First, before-subscribers are invoked: this is the place where you might call <code>e.halt()</code>, <code>a.preventDefault()</code>, <code>e.preventRender() or</code>e.preventFinalize()`</li>
+    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>
+    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>
+    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li></p>
+<ul>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[emitter]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>instance that emits the events</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">customEvent</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Full customEvent conform syntax <code>emitterName:eventName</code>.
+       <code>emitterName</code> is available as <strong>e.emitter</strong>, <code>eventName</code> as <strong>e.type</strong>.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">payload</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>extra payload to be added to the event-object</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | Undefined</span>:
+                    
+                    <p>eventobject or undefined when the event was halted or preventDefaulted.</p>
+
+                
+            </div>
+        </div>
     
 
     
@@ -3081,7 +3289,7 @@ unless you force to assign with <code>.forceAssign()</code></p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l806"><code>src&#x2F;event&#x2F;event-base.js:806</code></a>
+        <a href="../files/src_event_event-base.js.html#l834"><code>src&#x2F;event&#x2F;event-base.js:834</code></a>
         
         </p>
 
@@ -3107,9 +3315,11 @@ The eventobject is created with at least these properties:</p>
               <li>e.status.defaultFn (optional) --&gt; <code>true</code> if any defaultFn got invoked</li>
               <li>e.status.preventedFn (optional) --&gt; <code>true</code> if any preventedFn got invoked</li>
               <li>e.status.rendered (optional) --&gt; <code>true</code> the vDOM rendered the dom</li>
+              <li>e.status.finalized (optional) --&gt; <code>true</code> if finlize was invoked</li>
               <li>e.status.halted (optional) --&gt; <code>reason|true</code> if the event got halted and optional the why</li>
               <li>e.status.defaultPrevented (optional) --&gt;  <code>reason|true</code> if the event got defaultPrevented and optional the why</li>
               <li>e.status.renderPrevented (optional) --&gt;  <code>reason|true</code> if the event got renderPrevented and optional the why</li>
+              <li>e.status.finalizePrevented (optional) --&gt;  <code>reason|true</code> if the event got finalizePrevented and optional the why</li>
          </ul>
     </li>
 </ul>
@@ -3121,10 +3331,11 @@ If payload.silent is set true, the subscribers are not getting invoked: only the
     <li>e.halt() --&gt; stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>
     <li>e.preventDefault() --&gt; instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>
     <li>e.preventRender() --&gt; by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>
+    <li>e.preventFinalize() --&gt; by default, any event end up with running the finalizer, this can be prevented by calling e.preventFinalize()</li>
 </ul>
 
 <p><ul>
-    <li>First, before-subscribers are invoked: this is the place where you might call <code>e.halt()</code>, <code>a.preventDefault()</code> or <code>e.preventRender()</code></li>
+    <li>First, before-subscribers are invoked: this is the place where you might call <code>e.halt()</code>, <code>a.preventDefault()</code>, <code>e.preventRender()</code> or <code>e.preventFinalize()</code></li>
     <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>
     <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>
     <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li></p>
@@ -3304,198 +3515,6 @@ If payload.silent is set true, the subscribers are not getting invoked: only the
 </div>
 
                 
-                    <div id="method_emit" class="method item">
-    <h3 class="name"><code>emit</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code class="optional">[emitter]</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>customEvent</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>payload</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | Undefined</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/event.html">event</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_event_event-base.js.html#l280"><code>src&#x2F;event&#x2F;event-base.js:280</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Emits the event <code>eventName</code> on behalf of <code>emitter</code>, which becomes e.target in the eventobject.
-During this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.
-The eventobject is created with at least these properties:</p>
-<ul>
-    <li>e.target --&gt; source that triggered the event (instance or DOM-node), specified by <code>emitter</code></li>
-    <li>e.type --&gt; eventName</li>
-    <li>e.emitter --&gt; emitterName</li>
-    <li>e.status --&gt; status-information:
-         <ul>
-              <li>e.status.ok --&gt; <code>true|false</code> whether the event got executed (not halted or defaultPrevented)</li>
-              <li>e.status.defaultFn (optional) --&gt; <code>true</code> if any defaultFn got invoked</li>
-              <li>e.status.preventedFn (optional) --&gt; <code>true</code> if any preventedFn got invoked</li>
-              <li>e.status.rendered (optional) --&gt; <code>true</code> the vDOM rendered the dom</li>
-              <li>e.status.halted (optional) --&gt; <code>reason|true</code> if the event got halted and optional the why</li>
-              <li>e.status.defaultPrevented (optional) --&gt;  <code>reason|true</code> if the event got defaultPrevented and optional the why</li>
-              <li>e.status.renderPrevented (optional) --&gt;  <code>reason|true</code> if the event got renderPrevented and optional the why</li>
-         </ul>
-    </li>
-</ul>
-
-<p>The optional <code>payload</code> is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.
-If payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.</p>
-<p>The eventobject also has these methods:</p>
-<ul>
-    <li>e.halt() --&gt; stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>
-    <li>e.preventDefault() --&gt; instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>
-    <li>e.preventRender() --&gt; by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>
-</ul>
-
-<p><ul>
-    <li>First, before-subscribers are invoked: this is the place where you might call <code>e.halt()</code>, <code>a.preventDefault()</code> or <code>e.preventRender()</code></li>
-    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>
-    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>
-    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li></p>
-<ul>
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[emitter]</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>instance that emits the events</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">customEvent</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Full customEvent conform syntax <code>emitterName:eventName</code>.
-       <code>emitterName</code> is available as <strong>e.emitter</strong>, <code>eventName</code> as <strong>e.type</strong>.</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">payload</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>extra payload to be added to the event-object</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | Undefined</span>:
-                    
-                    <p>eventobject or undefined when the event was halted or preventDefaulted.</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
                     <div id="method_finalize" class="method item">
     <h3 class="name"><code>finalize</code></h3>
 
@@ -3544,7 +3563,7 @@ If payload.silent is set true, the subscribers are not getting invoked: only the
             
         
         
-        <a href="../files/src_event_event-base.js.html#l341"><code>src&#x2F;event&#x2F;event-base.js:341</code></a>
+        <a href="../files/src_event_event-base.js.html#l357"><code>src&#x2F;event&#x2F;event-base.js:357</code></a>
         
         </p>
 
@@ -3920,7 +3939,7 @@ Only get invoked when the cycle was not preventDefaulted or halted.</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l364"><code>src&#x2F;event&#x2F;event-base.js:364</code></a>
+        <a href="../files/src_event_event-base.js.html#l380"><code>src&#x2F;event&#x2F;event-base.js:380</code></a>
         
         </p>
 
@@ -4092,7 +4111,7 @@ The module <code>core-event-dom</code> uses <code>notify</code> to auto-define D
             
         
         
-        <a href="../files/src_event_event-base.js.html#l402"><code>src&#x2F;event&#x2F;event-base.js:402</code></a>
+        <a href="../files/src_event_event-base.js.html#l418"><code>src&#x2F;event&#x2F;event-base.js:418</code></a>
         
         </p>
 
@@ -4642,7 +4661,7 @@ dependend on the environment.</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l440"><code>src&#x2F;event&#x2F;event-base.js:440</code></a>
+        <a href="../files/src_event_event-base.js.html#l456"><code>src&#x2F;event&#x2F;event-base.js:456</code></a>
         
         </p>
 
@@ -4857,7 +4876,7 @@ No need to <code>detach()</code> (unless you want to undescribe before the first
             
         
         
-        <a href="../files/src_event_event-base.js.html#l484"><code>src&#x2F;event&#x2F;event-base.js:484</code></a>
+        <a href="../files/src_event_event-base.js.html#l500"><code>src&#x2F;event&#x2F;event-base.js:500</code></a>
         
         </p>
 
@@ -4998,6 +5017,102 @@ No need to <code>detach()</code> (unless you want to undescribe before the first
 </div>
 
                 
+                    <div id="method_runFinalizers" class="method item">
+    <h3 class="name"><code>runFinalizers</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>e</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/event.html">event</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_event_event-base.js.html#l544"><code>src&#x2F;event&#x2F;event-base.js:544</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.2</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Runs all registered finalizers. Sets <code>e.finalized</code> true if none of the finalizers turns e.silent into <code>true</code>
+and thus every single finalizer got invoked.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">e</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>eventobject</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_undefAllEvents" class="method item">
     <h3 class="name"><code>undefAllEvents</code></h3>
 
@@ -5044,7 +5159,7 @@ No need to <code>detach()</code> (unless you want to undescribe before the first
             
         
         
-        <a href="../files/src_event_event-base.js.html#l539"><code>src&#x2F;event&#x2F;event-base.js:539</code></a>
+        <a href="../files/src_event_event-base.js.html#l567"><code>src&#x2F;event&#x2F;event-base.js:567</code></a>
         
         </p>
 
@@ -5141,7 +5256,7 @@ When <code>emitterName</code> is not set, ALL event-definitions will be removed.
             
         
         
-        <a href="../files/src_event_event-base.js.html#l569"><code>src&#x2F;event&#x2F;event-base.js:569</code></a>
+        <a href="../files/src_event_event-base.js.html#l597"><code>src&#x2F;event&#x2F;event-base.js:597</code></a>
         
         </p>
 
@@ -5236,7 +5351,7 @@ When <code>emitterName</code> is not set, ALL event-definitions will be removed.
             
         
         
-        <a href="../files/src_event_event-base.js.html#l582"><code>src&#x2F;event&#x2F;event-base.js:582</code></a>
+        <a href="../files/src_event_event-base.js.html#l610"><code>src&#x2F;event&#x2F;event-base.js:610</code></a>
         
         </p>
 
@@ -5331,7 +5446,7 @@ When <code>emitterName</code> is not set, ALL event-definitions will be removed.
             
         
         
-        <a href="../files/src_event_event-base.js.html#l595"><code>src&#x2F;event&#x2F;event-base.js:595</code></a>
+        <a href="../files/src_event_event-base.js.html#l623"><code>src&#x2F;event&#x2F;event-base.js:623</code></a>
         
         </p>
 
@@ -5384,7 +5499,17 @@ When <code>emitterName</code> is not set, ALL event-definitions will be removed.
     <h3 class="name"><code>unobserveNative</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>emitterName</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
     
@@ -5416,7 +5541,7 @@ When <code>emitterName</code> is not set, ALL event-definitions will be removed.
             
         
         
-        <a href="../files/src_event_extra_objectobserve.js.html#l223"><code>src&#x2F;event&#x2F;extra&#x2F;objectobserve.js:223</code></a>
+        <a href="../files/src_event_extra_objectobserve.js.html#l209"><code>src&#x2F;event&#x2F;extra&#x2F;objectobserve.js:209</code></a>
         
         </p>
 
@@ -5433,6 +5558,30 @@ When <code>emitterName</code> is not set, ALL event-definitions will be removed.
 
     </div>
 
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">emitterName</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The emitter-name to be set as the <code>emitterName</code> for the <code>datachanged</code> events</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -5635,17 +5784,7 @@ When <code>emitterName</code> is not set, ALL event-definitions will be removed.
     <h3 class="name"><code>unobserveNative</code></h3>
 
     
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>emitterName</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
+        <span class="paren">()</span>
     
 
     
@@ -5677,7 +5816,7 @@ When <code>emitterName</code> is not set, ALL event-definitions will be removed.
             
         
         
-        <a href="../files/src_event_extra_objectobserve.js.html#l209"><code>src&#x2F;event&#x2F;extra&#x2F;objectobserve.js:209</code></a>
+        <a href="../files/src_event_extra_objectobserve.js.html#l223"><code>src&#x2F;event&#x2F;extra&#x2F;objectobserve.js:223</code></a>
         
         </p>
 
@@ -5694,30 +5833,6 @@ When <code>emitterName</code> is not set, ALL event-definitions will be removed.
 
     </div>
 
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">emitterName</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The emitter-name to be set as the <code>emitterName</code> for the <code>datachanged</code> events</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
     
 
     
@@ -5761,7 +5876,7 @@ When <code>emitterName</code> is not set, ALL event-definitions will be removed.
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1160"><code>src&#x2F;event&#x2F;event-base.js:1160</code></a>
+        <a href="../files/src_event_event-base.js.html#l1193"><code>src&#x2F;event&#x2F;event-base.js:1193</code></a>
         
         </p>
 
@@ -5780,13 +5895,15 @@ which has a structure like this:</p>
         preventable: true,
         defaultFn: function(){...},
         preventedFn: function(){...},
-        renderPreventable: true
+        renderPreventable: true,
+        finalizePreventable: true
     },
     &#39;redmodel:save&#39;: {
         preventable: true,
         defaultFn: function(){...},
         preventedFn: function(){...},
-        renderPreventable: true
+        renderPreventable: true,
+        finalizePreventable: true
     }
 }</p>
 
@@ -5829,7 +5946,7 @@ which has a structure like this:</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1192"><code>src&#x2F;event&#x2F;event-base.js:1192</code></a>
+        <a href="../files/src_event_event-base.js.html#l1227"><code>src&#x2F;event&#x2F;event-base.js:1227</code></a>
         
         </p>
 
@@ -5921,7 +6038,7 @@ Every item that gets in the array consist by itself of 3 properties:
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1255"><code>src&#x2F;event&#x2F;event-base.js:1255</code></a>
+        <a href="../files/src_event_event-base.js.html#l1290"><code>src&#x2F;event&#x2F;event-base.js:1290</code></a>
         
         </p>
 
@@ -5943,6 +6060,7 @@ To add more methods, you can use <code>_setEventObjProperty</code></p>
    halt: function()
    preventDefault: function()
    preventRender: function()
+   preventFinalize: function()
 }</p>
     
 
@@ -5979,7 +6097,7 @@ To add more methods, you can use <code>_setEventObjProperty</code></p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1271"><code>src&#x2F;event&#x2F;event-base.js:1271</code></a>
+        <a href="../files/src_event_event-base.js.html#l1307"><code>src&#x2F;event&#x2F;event-base.js:1307</code></a>
         
         </p>
 
@@ -6047,7 +6165,7 @@ This list is maintained by <code>notifyDetach</code> and <code>unNotifyDetach</c
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1243"><code>src&#x2F;event&#x2F;event-base.js:1243</code></a>
+        <a href="../files/src_event_event-base.js.html#l1278"><code>src&#x2F;event&#x2F;event-base.js:1278</code></a>
         
         </p>
 
@@ -6101,7 +6219,7 @@ Is an array of function-references.</p>
             
         
         
-        <a href="../files/src_event_event-base.js.html#l1298"><code>src&#x2F;event&#x2F;event-base.js:1298</code></a>
+        <a href="../files/src_event_event-base.js.html#l1334"><code>src&#x2F;event&#x2F;event-base.js:1334</code></a>
         
         </p>
 
