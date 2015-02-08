@@ -1156,8 +1156,17 @@ module.exports = function (window) {
             return (otherVNode===this);
         },
 
+       /**
+        * Empties the vnode.
+        *
+        * Syncs with the dom.
+        *
+        * @method empty
+        * @chainable
+        * @since 0.0.1
+        */
         empty: function() {
-            this._setChildNodes([]);
+            return this._setChildNodes([]);
         },
 
        /**
@@ -2050,7 +2059,7 @@ module.exports = function (window) {
                                 bkpChildNodes = newChild.vChildNodes;
                                 oldChild.attrs.id &amp;&amp; (delete nodeids[oldChild.attrs.id]);
 /*jshint proto:true */
-                                oldChild.isItag &amp;&amp; oldChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
+                                oldChild.isItag &amp;&amp; oldChild.domNode.destroyUI &amp;&amp; oldChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
 /*jshint proto:false */
                                 newChild.attrs = {}; // reset to force defined by &#x60;_setAttrs&#x60;
                                 newChild.vChildNodes = []; // reset , to force defined by &#x60;_setAttrs&#x60;
@@ -2100,7 +2109,7 @@ module.exports = function (window) {
                                     prevSuppress = DOCUMENT._suppressMutationEvents || false;
                                     DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(true);
 /*jshint proto:true */
-                                    newChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
+                                    newChild.domNode.destroyUI &amp;&amp; newChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
 /*jshint proto:false */
                                     oldChild._setAttrs(newChild.attrs);
                                     newChild._destroy(true); // destroy through the vnode and removing from DOCUMENT._itagList

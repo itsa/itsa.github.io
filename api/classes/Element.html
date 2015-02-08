@@ -1906,6 +1906,12 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code class="optional">[excludeItself]</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -1939,7 +1945,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1064"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1064</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1103"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1103</code></a>
         
         </p>
 
@@ -1950,7 +1956,8 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
     </div>
 
     <div class="description">
-        <p>Indicating whether this Element contains OR equals otherElement.</p>
+        <p>Indicating whether this Element contains OR equals otherElement. If you need only to be sure the other Element lies inside,
+but not equals itself, set <code>excludeItself</code> true.</p>
 
     </div>
 
@@ -1986,6 +1993,23 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
 
                     <div class="param-description">
                         <p>no deepsearch in iTags --&gt; by default, these elements should be hidden</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[excludeItself]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>to exclude itsefl as a hit</p>
 
                     </div>
 
@@ -2068,7 +2092,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4025"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4025</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4106"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4106</code></a>
         
         </p>
 
@@ -2211,7 +2235,7 @@ You can use or sum one of the next properties:</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1079"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1079</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1120"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1120</code></a>
         
         </p>
 
@@ -2376,7 +2400,7 @@ You can use or sum one of the next properties:</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1124"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1124</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1165"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1165</code></a>
         
         </p>
 
@@ -2471,7 +2495,7 @@ Making the Element&#39;s inline-style look like: style=&quot;value&quot;.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1139"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1139</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1180"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1180</code></a>
         
         </p>
 
@@ -2535,6 +2559,12 @@ Alias for thisNode.vTextContent = &#39;&#39;;</p>
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code class="optional">[container]</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -2568,7 +2598,7 @@ Alias for thisNode.vTextContent = &#39;&#39;;</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1155"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1155</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1196"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1196</code></a>
         
         </p>
 
@@ -2602,6 +2632,23 @@ Alias for thisNode.vTextContent = &#39;&#39;;</p>
 
                     <div class="param-description">
                         <p>to return the first Element that matches the css-selector</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[container]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/Document_Object_Model_(DOM)/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the container-element to search within --&gt; this lead into searching out of the same level</p>
 
                     </div>
 
@@ -2676,7 +2723,7 @@ Alias for thisNode.vTextContent = &#39;&#39;;</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1167"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1167</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1215"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1215</code></a>
         
         </p>
 
@@ -2782,7 +2829,7 @@ Alias for thisNode.vTextContent = &#39;&#39;;</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1180"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1180</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1228"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1228</code></a>
         
         </p>
 
@@ -2884,7 +2931,7 @@ Alias for thisNode.vTextContent = &#39;&#39;;</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1244"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1244</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1292"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1292</code></a>
         
         </p>
 
@@ -3071,7 +3118,7 @@ that <code>forceIntoView()</code> doesn&#39;t change the position when it&#39;s 
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1305"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1305</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1353"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1353</code></a>
         
         </p>
 
@@ -3197,7 +3244,7 @@ that <code>forceIntoView()</code> doesn&#39;t change the position when it&#39;s 
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1318"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1318</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1366"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1366</code></a>
         
         </p>
 
@@ -3306,7 +3353,7 @@ that <code>forceIntoView()</code> doesn&#39;t change the position when it&#39;s 
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1344"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1344</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1392"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1392</code></a>
         
         </p>
 
@@ -3405,7 +3452,7 @@ that <code>forceIntoView()</code> doesn&#39;t change the position when it&#39;s 
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l3994"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3994</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4075"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4075</code></a>
         
         </p>
 
@@ -3486,7 +3533,7 @@ that <code>forceIntoView()</code> doesn&#39;t change the position when it&#39;s 
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1332"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1332</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1380"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1380</code></a>
         
         </p>
 
@@ -3584,7 +3631,7 @@ that <code>forceIntoView()</code> doesn&#39;t change the position when it&#39;s 
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4001"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4001</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4082"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4082</code></a>
         
         </p>
 
@@ -3677,7 +3724,7 @@ describing the border-box in pixels. top and left are relative to the top-left o
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1542"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1542</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1590"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1590</code></a>
         
         </p>
 
@@ -3800,7 +3847,7 @@ the way it is visible (calculated through the DOM-tree).</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1359"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1359</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1407"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1407</code></a>
         
         </p>
 
@@ -3873,7 +3920,7 @@ the way it is visible (calculated through the DOM-tree).</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1377"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1377</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1425"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1425</code></a>
         
         </p>
 
@@ -3947,7 +3994,7 @@ See: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList">htt
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4013"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4013</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4094"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4094</code></a>
         
         </p>
 
@@ -4032,7 +4079,7 @@ the caption is included even though it&#39;s outside the border box of the table
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1395"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1395</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1443"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1443</code></a>
         
         </p>
 
@@ -4148,7 +4195,7 @@ The data is efficiently stored on the vnode.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1409"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1409</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1457"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1457</code></a>
         
         </p>
 
@@ -4281,7 +4328,7 @@ you need to prepend the id-name with a <code>#</code>. When multiple Element&#39
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1423"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1423</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1471"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1471</code></a>
         
         </p>
 
@@ -4403,7 +4450,7 @@ you need to prepend the id-name with a <code>#</code>. When multiple Element&#39
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4043"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4043</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4124"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4124</code></a>
         
         </p>
 
@@ -4513,7 +4560,7 @@ To match multiple different classes, separate them with a <code>comma</code>.</p
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4056"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4056</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4137"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4137</code></a>
         
         </p>
 
@@ -4622,7 +4669,7 @@ To match multiple different classes, separate them with a <code>comma</code>.</p
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4069"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4069</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4150"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4150</code></a>
         
         </p>
 
@@ -4721,7 +4768,7 @@ To match multiple different classes, separate them with a <code>comma</code>.</p
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1441"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1441</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1489"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1489</code></a>
         
         </p>
 
@@ -4796,7 +4843,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1455"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1455</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1503"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1503</code></a>
         
         </p>
 
@@ -4887,7 +4934,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1466"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1466</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1514"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1514</code></a>
         
         </p>
 
@@ -5023,7 +5070,7 @@ an appearance because of other CSS-rules.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1492"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1492</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1540"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1540</code></a>
         
         </p>
 
@@ -5145,7 +5192,7 @@ When <code>transition</code> is set inline, no <code>parent</code> transition-ru
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1517"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1517</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1565"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1565</code></a>
         
         </p>
 
@@ -5220,7 +5267,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1531"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1531</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1579"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1579</code></a>
         
         </p>
 
@@ -5291,7 +5338,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1652"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1652</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1700"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1700</code></a>
         
         </p>
 
@@ -5364,7 +5411,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1663"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1663</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1711"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1711</code></a>
         
         </p>
 
@@ -5455,7 +5502,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1573"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1573</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1621"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1621</code></a>
         
         </p>
 
@@ -5580,7 +5627,7 @@ Note2: in case of &quot;transition: all&quot; --&gt; these values will be return
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1677"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1677</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1725"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1725</code></a>
         
         </p>
 
@@ -5668,7 +5715,7 @@ Note2: in case of &quot;transition: all&quot; --&gt; these values will be return
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1701"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1701</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1749"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1749</code></a>
         
         </p>
 
@@ -5777,7 +5824,7 @@ Note2: in case of &quot;transition: all&quot; --&gt; these values will be return
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1715"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1715</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1763"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1763</code></a>
         
         </p>
 
@@ -5876,7 +5923,7 @@ Note2: in case of &quot;transition: all&quot; --&gt; these values will be return
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1729"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1729</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1777"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1777</code></a>
         
         </p>
 
@@ -5949,7 +5996,7 @@ Note2: in case of &quot;transition: all&quot; --&gt; these values will be return
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1740"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1740</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1788"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1788</code></a>
         
         </p>
 
@@ -6034,7 +6081,7 @@ Note2: in case of &quot;transition: all&quot; --&gt; these values will be return
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1751"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1751</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1799"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1799</code></a>
         
         </p>
 
@@ -6143,7 +6190,7 @@ Note2: in case of &quot;transition: all&quot; --&gt; these values will be return
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1763"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1763</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1811"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1811</code></a>
         
         </p>
 
@@ -6240,7 +6287,7 @@ Note2: in case of &quot;transition: all&quot; --&gt; these values will be return
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1776"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1776</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1824"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1824</code></a>
         
         </p>
 
@@ -6313,7 +6360,7 @@ Note2: in case of &quot;transition: all&quot; --&gt; these values will be return
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1787"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1787</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1835"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1835</code></a>
         
         </p>
 
@@ -6402,7 +6449,7 @@ Note2: in case of &quot;transition: all&quot; --&gt; these values will be return
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1799"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1799</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1846"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1846</code></a>
         
         </p>
 
@@ -6535,7 +6582,7 @@ Note2: in case of &quot;transition: all&quot; --&gt; these values will be return
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1814"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1814</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1861"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1861</code></a>
         
         </p>
 
@@ -6668,7 +6715,7 @@ Note2: in case of &quot;transition: all&quot; --&gt; these values will be return
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1829"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1829</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1876"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1876</code></a>
         
         </p>
 
@@ -6798,7 +6845,7 @@ Note2: in case of &quot;transition: all&quot; --&gt; hasTransition() will always
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1847"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1847</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1894"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1894</code></a>
         
         </p>
 
@@ -6899,7 +6946,7 @@ Hides immediately without <code>fade</code>, or will fade when fade is specified
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1907"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1907</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1954"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1954</code></a>
         
         </p>
 
@@ -6986,7 +7033,7 @@ Hides immediately without <code>fade</code>, or will fade when fade is specified
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4081"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4081</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4162"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4162</code></a>
         
         </p>
 
@@ -7110,7 +7157,7 @@ Hides immediately without <code>fade</code>, or will fade when fade is specified
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1969"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1969</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2016"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2016</code></a>
         
         </p>
 
@@ -7250,7 +7297,7 @@ Hides immediately without <code>fade</code>, or will fade when fade is specified
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1921"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1921</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1968"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1968</code></a>
         
         </p>
 
@@ -7375,7 +7422,7 @@ Hides immediately without <code>fade</code>, or will fade when fade is specified
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1951"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1951</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l1998"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1998</code></a>
         
         </p>
 
@@ -7490,7 +7537,7 @@ Hides immediately without <code>fade</code>, or will fade when fade is specified
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1983"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1983</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2030"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2030</code></a>
         
         </p>
 
@@ -7540,6 +7587,12 @@ Hides immediately without <code>fade</code>, or will fade when fade is specified
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code class="optional">[container]</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -7573,7 +7626,7 @@ Hides immediately without <code>fade</code>, or will fade when fade is specified
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l1994"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:1994</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2041"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2041</code></a>
         
         </p>
 
@@ -7607,6 +7660,23 @@ Hides immediately without <code>fade</code>, or will fade when fade is specified
 
                     <div class="param-description">
                         <p>to return the last Element that matches the css-selector</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[container]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/Document_Object_Model_(DOM)/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the container-element to search within --&gt; this lead into searching out of the same level</p>
 
                     </div>
 
@@ -7681,7 +7751,7 @@ Hides immediately without <code>fade</code>, or will fade when fade is specified
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2007"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2007</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2061"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2061</code></a>
         
         </p>
 
@@ -7789,7 +7859,7 @@ Hides immediately without <code>fade</code>, or will fade when fade is specified
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2020"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2020</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2074"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2074</code></a>
         
         </p>
 
@@ -7898,7 +7968,7 @@ Alias for matchesSelector()</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2033"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2033</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2087"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2087</code></a>
         
         </p>
 
@@ -7974,6 +8044,12 @@ Alias for matches()</p>
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code class="optional">[container]</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -8007,7 +8083,7 @@ Alias for matches()</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2046"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2046</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2100"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2100</code></a>
         
         </p>
 
@@ -8041,6 +8117,23 @@ Alias for matches()</p>
 
                     <div class="param-description">
                         <p>css-selector to be used as a filter</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[container]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/Document_Object_Model_(DOM)/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the container-element to search within --&gt; this lead into searching out of the same level</p>
 
                     </div>
 
@@ -8133,7 +8226,7 @@ Alias for matches()</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2081"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2081</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2139"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2139</code></a>
         
         </p>
 
@@ -8260,6 +8353,12 @@ Alias for matches()</p>
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code class="optional">[container]</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -8293,7 +8392,7 @@ Alias for matches()</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2135"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2135</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2193"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2193</code></a>
         
         </p>
 
@@ -8327,6 +8426,23 @@ Alias for matches()</p>
 
                     <div class="param-description">
                         <p>css-selector to be used as a filter</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[container]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/Document_Object_Model_(DOM)/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the container-element to search within --&gt; this lead into searching out of the same level</p>
 
                     </div>
 
@@ -8374,6 +8490,18 @@ Alias for matches()</p>
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code class="optional">[refNode]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[domPosition]</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -8407,7 +8535,7 @@ Alias for matches()</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2170"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2170</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2233"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2233</code></a>
         
         </p>
 
@@ -8462,6 +8590,43 @@ they need to be separated by a <code>comma</code>.</p>
                     
                 </li>
             
+                <li class="param">
+                    
+                        <code class="param-name optional">[refNode]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/Document_Object_Model_(DOM)/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>reference-node where the found node should be <code>before</code> or <code>after</code>: specified by domPosition</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[domPosition]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The position to accept, compared to <code>refNode</code>. Should be either:</p>
+<ul>
+    <li>Node.DOCUMENT_POSITION_PRECEDING === 2 (this Element comes before otherElement)</li>
+    <li>Node.DOCUMENT_POSITION_FOLLOWING === 4 (this Element comes after otherElement)</li>
+</ul>
+                    </div>
+
+                    
+                </li>
+            
             </ul>
         </div>
     
@@ -8503,6 +8668,18 @@ they need to be separated by a <code>comma</code>.</p>
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code class="optional">[refNode]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[domPosition]</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -8536,7 +8713,7 @@ they need to be separated by a <code>comma</code>.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2204"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2204</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2276"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2276</code></a>
         
         </p>
 
@@ -8587,6 +8764,43 @@ they need to be separated by a <code>comma</code>.</p>
                     <div class="param-description">
                         <p>no deepsearch in iTags --&gt; by default, these elements should be hidden</p>
 
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[refNode]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/Document_Object_Model_(DOM)/HTMLElement" class="crosslink external" target="_blank">HTMLElement</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>reference-node where the found nodes should be <code>before</code> or <code>after</code>: specified by domPosition</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[domPosition]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The position to accept, compared to <code>refNode</code>. Should be either:</p>
+<ul>
+    <li>Node.DOCUMENT_POSITION_PRECEDING === 2 (this Element comes before otherElement)</li>
+    <li>Node.DOCUMENT_POSITION_FOLLOWING === 4 (this Element comes after otherElement)</li>
+</ul>
                     </div>
 
                     
@@ -8662,7 +8876,7 @@ they need to be separated by a <code>comma</code>.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2240"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2240</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2321"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2321</code></a>
         
         </p>
 
@@ -8772,7 +8986,7 @@ This is no check of the DOM-tree, but purely based upon coordinates.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2259"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2259</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2340"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2340</code></a>
         
         </p>
 
@@ -8885,7 +9099,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2317"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2317</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2398"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2398</code></a>
         
         </p>
 
@@ -9001,7 +9215,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2279"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2279</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2360"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2360</code></a>
         
         </p>
 
@@ -9109,7 +9323,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4095"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4095</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4176"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4176</code></a>
         
         </p>
 
@@ -9211,7 +9425,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2335"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2335</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2416"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2416</code></a>
         
         </p>
 
@@ -9340,7 +9554,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2295"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2295</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2376"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2376</code></a>
         
         </p>
 
@@ -9461,7 +9675,7 @@ The argument should be one ore more AttributeNames.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2348"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2348</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2429"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2429</code></a>
         
         </p>
 
@@ -9586,7 +9800,7 @@ The argument should be one ore more AttributeNames.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2362"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2362</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2443"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2443</code></a>
         
         </p>
 
@@ -9761,7 +9975,7 @@ The argument should be one ore more AttributeNames.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2405"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2405</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2486"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2486</code></a>
         
         </p>
 
@@ -9863,7 +10077,7 @@ When no arguments are passed, all node-data (key-value pairs) will be removed.</
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2435"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2435</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2516"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2516</code></a>
         
         </p>
 
@@ -9944,7 +10158,7 @@ When no arguments are passed, all node-data (key-value pairs) will be removed.</
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2446"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2446</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2527"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2527</code></a>
         
         </p>
 
@@ -10079,7 +10293,7 @@ No need to use camelCase.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2462"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2462</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2543"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2543</code></a>
         
         </p>
 
@@ -10206,7 +10420,7 @@ No need to use camelCase.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2623"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2623</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2704"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2704</code></a>
         
         </p>
 
@@ -10319,7 +10533,7 @@ other inline <code>transform</code> css=properties.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2640"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2640</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2721"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2721</code></a>
         
         </p>
 
@@ -10428,7 +10642,7 @@ You need to supply an Array of Objects, with the properties:
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2687"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2687</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2768"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2768</code></a>
         
         </p>
 
@@ -10566,7 +10780,7 @@ You need to supply an Array of Objects, with the properties:
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2708"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2708</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2789"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2789</code></a>
         
         </p>
 
@@ -10738,7 +10952,7 @@ You need to supply an Array of Objects, with the properties:
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2723"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2723</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2804"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2804</code></a>
         
         </p>
 
@@ -10928,7 +11142,7 @@ If the previous className is not available, the new className is set nevertheles
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4103"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4103</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4184"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4184</code></a>
         
         </p>
 
@@ -11001,7 +11215,7 @@ If the previous className is not available, the new className is set nevertheles
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2772"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2772</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2853"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2853</code></a>
         
         </p>
 
@@ -11123,7 +11337,7 @@ Only available when the Element has overflow.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2789"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2789</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2870"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2870</code></a>
         
         </p>
 
@@ -11259,7 +11473,7 @@ Only available when the Element has overflow.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2807"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2807</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2888"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2888</code></a>
         
         </p>
 
@@ -11381,7 +11595,7 @@ Only available when the Element has overflow.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4109"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4109</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4190"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4190</code></a>
         
         </p>
 
@@ -11487,7 +11701,7 @@ Only available when the Element has overflow.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2828"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2828</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2909"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2909</code></a>
         
         </p>
 
@@ -11632,7 +11846,7 @@ Only available when the Element has overflow.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2842"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2842</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2923"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2923</code></a>
         
         </p>
 
@@ -11774,7 +11988,7 @@ The argument should be one ore more Objects with the properties: <code>name</cod
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2867"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2867</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2948"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2948</code></a>
         
         </p>
 
@@ -11955,7 +12169,7 @@ The argument should be one ore more Objects with the properties: <code>name</cod
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2910"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2910</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2991"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2991</code></a>
         
         </p>
 
@@ -12088,7 +12302,7 @@ it is just a way to bind any data to the specific Element so it can be retrieved
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2936"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2936</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3017"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3017</code></a>
         
         </p>
 
@@ -12201,7 +12415,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2959"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2959</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3040"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3040</code></a>
         
         </p>
 
@@ -12314,7 +12528,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2971"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2971</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3052"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3052</code></a>
         
         </p>
 
@@ -12481,7 +12695,7 @@ Note2: no need to camelCase cssProperty: both <code>margin-left</code> as well a
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2995"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2995</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3076"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3076</code></a>
         
         </p>
 
@@ -12619,7 +12833,7 @@ Note2: no need to camelCase cssProperty: both <code>margin-left</code> as well a
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l3242"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3242</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3323"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3323</code></a>
         
         </p>
 
@@ -12738,7 +12952,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l3195"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3195</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3276"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3276</code></a>
         
         </p>
 
@@ -12881,7 +13095,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l3176"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3176</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3257"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3257</code></a>
         
         </p>
 
@@ -13047,7 +13261,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l3265"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3265</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3346"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3346</code></a>
         
         </p>
 
@@ -13166,7 +13380,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l3288"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3288</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3369"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3369</code></a>
         
         </p>
 
@@ -13304,7 +13518,7 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l3347"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3347</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3428"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3428</code></a>
         
         </p>
 
@@ -13471,7 +13685,7 @@ The element must be part of the DOM tree to have page coordinates (display:none 
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l3502"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3502</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3583"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3583</code></a>
         
         </p>
 
@@ -13606,7 +13820,7 @@ Shows immediately without <code>fade</code>, or will fade-in when fade is specif
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l3783"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3783</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3864"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3864</code></a>
         
         </p>
 
@@ -13799,7 +14013,7 @@ Shows immediately without <code>fade</code>, or will fade-in when fade is specif
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l3564"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3564</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3645"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3645</code></a>
         
         </p>
 
@@ -13936,7 +14150,7 @@ Shows immediately without <code>fade</code>, or will fade-in when fade is specif
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4133"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4133</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4214"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4214</code></a>
         
         </p>
 
@@ -13982,7 +14196,7 @@ Note: The way of accessing the shortcut key is varying in different browsers: <a
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4142"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4142</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4223"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4223</code></a>
         
         </p>
 
@@ -14030,7 +14244,7 @@ To be more specific, attributes is a key/value pair of strings that represents a
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4153"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4153</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4234"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4234</code></a>
         
         </p>
 
@@ -14075,7 +14289,7 @@ To be more specific, attributes is a key/value pair of strings that represents a
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4161"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4161</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4242"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4242</code></a>
         
         </p>
 
@@ -14120,7 +14334,7 @@ To be more specific, attributes is a key/value pair of strings that represents a
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4169"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4169</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4250"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4250</code></a>
         
         </p>
 
@@ -14165,7 +14379,7 @@ To be more specific, attributes is a key/value pair of strings that represents a
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4177"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4177</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4258"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4258</code></a>
         
         </p>
 
@@ -14210,7 +14424,7 @@ To be more specific, attributes is a key/value pair of strings that represents a
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4185"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4185</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4266"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4266</code></a>
         
         </p>
 
@@ -14255,7 +14469,7 @@ To be more specific, attributes is a key/value pair of strings that represents a
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4192"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4192</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4273"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4273</code></a>
         
         </p>
 
@@ -14300,7 +14514,7 @@ To be more specific, attributes is a key/value pair of strings that represents a
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4200"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4200</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4281"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4281</code></a>
         
         </p>
 
@@ -14346,7 +14560,7 @@ and if there is an overflow causing a left vertical scrollbar to be rendered. cl
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4209"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4209</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4290"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4290</code></a>
         
         </p>
 
@@ -14391,7 +14605,7 @@ and if there is an overflow causing a left vertical scrollbar to be rendered. cl
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4217"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4217</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4298"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4298</code></a>
         
         </p>
 
@@ -14438,7 +14652,7 @@ and if there is an overflow causing a left vertical scrollbar to be rendered. cl
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4225"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4225</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4306"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4306</code></a>
         
         </p>
 
@@ -14484,7 +14698,7 @@ and if there is an overflow causing a left vertical scrollbar to be rendered. cl
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4236"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4236</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4317"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4317</code></a>
         
         </p>
 
@@ -14529,7 +14743,7 @@ and if there is an overflow causing a left vertical scrollbar to be rendered. cl
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l3829"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3829</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3910"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3910</code></a>
         
         </p>
 
@@ -14579,7 +14793,7 @@ By setting the argument <code>overflow</code> you get the total height, included
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4244"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4244</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4325"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4325</code></a>
         
         </p>
 
@@ -14624,7 +14838,7 @@ By setting the argument <code>overflow</code> you get the total height, included
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4251"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4251</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4332"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4332</code></a>
         
         </p>
 
@@ -14671,7 +14885,7 @@ By setting the argument <code>overflow</code> you get the total height, included
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4258"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4258</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4339"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4339</code></a>
         
         </p>
 
@@ -14717,7 +14931,7 @@ By setting the argument <code>overflow</code> you get the total height, included
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4269"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4269</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4350"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4350</code></a>
         
         </p>
 
@@ -14762,7 +14976,7 @@ By setting the argument <code>overflow</code> you get the total height, included
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l3856"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3856</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3937"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3937</code></a>
         
         </p>
 
@@ -14810,7 +15024,7 @@ DOCUMENT-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4277"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4277</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4358"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4358</code></a>
         
         </p>
 
@@ -14856,7 +15070,7 @@ DOCUMENT-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4285"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4285</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4366"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4366</code></a>
         
         </p>
 
@@ -14904,7 +15118,7 @@ Is an Element (nodeType===1).</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4294"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4294</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4375"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4375</code></a>
         
         </p>
 
@@ -14951,7 +15165,7 @@ Is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4306"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4306</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4387"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4387</code></a>
         
         </p>
 
@@ -14996,7 +15210,7 @@ Is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4314"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4314</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4395"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4395</code></a>
         
         </p>
 
@@ -15041,7 +15255,7 @@ Is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4322"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4322</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4403"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4403</code></a>
         
         </p>
 
@@ -15088,7 +15302,7 @@ Is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4344"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4344</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4425"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4425</code></a>
         
         </p>
 
@@ -15138,7 +15352,7 @@ Included borders and padding (no margin).</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4330"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4330</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4411"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4411</code></a>
         
         </p>
 
@@ -15188,7 +15402,7 @@ Included borders and padding (no margin).</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4357"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4357</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4438"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4438</code></a>
         
         </p>
 
@@ -15234,7 +15448,7 @@ Included borders and padding (no margin).</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4366"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4366</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4447"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4447</code></a>
         
         </p>
 
@@ -15280,7 +15494,7 @@ Included borders and padding (no margin).</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4375"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4375</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4456"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4456</code></a>
         
         </p>
 
@@ -15328,7 +15542,7 @@ Is an Element (nodeType===1).</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4384"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4384</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4465"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4465</code></a>
         
         </p>
 
@@ -15375,7 +15589,7 @@ Is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4397"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4397</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4478"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4478</code></a>
         
         </p>
 
@@ -15423,7 +15637,7 @@ without using a vertical scrollbar. It includes the element padding but not its 
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4409"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4409</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4490"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4490</code></a>
         
         </p>
 
@@ -15468,7 +15682,7 @@ without using a vertical scrollbar. It includes the element padding but not its 
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4416"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4416</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4497"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4497</code></a>
         
         </p>
 
@@ -15515,7 +15729,7 @@ then its scrollTop value defaults to 0.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4425"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4425</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4506"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4506</code></a>
         
         </p>
 
@@ -15563,7 +15777,7 @@ the scrollWidth is larger than the clientWidth.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4437"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4437</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4518"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4518</code></a>
         
         </p>
 
@@ -15608,7 +15822,7 @@ the scrollWidth is larger than the clientWidth.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4444"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4444</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4525"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4525</code></a>
         
         </p>
 
@@ -15653,7 +15867,7 @@ the scrollWidth is larger than the clientWidth.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l3872"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3872</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3953"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3953</code></a>
         
         </p>
 
@@ -15701,7 +15915,7 @@ DOCUMENT-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4451"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4451</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4532"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4532</code></a>
         
         </p>
 
@@ -15746,7 +15960,7 @@ DOCUMENT-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4458"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4458</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4539"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4539</code></a>
         
         </p>
 
@@ -15794,7 +16008,7 @@ DOCUMENT-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l3888"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3888</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3969"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3969</code></a>
         
         </p>
 
@@ -15854,7 +16068,7 @@ By setting the argument <code>overflow</code> you get the total width, included 
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4118"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4118</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4199"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4199</code></a>
         
         </p>
 
@@ -15898,7 +16112,7 @@ By setting the argument <code>overflow</code> you get the total width, included 
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4125"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4125</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4206"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4206</code></a>
         
         </p>
 
@@ -15942,7 +16156,7 @@ By setting the argument <code>overflow</code> you get the total width, included 
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l3338"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3338</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3419"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3419</code></a>
         
         </p>
 
