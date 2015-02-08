@@ -49,15 +49,15 @@ intro: "This example shows how to set up a simple focusmanagers with plain HTML.
             <div class="pure-form-message-inline">Enter with key-right and leave with Esc</div>
             <fieldset>
                 <div class="pure-control-group">
-                    <label for="name">Username</label>
-                    <input id="name" type="text" value="first"/>
+                    <label for="nameinner">Username</label>
+                    <input id="nameinner" type="text" value="first"/>
                 </div>
                 <div class="pure-control-group">
-                    <label for="pw">Password</label>
-                    <input id="pw" type="password" value="second"/>
+                    <label for="pwinner">Password</label>
+                    <input id="pwinner" type="password" value="second"/>
                 </div>
                 <div class="pure-controls">
-                    <label for="cb" class="pure-checkbox"><input id="cb" type="checkbox" /> I've read the conditions</label>
+                    <label for="cbinner" class="pure-checkbox"><input id="cbinner" type="checkbox" /> I've read the conditions</label>
                 </div>
                 <div class="pure-controls">
                     <button class="pure-button pure-button-bordered">Cancel</button>
@@ -120,6 +120,5 @@ intro: "This example shows how to set up a simple focusmanagers with plain HTML.
 <script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa');
-    // document.getElement('input[id="name"]').focus();
     document.getElement('.container').focus();
 </script>

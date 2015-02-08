@@ -250,7 +250,8 @@ var NAME = &#x27;[focusmanager]: &#x27;,
 module.exports = function (window) {
 
     var DOCUMENT = window.document,
-        nodePlugin, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed, getFocusManagerSelector, setupEvents, defineFocusEvent;
+        nodePlugin, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed,
+        resetLastValue, getFocusManagerSelector, setupEvents, defineFocusEvent;
 
     window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
@@ -278,12 +279,14 @@ module.exports = function (window) {
         len = keys.length;
         lastIndex = len - 1;
 
+console.warn(&#x27;fase 1&#x27;);
         if ((keyCode===13) &amp;&amp; (sourceNode.getTagName()===&#x27;INPUT&#x27;)) {
             inputType = sourceNode.getAttr(&#x27;type&#x27;).toLowerCase();
             enterPressedOnInput = (inputType===&#x27;text&#x27;) || (inputType===&#x27;password&#x27;);
         }
 
         if (enterPressedOnInput) {
+console.warn(&#x27;fase 2&#x27;);
             // check if we need to press the primary button - if available
 /*jshint boss:true */
             if ((primaryonenter=sourceNode.getAttr(&#x27;fm-primaryonenter&#x27;)) &amp;&amp; (primaryonenter.toLowerCase()===&#x27;true&#x27;)) {
@@ -306,8 +309,12 @@ module.exports = function (window) {
                 }
             }
         }
+console.warn(&#x27;keyCode &#x27;+keyCode);
+console.warn(&#x27;keys[lastIndex] &#x27;+keys[lastIndex]);
+console.warn(&#x27;actionkey &#x27;+actionkey);
         // double == --&gt; keyCode is number, keys is a string
         if (enterPressedOnInput || (keyCode==keys[lastIndex])) {
+console.warn(&#x27;fase 3&#x27;);
             // posible keyup --&gt; check if special characters match:
             specialKeysMatch = true;
             SPECIAL_KEYS.some(function(value) {
@@ -319,7 +326,9 @@ module.exports = function (window) {
                 specialKeysMatch = e[SPECIAL_KEYS[specialKey]];
             }
         }
+console.warn(&#x27;fase 4&#x27;);
         if (specialKeysMatch) {
+console.warn(&#x27;fase 5&#x27;);
             noloop = focusContainerNode.getAttr(&#x27;fm-noloop&#x27;);
             noloop = noloop &amp;&amp; (noloop.toLowerCase()===&#x27;true&#x27;);
             if (downwards) {
@@ -328,11 +337,14 @@ module.exports = function (window) {
             else {
                 nodeHit = sourceNode.previous(selector, focusContainerNode) || (noloop ? sourceNode.first(selector, focusContainerNode) : sourceNode.last(selector, focusContainerNode));
             }
+console.warn(&#x27;fase 6&#x27;);
             if (nodeHit===sourceNode) {
+console.warn(&#x27;fase 7&#x27;);
                 // cannot found another, return itself, BUT return &#x60;initialSourceNode&#x60; if it is available
                 return initialSourceNode || sourceNode;
             }
             else {
+console.warn(&#x27;fase 8&#x27;);
                 foundContainer = nodeHit.inside(&#x27;[fm-manage]&#x27;);
                 // only if &#x60;nodeHit&#x60; is inside the runniong focusContainer, we may return it,
                 // otherwise look further
@@ -348,9 +360,7 @@ module.exports = function (window) {
             index = focusContainerNode.getAll(selector).indexOf(node) || 0;
         // we also need to set the appropriate nodeData, so that when the itags re-render,
         // they don&#x27;t reset this particular information
-        focusContainerNode.getAll(&#x27;[fm-lastitem]&#x27;)
-                          .removeAttrs([&#x27;fm-lastitem&#x27;, &#x27;tabindex&#x27;], true)
-                          .removeData(&#x27;fm-tabindex&#x27;);
+        resetLastValue(focusContainerNode);
 
         // also store the lastitem&#x27;s index --&gt; in case the node gets removed,
         // or re-rendering itags which don&#x27;t have the attribute-data.
@@ -363,6 +373,13 @@ module.exports = function (window) {
         ], true);
     };
 
+    resetLastValue = function(focusContainerNode) {
+        var lastItemNodes = focusContainerNode.getAll(&#x27;[fm-lastitem]&#x27;);
+        lastItemNodes.removeAttrs([&#x27;fm-lastitem&#x27;, &#x27;tabindex&#x27;], true)
+                     .removeData(&#x27;fm-tabindex&#x27;);
+        focusContainerNode.removeData(&#x27;fm-lastitem-bkp&#x27;);
+    };
+
     searchFocusNode = function(initialNode, deeper) {
         console.log(NAME+&#x27;searchFocusNode&#x27;);
         var focusContainerNode = initialNode.hasAttr(&#x27;fm-manage&#x27;) ? initialNode : initialNode.inside(&#x27;[fm-manage]&#x27;),
@@ -372,14 +389,10 @@ module.exports = function (window) {
             selector = getFocusManagerSelector(focusContainerNode);
             focusNode = initialNode.matches(selector) ? initialNode : initialNode.inside(selector);
             // focusNode can only be equal focusContainerNode when focusContainerNode lies with a focusnode itself with that particular selector:
-console.warn(&#x27;fase A&#x27;);
             if (focusNode===focusContainerNode) {
-console.warn(&#x27;fase B&#x27;);
                 parentContainerNode = focusNode.inside(selector);
-console.warn(parentContainerNode);
                 if (parentContainerNode) {
                     parentSelector = getFocusManagerSelector(parentContainerNode);
-console.warn(parentSelector);
                     if (!focusNode.matches(parentSelector) || deeper) {
                         focusNode = null;
                     }
@@ -387,7 +400,6 @@ console.warn(parentSelector);
                 else {
                     focusNode = null;
                 }
-console.warn(focusNode);
             }
             if (focusNode &amp;&amp; focusContainerNode.contains(focusNode, true)) {
                 markAsFocussed(parentContainerNode || focusContainerNode, focusNode);
@@ -434,7 +446,6 @@ console.warn(focusNode);
             console.log(NAME+&#x27;before keydown-event&#x27;);
             var focusContainerNode,
                 sourceNode = e.target,
-                node = sourceNode.getParent(),
                 selector, keyCode, actionkey, focusNode, keys, len, lastIndex, specialKeysMatch, i, specialKey;
 
             focusContainerNode = sourceNode.inside(&#x27;[fm-manage]&#x27;);
@@ -444,25 +455,22 @@ console.warn(focusNode);
                 keyCode = e.keyCode;
 
                 // first check for keydown:
-                actionkey = node.getAttr(&#x27;fm-keydown&#x27;) || DEFAULT_KEYDOWN;
+                actionkey = focusContainerNode.getAttr(&#x27;fm-keydown&#x27;) || DEFAULT_KEYDOWN;
                 focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, true);
                 if (!focusNode) {
                     // check for keyup:
-                    actionkey = node.getAttr(&#x27;fm-keyup&#x27;) || DEFAULT_KEYUP;
+                    actionkey = focusContainerNode.getAttr(&#x27;fm-keyup&#x27;) || DEFAULT_KEYUP;
                     focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector);
                 }
                 if (!focusNode) {
-console.warn(&#x27;fase 1&#x27;);
                     // check for keyenter, but only when e.target equals a focusmanager:
                     if (sourceNode.matches(&#x27;[fm-manage]&#x27;)) {
-console.warn(&#x27;fase 2&#x27;);
-                        actionkey = node.getAttr(&#x27;fm-enter&#x27;) || DEFAULT_ENTER;
+                        actionkey = focusContainerNode.getAttr(&#x27;fm-enter&#x27;) || DEFAULT_ENTER;
                         keys = actionkey.split(&#x27;+&#x27;);
                         len = keys.length;
                         lastIndex = len - 1;
                         // double == --&gt; keyCode is number, keys is a string
                         if (keyCode==keys[lastIndex]) {
-console.warn(&#x27;fase 3&#x27;);
                             // posible keyup --&gt; check if special characters match:
                             specialKeysMatch = true;
                             SPECIAL_KEYS.some(function(value) {
@@ -474,17 +482,15 @@ console.warn(&#x27;fase 3&#x27;);
                                 specialKeysMatch = e[SPECIAL_KEYS[specialKey]];
                             }
                         }
-console.warn(&#x27;fase 4&#x27;);
                         if (specialKeysMatch) {
-console.warn(&#x27;fase 5&#x27;);
+                            resetLastValue(sourceNode);
                             focusNode = searchFocusNode(sourceNode, true);
-console.warn(focusNode);
                         }
                     }
                 }
                 if (!focusNode) {
                     // check for keyleave:
-                    actionkey = node.getAttr(&#x27;fm-leave&#x27;) || DEFAULT_LEAVE;
+                    actionkey = focusContainerNode.getAttr(&#x27;fm-leave&#x27;) || DEFAULT_LEAVE;
                     keys = actionkey.split(&#x27;+&#x27;);
                     len = keys.length;
                     lastIndex = len - 1;
@@ -502,6 +508,7 @@ console.warn(focusNode);
                         }
                     }
                     if (specialKeysMatch) {
+                        resetLastValue(focusContainerNode);
                         focusNode = focusContainerNode;
                     }
                 }
@@ -573,7 +580,7 @@ console.warn(focusNode);
             }
             if (focusContainerNode) {
                 if ((focusNode===focusContainerNode) || !focusNode.matches(getFocusManagerSelector(focusContainerNode))) {
-                    focusNode = searchFocusNode(focusNode);
+                    focusNode = searchFocusNode(focusNode, true);
                 }
                 if (focusNode.hasFocus()) {
                     markAsFocussed(focusContainerNode, focusNode);
