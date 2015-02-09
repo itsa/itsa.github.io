@@ -13091,7 +13091,7 @@
         },
         {
             "file": "src/focusmanager/focusmanager.js",
-            "line": 447,
+            "line": 436,
             "description": "In case of a manual focus (node.focus()) the node will fire an `manualfocus`-event\nwhich can be prevented.",
             "itemtype": "event",
             "name": "manualfocus",
@@ -17991,17 +17991,17 @@
                     "type": "Element"
                 },
                 {
+                    "name": "excludeItself",
+                    "description": "to exclude itsefl as a hit",
+                    "type": "Boolean",
+                    "optional": true
+                },
+                {
                     "name": "insideItags",
                     "description": "no deepsearch in iTags --> by default, these elements should be hidden",
                     "type": "Boolean",
                     "optional": true,
                     "optdefault": "false"
-                },
-                {
-                    "name": "excludeItself",
-                    "description": "to exclude itsefl as a hit",
-                    "type": "Boolean",
-                    "optional": true
                 }
             ],
             "return": {

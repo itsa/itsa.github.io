@@ -279,14 +279,12 @@ module.exports = function (window) {
         len = keys.length;
         lastIndex = len - 1;
 
-console.warn(&#x27;fase 1&#x27;);
         if ((keyCode===13) &amp;&amp; (sourceNode.getTagName()===&#x27;INPUT&#x27;)) {
             inputType = sourceNode.getAttr(&#x27;type&#x27;).toLowerCase();
             enterPressedOnInput = (inputType===&#x27;text&#x27;) || (inputType===&#x27;password&#x27;);
         }
 
         if (enterPressedOnInput) {
-console.warn(&#x27;fase 2&#x27;);
             // check if we need to press the primary button - if available
 /*jshint boss:true */
             if ((primaryonenter=sourceNode.getAttr(&#x27;fm-primaryonenter&#x27;)) &amp;&amp; (primaryonenter.toLowerCase()===&#x27;true&#x27;)) {
@@ -309,12 +307,8 @@ console.warn(&#x27;fase 2&#x27;);
                 }
             }
         }
-console.warn(&#x27;keyCode &#x27;+keyCode);
-console.warn(&#x27;keys[lastIndex] &#x27;+keys[lastIndex]);
-console.warn(&#x27;actionkey &#x27;+actionkey);
         // double == --&gt; keyCode is number, keys is a string
         if (enterPressedOnInput || (keyCode==keys[lastIndex])) {
-console.warn(&#x27;fase 3&#x27;);
             // posible keyup --&gt; check if special characters match:
             specialKeysMatch = true;
             SPECIAL_KEYS.some(function(value) {
@@ -326,9 +320,7 @@ console.warn(&#x27;fase 3&#x27;);
                 specialKeysMatch = e[SPECIAL_KEYS[specialKey]];
             }
         }
-console.warn(&#x27;fase 4&#x27;);
         if (specialKeysMatch) {
-console.warn(&#x27;fase 5&#x27;);
             noloop = focusContainerNode.getAttr(&#x27;fm-noloop&#x27;);
             noloop = noloop &amp;&amp; (noloop.toLowerCase()===&#x27;true&#x27;);
             if (downwards) {
@@ -337,14 +329,11 @@ console.warn(&#x27;fase 5&#x27;);
             else {
                 nodeHit = sourceNode.previous(selector, focusContainerNode) || (noloop ? sourceNode.first(selector, focusContainerNode) : sourceNode.last(selector, focusContainerNode));
             }
-console.warn(&#x27;fase 6&#x27;);
             if (nodeHit===sourceNode) {
-console.warn(&#x27;fase 7&#x27;);
                 // cannot found another, return itself, BUT return &#x60;initialSourceNode&#x60; if it is available
                 return initialSourceNode || sourceNode;
             }
             else {
-console.warn(&#x27;fase 8&#x27;);
                 foundContainer = nodeHit.inside(&#x27;[fm-manage]&#x27;);
                 // only if &#x60;nodeHit&#x60; is inside the runniong focusContainer, we may return it,
                 // otherwise look further
@@ -390,7 +379,7 @@ console.warn(&#x27;fase 8&#x27;);
             focusNode = initialNode.matches(selector) ? initialNode : initialNode.inside(selector);
             // focusNode can only be equal focusContainerNode when focusContainerNode lies with a focusnode itself with that particular selector:
             if (focusNode===focusContainerNode) {
-                parentContainerNode = focusNode.inside(selector);
+                parentContainerNode = focusNode.inside(&#x27;[fm-manage]&#x27;);
                 if (parentContainerNode) {
                     parentSelector = getFocusManagerSelector(parentContainerNode);
                     if (!focusNode.matches(parentSelector) || deeper) {

@@ -2,7 +2,7 @@
 module: focusmanager
 maintainer: Marco Asbreuk
 title: Nested focusmanagers in a form
-intro: "This example shows how to set up a simple focusmanagers with plain HTML. <br><br>By setting the focus to the container, the first element gets focussed automaticly. Looping through the focussable items can be done by the tab-keys - which is the default."
+intro: "This example shows how the focusmanager works when nested."
 ---
 
 <style type="text/css">
@@ -47,6 +47,7 @@ intro: "This example shows how to set up a simple focusmanagers with plain HTML.
         </div>
         <div class="container2 pure-form pure-form-aligned" fm-manage="true">
             <div class="pure-form-message-inline">Enter with key-right and leave with Esc</div>
+            <div class="pure-form-message-inline">Navigate with tab and shift+tab</div>
             <fieldset>
                 <div class="pure-control-group">
                     <label for="nameinner">Username</label>
