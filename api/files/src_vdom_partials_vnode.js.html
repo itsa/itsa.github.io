@@ -551,78 +551,70 @@ module.exports = function (window) {
     _matchesOneSelector = function(vnode, selector, relatedVNode) {
         var selList = _splitSelector(selector),
             size = selList.length,
-            originalVNode = vnode,
-            firstSelectorChar = selector[0],
-            i, selectorItem, selMatch, directMatch, vParentvChildren, indexRelated;
+            selMatch = false,
+            i, selectorItem, last,
+            rightvnode, relationMatch, checkRelation;
 
-        if (size===0) {
+        if (STORABLE_SPLIT_CHARACTER[selList[size-1]]) {
             return false;
         }
 
-        selectorItem = selList[size-1];
-        selMatch = _matchesSelectorItem(vnode, selectorItem);
-        for (i=size-2; (selMatch &amp;&amp; (i&gt;=0)); i--) {
-            selectorItem = selList[i];
-            if (SIBLING_MATCH_CHARACTER[selectorItem]) {
-                // need to search through the same level
-                if (--i&gt;=0) {
-                    directMatch = (selectorItem===&#x27;+&#x27;);
-                    selectorItem = selList[i];
-                    // need to search the previous siblings
-                    vnode = vnode.vPreviousElement;
-                    if (!vnode) {
-                        return false;
-                    }
-                    if (directMatch) {
-                        // should be immediate match
-                        selMatch = _matchesSelectorItem(vnode, selectorItem);
-                    }
-                    else {
-                        while (vnode &amp;&amp; !(selMatch=_matchesSelectorItem(vnode, selectorItem))) {
-                            vnode = vnode.vPreviousElement;
-                        }
-                    }
-                }
-            }
-            else {
-                // need to search up the tree
-                vnode = vnode.vParent;
-                if (!vnode || ((vnode===relatedVNode) &amp;&amp; (selectorItem!==&#x27;&gt;&#x27;))) {
-                    return false;
-                }
-                if (selectorItem===&#x27;&gt;&#x27;) {
-                    if (--i&gt;=0) {
-                        selectorItem = selList[i];
-                       // should be immediate match
-                        selMatch = _matchesSelectorItem(vnode, selectorItem);
-                    }
-                }
-                else {
-                    while (!(selMatch=_matchesSelectorItem(vnode, selectorItem))) {
-                        vnode = vnode.vParent;
-                        if (!vnode || (vnode===relatedVNode)) {
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        if (selMatch &amp;&amp; relatedVNode &amp;&amp; STORABLE_SPLIT_CHARACTER[firstSelectorChar]) {
+        relationMatch = function(leftVNode, rightVNode, relationCharacter) {
+            var match, vParent, vChildren;
             // when &#x60;selector&#x60; starts with &#x60;&gt;&#x60;, &#x60;~&#x60; or &#x60;+&#x60;, then
             // there should also be a match comparing a related node!
-            switch (firstSelectorChar) {
+            switch (relationCharacter) {
                 case &#x27;&gt;&#x27;:
-                    selMatch = (relatedVNode.vChildren.indexOf(originalVNode)!==-1);
+                    leftVNode || (leftVNode=rightVNode.vParent);
+                    match = (leftVNode.vChildren.indexOf(rightVNode)!==-1);
                 break;
                 case &#x27;~&#x27;:
-                    vParentvChildren = originalVNode.vParent.vChildren;
-                    indexRelated = vParentvChildren.indexOf(relatedVNode);
-                    selMatch = (indexRelated!==-1) &amp;&amp; (indexRelated&lt;vParentvChildren.indexOf(originalVNode));
+                    leftVNode || (leftVNode=rightVNode.vFirstElement);
+                    vParent = leftVNode.vParent;
+                    vChildren = vParent &amp;&amp; vParent.vChildren;
+                    match = vParent &amp;&amp; (vChildren.indexOf(leftVNode)&lt;vChildren.indexOf(rightVNode));
                 break;
                 case &#x27;+&#x27;:
-                    selMatch = (originalVNode.vPreviousElement === relatedVNode);
+                    leftVNode || (leftVNode=rightVNode.vPreviousElement);
+                    match = (leftVNode.vNextElement === rightVNode);
+            }
+            return !!match;
+        };
+        last = size - 1;
+        i = last;
+        while (vnode &amp;&amp; ((selMatch || (i===last)) &amp;&amp; (i&gt;=0))) {
+            selectorItem = selList[i];
+            if (STORABLE_SPLIT_CHARACTER[selectorItem]) {
+                checkRelation = selectorItem;
+                i--;
+            }
+            else {
+                selMatch = _matchesSelectorItem(vnode, selectorItem);
+                if (!selMatch &amp;&amp; (i===last)) {
+                    return false;
+                }
+                while (!selMatch &amp;&amp; vnode &amp;&amp; (i!==last)) {
+                    // may also look at nodes higher in the chain
+                    vnode = SIBLING_MATCH_CHARACTER[selList[i+1]] ? vnode.vPreviousElement : vnode.vParent;
+                    selMatch = vnode &amp;&amp; _matchesSelectorItem(vnode, selectorItem);
+                }
+                selMatch &amp;&amp; checkRelation &amp;&amp; vnode &amp;&amp; (selMatch=relationMatch(vnode, rightvnode, checkRelation));
+                rightvnode = vnode;
+                if (vnode) {
+                    // do a precheck on the next checkRelation:
+                    // and determine whether to set the vnode upper the tree or at the previous sibling:
+                    vnode = SIBLING_MATCH_CHARACTER[selList[i-1]] ? vnode.vPreviousElement : vnode.vParent;
+                }
+                if (selMatch) {
+                    checkRelation = false;
+                    i--;
+                }
             }
         }
+        if ((rightvnode===relatedVNode) || (i!==-1)) {
+            selMatch = false;
+        }
+        selMatch &amp;&amp; checkRelation &amp;&amp; rightvnode &amp;&amp; (selMatch=relationMatch(relatedVNode, rightvnode, checkRelation));
         return selMatch;
     };
 
@@ -1156,8 +1148,17 @@ module.exports = function (window) {
             return (otherVNode===this);
         },
 
+       /**
+        * Empties the vnode.
+        *
+        * Syncs with the dom.
+        *
+        * @method empty
+        * @chainable
+        * @since 0.0.1
+        */
         empty: function() {
-            this._setChildNodes([]);
+            return this._setChildNodes([]);
         },
 
        /**
@@ -2050,7 +2051,7 @@ module.exports = function (window) {
                                 bkpChildNodes = newChild.vChildNodes;
                                 oldChild.attrs.id &amp;&amp; (delete nodeids[oldChild.attrs.id]);
 /*jshint proto:true */
-                                oldChild.isItag &amp;&amp; oldChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
+                                oldChild.isItag &amp;&amp; oldChild.domNode.destroyUI &amp;&amp; oldChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
 /*jshint proto:false */
                                 newChild.attrs = {}; // reset to force defined by &#x60;_setAttrs&#x60;
                                 newChild.vChildNodes = []; // reset , to force defined by &#x60;_setAttrs&#x60;
@@ -2100,7 +2101,7 @@ module.exports = function (window) {
                                     prevSuppress = DOCUMENT._suppressMutationEvents || false;
                                     DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(true);
 /*jshint proto:true */
-                                    newChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
+                                    newChild.domNode.destroyUI &amp;&amp; newChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
 /*jshint proto:false */
                                     oldChild._setAttrs(newChild.attrs);
                                     newChild._destroy(true); // destroy through the vnode and removing from DOCUMENT._itagList

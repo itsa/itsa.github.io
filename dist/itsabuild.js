@@ -4907,9 +4907,22 @@ module.exports = function (window) {
             lastFocussed = e.target;
         });
 
+
+        // patching DOCUMENT.activeElement because it doesn't work well in a Mac: https://developer.mozilla.org/en-US/docs/Web/API/document.activeElement
+        // DOCUMENT._activeElement is used with the patch for DOCUMENT.activeElement its getter
         Event.after('focus', function() {
-            // DOCUMENT._activeElement is used with the patch for DOCUMENT.activeElement its getter
-            DOCUMENT._activeElement = lastFocussed;
+                DOCUMENT._activeElement = lastFocussed;
+        });
+
+        Event.before('blur', function() {
+                DOCUMENT._activeElement = null;
+        });
+
+        // Note: window.document has no prototype
+        Object.defineProperty(DOCUMENT, 'activeElement', {
+            get: function() {
+                return DOCUMENT._activeElement || DOCUMENT.body;
+            }
         });
 
     };
@@ -10294,7 +10307,7 @@ require('polyfill');
 var NAME = '[focusmanager]: ',
     async = require('utils').async,
     createHashMap = require('js-ext/extra/hashmap.js').createMap,
-    DEFAULT_SELECTOR = 'input, button, select, textarea, .focusable',
+    DEFAULT_SELECTOR = 'input, button, select, textarea, .focusable, [fm-manage]',
     // SPECIAL_KEYS needs to be a native Object --> we need .some()
     SPECIAL_KEYS = {
         shift: 'shiftKey',
@@ -10304,6 +10317,8 @@ var NAME = '[focusmanager]: ',
     },
     DEFAULT_KEYUP = 'shift+9',
     DEFAULT_KEYDOWN = '9',
+    DEFAULT_ENTER = '39',
+    DEFAULT_LEAVE = '27',
     FM_SELECTION = 'fm-selection',
     FM_SELECTION_START = FM_SELECTION+'start',
     FM_SELECTION_END = FM_SELECTION+'end',
@@ -10312,7 +10327,8 @@ var NAME = '[focusmanager]: ',
 module.exports = function (window) {
 
     var DOCUMENT = window.document,
-        nodePlugin, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed, getFocusManagerSelector, setupEvents, defineFocusEvent;
+        nodePlugin, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed,
+        resetLastValue, getFocusManagerSelector, setupEvents, defineFocusEvent;
 
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
@@ -10332,10 +10348,10 @@ module.exports = function (window) {
         return selector;
     };
 
-    nextFocusNode = function(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, downwards) {
+    nextFocusNode = function(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, downwards, initialSourceNode) {
         console.log(NAME+'nextFocusNode');
         var keys, lastIndex, i, specialKeysMatch, specialKey, len, enterPressedOnInput, primaryButtons,
-            inputType, foundNode, formNode, primaryonenter, noloop;
+            inputType, foundNode, formNode, primaryonenter, noloop, nodeHit, foundContainer;
         keys = actionkey.split('+');
         len = keys.length;
         lastIndex = len - 1;
@@ -10385,10 +10401,20 @@ module.exports = function (window) {
             noloop = focusContainerNode.getAttr('fm-noloop');
             noloop = noloop && (noloop.toLowerCase()==='true');
             if (downwards) {
-                return sourceNode.next(selector) || (noloop ? sourceNode.last(selector) : sourceNode.first(selector));
+                nodeHit = sourceNode.next(selector, focusContainerNode) || (noloop ? sourceNode.last(selector, focusContainerNode) : sourceNode.first(selector, focusContainerNode));
             }
             else {
-                return sourceNode.previous(selector) || (noloop ? sourceNode.first(selector) : sourceNode.last(selector));
+                nodeHit = sourceNode.previous(selector, focusContainerNode) || (noloop ? sourceNode.first(selector, focusContainerNode) : sourceNode.last(selector, focusContainerNode));
+            }
+            if (nodeHit===sourceNode) {
+                // cannot found another, return itself, BUT return `initialSourceNode` if it is available
+                return initialSourceNode || sourceNode;
+            }
+            else {
+                foundContainer = nodeHit.inside('[fm-manage]');
+                // only if `nodeHit` is inside the runniong focusContainer, we may return it,
+                // otherwise look further
+                return (foundContainer===focusContainerNode) ? nodeHit : nextFocusNode(e, keyCode, actionkey, focusContainerNode, nodeHit, selector, downwards, sourceNode);
             }
         }
         return false;
@@ -10400,32 +10426,49 @@ module.exports = function (window) {
             index = focusContainerNode.getAll(selector).indexOf(node) || 0;
         // we also need to set the appropriate nodeData, so that when the itags re-render,
         // they don't reset this particular information
-        focusContainerNode.getAll('[fm-lastitem]')
-                          .removeAttrs(['fm-lastitem', 'tabindex'], true)
-                          .removeData('fm-tabindex');
+        resetLastValue(focusContainerNode);
 
         // also store the lastitem's index --> in case the node gets removed,
         // or re-rendering itags which don't have the attribute-data.
         // otherwise, a refocus on the container will set the focus to the nearest item
         focusContainerNode.setData('fm-lastitem-bkp', index);
         node.setData('fm-tabindex', true);
-
         node.setAttrs([
             {name: 'tabindex', value: '0'},
             {name: 'fm-lastitem', value: true}
-        ]);
+        ], true);
     };
 
-    searchFocusNode = function(initialNode) {
+    resetLastValue = function(focusContainerNode) {
+        var lastItemNodes = focusContainerNode.getAll('[fm-lastitem]');
+        lastItemNodes.removeAttrs(['fm-lastitem', 'tabindex'], true)
+                     .removeData('fm-tabindex');
+        focusContainerNode.removeData('fm-lastitem-bkp');
+    };
+
+    searchFocusNode = function(initialNode, deeper) {
         console.log(NAME+'searchFocusNode');
         var focusContainerNode = initialNode.hasAttr('fm-manage') ? initialNode : initialNode.inside('[fm-manage]'),
-            focusNode, alwaysDefault, fmAlwaysDefault, selector, allFocusableNodes, index;
+            focusNode, alwaysDefault, fmAlwaysDefault, selector, allFocusableNodes, index, parentContainerNode, parentSelector;
 
         if (focusContainerNode) {
             selector = getFocusManagerSelector(focusContainerNode);
             focusNode = initialNode.matches(selector) ? initialNode : initialNode.inside(selector);
-            if (focusNode && focusContainerNode.contains(focusNode)) {
-                markAsFocussed(focusContainerNode, focusNode);
+            // focusNode can only be equal focusContainerNode when focusContainerNode lies with a focusnode itself with that particular selector:
+            if (focusNode===focusContainerNode) {
+                parentContainerNode = focusNode.inside('[fm-manage]');
+                if (parentContainerNode) {
+                    parentSelector = getFocusManagerSelector(parentContainerNode);
+                    if (!focusNode.matches(parentSelector) || deeper) {
+                        focusNode = null;
+                    }
+                }
+                else {
+                    focusNode = null;
+                }
+            }
+            if (focusNode && focusContainerNode.contains(focusNode, true)) {
+                markAsFocussed(parentContainerNode || focusContainerNode, focusNode);
             }
             else {
                 // find the right node that should get focus
@@ -10450,7 +10493,7 @@ module.exports = function (window) {
                 // still not found: try the first focussable node (which we might find inside `allFocusableNodes`:
                 !focusNode && (focusNode = allFocusableNodes ? allFocusableNodes[0] : focusContainerNode.getElement(selector));
                 if (focusNode) {
-                    markAsFocussed(focusContainerNode, focusNode);
+                    markAsFocussed(parentContainerNode || focusContainerNode, focusNode);
                 }
                 else {
                     focusNode = initialNode;
@@ -10469,8 +10512,7 @@ module.exports = function (window) {
             console.log(NAME+'before keydown-event');
             var focusContainerNode,
                 sourceNode = e.target,
-                node = sourceNode.getParent(),
-                selector, keyCode, actionkey, focusNode;
+                selector, keyCode, actionkey, focusNode, keys, len, lastIndex, specialKeysMatch, i, specialKey;
 
             focusContainerNode = sourceNode.inside('[fm-manage]');
             if (focusContainerNode) {
@@ -10479,12 +10521,62 @@ module.exports = function (window) {
                 keyCode = e.keyCode;
 
                 // first check for keydown:
-                actionkey = node.getAttr('fm-keydown') || DEFAULT_KEYDOWN;
+                actionkey = focusContainerNode.getAttr('fm-keydown') || DEFAULT_KEYDOWN;
                 focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, true);
                 if (!focusNode) {
                     // check for keyup:
-                    actionkey = node.getAttr('fm-keyup') || DEFAULT_KEYUP;
+                    actionkey = focusContainerNode.getAttr('fm-keyup') || DEFAULT_KEYUP;
                     focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector);
+                }
+                if (!focusNode) {
+                    // check for keyenter, but only when e.target equals a focusmanager:
+                    if (sourceNode.matches('[fm-manage]')) {
+                        actionkey = focusContainerNode.getAttr('fm-enter') || DEFAULT_ENTER;
+                        keys = actionkey.split('+');
+                        len = keys.length;
+                        lastIndex = len - 1;
+                        // double == --> keyCode is number, keys is a string
+                        if (keyCode==keys[lastIndex]) {
+                            // posible keyup --> check if special characters match:
+                            specialKeysMatch = true;
+                            SPECIAL_KEYS.some(function(value) {
+                                specialKeysMatch = !e[value];
+                                return !specialKeysMatch;
+                            });
+                            for (i=lastIndex-1; (i>=0) && !specialKeysMatch; i--) {
+                                specialKey = keys[i].toLowerCase();
+                                specialKeysMatch = e[SPECIAL_KEYS[specialKey]];
+                            }
+                        }
+                        if (specialKeysMatch) {
+                            resetLastValue(sourceNode);
+                            focusNode = searchFocusNode(sourceNode, true);
+                        }
+                    }
+                }
+                if (!focusNode) {
+                    // check for keyleave:
+                    actionkey = focusContainerNode.getAttr('fm-leave') || DEFAULT_LEAVE;
+                    keys = actionkey.split('+');
+                    len = keys.length;
+                    lastIndex = len - 1;
+                    // double == --> keyCode is number, keys is a string
+                    if (keyCode==keys[lastIndex]) {
+                        // posible keyup --> check if special characters match:
+                        specialKeysMatch = true;
+                        SPECIAL_KEYS.some(function(value) {
+                            specialKeysMatch = !e[value];
+                            return !specialKeysMatch;
+                        });
+                        for (i=lastIndex-1; (i>=0) && !specialKeysMatch; i--) {
+                            specialKey = keys[i].toLowerCase();
+                            specialKeysMatch = e[SPECIAL_KEYS[specialKey]];
+                        }
+                    }
+                    if (specialKeysMatch) {
+                        resetLastValue(focusContainerNode);
+                        focusNode = focusContainerNode;
+                    }
                 }
                 if (focusNode) {
                     e.preventDefaultContinue();
@@ -10554,7 +10646,7 @@ module.exports = function (window) {
             }
             if (focusContainerNode) {
                 if ((focusNode===focusContainerNode) || !focusNode.matches(getFocusManagerSelector(focusContainerNode))) {
-                    focusNode = searchFocusNode(focusNode);
+                    focusNode = searchFocusNode(focusNode, true);
                 }
                 if (focusNode.hasFocus()) {
                     markAsFocussed(focusContainerNode, focusNode);
@@ -10577,8 +10669,8 @@ module.exports = function (window) {
                 // key was pressed inside a focusmanagable container
                 selector = getFocusManagerSelector(focusContainerNode);
                 if (sourceNode.matches(selector)) {
-                    sourceNode.setAttr(FM_SELECTION_START, sourceNode.selectionStart || '0')
-                              .setAttr(FM_SELECTION_END, sourceNode.selectionEnd || '0');
+                    sourceNode.setAttr(FM_SELECTION_START, sourceNode.selectionStart || '0', true)
+                              .setAttr(FM_SELECTION_END, sourceNode.selectionEnd || '0', true);
                 }
             }
         }, 'input[type="text"], textarea');
@@ -10628,14 +10720,14 @@ module.exports = function (window) {
     (function(HTMLElementPrototype) {
 
         HTMLElementPrototype._focus = HTMLElementPrototype.focus;
-        HTMLElementPrototype.focus = function(noRender) {
+        HTMLElementPrototype.focus = function(noRender, noRefocus) {
             console.log(NAME+'focus');
             /**
              * In case of a manual focus (node.focus()) the node will fire an `manualfocus`-event
              * which can be prevented.
              * @event manualfocus
             */
-            var focusNode = searchFocusNode(this),
+            var focusNode = noRefocus ? this : searchFocusNode(this),
                 emitterName = focusNode._emitterName,
                 customevent = emitterName+':manualfocus';
             Event._ce[customevent] || defineFocusEvent(customevent);
@@ -12083,7 +12175,7 @@ require('../lib/object.js');
                     // if nameInProto: set the property, but also backup for chaining using $$orig
                     propDescriptor = Object.getOwnPropertyDescriptor(prototypes, name);
                     if (!propDescriptor.writable) {
-                        console.warn(NAME+'mergePrototypes will set property of '+name+' without its property-descriptor: for it is an unwritable property.');
+                        console.info(NAME+'mergePrototypes will set property of '+name+' without its property-descriptor: for it is an unwritable property.');
                         proto[finalName] = prototypes[name];
                     }
                     else {
@@ -16118,16 +16210,7 @@ module.exports = function (window) {
     // prevent double definition:
     window._ITSAmodules.ExtendDocument = true;
 
-    var DOCUMENT = window.document,
-        activeElementBKP = DOCUMENT.activeElement;
-
-    // Note: window.document has no prototype
-
-    Object.defineProperty(DOCUMENT, 'activeElement', {
-        get: function() {
-            return DOCUMENT._activeElement || activeElementBKP;
-        }
-    });
+    var DOCUMENT = window.document;
 
     /**
      * Returns a newly created TreeWalker object.
@@ -17846,7 +17929,8 @@ module.exports = function (window) {
         ElementPrototype.compareDocumentPosition = function(otherElement) {
             // see http://ejohn.org/blog/comparing-document-position/
             var instance = this,
-                parent, index1, index2, vChildNodes;
+                parent, index1, index2, vChildNodes, vnode, otherVNode,
+                i_instance, i_other, sameLevel, arrayInstance, arrayOther;
             if (instance===otherElement) {
                 return 0;
             }
@@ -17861,27 +17945,71 @@ module.exports = function (window) {
             }
             parent = instance.getParent();
             vChildNodes = parent.vnode.vChildNodes;
-            index1 = vChildNodes.indexOf(instance.vnode);
-            index2 = vChildNodes.indexOf(otherElement.vnode);
+            vnode = instance.vnode;
+            otherVNode = otherElement.vnode;
+            index1 = vChildNodes.indexOf(vnode);
+            index2 = vChildNodes.indexOf(otherVNode);
+            if ((index1!==-1) && (index2!==-1)) {
+                if (index1<index2) {
+                    return 4;
+                }
+                else {
+                    return 2;
+                }
+            }
+            // still not found, now we need to inspect the tree-structure of both elements
+            // and determine at what point (up-down the tree) the elements are going to differ
+            arrayInstance = [];
+            arrayOther = [];
+            arrayInstance[0] = vnode;
+/*jshint boss:true */
+            while (vnode=vnode.vParent) {
+/*jshint boss:false */
+                arrayInstance[arrayInstance.length] = vnode;
+            }
+            arrayOther[0] = otherVNode;
+/*jshint boss:true */
+            while (otherVNode=otherVNode.vParent) {
+/*jshint boss:false */
+                arrayOther[arrayOther.length] = otherVNode;
+            }
+            i_instance = arrayInstance.length - 1;
+            i_other = arrayOther.length - 1;
+            sameLevel = true;
+            while (sameLevel && (i_instance>=0) && (i_other>=0)) {
+                // starts with the most upper element
+                vnode = arrayInstance[i_instance];
+                otherVNode = arrayOther[i_other];
+                sameLevel = (vnode===otherVNode);
+                i_instance--;
+                i_other--;
+            }
+            // now we are out and we should be able to compare `vnode` and `otherVNode` which lie at the same level though are different
+            parent = vnode.vParent;
+            vChildNodes = parent.vChildNodes;
+            index1 = vChildNodes.indexOf(vnode);
+            index2 = vChildNodes.indexOf(otherVNode);
             if (index1<index2) {
-                return 2;
+                return 4;
             }
             else {
-                return 4;
+                return 2;
             }
         };
 
         /**
-         * Indicating whether this Element contains OR equals otherElement.
+         * Indicating whether this Element contains OR equals otherElement. If you need only to be sure the other Element lies inside,
+         * but not equals itself, set `excludeItself` true.
          *
          * @method contains
          * @param otherElement {Element}
+         * @param [excludeItself] {Boolean} to exclude itsefl as a hit
          * @param [insideItags=false] {Boolean} no deepsearch in iTags --> by default, these elements should be hidden
          * @return {Boolean} whether this Element contains OR equals otherElement.
          */
-        ElementPrototype.contains = function(otherElement, insideItags) {
+        ElementPrototype.contains = function(otherElement, excludeItself, insideItags) {
             if (otherElement===this) {
-                return true;
+                return !excludeItself;
             }
             return this.vnode.contains(otherElement.vnode, !insideItags);
         };
@@ -17967,11 +18095,18 @@ module.exports = function (window) {
          *
          * @method first
          * @param [cssSelector] {String} to return the first Element that matches the css-selector
+         * @param [container] {HTMLElement} the container-element to search within --> this lead into searching out of the same level
          * @return {Element}
          * @since 0.0.1
          */
-        ElementPrototype.first = function(cssSelector) {
-            return this.vnode.vParent.firstOfVChildren(cssSelector).domNode;
+        ElementPrototype.first = function(cssSelector, container) {
+            var parent, firstV;
+            if (container) {
+                return container.querySelector(cssSelector);
+            }
+            parent = this.vnode.vParent;
+            firstV = parent && parent.firstOfVChildren(cssSelector);
+            return firstV && firstV.domNode;
         };
 
         /**
@@ -18241,7 +18376,7 @@ module.exports = function (window) {
          */
         ElementPrototype.getElementById = function(id, insideItags) {
             var element = nodeids[id];
-            if (element && !this.contains(element, insideItags)) {
+            if (element && !this.contains(element, true, insideItags)) {
                 // outside itself
                 return null;
             }
@@ -18602,8 +18737,7 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         ElementPrototype.hasFocusInside = function() {
-            var activeElement = DOCUMENT.activeElement;
-            return ((DOCUMENT.activeElement!==this) && this.contains(activeElement));
+            return this.contains(DOCUMENT.activeElement, true);
         };
 
        /**
@@ -18725,7 +18859,7 @@ module.exports = function (window) {
             if (this.vnode.removedFromDOM) {
                 return false;
             }
-            return DOCUMENT.contains(this, true);
+            return DOCUMENT.contains(this, false, true);
         };
 
        /**
@@ -18806,12 +18940,19 @@ module.exports = function (window) {
          *
          * @method last
          * @param [cssSelector] {String} to return the last Element that matches the css-selector
+         * @param [container] {HTMLElement} the container-element to search within --> this lead into searching out of the same level
          * @return {Element}
          * @since 0.0.1
          */
-        ElementPrototype.last = function(cssSelector) {
-            var vParent = this.vnode.vParent;
-            return vParent && vParent.lastOfVChildren(cssSelector).domNode;
+        ElementPrototype.last = function(cssSelector, container) {
+            var vParent, lastV, found;
+            if (container) {
+                found = container.querySelectorAll(cssSelector);
+                return found[found.length-1];
+            }
+            vParent = this.vnode.vParent;
+            lastV = vParent && vParent.lastOfVChildren(cssSelector);
+            return lastV && lastV.domNode;
         };
 
         /**
@@ -18858,13 +18999,17 @@ module.exports = function (window) {
          *
          * @method next
          * @param [cssSelector] {String} css-selector to be used as a filter
+         * @param [container] {HTMLElement} the container-element to search within --> this lead into searching out of the same level
          * @return {Element|null}
          * @type Element
          * @since 0.0.1
          */
-        ElementPrototype.next = function(cssSelector) {
+        ElementPrototype.next = function(cssSelector, container) {
             var vnode = this.vnode,
                 found, vNextElement, firstCharacter, i, len;
+            if (container) {
+                return container.querySelector(cssSelector, false, this, 2) || null;
+            }
             if (!cssSelector) {
                 vNextElement = vnode.vNextElement;
                 return vNextElement && vNextElement.domNode;
@@ -18947,13 +19092,18 @@ module.exports = function (window) {
          *
          * @method previous
          * @param [cssSelector] {String} css-selector to be used as a filter
+         * @param [container] {HTMLElement} the container-element to search within --> this lead into searching out of the same level
          * @return {Element|null}
          * @type Element
          * @since 0.0.1
          */
-        ElementPrototype.previous = function(cssSelector) {
+        ElementPrototype.previous = function(cssSelector, container) {
             var vnode = this.vnode,
                 found, vPreviousElement, firstCharacter, i, len;
+            if (container) {
+                found = container.querySelectorAll(cssSelector, false, this, 4);
+                return (found.length>0) ? found[found.length-1] :  null;
+            }
             if (!cssSelector) {
                 vPreviousElement = vnode.vPreviousElement;
                 return vPreviousElement && vPreviousElement.domNode;
@@ -18984,24 +19134,33 @@ module.exports = function (window) {
          * @method querySelector
          * @param selectors {String} CSS-selector(s) that should match
          * @param [insideItags=false] {Boolean} no deepsearch in iTags --> by default, these elements should be hidden
+         * @param [refNode] {HTMLElement} reference-node where the found node should be `before` or `after`: specified by domPosition
+         * @param [domPosition] {Number} The position to accept, compared to `refNode`. Should be either:
+         * <ul>
+         *     <li>Node.DOCUMENT_POSITION_PRECEDING === 2 (this Element comes before otherElement)</li>
+         *     <li>Node.DOCUMENT_POSITION_FOLLOWING === 4 (this Element comes after otherElement)</li>
+         * </ul>
          * @return {Element}
          */
-        ElementPrototype.querySelector = function(selectors, insideItags) {
+        ElementPrototype.querySelector = function(selectors, insideItags, refNode, domPosition) {
             var found,
                 i = -1,
-                len = selectors.length,
-                firstCharacter, startvnode,
                 thisvnode = this.vnode,
-                inspectChildren = function(vnode) {
-                    var vChildren = vnode.vChildren,
-                        len2 = vChildren ? vChildren.length : 0,
-                        j, vChildNode;
-                    for (j=0; (j<len2) && !found; j++) {
-                        vChildNode = vChildren[j];
-                        vChildNode.matchesSelector(selectors, thisvnode) && (found=vChildNode.domNode);
-                        found || (!insideItags && vChildNode.isItag && vChildNode.domNode.contentHidden) || inspectChildren(vChildNode); // not dive into itags (except from when content is not hidden)
+                len, firstCharacter, startvnode, inspectChildren;
+            selectors || (selectors='*');
+            len = selectors.length;
+            inspectChildren = function(vnode) {
+                var vChildren = vnode.vChildren,
+                    len2 = vChildren ? vChildren.length : 0,
+                    j, vChildNode;
+                for (j=0; (j<len2) && !found; j++) {
+                    vChildNode = vChildren[j];
+                    if (vChildNode.matchesSelector(selectors, thisvnode) && (!refNode || ((vChildNode.domNode.compareDocumentPosition(refNode) & domPosition)!==0))) {
+                        found = vChildNode.domNode;
                     }
-                };
+                    found || (!insideItags && vChildNode.isItag && vChildNode.domNode.contentHidden) || inspectChildren(vChildNode); // not dive into itags (except from when content is not hidden)
+                }
+            };
             while (!firstCharacter && (++i<len)) {
                 firstCharacter = selectors[i];
                 (firstCharacter===' ') && (firstCharacter=null);
@@ -19020,24 +19179,33 @@ module.exports = function (window) {
          * @method querySelectorAll
          * @param selectors {String} CSS-selector(s) that should match
          * @param [insideItags=false] {Boolean} no deepsearch in iTags --> by default, these elements should be hidden
+         * @param [refNode] {HTMLElement} reference-node where the found nodes should be `before` or `after`: specified by domPosition
+         * @param [domPosition] {Number} The position to accept, compared to `refNode`. Should be either:
+         * <ul>
+         *     <li>Node.DOCUMENT_POSITION_PRECEDING === 2 (this Element comes before otherElement)</li>
+         *     <li>Node.DOCUMENT_POSITION_FOLLOWING === 4 (this Element comes after otherElement)</li>
+         * </ul>
          * @return {ElementArray} non-life Array (snapshot) with Elements
          */
-        ElementPrototype.querySelectorAll = function(selectors, insideItags) {
+        ElementPrototype.querySelectorAll = function(selectors, insideItags, refNode, domPosition) {
             var found = ElementArray.createArray(),
                 i = -1,
-                len = selectors.length,
-                firstCharacter, startvnode,
                 thisvnode = this.vnode,
-                inspectChildren = function(vnode) {
-                    var vChildren = vnode.vChildren,
-                        len2 = vChildren ? vChildren.length : 0,
-                        j, vChildNode;
-                    for (j=0; j<len2; j++) {
-                        vChildNode = vChildren[j];
-                        vChildNode.matchesSelector(selectors, thisvnode) && (found[found.length]=vChildNode.domNode);
-                        (!insideItags && vChildNode.isItag && vChildNode.domNode.contentHidden) || inspectChildren(vChildNode); // not dive into itags
+                len, firstCharacter, startvnode, inspectChildren;
+            selectors || (selectors='*');
+            len = selectors.length,
+            inspectChildren = function(vnode) {
+                var vChildren = vnode.vChildren,
+                    len2 = vChildren ? vChildren.length : 0,
+                    j, vChildNode;
+                for (j=0; j<len2; j++) {
+                    vChildNode = vChildren[j];
+                    if (vChildNode.matchesSelector(selectors, thisvnode) && (!refNode || ((vChildNode.domNode.compareDocumentPosition(refNode) & domPosition)!==0))) {
+                        found[found.length] = vChildNode.domNode;
                     }
-                };
+                    (!insideItags && vChildNode.isItag && vChildNode.domNode.contentHidden) || inspectChildren(vChildNode); // not dive into itags
+                }
+            };
             while (!firstCharacter && (++i<len)) {
                 firstCharacter = selectors[i];
                 (firstCharacter===' ') && (firstCharacter=null);
@@ -21814,6 +21982,64 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap,
     },
 /*jshint proto:false */
     charToEntity = {},
+
+// Void Elements - HTML 4.01
+    DEFAULT_VOID = createHashMap({
+        AREA: true,
+        BASE: true,
+        BASEFONT: true,
+        BR: true,
+        COL: true,
+        FRAME: true,
+        HR: true,
+        IMG: true,
+        INPUT: true,
+        ISINDEX: true,
+        LINK: true,
+        META: true,
+        PARAM: true,
+        EMBED: true
+    }),
+
+    // Block Elements - HTML 4.01
+    DEFAULT_NON_BLOCK = createHashMap({
+        ADDRESS: true,
+        APPLET: true,
+        BLOCKQUITE: true,
+        BUTTON: true,
+        CENTER: true,
+        DD: true,
+        DEL: true,
+        DIR: true,
+        DIV: true,
+        DL: true,
+        DT: true,
+        FIELDSET: true,
+        FORM: true,
+        FRAMESET: true,
+        IFRAME: true,
+        INS: true,
+        ISINDEX: true,
+        LI: true,
+        MAP: true,
+        MENU: true,
+        NOFRAMES: true,
+        NOSCRIPT: true,
+        OBJECT: true,
+        OL: true,
+        P: true,
+        PRE: true,
+        SCRIPT: true,
+        TABLE: true,
+        TBODY: true,
+        TD: true,
+        TFOOT: true,
+        TH: true,
+        THEAD: true,
+        TR: true,
+        UL: true
+    }),
+
     entityName;
 
 for (entityName in ENTITY_TO_CODE) {
@@ -21867,7 +22093,7 @@ module.exports = function (window) {
      * @type Object
      * @since 0.0.1
      */
-    NS.nonVoidElements || (NS.nonVoidElements=createHashMap());
+    NS.nonVoidElements || (NS.nonVoidElements=DEFAULT_NON_BLOCK);
 
     /**
      * A hash to identify what tagNames are equal to `SCRIPT` or `STYLE`.
@@ -21904,7 +22130,7 @@ module.exports = function (window) {
      * @type Object
      * @since 0.0.1
      */
-    NS.voidElements || (NS.voidElements=createHashMap());
+    NS.voidElements || (NS.voidElements=DEFAULT_VOID);
 
     NS.UnescapeEntities = function(str) {
         return str.replace(
@@ -22268,78 +22494,70 @@ module.exports = function (window) {
     _matchesOneSelector = function(vnode, selector, relatedVNode) {
         var selList = _splitSelector(selector),
             size = selList.length,
-            originalVNode = vnode,
-            firstSelectorChar = selector[0],
-            i, selectorItem, selMatch, directMatch, vParentvChildren, indexRelated;
+            selMatch = false,
+            i, selectorItem, last,
+            rightvnode, relationMatch, checkRelation;
 
-        if (size===0) {
+        if (STORABLE_SPLIT_CHARACTER[selList[size-1]]) {
             return false;
         }
 
-        selectorItem = selList[size-1];
-        selMatch = _matchesSelectorItem(vnode, selectorItem);
-        for (i=size-2; (selMatch && (i>=0)); i--) {
-            selectorItem = selList[i];
-            if (SIBLING_MATCH_CHARACTER[selectorItem]) {
-                // need to search through the same level
-                if (--i>=0) {
-                    directMatch = (selectorItem==='+');
-                    selectorItem = selList[i];
-                    // need to search the previous siblings
-                    vnode = vnode.vPreviousElement;
-                    if (!vnode) {
-                        return false;
-                    }
-                    if (directMatch) {
-                        // should be immediate match
-                        selMatch = _matchesSelectorItem(vnode, selectorItem);
-                    }
-                    else {
-                        while (vnode && !(selMatch=_matchesSelectorItem(vnode, selectorItem))) {
-                            vnode = vnode.vPreviousElement;
-                        }
-                    }
-                }
-            }
-            else {
-                // need to search up the tree
-                vnode = vnode.vParent;
-                if (!vnode || ((vnode===relatedVNode) && (selectorItem!=='>'))) {
-                    return false;
-                }
-                if (selectorItem==='>') {
-                    if (--i>=0) {
-                        selectorItem = selList[i];
-                       // should be immediate match
-                        selMatch = _matchesSelectorItem(vnode, selectorItem);
-                    }
-                }
-                else {
-                    while (!(selMatch=_matchesSelectorItem(vnode, selectorItem))) {
-                        vnode = vnode.vParent;
-                        if (!vnode || (vnode===relatedVNode)) {
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        if (selMatch && relatedVNode && STORABLE_SPLIT_CHARACTER[firstSelectorChar]) {
+        relationMatch = function(leftVNode, rightVNode, relationCharacter) {
+            var match, vParent, vChildren;
             // when `selector` starts with `>`, `~` or `+`, then
             // there should also be a match comparing a related node!
-            switch (firstSelectorChar) {
+            switch (relationCharacter) {
                 case '>':
-                    selMatch = (relatedVNode.vChildren.indexOf(originalVNode)!==-1);
+                    leftVNode || (leftVNode=rightVNode.vParent);
+                    match = (leftVNode.vChildren.indexOf(rightVNode)!==-1);
                 break;
                 case '~':
-                    vParentvChildren = originalVNode.vParent.vChildren;
-                    indexRelated = vParentvChildren.indexOf(relatedVNode);
-                    selMatch = (indexRelated!==-1) && (indexRelated<vParentvChildren.indexOf(originalVNode));
+                    leftVNode || (leftVNode=rightVNode.vFirstElement);
+                    vParent = leftVNode.vParent;
+                    vChildren = vParent && vParent.vChildren;
+                    match = vParent && (vChildren.indexOf(leftVNode)<vChildren.indexOf(rightVNode));
                 break;
                 case '+':
-                    selMatch = (originalVNode.vPreviousElement === relatedVNode);
+                    leftVNode || (leftVNode=rightVNode.vPreviousElement);
+                    match = (leftVNode.vNextElement === rightVNode);
+            }
+            return !!match;
+        };
+        last = size - 1;
+        i = last;
+        while (vnode && ((selMatch || (i===last)) && (i>=0))) {
+            selectorItem = selList[i];
+            if (STORABLE_SPLIT_CHARACTER[selectorItem]) {
+                checkRelation = selectorItem;
+                i--;
+            }
+            else {
+                selMatch = _matchesSelectorItem(vnode, selectorItem);
+                if (!selMatch && (i===last)) {
+                    return false;
+                }
+                while (!selMatch && vnode && (i!==last)) {
+                    // may also look at nodes higher in the chain
+                    vnode = SIBLING_MATCH_CHARACTER[selList[i+1]] ? vnode.vPreviousElement : vnode.vParent;
+                    selMatch = vnode && _matchesSelectorItem(vnode, selectorItem);
+                }
+                selMatch && checkRelation && vnode && (selMatch=relationMatch(vnode, rightvnode, checkRelation));
+                rightvnode = vnode;
+                if (vnode) {
+                    // do a precheck on the next checkRelation:
+                    // and determine whether to set the vnode upper the tree or at the previous sibling:
+                    vnode = SIBLING_MATCH_CHARACTER[selList[i-1]] ? vnode.vPreviousElement : vnode.vParent;
+                }
+                if (selMatch) {
+                    checkRelation = false;
+                    i--;
+                }
             }
         }
+        if ((rightvnode===relatedVNode) || (i!==-1)) {
+            selMatch = false;
+        }
+        selMatch && checkRelation && rightvnode && (selMatch=relationMatch(relatedVNode, rightvnode, checkRelation));
         return selMatch;
     };
 
@@ -22873,8 +23091,17 @@ module.exports = function (window) {
             return (otherVNode===this);
         },
 
+       /**
+        * Empties the vnode.
+        *
+        * Syncs with the dom.
+        *
+        * @method empty
+        * @chainable
+        * @since 0.0.1
+        */
         empty: function() {
-            this._setChildNodes([]);
+            return this._setChildNodes([]);
         },
 
        /**
@@ -23767,7 +23994,7 @@ module.exports = function (window) {
                                 bkpChildNodes = newChild.vChildNodes;
                                 oldChild.attrs.id && (delete nodeids[oldChild.attrs.id]);
 /*jshint proto:true */
-                                oldChild.isItag && oldChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
+                                oldChild.isItag && oldChild.domNode.destroyUI && oldChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
 /*jshint proto:false */
                                 newChild.attrs = {}; // reset to force defined by `_setAttrs`
                                 newChild.vChildNodes = []; // reset , to force defined by `_setAttrs`
@@ -23817,7 +24044,7 @@ module.exports = function (window) {
                                     prevSuppress = DOCUMENT._suppressMutationEvents || false;
                                     DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
 /*jshint proto:true */
-                                    newChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
+                                    newChild.domNode.destroyUI && newChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
 /*jshint proto:false */
                                     oldChild._setAttrs(newChild.attrs);
                                     newChild._destroy(true); // destroy through the vnode and removing from DOCUMENT._itagList
