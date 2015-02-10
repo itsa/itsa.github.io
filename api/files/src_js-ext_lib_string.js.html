@@ -243,7 +243,8 @@
         PATTERN_FLOAT_COMMA = new RegExp(PATTERN_FLOAT_START + &#x27;,&#x27; + PATTERN_FLOAT_END),
         PATTERN_FLOAT_DOT = new RegExp(PATTERN_FLOAT_START + &#x27;.&#x27; + PATTERN_FLOAT_END),
         PATTERN_HEX_COLOR_ALPHA = /^#?[0-9A-F]{4}([0-9A-F]{4})?$/,
-        PATTERN_HEX_COLOR = /^#?[0-9A-F]{3}([0-9A-F]{3})?$/;
+        PATTERN_HEX_COLOR = /^#?[0-9A-F]{3}([0-9A-F]{3})?$/,
+        replaceBKP;
 
     /**
      * Checks whether the substring is part if this String.
@@ -363,6 +364,43 @@
      */
     String.trimRight || (StringPrototype.trimRight=function() {
         return this.replace(TRIM_RIGHT_REGEX, &#x27;&#x27;);
+    });
+
+    /**
+     * Replaces search-characters by a replacement. Replaces only the firts occurence.
+     * Does not alter the String itself, but returns a new String with the replacement.
+     *
+     * @method replace
+     * @param search {String} the character(s) to be replaced
+     * @param replacement {String} the replacement
+     * @param [caseInsensitive=false] {Boolean} whether to do search case-insensitive
+     * @return {String} new String with the replacement
+     */
+    replaceBKP = StringPrototype.replace;
+    StringPrototype.replace=function(search, replacement, caseInsensitive) {
+        var re;
+        if (caseInsensitive) {
+            re = new RegExp(search, &#x27;i&#x27;);
+            return this.replace(re, replacement);
+        }
+        else {
+            return replaceBKP.apply(this, arguments);
+        }
+    };
+
+    /**
+     * Replaces search-characters by a replacement. Replaces all occurences.
+     * Does not alter the String itself, but returns a new String with the replacements.
+     *
+     * @method replaceAll
+     * @param search {String} the character(s) to be replaced
+     * @param replacement {String} the replacement
+     * @param [caseInsensitive=false] {Boolean} whether to do search case-insensitive
+     * @return {String} new String with the replacements
+     */
+    String.replaceAll || (StringPrototype.replaceAll=function(search, replacement, caseInsensitive) {
+        var re = new RegExp(search, &#x27;g&#x27; + (caseInsensitive ? &#x27;i&#x27; : &#x27;&#x27;));
+        return this.replace(re, replacement);
     });
 
     /**

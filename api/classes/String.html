@@ -283,6 +283,20 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_replace">replace</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_replaceAll">replaceAll</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_startsWith">startsWith</a>
 
                                 
@@ -441,7 +455,7 @@
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l36"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:36</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l37"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:37</code></a>
         
         </p>
 
@@ -572,7 +586,7 @@ Alias for (String.indexOf(substring) &gt; -1)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l49"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:49</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l50"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:50</code></a>
         
         </p>
 
@@ -686,7 +700,7 @@ Alias for (String.indexOf(substring) &gt; -1)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l62"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:62</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l63"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:63</code></a>
         
         </p>
 
@@ -713,6 +727,312 @@ Alias for (String.indexOf(substring) &gt; -1)</p>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
                     
                     <p>whether the string is parsable</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_replace" class="method item">
+    <h3 class="name"><code>replace</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>search</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>replacement</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[caseInsensitive=false]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js-ext_lib_string.js.html#l157"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:157</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Replaces search-characters by a replacement. Replaces only the firts occurence.
+Does not alter the String itself, but returns a new String with the replacement.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">search</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the character(s) to be replaced</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">replacement</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the replacement</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[caseInsensitive=false]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>whether to do search case-insensitive</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>:
+                    
+                    <p>new String with the replacement</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_replaceAll" class="method item">
+    <h3 class="name"><code>replaceAll</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>search</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>replacement</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[caseInsensitive=false]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js-ext_lib_string.js.html#l179"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:179</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Replaces search-characters by a replacement. Replaces all occurences.
+Does not alter the String itself, but returns a new String with the replacements.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">search</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the character(s) to be replaced</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">replacement</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the replacement</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[caseInsensitive=false]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>whether to do search case-insensitive</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>:
+                    
+                    <p>new String with the replacements</p>
 
                 
             </div>
@@ -775,7 +1095,7 @@ Alias for (String.indexOf(substring) &gt; -1)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l75"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:75</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l76"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:76</code></a>
         
         </p>
 
@@ -899,7 +1219,7 @@ Alias for (String.indexOf(substring) &gt; -1)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l88"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:88</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l89"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:89</code></a>
         
         </p>
 
@@ -1009,7 +1329,7 @@ greeting.substitute({message: &#39;Hello&#39;}); // results into &#39;Hello !&#3
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l109"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:109</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l110"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:110</code></a>
         
         </p>
 
@@ -1094,7 +1414,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l126"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:126</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l127"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:127</code></a>
         
         </p>
 
@@ -1167,7 +1487,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l136"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:136</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l137"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:137</code></a>
         
         </p>
 
@@ -1240,7 +1560,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l146"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:146</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l147"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:147</code></a>
         
         </p>
 
@@ -1313,7 +1633,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l198"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:198</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l236"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:236</code></a>
         
         </p>
 
@@ -1386,7 +1706,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l214"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:214</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l252"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:252</code></a>
         
         </p>
 
@@ -1459,7 +1779,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l156"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:156</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l194"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:194</code></a>
         
         </p>
 
@@ -1542,7 +1862,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l166"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:166</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l204"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:204</code></a>
         
         </p>
 
@@ -1650,7 +1970,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l177"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:177</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l215"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:215</code></a>
         
         </p>
 
@@ -1748,7 +2068,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l188"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:188</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l226"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:226</code></a>
         
         </p>
 
@@ -1831,7 +2151,7 @@ birthday.toDate(); // --&gt; Wed Feb 10 2010 15:45:30 GMT+0100 (CET)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_string.js.html#l224"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:224</code></a>
+        <a href="../files/src_js-ext_lib_string.js.html#l262"><code>src&#x2F;js-ext&#x2F;lib&#x2F;string.js:262</code></a>
         
         </p>
 

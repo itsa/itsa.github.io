@@ -9,11 +9,16 @@ twitter_username: ItsaModules
 github_username:  itsa
 
 # Build settings
-markdown: redcarpet
+markdown: kramdown
 
 redcarpet:
   input: GFM
   extensions: [with_toc_data, prettify, hard_wrap]
+
+kramdown:
+  input: GFM
+  hard_wrap: true
+  syntax_highlighter: rouge
 
 collections:
   docs:

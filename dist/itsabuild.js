@@ -10400,6 +10400,8 @@ module.exports = function (window) {
         if (specialKeysMatch) {
             noloop = focusContainerNode.getAttr('fm-noloop');
             noloop = noloop && (noloop.toLowerCase()==='true');
+            // in case sourceNode is an innernode of a selector, we need to start from the selector:
+            sourceNode.matches(selector) || (sourceNode=sourceNode.inside(selector));
             if (downwards) {
                 nodeHit = sourceNode.next(selector, focusContainerNode) || (noloop ? sourceNode.last(selector, focusContainerNode) : sourceNode.first(selector, focusContainerNode));
             }
@@ -10583,7 +10585,7 @@ module.exports = function (window) {
                     e.preventRender(); // don't double render --> focus does this
                     // prevent default action --> we just want to re-focus, but we DO want afterlisteners
                     // to be handled in the after-listener: someone else might want to halt the keydown event.
-                    sourceNode.matches(selector) && (e._focusNode=focusNode);
+                    e._focusNode = focusNode;
                 }
             }
         });
@@ -13843,7 +13845,8 @@ Promise.manage = function (callbackFn) {
         PATTERN_FLOAT_COMMA = new RegExp(PATTERN_FLOAT_START + ',' + PATTERN_FLOAT_END),
         PATTERN_FLOAT_DOT = new RegExp(PATTERN_FLOAT_START + '.' + PATTERN_FLOAT_END),
         PATTERN_HEX_COLOR_ALPHA = /^#?[0-9A-F]{4}([0-9A-F]{4})?$/,
-        PATTERN_HEX_COLOR = /^#?[0-9A-F]{3}([0-9A-F]{3})?$/;
+        PATTERN_HEX_COLOR = /^#?[0-9A-F]{3}([0-9A-F]{3})?$/,
+        replaceBKP;
 
     /**
      * Checks whether the substring is part if this String.
@@ -13963,6 +13966,43 @@ Promise.manage = function (callbackFn) {
      */
     String.trimRight || (StringPrototype.trimRight=function() {
         return this.replace(TRIM_RIGHT_REGEX, '');
+    });
+
+    /**
+     * Replaces search-characters by a replacement. Replaces only the firts occurence.
+     * Does not alter the String itself, but returns a new String with the replacement.
+     *
+     * @method replace
+     * @param search {String} the character(s) to be replaced
+     * @param replacement {String} the replacement
+     * @param [caseInsensitive=false] {Boolean} whether to do search case-insensitive
+     * @return {String} new String with the replacement
+     */
+    replaceBKP = StringPrototype.replace;
+    StringPrototype.replace=function(search, replacement, caseInsensitive) {
+        var re;
+        if (caseInsensitive) {
+            re = new RegExp(search, 'i');
+            return this.replace(re, replacement);
+        }
+        else {
+            return replaceBKP.apply(this, arguments);
+        }
+    };
+
+    /**
+     * Replaces search-characters by a replacement. Replaces all occurences.
+     * Does not alter the String itself, but returns a new String with the replacements.
+     *
+     * @method replaceAll
+     * @param search {String} the character(s) to be replaced
+     * @param replacement {String} the replacement
+     * @param [caseInsensitive=false] {Boolean} whether to do search case-insensitive
+     * @return {String} new String with the replacements
+     */
+    String.replaceAll || (StringPrototype.replaceAll=function(search, replacement, caseInsensitive) {
+        var re = new RegExp(search, 'g' + (caseInsensitive ? 'i' : ''));
+        return this.replace(re, replacement);
     });
 
     /**
@@ -21555,7 +21595,7 @@ module.exports = function (window) {
             var i = 0,
                 vnodes = [],
                 parentVNode = arguments[3], // private pass through-argument, only available when internal looped
-                insideTagDefinition, insideComment, innerText, endTagCount, stringMarker, attributeisString, attribute, attributeValue,
+                insideTagDefinition, insideComment, innerText, endTagCount, stringMarker, attributeisString, attribute, attributeValue, nestedComments,
                 len, j, character, character2, vnode, tag, isBeginTag, isEndTag, scriptVNode, extractClass, extractStyle, tagdefinition, is;
 
             htmlString || (htmlString='');
@@ -21689,17 +21729,27 @@ module.exports = function (window) {
                 }
 
                 else if (insideComment) {
+                    if (character+character2+htmlString[i+2]+htmlString[i+3]==='<!--') {
+                        nestedComments++;
+                    }
                     if (character+character2+htmlString[i+2]==='-->') {
-                        // close vnode
-                        // move index to last character of comment
-                        i = i+2;
-                        vnode.domNode = DOCUMENT.createComment('');
-                        // create circular reference:
-                        vnode.domNode._vnode = vnode;
-                        vnodes[vnodes.length] = vnode;
-                        // reset vnode to force create a new one
-                        vnode = null;
-                        insideComment = false;
+                        // should we close  the vnode?
+                        nestedComments--;
+                        if (nestedComments<0) {
+                            // yes close the commentnode
+                            // move index to last character of comment
+                            i = i+2;
+                            vnode.domNode = DOCUMENT.createComment('');
+                            // create circular reference:
+                            vnode.domNode._vnode = vnode;
+                            vnodes[vnodes.length] = vnode;
+                            // reset vnode to force create a new one
+                            vnode = null;
+                            insideComment = false;
+                        }
+                        else {
+                            vnode.text += character;
+                        }
                     }
                     else {
                         vnode.text += character;
@@ -21765,6 +21815,7 @@ module.exports = function (window) {
                         // move index to first character of comment
                         i = i+4;
                         insideComment = true;
+                        nestedComments = 0;
                     }
                     else {
                         if (!vnode) {
@@ -21913,6 +21964,7 @@ module.exports = function (window) {
             else {
                 // TextNode or CommentNode
                 vnode.text = escapeEntities(domNode.nodeValue);
+                // vnode.text = (nodeType===3) ? escapeEntities(domNode.nodeValue) : domNode.nodeValue;
             }
             // store vnode's id:
             vnode.storeId();
@@ -23082,13 +23134,14 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         contains: function(otherVNode, noItagSearch) {
+            var instance = this;
             if (otherVNode && otherVNode.destroyed) {
                 return false;
             }
-            while (otherVNode && (otherVNode!==this) && (!noItagSearch || !otherVNode.isItag || !otherVNode.domNode.contentHidden)) {
+            while (otherVNode && (otherVNode!==instance) && (!noItagSearch || !instance.isItag || !instance.domNode.contentHidden)) {
                 otherVNode = otherVNode.vParent;
             }
-            return (otherVNode===this);
+            return (otherVNode===instance);
         },
 
        /**

@@ -95,6 +95,28 @@ The method `plug()` is available on both NodeLists as well as Elements.
 
 
 
+#Nested focusmanagers#
+
+Focusmanagers can be nested. There is no `bleed-in` or `bleed-out` of the manage-keys. In some cases, a nested focusmanager is a focusable item on the parent as well. In those cases, focussing through the parent-manager will set focus on the nested manager, but doesn't refocus into this nested manager. This way, you can focus through all the items of the parent manager where the nested manager is just another item.
+
+However -in those cases- you need a way to get inside and outside the nested manager. This can be done with the attibutes `fm-keyenter` and `fm-keyleave`.
+
+####Example nested focusmanager####
+```html
+<form fm-manage="true">
+    <input id="name" type="text" value="first"/>
+    <input id="pw" type="password" value="second"/>
+    <div fm-manage="true">
+        <input id="nameinner" type="text" value="first"/>
+        <input id="pwinner" type="password" value="second"/>
+    </div>
+    <inputtype="checkbox" /> I've read the conditions</label>
+    <button >OK</button>
+</form>
+```
+
+
+
 #Focusmanager-options#
 
 Additional options can be set directly by HTML, or by using the second argument of the Plugin (see the examples above).
@@ -117,6 +139,12 @@ The `keyup` property manages the key that makes the focus going upward.
 Can be set to a proper `keyCode`, optional prepended by one or more `special-keys`: <b>ctrl</b>, <b>cmd</b>, <b>alt</b>, <b>shift</b>. Whenever `special-keys` are used, they need to be appended with `+`. Valid examples are: `"38"`, `"shift+38"`, `"ctrl+shift+38"`.
 
 The `keydown` property manages the key that makes the focus going downward.
+
+###keyenter###
+When working with nested focusmanagers, the `keyenter` property holds the key that will set the focus into the nested manager.
+
+###keyleave###
+When working with nested focusmanagers, the `keyleave` property holds the key that will set the focus into parent manager.
 
 ###noloop###
 To prevent looping through the focussable items. By default the focusmanager will loop: set this attribute to prevent this.

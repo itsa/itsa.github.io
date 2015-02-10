@@ -321,7 +321,7 @@ module.exports = function (window) {
             var i = 0,
                 vnodes = [],
                 parentVNode = arguments[3], // private pass through-argument, only available when internal looped
-                insideTagDefinition, insideComment, innerText, endTagCount, stringMarker, attributeisString, attribute, attributeValue,
+                insideTagDefinition, insideComment, innerText, endTagCount, stringMarker, attributeisString, attribute, attributeValue, nestedComments,
                 len, j, character, character2, vnode, tag, isBeginTag, isEndTag, scriptVNode, extractClass, extractStyle, tagdefinition, is;
 
             htmlString || (htmlString=&#x27;&#x27;);
@@ -455,17 +455,27 @@ module.exports = function (window) {
                 }
 
                 else if (insideComment) {
+                    if (character+character2+htmlString[i+2]+htmlString[i+3]===&#x27;&lt;!--&#x27;) {
+                        nestedComments++;
+                    }
                     if (character+character2+htmlString[i+2]===&#x27;--&gt;&#x27;) {
-                        // close vnode
-                        // move index to last character of comment
-                        i = i+2;
-                        vnode.domNode = DOCUMENT.createComment(&#x27;&#x27;);
-                        // create circular reference:
-                        vnode.domNode._vnode = vnode;
-                        vnodes[vnodes.length] = vnode;
-                        // reset vnode to force create a new one
-                        vnode = null;
-                        insideComment = false;
+                        // should we close  the vnode?
+                        nestedComments--;
+                        if (nestedComments&lt;0) {
+                            // yes close the commentnode
+                            // move index to last character of comment
+                            i = i+2;
+                            vnode.domNode = DOCUMENT.createComment(&#x27;&#x27;);
+                            // create circular reference:
+                            vnode.domNode._vnode = vnode;
+                            vnodes[vnodes.length] = vnode;
+                            // reset vnode to force create a new one
+                            vnode = null;
+                            insideComment = false;
+                        }
+                        else {
+                            vnode.text += character;
+                        }
                     }
                     else {
                         vnode.text += character;
@@ -531,6 +541,7 @@ module.exports = function (window) {
                         // move index to first character of comment
                         i = i+4;
                         insideComment = true;
+                        nestedComments = 0;
                     }
                     else {
                         if (!vnode) {
