@@ -21715,7 +21715,7 @@ module.exports = function (window) {
 
                     //vnode.domNode can only be set after inspecting the attributes --> there might be an `is` attribute
                     tagdefinition = tag.toLowerCase();
-                    if ((is=vnode.attrs.is) && !is.contains('-')) {
+                    if (vnode.isItag && (is=vnode.attrs.is) && !is.contains('-')) {
                         tagdefinition = tag + '#' + is;
                     }
                     vnode.domNode = vnode.ns ? DOCUMENT.createElementNS(vnode.ns, tagdefinition) : DOCUMENT.createElement(tagdefinition);
