@@ -3,34 +3,12 @@ module: vdom
 maintainer: Marco Asbreuk
 title: Test commentnode
 intro: "This example moves a div-node to a new location"
+includeexample: 20em
 ---
 
-<style type="text/css">
-    #btncontainer {
-        margin: 2em 0;
-        min-height: 2em;
-    }
-    #btncontainer button {
-        margin-top: 0.5em;
-        min-width: 20em;
-        display: block;
-    }
-    .container {
-        background-color: #F00;
-        text-align: center;
-        margin: 2em 0;
-        padding-top: 1.5em;
-        height: 100px;
-        width: 100px;
-        border: solid 1px #000;
-    }
-</style>
 
 Clik on the buttons to move the div:
 
-<i-test id="btncontainer"><!-- here & is <div>some</div> comment --></i-test>
-
-<div class="container"></div>
 
 Code-example:
 
@@ -65,11 +43,3 @@ Code-example:
 
 </script>
 ```
-
-<script src="../../dist/itsabuild.js"></script>
-<script>
-    var ITSA = require('itsa'),
-        container = document.getElement('#btncontainer');
-    console.warn(container.vnode.vChildNodes.length);
-    console.warn(container.getOuterHTML());
-</script>
