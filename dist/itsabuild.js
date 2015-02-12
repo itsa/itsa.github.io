@@ -23938,7 +23938,7 @@ module.exports = function (window) {
             }
             // don't check by !== --> value isn't parsed into a String yet
             if (prevVal && ((value===undefined) || (value===null))) {
-                instance._removeAttr(attributeName);
+                instance._removeAttr(attributeName, suppressItagRender);
                 return instance;
             }
             // attribute-values are always Strings:
@@ -24048,7 +24048,7 @@ module.exports = function (window) {
             len = keys.length;
             for (i = 0; i < len; i++) {
                 key = keys[i];
-                attrsObj[key] || instance._removeAttr(key);
+                attrsObj[key] || instance._removeAttr(key, suppressItagRender);
             }
 
             // next: every attribute that differs: redefine
@@ -24057,7 +24057,7 @@ module.exports = function (window) {
             for (i = 0; i < len; i++) {
                 key = keys[i];
                 value = attrsObj[key];
-                (attrs[key]===value) || instance._setAttr(key, value);
+                (attrs[key]===value) || instance._setAttr(key, value, suppressItagRender);
             }
 
             return instance;
@@ -24117,7 +24117,7 @@ module.exports = function (window) {
                                 _tryReplaceChild(domNode, newChild.domNode, childDomNode);
                                 newChild.vParent = instance;
                                 newChild._setAttrs(bkpAttrs, suppressItagRender);
-                                newChild._setChildNodes(bkpChildNodes);
+                                newChild._setChildNodes(bkpChildNodes, suppressItagRender);
                                 newChild.id && (nodeids[newChild.id]=newChild.domNode);
                                 oldChild._replaceAtParent(newChild);
                                 newChild._addToTaglist();
@@ -24169,7 +24169,7 @@ module.exports = function (window) {
                                 else {
                                     oldChild._setAttrs(newChild.attrs, suppressItagRender);
                                     // next: sync the vChildNodes:
-                                    oldChild._setChildNodes(newChild.vChildNodes);
+                                    oldChild._setChildNodes(newChild.vChildNodes, suppressItagRender);
                                 }
                                 // reset ref. to the domNode, for it might have been changed by newChild:
                                 oldChild.id && (nodeids[oldChild.id]=childDomNode);
@@ -24195,7 +24195,7 @@ module.exports = function (window) {
                             newChild.vChildNodes = []; // reset to current state, to force defined by `_setAttrs`
                             _tryReplaceChild(domNode, newChild.domNode, childDomNode);
                             newChild._setAttrs(bkpAttrs, suppressItagRender);
-                            newChild._setChildNodes(bkpChildNodes);
+                            newChild._setChildNodes(bkpChildNodes, suppressItagRender);
                             newChild.id && (nodeids[newChild.id]=newChild.domNode);
                             // oldChild.isVoid = newChild.isVoid;
                             // delete oldChild.text;
@@ -24250,7 +24250,7 @@ module.exports = function (window) {
                         newChild.vChildNodes = []; // reset to current state, to force defined by `_setAttrs`
                         domNode._appendChild(newChild.domNode);
                         newChild._setAttrs(bkpAttrs, suppressItagRender);
-                        newChild._setChildNodes(bkpChildNodes);
+                        newChild._setChildNodes(bkpChildNodes, suppressItagRender);
                         newChild._addToTaglist();
                         newChild._emit(EV_INSERTED);
                         break;
