@@ -40,7 +40,7 @@ Code-example:
     );
 
     ITSA.Event.after(
-        'click',
+        'tap',
         function() {
             // we make the 11'th element to emit the save-event:
             profiles[10].emit('save');
@@ -73,7 +73,7 @@ Code-example:
     );
 
     ITSA.Event.after(
-        'click',
+        'tap',
         function() {
             // we make the 11'th element to emit the save-event:
             profiles[10].emit('save');

@@ -29,8 +29,8 @@ Code-example:
         e.preventDefault();
     };
 
-    ITSA.Event.before('click', beforeClick, '#buttongo');
-    ITSA.Event.after('click', afterClick, '#buttongo');
+    ITSA.Event.before('tap', beforeClick, '#buttongo');
+    ITSA.Event.after('tap', afterClick, '#buttongo');
 </script>
 ```
 
@@ -45,6 +45,6 @@ Code-example:
         e.preventDefault();
     };
 
-    ITSA.Event.before('click', beforeClick, '#buttongo');
-    ITSA.Event.after('click', afterClick, '#buttongo');
+    ITSA.Event.before('tap', beforeClick, '#buttongo');
+    ITSA.Event.after('tap', afterClick, '#buttongo');
 </script>

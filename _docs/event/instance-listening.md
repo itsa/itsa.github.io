@@ -22,7 +22,7 @@ Code-example:
     });
 
     ITSA.Event.after(
-        'click',
+        'tap',
         function() {
             ITSA.Event.emit('PersonalProfile:save');
         },
@@ -42,7 +42,7 @@ Code-example:
     });
 
     ITSA.Event.after(
-        'click',
+        'tap',
         function() {
             ITSA.Event.emit('PersonalProfile:save');
         },

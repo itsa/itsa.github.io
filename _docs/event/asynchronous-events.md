@@ -64,7 +64,7 @@ var memberproto = {}.merge(ITSA.Event.Listener).merge(ITSA.Event.Emitter('Person
     });
 
     ITSA.Event.after(
-        'click',
+        'tap',
         function() {
             member.emit('send');
         },
@@ -105,7 +105,7 @@ var memberproto = {}.merge(ITSA.Event.Listener).merge(ITSA.Event.Emitter('Person
     });
 
     ITSA.Event.after(
-        'click',
+        'tap',
         function() {
             member.emit('send');
         },

@@ -57,8 +57,8 @@ Code-example:
         alert(e.target.innerHTML);
     };
 
-    ITSA.Event.after('click', addNewButton, '#addbtn');
-    ITSA.Event.after('click', showButtonText, '#container button');
+    ITSA.Event.after('tap', addNewButton, '#addbtn');
+    ITSA.Event.after('tap', showButtonText, '#container button');
 
     setTimeout(function() {
         var button = document.createElement('button');
@@ -91,8 +91,8 @@ Code-example:
         alert(e.target.innerHTML);
     };
 
-    ITSA.Event.after('click', addNewButton, '#addbtn');
-    ITSA.Event.after('click', showButtonText, '#container button');
+    ITSA.Event.after('tap', addNewButton, '#addbtn');
+    ITSA.Event.after('tap', showButtonText, '#container button');
 
     setTimeout(function() {
         var button = document.createElement('button');

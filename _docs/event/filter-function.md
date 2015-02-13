@@ -48,7 +48,7 @@ Code-example:
     );
 
     ITSA.Event.after(
-        'click',
+        'tap',
         function() {
             ITSA.Event.emit('object1:save');
         },
@@ -56,7 +56,7 @@ Code-example:
     );
 
     ITSA.Event.after(
-        'click',
+        'tap',
         function() {
             ITSA.Event.emit('object2:save', {age: 65});
         },
@@ -80,7 +80,7 @@ Code-example:
     );
 
     ITSA.Event.after(
-        'click',
+        'tap',
         function() {
             ITSA.Event.emit('object1:save');
         },
@@ -88,7 +88,7 @@ Code-example:
     );
 
     ITSA.Event.after(
-        'click',
+        'tap',
         function() {
             ITSA.Event.emit('object2:save', {age: 65});
         },
