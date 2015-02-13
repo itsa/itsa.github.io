@@ -37,11 +37,11 @@ Code-example:
         console.log(e);
     };
 
-    ITSA.Event.after('click', showMsg, '#buttongo');
+    ITSA.Event.after('tap', showMsg, '#buttongo');
 </script>
 ```
 
-<script src="../../dist/itsabuild-min.js"></script>
+<script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa');
 
@@ -50,5 +50,5 @@ Code-example:
         console.log(e);
     };
 
-    ITSA.Event.after('click', showMsg, '#buttongo');
+    ITSA.Event.after('tap', showMsg, '#buttongo');
 </script>

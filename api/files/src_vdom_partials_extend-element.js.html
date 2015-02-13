@@ -283,7 +283,6 @@ module.exports = function (window) {
         INVISIBLE_RELATIVE = INVISIBLE+&#x27;-relative&#x27;,
         INVISIBLE_UNFOCUSABLE = INVISIBLE+&#x27;-unfocusable&#x27;,
         HIDDEN = ITSA_+&#x27;hidden&#x27;,
-        REGEXP_NODE_ID = /^#\S+$/,
         LEFT = &#x27;left&#x27;,
         TOP = &#x27;top&#x27;,
         BORDER = &#x27;border&#x27;,
@@ -2864,13 +2863,15 @@ module.exports = function (window) {
 
                     if (toStylesExact[group] &amp;&amp; (toStylesExact[group][prop]!==fromStyles[group][prop])) {
                         transproperty = instance.getTransition(prop, (group===&#x27;element&#x27;) ? null : group);
+                        if (transproperty) {
                         transtime = transproperty.delay+transproperty.duration;
-                        maxtranstime = Math.max(maxtranstime, transtime);
-                        if (transtime&gt;0) {
-                            transCount++;
-                            // TODO: transitionProperties supposes that we DO NOT have pseudo transitions!
-                            // as soon we do, we need to split this object for each &#x27;group&#x27;
-                            transitionProperties[prop] = true;
+                            maxtranstime = Math.max(maxtranstime, transtime);
+                            if (transtime&gt;0) {
+                                transCount++;
+                                // TODO: transitionProperties supposes that we DO NOT have pseudo transitions!
+                                // as soon we do, we need to split this object for each &#x27;group&#x27;
+                                transitionProperties[prop] = true;
+                            }
                         }
                     }
                 }
@@ -3367,20 +3368,22 @@ module.exports = function (window) {
                     (property===VENDOR_TRANSFORM_PROPERTY) || (fromStyles[group][property]=instance.getStyle(property, pseudo));
                     if (fromStyles[group][property]!==value) {
                         transproperty = instance.getTransition(property, (group===&#x27;element&#x27;) ? null : group);
-                        transtime = transproperty.delay+transproperty.duration;
-                        maxtranstime = Math.max(maxtranstime, transtime);
-                        if (transtime&gt;0) {
-                            hasTransitionedStyle = true;
-                            transCount++;
-                            // TODO: transitionProperties supposes that we DO NOT have pseudo transitions!
-                            // as soon we do, we need to split this object for each &#x27;group&#x27;
-                            transitionProperties[property] = true;
-                            transitionedProps[transitionedProps.length] = {
-                                group: group,
-                                property: property,
-                                value: value,
-                                pseudo: pseudo
-                            };
+                        if (transproperty) {
+                            transtime = transproperty.delay+transproperty.duration;
+                            maxtranstime = Math.max(maxtranstime, transtime);
+                            if (transtime&gt;0) {
+                                hasTransitionedStyle = true;
+                                transCount++;
+                                // TODO: transitionProperties supposes that we DO NOT have pseudo transitions!
+                                // as soon we do, we need to split this object for each &#x27;group&#x27;
+                                transitionProperties[property] = true;
+                                transitionedProps[transitionedProps.length] = {
+                                    group: group,
+                                    property: property,
+                                    value: value,
+                                    pseudo: pseudo
+                                };
+                            }
                         }
                     }
                 }
@@ -3669,7 +3672,7 @@ module.exports = function (window) {
         ElementPrototype.setXY = function(x, y, constrain, notransition) {
             console.log(NAME, &#x27;setXY &#x27;+x+&#x27;,&#x27;+y);
             var instance = this,
-                dif, match, constrainNode, byExactId, parent, clone, promise,
+                dif, constrainNode, parent, clone, promise,
                 containerTop, containerRight, containerLeft, containerBottom, requestedX, requestedY,
                 transObject, xtrans, ytrans, inlinePosition, globalPosition, invisibleClass;
 
@@ -3694,16 +3697,7 @@ module.exports = function (window) {
                 }
                 else {
                     if (typeof constrain === STRING) {
-                        match = false;
-                        constrainNode = instance.getParent();
-                        byExactId = REGEXP_NODE_ID.test(constrain);
-                        while (constrainNode.matchesSelector &amp;&amp; !match) {
-                            match = byExactId ? (constrainNode.id===constrain.substr(1)) : constrainNode.matchesSelector(constrain);
-                            // if there is a match, then make sure x and y fall within the region
-                            match || (constrainNode=constrainNode.getParent());
-                        }
-                        // if Element found, then bound it to &#x60;constrain&#x60; as if the argument &#x60;constrain&#x60; was an Element
-                        match &amp;&amp; (constrain=constrainNode);
+                        constrainNode = instance.inside(constrain);
                     }
                     if (constrain.matchesSelector) {
                         // Element --&gt; we need to search the rectangle

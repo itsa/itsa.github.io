@@ -65,37 +65,37 @@ Code-example:
 
     //====================================================
 
-    ITSA.Event.after('click', function() {
+    ITSA.Event.after('tap', function() {
         addText('after click --> document');
     });
 
-    ITSA.Event.after('click', function() {
+    ITSA.Event.after('tap', function() {
         addText('after click --> master-container');
     }, '#master-container');
 
-    ITSA.Event.after('click', function() {
+    ITSA.Event.after('tap', function() {
         addText('after click --> child-container');
     }, '#child-container');
 
-    ITSA.Event.after('click', function() {
+    ITSA.Event.after('tap', function() {
         addText('after click --> child-child-container');
     }, '#child-child-container');
 
     //====================================================
 
-    ITSA.Event.before('click', function() {
+    ITSA.Event.before('tap', function() {
         addText('before click --> document before');
     });
 
-    ITSA.Event.before('click', function() {
+    ITSA.Event.before('tap', function() {
         addText('before click --> master-container');
     }, '#master-container');
 
-    ITSA.Event.before('click', function(e) {
+    ITSA.Event.before('tap', function(e) {
         addText('before click --> child-container first subscriber');
     }, '#child-container');
 
-    ITSA.Event.before('click', function(e) {
+    ITSA.Event.before('tap', function(e) {
         if (e.sourceTarget.id==='stop') {
             e.stopPropagation();
         }
@@ -105,17 +105,17 @@ Code-example:
         addText('before click --> child-container second subscriber');
     }, '#child-container');
 
-    ITSA.Event.before('click', function(e) {
+    ITSA.Event.before('tap', function(e) {
         addText('before click --> child-container third subscriber');
     }, '#child-container');
 
-    ITSA.Event.before('click', function(e) {
+    ITSA.Event.before('tap', function(e) {
         addText('before click --> child-child-container');
     }, '#child-child-container');
 
     //====================================================
 
-    ITSA.Event.before('click', function(e) {
+    ITSA.Event.before('tap', function(e) {
         container.innerHTML = '';
         e.halt();
     }, 'button.clear');
@@ -134,37 +134,37 @@ Code-example:
 
     //====================================================
 
-    ITSA.Event.after('click', function() {
+    ITSA.Event.after('tap', function() {
         addText('after click --> document');
     });
 
-    ITSA.Event.after('click', function() {
+    ITSA.Event.after('tap', function() {
         addText('after click --> master-container');
     }, '#master-container');
 
-    ITSA.Event.after('click', function() {
+    ITSA.Event.after('tap', function() {
         addText('after click --> child-container');
     }, '#child-container');
 
-    ITSA.Event.after('click', function() {
+    ITSA.Event.after('tap', function() {
         addText('after click --> child-child-container');
     }, '#child-child-container');
 
     //====================================================
 
-    ITSA.Event.before('click', function() {
+    ITSA.Event.before('tap', function() {
         addText('before click --> document before');
     });
 
-    ITSA.Event.before('click', function() {
+    ITSA.Event.before('tap', function() {
         addText('before click --> master-container');
     }, '#master-container');
 
-    ITSA.Event.before('click', function(e) {
+    ITSA.Event.before('tap', function(e) {
         addText('before click --> child-container first subscriber');
     }, '#child-container');
 
-    ITSA.Event.before('click', function(e) {
+    ITSA.Event.before('tap', function(e) {
         if (e.sourceTarget.id==='stop') {
             e.stopPropagation();
         }
@@ -174,17 +174,17 @@ Code-example:
         addText('before click --> child-container second subscriber');
     }, '#child-container');
 
-    ITSA.Event.before('click', function(e) {
+    ITSA.Event.before('tap', function(e) {
         addText('before click --> child-container third subscriber');
     }, '#child-container');
 
-    ITSA.Event.before('click', function(e) {
+    ITSA.Event.before('tap', function(e) {
         addText('before click --> child-child-container');
     }, '#child-child-container');
 
     //====================================================
 
-    ITSA.Event.before('click', function(e) {
+    ITSA.Event.before('tap', function(e) {
         container.innerHTML = '';
         e.halt();
     }, 'button.clear');

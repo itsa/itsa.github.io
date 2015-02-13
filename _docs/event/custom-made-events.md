@@ -29,7 +29,7 @@ Code-example:
                  alert('personal profile was saved');
              });
 
-    ITSA.Event.after('click', function() {
+    ITSA.Event.after('tap', function() {
         myProfile.emit('save');
     }, '#save');
 </script>
@@ -47,7 +47,7 @@ Code-example:
                  alert('personal profile was saved');
              });
 
-    ITSA.Event.after('click', function() {
+    ITSA.Event.after('tap', function() {
         myProfile.emit('save');
     }, '#save');
 </script>

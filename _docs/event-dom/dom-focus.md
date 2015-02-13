@@ -110,7 +110,7 @@ Code-example:
     ITSA.Event.after('blur', showMsgBlur, '#form-container input, #form-container button');
     ITSA.Event.after('focus', showMsgFocus, '#form-container input, #form-container button');
 
-    ITSA.Event.before('click', function(e) {
+    ITSA.Event.before('tap', function(e) {
         e.preventDefault();
         e.target.focus();
     }, '#submit-button');
@@ -135,7 +135,7 @@ Code-example:
     ITSA.Event.after('blur', showMsgBlur, '#form-container input, #form-container button');
     ITSA.Event.after('focus', showMsgFocus, '#form-container input, #form-container button');
 
-    ITSA.Event.before('click', function(e) {
+    ITSA.Event.before('tap', function(e) {
         e.preventDefault();
         e.target.focus();
     }, '#submit-button');

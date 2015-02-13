@@ -4512,6 +4512,8 @@ module.exports = function (window) {
         byExactId = REGEXP_NODE_ID.test(selector);
 
         deepSearch = !NO_DEEP_SEARCH[customEvent];
+        // set the selector to `subscriber._s` so that e.currentTarget can calculate it:
+        subscriber._s = selector;
 
         subscriber.f = function(e) {
             // this stage is runned when the event happens
@@ -4738,7 +4740,7 @@ module.exports = function (window) {
                 return filtered;
             }(subscribers, function(subscriber) {return (!subscriber.f || subscriber.f.call(subscriber.o, e));});
             if (subscribers.length>0) {
-                _findCurrentTargets(subscribers);
+// _findCurrentTargets(subscribers);
                 // sorting, based upon the sortFn
                 subscribers.sort(SORT);
             }
@@ -4747,7 +4749,7 @@ module.exports = function (window) {
     };
 
     /*
-     * Sets e.target, e.currentTarget and e.sourceTarget for the single subscriber.
+     * Sets e.target and e.sourceTarget for the single subscriber.
      * Needs to be done for evenry single subscriber, because with a single event, these values change for each subscriber
      *
      * @method _preProcessor
@@ -4779,7 +4781,8 @@ module.exports = function (window) {
             return true;
         }
 
-        e.currentTarget = subscriber.n;
+        e._s = subscriber._s;
+
         // now we might need to set e.target to the right node:
         // the filterfunction might have found the true domnode that should act as e.target
         // and set it at subscriber.t
@@ -5026,6 +5029,19 @@ module.exports = function (window) {
     });
 
     // Now we do some initialization in order to make DOM-events work:
+
+    Object.defineProperty(Event._defaultEventObj, 'currentTarget', {
+        get: function() {
+            var ev = this,
+                e_target = ev.target;
+            if (e_target && ev._s) {
+                if (e_target.matches(ev._s)) {
+                    return e_target;
+                }
+                return e_target.inside(ev._s) || undefined;
+            }
+        }
+    });
 
     // Notify when someone subscribes to an UI:* event
     // if so: then we might need to define a customEvent for it:
@@ -9104,7 +9120,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                 allCustomEvents = instance._ce,
                 allSubscribers = instance._subs,
                 customEventDefinition, extract, emitterName, eventName, subs, wildcard_named_subs,
-                named_wildcard_subs, wildcard_wildcard_subs, e, invokeSubs, key, subscribedSize;
+                named_wildcard_subs, wildcard_wildcard_subs, e, invokeSubs, key, subscribedSize, propDescriptor;
 
             (customEvent.indexOf(':') !== -1) || (customEvent = emitter._emitterName+':'+customEvent);
             console.log(NAME, 'customEvent.emit: '+customEvent);
@@ -9145,7 +9161,15 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                 if (payload) {
                     // e.merge(payload); is not enough --> DOM-eventobject has many properties that are not "own"-properties
                     for (key in payload) {
-                        e[key] || (e[key]=payload[key]);
+                        if (!(key in e)) {
+                            propDescriptor = Object.getOwnPropertyDescriptor(payload, key);
+                            if (!propDescriptor || !propDescriptor.writable) {
+                                e[key] = payload[key];
+                            }
+                            else {
+                                Object.defineProperty(e, key, propDescriptor);
+                            }
+                        }
                     }
                 }
                 if (e.status.unSilencable && e.silent) {
@@ -17005,7 +17029,6 @@ module.exports = function (window) {
         INVISIBLE_RELATIVE = INVISIBLE+'-relative',
         INVISIBLE_UNFOCUSABLE = INVISIBLE+'-unfocusable',
         HIDDEN = ITSA_+'hidden',
-        REGEXP_NODE_ID = /^#\S+$/,
         LEFT = 'left',
         TOP = 'top',
         BORDER = 'border',
@@ -19586,13 +19609,15 @@ module.exports = function (window) {
 
                     if (toStylesExact[group] && (toStylesExact[group][prop]!==fromStyles[group][prop])) {
                         transproperty = instance.getTransition(prop, (group==='element') ? null : group);
+                        if (transproperty) {
                         transtime = transproperty.delay+transproperty.duration;
-                        maxtranstime = Math.max(maxtranstime, transtime);
-                        if (transtime>0) {
-                            transCount++;
-                            // TODO: transitionProperties supposes that we DO NOT have pseudo transitions!
-                            // as soon we do, we need to split this object for each 'group'
-                            transitionProperties[prop] = true;
+                            maxtranstime = Math.max(maxtranstime, transtime);
+                            if (transtime>0) {
+                                transCount++;
+                                // TODO: transitionProperties supposes that we DO NOT have pseudo transitions!
+                                // as soon we do, we need to split this object for each 'group'
+                                transitionProperties[prop] = true;
+                            }
                         }
                     }
                 }
@@ -20089,20 +20114,22 @@ module.exports = function (window) {
                     (property===VENDOR_TRANSFORM_PROPERTY) || (fromStyles[group][property]=instance.getStyle(property, pseudo));
                     if (fromStyles[group][property]!==value) {
                         transproperty = instance.getTransition(property, (group==='element') ? null : group);
-                        transtime = transproperty.delay+transproperty.duration;
-                        maxtranstime = Math.max(maxtranstime, transtime);
-                        if (transtime>0) {
-                            hasTransitionedStyle = true;
-                            transCount++;
-                            // TODO: transitionProperties supposes that we DO NOT have pseudo transitions!
-                            // as soon we do, we need to split this object for each 'group'
-                            transitionProperties[property] = true;
-                            transitionedProps[transitionedProps.length] = {
-                                group: group,
-                                property: property,
-                                value: value,
-                                pseudo: pseudo
-                            };
+                        if (transproperty) {
+                            transtime = transproperty.delay+transproperty.duration;
+                            maxtranstime = Math.max(maxtranstime, transtime);
+                            if (transtime>0) {
+                                hasTransitionedStyle = true;
+                                transCount++;
+                                // TODO: transitionProperties supposes that we DO NOT have pseudo transitions!
+                                // as soon we do, we need to split this object for each 'group'
+                                transitionProperties[property] = true;
+                                transitionedProps[transitionedProps.length] = {
+                                    group: group,
+                                    property: property,
+                                    value: value,
+                                    pseudo: pseudo
+                                };
+                            }
                         }
                     }
                 }
@@ -20391,7 +20418,7 @@ module.exports = function (window) {
         ElementPrototype.setXY = function(x, y, constrain, notransition) {
             console.log(NAME, 'setXY '+x+','+y);
             var instance = this,
-                dif, match, constrainNode, byExactId, parent, clone, promise,
+                dif, constrainNode, parent, clone, promise,
                 containerTop, containerRight, containerLeft, containerBottom, requestedX, requestedY,
                 transObject, xtrans, ytrans, inlinePosition, globalPosition, invisibleClass;
 
@@ -20416,16 +20443,7 @@ module.exports = function (window) {
                 }
                 else {
                     if (typeof constrain === STRING) {
-                        match = false;
-                        constrainNode = instance.getParent();
-                        byExactId = REGEXP_NODE_ID.test(constrain);
-                        while (constrainNode.matchesSelector && !match) {
-                            match = byExactId ? (constrainNode.id===constrain.substr(1)) : constrainNode.matchesSelector(constrain);
-                            // if there is a match, then make sure x and y fall within the region
-                            match || (constrainNode=constrainNode.getParent());
-                        }
-                        // if Element found, then bound it to `constrain` as if the argument `constrain` was an Element
-                        match && (constrain=constrainNode);
+                        constrainNode = instance.inside(constrain);
                     }
                     if (constrain.matchesSelector) {
                         // Element --> we need to search the rectangle
