@@ -3363,7 +3363,7 @@ module.exports = function (window) {
                 else {
                     styles[property] = value;
                 }
-                if ((property!==VENDOR_TRANSITION_PROPERTY) &amp;&amp; instance.hasTransition(property, pseudo)) {
+                if ((property!==VENDOR_TRANSITION_PROPERTY) &amp;&amp; (instance.getStyle(property, pseudo)!==value) &amp;&amp; instance.hasTransition(property, pseudo)) {
                     fromStyles[group] || (fromStyles[group]={});
                     (property===VENDOR_TRANSFORM_PROPERTY) || (fromStyles[group][property]=instance.getStyle(property, pseudo));
                     if (fromStyles[group][property]!==value) {
