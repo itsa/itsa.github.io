@@ -365,10 +365,39 @@ module.exports = function (window) {
         htmlToVFragments = function(html, nameSpace) {
             var vnodes = htmlToVNodes(html, vNodeProto, nameSpace),
                 len = vnodes.length,
-                vnode, i, bkpAttrs, bkpVChildNodes;
+                vnode, i, bkpAttrs, bkpVChildNodes, scriptContent, _scripts, _scriptVNodes, scriptVNode;
+
             for (i=0; i&lt;len; i++) {
                 vnode = vnodes[i];
                 if (vnode.nodeType===1) {
+if (vnode.tag===&#x27;XSCRIPT&#x27;) {
+console.warn(&#x27;htmlToVFragments&#x27;);
+}
+/*
+                    if (vnode.tag===&#x27;XSCRIPT&#x27;) {
+                        // create circular reference:
+                        scriptContent = vnode.vChildNodes[0].text;
+                        // check if the parent has this script set:
+                        // parent didn&#x27;t had the script set: we will process
+                        // but we need to remove the node once it is set
+                        // also: the script&#x27;s content will be stored on is parent,
+                        // so we know can compare future comparision.
+                        _scripts || (_scripts=[]);
+                        _scripts[_scripts.length] = scriptContent;
+                        _scriptVNodes || (_scriptVNodes=[]);
+                        _scriptVNodes[_scriptVNodes.length] = vnode;
+                        // CREATE INNER TEXTNODE
+                        scriptVNode = Object.create(vNodeProto);
+                        scriptVNode.nodeType = 3;
+                        scriptVNode.domNode = DOCUMENT.createTextNode(scriptContent);
+                        // create circular reference:
+                        scriptVNode.domNode._vnode = scriptVNode;
+                        scriptVNode.text = scriptContent;
+                        scriptVNode.vParent = vnode;
+                        vnode.vChildNodes = [scriptVNode];
+                    }
+                    else {
+*/
                     // same tag --&gt; only update what is needed
                     bkpAttrs = vnode.attrs;
                     bkpVChildNodes = vnode.vChildNodes;
@@ -380,6 +409,9 @@ module.exports = function (window) {
                     // next: sync the vnodes:
                     vnode._setAttrs(bkpAttrs);
                     vnode._setChildNodes(bkpVChildNodes);
+/*
+                    }
+*/
                 }
                 else {
                     vnode.domNode.nodeValue = vnode.text;
@@ -387,7 +419,9 @@ module.exports = function (window) {
             }
             return {
                 isFragment: true,
-                vnodes: vnodes
+                vnodes: vnodes,
+                _scripts: _scripts,
+                _scriptVNodes: _scriptVNodes
             };
         },
         toCamelCase = function(input) {
@@ -1139,11 +1173,13 @@ module.exports = function (window) {
         * @return {Element} the created Element (or the last when multiple)
         * @since 0.0.1
         */
-        ElementPrototype.append = function(content, escape, refElement, silent) {
+        ElementPrototype.xappend = function(content, escape, refElement, silent) {
+console.warn(content);
+return;
             var instance = this,
                 vnode = instance.vnode,
                 prevSuppress = DOCUMENT._suppressMutationEvents || false,
-                i, len, item, createdElement, vnodes, vRefElement,
+                i, len, item, createdElement, vnodes, vRefElement, _scripts, scriptcontent,
             doAppend = function(oneItem) {
                 escape &amp;&amp; (oneItem.nodeType===1) &amp;&amp; (oneItem=DOCUMENT.createTextNode(oneItem.getOuterHTML()));
                 createdElement = refElement ? vnode._insertBefore(oneItem.vnode, refElement.vnode) : vnode._appendChild(oneItem.vnode);
@@ -1156,10 +1192,28 @@ module.exports = function (window) {
             }
             (typeof content===STRING) &amp;&amp; (content=htmlToVFragments(content, vnode.ns));
             if (content.isFragment) {
+console.warn(content);
                 vnodes = content.vnodes;
                 len = vnodes.length;
                 for (i=0; i&lt;len; i++) {
                     doAppend(vnodes[i].domNode);
+                }
+/*jshint boss:true */
+                if (_scripts=content._scripts) {
+/*jshint boss:false */
+                    len = _scripts.length;
+                    vnode._scripts || (vnode._scripts=[]);
+                    for (i=0; i&lt;len; i++) {
+                        scriptcontent = _scripts[i];
+                        if (!vnode._scripts.contains(scriptcontent)) {
+                            vnode._scripts[vnode._scripts.length] = scriptcontent;
+/*jshint -W083 */
+                            async(function() {
+                                vnode._removeChild(content._scriptVNodes[i]);
+                            });
+/*jshint +W083 */
+                        }
+                    }
                 }
             }
             else if (Array.isArray(content)) {
@@ -2367,7 +2421,7 @@ module.exports = function (window) {
             var instance = this,
                 vnode = instance.vnode,
                 prevSuppress = DOCUMENT._suppressMutationEvents || false,
-                i, len, item, createdElement, vnodes, vChildNodes, vRefElement,
+                i, len, item, createdElement, vnodes, vChildNodes, vRefElement, _scripts, scriptcontent,
             doPrepend = function(oneItem) {
                 escape &amp;&amp; (oneItem.nodeType===1) &amp;&amp; (oneItem=DOCUMENT.createTextNode(oneItem.getOuterHTML()));
                 createdElement = refElement ? vnode._insertBefore(oneItem.vnode, refElement.vnode) : vnode._appendChild(oneItem.vnode);
@@ -2388,6 +2442,23 @@ module.exports = function (window) {
                 // to manage TextNodes which might get merged, we loop downwards:
                 for (i=len-1; i&gt;=0; i--) {
                     doPrepend(vnodes[i].domNode);
+                }
+/*jshint boss:true */
+                if (_scripts=content._scripts) {
+/*jshint boss:false */
+                    len = _scripts.length;
+                    vnode._scripts || (vnode._scripts=[]);
+                    for (i=0; i&lt;len; i++) {
+                        scriptcontent = _scripts[i];
+                        if (!vnode._scripts.contains(scriptcontent)) {
+                            vnode._scripts[vnode._scripts.length] = scriptcontent;
+/*jshint -W083 */
+                            async(function() {
+                                vnode._removeChild(content._scriptVNodes[i]);
+                            });
+/*jshint +W083 */
+                        }
+                    }
                 }
             }
             else if (Array.isArray(content)) {

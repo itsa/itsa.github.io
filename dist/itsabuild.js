@@ -17111,10 +17111,39 @@ module.exports = function (window) {
         htmlToVFragments = function(html, nameSpace) {
             var vnodes = htmlToVNodes(html, vNodeProto, nameSpace),
                 len = vnodes.length,
-                vnode, i, bkpAttrs, bkpVChildNodes;
+                vnode, i, bkpAttrs, bkpVChildNodes, scriptContent, _scripts, _scriptVNodes, scriptVNode;
+
             for (i=0; i<len; i++) {
                 vnode = vnodes[i];
                 if (vnode.nodeType===1) {
+if (vnode.tag==='XSCRIPT') {
+console.warn('htmlToVFragments');
+}
+/*
+                    if (vnode.tag==='XSCRIPT') {
+                        // create circular reference:
+                        scriptContent = vnode.vChildNodes[0].text;
+                        // check if the parent has this script set:
+                        // parent didn't had the script set: we will process
+                        // but we need to remove the node once it is set
+                        // also: the script's content will be stored on is parent,
+                        // so we know can compare future comparision.
+                        _scripts || (_scripts=[]);
+                        _scripts[_scripts.length] = scriptContent;
+                        _scriptVNodes || (_scriptVNodes=[]);
+                        _scriptVNodes[_scriptVNodes.length] = vnode;
+                        // CREATE INNER TEXTNODE
+                        scriptVNode = Object.create(vNodeProto);
+                        scriptVNode.nodeType = 3;
+                        scriptVNode.domNode = DOCUMENT.createTextNode(scriptContent);
+                        // create circular reference:
+                        scriptVNode.domNode._vnode = scriptVNode;
+                        scriptVNode.text = scriptContent;
+                        scriptVNode.vParent = vnode;
+                        vnode.vChildNodes = [scriptVNode];
+                    }
+                    else {
+*/
                     // same tag --> only update what is needed
                     bkpAttrs = vnode.attrs;
                     bkpVChildNodes = vnode.vChildNodes;
@@ -17126,6 +17155,9 @@ module.exports = function (window) {
                     // next: sync the vnodes:
                     vnode._setAttrs(bkpAttrs);
                     vnode._setChildNodes(bkpVChildNodes);
+/*
+                    }
+*/
                 }
                 else {
                     vnode.domNode.nodeValue = vnode.text;
@@ -17133,7 +17165,9 @@ module.exports = function (window) {
             }
             return {
                 isFragment: true,
-                vnodes: vnodes
+                vnodes: vnodes,
+                _scripts: _scripts,
+                _scriptVNodes: _scriptVNodes
             };
         },
         toCamelCase = function(input) {
@@ -17885,11 +17919,13 @@ module.exports = function (window) {
         * @return {Element} the created Element (or the last when multiple)
         * @since 0.0.1
         */
-        ElementPrototype.append = function(content, escape, refElement, silent) {
+        ElementPrototype.xappend = function(content, escape, refElement, silent) {
+console.warn(content);
+return;
             var instance = this,
                 vnode = instance.vnode,
                 prevSuppress = DOCUMENT._suppressMutationEvents || false,
-                i, len, item, createdElement, vnodes, vRefElement,
+                i, len, item, createdElement, vnodes, vRefElement, _scripts, scriptcontent,
             doAppend = function(oneItem) {
                 escape && (oneItem.nodeType===1) && (oneItem=DOCUMENT.createTextNode(oneItem.getOuterHTML()));
                 createdElement = refElement ? vnode._insertBefore(oneItem.vnode, refElement.vnode) : vnode._appendChild(oneItem.vnode);
@@ -17902,10 +17938,28 @@ module.exports = function (window) {
             }
             (typeof content===STRING) && (content=htmlToVFragments(content, vnode.ns));
             if (content.isFragment) {
+console.warn(content);
                 vnodes = content.vnodes;
                 len = vnodes.length;
                 for (i=0; i<len; i++) {
                     doAppend(vnodes[i].domNode);
+                }
+/*jshint boss:true */
+                if (_scripts=content._scripts) {
+/*jshint boss:false */
+                    len = _scripts.length;
+                    vnode._scripts || (vnode._scripts=[]);
+                    for (i=0; i<len; i++) {
+                        scriptcontent = _scripts[i];
+                        if (!vnode._scripts.contains(scriptcontent)) {
+                            vnode._scripts[vnode._scripts.length] = scriptcontent;
+/*jshint -W083 */
+                            async(function() {
+                                vnode._removeChild(content._scriptVNodes[i]);
+                            });
+/*jshint +W083 */
+                        }
+                    }
                 }
             }
             else if (Array.isArray(content)) {
@@ -19113,7 +19167,7 @@ module.exports = function (window) {
             var instance = this,
                 vnode = instance.vnode,
                 prevSuppress = DOCUMENT._suppressMutationEvents || false,
-                i, len, item, createdElement, vnodes, vChildNodes, vRefElement,
+                i, len, item, createdElement, vnodes, vChildNodes, vRefElement, _scripts, scriptcontent,
             doPrepend = function(oneItem) {
                 escape && (oneItem.nodeType===1) && (oneItem=DOCUMENT.createTextNode(oneItem.getOuterHTML()));
                 createdElement = refElement ? vnode._insertBefore(oneItem.vnode, refElement.vnode) : vnode._appendChild(oneItem.vnode);
@@ -19134,6 +19188,23 @@ module.exports = function (window) {
                 // to manage TextNodes which might get merged, we loop downwards:
                 for (i=len-1; i>=0; i--) {
                     doPrepend(vnodes[i].domNode);
+                }
+/*jshint boss:true */
+                if (_scripts=content._scripts) {
+/*jshint boss:false */
+                    len = _scripts.length;
+                    vnode._scripts || (vnode._scripts=[]);
+                    for (i=0; i<len; i++) {
+                        scriptcontent = _scripts[i];
+                        if (!vnode._scripts.contains(scriptcontent)) {
+                            vnode._scripts[vnode._scripts.length] = scriptcontent;
+/*jshint -W083 */
+                            async(function() {
+                                vnode._removeChild(content._scriptVNodes[i]);
+                            });
+/*jshint +W083 */
+                        }
+                    }
                 }
             }
             else if (Array.isArray(content)) {
@@ -21894,6 +21965,7 @@ module.exports = function (window) {
     var NS = require('./vdom-ns.js')(window),
         escapeEntities = NS.EscapeEntities,
         extractor = require('./attribute-extractor.js')(window),
+        asyncSilent = require('utils/lib/timers.js').asyncSilent,
         xmlNS = NS.xmlNS,
         voidElements = NS.voidElements,
         nonVoidElements = NS.nonVoidElements,
@@ -21910,7 +21982,7 @@ module.exports = function (window) {
         domNodeToVNode = window._ITSAmodules.NodeParser = function(domNode, parentVNode) {
             var nodeType = domNode.nodeType,
                 vnode, attributes, attr, i, len, childNodes, domChildNode, vChildNodes, tag,
-                childVNode, extractClass, extractStyle, attributeName;
+                childVNode, extractClass, extractStyle, attributeName, parentNode;
             if (!NS.VALID_NODE_TYPES[nodeType]) {
                 // only process ElementNodes, TextNodes and CommentNodes
                 return;
@@ -21964,18 +22036,34 @@ module.exports = function (window) {
                 }
 
                 if (!vnode.isVoid) {
-                    // in case of 'SCRIPT' or 'STYLE' tags --> just use the innertext, all other tags need to be extracted
-                    if (NS.SCRIPT_OR_STYLE_TAG[tag]) {
-                        vnode.text = domNode.textContent;
+                    vChildNodes = vnode.vChildNodes = [];
+                    childNodes = domNode.childNodes;
+                    len = childNodes.length;
+
+if (tag==='SCRIPT') {
+console.warn('SCRIPT: '+len);
+}
+                    for (i=0; i<len; i++) {
+                        domChildNode = childNodes[i];
+                        childVNode = domNodeToVNode(domChildNode, vnode);
+                        vChildNodes[vChildNodes.length] = childVNode;
                     }
-                    else {
-                        vChildNodes = vnode.vChildNodes = [];
-                        childNodes = domNode.childNodes;
-                        len = childNodes.length;
-                        for (i=0; i<len; i++) {
-                            domChildNode = childNodes[i];
-                            childVNode = domNodeToVNode(domChildNode, vnode);
-                            vChildNodes[vChildNodes.length] = childVNode;
+                    if (tag==='SCRIPT') {
+                        // we register its content to its vParent abd will remove it from the dom
+                        // asyncrouniously after the dom is parsed
+                        if (!parentVNode) {
+                            // try to look in the dom for its parent
+                            parentNode = domNode.parentNode;
+                            parentVNode = parentNode && parentNode.vnode;
+                        }
+                        if (parentVNode) {
+                            if (len>0) {
+                                parentVNode._scripts || (parentVNode._scripts=[]);
+                                parentVNode._scripts[parentVNode._scripts.length] = vChildNodes[0].text;
+                            }
+                            asyncSilent(function() {
+                                parentVNode._removeChild(vnode);
+                            });
                         }
                     }
                 }
@@ -21993,7 +22081,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":61,"./vdom-ns.js":68,"./vnode.js":69,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":54}],68:[function(require,module,exports){
+},{"./attribute-extractor.js":61,"./vdom-ns.js":68,"./vnode.js":69,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":54,"utils/lib/timers.js":59}],68:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -23463,6 +23551,7 @@ module.exports = function (window) {
          * @since 0.0.1
          */
         _appendChild: function(VNode) {
+console.warn('_appendChild '+VNode);
             var instance = this,
                 domNode = VNode.domNode,
                 size;
@@ -23553,6 +23642,8 @@ module.exports = function (window) {
                 if (DOCUMENT._itagList && instance.isItag) {
                     DOCUMENT._itagList.remove(instance.domNode);
                 }
+
+                instance._scripts && (instance._scripts.length=0);
 
                 // The definite cleanup needs to be done after a timeout:
                 // someone might need to handle the Element when removed (fe to cleanup specific things)
@@ -24099,7 +24190,8 @@ module.exports = function (window) {
                 vChildNodes = instance.vChildNodes || [],
                 domNode = instance.domNode,
                 forRemoval = [],
-                i, oldChild, newChild, newLength, len, len2, childDomNode, nodeswitch, bkpAttrs, bkpChildNodes, needNormalize, prevSuppress;
+                i, oldChild, newChild, newLength, len, len2, childDomNode, nodeswitch, bkpAttrs,
+                process, bkpChildNodes, needNormalize, prevSuppress, scriptContent, _scripts, scriptLen, j;
 
             instance._noSync();
             // first: reset ._vChildren --> by making it empty, its getter will refresh its list on a next call
@@ -24115,83 +24207,120 @@ module.exports = function (window) {
                 if (i < newLength) {
                     newChild = newVChildNodes[i];
                     newChild.vParent || (newChild.vParent=instance);
+console.warn('1. newChild.tag '+newChild.tag);
 /*jshint boss:true */
                     switch (nodeswitch=NODESWITCH[oldChild.nodeType][newChild.nodeType]) {
 /*jshint boss:false */
                         case 1: // oldNodeType==Element, newNodeType==Element
-                            // iTagThatNeedsToRender = newChild.tag
-                            if ((oldChild.tag!==newChild.tag) ||
-                                ((oldChild.tag===newChild.tag) && oldChild.isItag && (oldChild.attrs.is!==newChild.attrs.is)) ||
-                                ((oldChild.tag==='SCRIPT') && (oldChild.text!==newChild.text))) {
-                                // new tag --> completely replace
-                                bkpAttrs = newChild.attrs;
-                                bkpChildNodes = newChild.vChildNodes;
-                                oldChild.attrs.id && (delete nodeids[oldChild.attrs.id]);
-/*jshint proto:true */
-                                oldChild.isItag && oldChild.domNode.destroyUI && oldChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
-/*jshint proto:false */
-                                newChild.attrs = {}; // reset to force defined by `_setAttrs`
-                                newChild.vChildNodes = []; // reset , to force defined by `_setAttrs`
-                                _tryReplaceChild(domNode, newChild.domNode, childDomNode);
-                                newChild.vParent = instance;
-                                newChild._setAttrs(bkpAttrs, suppressItagRender);
-                                newChild._setChildNodes(bkpChildNodes, suppressItagRender);
-                                newChild.id && (nodeids[newChild.id]=newChild.domNode);
-                                oldChild._replaceAtParent(newChild);
-                                newChild._addToTaglist();
-                                newChild._emit(EV_INSERTED);
+                            // Firts check if the tag is a script:
+                            // Script-tags are removed from the dom after executed and stored inside parentVNode._scripts {Array}
+                            // where the innerHTML is stored. They don't get re-inserted when they are already present inside this hash
+                            // This way we prevent scripts from running multiple times
+                            if (newChild.tag==='SCRIPT') {
+                                scriptContent = newChild.vChildNodes[0].text;
+                                // check if the parent has this script set:
+console.warn('script');
+                                process = true;
+/*jshint boss:true */
+                                if (_scripts=instance._scripts) {
+/*jshint boss:false */
+                                    scriptLen = _scripts.length;
+                                    for (j=0; process && (j<scriptLen); j++) {
+                                        process = (scriptContent!==scriptLen[j]);
+console.warn('process : '+process);
+                                    }
+                                }
+                                if (process) {
+                                    // parent didn't had the script set: we will process
+                                    // but we need to remove the node once it is set
+                                    // also: the script's content will be stored on is parent,
+                                    // so we know can compare future comparision.
+                                    instance._scripts || (instance._scripts=[]);
+                                    instance._scripts[instance._scripts.length] = scriptContent;
+                /*jshint -W083 */
+                                    async(function() {
+console.warn('removeing domnode');
+                                        instance._removeChild(newChild);
+                                    });
+                /*jshint +W083 */
+                                }
                             }
                             else {
-                                // same tag --> only update what is needed
-                                // NOTE: when this._unchangableAttrs exists, an itag-element syncs its UI -->
-                                if (oldChild._data) {
-                                    // we might need to set the class `itag-rendered` when the attributeData says so:
-                                    // this happens when an itag gets refreshed with an unrendered definition
-                                    if (oldChild._data.itagRendered && !newChild.hasClass('itag-rendered')) {
-                                        newChild.classNames['itag-rendered'] = true;
-                                        if (newChild.attrs[CLASS]) {
-                                            newChild.attrs[CLASS] = newChild.attrs[CLASS] + ' '+'itag-rendered';
-                                        }
-                                        else {
-                                            newChild.attrs[CLASS] = 'itag-rendered';
-                                        }
-                                    }
-                                    // we might need to set the class `focussed` when the attributeData says so:
-                                    // this happens when an itag gets rerendered: its renderFn doesn't know if any elements
-                                    // were focussed
-                                    if (oldChild._data.focussed && !newChild.hasClass('focussed')) {
-                                        newChild.classNames.focussed = true;
-                                        if (newChild.attrs[CLASS]) {
-                                            newChild.attrs[CLASS] = newChild.attrs[CLASS] + ' ' + 'focussed';
-                                        }
-                                        else {
-                                            newChild.attrs[CLASS] = 'focussed';
-                                        }
-                                    }
-                                    if (oldChild._data['fm-tabindex']) {
-                                        // node has the tabindex set by the focusmanager,
-                                        // but that info might got lost with re-rendering of the new element
-                                        newChild.attrs.tabindex = '0';
-                                    }
-                                }
-                                if (oldChild.isItag) {
-                                    prevSuppress = DOCUMENT._suppressMutationEvents || false;
-                                    DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
-/*jshint proto:true */
-                                    newChild.domNode.destroyUI && newChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
-/*jshint proto:false */
-                                    oldChild._setAttrs(newChild.attrs, suppressItagRender);
-                                    newChild._destroy(true); // destroy through the vnode and removing from DOCUMENT._itagList
-                                    DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(prevSuppress);
+                                process = true;
+                            }
+                            if (process) {
+                                if ((oldChild.tag!==newChild.tag) ||
+                                    ((oldChild.tag===newChild.tag) && oldChild.isItag && (oldChild.attrs.is!==newChild.attrs.is))) {
+                                    // new tag --> completely replace
+                                    bkpAttrs = newChild.attrs;
+                                    bkpChildNodes = newChild.vChildNodes;
+                                    oldChild.attrs.id && (delete nodeids[oldChild.attrs.id]);
+    /*jshint proto:true */
+                                    oldChild.isItag && oldChild.domNode.destroyUI && oldChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
+    /*jshint proto:false */
+                                    newChild.attrs = {}; // reset to force defined by `_setAttrs`
+                                    newChild.vChildNodes = []; // reset , to force defined by `_setAttrs`
+                                    _tryReplaceChild(domNode, newChild.domNode, childDomNode);
+                                    newChild.vParent = instance;
+                                    newChild._setAttrs(bkpAttrs, suppressItagRender);
+                                    newChild._setChildNodes(bkpChildNodes, suppressItagRender);
+                                    newChild.id && (nodeids[newChild.id]=newChild.domNode);
+                                    oldChild._replaceAtParent(newChild);
+                                    newChild._addToTaglist();
+                                    newChild._emit(EV_INSERTED);
                                 }
                                 else {
-                                    oldChild._setAttrs(newChild.attrs, suppressItagRender);
-                                    // next: sync the vChildNodes:
-                                    oldChild._setChildNodes(newChild.vChildNodes, suppressItagRender);
+                                    // same tag --> only update what is needed
+                                    // NOTE: when this._unchangableAttrs exists, an itag-element syncs its UI -->
+                                    if (oldChild._data) {
+                                        // we might need to set the class `itag-rendered` when the attributeData says so:
+                                        // this happens when an itag gets refreshed with an unrendered definition
+                                        if (oldChild._data.itagRendered && !newChild.hasClass('itag-rendered')) {
+                                            newChild.classNames['itag-rendered'] = true;
+                                            if (newChild.attrs[CLASS]) {
+                                                newChild.attrs[CLASS] = newChild.attrs[CLASS] + ' '+'itag-rendered';
+                                            }
+                                            else {
+                                                newChild.attrs[CLASS] = 'itag-rendered';
+                                            }
+                                        }
+                                        // we might need to set the class `focussed` when the attributeData says so:
+                                        // this happens when an itag gets rerendered: its renderFn doesn't know if any elements
+                                        // were focussed
+                                        if (oldChild._data.focussed && !newChild.hasClass('focussed')) {
+                                            newChild.classNames.focussed = true;
+                                            if (newChild.attrs[CLASS]) {
+                                                newChild.attrs[CLASS] = newChild.attrs[CLASS] + ' ' + 'focussed';
+                                            }
+                                            else {
+                                                newChild.attrs[CLASS] = 'focussed';
+                                            }
+                                        }
+                                        if (oldChild._data['fm-tabindex']) {
+                                            // node has the tabindex set by the focusmanager,
+                                            // but that info might got lost with re-rendering of the new element
+                                            newChild.attrs.tabindex = '0';
+                                        }
+                                    }
+                                    if (oldChild.isItag) {
+                                        prevSuppress = DOCUMENT._suppressMutationEvents || false;
+                                        DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
+    /*jshint proto:true */
+                                        newChild.domNode.destroyUI && newChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
+    /*jshint proto:false */
+                                        oldChild._setAttrs(newChild.attrs, suppressItagRender);
+                                        newChild._destroy(true); // destroy through the vnode and removing from DOCUMENT._itagList
+                                        DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(prevSuppress);
+                                    }
+                                    else {
+                                        oldChild._setAttrs(newChild.attrs, suppressItagRender);
+                                        // next: sync the vChildNodes:
+                                        oldChild._setChildNodes(newChild.vChildNodes, suppressItagRender);
+                                    }
+                                    // reset ref. to the domNode, for it might have been changed by newChild:
+                                    oldChild.id && (nodeids[oldChild.id]=childDomNode);
+                                    newVChildNodes[i] = oldChild;
                                 }
-                                // reset ref. to the domNode, for it might have been changed by newChild:
-                                oldChild.id && (nodeids[oldChild.id]=childDomNode);
-                                newVChildNodes[i] = oldChild;
                             }
                             break;
                         case 2: // oldNodeType==Element, newNodeType==TextNode
@@ -24260,17 +24389,57 @@ module.exports = function (window) {
             for (i = len; i < newLength; i++) {
                 newChild = newVChildNodes[i];
                 newChild.vParent = instance;
+console.warn('2. newChild.tag: '+newChild.tag);
+console.warn(newChild);
                 switch (newChild.nodeType) {
                     case 1: // Element
-                        bkpAttrs = newChild.attrs;
-                        bkpChildNodes = newChild.vChildNodes;
-                        newChild.attrs = {}; // reset, to force defined by `_setAttrs`
-                        newChild.vChildNodes = []; // reset to current state, to force defined by `_setAttrs`
-                        domNode._appendChild(newChild.domNode);
-                        newChild._setAttrs(bkpAttrs, suppressItagRender);
-                        newChild._setChildNodes(bkpChildNodes, suppressItagRender);
-                        newChild._addToTaglist();
-                        newChild._emit(EV_INSERTED);
+                        // Firts check if the tag is a script:
+                        // Script-tags are removed from the dom after executed and stored inside parentVNode._scripts {Array}
+                        // where the innerHTML is stored. They don't get re-inserted when they are already present inside this hash
+                        // This way we prevent scripts from running multiple times
+                        if (newChild.tag==='SCRIPT') {
+                            scriptContent = newChild.vChildNodes[0].text;
+                            // check if the parent has this script set:
+console.warn('script');
+                            process = true;
+/*jshint boss:true */
+                            if (_scripts=instance._scripts) {
+/*jshint boss:false */
+                                scriptLen = _scripts.length;
+                                for (j=0; process && (j<scriptLen); j++) {
+                                    process = (scriptContent!==scriptLen[j]);
+console.warn('process : '+process);
+                                }
+                            }
+                            if (process) {
+                                // parent didn't had the script set: we will process
+                                // but we need to remove the node once it is set
+                                // also: the script's content will be stored on is parent,
+                                // so we know can compare future comparision.
+                                instance._scripts || (instance._scripts=[]);
+                                instance._scripts[instance._scripts.length] = scriptContent;
+            /*jshint -W083 */
+                                async(function() {
+console.warn('removeing domnode');
+                                    instance._removeChild(newChild);
+                                });
+            /*jshint +W083 */
+                            }
+                        }
+                        else {
+                            process = true;
+                        }
+                        if (process) {
+                            bkpAttrs = newChild.attrs;
+                            bkpChildNodes = newChild.vChildNodes;
+                            newChild.attrs = {}; // reset, to force defined by `_setAttrs`
+                            newChild.vChildNodes = []; // reset to current state, to force defined by `_setAttrs`
+                            domNode._appendChild(newChild.domNode);
+                            newChild._setAttrs(bkpAttrs, suppressItagRender);
+                            newChild._setChildNodes(bkpChildNodes, suppressItagRender);
+                            newChild._addToTaglist();
+                            newChild._emit(EV_INSERTED);
+                        }
                         break;
                     case 3: // TextNode
                         needNormalize = true;
