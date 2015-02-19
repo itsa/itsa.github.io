@@ -36,10 +36,7 @@
             container = document.getElement('#btncontainer');
         console.warn(container.vnode.vChildNodes.length);
         console.warn(container.getOuterHTML());
-        var fn = function(text) {
-
-        }
-        fn('<script>alert(1)</script>');
+        container.append('<xscript>alert(1)</xscript>');
     </script>
 
 </body>

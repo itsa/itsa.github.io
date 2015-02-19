@@ -1138,13 +1138,16 @@ module.exports = function (window) {
         * @return {Boolean} whether the vnode&#x27;s domNode is equal, or contains the specified Element.
         * @since 0.0.1
         */
-        contains: function(otherVNode, noItagSearch) {
+        contains: function(otherVNode, noProtectedSearch) {
             var instance = this;
-            if (otherVNode &amp;&amp; otherVNode.destroyed) {
+            if (otherVNode &amp;&amp; (otherVNode.destroyed || (noProtectedSearch &amp;&amp; otherVNode._systemNode))) {
                 return false;
             }
-            while (otherVNode &amp;&amp; (otherVNode!==instance) &amp;&amp; (!noItagSearch || !instance.isItag || !instance.domNode.contentHidden)) {
+            while (otherVNode &amp;&amp; (otherVNode!==instance)) {
                 otherVNode = otherVNode.vParent;
+                if (otherVNode &amp;&amp; noProtectedSearch &amp;&amp; (otherVNode._systemNode || (otherVNode.isItag &amp;&amp; otherVNode.domNode.contentHidden))) {
+                    return false;
+                }
             }
             return (otherVNode===instance);
         },
@@ -1155,11 +1158,12 @@ module.exports = function (window) {
         * Syncs with the dom.
         *
         * @method empty
+        * @param [full=false] {Boolean} whether system-nodes should be removed as well
         * @chainable
         * @since 0.0.1
         */
-        empty: function() {
-            return this._setChildNodes([]);
+        empty: function(full) {
+            return this._setChildNodes([], null, full);
         },
 
        /**
@@ -1208,7 +1212,7 @@ module.exports = function (window) {
                     vChildNode = vChildNodes[i];
                     switch (vChildNode.nodeType) {
                         case 1:
-                            exclude.contains(vChildNode.domNode) || (html+=vChildNode.outerHTML);
+                            exclude.contains(vChildNode.domNode) || vChildNode._systemNode || (html+=vChildNode.outerHTML);
                             break;
                         case 3:
                             html += vChildNode.text.replace(/&lt;/g, &#x27;&amp;lt;&#x27;).replace(/&gt;/g, &#x27;&amp;gt;&#x27;);
@@ -1449,7 +1453,6 @@ module.exports = function (window) {
          * @since 0.0.1
          */
         _appendChild: function(VNode) {
-console.warn(&#x27;_appendChild &#x27;+VNode);
             var instance = this,
                 domNode = VNode.domNode,
                 size;
@@ -1719,8 +1722,12 @@ console.warn(&#x27;_appendChild &#x27;+VNode);
                     newVNode._addToTaglist();
                     newVNode._emit(EV_INSERTED);
                 }
+                return domNode;
             }
-            return domNode;
+            else {
+                console.warn(&#x27;trying to insert before, but no ref-node found. Will append the new node&#x27;);
+                return instance._appendChild(newVNode);
+            }
         },
 
        /**
@@ -2082,7 +2089,7 @@ console.warn(&#x27;_appendChild &#x27;+VNode);
         * @chainable
         * @since 0.0.1
         */
-        _setChildNodes: function(newVChildNodes, suppressItagRender) {
+        _setChildNodes: function(newVChildNodes, suppressItagRender, removeSystemElements) {
             // does sync the DOM
             var instance = this,
                 vChildNodes = instance.vChildNodes || [],
@@ -2096,16 +2103,31 @@ console.warn(&#x27;_appendChild &#x27;+VNode);
             instance._vChildren = null;
             // if newVChildNodes is undefined, then we assume it to be empty --&gt; an empty array
             newVChildNodes || (newVChildNodes=[]);
+
             // quickest way to loop through array is by using for loops: http://jsperf.com/array-foreach-vs-for-loop/5
             len = vChildNodes.length;
+
+            // we need to add the systemNodes -if any- to the new newVChildNodes: they should be retained.
+            // SystemNodes are always places at the beginning, so they won&#x27;t get reshuffled:
+            if (!removeSystemElements) {
+                for (i=0; i&lt;len; i++) {
+                    oldChild = vChildNodes[i];
+                    if (oldChild._systemNode) {
+                        newVChildNodes.insertAt(oldChild, i);
+                    }
+                    else {
+                        break;
+                    }
+                }
+            }
             newLength = newVChildNodes.length;
             for (i=0; i&lt;len; i++) {
                 oldChild = vChildNodes[i];
                 childDomNode = oldChild.domNode;
+
                 if (i &lt; newLength) {
                     newChild = newVChildNodes[i];
                     newChild.vParent || (newChild.vParent=instance);
-console.warn(&#x27;1. newChild.tag &#x27;+newChild.tag);
 /*jshint boss:true */
                     switch (nodeswitch=NODESWITCH[oldChild.nodeType][newChild.nodeType]) {
 /*jshint boss:false */
@@ -2117,7 +2139,6 @@ console.warn(&#x27;1. newChild.tag &#x27;+newChild.tag);
                             if (newChild.tag===&#x27;SCRIPT&#x27;) {
                                 scriptContent = newChild.vChildNodes[0].text;
                                 // check if the parent has this script set:
-console.warn(&#x27;script&#x27;);
                                 process = true;
 /*jshint boss:true */
                                 if (_scripts=instance._scripts) {
@@ -2125,7 +2146,6 @@ console.warn(&#x27;script&#x27;);
                                     scriptLen = _scripts.length;
                                     for (j=0; process &amp;&amp; (j&lt;scriptLen); j++) {
                                         process = (scriptContent!==scriptLen[j]);
-console.warn(&#x27;process : &#x27;+process);
                                     }
                                 }
                                 if (process) {
@@ -2137,7 +2157,8 @@ console.warn(&#x27;process : &#x27;+process);
                                     instance._scripts[instance._scripts.length] = scriptContent;
                 /*jshint -W083 */
                                     async(function() {
-console.warn(&#x27;removeing domnode&#x27;);
+console.warn(&#x27;going to remove&#x27;);
+console.warn(newChild);
                                         instance._removeChild(newChild);
                                     });
                 /*jshint +W083 */
@@ -2287,8 +2308,6 @@ console.warn(&#x27;removeing domnode&#x27;);
             for (i = len; i &lt; newLength; i++) {
                 newChild = newVChildNodes[i];
                 newChild.vParent = instance;
-console.warn(&#x27;2. newChild.tag: &#x27;+newChild.tag);
-console.warn(newChild);
                 switch (newChild.nodeType) {
                     case 1: // Element
                         // Firts check if the tag is a script:
@@ -2298,7 +2317,6 @@ console.warn(newChild);
                         if (newChild.tag===&#x27;SCRIPT&#x27;) {
                             scriptContent = newChild.vChildNodes[0].text;
                             // check if the parent has this script set:
-console.warn(&#x27;script&#x27;);
                             process = true;
 /*jshint boss:true */
                             if (_scripts=instance._scripts) {
@@ -2306,7 +2324,6 @@ console.warn(&#x27;script&#x27;);
                                 scriptLen = _scripts.length;
                                 for (j=0; process &amp;&amp; (j&lt;scriptLen); j++) {
                                     process = (scriptContent!==scriptLen[j]);
-console.warn(&#x27;process : &#x27;+process);
                                 }
                             }
                             if (process) {
@@ -2318,7 +2335,8 @@ console.warn(&#x27;process : &#x27;+process);
                                 instance._scripts[instance._scripts.length] = scriptContent;
             /*jshint -W083 */
                                 async(function() {
-console.warn(&#x27;removeing domnode&#x27;);
+console.warn(&#x27;going to remove&#x27;);
+console.warn(newChild);
                                     instance._removeChild(newChild);
                                 });
             /*jshint +W083 */
@@ -2520,7 +2538,7 @@ console.warn(&#x27;removeing domnode&#x27;);
                     instance.isVoid &amp;&amp; (html += &#x27;/&#x27;);
                     html += &#x27;&gt;&#x27;;
                     if (!instance.isVoid) {
-                        html += instance.innerHTML + &#x27;&lt;/&#x27; + instance.tag.toLowerCase() + &#x27;&gt;&#x27;;
+                        html += (instance.isItag ? &#x27;&#x27; : instance.innerHTML) + &#x27;&lt;/&#x27; + instance.tag.toLowerCase() + &#x27;&gt;&#x27;;
                     }
                 }
                 return html;
