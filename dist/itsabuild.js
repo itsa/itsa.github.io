@@ -25078,7 +25078,8 @@ module.exports = function (window) {
 
 require('js-ext/lib/object.js');
 
-var createHashMap = require('js-ext/extra/hashmap.js').createMap;
+var createHashMap = require('js-ext/extra/hashmap.js').createMap,
+    laterSilent = require('utils/lib/timers.js').laterSilent;
 
 module.exports = function (window) {
 
@@ -25108,6 +25109,12 @@ module.exports = function (window) {
             // now reset:
             vnode._setAttr('style', rightStyle);
         });
+        // cleanup duplicated `style` elements - if any
+        // this can be done async with a small delay: no one will notice
+        laterSilent(function() {
+            var head = DOCUMENT.getElement('head');
+            head.vnode._cleanupStyle();
+        }, 500);
     }
     else {
         // if no HTML, then return an empty Plugin-object
@@ -25118,7 +25125,7 @@ module.exports = function (window) {
 
     return vdom;
 };
-},{"./partials/element-plugin.js":63,"./partials/extend-document.js":64,"./partials/extend-element.js":65,"./partials/node-parser.js":67,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42}],71:[function(require,module,exports){
+},{"./partials/element-plugin.js":63,"./partials/extend-document.js":64,"./partials/extend-element.js":65,"./partials/node-parser.js":67,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"utils/lib/timers.js":59}],71:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
