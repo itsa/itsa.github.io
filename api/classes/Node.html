@@ -264,20 +264,6 @@
                             </li>
                         
                             <li class="index-item method private">
-                                <a href="#method__getEvtTransEndCount">_getEvtTransEndCount</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method private">
-                                <a href="#method__getTransitionAll">_getTransitionAll</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method private">
                                 <a href="#method__getTransitionAll">_getTransitionAll</a>
 
                                 
@@ -300,13 +286,6 @@
                     <h3>Properties</h3>
 
                     <ul class="index-list properties">
-                        
-                            <li class="index-item property">
-                                <a href="#property_vnode">vnode</a>
-
-                                
-                                
-                            </li>
                         
                             <li class="index-item property">
                                 <a href="#property_vnode">vnode</a>
@@ -363,66 +342,7 @@
             
         
         
-        <a href="../files/src_vdom_partials_extend-element (origineel).js.html#l863"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element (origineel).js:863</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Determines the number of transitionend-events there will occur</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method__getEvtTransEndCount" class="method item private">
-    <h3 class="name"><code>_getEvtTransEndCount</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_vdom_partials_extend-element.js.html#l863"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:863</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l864"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:864</code></a>
         
         </p>
 
@@ -501,150 +421,7 @@
             
         
         
-        <a href="../files/src_vdom_partials_extend-element (origineel).js.html#l884"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element (origineel).js:884</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Returns cascaded &quot;transition&quot; style of all transition-properties. <code>Cascaded</code> means: the actual present style,
-the way it is visible (calculated through the DOM-tree).</p>
-<p>Note1: When &quot;transition&quot; is set inline, ONLY inline transtition is active!
-Thus, if parentNode has &quot;transition: width 2s&quot; and inline has &quot;transition: height 3s&quot;, then the transition
-will be &quot;transition: height 3s&quot; --&gt; returning &quot;undefined&quot; for transitionProperty=width.
-Note2: in case of &quot;transition: all&quot; --&gt; these values will be returned for every &quot;transitionProperty&quot; (even when querying &quot;width&quot;)</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">transitionProperty</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>transform property that is queried, f.e. &quot;width&quot;, or &quot;all&quot;</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[pseudo]</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>to query pseudo-element, fe: <code>:before</code> or <code>:first-line</code></p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
-                    
-                    <p>the transition-object, with the properties:</p>
-<ul>
-    <li>duration {Number}</li>
-    <li>timingFunction {String}</li>
-    <li>delay {Number}</li>
-</ul>
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method__getTransitionAll" class="method item private">
-    <h3 class="name"><code>_getTransitionAll</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>transitionProperty</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code class="optional">[pseudo]</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-        </span>
-    
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_vdom_partials_extend-element.js.html#l884"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:884</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l885"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:885</code></a>
         
         </p>
 
@@ -791,7 +568,7 @@ Note2: in case of &quot;transition: all&quot; --&gt; these values will be return
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l944"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:944</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l945"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:945</code></a>
         
         </p>
 
@@ -925,55 +702,7 @@ Note2: in case of &quot;transition: all&quot; --&gt; these values will be return
             
         
         
-        <a href="../files/src_vdom_partials_extend-element (origineel).js.html#l825"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element (origineel).js:825</code></a>
-        
-        </p>
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Reference to the vnode-object that represents the Node</p>
-<p>(will autogenerate a vnode, should it not exists)</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_vnode" class="property item">
-    <h3 class="name"><code>vnode</code></h3>
-    <span class="type">Vnode</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_vdom_partials_extend-element.js.html#l825"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:825</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l826"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:826</code></a>
         
         </p>
 

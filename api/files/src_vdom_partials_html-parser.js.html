@@ -317,12 +317,12 @@ module.exports = function (window) {
          * @return {Array} array with &#x60;vnodes&#x60;
          * @since 0.0.1
          */
-        htmlToVNodes = window._ITSAmodules.HtmlParser = function(htmlString, vNodeProto, nameSpace, parentVNode, suppressItagRender, scriptsAllowed) {
+        htmlToVNodes = window._ITSAmodules.HtmlParser = function(htmlString, vNodeProto, nameSpace, parentVNode, suppressItagRender, allowScripts) {
             var i = 0,
                 vnodes = [],
                 insideTagDefinition, insideComment, innerText, endTagCount, stringMarker, attributeisString, attribute, attributeValue, nestedComments,
                 len, j, character, character2, vnode, tag, isBeginTag, isEndTag, scriptVNode, extractClass, extractStyle, tagdefinition, is;
-scriptsAllowed = true;
+
             htmlString || (htmlString=&#x27;&#x27;);
             len = htmlString.length;
 
@@ -431,7 +431,7 @@ scriptsAllowed = true;
                             vnode.vChildNodes = [scriptVNode];
                         }
                         else {
-                            vnode.vChildNodes = (innerText!==&#x27;&#x27;) ? htmlToVNodes(innerText, vNodeProto, vnode.ns, vnode, suppressItagRender) : [];
+                            vnode.vChildNodes = (innerText!==&#x27;&#x27;) ? htmlToVNodes(innerText, vNodeProto, vnode.ns, vnode, suppressItagRender, allowScripts) : [];
                         }
                     }
                     else {
@@ -442,7 +442,7 @@ scriptsAllowed = true;
                     (tag===&#x27;SCRIPT&#x27;) &amp;&amp; (tag===&#x27;XSCRIPT&#x27;);
 
                     // the string-parser expects &lt;/xscript&gt; for &#x60;script&#x60;-tags
-                    if ((tag===&#x27;XSCRIPT&#x27;) &amp;&amp; scriptsAllowed) {
+                    if ((tag===&#x27;XSCRIPT&#x27;) &amp;&amp; allowScripts) {
                         tagdefinition = &#x27;script&#x27;;
                         vnode.tag = &#x27;SCRIPT&#x27;;
                     }
@@ -454,7 +454,7 @@ scriptsAllowed = true;
                         }
                     }
 
-                    vnode.domNode = vnode.ns ? DOCUMENT.createElementNS(vnode.ns, tagdefinition) : DOCUMENT.createElement(tagdefinition, suppressItagRender);
+                    vnode.domNode = vnode.ns ? DOCUMENT.createElementNS(vnode.ns, tagdefinition) : DOCUMENT.createElement(tagdefinition, suppressItagRender, allowScripts);
                     // create circular reference:
                     vnode.domNode._vnode = vnode;
 

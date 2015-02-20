@@ -240,7 +240,6 @@ module.exports = function (window) {
     var NS = require(&#x27;./vdom-ns.js&#x27;)(window),
         escapeEntities = NS.EscapeEntities,
         extractor = require(&#x27;./attribute-extractor.js&#x27;)(window),
-        asyncSilent = require(&#x27;utils/lib/timers.js&#x27;).asyncSilent,
         xmlNS = NS.xmlNS,
         voidElements = NS.voidElements,
         nonVoidElements = NS.nonVoidElements,
@@ -314,10 +313,6 @@ module.exports = function (window) {
                     vChildNodes = vnode.vChildNodes = [];
                     childNodes = domNode.childNodes;
                     len = childNodes.length;
-
-if (tag===&#x27;SCRIPT&#x27;) {
-console.warn(&#x27;SCRIPT: &#x27;+len);
-}
                     for (i=0; i&lt;len; i++) {
                         domChildNode = childNodes[i];
                         childVNode = domNodeToVNode(domChildNode, vnode);
@@ -336,9 +331,6 @@ console.warn(&#x27;SCRIPT: &#x27;+len);
                                 parentVNode._scripts || (parentVNode._scripts=[]);
                                 parentVNode._scripts[parentVNode._scripts.length] = vChildNodes[0].text;
                             }
-                            asyncSilent(function() {
-                                parentVNode._removeChild(vnode);
-                            });
                         }
                     }
                 }

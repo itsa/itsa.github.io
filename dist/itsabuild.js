@@ -17108,16 +17108,18 @@ module.exports = function (window) {
             zIndex: true
         },
         // CSS_PROPS_TO_CALCULATE.transform is set later on by the vendor specific transform-property
-        htmlToVFragments = function(html, nameSpace) {
-            var vnodes = htmlToVNodes(html, vNodeProto, nameSpace),
+        htmlToVFragments = function(html, nameSpace, allowScripts) {
+            var vnodes = htmlToVNodes(html, vNodeProto, nameSpace, null, null, allowScripts),
                 len = vnodes.length,
+                _cleanupStyle = false,
                 vnode, i, bkpAttrs, bkpVChildNodes, scriptContent, _scripts, _scriptVNodes, scriptVNode;
 
             for (i=0; i<len; i++) {
                 vnode = vnodes[i];
                 if (vnode.nodeType===1) {
+                    (vnode.tag==='STYLE') && (_cleanupStyle=true);
                     if (vnode.tag==='SCRIPT') {
-                        scriptContent = vnode.vChildNodes[0].text;
+                        scriptContent = (vnode.attrs && vnode.attrs.src) ? vnode.attrs.src : vnode.vChildNodes[0].text;
                         // check if the parent has this script set:
                         // parent didn't had the script set: we will process
                         // but we need to remove the node once it is set
@@ -17137,19 +17139,17 @@ module.exports = function (window) {
                         scriptVNode.vParent = vnode;
                         vnode.vChildNodes = [scriptVNode];
                     }
-                    else {
-                        // same tag --> only update what is needed
-                        bkpAttrs = vnode.attrs;
-                        bkpVChildNodes = vnode.vChildNodes;
+                    // same tag --> only update what is needed
+                    bkpAttrs = vnode.attrs;
+                    bkpVChildNodes = vnode.vChildNodes;
 
-                        // reset, to force creation of inner domNodes:
-                        vnode.attrs = {};
-                        vnode.vChildNodes = [];
+                    // reset, to force creation of inner domNodes:
+                    vnode.attrs = {};
+                    vnode.vChildNodes = [];
 
-                        // next: sync the vnodes:
-                        vnode._setAttrs(bkpAttrs);
-                        vnode._setChildNodes(bkpVChildNodes);
-                    }
+                    // next: sync the vnodes:
+                    vnode._setAttrs(bkpAttrs);
+                    vnode._setChildNodes(bkpVChildNodes);
                 }
                 else {
                     vnode.domNode.nodeValue = vnode.text;
@@ -17159,7 +17159,8 @@ module.exports = function (window) {
                 isFragment: true,
                 vnodes: vnodes,
                 _scripts: _scripts,
-                _scriptVNodes: _scriptVNodes
+                _scriptVNodes: _scriptVNodes,
+                _cleanupStyle: _cleanupStyle
             };
         },
         toCamelCase = function(input) {
@@ -17939,10 +17940,11 @@ module.exports = function (window) {
         * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
         * @param [refElement] {Element} reference Element where the content should be appended
         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
+        * @param [allowScripts=false] {Boolean} whether scripts are allowed --> these should be defined with `xscript` instead of `script`
         * @return {Element} the created Element (or the last when multiple)
         * @since 0.0.1
         */
-        ElementPrototype.append = function(content, escape, refElement, silent) {
+        ElementPrototype.append = function(content, escape, refElement, silent, allowScripts) {
             var instance = this,
                 vnode = instance.vnode,
                 prevSuppress = DOCUMENT._suppressMutationEvents || false,
@@ -17957,7 +17959,7 @@ module.exports = function (window) {
                 vRefElement = refElement.vnode.vNext;
                 refElement = vRefElement && vRefElement.domNode;
             }
-            (typeof content===STRING) && (content=htmlToVFragments(content, vnode.ns));
+            (typeof content===STRING) && (content=htmlToVFragments(content, vnode.ns, allowScripts));
             if (content.isFragment) {
                 vnodes = content.vnodes;
                 len = vnodes.length;
@@ -17973,14 +17975,11 @@ module.exports = function (window) {
                         scriptcontent = _scripts[i];
                         if (!vnode._scripts.contains(scriptcontent)) {
                             vnode._scripts[vnode._scripts.length] = scriptcontent;
-/*jshint -W083 */
-                            async(function() {
-                                vnode._removeChild(content._scriptVNodes[i]);
-                            });
-/*jshint +W083 */
                         }
                     }
                 }
+                // in case a style-tag was added, we need to cleanup double definitions:
+                content._cleanupStyle && vnode._cleanupStyle();
             }
             else if (Array.isArray(content)) {
                 len = content.length;
@@ -19181,10 +19180,11 @@ module.exports = function (window) {
         * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
         * @param [refElement] {Element} reference Element where the content should be prepended
         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
+        * @param [allowScripts=false] {Boolean} whether scripts are allowed --> these should be defined with `xscript` instead of `script`
         * @return {Element} the created Element (or the last when multiple)
         * @since 0.0.1
         */
-        ElementPrototype.prepend = function(content, escape, refElement, silent) {
+        ElementPrototype.prepend = function(content, escape, refElement, silent, allowScripts) {
             var instance = this,
                 vnode = instance.vnode,
                 prevSuppress = DOCUMENT._suppressMutationEvents || false,
@@ -19206,7 +19206,7 @@ module.exports = function (window) {
                     }
                 }
             }
-            (typeof content===STRING) && (content=htmlToVFragments(content, vnode.ns));
+            (typeof content===STRING) && (content=htmlToVFragments(content, vnode.ns, allowScripts));
             if (content.isFragment) {
                 vnodes = content.vnodes;
                 len = vnodes.length;
@@ -19223,14 +19223,11 @@ module.exports = function (window) {
                         scriptcontent = _scripts[i];
                         if (!vnode._scripts.contains(scriptcontent)) {
                             vnode._scripts[vnode._scripts.length] = scriptcontent;
-/*jshint -W083 */
-                            async(function() {
-                                vnode._removeChild(content._scriptVNodes[i]);
-                            });
-/*jshint +W083 */
                         }
                     }
                 }
+                // in case a style-tag was added, we need to cleanup double definitions:
+                content._cleanupStyle && vnode._cleanupStyle();
             }
             else if (Array.isArray(content)) {
                 len = content.length;
@@ -20107,14 +20104,15 @@ module.exports = function (window) {
          * @method setHTML
          * @param val {String} the new value to be set
          * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
+         * @param [allowScripts=false] {Boolean} whether scripts are allowed --> these should be defined with `xscript` instead of `script`
          * @chainable
          * @since 0.0.1
          */
-        ElementPrototype.setHTML = function(val, silent) {
+        ElementPrototype.setHTML = function(val, silent, allowScripts) {
             var instance = this,
                 prevSuppress = DOCUMENT._suppressMutationEvents || false;
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
-            instance.vnode.innerHTML = val;
+            instance.vnode.setHTML(val, null, allowScripts);
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(prevSuppress);
             return instance;
         };
@@ -21729,12 +21727,12 @@ module.exports = function (window) {
          * @return {Array} array with `vnodes`
          * @since 0.0.1
          */
-        htmlToVNodes = window._ITSAmodules.HtmlParser = function(htmlString, vNodeProto, nameSpace, parentVNode, suppressItagRender, scriptsAllowed) {
+        htmlToVNodes = window._ITSAmodules.HtmlParser = function(htmlString, vNodeProto, nameSpace, parentVNode, suppressItagRender, allowScripts) {
             var i = 0,
                 vnodes = [],
                 insideTagDefinition, insideComment, innerText, endTagCount, stringMarker, attributeisString, attribute, attributeValue, nestedComments,
                 len, j, character, character2, vnode, tag, isBeginTag, isEndTag, scriptVNode, extractClass, extractStyle, tagdefinition, is;
-scriptsAllowed = true;
+
             htmlString || (htmlString='');
             len = htmlString.length;
 
@@ -21843,7 +21841,7 @@ scriptsAllowed = true;
                             vnode.vChildNodes = [scriptVNode];
                         }
                         else {
-                            vnode.vChildNodes = (innerText!=='') ? htmlToVNodes(innerText, vNodeProto, vnode.ns, vnode, suppressItagRender) : [];
+                            vnode.vChildNodes = (innerText!=='') ? htmlToVNodes(innerText, vNodeProto, vnode.ns, vnode, suppressItagRender, allowScripts) : [];
                         }
                     }
                     else {
@@ -21854,7 +21852,7 @@ scriptsAllowed = true;
                     (tag==='SCRIPT') && (tag==='XSCRIPT');
 
                     // the string-parser expects </xscript> for `script`-tags
-                    if ((tag==='XSCRIPT') && scriptsAllowed) {
+                    if ((tag==='XSCRIPT') && allowScripts) {
                         tagdefinition = 'script';
                         vnode.tag = 'SCRIPT';
                     }
@@ -21866,7 +21864,7 @@ scriptsAllowed = true;
                         }
                     }
 
-                    vnode.domNode = vnode.ns ? DOCUMENT.createElementNS(vnode.ns, tagdefinition) : DOCUMENT.createElement(tagdefinition, suppressItagRender);
+                    vnode.domNode = vnode.ns ? DOCUMENT.createElementNS(vnode.ns, tagdefinition) : DOCUMENT.createElement(tagdefinition, suppressItagRender, allowScripts);
                     // create circular reference:
                     vnode.domNode._vnode = vnode;
 
@@ -22023,7 +22021,6 @@ module.exports = function (window) {
     var NS = require('./vdom-ns.js')(window),
         escapeEntities = NS.EscapeEntities,
         extractor = require('./attribute-extractor.js')(window),
-        asyncSilent = require('utils/lib/timers.js').asyncSilent,
         xmlNS = NS.xmlNS,
         voidElements = NS.voidElements,
         nonVoidElements = NS.nonVoidElements,
@@ -22097,10 +22094,6 @@ module.exports = function (window) {
                     vChildNodes = vnode.vChildNodes = [];
                     childNodes = domNode.childNodes;
                     len = childNodes.length;
-
-if (tag==='SCRIPT') {
-console.warn('SCRIPT: '+len);
-}
                     for (i=0; i<len; i++) {
                         domChildNode = childNodes[i];
                         childVNode = domNodeToVNode(domChildNode, vnode);
@@ -22119,9 +22112,6 @@ console.warn('SCRIPT: '+len);
                                 parentVNode._scripts || (parentVNode._scripts=[]);
                                 parentVNode._scripts[parentVNode._scripts.length] = vChildNodes[0].text;
                             }
-                            asyncSilent(function() {
-                                parentVNode._removeChild(vnode);
-                            });
                         }
                     }
                 }
@@ -22139,7 +22129,7 @@ console.warn('SCRIPT: '+len);
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":61,"./vdom-ns.js":68,"./vnode.js":69,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":54,"utils/lib/timers.js":59}],68:[function(require,module,exports){
+},{"./attribute-extractor.js":61,"./vdom-ns.js":68,"./vnode.js":69,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":54}],68:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -23324,6 +23314,7 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         empty: function(full) {
+            delete this._scripts;
             return this._setChildNodes([], null, full);
         },
 
@@ -23563,12 +23554,13 @@ module.exports = function (window) {
         * @method setHTML
         * @param content {String} the innerHTML
         * @param [suppressItagRender] {Boolean} to suppress Itags from rendering
+        * @param [allowScripts=false] {Boolean} whether scripts are allowed --> these should be defined with `xscript` instead of `script`
         * @chainable
         * @since 0.0.1
         */
-        setHTML: function(content, suppressItagRender) {
+        setHTML: function(content, suppressItagRender, allowScripts) {
             var instance = this;
-            instance._setChildNodes(htmlToVNodes(content, vNodeProto, instance.ns, null, suppressItagRender), suppressItagRender);
+            instance._setChildNodes(htmlToVNodes(content, vNodeProto, instance.ns, null, suppressItagRender, allowScripts), suppressItagRender);
             return instance;
         },
 
@@ -23616,20 +23608,30 @@ module.exports = function (window) {
         _appendChild: function(VNode) {
             var instance = this,
                 domNode = VNode.domNode,
-                size;
-            VNode._moveToParent(instance);
-            instance.domNode._appendChild(domNode);
-            if (VNode.nodeType===3) {
-                size = instance.vChildNodes.length;
-                instance._normalize();
-                // if the size changed, then the domNode was merged
-                (size===instance.vChildNodes.length) || (domNode=instance.vChildNodes[instance.vChildNodes.length-1].domNode);
+                size, noProccessScript, scriptContent;
+            if ((VNode.tag==='SCRIPT') && instance._scripts) {
+                // first check if the script already ran:
+                scriptContent = (VNode.attrs && VNode.attrs.src) ? VNode.attrs.src : VNode.vChildNodes[0].text;
+                instance._scripts.some(function(script) {
+                    noProccessScript = (scriptContent===script);
+                    return noProccessScript;
+                });
             }
-            if (VNode.nodeType===1) {
-                VNode._addToTaglist();
-                VNode._emit(EV_INSERTED);
+            if (!noProccessScript) {
+                VNode._moveToParent(instance);
+                instance.domNode._appendChild(domNode);
+                if (VNode.nodeType===3) {
+                    size = instance.vChildNodes.length;
+                    instance._normalize();
+                    // if the size changed, then the domNode was merged
+                    (size===instance.vChildNodes.length) || (domNode=instance.vChildNodes[instance.vChildNodes.length-1].domNode);
+                }
+                if (VNode.nodeType===1) {
+                    VNode._addToTaglist();
+                    VNode._emit(EV_INSERTED);
+                }
+                return domNode;
             }
-            return domNode;
         },
 
        /**
@@ -23653,6 +23655,14 @@ module.exports = function (window) {
             return instance;
         },
 
+       /**
+        * Cleans up (empties) vnode's `_data`
+        *
+        * @method _cleanData
+        * @private
+        * @chainable
+        * @since 0.0.1
+        */
         _cleanData: function() {
             var instance = this,
                 data = instance._data;
@@ -23662,6 +23672,38 @@ module.exports = function (window) {
                 }
             );
             return instance;
+        },
+
+       /**
+        * Cleans up (removes) duplicated `style` definitions.
+        *
+        * @method _cleanupStyle
+        * @private
+        * @chainable
+        * @since 0.0.1
+        */
+        _cleanupStyle: function() {
+            var instance = this,
+                compare = [],
+                removal = [],
+                vChildren = instance.vChildren,
+                len = vChildren.length,
+                vChild, i, styleContent;
+            for (i=0; i<len; i++) {
+                vChild = vChildren[i];
+                if (vChild.tag==='STYLE') {
+                    styleContent = vChild.vChildNodes[0].text;
+                    if (compare.contains(styleContent)) {
+                        removal[removal.length] = vChild;
+                    }
+                    else {
+                        compare[compare.length] = styleContent;
+                    }
+                }
+            }
+            removal.forEach(function(vnode) {
+                instance._removeChild(vnode);
+            });
         },
 
        /**
@@ -23874,20 +23916,31 @@ module.exports = function (window) {
         _insertBefore: function(newVNode, refVNode) {
             var instance = this,
                 domNode = newVNode.domNode,
-                index = instance.vChildNodes.indexOf(refVNode);
-            if (index!==-1) {
-                newVNode._moveToParent(instance, index);
-                instance.domNode._insertBefore(domNode, refVNode.domNode);
-                (newVNode.nodeType===3) && instance._normalize();
-                if (newVNode.nodeType===1) {
-                    newVNode._addToTaglist();
-                    newVNode._emit(EV_INSERTED);
-                }
-                return domNode;
+                index = instance.vChildNodes.indexOf(refVNode),
+                noProccessScript, scriptContent;
+            if ((newVNode.tag==='SCRIPT') && instance._scripts) {
+                // first check if the script already ran:
+                scriptContent = (newVNode.attrs && newVNode.attrs.src) ? newVNode.attrs.src : newVNode.vChildNodes[0].text;
+                instance._scripts.some(function(script) {
+                    noProccessScript = (scriptContent===script);
+                    return noProccessScript;
+                });
             }
-            else {
-                console.warn('trying to insert before, but no ref-node found. Will append the new node');
-                return instance._appendChild(newVNode);
+            if (!noProccessScript) {
+                if (index!==-1) {
+                    newVNode._moveToParent(instance, index);
+                    instance.domNode._insertBefore(domNode, refVNode.domNode);
+                    (newVNode.nodeType===3) && instance._normalize();
+                    if (newVNode.nodeType===1) {
+                        newVNode._addToTaglist();
+                        newVNode._emit(EV_INSERTED);
+                    }
+                    return domNode;
+                }
+                else {
+                    console.warn('trying to insert before, but no ref-node found. Will append the new node');
+                    return instance._appendChild(newVNode);
+                }
             }
         },
 
@@ -24256,7 +24309,7 @@ module.exports = function (window) {
                 vChildNodes = instance.vChildNodes || [],
                 domNode = instance.domNode,
                 forRemoval = [],
-                i, oldChild, newChild, newLength, len, len2, childDomNode, nodeswitch, bkpAttrs,
+                i, oldChild, newChild, newLength, len, len2, childDomNode, nodeswitch, bkpAttrs, cleanupStyle,
                 process, bkpChildNodes, needNormalize, prevSuppress, scriptContent, _scripts, scriptLen, j;
 
             instance._noSync();
@@ -24289,6 +24342,8 @@ module.exports = function (window) {
                 if (i < newLength) {
                     newChild = newVChildNodes[i];
                     newChild.vParent || (newChild.vParent=instance);
+                    // in case a `style` tag is set --> we want to cleanup posible double definitions
+                    (newChild.tag==='STYLE') && (cleanupStyle=true);
 /*jshint boss:true */
                     switch (nodeswitch=NODESWITCH[oldChild.nodeType][newChild.nodeType]) {
 /*jshint boss:false */
@@ -24298,7 +24353,7 @@ module.exports = function (window) {
                             // where the innerHTML is stored. They don't get re-inserted when they are already present inside this hash
                             // This way we prevent scripts from running multiple times
                             if (newChild.tag==='SCRIPT') {
-                                scriptContent = newChild.vChildNodes[0].text;
+                                scriptContent = (newChild.attrs && newChild.attrs.src) ? newChild.attrs.src : newChild.vChildNodes[0].text;
                                 // check if the parent has this script set:
                                 process = true;
 /*jshint boss:true */
@@ -24316,13 +24371,6 @@ module.exports = function (window) {
                                     // so we know can compare future comparision.
                                     instance._scripts || (instance._scripts=[]);
                                     instance._scripts[instance._scripts.length] = scriptContent;
-                /*jshint -W083 */
-                                    async(function() {
-console.warn('going to remove');
-console.warn(newChild);
-                                        instance._removeChild(newChild);
-                                    });
-                /*jshint +W083 */
                                 }
                             }
                             else {
@@ -24469,6 +24517,8 @@ console.warn(newChild);
             for (i = len; i < newLength; i++) {
                 newChild = newVChildNodes[i];
                 newChild.vParent = instance;
+                // in case a `style` tag is set --> we want to cleanup posible double definitions
+                (newChild.tag==='STYLE') && (cleanupStyle=true);
                 switch (newChild.nodeType) {
                     case 1: // Element
                         // Firts check if the tag is a script:
@@ -24476,7 +24526,7 @@ console.warn(newChild);
                         // where the innerHTML is stored. They don't get re-inserted when they are already present inside this hash
                         // This way we prevent scripts from running multiple times
                         if (newChild.tag==='SCRIPT') {
-                            scriptContent = newChild.vChildNodes[0].text;
+                            scriptContent = (newChild.attrs && newChild.attrs.src) ? newChild.attrs.src : newChild.vChildNodes[0].text;
                             // check if the parent has this script set:
                             process = true;
 /*jshint boss:true */
@@ -24494,13 +24544,6 @@ console.warn(newChild);
                                 // so we know can compare future comparision.
                                 instance._scripts || (instance._scripts=[]);
                                 instance._scripts[instance._scripts.length] = scriptContent;
-            /*jshint -W083 */
-                                async(function() {
-console.warn('going to remove');
-console.warn(newChild);
-                                    instance._removeChild(newChild);
-                                });
-            /*jshint +W083 */
                             }
                         }
                         else {
@@ -24532,6 +24575,7 @@ console.warn(newChild);
             }
             instance.vChildNodes = newVChildNodes;
             needNormalize && instance._normalize();
+            cleanupStyle && instance._cleanupStyle();
             return instance;
         },
 
