@@ -391,7 +391,8 @@ module.exports = function (window) {
      * @since 0.0.1
      */
     NS.SCRIPT_OR_STYLE_TAG = createHashMap({
-        SCRIPT: true,
+        // the string-parser expects &lt;/xscript&gt; for &#x60;script&#x60;-tags
+        XSCRIPT: true,
         STYLE: true
     });
 

@@ -152,6 +152,7 @@ These <u>do work</u>, but they update their vnode's asynchronously. So, if you q
 ##Element's inner-content##
 
 ####methods for manipulation:####
+###addSystemElement###
 ###append###
 ###prepend###
 ###setOuterHTML###

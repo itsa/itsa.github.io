@@ -270,6 +270,13 @@
                                 
                             </li>
                         
+                            <li class="index-item method">
+                                <a href="#method_addSystemElement">addSystemElement</a>
+
+                                
+                                
+                            </li>
+                        
                     </ul>
                 </div>
             
@@ -335,7 +342,7 @@
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l837"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:837</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l864"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:864</code></a>
         
         </p>
 
@@ -414,7 +421,7 @@
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l858"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:858</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l885"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:885</code></a>
         
         </p>
 
@@ -503,6 +510,167 @@ Note2: in case of &quot;transition: all&quot; --&gt; these values will be return
 </div>
 
                 
+                    <div id="method_addSystemElement" class="method item">
+    <h3 class="name"><code>addSystemElement</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>content</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[escape]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[silent=false]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_extend-element.js.html#l945"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:945</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Inserts a system-HTMLElement. These are child-Elements, just like other children, but they have a slightly different behaviour:</p>
+<ul>
+    <li>They get inserted as the first of the children</li>
+    <li>They don&#39;t show up when querying</li>
+    <li>They retain whenever new content is set for the parent-Element</li>
+</ul>
+
+<p>System-Elements are useful f.e. when you want to add special features to an Element, like scrolling or resizing. You can add <code>helper-elements</code>
+(the system-elements) which keep hidden (protected) and retain whenever the Element changes his content.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">content</code>
+                        <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a> | <a href="../classes/ElementArray.html" class="crosslink">ElementArray</a> | <a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>content to append</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[escape]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>whether to insert <code>escaped</code> content, leading it into only text inserted</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[silent=false]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>prevent node-mutation events by the Event-module to emit</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Element.html" class="crosslink">Element</a></span>:
+                    
+                    <p>the created Element (or the last when multiple)</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
             </div>
         
 
@@ -534,7 +702,7 @@ Note2: in case of &quot;transition: all&quot; --&gt; these values will be return
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l799"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:799</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l826"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:826</code></a>
         
         </p>
 
