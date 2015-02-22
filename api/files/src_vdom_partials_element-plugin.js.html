@@ -246,7 +246,10 @@ module.exports = function (window) {
         return window._ITSAmodules.ElementPlugin; // ElementPlugin was already created
     }
 
-    var nodePlugin, nodeConstrain, ElementPlugin;
+    var NAME = &#x27;[ElementPlugin]: &#x27;,
+        Classes = require(&#x27;js-ext/extra/classes.js&#x27;),
+        DOCUMENT = window.document,
+        Base, Constrain, ElementPlugin;
 
     // also extend window.Element:
     window.Element &amp;&amp; (function(ElementPrototype) {
@@ -258,8 +261,8 @@ module.exports = function (window) {
         * @return {Boolean} whether the plugin is plugged in
         * @since 0.0.1
         */
-        ElementPrototype.isPlugged = function(nodePlugin) {
-            return nodePlugin.validate(this);
+        ElementPrototype.isPlugged = function(pluginClass) {
+            return pluginClass.validate(this);
         };
 
        /**
@@ -271,8 +274,8 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.plug = function(nodePlugin, config) {
-            nodePlugin.setup(this, config);
+        ElementPrototype.plug = function(pluginClass, config) {
+            pluginClass(this, config);
             return this;
         };
 
@@ -284,60 +287,137 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.unplug = function(nodePlugin) {
-            nodePlugin.teardown(this);
+        ElementPrototype.unplug = function(pluginClass) {
+            pluginClass.destroy(this);
             return this;
         };
     }(window.Element.prototype));
 
-    nodePlugin = {
-        setup: function (hostElement, config) {
+    Base = Classes.createClass(
+        function (hostElement, config) {
             var instance = this,
+                ns = instance.constructor.ns,
                 attrs = instance.defaults.shallowClone();
-            attrs.merge(config, {force: true});
+            config &amp;&amp; attrs.merge(config, {force: true});
             attrs.each(
                 function(value, key) {
-                    key = fromCamelCase(key);
-                    value &amp;&amp; hostElement.setAttr(instance.ns+&#x27;-&#x27;+key, value);
-                }
-            );
-        } ,
-        teardown: function (hostElement) {
-            var instance = this,
-                attrs = hostElement.vnode.attrs,
-                ns = instance.ns+&#x27;-&#x27;;
-            attrs.each(
-                function(value, key) {
-                     key.startsWith(ns) &amp;&amp; hostElement.removeAttr(key);
+                    value &amp;&amp; hostElement.setAttr(ns+&#x27;-&#x27;+fromCamelCase(key), value, true);
                 }
             );
         },
-        validate: function (hostElement) {
-            var instance = this,
-                attrs = hostElement.vnode.attrs,
-                ns = instance.ns+&#x27;-&#x27;;
-            return attrs.some(
-                function(value, key) {
-                    return key.startsWith(ns);
-                }
-            );
-        },
-        definePlugin: function (ns, defaults) {
-            var newPlugin = Object.create(nodePlugin);
-            Object.isObject(defaults) || (defaults = {});
-            (typeof ns===&#x27;string&#x27;) || (ns = &#x27;invalid_ns&#x27;);
-            ns = ns.replace(/ /g, &#x27;&#x27;).replace(/-/g, &#x27;&#x27;);
-            Object.protectedProp(newPlugin, &#x27;ns&#x27;, ns);
-            newPlugin.defaults = defaults;
-            return newPlugin;
+        {
+            attrs: {},
+            defaults: {},
+            destroy: function (hostElement) {
+                var instance = this,
+                    attrs = hostElement.vnode.attrs,
+                    ns = instance.constructor.ns+&#x27;-&#x27;;
+                attrs.each(
+                    function(value, key) {
+                         key.startsWith(ns) &amp;&amp; hostElement.removeAttr(key);
+                    }
+                );
+            },
+            validate: function (hostElement) {
+                var instance = this,
+                    attrs = hostElement.vnode.attrs,
+                    ns = instance.constructor.ns+&#x27;-&#x27;;
+                return attrs.some(
+                    function(value, key) {
+                        return key.startsWith(ns);
+                    }
+                );
+            }
         }
+    );
+
+   /**
+    * Creates a new Element-PluginClass.
+    *
+    * @method definePlugin
+    * @param ns {String} the namespace of the plugin
+    * @param [constructor] {Function} The function that will serve as constructor for the new class.
+    *        If &#x60;undefined&#x60; defaults to &#x60;NOOP&#x60;
+    * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
+    * @return {PluginClass}
+    * @since 0.0.1
+    */
+    DOCUMENT.definePlugin = function(ns, constructor, prototypes) {
+        var NewClass;
+        if ((typeof ns===&#x27;string&#x27;) &amp;&amp; (ns=ns.replaceAll(&#x27; &#x27;, &#x27;&#x27;)) &amp;&amp; (ns.length&gt;0) &amp;&amp; !ns.contains(&#x27;-&#x27;)) {
+            console.log(NAME+&#x27;definePlugin&#x27;);
+            NewClass = Base.subClass(constructor, prototypes);
+            NewClass.$ns = ns;
+        }
+        else {
+            console.warn(NAME+&#x27;definePlugin cannot create Plugin: invalid ns: &#x27;+ns);
+        }
+        return NewClass;
     };
 
-    nodeConstrain = nodePlugin.definePlugin(&#x27;constrain&#x27;, {selector: &#x27;window&#x27;});
+    (function(FunctionPrototype) {
+        var originalSubClass = FunctionPrototype.subClass;
+        /**
+         * Returns a newly created class inheriting from this class
+         * using the given &#x60;constructor&#x60; with the
+         * prototypes listed in &#x60;prototypes&#x60; merged in.
+         *
+         *
+         * The newly created class has the &#x60;$$super&#x60; static property
+         * available to access all of is ancestor&#x27;s instance methods.
+         *
+         * Further methods can be added via the [mergePrototypes](#method_mergePrototypes).
+         *
+         * @example
+         *
+         *  var Circle = Shape.subClass(
+         *      function (x, y, r) {
+         *          // arguments will automaticly be passed through to Shape&#x27;s constructor
+         *          this.r = r;
+         *      },
+         *      {
+         *          area: function () {
+         *              return this.r * this.r * Math.PI;
+         *          }
+         *      }
+         *  );
+         *
+         * @method subClass
+         * @param ns {String} the namespace of the plugin
+         * @param [constructor] {Function} The function that will serve as constructor for the new class.
+         *        If &#x60;undefined&#x60; defaults to &#x60;NOOP&#x60;
+         * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
+         * @param [chainConstruct=true] {Boolean} Whether -during instance creation- to automaticly construct in the complete hierarchy with the given constructor arguments.
+         * @return the new class.
+         */
+        FunctionPrototype.subClass = function (ns, constructor, prototypes /*, chainConstruct */) {
+            var instance = this,
+                NewClass;
+            if (instance.$ns) {
+                NewClass = originalSubClass(constructor, prototypes);
+                NewClass.$ns = ns;
+                return NewClass;
+            }
+            else {
+                // Original subclassing
+                return originalSubClass.apply(instance, arguments);
+            }
+        };
+    }(Function.prototype));
+
+    Constrain = DOCUMENT.definePlugin(&#x27;constrain&#x27;, null, {
+            attrs: {
+                selector: &#x27;string&#x27;
+            },
+            defaults: {
+                selector: &#x27;window&#x27;
+            }
+        }
+    );
 
     ElementPlugin = window._ITSAmodules.ElementPlugin = {
-        nodePlugin: nodePlugin,
-        nodeConstrain: nodeConstrain
+        Base: Base,
+        Constrain: Constrain
     };
 
     return ElementPlugin;

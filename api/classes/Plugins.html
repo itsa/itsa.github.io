@@ -263,6 +263,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
+                                <a href="#method_definePlugin">definePlugin</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_isPlugged">isPlugged</a>
 
                                 
@@ -271,6 +278,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item method">
                                 <a href="#method_plug">plug</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_subClass">subClass</a>
 
                                 
                                 
@@ -297,6 +311,160 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_definePlugin" class="method item">
+    <h3 class="name"><code>definePlugin</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>ns</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[constructor]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[prototypes]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">PluginClass</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_element-plugin.js.html#l122"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-plugin.js:122</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Creates a new Element-PluginClass.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">ns</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the namespace of the plugin</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[constructor]</code>
+                        <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The function that will serve as constructor for the new class.
+       If <code>undefined</code> defaults to <code>NOOP</code></p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[prototypes]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Hash map of properties to be added to the prototype of the new class.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">PluginClass</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
 
                 
                     <div id="method_isPlugged" class="method item">
@@ -345,7 +513,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_partials_element-plugin.js.html#l41"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-plugin.js:41</code></a>
+        <a href="../files/src_vdom_partials_element-plugin.js.html#l44"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-plugin.js:44</code></a>
         
         </p>
 
@@ -458,7 +626,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_partials_element-plugin.js.html#l53"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-plugin.js:53</code></a>
+        <a href="../files/src_vdom_partials_element-plugin.js.html#l56"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-plugin.js:56</code></a>
         
         </p>
 
@@ -523,6 +691,205 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
 </div>
 
                 
+                    <div id="method_subClass" class="method item">
+    <h3 class="name"><code>subClass</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>ns</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[constructor]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[prototypes]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[chainConstruct=true]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_element-plugin.js.html#l148"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-plugin.js:148</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Returns a newly created class inheriting from this class
+using the given <code>constructor</code> with the
+prototypes listed in <code>prototypes</code> merged in.</p>
+<p>The newly created class has the <code>$$super</code> static property
+available to access all of is ancestor&#39;s instance methods.</p>
+<p>Further methods can be added via the <a href="#method_mergePrototypes">mergePrototypes</a>.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">ns</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the namespace of the plugin</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[constructor]</code>
+                        <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The function that will serve as constructor for the new class.
+       If <code>undefined</code> defaults to <code>NOOP</code></p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[prototypes]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Hash map of properties to be added to the prototype of the new class.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[chainConstruct=true]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Whether -during instance creation- to automaticly construct in the complete hierarchy with the given constructor arguments.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                    <p>the new class.</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <p> var Circle = Shape.subClass(
+     function (x, y, r) {
+         // arguments will automaticly be passed through to Shape&#39;s constructor
+         this.r = r;
+     },
+     {
+         area: function () {
+             return this.r <em> this.r </em> Math.PI;
+         }
+     }
+ );</p>
+
+            </div>
+        </div>
+    
+</div>
+
+                
                     <div id="method_unplug" class="method item">
     <h3 class="name"><code>unplug</code></h3>
 
@@ -567,7 +934,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_partials_element-plugin.js.html#l67"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-plugin.js:67</code></a>
+        <a href="../files/src_vdom_partials_element-plugin.js.html#l70"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-plugin.js:70</code></a>
         
         </p>
 

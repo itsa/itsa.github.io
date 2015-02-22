@@ -230,7 +230,7 @@ require(&#x27;polyfill&#x27;);
 var NAME = &#x27;[focusmanager]: &#x27;,
     async = require(&#x27;utils&#x27;).async,
     createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
-    DEFAULT_SELECTOR = &#x27;input, button, select, textarea, .focusable, [fm-manage]&#x27;,
+    DEFAULT_SELECTOR = &#x27;input, button, select, textarea, .focusable, [fm-manage], [itag-formelement=&quot;true&quot;]&#x27;,
     // SPECIAL_KEYS needs to be a native Object --&gt; we need .some()
     SPECIAL_KEYS = {
         shift: &#x27;shiftKey&#x27;,
@@ -250,7 +250,7 @@ var NAME = &#x27;[focusmanager]: &#x27;,
 module.exports = function (window) {
 
     var DOCUMENT = window.document,
-        nodePlugin, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed,
+        base, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed,
         resetLastValue, getFocusManagerSelector, setupEvents, defineFocusEvent;
 
     window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
@@ -262,7 +262,7 @@ module.exports = function (window) {
         return FocusManager; // FocusManager was already created
     }
 
-    nodePlugin = require(&#x27;vdom&#x27;)(window).Plugins.nodePlugin;
+    base = require(&#x27;vdom&#x27;)(window).Plugins.Base;
     Event = require(&#x27;event-mobile&#x27;)(window);
 
     getFocusManagerSelector = function(focusContainerNode) {
@@ -627,7 +627,14 @@ module.exports = function (window) {
 
     setupEvents();
 
-    window._ITSAmodules.FocusManager = FocusManager = nodePlugin.definePlugin(&#x27;fm&#x27;, {manage: &#x27;true&#x27;});
+    window._ITSAmodules.FocusManager = FocusManager = DOCUMENT.definePlugin(&#x27;fm&#x27;, null, {
+                attrs: {
+                    manage: &#x27;string&#x27;
+                },
+                defaults: {
+                    manage: &#x27;true&#x27;
+                }
+            });
 
     defineFocusEvent = function(customevent) {
         Event.defineEvent(customevent)

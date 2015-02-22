@@ -445,7 +445,6 @@ module.exports = function (window) {
     }
 
     var Event = require(&#x27;event-dom&#x27;)(window),
-        nodePlugin = require(&#x27;vdom&#x27;)(window).Plugins.nodePlugin,
         DragModule = require(&#x27;drag&#x27;)(window),
         $superInit = DragModule.DD.init,
         ctrlPressed = false,
@@ -456,6 +455,7 @@ module.exports = function (window) {
         mobileEvents = supportHammer &amp;&amp; isMobile,
         DD, DD_Object;
 
+    require(&#x27;vdom&#x27;)(window);
     require(&#x27;window-ext&#x27;)(window);
 
     DD = {
@@ -1270,7 +1270,14 @@ module.exports = function (window) {
         DD: DragModule.DD.merge(DD, {force: true}),
         Plugins: {
             nodeDD: DragModule.Plugins.nodeDD,
-            nodeDropzone: nodePlugin.definePlugin(&#x27;dd&#x27;, {dropzone: &#x27;true&#x27;})
+            nodeDropzone: DOCUMENT.definePlugin(&#x27;dd&#x27;, null, {
+                attrs: {
+                    dropzone: &#x27;string&#x27;
+                },
+                defaults: {
+                    dropzone: &#x27;true&#x27;
+                }
+            })
         }
     };
 

@@ -2884,7 +2884,6 @@ module.exports = function (window) {
     }
 
     var Event = require('event-dom')(window),
-        nodePlugin = require('vdom')(window).Plugins.nodePlugin,
         DragModule = require('drag')(window),
         $superInit = DragModule.DD.init,
         ctrlPressed = false,
@@ -2895,6 +2894,7 @@ module.exports = function (window) {
         mobileEvents = supportHammer && isMobile,
         DD, DD_Object;
 
+    require('vdom')(window);
     require('window-ext')(window);
 
     DD = {
@@ -3709,7 +3709,14 @@ module.exports = function (window) {
         DD: DragModule.DD.merge(DD, {force: true}),
         Plugins: {
             nodeDD: DragModule.Plugins.nodeDD,
-            nodeDropzone: nodePlugin.definePlugin('dd', {dropzone: 'true'})
+            nodeDropzone: DOCUMENT.definePlugin('dd', null, {
+                attrs: {
+                    dropzone: 'string'
+                },
+                defaults: {
+                    dropzone: 'true'
+                }
+            })
         }
     };
 
@@ -3798,13 +3805,14 @@ module.exports = function (window) {
     }
 
     var Event = require('event-dom')(window),
-        nodePlugin = require('vdom')(window).Plugins.nodePlugin,
         isMobile = require('useragent')(window).isMobile,
-        bodyNode = window.document.body,
+        DOCUMENT = window.document,
+        bodyNode = DOCUMENT.body,
         supportHammer = !!Event.Hammer,
         mobileEvents = supportHammer && isMobile,
         DD, DD_Object;
 
+    require('vdom')(window);
     require('window-ext')(window);
 
     DD = {
@@ -3962,7 +3970,7 @@ module.exports = function (window) {
             customEvent = e.emitter + ':'+DD_DRAG;
             console.log(NAME, '_defFnStart: default function UI:dd-start. Defining customEvent '+customEvent);
             Event.defineEvent(customEvent).defaultFn(instance._defFnDrag.bind(instance));
-            window.document.getAll('.'+DD_MASTER_CLASS).removeClass(DD_MASTER_CLASS);
+            DOCUMENT.getAll('.'+DD_MASTER_CLASS).removeClass(DD_MASTER_CLASS);
             instance._initializeDrag(e);
         },
 
@@ -4362,7 +4370,14 @@ module.exports = function (window) {
     DD_Object = window._ITSAmodules.Drag = {
         DD: DD,
         Plugins: {
-            nodeDD: nodePlugin.definePlugin('dd', {draggable: 'true'})
+            nodeDD: DOCUMENT.definePlugin('dd', null, {
+                attrs: {
+                    draggable: 'string'
+                },
+                defaults: {
+                    draggable: 'true'
+                }
+            })
         }
     };
 
@@ -10331,7 +10346,7 @@ require('polyfill');
 var NAME = '[focusmanager]: ',
     async = require('utils').async,
     createHashMap = require('js-ext/extra/hashmap.js').createMap,
-    DEFAULT_SELECTOR = 'input, button, select, textarea, .focusable, [fm-manage]',
+    DEFAULT_SELECTOR = 'input, button, select, textarea, .focusable, [fm-manage], [itag-formelement="true"]',
     // SPECIAL_KEYS needs to be a native Object --> we need .some()
     SPECIAL_KEYS = {
         shift: 'shiftKey',
@@ -10351,7 +10366,7 @@ var NAME = '[focusmanager]: ',
 module.exports = function (window) {
 
     var DOCUMENT = window.document,
-        nodePlugin, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed,
+        base, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed,
         resetLastValue, getFocusManagerSelector, setupEvents, defineFocusEvent;
 
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
@@ -10363,7 +10378,7 @@ module.exports = function (window) {
         return FocusManager; // FocusManager was already created
     }
 
-    nodePlugin = require('vdom')(window).Plugins.nodePlugin;
+    base = require('vdom')(window).Plugins.Base;
     Event = require('event-mobile')(window);
 
     getFocusManagerSelector = function(focusContainerNode) {
@@ -10728,7 +10743,14 @@ module.exports = function (window) {
 
     setupEvents();
 
-    window._ITSAmodules.FocusManager = FocusManager = nodePlugin.definePlugin('fm', {manage: 'true'});
+    window._ITSAmodules.FocusManager = FocusManager = DOCUMENT.definePlugin('fm', null, {
+                attrs: {
+                    manage: 'string'
+                },
+                defaults: {
+                    manage: 'true'
+                }
+            });
 
     defineFocusEvent = function(customevent) {
         Event.defineEvent(customevent)
@@ -16145,7 +16167,10 @@ module.exports = function (window) {
         return window._ITSAmodules.ElementPlugin; // ElementPlugin was already created
     }
 
-    var nodePlugin, nodeConstrain, ElementPlugin;
+    var NAME = '[ElementPlugin]: ',
+        Classes = require('js-ext/extra/classes.js'),
+        DOCUMENT = window.document,
+        Base, Constrain, ElementPlugin;
 
     // also extend window.Element:
     window.Element && (function(ElementPrototype) {
@@ -16157,8 +16182,8 @@ module.exports = function (window) {
         * @return {Boolean} whether the plugin is plugged in
         * @since 0.0.1
         */
-        ElementPrototype.isPlugged = function(nodePlugin) {
-            return nodePlugin.validate(this);
+        ElementPrototype.isPlugged = function(pluginClass) {
+            return pluginClass.validate(this);
         };
 
        /**
@@ -16170,8 +16195,8 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.plug = function(nodePlugin, config) {
-            nodePlugin.setup(this, config);
+        ElementPrototype.plug = function(pluginClass, config) {
+            pluginClass(this, config);
             return this;
         };
 
@@ -16183,65 +16208,142 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.unplug = function(nodePlugin) {
-            nodePlugin.teardown(this);
+        ElementPrototype.unplug = function(pluginClass) {
+            pluginClass.destroy(this);
             return this;
         };
     }(window.Element.prototype));
 
-    nodePlugin = {
-        setup: function (hostElement, config) {
+    Base = Classes.createClass(
+        function (hostElement, config) {
             var instance = this,
+                ns = instance.constructor.ns,
                 attrs = instance.defaults.shallowClone();
-            attrs.merge(config, {force: true});
+            config && attrs.merge(config, {force: true});
             attrs.each(
                 function(value, key) {
-                    key = fromCamelCase(key);
-                    value && hostElement.setAttr(instance.ns+'-'+key, value);
-                }
-            );
-        } ,
-        teardown: function (hostElement) {
-            var instance = this,
-                attrs = hostElement.vnode.attrs,
-                ns = instance.ns+'-';
-            attrs.each(
-                function(value, key) {
-                     key.startsWith(ns) && hostElement.removeAttr(key);
+                    value && hostElement.setAttr(ns+'-'+fromCamelCase(key), value, true);
                 }
             );
         },
-        validate: function (hostElement) {
-            var instance = this,
-                attrs = hostElement.vnode.attrs,
-                ns = instance.ns+'-';
-            return attrs.some(
-                function(value, key) {
-                    return key.startsWith(ns);
-                }
-            );
-        },
-        definePlugin: function (ns, defaults) {
-            var newPlugin = Object.create(nodePlugin);
-            Object.isObject(defaults) || (defaults = {});
-            (typeof ns==='string') || (ns = 'invalid_ns');
-            ns = ns.replace(/ /g, '').replace(/-/g, '');
-            Object.protectedProp(newPlugin, 'ns', ns);
-            newPlugin.defaults = defaults;
-            return newPlugin;
+        {
+            attrs: {},
+            defaults: {},
+            destroy: function (hostElement) {
+                var instance = this,
+                    attrs = hostElement.vnode.attrs,
+                    ns = instance.constructor.ns+'-';
+                attrs.each(
+                    function(value, key) {
+                         key.startsWith(ns) && hostElement.removeAttr(key);
+                    }
+                );
+            },
+            validate: function (hostElement) {
+                var instance = this,
+                    attrs = hostElement.vnode.attrs,
+                    ns = instance.constructor.ns+'-';
+                return attrs.some(
+                    function(value, key) {
+                        return key.startsWith(ns);
+                    }
+                );
+            }
         }
+    );
+
+   /**
+    * Creates a new Element-PluginClass.
+    *
+    * @method definePlugin
+    * @param ns {String} the namespace of the plugin
+    * @param [constructor] {Function} The function that will serve as constructor for the new class.
+    *        If `undefined` defaults to `NOOP`
+    * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
+    * @return {PluginClass}
+    * @since 0.0.1
+    */
+    DOCUMENT.definePlugin = function(ns, constructor, prototypes) {
+        var NewClass;
+        if ((typeof ns==='string') && (ns=ns.replaceAll(' ', '')) && (ns.length>0) && !ns.contains('-')) {
+            console.log(NAME+'definePlugin');
+            NewClass = Base.subClass(constructor, prototypes);
+            NewClass.$ns = ns;
+        }
+        else {
+            console.warn(NAME+'definePlugin cannot create Plugin: invalid ns: '+ns);
+        }
+        return NewClass;
     };
 
-    nodeConstrain = nodePlugin.definePlugin('constrain', {selector: 'window'});
+    (function(FunctionPrototype) {
+        var originalSubClass = FunctionPrototype.subClass;
+        /**
+         * Returns a newly created class inheriting from this class
+         * using the given `constructor` with the
+         * prototypes listed in `prototypes` merged in.
+         *
+         *
+         * The newly created class has the `$$super` static property
+         * available to access all of is ancestor's instance methods.
+         *
+         * Further methods can be added via the [mergePrototypes](#method_mergePrototypes).
+         *
+         * @example
+         *
+         *  var Circle = Shape.subClass(
+         *      function (x, y, r) {
+         *          // arguments will automaticly be passed through to Shape's constructor
+         *          this.r = r;
+         *      },
+         *      {
+         *          area: function () {
+         *              return this.r * this.r * Math.PI;
+         *          }
+         *      }
+         *  );
+         *
+         * @method subClass
+         * @param ns {String} the namespace of the plugin
+         * @param [constructor] {Function} The function that will serve as constructor for the new class.
+         *        If `undefined` defaults to `NOOP`
+         * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
+         * @param [chainConstruct=true] {Boolean} Whether -during instance creation- to automaticly construct in the complete hierarchy with the given constructor arguments.
+         * @return the new class.
+         */
+        FunctionPrototype.subClass = function (ns, constructor, prototypes /*, chainConstruct */) {
+            var instance = this,
+                NewClass;
+            if (instance.$ns) {
+                NewClass = originalSubClass(constructor, prototypes);
+                NewClass.$ns = ns;
+                return NewClass;
+            }
+            else {
+                // Original subclassing
+                return originalSubClass.apply(instance, arguments);
+            }
+        };
+    }(Function.prototype));
+
+    Constrain = DOCUMENT.definePlugin('constrain', null, {
+            attrs: {
+                selector: 'string'
+            },
+            defaults: {
+                selector: 'window'
+            }
+        }
+    );
 
     ElementPlugin = window._ITSAmodules.ElementPlugin = {
-        nodePlugin: nodePlugin,
-        nodeConstrain: nodeConstrain
+        Base: Base,
+        Constrain: Constrain
     };
 
     return ElementPlugin;
 };
-},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":54}],64:[function(require,module,exports){
+},{"js-ext/extra/classes.js":33,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":54}],64:[function(require,module,exports){
 "use strict";
 
 /**
