@@ -214,7 +214,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_vdom_partials_element-plugin.js.html#l3"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-plugin.js:3</code></a>
+            Defined in: <a href="../files/src_node-plugin_lib_element-plugin.js.html#l3"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:3</code></a>
         </div>
     
 
@@ -248,6 +248,8 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
         
         
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+        
         
         
     </ul>
@@ -261,6 +263,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                     <h3>Methods</h3>
 
                     <ul class="index-list methods">
+                        
+                            <li class="index-item method">
+                                <a href="#method_bindModel">bindModel</a>
+
+                                
+                                
+                            </li>
                         
                             <li class="index-item method">
                                 <a href="#method_definePlugin">definePlugin</a>
@@ -278,6 +287,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item method">
                                 <a href="#method_plug">plug</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_setItagDirectEventResponse">setItagDirectEventResponse</a>
 
                                 
                                 
@@ -302,6 +318,21 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
 
             
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                        
+                            <li class="index-item property private">
+                                <a href="#property_DEFAULT_DELAYED_FINALIZE_EVENTS">DEFAULT_DELAYED_FINALIZE_EVENTS</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
 
             
 
@@ -311,6 +342,123 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_bindModel" class="method item">
+    <h3 class="name"><code>bindModel</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>model</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[mergeCurrent=false]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l306"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:306</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Binds a model to the plugin, making plugin.model equals the bound model.
+Immediately syncs the plugin with the new model-data.</p>
+<p>Syncs the new vnode&#39;s childNodes with the dom.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">model</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the model to bind to the itag-element</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[mergeCurrent=false]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>when set true, current properties on the plugin&#39;s model that aren&#39;t defined
+       in the new model, get merged into the new model.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
 
                 
                     <div id="method_definePlugin" class="method item">
@@ -371,7 +519,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_partials_element-plugin.js.html#l122"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-plugin.js:122</code></a>
+        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l472"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:472</code></a>
         
         </p>
 
@@ -476,7 +624,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
                 <li class="arg">
                     
-                        <code>pluginClass</code>
+                        <code>PluginClass</code>
                     
                 </li>
             
@@ -513,7 +661,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_partials_element-plugin.js.html#l44"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-plugin.js:44</code></a>
+        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l241"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:241</code></a>
         
         </p>
 
@@ -538,7 +686,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
                 <li class="param">
                     
-                        <code class="param-name">pluginClass</code>
+                        <code class="param-name">PluginClass</code>
                         <span class="type">NodePlugin</span>
                     
 
@@ -585,13 +733,19 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
                 <li class="arg">
                     
-                        <code>pluginClass</code>
+                        <code>PluginClass</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>config</code>
+                        <code class="optional">[config]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[model]</code>
                     
                 </li>
             
@@ -626,7 +780,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_partials_element-plugin.js.html#l56"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-plugin.js:56</code></a>
+        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l253"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:253</code></a>
         
         </p>
 
@@ -651,7 +805,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
                 <li class="param">
                     
-                        <code class="param-name">pluginClass</code>
+                        <code class="param-name">PluginClass</code>
                         <span class="type">NodePlugin</span>
                     
 
@@ -667,14 +821,170 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
                 <li class="param">
                     
-                        <code class="param-name">config</code>
+                        <code class="param-name optional">[config]</code>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
                     
 
                     
 
                     <div class="param-description">
                         <p>any config that should be passed through when the class is instantiated.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[model]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>model to used as <code>ns.model</code></p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_setItagDirectEventResponse" class="method item">
+    <h3 class="name"><code>setItagDirectEventResponse</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>ItagClass</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>domEvents</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l340"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:340</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Defines which domevents should lead to a direct sync by the Event-finalizer.
+Only needed for events that are in the list set by DEFAULT_DELAYED_FINALIZE_EVENTS:</p>
+<ul>
+    <li>mousedown</li>
+    <li>mouseup</li>
+    <li>mousemove</li>
+    <li>panmove</li>
+    <li>panstart</li>
+    <li>panleft</li>
+    <li>panright</li>
+    <li>panup</li>
+    <li>pandown</li>
+    <li>pinchmove</li>
+    <li>rotatemove</li>
+    <li>focus</li>
+    <li>manualfocus</li>
+    <li>keydown</li>
+    <li>keyup</li>
+    <li>keypress</li>
+    <li>blur</li>
+    <li>resize</li>
+    <li>scroll</li>
+</ul>
+
+<p>Events that are not in this list don&#39;t need to be set: they always go through the finalizer immediatly.</p>
+<p>You need to set this if the itag-definition its <code>sync</code>-method should be updated after one of the events in the list.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">ItagClass</code>
+                        <span class="type">Class</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The ItagClass that wants to register</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">domEvents</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a> | <a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the domevents that should directly make the itag sync</p>
 
                     </div>
 
@@ -728,7 +1038,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
 
     
         <span class="returns-inline">
-            <span class="type"></span>
+            <span class="type">Plugin | Undefined</span>
         </span>
     
 
@@ -755,7 +1065,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_vdom_partials_element-plugin.js.html#l148"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-plugin.js:148</code></a>
+        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l506"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:506</code></a>
         
         </p>
 
@@ -860,7 +1170,9 @@ available to access all of is ancestor&#39;s instance methods.</p>
             <div class="returns-description">
                 
                     
-                    <p>the new class.</p>
+                        <span class="type">Plugin | Undefined</span>:
+                    
+                    <p>undefined when no valid namespace is given</p>
 
                 
             </div>
@@ -899,7 +1211,7 @@ available to access all of is ancestor&#39;s instance methods.</p>
             
                 <li class="arg">
                     
-                        <code>pluginClass</code>
+                        <code>PluginClass</code>
                     
                 </li>
             
@@ -934,7 +1246,7 @@ available to access all of is ancestor&#39;s instance methods.</p>
             
         
         
-        <a href="../files/src_vdom_partials_element-plugin.js.html#l70"><code>src&#x2F;vdom&#x2F;partials&#x2F;element-plugin.js:70</code></a>
+        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l275"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:275</code></a>
         
         </p>
 
@@ -959,7 +1271,7 @@ available to access all of is ancestor&#39;s instance methods.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">pluginClass</code>
+                        <code class="param-name">PluginClass</code>
                         <span class="type">NodePlugin</span>
                     
 
@@ -986,6 +1298,84 @@ available to access all of is ancestor&#39;s instance methods.</p>
             </div>
         
 
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_DEFAULT_DELAYED_FINALIZE_EVENTS" class="property item private">
+    <h3 class="name"><code>DEFAULT_DELAYED_FINALIZE_EVENTS</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l68"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:68</code></a>
+        
+        </p>
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Default internal hash containing all DOM-events that will not directly call <code>event-finalize</code>
+but after a delay of 1 second</p>
+
+    </div>
+
+    
+        <p><strong>Default:</strong> {
+   mousedown: true,
+   mouseup: true,
+   mousemove: true,
+   panmove: true,
+   panstart: true,
+   panleft: true,
+   panright: true,
+   panup: true,
+   pandown: true,
+   pinchmove: true,
+   rotatemove: true,
+   focus: true,
+   manualfocus: true,
+   keydown: true,
+   keyup: true,
+   keypress: true,
+   blur: true,
+   resize: true,
+   scroll: true
+}</p>
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
         
 
         

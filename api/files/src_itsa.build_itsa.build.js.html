@@ -344,6 +344,7 @@
         dragdrop;
 
     require(&#x27;event/extra/objectobserve.js&#x27;)(window);
+    require(&#x27;vdom&#x27;)(window);
 
     /**
      * Reference to the &#x60;idGenerator&#x60; function in [utils](../modules/utils.html)
@@ -352,8 +353,7 @@
      * @type function
      * @static
     */
-
-    ITSA.Plugins.merge(require(&#x27;vdom&#x27;)(window).Plugins);
+    ITSA.Plugins.merge(require(&#x27;node-plugin&#x27;)(window));
 
     ITSA.merge(require(&#x27;utils&#x27;));
     ITSA.RESERVED_WORDS = require(&#x27;js-ext/extra/reserved-words.js&#x27;);

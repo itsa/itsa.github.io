@@ -1,6 +1,5 @@
 ---
-module: vdom
-functionality: node-plugins
+module: node-plugin
 layout: history
 ---
 

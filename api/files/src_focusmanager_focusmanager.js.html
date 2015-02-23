@@ -250,19 +250,20 @@ var NAME = &#x27;[focusmanager]: &#x27;,
 module.exports = function (window) {
 
     var DOCUMENT = window.document,
-        base, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed,
+        FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed,
         resetLastValue, getFocusManagerSelector, setupEvents, defineFocusEvent;
 
     window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
-    require(&#x27;window-ext&#x27;)(window);
 /*jshint boss:true */
     if (FocusManager=window._ITSAmodules.FocusManager) {
 /*jshint boss:false */
         return FocusManager; // FocusManager was already created
     }
 
-    base = require(&#x27;vdom&#x27;)(window).Plugins.Base;
+    require(&#x27;window-ext&#x27;)(window);
+    require(&#x27;node-plugin&#x27;)(window);
+
     Event = require(&#x27;event-mobile&#x27;)(window);
 
     getFocusManagerSelector = function(focusContainerNode) {

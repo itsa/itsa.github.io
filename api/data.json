@@ -346,6 +346,17 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/node-plugin/lib/element-plugin.js": {
+            "name": "src/node-plugin/lib/element-plugin.js",
+            "modules": {
+                "element-plugin": 1
+            },
+            "classes": {
+                "Plugins": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/node-win/lib/XMLHttpRequest.js": {
             "name": "src/node-win/lib/XMLHttpRequest.js",
             "modules": {},
@@ -423,17 +434,6 @@
             },
             "classes": {
                 "ElementArray": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "src/vdom/partials/element-plugin.js": {
-            "name": "src/vdom/partials/element-plugin.js",
-            "modules": {
-                "element-plugin": 1
-            },
-            "classes": {
-                "Plugins": 1
             },
             "fors": {},
             "namespaces": {}
@@ -974,6 +974,52 @@
             "line": 3,
             "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
+        "vdom": {
+            "name": "vdom",
+            "submodules": {
+                "element-plugin": 1,
+                "attribute-extractor": 1,
+                "element-array": 1,
+                "extend-document": 1,
+                "extend-element": 1,
+                "html-parser": 1,
+                "node-parser": 1,
+                "vdom-ns": 1,
+                "vnode": 1
+            },
+            "classes": {
+                "Plugins": 1,
+                "ElementArray": 1,
+                "document": 1,
+                "Element": 1,
+                "Node": 1,
+                "NS-vdom": 1,
+                "vnode": 1
+            },
+            "fors": {
+                "Node": 1,
+                "Element": 1
+            },
+            "namespaces": {},
+            "file": "src/vdom/partials/vnode.js",
+            "line": 3
+        },
+        "element-plugin": {
+            "name": "element-plugin",
+            "submodules": {},
+            "classes": {
+                "Plugins": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "vdom",
+            "namespace": "",
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 3,
+            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "since": "0.0.1"
+        },
         "node-win": {
             "name": "node-win",
             "submodules": {},
@@ -1016,36 +1062,6 @@
             "description": "Collection of various utility functions.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "static": 1
         },
-        "vdom": {
-            "name": "vdom",
-            "submodules": {
-                "attribute-extractor": 1,
-                "element-array": 1,
-                "element-plugin": 1,
-                "extend-document": 1,
-                "extend-element": 1,
-                "html-parser": 1,
-                "node-parser": 1,
-                "vdom-ns": 1,
-                "vnode": 1
-            },
-            "classes": {
-                "ElementArray": 1,
-                "Plugins": 1,
-                "document": 1,
-                "Element": 1,
-                "Node": 1,
-                "NS-vdom": 1,
-                "vnode": 1
-            },
-            "fors": {
-                "Node": 1,
-                "Element": 1
-            },
-            "namespaces": {},
-            "file": "src/vdom/partials/vnode.js",
-            "line": 3
-        },
         "attribute-extractor": {
             "name": "attribute-extractor",
             "submodules": {},
@@ -1074,22 +1090,6 @@
             "file": "src/vdom/partials/element-array.js",
             "line": 3,
             "description": "Extends Array into an array with special utility-methods that can be applied upon its members.\nThe membres should be vElement's\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
-            "since": "0.0.1"
-        },
-        "element-plugin": {
-            "name": "element-plugin",
-            "submodules": {},
-            "classes": {
-                "Plugins": 1
-            },
-            "fors": {},
-            "is_submodule": 1,
-            "namespaces": {},
-            "module": "vdom",
-            "namespace": "",
-            "file": "src/vdom/partials/element-plugin.js",
-            "line": 3,
-            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "since": "0.0.1"
         },
         "extend-document": {
@@ -1421,6 +1421,21 @@
             "line": 3,
             "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
+        "Plugins": {
+            "name": "Plugins",
+            "shortname": "Plugins",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "vdom",
+            "submodule": "element-plugin",
+            "namespace": "",
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 3,
+            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
         "window": {
             "name": "window",
             "shortname": "window",
@@ -1477,21 +1492,6 @@
             "file": "src/vdom/partials/element-array.js",
             "line": 3,
             "description": "Extends Array into an array with special utility-methods that can be applied upon its members.\nThe membres should be vElement's\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        "Plugins": {
-            "name": "Plugins",
-            "shortname": "Plugins",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "vdom",
-            "submodule": "element-plugin",
-            "namespace": "",
-            "file": "src/vdom/partials/element-plugin.js",
-            "line": 3,
-            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "document": {
             "name": "document",
@@ -8030,7 +8030,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 91,
+            "line": 92,
             "description": "Objecthash containing all specific information about the particular drag-cycle.\nIt has a structure like this:\n\nddProps = {\n    dragNode {HtmlElement} Element that is dragged\n    x {Number} absolute x-position of the draggable inside `document` when the drag starts\n    y {Number} absolute y-position of the draggable inside `document` when the drag starts\n    inlineLeft {String} inline css of the property `left` when drag starts\n    inlineTop {String} inline css of the property `top` when drag starts\n    winConstrained {Boolean} whether the draggable should be constrained to `window`\n    xMouseLast {Number} absolute x-position of the mouse inside `document` when the drag starts\n    yMouseLast {Number} absolute y-position of the draggable inside `document` when the drag starts\n    winScrollLeft {Number} the left-scroll of window when drag starts\n    winScrollTop {Number} the top-scroll of window when drag starts\n    constrain = { // constrain-properties when constrained to a HtmlElement\n        xOrig {Number} x-position in the document, included with left-border-width\n        yOrig {Number} y-position in the document, included with top-border-width\n        x {Number} xOrig corrected with scroll-left of the constrained node\n        y {Number} yOrig corrected with scroll-top of the constrained node\n        w {Number} scrollWidth\n        h {Number} scrollHeight\n    };\n    relatives[{ // Array with objects that represent all draggables that come along with the master-draggable (in case of multiple items), excluded the master draggable itself\n        sourceNode {HtmlElement} original node (defined by drag-drop)\n        dragNode {HtmlElement} draggable node\n        shiftX {Number} the amount of left-pixels that this HtmlElement differs from the dragged element\n        shiftY {Number} the amount of top-pixels that this HtmlElement differs from the dragged element\n        inlineLeft {String} inline css of the property `left` when drag starts\n        inlineTop {String} inline css of the property `top` when drag starts\n    }]\n}",
             "itemtype": "property",
             "name": "ddProps",
@@ -8042,7 +8042,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 131,
+            "line": 132,
             "description": "Internal hash with notifiers to response after each `Drag` event is set up, or teared down.\nYou can use this to hook in into the drag-eventcycle: the `drop`-module uses it this way.\nIs filled by using `notify()`.",
             "itemtype": "property",
             "name": "_notifiers",
@@ -8056,7 +8056,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 144,
+            "line": 145,
             "description": "Default function for the `*:dd-drag`-event",
             "itemtype": "method",
             "name": "_defFnDrag",
@@ -8075,7 +8075,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 169,
+            "line": 170,
             "description": "Fired when the mouse comes back into the browser-window while dd-drag was busy yet no buttons are pressed.\nThis is a correction to the fact that the mouseup-event wasn't noticed because the mouse was outside the browser.",
             "itemtype": "event",
             "name": "dd-fake-mouseup",
@@ -8087,7 +8087,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 201,
+            "line": 202,
             "description": "Default function for the `*:dd-drop`-event",
             "itemtype": "method",
             "name": "_defFnDrop",
@@ -8106,7 +8106,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 231,
+            "line": 232,
             "description": "Default function for the `*:dd`-event",
             "itemtype": "method",
             "name": "_defFnStart",
@@ -8125,7 +8125,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 249,
+            "line": 250,
             "description": "Defines the definition of the `dd` event: the first phase of the drag-eventcycle (dd, *:dd-drag, *:dd-drop)",
             "itemtype": "method",
             "name": "_defineDDStart",
@@ -8144,7 +8144,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 267,
+            "line": 268,
             "description": "Default function for the `*:dd-drag`-event",
             "itemtype": "method",
             "name": "_initializeDrag",
@@ -8163,7 +8163,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 349,
+            "line": 350,
             "description": "Emitted during the drag-cycle of a draggable Element (while it is dragged).",
             "itemtype": "event",
             "name": "*:dd-drag",
@@ -8238,7 +8238,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 398,
+            "line": 399,
             "description": "Emitted when drag-cycle of a draggable Element is ended.",
             "itemtype": "event",
             "name": "*:dd-drop",
@@ -8313,7 +8313,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 456,
+            "line": 457,
             "description": "Prevented function for the `*:dd-start`-event",
             "itemtype": "method",
             "name": "_prevFnStart",
@@ -8332,7 +8332,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 469,
+            "line": 470,
             "description": "Engine behind the drag-drop-cycle.\nSets up a `mousedown` listener to initiate a drag-drop eventcycle. The eventcycle start whenever\none of these events happens on a HtmlElement with the attribute `dd-draggable=\"true\"`.\nThe drag-drop eventcycle consists of the events: `dd-start`, `emitterName:dd-drag` and `emitterName:dd-drop`",
             "itemtype": "method",
             "name": "_setupMouseEv",
@@ -8344,7 +8344,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 525,
+            "line": 526,
             "description": "Emitted when a draggable Element's drag-cycle starts. You can use a `before`-subscriber to specify\ne.relatives, which should be a nodelist with HtmlElements, that should be dragged togehter with the master\ndraggable Element.",
             "itemtype": "event",
             "name": "*:dd",
@@ -8419,7 +8419,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 588,
+            "line": 589,
             "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
             "itemtype": "method",
             "name": "init",
@@ -8440,7 +8440,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 612,
+            "line": 613,
             "description": "Creates a notifier to response after each `Drag` event is set up, or teared down.\nYou can use this to hook in into the drag-eventcycle: the `drop`-module uses it this way.",
             "static": 1,
             "itemtype": "method",
@@ -8814,7 +8814,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 250,
+            "line": 251,
             "description": "Returns the allowed effects on the dragable-HtmlElement. Is determined by the attribute `dd-effect-allowed`\nWill be set to \"move\" when undefined.",
             "itemtype": "method",
             "name": "_allowedEffects",
@@ -8837,7 +8837,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 266,
+            "line": 267,
             "description": "Default function for the `*:dd-drop`-event. Overrides the definition of the `drag`-module.",
             "itemtype": "method",
             "name": "_defFnDrop (extended by drag-drop)",
@@ -8876,7 +8876,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 316,
+            "line": 317,
             "description": "Default function for the `*:dropzone`-event",
             "itemtype": "method",
             "name": "_defFnOver",
@@ -8895,7 +8895,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 335,
+            "line": 336,
             "description": "Emitted when the draggable gets out of the dropzone.",
             "itemtype": "event",
             "name": "*:dropzone-out",
@@ -9007,7 +9007,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 370,
+            "line": 371,
             "description": "Defines the definition of the `dd-drop` event: the last phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)",
             "itemtype": "method",
             "name": "_defineDropEv",
@@ -9066,7 +9066,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 395,
+            "line": 396,
             "description": "Defines the definition of the `dropzone` event.\nAlso sets up listeners to tricker dd-over when the mouse is above an dropzone.",
             "itemtype": "method",
             "name": "_defineOverEv",
@@ -9090,7 +9090,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 478,
+            "line": 479,
             "description": "Emitted when the draggable gets inside a dropzone.",
             "itemtype": "event",
             "name": "*:dropzone-over",
@@ -9202,7 +9202,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 517,
+            "line": 518,
             "description": "Emits a dropzone-drop event.",
             "itemtype": "method",
             "name": "_emitDropzoneDrop",
@@ -9221,7 +9221,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 526,
+            "line": 527,
             "description": "Emitted when a draggable gets dropped inside a dropzone.",
             "itemtype": "event",
             "name": "*:dropzone-drop",
@@ -9333,7 +9333,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 559,
+            "line": 560,
             "description": "Sets the draggable node back to its original position",
             "itemtype": "method",
             "name": "_handleDrop",
@@ -9367,7 +9367,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 725,
+            "line": 726,
             "description": "Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,\nso you can choose to do set the draggables back conditionally.",
             "itemtype": "method",
             "name": "_restoreDraggables",
@@ -9426,7 +9426,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 763,
+            "line": 764,
             "description": "Sets the draggable node back to its original position",
             "itemtype": "method",
             "name": "_setBack",
@@ -9481,7 +9481,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 838,
+            "line": 839,
             "description": "Sets up a `keydown` and `keyup` listener, to monitor whether a `ctrlKey` (windows) or `metaKey` (Mac)\nis pressed to support the copying of draggable items",
             "itemtype": "method",
             "name": "_setupKeyEv",
@@ -9493,7 +9493,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 873,
+            "line": 874,
             "description": "Fired when the mouse comes back into the browser-window while dd-drag was busy yet no buttons are pressed.\nThis is a correction to the fact that the mouseup-event wasn't noticed because the mouse was outside the browser.",
             "itemtype": "event",
             "name": "dd-fake-mousemove",
@@ -9505,7 +9505,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 886,
+            "line": 887,
             "description": "Cleansup the dragover subscriber and fulfills any dropzone-promise.",
             "itemtype": "method",
             "name": "_teardownOverEvent",
@@ -9524,7 +9524,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 910,
+            "line": 911,
             "description": "Returns true if the dropzone-HtmlElement accepts copy-dragables.\nIs determined by the attribute `dd-effect-allowed=\"copy\"` or `dd-effect-allowed=\"all\"`",
             "itemtype": "method",
             "name": "allowCopy",
@@ -9545,7 +9545,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 925,
+            "line": 926,
             "description": "Returns true if the dragable-HtmlElement allowes to switch between `copy` and `move`.",
             "itemtype": "method",
             "name": "allowSwitch",
@@ -9566,7 +9566,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 938,
+            "line": 939,
             "description": "Returns the emitterName that the dropzone accepts.",
             "itemtype": "method",
             "name": "getDropzoneEmitter",
@@ -9587,7 +9587,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 952,
+            "line": 953,
             "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
             "itemtype": "method",
             "name": "init (extended by drag-drop)",
@@ -9608,7 +9608,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 1030,
+            "line": 1031,
             "description": "Returns true if the dragable-HtmlElement accepts only copy-dragables (no moveable)\nIs determined by the attribute `dd-effect-allowed=\"copy\"`",
             "itemtype": "method",
             "name": "onlyCopy",
@@ -9629,7 +9629,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 1044,
+            "line": 1045,
             "description": "Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,\nso you can choose to do set the draggables back conditionally.",
             "itemtype": "method",
             "name": "restoreDraggables",
@@ -13091,7 +13091,7 @@
         },
         {
             "file": "src/focusmanager/focusmanager.js",
-            "line": 446,
+            "line": 447,
             "description": "In case of a manual focus (node.focus()) the node will fire an `manualfocus`-event\nwhich can be prevented.",
             "itemtype": "event",
             "name": "manualfocus",
@@ -14182,7 +14182,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 136,
+            "line": 137,
             "description": "Reference to the `idGenerator` function in [utils](../modules/utils.html)",
             "itemtype": "property",
             "name": "idGenerator",
@@ -15041,6 +15041,13 @@
                             "optdefault": "false"
                         },
                         {
+                            "name": "replace",
+                            "description": "If true, only properties that already exist on the instance will be merged (forced replaced). No need to set force as well.",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
                             "name": "descriptors",
                             "description": "If true, the full descriptors will be set. This takes more time, but avoids any info to be lost.",
                             "type": "Boolean",
@@ -15057,7 +15064,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 410,
+            "line": 412,
             "description": "Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object",
             "itemtype": "method",
             "name": "isObject",
@@ -15072,7 +15079,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 421,
+            "line": 423,
             "description": "Creates a protected property on the object.",
             "itemtype": "method",
             "name": "protectedProp",
@@ -15083,7 +15090,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 436,
+            "line": 438,
             "description": "Returns a new object resulting of merging the properties of the given objects.\nThe copying is shallow, complex properties will reference the very same object.\nProperties in later objects do **not overwrite** properties of the same name in earlier objects.\nIf any of the objects is missing, it will be skiped.",
             "example": [
                 "\n\n var foo = function (config) {\n      config = Object.merge(config, defaultConfig);\n }"
@@ -15618,6 +15625,218 @@
             "submodule": "lib/string.js"
         },
         {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 68,
+            "description": "Default internal hash containing all DOM-events that will not directly call `event-finalize`\nbut after a delay of 1 second",
+            "itemtype": "property",
+            "name": "DEFAULT_DELAYED_FINALIZE_EVENTS",
+            "default": "{\n   mousedown: true,\n   mouseup: true,\n   mousemove: true,\n   panmove: true,\n   panstart: true,\n   panleft: true,\n   panright: true,\n   panup: true,\n   pandown: true,\n   pinchmove: true,\n   rotatemove: true,\n   focus: true,\n   manualfocus: true,\n   keydown: true,\n   keyup: true,\n   keypress: true,\n   blur: true,\n   resize: true,\n   scroll: true\n}",
+            "type": "Object",
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 241,
+            "description": "Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.",
+            "itemtype": "method",
+            "name": "isPlugged",
+            "params": [
+                {
+                    "name": "PluginClass",
+                    "description": "The plugin that should be plugged. Needs to be the Class, not an instance!",
+                    "type": "NodePlugin"
+                }
+            ],
+            "return": {
+                "description": "whether the plugin is plugged in",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 253,
+            "description": "Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.",
+            "itemtype": "method",
+            "name": "plug",
+            "params": [
+                {
+                    "name": "PluginClass",
+                    "description": "The plugin that should be plugged. Needs to be the Class, not an instance!",
+                    "type": "NodePlugin"
+                },
+                {
+                    "name": "config",
+                    "description": "any config that should be passed through when the class is instantiated.",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "model",
+                    "description": "model to used as `ns.model`",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 275,
+            "description": "Unplugs a NodePlugin from the HtmlElement.",
+            "itemtype": "method",
+            "name": "unplug",
+            "params": [
+                {
+                    "name": "PluginClass",
+                    "description": "The plugin that should be unplugged. Needs to be the Class, not an instance!",
+                    "type": "NodePlugin"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 306,
+            "description": "Binds a model to the plugin, making plugin.model equals the bound model.\nImmediately syncs the plugin with the new model-data.\n\nSyncs the new vnode's childNodes with the dom.",
+            "itemtype": "method",
+            "name": "bindModel",
+            "params": [
+                {
+                    "name": "model",
+                    "description": "the model to bind to the itag-element",
+                    "type": "Object"
+                },
+                {
+                    "name": "mergeCurrent",
+                    "description": "when set true, current properties on the plugin's model that aren't defined\n       in the new model, get merged into the new model.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 340,
+            "description": "Defines which domevents should lead to a direct sync by the Event-finalizer.\nOnly needed for events that are in the list set by DEFAULT_DELAYED_FINALIZE_EVENTS:\n\n<ul>\n    <li>mousedown</li>\n    <li>mouseup</li>\n    <li>mousemove</li>\n    <li>panmove</li>\n    <li>panstart</li>\n    <li>panleft</li>\n    <li>panright</li>\n    <li>panup</li>\n    <li>pandown</li>\n    <li>pinchmove</li>\n    <li>rotatemove</li>\n    <li>focus</li>\n    <li>manualfocus</li>\n    <li>keydown</li>\n    <li>keyup</li>\n    <li>keypress</li>\n    <li>blur</li>\n    <li>resize</li>\n    <li>scroll</li>\n</ul>\n\nEvents that are not in this list don't need to be set: they always go through the finalizer immediatly.\n\nYou need to set this if the itag-definition its `sync`-method should be updated after one of the events in the list.",
+            "itemtype": "method",
+            "name": "setItagDirectEventResponse",
+            "params": [
+                {
+                    "name": "ItagClass",
+                    "description": "The ItagClass that wants to register",
+                    "type": "Class"
+                },
+                {
+                    "name": "domEvents",
+                    "description": "the domevents that should directly make the itag sync",
+                    "type": "Array|String"
+                }
+            ],
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 472,
+            "description": "Creates a new Element-PluginClass.",
+            "itemtype": "method",
+            "name": "definePlugin",
+            "params": [
+                {
+                    "name": "ns",
+                    "description": "the namespace of the plugin",
+                    "type": "String"
+                },
+                {
+                    "name": "constructor",
+                    "description": "The function that will serve as constructor for the new class.\n       If `undefined` defaults to `NOOP`",
+                    "type": "Function",
+                    "optional": true
+                },
+                {
+                    "name": "prototypes",
+                    "description": "Hash map of properties to be added to the prototype of the new class.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "PluginClass"
+            },
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 506,
+            "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
+            "example": [
+                "\n\n var Circle = Shape.subClass(\n     function (x, y, r) {\n         // arguments will automaticly be passed through to Shape's constructor\n         this.r = r;\n     },\n     {\n         area: function () {\n             return this.r * this.r * Math.PI;\n         }\n     }\n );"
+            ],
+            "itemtype": "method",
+            "name": "subClass",
+            "params": [
+                {
+                    "name": "ns",
+                    "description": "the namespace of the plugin",
+                    "type": "String"
+                },
+                {
+                    "name": "constructor",
+                    "description": "The function that will serve as constructor for the new class.\n       If `undefined` defaults to `NOOP`",
+                    "type": "Function",
+                    "optional": true
+                },
+                {
+                    "name": "prototypes",
+                    "description": "Hash map of properties to be added to the prototype of the new class.",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "chainConstruct",
+                    "description": "Whether -during instance creation- to automaticly construct in the complete hierarchy with the given constructor arguments.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
+                }
+            ],
+            "return": {
+                "description": "undefined when no valid namespace is given",
+                "type": "Plugin|undefined"
+            },
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 3,
             "description": "Wrapper for built-in http.js to emulate the browser XMLHttpRequest object.\n\nThis can be used with JS designed for browsers to improve reuse of code and\nallow the use of existing libraries.\n\nUsage: include(\"XMLHttpRequest.js\") and use XMLHttpRequest per W3C specs.",
@@ -15625,35 +15844,35 @@
             "contributor": "David Ellis <d.f.ellis@ieee.org>",
             "license": "MIT",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 22,
             "description": "Private variables",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 89,
             "description": "Constants",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 99,
             "description": "Public vars",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 115,
             "description": "Private methods",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15669,7 +15888,7 @@
                 "description": "boolean False if not allowed, otherwise true"
             },
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15685,14 +15904,14 @@
                 "description": "boolean False if not allowed, otherwise true"
             },
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 143,
             "description": "Public methods",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15721,7 +15940,7 @@
                 }
             ],
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15734,7 +15953,7 @@
                 }
             ],
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15751,7 +15970,7 @@
                 }
             ],
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15767,7 +15986,7 @@
                 "description": "string Text of the header or null if it doesn't exist."
             },
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15777,7 +15996,7 @@
                 "description": "string A string with all response headers separated by CR+LF"
             },
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15793,7 +16012,7 @@
                 "description": "string Returns the request header or empty string if not set"
             },
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15806,42 +16025,42 @@
                 }
             ],
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 515,
             "description": "Called when an error is encountered to deal with it.",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 526,
             "description": "Aborts a request.",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 548,
             "description": "Adds an event listener. Preferred method of binding to events.",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 559,
             "description": "Remove an event callback that has already been bound.\nOnly works on the matching funciton, cannot be a copy.",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 572,
             "description": "Dispatch any events, including both \"on\" methods and events attached using addEventListener.",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15854,7 +16073,7 @@
                 }
             ],
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/polyfill/lib/mutationobserver.js",
@@ -16745,147 +16964,6 @@
             "class": "ElementArray",
             "module": "vdom",
             "submodule": "element-array"
-        },
-        {
-            "file": "src/vdom/partials/element-plugin.js",
-            "line": 44,
-            "description": "Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.",
-            "itemtype": "method",
-            "name": "isPlugged",
-            "params": [
-                {
-                    "name": "pluginClass",
-                    "description": "The plugin that should be plugged. Needs to be the Class, not an instance!",
-                    "type": "NodePlugin"
-                }
-            ],
-            "return": {
-                "description": "whether the plugin is plugged in",
-                "type": "Boolean"
-            },
-            "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
-        },
-        {
-            "file": "src/vdom/partials/element-plugin.js",
-            "line": 56,
-            "description": "Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.",
-            "itemtype": "method",
-            "name": "plug",
-            "params": [
-                {
-                    "name": "pluginClass",
-                    "description": "The plugin that should be plugged. Needs to be the Class, not an instance!",
-                    "type": "NodePlugin"
-                },
-                {
-                    "name": "config",
-                    "description": "any config that should be passed through when the class is instantiated.",
-                    "type": "Object"
-                }
-            ],
-            "chainable": 1,
-            "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
-        },
-        {
-            "file": "src/vdom/partials/element-plugin.js",
-            "line": 70,
-            "description": "Unplugs a NodePlugin from the HtmlElement.",
-            "itemtype": "method",
-            "name": "unplug",
-            "params": [
-                {
-                    "name": "pluginClass",
-                    "description": "The plugin that should be unplugged. Needs to be the Class, not an instance!",
-                    "type": "NodePlugin"
-                }
-            ],
-            "chainable": 1,
-            "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
-        },
-        {
-            "file": "src/vdom/partials/element-plugin.js",
-            "line": 122,
-            "description": "Creates a new Element-PluginClass.",
-            "itemtype": "method",
-            "name": "definePlugin",
-            "params": [
-                {
-                    "name": "ns",
-                    "description": "the namespace of the plugin",
-                    "type": "String"
-                },
-                {
-                    "name": "constructor",
-                    "description": "The function that will serve as constructor for the new class.\n       If `undefined` defaults to `NOOP`",
-                    "type": "Function",
-                    "optional": true
-                },
-                {
-                    "name": "prototypes",
-                    "description": "Hash map of properties to be added to the prototype of the new class.",
-                    "type": "Object",
-                    "optional": true
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "PluginClass"
-            },
-            "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
-        },
-        {
-            "file": "src/vdom/partials/element-plugin.js",
-            "line": 148,
-            "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
-            "example": [
-                "\n\n var Circle = Shape.subClass(\n     function (x, y, r) {\n         // arguments will automaticly be passed through to Shape's constructor\n         this.r = r;\n     },\n     {\n         area: function () {\n             return this.r * this.r * Math.PI;\n         }\n     }\n );"
-            ],
-            "itemtype": "method",
-            "name": "subClass",
-            "params": [
-                {
-                    "name": "ns",
-                    "description": "the namespace of the plugin",
-                    "type": "String"
-                },
-                {
-                    "name": "constructor",
-                    "description": "The function that will serve as constructor for the new class.\n       If `undefined` defaults to `NOOP`",
-                    "type": "Function",
-                    "optional": true
-                },
-                {
-                    "name": "prototypes",
-                    "description": "Hash map of properties to be added to the prototype of the new class.",
-                    "type": "Object",
-                    "optional": true
-                },
-                {
-                    "name": "chainConstruct",
-                    "description": "Whether -during instance creation- to automaticly construct in the complete hierarchy with the given constructor arguments.",
-                    "type": "Boolean",
-                    "optional": true,
-                    "optdefault": "true"
-                }
-            ],
-            "return": {
-                "description": "the new class."
-            },
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
         },
         {
             "file": "src/vdom/partials/extend-document.js",

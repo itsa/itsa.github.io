@@ -2636,7 +2636,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":73}],6:[function(require,module,exports){
+},{"_process":75}],6:[function(require,module,exports){
 var css = "*:focus {\n    outline: 0;\n}\n\na[target=\"_blank\"]:focus {\n    outline: 1px solid #129fea;\n}\n\n/* because we think the padding and margin should always be part of the size,\n   we define \"box-sizing: border-box\" for all elements */\n\n* {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],7:[function(require,module,exports){
 var css = ".pure-menu.pure-menu-open {\n    z-index: 3; /* prevent graph from crossing the menuarea */\n}\n\n.pure-button.pure-button-bordered,\n.pure-button.pure-button-bordered[disabled] {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;\n}\n\n.pure-button-active,\n.pure-button:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button.pure-button-bordered.pure-button-active[disabled],\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered[disabled]:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.4) inset, 0 0 6px rgba(0,0,0, 0.2) inset;\n}\n\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.6) inset;\n}\n\n/* restore pure-button:active */\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button:active:focus,\n.pure-button.pure-button-active:focus {\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6) inset, 0 0 10px rgba(0, 0, 0, 0.2) inset;\n}\n\n.pure-button.pure-button-rounded {\n    border-radius: 0.3em;\n}\n\n.pure-button.pure-button-heavyrounded {\n    border-radius: 0.5em;\n}\n\n.pure-button.pure-button-oval {\n    border-radius: 50%;\n}\n\n.pure-button.pure-button-halfoval {\n    border-radius: 25%;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -2895,6 +2895,7 @@ module.exports = function (window) {
         DD, DD_Object;
 
     require('vdom')(window);
+    require('node-plugin')(window);
     require('window-ext')(window);
 
     DD = {
@@ -3723,7 +3724,7 @@ module.exports = function (window) {
     return DD_Object;
 
 };
-},{"./css/drag-drop.css":10,"drag":13,"event-dom":14,"js-ext":37,"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":54,"useragent":56,"vdom":70,"window-ext":71}],12:[function(require,module,exports){
+},{"./css/drag-drop.css":10,"drag":13,"event-dom":14,"js-ext":37,"js-ext/extra/hashmap.js":34,"node-plugin":45,"polyfill/polyfill-base.js":57,"useragent":59,"vdom":72,"window-ext":73}],12:[function(require,module,exports){
 module.exports=require(10)
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],13:[function(require,module,exports){
 "use strict";
@@ -3813,6 +3814,7 @@ module.exports = function (window) {
         DD, DD_Object;
 
     require('vdom')(window);
+    require('node-plugin')(window);
     require('window-ext')(window);
 
     DD = {
@@ -4383,7 +4385,7 @@ module.exports = function (window) {
 
     return DD_Object;
 };
-},{"./css/drag.css":12,"event-dom":14,"js-ext":37,"js-ext/extra/hashmap.js":34,"polyfill":54,"useragent":56,"vdom":70,"window-ext":71}],14:[function(require,module,exports){
+},{"./css/drag.css":12,"event-dom":14,"js-ext":37,"js-ext/extra/hashmap.js":34,"node-plugin":45,"polyfill":57,"useragent":59,"vdom":72,"window-ext":73}],14:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5143,7 +5145,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":26,"js-ext/extra/hashmap.js":34,"js-ext/lib/array.js":39,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill/polyfill-base.js":54,"utils":57,"vdom":70}],15:[function(require,module,exports){
+},{"event":26,"js-ext/extra/hashmap.js":34,"js-ext/lib/array.js":39,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill/polyfill-base.js":57,"utils":60,"vdom":72}],15:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5733,7 +5735,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":14,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"utils":57,"vdom":70}],19:[function(require,module,exports){
+},{"../event-dom.js":14,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"utils":60,"vdom":72}],19:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8228,7 +8230,7 @@ module.exports = function (window) {
 
 };
 
-},{"utils":57}],21:[function(require,module,exports){
+},{"utils":60}],21:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -9607,7 +9609,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill/polyfill-base.js":54}],22:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill/polyfill-base.js":57}],22:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10242,7 +10244,7 @@ module.exports = function (window) {
     module.exports = Event;
 
 };
-},{"../event-base.js":21,"./timer-finalize.js":25,"io":32,"js-ext/lib/object.js":42,"utils":57}],25:[function(require,module,exports){
+},{"../event-base.js":21,"./timer-finalize.js":25,"io":32,"js-ext/lib/object.js":42,"utils":60}],25:[function(require,module,exports){
 (function (global){
 (function (global) {
 
@@ -10366,19 +10368,20 @@ var NAME = '[focusmanager]: ',
 module.exports = function (window) {
 
     var DOCUMENT = window.document,
-        base, FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed,
+        FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed,
         resetLastValue, getFocusManagerSelector, setupEvents, defineFocusEvent;
 
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
-    require('window-ext')(window);
 /*jshint boss:true */
     if (FocusManager=window._ITSAmodules.FocusManager) {
 /*jshint boss:false */
         return FocusManager; // FocusManager was already created
     }
 
-    base = require('vdom')(window).Plugins.Base;
+    require('window-ext')(window);
+    require('node-plugin')(window);
+
     Event = require('event-mobile')(window);
 
     getFocusManagerSelector = function(focusContainerNode) {
@@ -10788,7 +10791,7 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"event-mobile":19,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":54,"utils":57,"vdom":70,"window-ext":71}],28:[function(require,module,exports){
+},{"event-mobile":19,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"node-plugin":45,"polyfill":57,"utils":60,"window-ext":73}],28:[function(require,module,exports){
 
 "use strict";
 
@@ -11513,7 +11516,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":32,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill/polyfill-base.js":54}],31:[function(require,module,exports){
+},{"../io.js":32,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill/polyfill-base.js":57}],31:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12027,7 +12030,7 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":37,"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":54,"utils":57}],33:[function(require,module,exports){
+},{"js-ext":37,"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":57,"utils":60}],33:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -12628,7 +12631,7 @@ require('../lib/object.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/object.js":42,"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":54}],34:[function(require,module,exports){
+},{"../lib/object.js":42,"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":57}],34:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -12763,7 +12766,7 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":39,"../lib/object.js":42,"./classes.js":33,"js-ext/extra/hashmap.js":34,"polyfill/lib/weakmap.js":52}],36:[function(require,module,exports){
+},{"../lib/array.js":39,"../lib/object.js":42,"./classes.js":33,"js-ext/extra/hashmap.js":34,"polyfill/lib/weakmap.js":55}],36:[function(require,module,exports){
 "use strict";
 
 var createHashMap = require('./hashmap.js').createMap;
@@ -13009,7 +13012,7 @@ var cloneObj = function(obj) {
      };
 
 }(Array.prototype));
-},{"polyfill/polyfill-base.js":54}],40:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":57}],40:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -13068,7 +13071,7 @@ var NAME = '[Function]: ';
 
 }(Function.prototype));
 
-},{"polyfill/polyfill-base.js":54}],41:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":57}],41:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -13093,7 +13096,7 @@ var REVIVER = function(key, value) {
 JSON.parseWithDate = function(stringifiedObj) {
     return this.parse(stringifiedObj, REVIVER);
 };
-},{"polyfill/polyfill-base.js":54}],42:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":57}],42:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -13465,13 +13468,14 @@ defineProperties(Object.prototype, {
      * @param [options.force=false] {Boolean} If true, the properties in `obj` will override those of the same name
      *        in the original object
      * @param [options.full=false] {Boolean} If true, also any non-enumerable properties will be merged
+     * @param [options.replace=false] {Boolean} If true, only properties that already exist on the instance will be merged (forced replaced). No need to set force as well.
      * @param [options.descriptors=false] {Boolean} If true, the full descriptors will be set. This takes more time, but avoids any info to be lost.
      * @chainable
      */
     merge: function (obj, options) {
         var instance = this,
             i = -1,
-            keys, l, key, force, descriptors, propDescriptor;
+            keys, l, key, force, replace, descriptors, propDescriptor;
         if (!Object.isObject(obj)) {
             return instance;
         }
@@ -13479,11 +13483,12 @@ defineProperties(Object.prototype, {
         keys = options.full ? Object.getOwnPropertyNames(obj) : Object.keys(obj);
         l = keys.length;
         force = options.force;
+        replace = options.replace;
         descriptors = options.descriptors;
         // we cannot use obj.each --> obj might be an object defined through Object.create(null) and missing Object.prototype!
         while (++i < l) {
             key = keys[i];
-            if (force || !(key in instance)) {
+            if ((force && !replace) || (!replace && !(key in instance)) || (replace && (key in instance))) {
                 if (descriptors) {
                     propDescriptor = Object.getOwnPropertyDescriptor(obj, key);
                     if (!propDescriptor.writable) {
@@ -13553,7 +13558,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":54}],43:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":57}],43:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13858,7 +13863,7 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill":54}],44:[function(require,module,exports){
+},{"polyfill":57}],44:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -14142,6 +14147,597 @@ Promise.manage = function (callbackFn) {
 
 },{}],45:[function(require,module,exports){
 "use strict";
+module.exports = function (window) {
+    require('./lib/element-plugin.js')(window);
+    return {
+        Constrain: require('./lib/constrain.js')(window)
+    };
+};
+},{"./lib/constrain.js":46,"./lib/element-plugin.js":47}],46:[function(require,module,exports){
+"use strict";
+module.exports = function (window) {
+    require('./element-plugin.js')(window);
+    return window.document.definePlugin('constrain', null, {
+            attrs: {
+                selector: 'string'
+            },
+            defaults: {
+                selector: 'window'
+            }
+        }
+    );
+};
+},{"./element-plugin.js":47}],47:[function(require,module,exports){
+"use strict";
+
+/**
+ * Integrates DOM-events to event. more about DOM-events:
+ * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module vdom
+ * @submodule element-plugin
+ * @class Plugins
+ * @since 0.0.1
+*/
+
+require('js-ext/lib/object.js');
+require('js-ext/lib/string.js');
+require('polyfill');
+require('event/extra/timer-finalize.js');
+
+var createHashMap = require('js-ext/extra/hashmap.js').createMap,
+    fromCamelCase = function(input) {
+        return input.replace(/[a-z]([A-Z])/g, function(match, group) {
+            return match[0]+'-'+group.toLowerCase();
+        });
+    };
+
+module.exports = function (window) {
+
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
+
+    if (window._ITSAmodules.ElementPlugin) {
+        return; // ElementPlugin was already created
+    }
+
+    require('vdom')(window);
+
+    var NAME = '[ElementPlugin]: ',
+        Classes = require('js-ext/extra/classes.js'),
+        timers = require('utils/lib/timers.js'),
+        IO = require('io')(window),
+        Event = require('event-dom')(window),
+        asyncSilent = timers.asyncSilent,
+        laterSilent = timers.laterSilent,
+        DELAY_DESTRUCTION = 5000, // must be kept below vnode.js its DESTROY_DELAY (which is currently 60000)
+        DELAYED_EVT_TIME = 500,
+        NATIVE_OBJECT_OBSERVE = !!Object.observe,
+        DOCUMENT = window.document,
+        types = [],
+        NODE = 'node',
+        REMOVE = 'remove',
+        INSERT = 'insert',
+        CHANGE = 'change',
+        ATTRIBUTE = 'attribute',
+        NODE_REMOVE = NODE+REMOVE,
+        NODE_INSERT = NODE+INSERT,
+        NODE_CONTENT_CHANGE = NODE+'content'+CHANGE,
+        ATTRIBUTE_REMOVE = ATTRIBUTE+REMOVE,
+        ATTRIBUTE_CHANGE = ATTRIBUTE+CHANGE,
+        ATTRIBUTE_INSERT = ATTRIBUTE+INSERT,
+        MUTATION_EVENTS = [NODE_REMOVE, NODE_INSERT, NODE_CONTENT_CHANGE, ATTRIBUTE_REMOVE, ATTRIBUTE_CHANGE, ATTRIBUTE_INSERT],
+        Base, pluginDOM, modelToAttrs, attrsToModel, syncPlugin, autoRefreshPlugin, pluginDOMresync, DEFAULT_DELAYED_FINALIZE_EVENTS;
+
+    Object.protectedProp(window, '_ITSAPlugins', createHashMap());
+
+    /**
+     * Default internal hash containing all DOM-events that will not directly call `event-finalize`
+     * but after a delay of 1 second
+     *
+     * @property DEFAULT_DELAYED_FINALIZE_EVENTS
+     * @default {
+     *    mousedown: true,
+     *    mouseup: true,
+     *    mousemove: true,
+     *    panmove: true,
+     *    panstart: true,
+     *    panleft: true,
+     *    panright: true,
+     *    panup: true,
+     *    pandown: true,
+     *    pinchmove: true,
+     *    rotatemove: true,
+     *    focus: true,
+     *    manualfocus: true,
+     *    keydown: true,
+     *    keyup: true,
+     *    keypress: true,
+     *    blur: true,
+     *    resize: true,
+     *    scroll: true
+     * }
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
+    DEFAULT_DELAYED_FINALIZE_EVENTS = {
+        mousedown: true,
+        mouseup: true,
+        mousemove: true,
+        panmove: true,
+        panstart: true,
+        panleft: true,
+        panright: true,
+        panup: true,
+        pandown: true,
+        pinchmove: true,
+        rotatemove: true,
+        focus: true,
+        manualfocus: true,
+        keydown: true,
+        keyup: true,
+        keypress: true,
+        blur: true,
+        resize: true,
+        scroll: true
+    };
+
+    pluginDOM = function(NewClass) {
+        // asynchroniously we check all current elements and render when needed:
+        var ns = NewClass.prototype.$ns;
+        asyncSilent(function() {
+            var elements = DOCUMENT.getAll('plugin-'+ns+'="true"'),
+                len = elements.length,
+                element, i;
+            for (i=0; i<len; i++) {
+                element = elements[i];
+                element.plug(NewClass);
+            }
+        });
+    };
+
+    pluginDOMresync = function(NewClass) {
+        // asynchroniously we check all current elements and render when needed:
+        var ns = NewClass.prototype.$ns;
+        asyncSilent(function() {
+            var elements = DOCUMENT.getAll('plugin-'+ns+'="true"'),
+                len = elements.length,
+                element, i;
+            for (i=0; i<len; i++) {
+                element = elements[i];
+                syncPlugin(element[ns]);
+            }
+        });
+    };
+
+    attrsToModel = function(plugin, config) {
+        var host = plugin.host,
+            attrs = plugin.attrs,
+            defaults = plugin.defaults,
+            attrValue, validValue;
+        config || (config={});
+        // read the current ns-attributes on the node, overrule them with config and set the new attributes
+        attrs.each(function(value, key) {
+            attrValue = config[key] || host.getAttr(key) || defaults[key];
+            if (attrValue) {
+                switch (value.toLowerCase()) {
+                    case 'boolean':
+                        validValue = attrValue.validateBoolean();
+                        attrValue = (attrValue==='true');
+                        break;
+                    case 'number':
+                        validValue = attrValue.validateFloat();
+                        attrValue = parseFloat(attrValue);
+                        break;
+                    case 'date':
+                        validValue = attrValue.validateDate();
+                        attrValue = attrValue.toDate();
+                        break;
+                    case 'string':
+                        validValue = true;
+                        break;
+                    default:
+                        validValue = false;
+                }
+            }
+            else if (value.toLowerCase()==='boolean') {
+                // undefined `boolean` attributes need to be stored as `false`
+                validValue = true;
+                attrValue = false;
+            }
+            else {
+                validValue = false;
+            }
+            if (validValue && !plugin.model[key]) {
+                plugin.model[key] = attrValue;
+            }
+        });
+    };
+
+    modelToAttrs = function(plugin) {
+        console.log(NAME+'modelToAttrs');
+        var attrs = plugin.attrs,
+            model = plugin.model,
+            domElement = plugin.host,
+            ns = plugin.$ns,
+            newAttrs = [];
+        attrs.each(function(value, key) {
+            model[key] && (newAttrs[newAttrs.length] = {name: ns+'-'+fromCamelCase(key), value: model[key]});
+        });
+        (newAttrs.length>0) && domElement.setAttrs(newAttrs, true);
+    };
+
+    syncPlugin = function(plugin) {
+        modelToAttrs(plugin);
+        plugin.sync();
+    };
+
+    autoRefreshPlugin = function(plugin) {
+        if (!NATIVE_OBJECT_OBSERVE) {
+            plugin._EventFinalizer = Event.finalize(function(e) {
+                var type = e.type;
+                if (!e._noRender && (!e.status || !e.status.renderPrevented)) {
+                    if (!MUTATION_EVENTS[type] && !type.endsWith('outside')) {
+                        if (plugin._DELAYED_FINALIZE_EVENTS[type]) {
+                            types.push(type);
+                            plugin.constructor.$registerDelay || (plugin.constructor.$registerDelay = laterSilent(function() {
+                                console.info('Event-finalizer will delayed-refresh itags because of events: '+JSON.stringify(types));
+                                syncPlugin(plugin);
+                                types.length = 0;
+                                plugin.constructor.$registerDelay = null;
+                            }, DELAYED_EVT_TIME));
+                        }
+                        else {
+                            console.info('Event-finalizer will refresh itags because of event: '+type);
+                            syncPlugin(plugin);
+                        }
+                    }
+                }
+            });
+
+            plugin._IOFinalizer = IO.finalize(function() {
+                syncPlugin(plugin);
+            });
+        }
+    };
+
+    // extend window.Element:
+    window.Element && (function(ElementPrototype) {
+       /**
+        * Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.
+        *
+        * @method isPlugged
+        * @param PluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
+        * @return {Boolean} whether the plugin is plugged in
+        * @since 0.0.1
+        */
+        ElementPrototype.isPlugged = function(PluginClass) {
+            return !!this.ns && !!this.ns[PluginClass.prototype.$ns];
+        };
+
+       /**
+        * Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.
+        *
+        * @method plug
+        * @param PluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
+        * @param [config] {Object} any config that should be passed through when the class is instantiated.
+        * @param [model] {Object} model to used as `ns.model`
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.plug = function(PluginClass, config, model) {
+            var instance = this;
+            if (!instance.isPlugged(PluginClass)) {
+                instance.ns || Object.protectedProp(instance, 'ns', {});
+                instance.ns[PluginClass.prototype.$ns] = new PluginClass(instance, config, model);
+            }
+            else {
+                console.warn('ElementPlugin '+PluginClass.prototype.$ns+' already plugged in');
+            }
+            return instance;
+        };
+
+       /**
+        * Unplugs a NodePlugin from the HtmlElement.
+        *
+        * @method unplug
+        * @param PluginClass {NodePlugin} The plugin that should be unplugged. Needs to be the Class, not an instance!
+        * @chainable
+        * @since 0.0.1
+        */
+        ElementPrototype.unplug = function(PluginClass) {
+            var instance = this;
+            instance.isPlugged(PluginClass) && instance.ns[PluginClass.prototype.$ns].destroy();
+            return instance;
+        };
+    }(window.Element.prototype));
+
+    Base = Classes.createClass(
+        function (hostElement, config, model) {
+            var instance = this,
+                ns = instance.$ns;
+            instance.host = hostElement;
+            instance.model = Object.isObject(model) ? model : {};
+            attrsToModel(hostElement, instance);
+            hostElement.setAttr('plugin-'+ns, 'true', true);
+            syncPlugin(instance);
+            autoRefreshPlugin(instance);
+            hostElement.setAttr(ns+'-ready', 'true', true);
+        },
+        {
+            _DELAYED_FINALIZE_EVENTS: DEFAULT_DELAYED_FINALIZE_EVENTS.shallowClone(),
+            attrs: {},
+            defaults: {},
+           /**
+            * Binds a model to the plugin, making plugin.model equals the bound model.
+            * Immediately syncs the plugin with the new model-data.
+            *
+            * Syncs the new vnode's childNodes with the dom.
+            *
+            * @method bindModel
+            * @param model {Object} the model to bind to the itag-element
+            * @param [mergeCurrent=false] {Boolean} when set true, current properties on the plugin's model that aren't defined
+            *        in the new model, get merged into the new model.
+            * @since 0.0.1
+            */
+            bindModel: function(model, mergeCurrent) {
+                console.log(NAME+'bindModel');
+                var instance = this,
+                    observer;
+                if (instance.model!==model) {
+                    instance.removeAttr('bound-model');
+                    if (NATIVE_OBJECT_OBSERVE) {
+                        observer = instance._observer;
+                        observer && Object.unobserve(instance.model, observer);
+                    }
+                    mergeCurrent && (model.merge(instance.model, {full: true}));
+                    instance.model = model;
+                    if (NATIVE_OBJECT_OBSERVE) {
+                        observer = function() {
+                            syncPlugin(instance);
+                        };
+                        Object.observe(instance.model, observer);
+                        instance._observer = observer;
+                    }
+                    syncPlugin(instance);
+                }
+            },
+           /**
+            * Defines which domevents should lead to a direct sync by the Event-finalizer.
+            * Only needed for events that are in the list set by DEFAULT_DELAYED_FINALIZE_EVENTS:
+            *
+            * <ul>
+            *     <li>mousedown</li>
+            *     <li>mouseup</li>
+            *     <li>mousemove</li>
+            *     <li>panmove</li>
+            *     <li>panstart</li>
+            *     <li>panleft</li>
+            *     <li>panright</li>
+            *     <li>panup</li>
+            *     <li>pandown</li>
+            *     <li>pinchmove</li>
+            *     <li>rotatemove</li>
+            *     <li>focus</li>
+            *     <li>manualfocus</li>
+            *     <li>keydown</li>
+            *     <li>keyup</li>
+            *     <li>keypress</li>
+            *     <li>blur</li>
+            *     <li>resize</li>
+            *     <li>scroll</li>
+            * </ul>
+            *
+            * Events that are not in this list don't need to be set: they always go through the finalizer immediatly.
+            *
+            * You need to set this if the itag-definition its `sync`-method should be updated after one of the events in the list.
+            *
+            * @method setItagDirectEventResponse
+            * @param ItagClass {Class} The ItagClass that wants to register
+            * @param domEvents {Array|String} the domevents that should directly make the itag sync
+            * @since 0.0.1
+            */
+            setDirectEventResponse :function(domEvents) {
+                console.log(NAME+'setDirectEventResponse');
+                var instance = this;
+                if (!NATIVE_OBJECT_OBSERVE) {
+                    Array.isArray(domEvents) || (domEvents=[domEvents]);
+                    domEvents.forEach(function(domEvent) {
+                        domEvent.endsWith('outside') && (domEvent=domEvent.substr(0, domEvent.length-7));
+                        domEvent = domEvent.toLowerCase();
+                        if (domEvent==='blur') {
+                            console.warn('the event "blur" cannot be delayed, for it would lead to extremely many syncing before anything changes which you don\'t need');
+                        }
+                        else {
+                            if (DEFAULT_DELAYED_FINALIZE_EVENTS[domEvent]) {
+                                ('DELAYED_FINALIZE_EVENTS' in instance.constructor.prototypes) || instance.mergePrototypes({'DELAYED_FINALIZE_EVENTS': DEFAULT_DELAYED_FINALIZE_EVENTS.shallowClone()});
+                                delete instance.DELAYED_FINALIZE_EVENTS[domEvent];
+                            }
+                        }
+                    });
+                }
+            },
+            sync: function() {
+                // defaults to NOOP
+            },
+            destroy: function () {
+                var instance = this,
+                    host = instance.host,
+                    attrs = instance.attrs,
+                    ns = instance.$ns,
+                    observer;
+                if (NATIVE_OBJECT_OBSERVE) {
+                    observer = instance._observer;
+                    if (observer) {
+                        Object.unobserve(instance.model, observer);
+                        delete instance._observer;
+                    }
+                }
+                else {
+                    instance._EventFinalizer.detach();
+                    instance._IOFinalizer.detach();
+                }
+                attrs.each(
+                    function(value, key) {
+                        host.removeAttr(ns+'-'+fromCamelCase(key), true);
+                    }
+                );
+                host.setAttr('plugin-'+ns, true);
+                host.setAttr(ns+'-ready', true);
+                delete host.ns[instance.$ns];
+            },
+            $ns: 'undefined-namespace'
+        }
+    );
+
+    // Whenever elements are added: check for plugins and initialize them
+    Event.after('UI:'+NODE_INSERT, function(e) {
+        var element = e.target;
+        // to prevent less userexperience, we plug asynchroniously
+        asyncSilent(function() {
+            var attrs = element.vnode.attrs,
+                ns, Plugin;
+            attrs && attrs.each(function(value, key) {
+                if (key.substr(0, 7)==='plugin-') {
+                    ns = key.substr(7);
+                    Plugin = window._ITSAPlugins[ns];
+                    Plugin && element.plug(Plugin);
+                }
+            });
+        });
+    });
+
+    // Whenever elements are removed: check for plugins and destoy (unplug) them
+    Event.after('UI:'+NODE_REMOVE, function(e) {
+        var element = e.target;
+        // to prevent less userexperience, we unplug after a delay
+        laterSilent(function() {
+            var attrs = element.vnode.attrs,
+                ns, Plugin;
+            attrs && attrs.each(function(value, key) {
+                if (key.substr(0, 7)==='plugin-') {
+                    ns = key.substr(7);
+                    Plugin = window._ITSAPlugins[ns];
+                    Plugin && element.unplug(Plugin);
+                }
+            });
+        }, DELAY_DESTRUCTION);
+    });
+
+    Event.after(
+        ['*:prototypechange', '*:prototyperemove'],
+        function(e) {
+            pluginDOMresync(e.target);
+        },
+        function(e) {
+            return !!e.target.prototype.$ns;
+        }
+    );
+
+   /**
+    * Creates a new Element-PluginClass.
+    *
+    * @method definePlugin
+    * @param ns {String} the namespace of the plugin
+    * @param [constructor] {Function} The function that will serve as constructor for the new class.
+    *        If `undefined` defaults to `NOOP`
+    * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
+    * @return {PluginClass}
+    * @since 0.0.1
+    */
+    DOCUMENT.definePlugin = function(ns, constructor, prototypes) {
+        var NewClass;
+        if ((typeof ns==='string') && (ns=ns.replaceAll(' ', '')) && (ns.length>0) && !ns.contains('-')) {
+/*jshint boss:true */
+            if (NewClass=window._ITSAPlugins[ns]) {
+/*jshint boss:false */
+                console.warn(NAME+'definePlugin cannot redefine Plugin '+ns+' --> already exists');
+            }
+            else {
+                console.log(NAME+'definePlugin');
+                NewClass = Base.subClass(constructor, prototypes).mergePrototypes({$ns: ns}, true);
+                window._ITSAPlugins[ns] = NewClass;
+                pluginDOM(NewClass);
+            }
+        }
+        else {
+            console.warn(NAME+'definePlugin cannot create Plugin: invalid ns: '+ns);
+        }
+        return NewClass;
+    };
+
+    (function(FunctionPrototype) {
+        var originalSubClass = FunctionPrototype.subClass;
+        /**
+         * Returns a newly created class inheriting from this class
+         * using the given `constructor` with the
+         * prototypes listed in `prototypes` merged in.
+         *
+         *
+         * The newly created class has the `$$super` static property
+         * available to access all of is ancestor's instance methods.
+         *
+         * Further methods can be added via the [mergePrototypes](#method_mergePrototypes).
+         *
+         * @example
+         *
+         *  var Circle = Shape.subClass(
+         *      function (x, y, r) {
+         *          // arguments will automaticly be passed through to Shape's constructor
+         *          this.r = r;
+         *      },
+         *      {
+         *          area: function () {
+         *              return this.r * this.r * Math.PI;
+         *          }
+         *      }
+         *  );
+         *
+         * @method subClass
+         * @param ns {String} the namespace of the plugin
+         * @param [constructor] {Function} The function that will serve as constructor for the new class.
+         *        If `undefined` defaults to `NOOP`
+         * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
+         * @param [chainConstruct=true] {Boolean} Whether -during instance creation- to automaticly construct in the complete hierarchy with the given constructor arguments.
+         * @return {Plugin|undefined} undefined when no valid namespace is given
+         */
+        FunctionPrototype.subClass = function (ns, constructor, prototypes /*, chainConstruct */) {
+            var instance = this,
+                NewClass;
+            if (instance.prototype.$ns) {
+                if ((typeof ns==='string') && (ns=ns.replaceAll(' ', '')) && (ns.length>0) && !ns.contains('-')) {
+/*jshint boss:true */
+                    if (NewClass=window._ITSAPlugins[ns]) {
+/*jshint boss:false */
+                        console.warn(NAME+'definePlugin cannot redefine Plugin '+ns+' --> already exists');
+                    }
+                    else {
+                        NewClass = originalSubClass(constructor, prototypes).mergePrototypes({$ns: ns}, true);
+                        window._ITSAPlugins[ns] = NewClass;
+                        pluginDOM(ns);
+                    }
+                    return NewClass;
+                }
+                else {
+                    console.warn(NAME+'subClass cannot create Plugin: invalid ns: '+ns);
+                }
+            }
+            else {
+                // Original subclassing
+                return originalSubClass.apply(instance, arguments);
+            }
+        };
+    }(Function.prototype));
+
+    window._ITSAmodules.ElementPlugin = true;
+};
+},{"event-dom":14,"event/extra/timer-finalize.js":25,"io":32,"js-ext/extra/classes.js":33,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":57,"utils/lib/timers.js":62,"vdom":72}],48:[function(require,module,exports){
+"use strict";
 
 var merge = function (source, target) {
         var keys = Object.keys(source),
@@ -14163,7 +14759,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],46:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 "use strict";
 
 /*
@@ -14216,7 +14812,7 @@ module.exports = function (window) {
 
     return transition;
 };
-},{"../bin/local-hashmap.js":45}],47:[function(require,module,exports){
+},{"../bin/local-hashmap.js":48}],50:[function(require,module,exports){
 "use strict";
 
 // CAUTIOUS: need a copy of hashmap --> we cannot use js-ext/extra/hashap.js for that would lead to circular references!
@@ -14261,7 +14857,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{"../bin/local-hashmap.js":45}],48:[function(require,module,exports){
+},{"../bin/local-hashmap.js":48}],51:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -14332,7 +14928,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../bin/local-hashmap.js":45}],49:[function(require,module,exports){
+},{"../bin/local-hashmap.js":48}],52:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -14356,7 +14952,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],50:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 (function (global){
 /*
  * Copyright 2012 The Polymer Authors. All rights reserved.
@@ -14942,9 +15538,9 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],51:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 require('ypromise');
-},{"ypromise":5}],52:[function(require,module,exports){
+},{"ypromise":5}],55:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/Gozala/1269991
 
@@ -15054,7 +15650,7 @@ require('ypromise');
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],53:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -15073,15 +15669,15 @@ require('ypromise');
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],54:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":49,"./lib/window.console.js":53}],55:[function(require,module,exports){
+},{"./lib/matchesselector.js":52,"./lib/window.console.js":56}],58:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/promise.js');
 require('./lib/weakmap.js');
 require('./lib/mutationobserver.js'); // needs weakmap
-},{"./lib/mutationobserver.js":50,"./lib/promise.js":51,"./lib/weakmap.js":52,"./polyfill-base.js":54}],56:[function(require,module,exports){
+},{"./lib/mutationobserver.js":53,"./lib/promise.js":54,"./lib/weakmap.js":55,"./polyfill-base.js":57}],59:[function(require,module,exports){
 "use strict";
 
 /**
@@ -15121,7 +15717,7 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":54}],57:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":57}],60:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
@@ -15129,7 +15725,7 @@ module.exports = {
     async: require('./lib/timers.js').async,
     asyncSilent: require('./lib/timers.js').asyncSilent
 };
-},{"./lib/idgenerator.js":58,"./lib/timers.js":59}],58:[function(require,module,exports){
+},{"./lib/idgenerator.js":61,"./lib/timers.js":62}],61:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -15187,7 +15783,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":54}],59:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":57}],62:[function(require,module,exports){
 (function (global){
 /**
  * Collection of various utility functions.
@@ -15402,9 +15998,9 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"polyfill/polyfill-base.js":54}],60:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":57}],63:[function(require,module,exports){
 var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],61:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],64:[function(require,module,exports){
 "use strict";
 
 /**
@@ -15702,7 +16298,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":54,"polyfill/extra/transition.js":46,"polyfill/extra/vendorCSS.js":48}],62:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":57,"polyfill/extra/transition.js":49,"polyfill/extra/vendorCSS.js":51}],65:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16130,220 +16726,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":54}],63:[function(require,module,exports){
-"use strict";
-
-/**
- * Integrates DOM-events to event. more about DOM-events:
- * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- *
- * @module vdom
- * @submodule element-plugin
- * @class Plugins
- * @since 0.0.1
-*/
-
-require('js-ext/lib/object.js');
-require('js-ext/lib/string.js');
-require('polyfill');
-
-var createHashMap = require('js-ext/extra/hashmap.js').createMap,
-    fromCamelCase = function(input) {
-        return input.replace(/[a-z]([A-Z])/g, function(match, group) {
-            return match[0]+'-'+group.toLowerCase();
-        });
-    };
-
-module.exports = function (window) {
-
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
-
-    if (window._ITSAmodules.ElementPlugin) {
-        return window._ITSAmodules.ElementPlugin; // ElementPlugin was already created
-    }
-
-    var NAME = '[ElementPlugin]: ',
-        Classes = require('js-ext/extra/classes.js'),
-        DOCUMENT = window.document,
-        Base, Constrain, ElementPlugin;
-
-    // also extend window.Element:
-    window.Element && (function(ElementPrototype) {
-       /**
-        * Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.
-        *
-        * @method isPlugged
-        * @param pluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
-        * @return {Boolean} whether the plugin is plugged in
-        * @since 0.0.1
-        */
-        ElementPrototype.isPlugged = function(pluginClass) {
-            return pluginClass.validate(this);
-        };
-
-       /**
-        * Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.
-        *
-        * @method plug
-        * @param pluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
-        * @param config {Object} any config that should be passed through when the class is instantiated.
-        * @chainable
-        * @since 0.0.1
-        */
-        ElementPrototype.plug = function(pluginClass, config) {
-            pluginClass(this, config);
-            return this;
-        };
-
-       /**
-        * Unplugs a NodePlugin from the HtmlElement.
-        *
-        * @method unplug
-        * @param pluginClass {NodePlugin} The plugin that should be unplugged. Needs to be the Class, not an instance!
-        * @chainable
-        * @since 0.0.1
-        */
-        ElementPrototype.unplug = function(pluginClass) {
-            pluginClass.destroy(this);
-            return this;
-        };
-    }(window.Element.prototype));
-
-    Base = Classes.createClass(
-        function (hostElement, config) {
-            var instance = this,
-                ns = instance.constructor.ns,
-                attrs = instance.defaults.shallowClone();
-            config && attrs.merge(config, {force: true});
-            attrs.each(
-                function(value, key) {
-                    value && hostElement.setAttr(ns+'-'+fromCamelCase(key), value, true);
-                }
-            );
-        },
-        {
-            attrs: {},
-            defaults: {},
-            destroy: function (hostElement) {
-                var instance = this,
-                    attrs = hostElement.vnode.attrs,
-                    ns = instance.constructor.ns+'-';
-                attrs.each(
-                    function(value, key) {
-                         key.startsWith(ns) && hostElement.removeAttr(key);
-                    }
-                );
-            },
-            validate: function (hostElement) {
-                var instance = this,
-                    attrs = hostElement.vnode.attrs,
-                    ns = instance.constructor.ns+'-';
-                return attrs.some(
-                    function(value, key) {
-                        return key.startsWith(ns);
-                    }
-                );
-            }
-        }
-    );
-
-   /**
-    * Creates a new Element-PluginClass.
-    *
-    * @method definePlugin
-    * @param ns {String} the namespace of the plugin
-    * @param [constructor] {Function} The function that will serve as constructor for the new class.
-    *        If `undefined` defaults to `NOOP`
-    * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
-    * @return {PluginClass}
-    * @since 0.0.1
-    */
-    DOCUMENT.definePlugin = function(ns, constructor, prototypes) {
-        var NewClass;
-        if ((typeof ns==='string') && (ns=ns.replaceAll(' ', '')) && (ns.length>0) && !ns.contains('-')) {
-            console.log(NAME+'definePlugin');
-            NewClass = Base.subClass(constructor, prototypes);
-            NewClass.$ns = ns;
-        }
-        else {
-            console.warn(NAME+'definePlugin cannot create Plugin: invalid ns: '+ns);
-        }
-        return NewClass;
-    };
-
-    (function(FunctionPrototype) {
-        var originalSubClass = FunctionPrototype.subClass;
-        /**
-         * Returns a newly created class inheriting from this class
-         * using the given `constructor` with the
-         * prototypes listed in `prototypes` merged in.
-         *
-         *
-         * The newly created class has the `$$super` static property
-         * available to access all of is ancestor's instance methods.
-         *
-         * Further methods can be added via the [mergePrototypes](#method_mergePrototypes).
-         *
-         * @example
-         *
-         *  var Circle = Shape.subClass(
-         *      function (x, y, r) {
-         *          // arguments will automaticly be passed through to Shape's constructor
-         *          this.r = r;
-         *      },
-         *      {
-         *          area: function () {
-         *              return this.r * this.r * Math.PI;
-         *          }
-         *      }
-         *  );
-         *
-         * @method subClass
-         * @param ns {String} the namespace of the plugin
-         * @param [constructor] {Function} The function that will serve as constructor for the new class.
-         *        If `undefined` defaults to `NOOP`
-         * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
-         * @param [chainConstruct=true] {Boolean} Whether -during instance creation- to automaticly construct in the complete hierarchy with the given constructor arguments.
-         * @return the new class.
-         */
-        FunctionPrototype.subClass = function (ns, constructor, prototypes /*, chainConstruct */) {
-            var instance = this,
-                NewClass;
-            if (instance.$ns) {
-                NewClass = originalSubClass(constructor, prototypes);
-                NewClass.$ns = ns;
-                return NewClass;
-            }
-            else {
-                // Original subclassing
-                return originalSubClass.apply(instance, arguments);
-            }
-        };
-    }(Function.prototype));
-
-    Constrain = DOCUMENT.definePlugin('constrain', null, {
-            attrs: {
-                selector: 'string'
-            },
-            defaults: {
-                selector: 'window'
-            }
-        }
-    );
-
-    ElementPlugin = window._ITSAmodules.ElementPlugin = {
-        Base: Base,
-        Constrain: Constrain
-    };
-
-    return ElementPlugin;
-};
-},{"js-ext/extra/classes.js":33,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":54}],64:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":57}],66:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17056,7 +17439,7 @@ module.exports = function (window) {
 
 
 
-},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":54}],65:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":57}],67:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -21721,7 +22104,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":60,"./attribute-extractor.js":61,"./element-array.js":62,"./html-parser.js":66,"./node-parser.js":67,"./vdom-ns.js":68,"./vnode.js":69,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/promise.js":43,"js-ext/lib/string.js":44,"polyfill":54,"polyfill/extra/transition.js":46,"polyfill/extra/transitionend.js":47,"polyfill/extra/vendorCSS.js":48,"utils":57,"window-ext":71}],66:[function(require,module,exports){
+},{"../css/element.css":63,"./attribute-extractor.js":64,"./element-array.js":65,"./html-parser.js":68,"./node-parser.js":69,"./vdom-ns.js":70,"./vnode.js":71,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/promise.js":43,"js-ext/lib/string.js":44,"polyfill":57,"polyfill/extra/transition.js":49,"polyfill/extra/transitionend.js":50,"polyfill/extra/vendorCSS.js":51,"utils":60,"window-ext":73}],68:[function(require,module,exports){
 "use strict";
 
 /**
@@ -22092,7 +22475,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":61,"./vdom-ns.js":68,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":54}],67:[function(require,module,exports){
+},{"./attribute-extractor.js":64,"./vdom-ns.js":70,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":57}],69:[function(require,module,exports){
 "use strict";
 
 /**
@@ -22231,7 +22614,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":61,"./vdom-ns.js":68,"./vnode.js":69,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":54}],68:[function(require,module,exports){
+},{"./attribute-extractor.js":64,"./vdom-ns.js":70,"./vnode.js":71,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":57}],70:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -22462,7 +22845,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":54}],69:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":57}],71:[function(require,module,exports){
 "use strict";
 
 /**
@@ -25175,7 +25558,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":61,"./html-parser.js":66,"./vdom-ns.js":68,"js-ext/extra/hashmap.js":34,"js-ext/extra/lightmap.js":35,"js-ext/lib/array.js":39,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":54,"utils/lib/timers.js":59}],70:[function(require,module,exports){
+},{"./attribute-extractor.js":64,"./html-parser.js":68,"./vdom-ns.js":70,"js-ext/extra/hashmap.js":34,"js-ext/extra/lightmap.js":35,"js-ext/lib/array.js":39,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":57,"utils/lib/timers.js":62}],72:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -25191,16 +25574,13 @@ module.exports = function (window) {
         return window._ITSAmodules.VDOM; // VDOM was already created
     }
 
-    var DOCUMENT = window.document, vdom;
+    var DOCUMENT = window.document;
 
     if (DOCUMENT.doctype.name==='html') {
         require('./partials/extend-element.js')(window);
         require('./partials/extend-document.js')(window);
         // now parsing and virtualize the complete DOM:
         require('./partials/node-parser.js')(window)(DOCUMENT.documentElement);
-        vdom = {
-            Plugins: require('./partials/element-plugin.js')(window)
-        };
         // if there is any Element with inline `transform` that is not compatible with the current browser:
         // we can revert it into the right `transform`, because the vdom knows the right transform-name:
         DOCUMENT.getAll('[style*="transform:"]').forEach(function(node) {
@@ -25218,22 +25598,16 @@ module.exports = function (window) {
             head.vnode._cleanupStyle();
         }, 500);
     }
-    else {
-        // if no HTML, then return an empty Plugin-object
-        vdom = {Plugins: {}};
-    }
 
-    window._ITSAmodules.VDOM = vdom;
-
-    return vdom;
+    window._ITSAmodules.VDOM = true;
 };
-},{"./partials/element-plugin.js":63,"./partials/extend-document.js":64,"./partials/extend-element.js":65,"./partials/node-parser.js":67,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"utils/lib/timers.js":59}],71:[function(require,module,exports){
+},{"./partials/extend-document.js":66,"./partials/extend-element.js":67,"./partials/node-parser.js":69,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"utils/lib/timers.js":62}],73:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":72}],72:[function(require,module,exports){
+},{"./lib/sizes.js":74}],74:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -25337,7 +25711,7 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42}],73:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42}],75:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -25538,6 +25912,7 @@ process.chdir = function (dir) {
         dragdrop;
 
     require('event/extra/objectobserve.js')(window);
+    require('vdom')(window);
 
     /**
      * Reference to the `idGenerator` function in [utils](../modules/utils.html)
@@ -25546,8 +25921,7 @@ process.chdir = function (dir) {
      * @type function
      * @static
     */
-
-    ITSA.Plugins.merge(require('vdom')(window).Plugins);
+    ITSA.Plugins.merge(require('node-plugin')(window));
 
     ITSA.merge(require('utils'));
     ITSA.RESERVED_WORDS = require('js-ext/extra/reserved-words.js');
@@ -25597,4 +25971,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"css":9,"drag-drop":11,"event":26,"event-dom/extra/blurnode.js":15,"event-dom/extra/focusnode.js":16,"event-dom/extra/hover.js":17,"event-dom/extra/valuechange.js":18,"event-mobile":19,"event/extra/objectobserve.js":24,"focusmanager":27,"io/extra/io-cors-ie9.js":28,"io/extra/io-stream.js":29,"io/extra/io-transfer.js":30,"io/extra/io-xml.js":31,"js-ext/extra/reserved-words.js":36,"js-ext/js-ext.js":38,"node-win":undefined,"polyfill/polyfill.js":55,"useragent":56,"utils":57,"vdom":70,"window-ext":71}]},{},[]);
+},{"css":9,"drag-drop":11,"event":26,"event-dom/extra/blurnode.js":15,"event-dom/extra/focusnode.js":16,"event-dom/extra/hover.js":17,"event-dom/extra/valuechange.js":18,"event-mobile":19,"event/extra/objectobserve.js":24,"focusmanager":27,"io/extra/io-cors-ie9.js":28,"io/extra/io-stream.js":29,"io/extra/io-transfer.js":30,"io/extra/io-xml.js":31,"js-ext/extra/reserved-words.js":36,"js-ext/js-ext.js":38,"node-plugin":45,"node-win":undefined,"polyfill/polyfill.js":58,"useragent":59,"utils":60,"vdom":72,"window-ext":73}]},{},[]);

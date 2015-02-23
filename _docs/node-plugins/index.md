@@ -1,6 +1,5 @@
 ---
-module: vdom
-functionality: node-plugins
+module: node-plugin
 itsaclassname:
 version: 0.0.1
 modulesize: 1.69

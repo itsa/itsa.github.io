@@ -1,6 +1,5 @@
 ---
-module: vdom
-functionality: node-plugins
+module: node-plugin
 maintainer: Marco Asbreuk
 title: Simple draggable plugin
 intro: "An element can be made draggable by using <b>node.plugin(ITSA.Plugins.nodeDD)</b>. The plugin does nothing more than add the right attribute to the draggable Element, and it just works.</b>"
