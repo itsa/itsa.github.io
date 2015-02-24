@@ -429,7 +429,7 @@ module.exports = function (window) {
             PLUGIN_ATTRS.forEach(function(attribute) {
                 var data = &#x27;_del_&#x27;+attribute;
                 if (dragNode.getData(data)) {
-                    dragNode.removeAttr(attribute);
+                    delete dragNode.plugin.dd.model[attribute];
                     dragNode.removeData(data);
                 }
             });
@@ -771,7 +771,7 @@ module.exports = function (window) {
                     }
                 );
                 if (foundNode) {
-                    e.currentTarget = container;
+                    // e.currentTarget = container;
                     e.target = foundNode;
                     // Mark the delegated node, so it has the same style as [draggable]:
                     foundNode.setClass(DEL_DRAGGABLE);
@@ -781,7 +781,7 @@ module.exports = function (window) {
                         var attr = container.getAttr(attribute);
                         if (attr &amp;&amp; !foundNode.hasAttr(attribute)) {
                             foundNode.setData(&#x27;_del_&#x27;+attribute, attr);
-                            foundNode.setAttr(attribute, attr);
+                            foundNode.plugin.dd.model[attribute] = attr;
                         }
                     });
                     nodeTargetFn(e);
@@ -855,9 +855,12 @@ module.exports = function (window) {
     DD_Object = window._ITSAmodules.Drag = {
         DD: DD,
         Plugins: {
-            nodeDD: DOCUMENT.definePlugin(&#x27;dd&#x27;, null, {
+            DD: DOCUMENT.definePlugin(&#x27;dd&#x27;, null, {
                 attrs: {
-                    draggable: &#x27;string&#x27;
+                    draggable: &#x27;string&#x27;,
+                    constrain: &#x27;string&#x27;,
+                    handle: &#x27;string&#x27;,
+                    emitter: &#x27;string&#x27;
                 },
                 defaults: {
                     draggable: &#x27;true&#x27;

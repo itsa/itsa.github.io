@@ -46,7 +46,7 @@ intro: "By default, any item dropped inside a dropzone will be visible inside th
     .body-content.module p.spaced {
         margin-top: 290px;
     }
-    .dropzone-awake[dd-dropzone] {
+    .dropzone-awake[dz-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -54,15 +54,15 @@ intro: "By default, any item dropped inside a dropzone will be visible inside th
 Drag the items to the dropzones.
 
 <div class="base-container">
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container">drag me nr. 1</div>
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container">drag me nr. 2</div>
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container">drag me nr. 3</div>
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container">drag me nr. 4</div>
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container">drag me nr. 5</div>
+    <div class="container" plugin-dd="true" dd-dropzone=".drop-container">drag me nr. 1</div>
+    <div class="container" plugin-dd="true" dd-dropzone=".drop-container">drag me nr. 2</div>
+    <div class="container" plugin-dd="true" dd-dropzone=".drop-container">drag me nr. 3</div>
+    <div class="container" plugin-dd="true" dd-dropzone=".drop-container">drag me nr. 4</div>
+    <div class="container" plugin-dd="true" dd-dropzone=".drop-container">drag me nr. 5</div>
 </div>
 
-<div class="drop-container return" dd-dropzone="true"><b>accept and return</b><br></div>
-<div class="drop-container absorb" dd-dropzone="true"><b>accept and absorb</b><br></div>
+<div class="drop-container return" plugin-dz="true"><b>accept and return</b><br></div>
+<div class="drop-container absorb" plugin-dz="true"><b>accept and absorb</b><br></div>
 
 <p class="spaced">Code-example:</p>
 

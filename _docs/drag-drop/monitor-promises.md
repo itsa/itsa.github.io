@@ -44,7 +44,7 @@ intro: "Dragging can be monitored by listening to the 'dd' event and use the e.d
     .body-content.module p.spaced {
         margin-top: 25px;
     }
-    .dropzone-awake[dd-dropzone] {
+    .dropzone-awake[dz-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -52,8 +52,8 @@ intro: "Dragging can be monitored by listening to the 'dd' event and use the e.d
 Drag the item and watch for the events.
 
 
-<div id="dropzone-1" class="drop-container" dd-dropzone="true">dropzone</div>
-<div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me</div>
+<div id="dropzone-1" class="drop-container" plugin-dz="true">dropzone</div>
+<div class="container" plugin-dd="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me</div>
 
 <div class="monitor-container spaced"></div>
 <div class="monitor-container"></div>

@@ -34,7 +34,7 @@ intro: "Dragging can be monitored by listening to the 'dd' event and use the e.d
 
 Drag the item and watch for the events.
 
-<div class="container" dd-draggable="true" dd-effect-allowed="all">drag me</div>
+<div class="container" plugin-dd="true" dd-effect-allowed="all">drag me</div>
 <div class="monitor-container"></div>
 
 <p class="spaced">Code-example:</p>

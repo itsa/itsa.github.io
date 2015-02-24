@@ -23,7 +23,7 @@ intro: "Draggable elements can be setup using the attribute <b>dd-draggable=\"tr
 
 Drag the 2 rectangles. The first is constrained using html, the second is set up using javascript.
 
-<div class="container" dd-draggable="true"></div>
+<div class="container" plugin-dd="true"></div>
 
 <p class="spaced">Code-example:</p>
 

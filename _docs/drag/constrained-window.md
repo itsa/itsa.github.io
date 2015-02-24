@@ -23,8 +23,8 @@ intro: "Draggable elements can be constrained to the 'window' by setting the att
 
 Drag the 2 rectangles: they will be constrained inside the window. The first is constrained using html, the second is set up using javascript.
 
-<div class="container" dd-draggable="true" constrain-selector="window"></div>
-<div id="without" class="container" dd-draggable="true"></div>
+<div class="container" plugin-dd="true" plugin-constrain="true" constrain-selector="window"></div>
+<div id="without" class="container" plugin-dd="true"></div>
 
 <p class="spaced">Code-example:</p>
 

@@ -147,7 +147,7 @@ Which effects (`copy` or `move`) is allowed on the draggable HtmlElement.
 ###dd-emitter###
 Which emitterName the draggable HtmlElement should have (will overrule the `UI`-emitterName). The `emitterName` will be used within the events `emittername:dd-drag` and `emittername:dd-drop`
 
-###dd-dropzoneMovable###
+###dd-dropzone-movable###
 Whether the draggable HtmlElement can be moved inside a dropzone (once it gets there)
 
 
@@ -166,8 +166,8 @@ document.getElement('#someNode').plug(
         handle: 'h1',
         dropzone: true
         emitter: 'blueItem'
-        effectAllowed: 'move'
-        dropzoneMovable: true
+        'effect-allowed': 'move'
+        'dropzone-movable': true
     }
 );
 ```
@@ -302,7 +302,7 @@ You can overrule this behaviour by creating a before-subscriber at the dd-drop e
 * `ITSA.DD.restoreDraggables()` --> repositions all draggable items to their original position
 * `ITSA.DD_emitDropzoneDrop(e)` fire a dropzone-drop event
 
-Example:
+####Example:####
 ```js
 absorbItem = function(e) {
     e.preventDefault();

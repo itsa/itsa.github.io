@@ -2819,6 +2819,9 @@ var DRAG = 'drag',
     DRAGGABLE = DRAG+'gable',
     DEL_DRAGGABLE = 'del-'+DRAGGABLE,
     DD_MINUS = 'dd-',
+    DZ_MINUS = 'dz-',
+    PLUGIN_DD = 'plugin-dd',
+    DZ_DROPZONE = DZ_MINUS+DROPZONE,
     DD_DRAGGING_CLASS = DD_MINUS+DRAG+'ging',
     DD_MASTER_CLASS = DD_MINUS+'master',
     DD_HANDLE = DD_MINUS+'handle',
@@ -2855,7 +2858,7 @@ var DRAG = 'drag',
     PANMOVE = 'pan'+MOVE,
     DD_FAKE_MOUSEMOVE = DD_FAKE+MOUSEMOVE,
     UI = 'UI',
-    DROPZONE_BRACKETS = '[' + DD_DROPZONE + ']',
+    DROPZONE_BRACKETS = '[' + DZ_DROPZONE + ']',
     DD_EFFECT_ALLOWED = DD_MINUS+'effect-allowed',
     BORDER = 'border',
     WIDTH = 'width',
@@ -2869,7 +2872,7 @@ var DRAG = 'drag',
     ABSOLUTE = 'absolute',
     TRUE = 'true',
     DD_MINUSDRAGGABLE = DD_MINUS+DRAGGABLE,
-    PLUGIN_ATTRS = [DD_DROPZONE, CONSTRAIN_ATTR, DD_EMITTER, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE];
+    PLUGIN_ATTRS = [PLUGIN_DD, DD_DROPZONE, CONSTRAIN_ATTR, DD_EMITTER, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE];
 
 require('polyfill/polyfill-base.js');
 require('js-ext');
@@ -2951,7 +2954,7 @@ module.exports = function (window) {
                 PLUGIN_ATTRS.forEach(function(attribute) {
                     var data = '_del_'+attribute;
                     if (dragNode.getData(data)) {
-                        dragNode.removeAttr(attribute);
+                        delete dragNode.plugin.dd.model[attribute];
                         dragNode.removeData(data);
                     }
                 });
@@ -3080,12 +3083,11 @@ module.exports = function (window) {
                             overDropzone = true;
                             return;
                         }
-                        var dropzoneAccept = dropzone.getAttr(DD_DROPZONE) || '',
+                        var dropzoneAccept = dropzone.getAttr(DZ_DROPZONE) || '',
                             dropzoneMove = REGEXP_MOVE.test(dropzoneAccept),
                             dropzoneCopy = REGEXP_COPY.test(dropzoneAccept),
                             dropzoneDefDraggable = dragNode.getAttr(DD_DROPZONE),
                             dragOverPromise, dragOutEvent, effectAllowed, emitterAllowed, dropzoneEmitter, xMouseLast, yMouseLast, dropzoneAllowed;
-
                         // check if the mouse is inside the dropzone
                         // also check if the mouse is inside the dragged node: the dragged node might have been constrained
                         // and check if the dragged node is effectAllowed to go into the dropzone
@@ -3111,7 +3113,7 @@ module.exports = function (window) {
                                     function(e3) {
                                         var effectAllowed, dropzoneAccept, dropzoneMove, dropzoneCopy;
                                         if (e3.type===DD_FAKE_MOUSEMOVE) {
-                                            dropzoneAccept = dropzone.getAttr(DD_DROPZONE) || '';
+                                            dropzoneAccept = dropzone.getAttr(DZ_DROPZONE) || '';
                                             dropzoneMove = REGEXP_MOVE.test(dropzoneAccept);
                                             dropzoneCopy = REGEXP_COPY.test(dropzoneAccept);
                                             effectAllowed = (!dropzoneMove && !dropzoneCopy) || (dropzoneCopy && (dropEffect===COPY)) || (dropzoneMove && (dropEffect===MOVE));
@@ -3231,7 +3233,7 @@ module.exports = function (window) {
                 dropzoneIsDelegated = dropzoneDelegatedDraggable && (dropzoneNode.getAttr(DD_MINUSDRAGGABLE)!=='true');
                 copyToDropzone = function(nodeSource, nodeDrag, shiftX, shiftY) {
                     if (delegatedDragging) {
-                        dropzoneIsDelegated || nodeDrag.setAttr(DD_MINUSDRAGGABLE, TRUE);
+                        dropzoneIsDelegated || (nodeDrag.plugin.dd.model[DD_MINUSDRAGGABLE]=TRUE);
                         nodeDrag.removeClass(DEL_DRAGGABLE);
                     }
                     PLUGIN_ATTRS.forEach(function(attribute) {
@@ -3239,12 +3241,12 @@ module.exports = function (window) {
                             attr = sourceNode.getData(data);
                         if (attr) {
                             if (dropzoneIsDelegated) {
-                                nodeDrag.removeAttr(attribute);
+                                delete nodeDrag.plugin.dd.model[attribute];
                             }
                             else {
-                                nodeDrag.setAttr(attribute, attr);
+                                nodeDrag.plugin.dd.model[attribute] = attr;
                             }
-                            nodeSource.removeAttr(attribute);
+                            delete nodeSource.plugin.dd.model[attribute];
                             nodeSource.removeData(data);
                             nodeDrag.removeData(data);
                         }
@@ -3254,12 +3256,15 @@ module.exports = function (window) {
                     nodeSource.removeClass(DD_SOURCE_ISCOPIED_CLASS);
                     nodeDrag.setXY(dragNodeX+shiftX, dragNodeY+shiftY, constrainRectangle, true);
                     // make the new HtmlElement non-copyable: it only can be replaced inside its dropzone
-                    dropzoneIsDelegated || nodeDrag.setAttr(DD_EFFECT_ALLOWED, MOVE).setAttr(DD_DROPZONE_MOVABLE, TRUE); // to make moving inside the dropzone possible without return to its startposition
+                    if (!dropzoneIsDelegated) {
+                        nodeDrag.plugin.dd.model[DD_EFFECT_ALLOWED] = MOVE;
+                        nodeDrag.plugin.dd.model[DD_DROPZONE_MOVABLE] = TRUE;
+                    }
                 };
                 moveToDropzone = function(nodeSource, nodeDrag, shiftX, shiftY) {
                     nodeSource.setInlineStyle(POSITION, ABSOLUTE);
                     if (delegatedDragging) {
-                        dropzoneIsDelegated || nodeSource.setAttr(DD_MINUSDRAGGABLE, TRUE);
+                        dropzoneIsDelegated || (nodeSource.plugin.dd.model[DD_MINUSDRAGGABLE]=TRUE);
                         nodeSource.removeClass(DEL_DRAGGABLE);
                     }
                     PLUGIN_ATTRS.forEach(function(attribute) {
@@ -3267,10 +3272,10 @@ module.exports = function (window) {
                             attr = sourceNode.getData(data);
                         if (attr) {
                             if (dropzoneIsDelegated) {
-                                nodeSource.removeAttr(attribute);
+                                delete nodeSource.plugin.dd.model[attribute];
                             }
                             else {
-                                nodeSource.setAttr(attribute, attr);
+                                nodeSource.plugin.dd.model[attribute] = attr;
                             }
                             nodeSource.removeData(data);
                         }
@@ -3278,7 +3283,10 @@ module.exports = function (window) {
                     dropzoneNode.append(nodeSource);
                     nodeSource.setXY(dragNodeX+shiftX, dragNodeY+shiftY, constrainRectangle, true);
                     // make the new HtmlElement non-copyable: it only can be replaced inside its dropzone
-                    dropzoneIsDelegated || nodeSource.setAttr(DD_EFFECT_ALLOWED, MOVE).setAttr(DD_DROPZONE_MOVABLE, TRUE); // to make moving inside the dropzone possible without return to its startposition
+                    if (!dropzoneIsDelegated) {
+                        nodeDrag.plugin.dd.model[DD_EFFECT_ALLOWED] = MOVE;
+                        nodeDrag.plugin.dd.model[DD_DROPZONE_MOVABLE] = TRUE;
+                    }
                     nodeSource.removeClass(DD_HIDDEN_SOURCE_CLASS);
                     nodeDrag.remove();
                 };
@@ -3333,10 +3341,10 @@ module.exports = function (window) {
                                 attr = dragNode.getData(data);
                             if (attr) {
                                 if (dropzoneIsDelegated) {
-                                    nodeSource.removeAttr(attribute);
+                                    delete nodeSource.plugin.dd.model[attribute];
                                 }
                                 else {
-                                    nodeSource.setAttr(attribute, attr);
+                                    nodeSource.plugin.dd.model[attribute] = attr;
                                 }
                                 nodeSource.removeData(data);
                             }
@@ -3451,8 +3459,8 @@ module.exports = function (window) {
                         PLUGIN_ATTRS.forEach(function(attribute) {
                             var data = '_del_'+attribute;
                             if (sourceNode.getData(data)) {
-                                sourceNode.removeAttr(attribute)
-                                          .removeData(data);
+                                sourceNode.removeData(data);
+                                delete sourceNode.plugin.dd.model[attribute];
                             }
                         });
                     }
@@ -3706,11 +3714,24 @@ module.exports = function (window) {
 
     };
 
+    DragModule.DD.merge(DD, {force: true});
+    DragModule.Plugins.DD.mergePrototypes({
+        attrs: {
+            draggable: 'string',
+            constrain: 'string',
+            handle: 'string',
+            emitter: 'string',
+            'effect-allowed': 'string',
+            'dropzone-movable': 'string',
+            dropzone: 'string'
+        }
+    }, true);
+
     DD_Object = window._ITSAmodules.DragDrop = {
-        DD: DragModule.DD.merge(DD, {force: true}),
+        DD: DragModule.DD,
         Plugins: {
-            nodeDD: DragModule.Plugins.nodeDD,
-            nodeDropzone: DOCUMENT.definePlugin('dd', null, {
+            DD: DragModule.Plugins.DD,
+            Dropzone: DOCUMENT.definePlugin('dz', null, {
                 attrs: {
                     dropzone: 'string'
                 },
@@ -3946,7 +3967,7 @@ module.exports = function (window) {
             PLUGIN_ATTRS.forEach(function(attribute) {
                 var data = '_del_'+attribute;
                 if (dragNode.getData(data)) {
-                    dragNode.removeAttr(attribute);
+                    delete dragNode.plugin.dd.model[attribute];
                     dragNode.removeData(data);
                 }
             });
@@ -4288,7 +4309,7 @@ module.exports = function (window) {
                     }
                 );
                 if (foundNode) {
-                    e.currentTarget = container;
+                    // e.currentTarget = container;
                     e.target = foundNode;
                     // Mark the delegated node, so it has the same style as [draggable]:
                     foundNode.setClass(DEL_DRAGGABLE);
@@ -4298,7 +4319,7 @@ module.exports = function (window) {
                         var attr = container.getAttr(attribute);
                         if (attr && !foundNode.hasAttr(attribute)) {
                             foundNode.setData('_del_'+attribute, attr);
-                            foundNode.setAttr(attribute, attr);
+                            foundNode.plugin.dd.model[attribute] = attr;
                         }
                     });
                     nodeTargetFn(e);
@@ -4372,9 +4393,12 @@ module.exports = function (window) {
     DD_Object = window._ITSAmodules.Drag = {
         DD: DD,
         Plugins: {
-            nodeDD: DOCUMENT.definePlugin('dd', null, {
+            DD: DOCUMENT.definePlugin('dd', null, {
                 attrs: {
-                    draggable: 'string'
+                    draggable: 'string',
+                    constrain: 'string',
+                    handle: 'string',
+                    emitter: 'string'
                 },
                 defaults: {
                     draggable: 'true'
@@ -14157,7 +14181,19 @@ module.exports = function (window) {
 "use strict";
 module.exports = function (window) {
     require('./element-plugin.js')(window);
-    return window.document.definePlugin('constrain', null, {
+
+    var createHashMap = require('js-ext/extra/hashmap.js').createMap,
+        PluginConstrain;
+
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
+
+/*jshint boss:true */
+    if (PluginConstrain=window._ITSAmodules.PluginConstrain) {
+/*jshint boss:false */
+        return PluginConstrain;
+    }
+
+    window._ITSAmodules.PluginConstrain = PluginConstrain = window.document.definePlugin('constrain', null, {
             attrs: {
                 selector: 'string'
             },
@@ -14166,8 +14202,10 @@ module.exports = function (window) {
             }
         }
     );
+
+    return PluginConstrain;
 };
-},{"./element-plugin.js":47}],47:[function(require,module,exports){
+},{"./element-plugin.js":47,"js-ext/extra/hashmap.js":34}],47:[function(require,module,exports){
 "use strict";
 
 /**
@@ -14291,7 +14329,7 @@ module.exports = function (window) {
         // asynchroniously we check all current elements and render when needed:
         var ns = NewClass.prototype.$ns;
         asyncSilent(function() {
-            var elements = DOCUMENT.getAll('plugin-'+ns+'="true"'),
+            var elements = DOCUMENT.getAll('[plugin-'+ns+'="true"]'),
                 len = elements.length,
                 element, i;
             for (i=0; i<len; i++) {
@@ -14305,7 +14343,7 @@ module.exports = function (window) {
         // asynchroniously we check all current elements and render when needed:
         var ns = NewClass.prototype.$ns;
         asyncSilent(function() {
-            var elements = DOCUMENT.getAll('plugin-'+ns+'="true"'),
+            var elements = DOCUMENT.getAll('[plugin-'+ns+'="true"]'),
                 len = elements.length,
                 element, i;
             for (i=0; i<len; i++) {
@@ -14319,11 +14357,12 @@ module.exports = function (window) {
         var host = plugin.host,
             attrs = plugin.attrs,
             defaults = plugin.defaults,
+            ns = plugin.$ns + '-',
             attrValue, validValue;
         config || (config={});
         // read the current ns-attributes on the node, overrule them with config and set the new attributes
         attrs.each(function(value, key) {
-            attrValue = config[key] || host.getAttr(key) || defaults[key];
+            attrValue = config[key] || host.getAttr(ns+key) || defaults[key];
             if (attrValue) {
                 switch (value.toLowerCase()) {
                     case 'boolean':
@@ -14408,6 +14447,8 @@ module.exports = function (window) {
 
     // extend window.Element:
     window.Element && (function(ElementPrototype) {
+        ElementPrototype.plugin = {};
+
        /**
         * Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.
         *
@@ -14462,11 +14503,13 @@ module.exports = function (window) {
             var instance = this,
                 ns = instance.$ns;
             instance.host = hostElement;
+            hostElement.plugin[ns] = instance;
             instance.model = Object.isObject(model) ? model : {};
-            attrsToModel(hostElement, instance);
+            attrsToModel(instance, config);
             hostElement.setAttr('plugin-'+ns, 'true', true);
             syncPlugin(instance);
             autoRefreshPlugin(instance);
+            (hostElement.getAttr(ns+'-ready')==='true') || instance.render();
             hostElement.setAttr(ns+'-ready', 'true', true);
         },
         {
@@ -14561,6 +14604,9 @@ module.exports = function (window) {
                         }
                     });
                 }
+            },
+            render: function() {
+                // defaults to NOOP
             },
             sync: function() {
                 // defaults to NOOP
@@ -14660,9 +14706,7 @@ module.exports = function (window) {
             }
             else {
                 console.log(NAME+'definePlugin');
-                NewClass = Base.subClass(constructor, prototypes).mergePrototypes({$ns: ns}, true);
-                window._ITSAPlugins[ns] = NewClass;
-                pluginDOM(NewClass);
+                NewClass = Base.subClass(ns, constructor, prototypes).mergePrototypes({$ns: ns}, true);
             }
         }
         else {
@@ -14717,9 +14761,9 @@ module.exports = function (window) {
                         console.warn(NAME+'definePlugin cannot redefine Plugin '+ns+' --> already exists');
                     }
                     else {
-                        NewClass = originalSubClass(constructor, prototypes).mergePrototypes({$ns: ns}, true);
+                        NewClass = originalSubClass.call(instance, constructor, prototypes).mergePrototypes({$ns: ns}, true);
                         window._ITSAPlugins[ns] = NewClass;
-                        pluginDOM(ns);
+                        pluginDOM(NewClass);
                     }
                     return NewClass;
                 }
@@ -18513,6 +18557,15 @@ module.exports = function (window) {
                         targetVNode._data.merge(srcVNode._data);
                     }
                 },
+                unrenderPlugins = function(targetVNode) {
+                    targetVNode.attrs && targetVNode.attrs.each(function(value, key) {
+                        var plugin;
+                        if (key.substr(0, 7)==='plugin-') {
+                            plugin = key.substr(7);
+                            targetVNode.domNode.removeAttr(plugin+'-ready');
+                        }
+                    });
+                },
                 cloneDeepData = function(srcVNode, targetVNode) {
                     var srcVChildren = srcVNode.vChildren,
                         targetVChildren = targetVNode.vChildren,
@@ -18528,7 +18581,12 @@ module.exports = function (window) {
             cloned.vnode = domNodeToVNode(cloned);
             cloneData(vnode, cloned.vnode);
             // if deep, then we need to merge _data of all deeper nodes
-            deep && vnode.hasVChildren() && cloneDeepData(vnode, cloned.vnode);
+            if (deep) {
+                vnode.hasVChildren() && cloneDeepData(vnode, cloned.vnode);
+            }
+            else {
+                unrenderPlugins(cloned.vnode);
+            }
             return cloned;
         };
 

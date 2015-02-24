@@ -44,7 +44,7 @@ intro: "Multiple items can be dragged at once by specifying <b>e.relatives</b> i
 
 Drag the items to the dropzones. Use the Ctrl/Cmd button to select multiple items.
 
-<div class="base-container" dd-draggable=".container" dd-effect-allowed="all">
+<div class="base-container" plugin-dd="true" dd-draggable=".container">
     <div class="container">drag me nr. 1</div>
     <div class="container">drag me nr. 2</div>
     <div class="container">drag me nr. 3</div>

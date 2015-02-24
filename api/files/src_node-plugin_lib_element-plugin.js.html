@@ -333,7 +333,7 @@ module.exports = function (window) {
         // asynchroniously we check all current elements and render when needed:
         var ns = NewClass.prototype.$ns;
         asyncSilent(function() {
-            var elements = DOCUMENT.getAll(&#x27;plugin-&#x27;+ns+&#x27;=&quot;true&quot;&#x27;),
+            var elements = DOCUMENT.getAll(&#x27;[plugin-&#x27;+ns+&#x27;=&quot;true&quot;]&#x27;),
                 len = elements.length,
                 element, i;
             for (i=0; i&lt;len; i++) {
@@ -347,7 +347,7 @@ module.exports = function (window) {
         // asynchroniously we check all current elements and render when needed:
         var ns = NewClass.prototype.$ns;
         asyncSilent(function() {
-            var elements = DOCUMENT.getAll(&#x27;plugin-&#x27;+ns+&#x27;=&quot;true&quot;&#x27;),
+            var elements = DOCUMENT.getAll(&#x27;[plugin-&#x27;+ns+&#x27;=&quot;true&quot;]&#x27;),
                 len = elements.length,
                 element, i;
             for (i=0; i&lt;len; i++) {
@@ -361,11 +361,12 @@ module.exports = function (window) {
         var host = plugin.host,
             attrs = plugin.attrs,
             defaults = plugin.defaults,
+            ns = plugin.$ns + &#x27;-&#x27;,
             attrValue, validValue;
         config || (config={});
         // read the current ns-attributes on the node, overrule them with config and set the new attributes
         attrs.each(function(value, key) {
-            attrValue = config[key] || host.getAttr(key) || defaults[key];
+            attrValue = config[key] || host.getAttr(ns+key) || defaults[key];
             if (attrValue) {
                 switch (value.toLowerCase()) {
                     case &#x27;boolean&#x27;:
@@ -450,6 +451,8 @@ module.exports = function (window) {
 
     // extend window.Element:
     window.Element &amp;&amp; (function(ElementPrototype) {
+        ElementPrototype.plugin = {};
+
        /**
         * Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.
         *
@@ -504,11 +507,13 @@ module.exports = function (window) {
             var instance = this,
                 ns = instance.$ns;
             instance.host = hostElement;
+            hostElement.plugin[ns] = instance;
             instance.model = Object.isObject(model) ? model : {};
-            attrsToModel(hostElement, instance);
+            attrsToModel(instance, config);
             hostElement.setAttr(&#x27;plugin-&#x27;+ns, &#x27;true&#x27;, true);
             syncPlugin(instance);
             autoRefreshPlugin(instance);
+            (hostElement.getAttr(ns+&#x27;-ready&#x27;)===&#x27;true&#x27;) || instance.render();
             hostElement.setAttr(ns+&#x27;-ready&#x27;, &#x27;true&#x27;, true);
         },
         {
@@ -603,6 +608,9 @@ module.exports = function (window) {
                         }
                     });
                 }
+            },
+            render: function() {
+                // defaults to NOOP
             },
             sync: function() {
                 // defaults to NOOP
@@ -702,9 +710,7 @@ module.exports = function (window) {
             }
             else {
                 console.log(NAME+&#x27;definePlugin&#x27;);
-                NewClass = Base.subClass(constructor, prototypes).mergePrototypes({$ns: ns}, true);
-                window._ITSAPlugins[ns] = NewClass;
-                pluginDOM(NewClass);
+                NewClass = Base.subClass(ns, constructor, prototypes).mergePrototypes({$ns: ns}, true);
             }
         }
         else {
@@ -759,9 +765,9 @@ module.exports = function (window) {
                         console.warn(NAME+&#x27;definePlugin cannot redefine Plugin &#x27;+ns+&#x27; --&gt; already exists&#x27;);
                     }
                     else {
-                        NewClass = originalSubClass(constructor, prototypes).mergePrototypes({$ns: ns}, true);
+                        NewClass = originalSubClass.call(instance, constructor, prototypes).mergePrototypes({$ns: ns}, true);
                         window._ITSAPlugins[ns] = NewClass;
-                        pluginDOM(ns);
+                        pluginDOM(NewClass);
                     }
                     return NewClass;
                 }

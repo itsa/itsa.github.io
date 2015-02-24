@@ -28,8 +28,8 @@ intro: "Draggable elements can be constrained by setting the attribute <b>constr
 Drag the 2 rectangles: they will be constrained to their container. The first is constrained using html, the second is set up using javascript.
 
 <div class="base-container">
-    <div class="container" dd-draggable="true" constrain-selector=".base-container"></div>
-    <div id="without" class="container" dd-draggable="true"></div>
+    <div class="container" plugin-dd="true" plugin-constrain="true" constrain-selector=".base-container"></div>
+    <div id="without" class="container" plugin-dd="true"></div>
 </div>
 
 <p class="spaced">Code-example:</p>
