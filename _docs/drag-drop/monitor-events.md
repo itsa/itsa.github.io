@@ -61,7 +61,7 @@ Drag the item and watch for the events.
 
 ```css
 <style type="text/css">
-    .dropzone-awake[dd-dropzone] {
+    .dropzone-awake[dz-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -69,8 +69,8 @@ Drag the item and watch for the events.
 
 ```html
 <body>
-    <div id="dropzone-1" class="drop-container" dd-dropzone="true">dropzone</div>
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me</div>
+    <div id="dropzone-1" class="drop-container" plugin-dz="true">dropzone</div>
+    <div class="container" plugin-dd="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me</div>
     <div class="monitor-container"></div>
     <div class="monitor-container dz"></div>
 </body>
@@ -119,9 +119,9 @@ Drag the item and watch for the events.
     //=======================================================================
 
     ITSA.Event.after(['dropzone-over', 'dropzone-out', 'dropzone-drop'], function(e) {
-        var dropId = e.dropTarget.getId();
-        monitorContDropzone.append(((e.type==='dd-drop') ? 'after ' : '')+e.type+' --> '+dropId+'<br>');
+        monitorContDropzone.append(((e.type==='dd-drop') ? 'after ' : '')+e.type+' --> '+e.target.getId()+'<br>');
     });
+
 </script>
 ```
 

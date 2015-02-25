@@ -29,7 +29,7 @@ Drag the 2 rectangles. The first is constrained using html, the second is set up
 
 ```html
 <body>
-    <div class="container" dd-draggable="true"></div>
+    <div class="container" plugin-dd="true"></div>
 </body>
 ```
 

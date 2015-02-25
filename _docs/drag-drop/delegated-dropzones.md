@@ -84,23 +84,23 @@ Drag the items, they are all draggable and can be moved or copied into any dropz
         float: left;
         position: relative;
     }
-    .base-container div:not(.dd-dragging) {
+    .base-container div:not(.dz-dragging) {
         cursor: default;
     }
 </style>
 ```
 ```html
 <body>
-    <div class="drop-container" dd-draggable="div" dd-dropzone=".drop-container" dd-effect-allowed="all" dropzone="true">
+    <div class="drop-container" plugin-dd="true" dd-draggable="div" dd-dropzone=".drop-container" dd-effect-allowed="all" plugin-dz="true">
         <div>drag me</div>
         <div>drag me</div>
         <div>drag me</div>
         <div>drag me</div>
     </div>
 
-    <div class="drop-container" dd-draggable="div" dd-dropzone=".drop-container" dd-effect-allowed="all" dropzone="true"></div>
-    <div class="drop-container" dd-draggable="div" dd-dropzone=".drop-container" dd-effect-allowed="all" dropzone="true"></div>
-    <div class="drop-container" dd-draggable="div" dd-dropzone=".drop-container" dd-effect-allowed="all" dropzone="true"></div>
+    <div class="drop-container" plugin-dd="true" dd-draggable="div" dd-dropzone=".drop-container" dd-effect-allowed="all" plugin-dz="true"></div>
+    <div class="drop-container" plugin-dd="true" dd-draggable="div" dd-dropzone=".drop-container" dd-effect-allowed="all" plugin-dz="true"></div>
+    <div class="drop-container" plugin-dd="true" dd-draggable="div" dd-dropzone=".drop-container" dd-effect-allowed="all" plugin-dz="true"></div>
 </body>
 ```
 

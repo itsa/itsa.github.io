@@ -30,8 +30,8 @@ Drag the 2 rectangles: they will be constrained inside the window. The first is 
 
 ```html
 <body>
-    <div class="container" dd-draggable="true" constrain-selector="window"></div>
-    <div id="without" class="container" dd-draggable="true"></div>
+    <div class="container" plugin-dd="true" plugin-constrain="true" constrain-selector="window"></div>
+    <div id="without" class="container" plugin-dd="true"></div>
 </body>
 ```
 

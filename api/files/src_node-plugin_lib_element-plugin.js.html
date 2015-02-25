@@ -229,6 +229,7 @@
 
 require(&#x27;js-ext/lib/object.js&#x27;);
 require(&#x27;js-ext/lib/string.js&#x27;);
+require(&#x27;js-ext/lib/promise.js&#x27;);
 require(&#x27;polyfill&#x27;);
 require(&#x27;event/extra/timer-finalize.js&#x27;);
 
@@ -412,7 +413,9 @@ module.exports = function (window) {
         attrs.each(function(value, key) {
             model[key] &amp;&amp; (newAttrs[newAttrs.length] = {name: ns+&#x27;-&#x27;+fromCamelCase(key), value: model[key]});
         });
-        (newAttrs.length&gt;0) &amp;&amp; domElement.setAttrs(newAttrs, true);
+        if (newAttrs.length&gt;0) {
+            domElement.setAttrs(newAttrs, true);
+        }
     };
 
     syncPlugin = function(plugin) {
@@ -450,9 +453,7 @@ module.exports = function (window) {
     };
 
     // extend window.Element:
-    window.Element &amp;&amp; (function(ElementPrototype) {
-        ElementPrototype.plugin = {};
-
+    window.Element &amp;&amp; (function(HTMLElementPrototype) {
        /**
         * Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.
         *
@@ -461,8 +462,24 @@ module.exports = function (window) {
         * @return {Boolean} whether the plugin is plugged in
         * @since 0.0.1
         */
-        ElementPrototype.isPlugged = function(PluginClass) {
-            return !!this.ns &amp;&amp; !!this.ns[PluginClass.prototype.$ns];
+        HTMLElementPrototype.isPlugged = function(PluginClass) {
+            return !!this.plugin &amp;&amp; !!this.plugin[PluginClass.prototype.$ns];
+        };
+
+       /**
+        * Checks whether the plugin is ready to be used.
+        *
+        * @method pluginReady
+        * @param PluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
+        * @return {Promise} whether the plugin is plugged in
+        * @since 0.0.1
+        */
+        HTMLElementPrototype.pluginReady = function(PluginClass) {
+            var instance = this,
+                ns = PluginClass.prototype.$ns;
+            instance._pluginReadyInfo || (instance._pluginReadyInfo={});
+            instance._pluginReadyInfo[ns] || (instance._pluginReadyInfo[ns]=window.Promise.manage());
+            return instance._pluginReadyInfo[ns];
         };
 
        /**
@@ -475,14 +492,15 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.plug = function(PluginClass, config, model) {
+        HTMLElementPrototype.plug = function(PluginClass, config, model) {
             var instance = this;
             if (!instance.isPlugged(PluginClass)) {
-                instance.ns || Object.protectedProp(instance, &#x27;ns&#x27;, {});
-                instance.ns[PluginClass.prototype.$ns] = new PluginClass(instance, config, model);
+                instance.plugin || Object.protectedProp(instance, &#x27;plugin&#x27;, {});
+                instance.plugin[PluginClass.prototype.$ns] = new PluginClass(instance, config, model);
             }
             else {
-                console.warn(&#x27;ElementPlugin &#x27;+PluginClass.prototype.$ns+&#x27; already plugged in&#x27;);
+                console.info(&#x27;ElementPlugin &#x27;+PluginClass.prototype.$ns+&#x27; already plugged in&#x27;);
+                model &amp;&amp; instance.plugin[PluginClass.prototype.$ns].bindModel(model);
             }
             return instance;
         };
@@ -495,26 +513,25 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.unplug = function(PluginClass) {
+        HTMLElementPrototype.unplug = function(PluginClass) {
             var instance = this;
-            instance.isPlugged(PluginClass) &amp;&amp; instance.ns[PluginClass.prototype.$ns].destroy();
+            if (instance.isPlugged(PluginClass)) {
+                instance.plugin[PluginClass.prototype.$ns].destroy();
+            }
             return instance;
         };
-    }(window.Element.prototype));
+    }(window.HTMLElement.prototype));
 
     Base = Classes.createClass(
         function (hostElement, config, model) {
-            var instance = this,
-                ns = instance.$ns;
+            var instance = this;
             instance.host = hostElement;
-            hostElement.plugin[ns] = instance;
-            instance.model = Object.isObject(model) ? model : {};
+            instance.model = {};
             attrsToModel(instance, config);
-            hostElement.setAttr(&#x27;plugin-&#x27;+ns, &#x27;true&#x27;, true);
+            hostElement.setAttr(&#x27;plugin-&#x27;+instance.$ns, &#x27;true&#x27;, true);
+            model &amp;&amp; instance.bindModel(model, true);
             syncPlugin(instance);
             autoRefreshPlugin(instance);
-            (hostElement.getAttr(ns+&#x27;-ready&#x27;)===&#x27;true&#x27;) || instance.render();
-            hostElement.setAttr(ns+&#x27;-ready&#x27;, &#x27;true&#x27;, true);
         },
         {
             _DELAYED_FINALIZE_EVENTS: DEFAULT_DELAYED_FINALIZE_EVENTS.shallowClone(),
@@ -536,8 +553,8 @@ module.exports = function (window) {
                 console.log(NAME+&#x27;bindModel&#x27;);
                 var instance = this,
                     observer;
-                if (instance.model!==model) {
-                    instance.removeAttr(&#x27;bound-model&#x27;);
+                if (Object.isObject(model) &amp;&amp; (instance.model!==model)) {
+                    instance.host.removeAttr(&#x27;bound-model&#x27;);
                     if (NATIVE_OBJECT_OBSERVE) {
                         observer = instance._observer;
                         observer &amp;&amp; Object.unobserve(instance.model, observer);
@@ -553,6 +570,18 @@ module.exports = function (window) {
                     }
                     syncPlugin(instance);
                 }
+            },
+            afterInit: function() {
+                var instance = this,
+                    ns = instance.$ns,
+                    host = instance.host;
+                if (host.getAttr(ns+&#x27;-ready&#x27;)!==&#x27;true&#x27;) {
+                    instance.render();
+                    host.setAttr(ns+&#x27;-ready&#x27;, &#x27;true&#x27;, true);
+                }
+                host._pluginReadyInfo || (host._pluginReadyInfo={});
+                host._pluginReadyInfo[ns] || (host._pluginReadyInfo[ns]=window.Promise.manage());
+                host._pluginReadyInfo[ns].fulfill();
             },
            /**
             * Defines which domevents should lead to a direct sync by the Event-finalizer.
@@ -637,9 +666,9 @@ module.exports = function (window) {
                         host.removeAttr(ns+&#x27;-&#x27;+fromCamelCase(key), true);
                     }
                 );
-                host.setAttr(&#x27;plugin-&#x27;+ns, true);
-                host.setAttr(ns+&#x27;-ready&#x27;, true);
-                delete host.ns[instance.$ns];
+                host.removeAttr(&#x27;plugin-&#x27;+ns, true);
+                host.removeAttr(ns+&#x27;-ready&#x27;, true);
+                delete host.plugin[ns];
             },
             $ns: &#x27;undefined-namespace&#x27;
         }
@@ -765,6 +794,7 @@ module.exports = function (window) {
                         console.warn(NAME+&#x27;definePlugin cannot redefine Plugin &#x27;+ns+&#x27; --&gt; already exists&#x27;);
                     }
                     else {
+                        // change the constructor, so that it will end by calling &#x60;_finishInit&#x60;
                         NewClass = originalSubClass.call(instance, constructor, prototypes).mergePrototypes({$ns: ns}, true);
                         window._ITSAPlugins[ns] = NewClass;
                         pluginDOM(NewClass);

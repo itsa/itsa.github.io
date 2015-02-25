@@ -80,7 +80,7 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
         float: left;
         position: relative;
     }
-    .dropzone-awake[dd-dropzone] {
+    .dropzone-awake[dz-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -88,15 +88,15 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
 
 ```html
 <body>
-    <div class="base-container" dd-draggable=".container" dd-dropzone=".drop-container" >
-        <div dd-effect-allowed="copy">copyable</div>
-        <div dd-effect-allowed="move">movable</div>
-        <div dd-effect-allowed="all">movable and optional copyable</div>
+    <div class="base-container" plugin-dd="true" dd-draggable=".container" dd-dropzone=".drop-container" >
+        <div class="container" dd-effect-allowed="copy">copyable</div>
+        <div class="container" dd-effect-allowed="move">movable</div>
+        <div class="container" dd-effect-allowed="all">movable and optional copyable</div>
     </div>
 
-    <div class="drop-container" dd-dropzone="copy">only copied items</div>
-    <div class="drop-container" dd-dropzone="move">only moved items</div>
-    <div class="drop-container" dd-dropzone="true">copied and moved items</div>
+    <div class="drop-container" plugin-dz="true" dz-dropzone="copy">only copied items</div>
+    <div class="drop-container" plugin-dz="true" dz-dropzone="move">only moved items</div>
+    <div class="drop-container" plugin-dz="true" dz-dropzone="true">copied and moved items</div>
 </body>
 ```
 

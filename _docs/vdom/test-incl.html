@@ -23,20 +23,30 @@
             width: 100px;
             border: solid 1px #000;
         }
+        #i1, #i2 {
+            width: 200px;
+            height: 100px;
+            border: solid 1px #000;
+            display: block;
+        }
     </style>
 </head>
 
 <body>
 
-    <i-test id="btncontainer"><!-- here & is <div>some</div> comment --></i-test>
+    <div id="i1"><button id="btn">Hey</button></div>
+    <div id="i2"></div>
 
     <script src="../../dist/itsabuild.js"></script>
     <script>
         var ITSA = require('itsa'),
-            container = document.getElement('#btncontainer');
-        console.warn(container.vnode.vChildNodes.length);
-        console.warn(container.getOuterHTML());
-        container.append('<xscript>// test</xscript>');
+            button = document.getElement('#btn');
+        var newnode = document.getElement('#i2').append(button);
+        console.info(document.getElement('#btn')===button);
+        console.info(newnode===button);
+        ITSA.later(function() {
+            console.info(document.getElement('#btn')===button);
+        }, 1000);
     </script>
 
 </body>

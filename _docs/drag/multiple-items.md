@@ -74,7 +74,7 @@ Drag the items to the dropzones. Use the Ctrl/Cmd button to select multiple item
 
 ```html
 <body>
-<div class="base-container" dd-draggable=".container" dd-effect-allowed="all">
+    <div class="base-container" plugin-dd="true" dd-draggable=".container">
         <div class="container">drag me nr. 1</div>
         <div class="container">drag me nr. 2</div>
         <div class="container">drag me nr. 3</div>

@@ -2827,7 +2827,8 @@ var DRAG = 'drag',
     DD_HANDLE = DD_MINUS+'handle',
     DD_SOURCE_ISCOPIED_CLASS = DD_MINUS+COPY+SOURCE,
     DD_COPIED_CLASS = DD_MINUS+COPY,
-    DD_DROPZONE_MOVABLE = DD_MINUS+DROPZONE+'-movable',
+    DROPZONE_MOVABLE = DROPZONE+'-movable',
+    DD_DROPZONE_MOVABLE = DD_MINUS+DROPZONE_MOVABLE,
     CONSTRAIN_ATTR = 'constrain-selector',
     MOUSE = 'mouse',
     DROPZONE_OVER = DROPZONE+'-over',
@@ -2859,7 +2860,8 @@ var DRAG = 'drag',
     DD_FAKE_MOUSEMOVE = DD_FAKE+MOUSEMOVE,
     UI = 'UI',
     DROPZONE_BRACKETS = '[' + DZ_DROPZONE + ']',
-    DD_EFFECT_ALLOWED = DD_MINUS+'effect-allowed',
+    EFFECT_ALLOWED = 'effect-allowed',
+    DD_EFFECT_ALLOWED = DD_MINUS+EFFECT_ALLOWED,
     BORDER = 'border',
     WIDTH = 'width',
     BORDER_LEFT_WIDTH = BORDER+'-left-'+WIDTH,
@@ -3233,7 +3235,7 @@ module.exports = function (window) {
                 dropzoneIsDelegated = dropzoneDelegatedDraggable && (dropzoneNode.getAttr(DD_MINUSDRAGGABLE)!=='true');
                 copyToDropzone = function(nodeSource, nodeDrag, shiftX, shiftY) {
                     if (delegatedDragging) {
-                        dropzoneIsDelegated || (nodeDrag.plugin.dd.model[DD_MINUSDRAGGABLE]=TRUE);
+                        dropzoneIsDelegated || (nodeDrag.plugin.dd.model[DRAGGABLE]=TRUE);
                         nodeDrag.removeClass(DEL_DRAGGABLE);
                     }
                     PLUGIN_ATTRS.forEach(function(attribute) {
@@ -3257,14 +3259,14 @@ module.exports = function (window) {
                     nodeDrag.setXY(dragNodeX+shiftX, dragNodeY+shiftY, constrainRectangle, true);
                     // make the new HtmlElement non-copyable: it only can be replaced inside its dropzone
                     if (!dropzoneIsDelegated) {
-                        nodeDrag.plugin.dd.model[DD_EFFECT_ALLOWED] = MOVE;
-                        nodeDrag.plugin.dd.model[DD_DROPZONE_MOVABLE] = TRUE;
+                        nodeDrag.plugin.dd.model[EFFECT_ALLOWED] = MOVE;
+                        nodeDrag.plugin.dd.model[DROPZONE_MOVABLE] = TRUE;
                     }
                 };
                 moveToDropzone = function(nodeSource, nodeDrag, shiftX, shiftY) {
                     nodeSource.setInlineStyle(POSITION, ABSOLUTE);
                     if (delegatedDragging) {
-                        dropzoneIsDelegated || (nodeSource.plugin.dd.model[DD_MINUSDRAGGABLE]=TRUE);
+                        dropzoneIsDelegated || (nodeSource.plugin.dd.model[DRAGGABLE]=TRUE);
                         nodeSource.removeClass(DEL_DRAGGABLE);
                     }
                     PLUGIN_ATTRS.forEach(function(attribute) {
@@ -3284,8 +3286,8 @@ module.exports = function (window) {
                     nodeSource.setXY(dragNodeX+shiftX, dragNodeY+shiftY, constrainRectangle, true);
                     // make the new HtmlElement non-copyable: it only can be replaced inside its dropzone
                     if (!dropzoneIsDelegated) {
-                        nodeDrag.plugin.dd.model[DD_EFFECT_ALLOWED] = MOVE;
-                        nodeDrag.plugin.dd.model[DD_DROPZONE_MOVABLE] = TRUE;
+                        nodeSource.plugin.dd.model[EFFECT_ALLOWED] = MOVE;
+                        nodeSource.plugin.dd.model[DROPZONE_MOVABLE] = TRUE;
                     }
                     nodeSource.removeClass(DD_HIDDEN_SOURCE_CLASS);
                     nodeDrag.remove();
@@ -10372,7 +10374,7 @@ require('polyfill');
 var NAME = '[focusmanager]: ',
     async = require('utils').async,
     createHashMap = require('js-ext/extra/hashmap.js').createMap,
-    DEFAULT_SELECTOR = 'input, button, select, textarea, .focusable, [fm-manage], [itag-formelement="true"]',
+    DEFAULT_SELECTOR = 'input, button, select, textarea, .focusable, [plugin-fm="true"], [itag-formelement="true"]',
     // SPECIAL_KEYS needs to be a native Object --> we need .some()
     SPECIAL_KEYS = {
         shift: 'shiftKey',
@@ -10409,7 +10411,7 @@ module.exports = function (window) {
     Event = require('event-mobile')(window);
 
     getFocusManagerSelector = function(focusContainerNode) {
-        var selector = focusContainerNode.getAttr('fm-manage');
+        var selector = focusContainerNode.plugin.fm.model.manage;
         (selector.toLowerCase()==='true') && (selector=DEFAULT_SELECTOR);
         return selector;
     };
@@ -10464,8 +10466,7 @@ module.exports = function (window) {
             }
         }
         if (specialKeysMatch) {
-            noloop = focusContainerNode.getAttr('fm-noloop');
-            noloop = noloop && (noloop.toLowerCase()==='true');
+            noloop = focusContainerNode.plugin.fm.model.noloop;
             // in case sourceNode is an innernode of a selector, we need to start from the selector:
             sourceNode.matches(selector) || (sourceNode=sourceNode.inside(selector));
             if (downwards) {
@@ -10479,7 +10480,7 @@ module.exports = function (window) {
                 return initialSourceNode || sourceNode;
             }
             else {
-                foundContainer = nodeHit.inside('[fm-manage]');
+                foundContainer = nodeHit.inside('[plugin-fm="true"]');
                 // only if `nodeHit` is inside the runniong focusContainer, we may return it,
                 // otherwise look further
                 return (foundContainer===focusContainerNode) ? nodeHit : nextFocusNode(e, keyCode, actionkey, focusContainerNode, nodeHit, selector, downwards, sourceNode);
@@ -10516,15 +10517,15 @@ module.exports = function (window) {
 
     searchFocusNode = function(initialNode, deeper) {
         console.log(NAME+'searchFocusNode');
-        var focusContainerNode = initialNode.hasAttr('fm-manage') ? initialNode : initialNode.inside('[fm-manage]'),
-            focusNode, alwaysDefault, fmAlwaysDefault, selector, allFocusableNodes, index, parentContainerNode, parentSelector;
+        var focusContainerNode = initialNode.hasAttr('fm-manage') ? initialNode : initialNode.inside('[plugin-fm="true"]'),
+            focusNode, alwaysDefault, selector, allFocusableNodes, index, parentContainerNode, parentSelector;
 
         if (focusContainerNode) {
             selector = getFocusManagerSelector(focusContainerNode);
             focusNode = initialNode.matches(selector) ? initialNode : initialNode.inside(selector);
             // focusNode can only be equal focusContainerNode when focusContainerNode lies with a focusnode itself with that particular selector:
             if (focusNode===focusContainerNode) {
-                parentContainerNode = focusNode.inside('[fm-manage]');
+                parentContainerNode = focusNode.inside('[plugin-fm="true"]');
                 if (parentContainerNode) {
                     parentSelector = getFocusManagerSelector(parentContainerNode);
                     if (!focusNode.matches(parentSelector) || deeper) {
@@ -10541,7 +10542,7 @@ module.exports = function (window) {
             else {
                 // find the right node that should get focus
 /*jshint boss:true */
-                alwaysDefault = ((fmAlwaysDefault=focusContainerNode.getAttr('fm-alwaysdefault')) && (fmAlwaysDefault.toLowerCase()==='true'));
+                alwaysDefault = focusContainerNode.plugin.fm.model.alwaysdefault;
 /*jshint boss:false */
                 alwaysDefault && (focusNode=focusContainerNode.getElement('[fm-defaultitem="true"]'));
                 if (!focusNode) {
@@ -10582,24 +10583,24 @@ module.exports = function (window) {
                 sourceNode = e.target,
                 selector, keyCode, actionkey, focusNode, keys, len, lastIndex, specialKeysMatch, i, specialKey;
 
-            focusContainerNode = sourceNode.inside('[fm-manage]');
+            focusContainerNode = sourceNode.inside('[plugin-fm="true"]');
             if (focusContainerNode) {
                 // key was pressed inside a focusmanagable container
                 selector = getFocusManagerSelector(focusContainerNode);
                 keyCode = e.keyCode;
 
                 // first check for keydown:
-                actionkey = focusContainerNode.getAttr('fm-keydown') || DEFAULT_KEYDOWN;
+                actionkey = focusContainerNode.plugin.fm.model.keydown;
                 focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, true);
                 if (!focusNode) {
                     // check for keyup:
-                    actionkey = focusContainerNode.getAttr('fm-keyup') || DEFAULT_KEYUP;
+                    actionkey = focusContainerNode.plugin.fm.model.keyup;
                     focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector);
                 }
                 if (!focusNode) {
                     // check for keyenter, but only when e.target equals a focusmanager:
-                    if (sourceNode.matches('[fm-manage]')) {
-                        actionkey = focusContainerNode.getAttr('fm-enter') || DEFAULT_ENTER;
+                    if (sourceNode.matches('[plugin-fm="true"]')) {
+                        actionkey = focusContainerNode.plugin.fm.model.keyenter;
                         keys = actionkey.split('+');
                         len = keys.length;
                         lastIndex = len - 1;
@@ -10624,7 +10625,7 @@ module.exports = function (window) {
                 }
                 if (!focusNode) {
                     // check for keyleave:
-                    actionkey = focusContainerNode.getAttr('fm-leave') || DEFAULT_LEAVE;
+                    actionkey = focusContainerNode.plugin.fm.model.keyleave;
                     keys = actionkey.split('+');
                     len = keys.length;
                     lastIndex = len - 1;
@@ -10711,7 +10712,7 @@ module.exports = function (window) {
                 return;
             }
             if (focusNode && focusNode.inside) {
-                focusContainerNode = focusNode.hasAttr('fm-manage') ? focusNode : focusNode.inside('[fm-manage]');
+                focusContainerNode = focusNode.hasAttr('plugin-fm') ? focusNode : focusNode.inside('[plugin-fm="true"]');
             }
             if (focusContainerNode) {
                 if ((focusNode===focusContainerNode) || !focusNode.matches(getFocusManagerSelector(focusContainerNode))) {
@@ -10733,7 +10734,7 @@ module.exports = function (window) {
                 sourceNode = e.target,
                 selector;
 
-            focusContainerNode = sourceNode.inside('[fm-manage]');
+            focusContainerNode = sourceNode.inside('[plugin-fm="true"]');
             if (focusContainerNode) {
                 // key was pressed inside a focusmanagable container
                 selector = getFocusManagerSelector(focusContainerNode);
@@ -10750,7 +10751,7 @@ module.exports = function (window) {
                 sourceNode = e.target,
                 selector, selectionStart, selectionEnd;
 
-            focusContainerNode = sourceNode.inside('[fm-manage]');
+            focusContainerNode = sourceNode.inside('[plugin-fm="true"]');
             if (focusContainerNode) {
                 // key was pressed inside a focusmanagable container
                 selector = getFocusManagerSelector(focusContainerNode);
@@ -10772,10 +10773,22 @@ module.exports = function (window) {
 
     window._ITSAmodules.FocusManager = FocusManager = DOCUMENT.definePlugin('fm', null, {
                 attrs: {
-                    manage: 'string'
+                    manage: 'string',
+                    alwaysdefault: 'boolean',
+                    keyup: 'string',
+                    keydown: 'string',
+                    keyenter: 'string',
+                    keyleave: 'string',
+                    noloop: 'boolean'
                 },
                 defaults: {
-                    manage: 'true'
+                    manage: 'true',
+                    alwaysdefault: false,
+                    keyup: DEFAULT_KEYUP,
+                    keydown: DEFAULT_KEYDOWN,
+                    keyenter: DEFAULT_ENTER,
+                    keyleave: DEFAULT_LEAVE,
+                    noloop: 'boolean'
                 }
             });
 
@@ -10803,11 +10816,25 @@ module.exports = function (window) {
              * which can be prevented.
              * @event manualfocus
             */
-            var focusNode = noRefocus ? this : searchFocusNode(this),
-                emitterName = focusNode._emitterName,
-                customevent = emitterName+':manualfocus';
-            Event._ce[customevent] || defineFocusEvent(customevent);
-            focusNode.emit('manualfocus', noRender ? {_noRender: true} : null);
+            var focusElement = this,
+                doEmit, focusContainerNode;
+            doEmit = function(focusNode) {
+                var emitterName = focusNode._emitterName,
+                    customevent = emitterName+':manualfocus';
+                Event._ce[customevent] || defineFocusEvent(customevent);
+                focusNode.emit('manualfocus', noRender ? {_noRender: true} : null);
+            };
+            if (noRefocus) {
+                doEmit(focusElement);
+            }
+            else {
+                focusContainerNode = (this.getAttr('plugin-fm')==='true') ? focusElement : focusElement.inside('[plugin-fm="true"]');
+                focusContainerNode && focusContainerNode.pluginReady(FocusManager).then(
+                    function() {
+                        doEmit(searchFocusNode(focusElement));
+                    }
+                );
+            }
         };
 
     }(window.HTMLElement.prototype));
@@ -12418,7 +12445,8 @@ require('../lib/object.js');
                     context.__classCarier__ = constructorClosure.constructor;
                     context.__origProp__ = 'constructor';
                     originalConstructor.apply(context, arguments);
-
+                    // only call aferInit on the last constructor of the chain:
+                    (constructorClosure.constructor===context.constructor) && context.afterInit();
                 };
             })(constructor);
 
@@ -12465,6 +12493,17 @@ require('../lib/object.js');
         * @since 0.0.1
         */
         _destroy: NOOP,
+
+       /**
+        * Transformed from `destroy` --> when `destroy` gets invoked, the instance will invoke `_destroy` through the whole chain.
+        * Defaults to `NOOP`, so that it can be always be invoked.
+        *
+        * @method afterInit
+        * @private
+        * @chainable
+        * @since 0.0.1
+        */
+        afterInit: NOOP,
 
        /**
         * Calls `_destroy` on through the class-chain on every level (bottom-up).
@@ -14225,6 +14264,7 @@ module.exports = function (window) {
 
 require('js-ext/lib/object.js');
 require('js-ext/lib/string.js');
+require('js-ext/lib/promise.js');
 require('polyfill');
 require('event/extra/timer-finalize.js');
 
@@ -14408,7 +14448,9 @@ module.exports = function (window) {
         attrs.each(function(value, key) {
             model[key] && (newAttrs[newAttrs.length] = {name: ns+'-'+fromCamelCase(key), value: model[key]});
         });
-        (newAttrs.length>0) && domElement.setAttrs(newAttrs, true);
+        if (newAttrs.length>0) {
+            domElement.setAttrs(newAttrs, true);
+        }
     };
 
     syncPlugin = function(plugin) {
@@ -14446,9 +14488,7 @@ module.exports = function (window) {
     };
 
     // extend window.Element:
-    window.Element && (function(ElementPrototype) {
-        ElementPrototype.plugin = {};
-
+    window.Element && (function(HTMLElementPrototype) {
        /**
         * Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.
         *
@@ -14457,8 +14497,24 @@ module.exports = function (window) {
         * @return {Boolean} whether the plugin is plugged in
         * @since 0.0.1
         */
-        ElementPrototype.isPlugged = function(PluginClass) {
-            return !!this.ns && !!this.ns[PluginClass.prototype.$ns];
+        HTMLElementPrototype.isPlugged = function(PluginClass) {
+            return !!this.plugin && !!this.plugin[PluginClass.prototype.$ns];
+        };
+
+       /**
+        * Checks whether the plugin is ready to be used.
+        *
+        * @method pluginReady
+        * @param PluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
+        * @return {Promise} whether the plugin is plugged in
+        * @since 0.0.1
+        */
+        HTMLElementPrototype.pluginReady = function(PluginClass) {
+            var instance = this,
+                ns = PluginClass.prototype.$ns;
+            instance._pluginReadyInfo || (instance._pluginReadyInfo={});
+            instance._pluginReadyInfo[ns] || (instance._pluginReadyInfo[ns]=window.Promise.manage());
+            return instance._pluginReadyInfo[ns];
         };
 
        /**
@@ -14471,14 +14527,15 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.plug = function(PluginClass, config, model) {
+        HTMLElementPrototype.plug = function(PluginClass, config, model) {
             var instance = this;
             if (!instance.isPlugged(PluginClass)) {
-                instance.ns || Object.protectedProp(instance, 'ns', {});
-                instance.ns[PluginClass.prototype.$ns] = new PluginClass(instance, config, model);
+                instance.plugin || Object.protectedProp(instance, 'plugin', {});
+                instance.plugin[PluginClass.prototype.$ns] = new PluginClass(instance, config, model);
             }
             else {
-                console.warn('ElementPlugin '+PluginClass.prototype.$ns+' already plugged in');
+                console.info('ElementPlugin '+PluginClass.prototype.$ns+' already plugged in');
+                model && instance.plugin[PluginClass.prototype.$ns].bindModel(model);
             }
             return instance;
         };
@@ -14491,26 +14548,25 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        ElementPrototype.unplug = function(PluginClass) {
+        HTMLElementPrototype.unplug = function(PluginClass) {
             var instance = this;
-            instance.isPlugged(PluginClass) && instance.ns[PluginClass.prototype.$ns].destroy();
+            if (instance.isPlugged(PluginClass)) {
+                instance.plugin[PluginClass.prototype.$ns].destroy();
+            }
             return instance;
         };
-    }(window.Element.prototype));
+    }(window.HTMLElement.prototype));
 
     Base = Classes.createClass(
         function (hostElement, config, model) {
-            var instance = this,
-                ns = instance.$ns;
+            var instance = this;
             instance.host = hostElement;
-            hostElement.plugin[ns] = instance;
-            instance.model = Object.isObject(model) ? model : {};
+            instance.model = {};
             attrsToModel(instance, config);
-            hostElement.setAttr('plugin-'+ns, 'true', true);
+            hostElement.setAttr('plugin-'+instance.$ns, 'true', true);
+            model && instance.bindModel(model, true);
             syncPlugin(instance);
             autoRefreshPlugin(instance);
-            (hostElement.getAttr(ns+'-ready')==='true') || instance.render();
-            hostElement.setAttr(ns+'-ready', 'true', true);
         },
         {
             _DELAYED_FINALIZE_EVENTS: DEFAULT_DELAYED_FINALIZE_EVENTS.shallowClone(),
@@ -14532,8 +14588,8 @@ module.exports = function (window) {
                 console.log(NAME+'bindModel');
                 var instance = this,
                     observer;
-                if (instance.model!==model) {
-                    instance.removeAttr('bound-model');
+                if (Object.isObject(model) && (instance.model!==model)) {
+                    instance.host.removeAttr('bound-model');
                     if (NATIVE_OBJECT_OBSERVE) {
                         observer = instance._observer;
                         observer && Object.unobserve(instance.model, observer);
@@ -14549,6 +14605,18 @@ module.exports = function (window) {
                     }
                     syncPlugin(instance);
                 }
+            },
+            afterInit: function() {
+                var instance = this,
+                    ns = instance.$ns,
+                    host = instance.host;
+                if (host.getAttr(ns+'-ready')!=='true') {
+                    instance.render();
+                    host.setAttr(ns+'-ready', 'true', true);
+                }
+                host._pluginReadyInfo || (host._pluginReadyInfo={});
+                host._pluginReadyInfo[ns] || (host._pluginReadyInfo[ns]=window.Promise.manage());
+                host._pluginReadyInfo[ns].fulfill();
             },
            /**
             * Defines which domevents should lead to a direct sync by the Event-finalizer.
@@ -14633,9 +14701,9 @@ module.exports = function (window) {
                         host.removeAttr(ns+'-'+fromCamelCase(key), true);
                     }
                 );
-                host.setAttr('plugin-'+ns, true);
-                host.setAttr(ns+'-ready', true);
-                delete host.ns[instance.$ns];
+                host.removeAttr('plugin-'+ns, true);
+                host.removeAttr(ns+'-ready', true);
+                delete host.plugin[ns];
             },
             $ns: 'undefined-namespace'
         }
@@ -14761,6 +14829,7 @@ module.exports = function (window) {
                         console.warn(NAME+'definePlugin cannot redefine Plugin '+ns+' --> already exists');
                     }
                     else {
+                        // change the constructor, so that it will end by calling `_finishInit`
                         NewClass = originalSubClass.call(instance, constructor, prototypes).mergePrototypes({$ns: ns}, true);
                         window._ITSAPlugins[ns] = NewClass;
                         pluginDOM(NewClass);
@@ -14780,7 +14849,7 @@ module.exports = function (window) {
 
     window._ITSAmodules.ElementPlugin = true;
 };
-},{"event-dom":14,"event/extra/timer-finalize.js":25,"io":32,"js-ext/extra/classes.js":33,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":57,"utils/lib/timers.js":62,"vdom":72}],48:[function(require,module,exports){
+},{"event-dom":14,"event/extra/timer-finalize.js":25,"io":32,"js-ext/extra/classes.js":33,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/promise.js":43,"js-ext/lib/string.js":44,"polyfill":57,"utils/lib/timers.js":62,"vdom":72}],48:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -18550,6 +18619,7 @@ module.exports = function (window) {
         ElementPrototype.cloneNode = function(deep) {
             var instance = this,
                 vnode = instance.vnode,
+                plugins = [],
                 cloned = instance._cloneNode(deep),
                 cloneData = function(srcVNode, targetVNode) {
                     if (srcVNode._data) {
@@ -18557,12 +18627,19 @@ module.exports = function (window) {
                         targetVNode._data.merge(srcVNode._data);
                     }
                 },
-                unrenderPlugins = function(targetVNode) {
+                updatePlugins = function(srcVNode, targetVNode) {
                     targetVNode.attrs && targetVNode.attrs.each(function(value, key) {
-                        var plugin;
+                        var pluginName;
                         if (key.substr(0, 7)==='plugin-') {
-                            plugin = key.substr(7);
-                            targetVNode.domNode.removeAttr(plugin+'-ready');
+                            pluginName = key.substr(7);
+                            // remove and reset the plugin with shallowcloned modeldata
+                            // needs to be scheduled --> when deep cloned the full node needs t be build up first
+                            // otherwise we could get doube rendered nodes.
+                            plugins[plugins.length] = {
+                                domNode: targetVNode.domNode,
+                                pluginName: pluginName,
+                                model: srcVNode.domNode.plugin[pluginName].model.shallowClone()
+                            };
                         }
                     });
                 },
@@ -18575,17 +18652,22 @@ module.exports = function (window) {
                         childSrcVNode = srcVChildren[i];
                         childTargetVNode = targetVChildren[i];
                         cloneData(childSrcVNode, childTargetVNode);
+                        updatePlugins(childSrcVNode, childTargetVNode);
                         childSrcVNode.hasVChildren() && cloneDeepData(childSrcVNode, childTargetVNode);
                     }
-                };
+                },
+                i, len, PluginClass, pluginDef;
             cloned.vnode = domNodeToVNode(cloned);
             cloneData(vnode, cloned.vnode);
+            updatePlugins(vnode, cloned.vnode);
             // if deep, then we need to merge _data of all deeper nodes
-            if (deep) {
-                vnode.hasVChildren() && cloneDeepData(vnode, cloned.vnode);
-            }
-            else {
-                unrenderPlugins(cloned.vnode);
+            deep && vnode.hasVChildren() && cloneDeepData(vnode, cloned.vnode);
+            len = plugins.length;
+            for (i=0; i<len; i++) {
+                pluginDef = plugins[i];
+                PluginClass = window._ITSAPlugins[pluginDef.pluginName];
+                pluginDef.domNode.unplug(PluginClass);
+                pluginDef.domNode.plug(PluginClass, null, pluginDef.model);
             }
             return cloned;
         };
@@ -21639,11 +21721,15 @@ module.exports = function (window) {
                         vnode.text = node.nodeValue;
                     }
                     else {
-                        // remove the childNodes that are no longer there:
+                        // remove the childNodes that are no longer there,
+                        // but ONLY when they are not in the dom --> nodes might get
+                        // replaced inside other nodes, which leads into 'remove'-observer,
+                        // yet we still need them
                         len = removedChildNodes.length;
                         for (i=len-1; i>=0; i--) {
-                            childVNode = removedChildNodes[i].vnode;
-                            childVNode && childVNode._destroy();
+                            childDomNode = removedChildNodes[i];
+                            childVNode = childDomNode.vnode;
+                            childVNode && (!childDomNode.inDOM || !childDomNode.inDOM()) && childVNode._destroy();
                         }
                        // add the new childNodes:
                         len = addedChildNodes.length;

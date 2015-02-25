@@ -72,7 +72,7 @@ Drag the items, they are all draggable.
 ```
 ```html
 <body>
-    <div class="base-container" dd-draggable="div">
+    <div class="base-container" plugin-dd="true" dd-draggable="div">
         <div>drag me</div>
         <div>drag me</div>
         <div>drag me</div>
@@ -90,7 +90,7 @@ Drag the items, they are all draggable.
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
     ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD

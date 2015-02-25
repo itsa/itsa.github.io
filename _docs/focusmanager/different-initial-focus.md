@@ -26,7 +26,7 @@ intro: "This example shows how mark an element to be the first focusable item, w
     }
 </style>
 
-<div class="container pure-form" fm-manage="true">
+<div class="container pure-form" plugin-fm="true">
     <input type="text" value="first"/>
     <input type="text" value="second"/>
     <input type="checkbox" />
@@ -58,7 +58,7 @@ intro: "This example shows how mark an element to be the first focusable item, w
 
 ```html
 <body>
-    <div class="container pure-form" fm-manage="true" fm-keyup="38" fm-keydown="40">
+    <div class="container pure-form" plugin-fm="true">
         <input type="text" value="first"/>
         <input type="text" value="second"/>
         <input type="checkbox" />

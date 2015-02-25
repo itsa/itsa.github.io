@@ -41,7 +41,7 @@ Drag the item and watch for the events.
 
 ```html
 <body>
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me</div>
+    <div class="container" plugin-dd="true" dd-effect-allowed="all">drag me</div>
     <div class="monitor-container"></div>
 </body>
 ```
@@ -67,7 +67,7 @@ Drag the item and watch for the events.
             }
             else {
                 monitorContStart.append('<p class="monitor-drag">e.dd.callback --> item is dragging: 1 callback</p>');
-                node = monitorContStart.getElement('.monitor-drag'),
+                node = monitorContStart.getElement('.monitor-drag');
                 node.setData('count', 1);
             }
         });
@@ -76,14 +76,15 @@ Drag the item and watch for the events.
             function() {
                 var dropId = e.dropTarget && e.dropTarget.getId();
                 if (dropId) {
-                    monitorContStart.append('e.dd.then() --> dropped inside '+dropId);
+                    monitorContStart.append('<p>e.dd.then() --> dropped inside '+dropId+'</p>');
                 }
                 else {
-                    monitorContStart.append('e.dd.then() --> dropped outside any dropzone');
+                    monitorContStart.append('<p>e.dd.then() --> dropped outside any dropzone</p>');
                 }
             }
         );
     });
+
 </script>
 ```
 

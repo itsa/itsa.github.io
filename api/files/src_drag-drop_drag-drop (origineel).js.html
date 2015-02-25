@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/drag-drop/drag-drop.js - Itsa</title>
+    <title>src/drag-drop/drag-drop (origineel).js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -206,7 +206,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/drag-drop/drag-drop.js</h1>
+                        <h1 class="file-heading">File: src/drag-drop/drag-drop (origineel).js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -380,16 +380,12 @@ var DRAG = &#x27;drag&#x27;,
     DRAGGABLE = DRAG+&#x27;gable&#x27;,
     DEL_DRAGGABLE = &#x27;del-&#x27;+DRAGGABLE,
     DD_MINUS = &#x27;dd-&#x27;,
-    DZ_MINUS = &#x27;dz-&#x27;,
-    PLUGIN_DD = &#x27;plugin-dd&#x27;,
-    DZ_DROPZONE = DZ_MINUS+DROPZONE,
     DD_DRAGGING_CLASS = DD_MINUS+DRAG+&#x27;ging&#x27;,
     DD_MASTER_CLASS = DD_MINUS+&#x27;master&#x27;,
     DD_HANDLE = DD_MINUS+&#x27;handle&#x27;,
     DD_SOURCE_ISCOPIED_CLASS = DD_MINUS+COPY+SOURCE,
     DD_COPIED_CLASS = DD_MINUS+COPY,
-    DROPZONE_MOVABLE = DROPZONE+&#x27;-movable&#x27;,
-    DD_DROPZONE_MOVABLE = DD_MINUS+DROPZONE_MOVABLE,
+    DD_DROPZONE_MOVABLE = DD_MINUS+DROPZONE+&#x27;-movable&#x27;,
     CONSTRAIN_ATTR = &#x27;constrain-selector&#x27;,
     MOUSE = &#x27;mouse&#x27;,
     DROPZONE_OVER = DROPZONE+&#x27;-over&#x27;,
@@ -420,9 +416,8 @@ var DRAG = &#x27;drag&#x27;,
     PANMOVE = &#x27;pan&#x27;+MOVE,
     DD_FAKE_MOUSEMOVE = DD_FAKE+MOUSEMOVE,
     UI = &#x27;UI&#x27;,
-    DROPZONE_BRACKETS = &#x27;[&#x27; + DZ_DROPZONE + &#x27;]&#x27;,
-    EFFECT_ALLOWED = &#x27;effect-allowed&#x27;,
-    DD_EFFECT_ALLOWED = DD_MINUS+EFFECT_ALLOWED,
+    DROPZONE_BRACKETS = &#x27;[&#x27; + DD_DROPZONE + &#x27;]&#x27;,
+    DD_EFFECT_ALLOWED = DD_MINUS+&#x27;effect-allowed&#x27;,
     BORDER = &#x27;border&#x27;,
     WIDTH = &#x27;width&#x27;,
     BORDER_LEFT_WIDTH = BORDER+&#x27;-left-&#x27;+WIDTH,
@@ -435,7 +430,7 @@ var DRAG = &#x27;drag&#x27;,
     ABSOLUTE = &#x27;absolute&#x27;,
     TRUE = &#x27;true&#x27;,
     DD_MINUSDRAGGABLE = DD_MINUS+DRAGGABLE,
-    PLUGIN_ATTRS = [PLUGIN_DD, DD_DROPZONE, CONSTRAIN_ATTR, DD_EMITTER, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE];
+    PLUGIN_ATTRS = [DD_DROPZONE, CONSTRAIN_ATTR, DD_EMITTER, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE];
 
 require(&#x27;polyfill/polyfill-base.js&#x27;);
 require(&#x27;js-ext&#x27;);
@@ -450,6 +445,7 @@ module.exports = function (window) {
     }
 
     var Event = require(&#x27;event-dom&#x27;)(window),
+        nodePlugin = require(&#x27;vdom&#x27;)(window).Plugins.nodePlugin,
         DragModule = require(&#x27;drag&#x27;)(window),
         $superInit = DragModule.DD.init,
         ctrlPressed = false,
@@ -460,8 +456,6 @@ module.exports = function (window) {
         mobileEvents = supportHammer &amp;&amp; isMobile,
         DD, DD_Object;
 
-    require(&#x27;vdom&#x27;)(window);
-    require(&#x27;node-plugin&#x27;)(window);
     require(&#x27;window-ext&#x27;)(window);
 
     DD = {
@@ -517,7 +511,7 @@ module.exports = function (window) {
                 PLUGIN_ATTRS.forEach(function(attribute) {
                     var data = &#x27;_del_&#x27;+attribute;
                     if (dragNode.getData(data)) {
-                        delete dragNode.plugin.dd.model[attribute];
+                        dragNode.removeAttr(attribute);
                         dragNode.removeData(data);
                     }
                 });
@@ -646,11 +640,12 @@ module.exports = function (window) {
                             overDropzone = true;
                             return;
                         }
-                        var dropzoneAccept = dropzone.getAttr(DZ_DROPZONE) || &#x27;&#x27;,
+                        var dropzoneAccept = dropzone.getAttr(DD_DROPZONE) || &#x27;&#x27;,
                             dropzoneMove = REGEXP_MOVE.test(dropzoneAccept),
                             dropzoneCopy = REGEXP_COPY.test(dropzoneAccept),
                             dropzoneDefDraggable = dragNode.getAttr(DD_DROPZONE),
                             dragOverPromise, dragOutEvent, effectAllowed, emitterAllowed, dropzoneEmitter, xMouseLast, yMouseLast, dropzoneAllowed;
+
                         // check if the mouse is inside the dropzone
                         // also check if the mouse is inside the dragged node: the dragged node might have been constrained
                         // and check if the dragged node is effectAllowed to go into the dropzone
@@ -676,7 +671,7 @@ module.exports = function (window) {
                                     function(e3) {
                                         var effectAllowed, dropzoneAccept, dropzoneMove, dropzoneCopy;
                                         if (e3.type===DD_FAKE_MOUSEMOVE) {
-                                            dropzoneAccept = dropzone.getAttr(DZ_DROPZONE) || &#x27;&#x27;;
+                                            dropzoneAccept = dropzone.getAttr(DD_DROPZONE) || &#x27;&#x27;;
                                             dropzoneMove = REGEXP_MOVE.test(dropzoneAccept);
                                             dropzoneCopy = REGEXP_COPY.test(dropzoneAccept);
                                             effectAllowed = (!dropzoneMove &amp;&amp; !dropzoneCopy) || (dropzoneCopy &amp;&amp; (dropEffect===COPY)) || (dropzoneMove &amp;&amp; (dropEffect===MOVE));
@@ -796,7 +791,7 @@ module.exports = function (window) {
                 dropzoneIsDelegated = dropzoneDelegatedDraggable &amp;&amp; (dropzoneNode.getAttr(DD_MINUSDRAGGABLE)!==&#x27;true&#x27;);
                 copyToDropzone = function(nodeSource, nodeDrag, shiftX, shiftY) {
                     if (delegatedDragging) {
-                        dropzoneIsDelegated || (nodeDrag.plugin.dd.model[DRAGGABLE]=TRUE);
+                        dropzoneIsDelegated || nodeDrag.setAttr(DD_MINUSDRAGGABLE, TRUE);
                         nodeDrag.removeClass(DEL_DRAGGABLE);
                     }
                     PLUGIN_ATTRS.forEach(function(attribute) {
@@ -804,12 +799,12 @@ module.exports = function (window) {
                             attr = sourceNode.getData(data);
                         if (attr) {
                             if (dropzoneIsDelegated) {
-                                delete nodeDrag.plugin.dd.model[attribute];
+                                nodeDrag.removeAttr(attribute);
                             }
                             else {
-                                nodeDrag.plugin.dd.model[attribute] = attr;
+                                nodeDrag.setAttr(attribute, attr);
                             }
-                            delete nodeSource.plugin.dd.model[attribute];
+                            nodeSource.removeAttr(attribute);
                             nodeSource.removeData(data);
                             nodeDrag.removeData(data);
                         }
@@ -819,15 +814,12 @@ module.exports = function (window) {
                     nodeSource.removeClass(DD_SOURCE_ISCOPIED_CLASS);
                     nodeDrag.setXY(dragNodeX+shiftX, dragNodeY+shiftY, constrainRectangle, true);
                     // make the new HtmlElement non-copyable: it only can be replaced inside its dropzone
-                    if (!dropzoneIsDelegated) {
-                        nodeDrag.plugin.dd.model[EFFECT_ALLOWED] = MOVE;
-                        nodeDrag.plugin.dd.model[DROPZONE_MOVABLE] = TRUE;
-                    }
+                    dropzoneIsDelegated || nodeDrag.setAttr(DD_EFFECT_ALLOWED, MOVE).setAttr(DD_DROPZONE_MOVABLE, TRUE); // to make moving inside the dropzone possible without return to its startposition
                 };
                 moveToDropzone = function(nodeSource, nodeDrag, shiftX, shiftY) {
                     nodeSource.setInlineStyle(POSITION, ABSOLUTE);
                     if (delegatedDragging) {
-                        dropzoneIsDelegated || (nodeSource.plugin.dd.model[DRAGGABLE]=TRUE);
+                        dropzoneIsDelegated || nodeSource.setAttr(DD_MINUSDRAGGABLE, TRUE);
                         nodeSource.removeClass(DEL_DRAGGABLE);
                     }
                     PLUGIN_ATTRS.forEach(function(attribute) {
@@ -835,10 +827,10 @@ module.exports = function (window) {
                             attr = sourceNode.getData(data);
                         if (attr) {
                             if (dropzoneIsDelegated) {
-                                delete nodeSource.plugin.dd.model[attribute];
+                                nodeSource.removeAttr(attribute);
                             }
                             else {
-                                nodeSource.plugin.dd.model[attribute] = attr;
+                                nodeSource.setAttr(attribute, attr);
                             }
                             nodeSource.removeData(data);
                         }
@@ -846,10 +838,7 @@ module.exports = function (window) {
                     dropzoneNode.append(nodeSource);
                     nodeSource.setXY(dragNodeX+shiftX, dragNodeY+shiftY, constrainRectangle, true);
                     // make the new HtmlElement non-copyable: it only can be replaced inside its dropzone
-                    if (!dropzoneIsDelegated) {
-                        nodeSource.plugin.dd.model[EFFECT_ALLOWED] = MOVE;
-                        nodeSource.plugin.dd.model[DROPZONE_MOVABLE] = TRUE;
-                    }
+                    dropzoneIsDelegated || nodeSource.setAttr(DD_EFFECT_ALLOWED, MOVE).setAttr(DD_DROPZONE_MOVABLE, TRUE); // to make moving inside the dropzone possible without return to its startposition
                     nodeSource.removeClass(DD_HIDDEN_SOURCE_CLASS);
                     nodeDrag.remove();
                 };
@@ -904,10 +893,10 @@ module.exports = function (window) {
                                 attr = dragNode.getData(data);
                             if (attr) {
                                 if (dropzoneIsDelegated) {
-                                    delete nodeSource.plugin.dd.model[attribute];
+                                    nodeSource.removeAttr(attribute);
                                 }
                                 else {
-                                    nodeSource.plugin.dd.model[attribute] = attr;
+                                    nodeSource.setAttr(attribute, attr);
                                 }
                                 nodeSource.removeData(data);
                             }
@@ -1022,8 +1011,8 @@ module.exports = function (window) {
                         PLUGIN_ATTRS.forEach(function(attribute) {
                             var data = &#x27;_del_&#x27;+attribute;
                             if (sourceNode.getData(data)) {
-                                sourceNode.removeData(data);
-                                delete sourceNode.plugin.dd.model[attribute];
+                                sourceNode.removeAttr(attribute)
+                                          .removeData(data);
                             }
                         });
                     }
@@ -1277,31 +1266,11 @@ module.exports = function (window) {
 
     };
 
-    DragModule.DD.merge(DD, {force: true});
-    DragModule.Plugins.DD.mergePrototypes({
-        attrs: {
-            draggable: &#x27;string&#x27;,
-            constrain: &#x27;string&#x27;,
-            handle: &#x27;string&#x27;,
-            emitter: &#x27;string&#x27;,
-            &#x27;effect-allowed&#x27;: &#x27;string&#x27;,
-            &#x27;dropzone-movable&#x27;: &#x27;string&#x27;,
-            dropzone: &#x27;string&#x27;
-        }
-    }, true);
-
     DD_Object = window._ITSAmodules.DragDrop = {
-        DD: DragModule.DD,
+        DD: DragModule.DD.merge(DD, {force: true}),
         Plugins: {
-            DD: DragModule.Plugins.DD,
-            Dropzone: DOCUMENT.definePlugin(&#x27;dz&#x27;, null, {
-                attrs: {
-                    dropzone: &#x27;string&#x27;
-                },
-                defaults: {
-                    dropzone: &#x27;true&#x27;
-                }
-            })
+            nodeDD: DragModule.Plugins.nodeDD,
+            nodeDropzone: nodePlugin.definePlugin(&#x27;dd&#x27;, {dropzone: &#x27;true&#x27;})
         }
     };
 

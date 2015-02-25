@@ -73,7 +73,7 @@ Drag the items to the dropzones..
 
 ```css
 <style type="text/css">
-    .dropzone-awake[dd-dropzone] {
+    .dropzone-awake[dz-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -82,12 +82,12 @@ Drag the items to the dropzones..
 ```html
 <body>
     <div id="constr" class="base-container">
-        <div class="container" dd-draggable="true" dd-emitter="blue"></div>
-        <div id="without-emitter" class="container" dd-draggable="true"></div>
+        <div class="container" plugin-dd="true" dd-emitter="blue"></div>
+        <div id="without-emitter" class="container" plugin-dd="true"></div>
         <div id="without" class="container"></div>
     </div>
 
-    <div class="drop-container" dd-dropzone="emitter=blue">only blue items</div>
+    <div class="drop-container" plugin-dz="true" dz-dropzone="emitter=blue">only blue items</div>
     <div id="dropzone-without" class="drop-container">only red items</div>
 </body>
 ```
@@ -98,13 +98,15 @@ Drag the items to the dropzones..
     var ITSA = require('itsa');
 
     ITSA.DD.init();
-    document.getElement('#without').plug(ITSA.Plugins.nodeDD, {emitter: 'red'});
-    document.getElement('#without-emitter').plug(ITSA.Plugins.nodeDD);
-    document.getElement('#dropzone-without').plug(ITSA.Plugins.nodeDropzone, {dropzone: 'true emitter=red'});
+    document.getElement('#without').plug(ITSA.Plugins.DD, {emitter: 'red'});
+    document.getElement('#without-emitter').plug(ITSA.Plugins.DD);
+    document.getElement('#dropzone-without').plug(ITSA.Plugins.Dropzone, {dropzone: 'true emitter=red'});
 
     ITSA.Event.before('dd', function(e) {
         e.emitter = "blue";
+        console.info('SETTING EMITTER');
     }, '#without-emitter');
+
 </script>
 ```
 
