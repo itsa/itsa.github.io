@@ -23,15 +23,15 @@ intro: "Draggable elements can be constrained to the 'window' by setting the att
 
 Drag the 2 rectangles: they will be constrained inside the window. The first is constrained using html, the second is set up using javascript.
 
-<div class="container" dd-draggable="true" constrain-selector="window"></div>
-<div id="without" class="container" dd-draggable="true"></div>
+<div class="container" plugin-dd="true" plugin-constrain="true" constrain-selector="window"></div>
+<div id="without" class="container" plugin-dd="true"></div>
 
 <p class="spaced">Code-example:</p>
 
 ```html
 <body>
-    <div class="container" dd-draggable="true" constrain-selector="window"></div>
-    <div id="without" class="container" dd-draggable="true"></div>
+    <div class="container" plugin-dd="true" plugin-constrain="true" constrain-selector="window"></div>
+    <div id="without" class="container" plugin-dd="true"></div>
 </body>
 ```
 
@@ -41,7 +41,7 @@ Drag the 2 rectangles: they will be constrained inside the window. The first is 
     var ITSA = require('itsa');
 
     ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
-    document.getElement('#without').plug(ITSA.Plugins.nodeConstrain);
+    document.getElement('#without').plug(ITSA.Plugins.Constrain);
 </script>
 ```
 
@@ -50,5 +50,5 @@ Drag the 2 rectangles: they will be constrained inside the window. The first is 
     var ITSA = require('itsa');
 
     ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
-    document.getElement('#without').plug(ITSA.Plugins.nodeConstrain);
+    document.getElement('#without').plug(ITSA.Plugins.Constrain);
 </script>

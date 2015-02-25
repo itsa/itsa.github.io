@@ -36,7 +36,7 @@ intro: "This example shows how multiple focusmanagers can be setup. The setup is
     }
 </style>
 
-<div class="container pure-form" fm-manage="input, button, .area">
+<div class="container pure-form" plugin-fm="true" fm-manage="input, button, .area">
     <input type="text" value="first"/>
     <input type="text" value="second"/>
     <input type="checkbox" />
@@ -45,7 +45,7 @@ intro: "This example shows how multiple focusmanagers can be setup. The setup is
     <button class="pure-button pure-button-bordered">OK</button>
 </div>
 
-<div class="container pure-form" fm-manage="true">
+<div class="container pure-form" plugin-fm="true">
     <input type="text" value="first"/>
     <input type="text" value="second"/>
     <input type="checkbox" />
@@ -88,7 +88,7 @@ intro: "This example shows how multiple focusmanagers can be setup. The setup is
 
 ```html
 <body>
-    <div class="container pure-form" fm-selector="input, button, .area">
+    <div class="container pure-form" plugin-fm="true" fm-manage="input, button, .area">
         <input type="text" value="first"/>
         <input type="text" value="second"/>
         <input type="checkbox" />
@@ -97,7 +97,7 @@ intro: "This example shows how multiple focusmanagers can be setup. The setup is
         <button class="pure-button pure-button-bordered">OK</button>
     </div>
 
-    <div class="container pure-form">
+    <div class="container pure-form" plugin-fm="true">
         <input type="text" value="first"/>
         <input type="text" value="second"/>
         <input type="checkbox" />

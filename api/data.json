@@ -64,11 +64,18 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/drag-drop/drag-drop.js": {
-            "name": "src/drag-drop/drag-drop.js",
+        "src/drag-drop/drag-drop (origineel).js": {
+            "name": "src/drag-drop/drag-drop (origineel).js",
             "modules": {
                 "drag-drop": 1
             },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/drag-drop/drag-drop.js": {
+            "name": "src/drag-drop/drag-drop.js",
+            "modules": {},
             "classes": {
                 "DD": 1
             },
@@ -346,6 +353,17 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/node-plugin/lib/element-plugin.js": {
+            "name": "src/node-plugin/lib/element-plugin.js",
+            "modules": {
+                "element-plugin": 1
+            },
+            "classes": {
+                "Plugins": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/node-win/lib/XMLHttpRequest.js": {
             "name": "src/node-win/lib/XMLHttpRequest.js",
             "modules": {},
@@ -423,17 +441,6 @@
             },
             "classes": {
                 "ElementArray": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "src/vdom/partials/element-plugin.js": {
-            "name": "src/vdom/partials/element-plugin.js",
-            "modules": {
-                "element-plugin": 1
-            },
-            "classes": {
-                "Plugins": 1
             },
             "fors": {},
             "namespaces": {}
@@ -974,6 +981,52 @@
             "line": 3,
             "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
+        "vdom": {
+            "name": "vdom",
+            "submodules": {
+                "element-plugin": 1,
+                "attribute-extractor": 1,
+                "element-array": 1,
+                "extend-document": 1,
+                "extend-element": 1,
+                "html-parser": 1,
+                "node-parser": 1,
+                "vdom-ns": 1,
+                "vnode": 1
+            },
+            "classes": {
+                "Plugins": 1,
+                "ElementArray": 1,
+                "document": 1,
+                "Element": 1,
+                "Node": 1,
+                "NS-vdom": 1,
+                "vnode": 1
+            },
+            "fors": {
+                "Node": 1,
+                "Element": 1
+            },
+            "namespaces": {},
+            "file": "src/vdom/partials/vnode.js",
+            "line": 3
+        },
+        "element-plugin": {
+            "name": "element-plugin",
+            "submodules": {},
+            "classes": {
+                "Plugins": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "vdom",
+            "namespace": "",
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 3,
+            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "since": "0.0.1"
+        },
         "node-win": {
             "name": "node-win",
             "submodules": {},
@@ -1016,36 +1069,6 @@
             "description": "Collection of various utility functions.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "static": 1
         },
-        "vdom": {
-            "name": "vdom",
-            "submodules": {
-                "attribute-extractor": 1,
-                "element-array": 1,
-                "element-plugin": 1,
-                "extend-document": 1,
-                "extend-element": 1,
-                "html-parser": 1,
-                "node-parser": 1,
-                "vdom-ns": 1,
-                "vnode": 1
-            },
-            "classes": {
-                "ElementArray": 1,
-                "Plugins": 1,
-                "document": 1,
-                "Element": 1,
-                "Node": 1,
-                "NS-vdom": 1,
-                "vnode": 1
-            },
-            "fors": {
-                "Node": 1,
-                "Element": 1
-            },
-            "namespaces": {},
-            "file": "src/vdom/partials/vnode.js",
-            "line": 3
-        },
         "attribute-extractor": {
             "name": "attribute-extractor",
             "submodules": {},
@@ -1074,22 +1097,6 @@
             "file": "src/vdom/partials/element-array.js",
             "line": 3,
             "description": "Extends Array into an array with special utility-methods that can be applied upon its members.\nThe membres should be vElement's\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
-            "since": "0.0.1"
-        },
-        "element-plugin": {
-            "name": "element-plugin",
-            "submodules": {},
-            "classes": {
-                "Plugins": 1
-            },
-            "fors": {},
-            "is_submodule": 1,
-            "namespaces": {},
-            "module": "vdom",
-            "namespace": "",
-            "file": "src/vdom/partials/element-plugin.js",
-            "line": 3,
-            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "since": "0.0.1"
         },
         "extend-document": {
@@ -1421,6 +1428,21 @@
             "line": 3,
             "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
+        "Plugins": {
+            "name": "Plugins",
+            "shortname": "Plugins",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "vdom",
+            "submodule": "element-plugin",
+            "namespace": "",
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 3,
+            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
         "window": {
             "name": "window",
             "shortname": "window",
@@ -1477,21 +1499,6 @@
             "file": "src/vdom/partials/element-array.js",
             "line": 3,
             "description": "Extends Array into an array with special utility-methods that can be applied upon its members.\nThe membres should be vElement's\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        "Plugins": {
-            "name": "Plugins",
-            "shortname": "Plugins",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "vdom",
-            "submodule": "element-plugin",
-            "namespace": "",
-            "file": "src/vdom/partials/element-plugin.js",
-            "line": 3,
-            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "document": {
             "name": "document",
@@ -8030,7 +8037,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 90,
+            "line": 92,
             "description": "Objecthash containing all specific information about the particular drag-cycle.\nIt has a structure like this:\n\nddProps = {\n    dragNode {HtmlElement} Element that is dragged\n    x {Number} absolute x-position of the draggable inside `document` when the drag starts\n    y {Number} absolute y-position of the draggable inside `document` when the drag starts\n    inlineLeft {String} inline css of the property `left` when drag starts\n    inlineTop {String} inline css of the property `top` when drag starts\n    winConstrained {Boolean} whether the draggable should be constrained to `window`\n    xMouseLast {Number} absolute x-position of the mouse inside `document` when the drag starts\n    yMouseLast {Number} absolute y-position of the draggable inside `document` when the drag starts\n    winScrollLeft {Number} the left-scroll of window when drag starts\n    winScrollTop {Number} the top-scroll of window when drag starts\n    constrain = { // constrain-properties when constrained to a HtmlElement\n        xOrig {Number} x-position in the document, included with left-border-width\n        yOrig {Number} y-position in the document, included with top-border-width\n        x {Number} xOrig corrected with scroll-left of the constrained node\n        y {Number} yOrig corrected with scroll-top of the constrained node\n        w {Number} scrollWidth\n        h {Number} scrollHeight\n    };\n    relatives[{ // Array with objects that represent all draggables that come along with the master-draggable (in case of multiple items), excluded the master draggable itself\n        sourceNode {HtmlElement} original node (defined by drag-drop)\n        dragNode {HtmlElement} draggable node\n        shiftX {Number} the amount of left-pixels that this HtmlElement differs from the dragged element\n        shiftY {Number} the amount of top-pixels that this HtmlElement differs from the dragged element\n        inlineLeft {String} inline css of the property `left` when drag starts\n        inlineTop {String} inline css of the property `top` when drag starts\n    }]\n}",
             "itemtype": "property",
             "name": "ddProps",
@@ -8042,7 +8049,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 130,
+            "line": 132,
             "description": "Internal hash with notifiers to response after each `Drag` event is set up, or teared down.\nYou can use this to hook in into the drag-eventcycle: the `drop`-module uses it this way.\nIs filled by using `notify()`.",
             "itemtype": "property",
             "name": "_notifiers",
@@ -8056,7 +8063,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 143,
+            "line": 145,
             "description": "Default function for the `*:dd-drag`-event",
             "itemtype": "method",
             "name": "_defFnDrag",
@@ -8075,7 +8082,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 168,
+            "line": 170,
             "description": "Fired when the mouse comes back into the browser-window while dd-drag was busy yet no buttons are pressed.\nThis is a correction to the fact that the mouseup-event wasn't noticed because the mouse was outside the browser.",
             "itemtype": "event",
             "name": "dd-fake-mouseup",
@@ -8087,7 +8094,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 200,
+            "line": 202,
             "description": "Default function for the `*:dd-drop`-event",
             "itemtype": "method",
             "name": "_defFnDrop",
@@ -8106,7 +8113,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 230,
+            "line": 232,
             "description": "Default function for the `*:dd`-event",
             "itemtype": "method",
             "name": "_defFnStart",
@@ -8125,7 +8132,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 248,
+            "line": 250,
             "description": "Defines the definition of the `dd` event: the first phase of the drag-eventcycle (dd, *:dd-drag, *:dd-drop)",
             "itemtype": "method",
             "name": "_defineDDStart",
@@ -8144,7 +8151,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 266,
+            "line": 268,
             "description": "Default function for the `*:dd-drag`-event",
             "itemtype": "method",
             "name": "_initializeDrag",
@@ -8163,7 +8170,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 348,
+            "line": 350,
             "description": "Emitted during the drag-cycle of a draggable Element (while it is dragged).",
             "itemtype": "event",
             "name": "*:dd-drag",
@@ -8238,7 +8245,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 397,
+            "line": 399,
             "description": "Emitted when drag-cycle of a draggable Element is ended.",
             "itemtype": "event",
             "name": "*:dd-drop",
@@ -8313,7 +8320,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 455,
+            "line": 457,
             "description": "Prevented function for the `*:dd-start`-event",
             "itemtype": "method",
             "name": "_prevFnStart",
@@ -8332,7 +8339,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 468,
+            "line": 470,
             "description": "Engine behind the drag-drop-cycle.\nSets up a `mousedown` listener to initiate a drag-drop eventcycle. The eventcycle start whenever\none of these events happens on a HtmlElement with the attribute `dd-draggable=\"true\"`.\nThe drag-drop eventcycle consists of the events: `dd-start`, `emitterName:dd-drag` and `emitterName:dd-drop`",
             "itemtype": "method",
             "name": "_setupMouseEv",
@@ -8344,7 +8351,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 524,
+            "line": 526,
             "description": "Emitted when a draggable Element's drag-cycle starts. You can use a `before`-subscriber to specify\ne.relatives, which should be a nodelist with HtmlElements, that should be dragged togehter with the master\ndraggable Element.",
             "itemtype": "event",
             "name": "*:dd",
@@ -8419,7 +8426,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 587,
+            "line": 589,
             "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
             "itemtype": "method",
             "name": "init",
@@ -8440,7 +8447,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 611,
+            "line": 613,
             "description": "Creates a notifier to response after each `Drag` event is set up, or teared down.\nYou can use this to hook in into the drag-eventcycle: the `drop`-module uses it this way.",
             "static": 1,
             "itemtype": "method",
@@ -8469,6 +8476,1176 @@
             "since": "0.0.1",
             "class": "DD",
             "module": "drag"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 22,
+            "description": "Emitted during the drag-cycle of a draggable Element (while it is dragged).",
+            "itemtype": "event",
+            "name": "*:dd-drag (extended by drag-drop)",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject including:",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "target",
+                            "description": "the HtmlElement that is being dragged",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "dragNode",
+                            "description": "The HtmlElement that is being dragged (equals e.target)",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "sourceNode",
+                            "description": "The original Element. Only when a `copy` is made --> e.dragNode is being moved while\n       e.sourceNode stand at its place.",
+                            "type": "HtmlElement",
+                            "optional": true
+                        },
+                        {
+                            "name": "currentTarget",
+                            "description": "the HtmlElement that is delegating",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "sourceTarget",
+                            "description": "the deepest HtmlElement where the mouse lies upon",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "dropTarget",
+                            "description": "The dropzone HtmlElement that will be available whenever the draggable gets over a dropzone.",
+                            "type": "HtmlElement",
+                            "optional": true
+                        },
+                        {
+                            "name": "dd",
+                            "description": "Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.",
+                            "type": "Promise"
+                        },
+                        {
+                            "name": "dropzone",
+                            "description": "a Promise that will be available whenever the draggable gets over a dropzone.\n       The Promise that gets fulfilled as soon as the draggable is dropped, or outside the dropzone\n       Will fulfill with one argument: `onDropzone` {Boolean} when `true`, the draggable is dropped inside the dropzone, otherwise\n       the draggable got outside the dropzone without beging dropped.",
+                            "type": "Promise",
+                            "optional": true
+                        },
+                        {
+                            "name": "ctrlKey",
+                            "description": "Whether the Ctrl/cmd key is pressed",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "isCopied",
+                            "description": "Whether the drag is a copy-drag",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "xMouse",
+                            "description": "the current x-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "yMouse",
+                            "description": "the current y-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "clientX",
+                            "description": "the current x-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "clientY",
+                            "description": "the current y-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "xMouseOrigin",
+                            "description": "the original x-position in the document when drag started (incl. scrollOffset)",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "yMouseOrigin",
+                            "description": "the original y-position in the document when drag started (incl. scrollOffset)",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "relatives",
+                            "description": "an optional list that the user could set in a `before`-subscriber of the `dd`-event\n       to inform which nodes are related to the draggable node and should be dragged as well.",
+                            "type": "NodeList",
+                            "optional": true
+                        },
+                        {
+                            "name": "relativeDragNodes",
+                            "description": "an optional list that holds the HtmlElements that corresponds with\n       the `e.relative` list, but is a list with draggable Elements.",
+                            "type": "NodeList",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 55,
+            "description": "Emitted when drag-cycle of a draggable Element is ended.",
+            "itemtype": "event",
+            "name": "*:dd-drop (extended by drag-drop)",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject including:",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "target",
+                            "description": "the HtmlElement that is being dragged",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "dragNode",
+                            "description": "The HtmlElement that is being dragged (equals e.target)",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "sourceNode",
+                            "description": "The original Element. Only when a `copy` is made --> e.dragNode is being moved while\n       e.sourceNode stand at its place.",
+                            "type": "HtmlElement",
+                            "optional": true
+                        },
+                        {
+                            "name": "currentTarget",
+                            "description": "the HtmlElement that is delegating",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "sourceTarget",
+                            "description": "the deepest HtmlElement where the mouse lies upon",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "dropTarget",
+                            "description": "The dropzone HtmlElement that will be available whenever the draggable gets over a dropzone.",
+                            "type": "HtmlElement",
+                            "optional": true
+                        },
+                        {
+                            "name": "dd",
+                            "description": "Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.",
+                            "type": "Promise"
+                        },
+                        {
+                            "name": "dropzone",
+                            "description": "a Promise that will be available whenever the draggable gets over a dropzone.\n       The Promise that gets fulfilled as soon as the draggable is dropped, or outside the dropzone\n       Will fulfill with one argument: `onDropzone` {Boolean} when `true`, the draggable is dropped inside the dropzone, otherwise\n       the draggable got outside the dropzone without beging dropped.",
+                            "type": "Promise",
+                            "optional": true
+                        },
+                        {
+                            "name": "ctrlKey",
+                            "description": "Whether the Ctrl/cmd key is pressed",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "isCopied",
+                            "description": "Whether the drag is a copy-drag",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "xMouse",
+                            "description": "the current x-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "yMouse",
+                            "description": "the current y-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "clientX",
+                            "description": "the current x-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "clientY",
+                            "description": "the current y-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "xMouseOrigin",
+                            "description": "the original x-position in the document when drag started (incl. scrollOffset)",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "yMouseOrigin",
+                            "description": "the original y-position in the document when drag started (incl. scrollOffset)",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "relatives",
+                            "description": "an optional list that the user could set in a `before`-subscriber of the `dd`-event\n       to inform which nodes are related to the draggable node and should be dragged as well.",
+                            "type": "NodeList",
+                            "optional": true
+                        },
+                        {
+                            "name": "relativeDragNodes",
+                            "description": "an optional list that holds the HtmlElements that corresponds with\n       the `e.relative` list, but is a list with draggable Elements.",
+                            "type": "NodeList",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 88,
+            "description": "Emitted when a draggable Element's drag-cycle starts. You can use a `before`-subscriber to specify\ne.relatives, which should be a nodelist with HtmlElements, that should be dragged togehter with the master\ndraggable Element.",
+            "itemtype": "event",
+            "name": "dd (extended by drag-drop)",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject including:",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "target",
+                            "description": "the HtmlElement that is being dragged",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "dragNode",
+                            "description": "The HtmlElement that is being dragged (equals e.target)",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "sourceNode",
+                            "description": "The original Element. Only when a `copy` is made --> e.dragNode is being moved while\n       e.sourceNode stand at its place.",
+                            "type": "HtmlElement",
+                            "optional": true
+                        },
+                        {
+                            "name": "currentTarget",
+                            "description": "the HtmlElement that is delegating",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "sourceTarget",
+                            "description": "the deepest HtmlElement where the mouse lies upon",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "dd",
+                            "description": "Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.",
+                            "type": "Promise"
+                        },
+                        {
+                            "name": "ctrlKey",
+                            "description": "Whether the Ctrl/cmd key is pressed",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "isCopied",
+                            "description": "Whether the drag is a copy-drag",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "xMouse",
+                            "description": "the current x-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "yMouse",
+                            "description": "the current y-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "clientX",
+                            "description": "the current x-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "clientY",
+                            "description": "the current y-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "xMouseOrigin",
+                            "description": "the original x-position in the document when drag started (incl. scrollOffset)",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "yMouseOrigin",
+                            "description": "the original y-position in the document when drag started (incl. scrollOffset)",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "relatives",
+                            "description": "an optional list that the user could set in a `before`-subscriber of the `dd`-event\n       to inform which nodes are related to the draggable node and should be dragged as well.",
+                            "type": "NodeList",
+                            "optional": true
+                        },
+                        {
+                            "name": "relativeDragNodes",
+                            "description": "an optional list that holds the HtmlElements that corresponds with\n       the `e.relative` list, but is a list with draggable Elements.",
+                            "type": "NodeList",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 118,
+            "description": "Objecthash containing all specific information about the particular drag-cycle.\nIt has a structure like this:\n\nddProps = {\n    sourceNode {HtmlElement} original node (defined by drag-drop)\n    dragNode {HtmlElement} Element that is dragged\n    x {Number} absolute x-position of the draggable inside `document` when the drag starts\n    y {Number} absolute y-position of the draggable inside `document` when the drag starts\n    inlineLeft {String} inline css of the property `left` when drag starts\n    inlineTop {String} inline css of the property `top` when drag starts\n    winConstrained {Boolean} whether the draggable should be constrained to `window`\n    xMouseLast {Number} absolute x-position of the mouse inside `document` when the drag starts\n    yMouseLast {Number} absolute y-position of the draggable inside `document` when the drag starts\n    winScrollLeft {Number} the left-scroll of window when drag starts\n    winScrollTop {Number} the top-scroll of window when drag starts\n    constrain = { // constrain-properties when constrained to a HtmlElement\n        xOrig {Number} x-position in the document, included with left-border-width\n        yOrig {Number} y-position in the document, included with top-border-width\n        x {Number} xOrig corrected with scroll-left of the constrained node\n        y {Number} yOrig corrected with scroll-top of the constrained node\n        w {Number} scrollWidth\n        h {Number} scrollHeight\n    };\n    dropzoneSpecified {Boolean} whether the draggable has a dropzone specified (either by `dd-dropzone` or by `dd-emitter`) (defined by drag-drop)\n    dragOverEv {Object} Eventhandler that watches for `mousemove` to detect dropzone-over events (defined by drag-drop)\n    relatives[{ // Array with objects that represent all draggables that come along with the master-draggable (in case of multiple items), excluded the master draggable itself\n        sourceNode {HtmlElement} original node (defined by drag-drop)\n        dragNode {HtmlElement} draggable node\n        shiftX {Number} the amount of left-pixels that this HtmlElement differs from the dragged element\n        shiftY {Number} the amount of top-pixels that this HtmlElement differs from the dragged element\n        inlineLeft {String} inline css of the property `left` when drag starts\n        inlineTop {String} inline css of the property `top` when drag starts\n    }]\n    relativeDragNodes [HtmlElements] Array with all `copyied` Nodes corresponding to `ddProps.relatives`. Only in case of copying multiple items (defined by drag-drop)\n}",
+            "itemtype": "property",
+            "name": "ddProps (extended by drag-drop)",
+            "default": "{}",
+            "type": "Object",
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 250,
+            "description": "Returns the allowed effects on the dragable-HtmlElement. Is determined by the attribute `dd-effect-allowed`\nWill be set to \"move\" when undefined.",
+            "itemtype": "method",
+            "name": "_allowedEffects",
+            "params": [
+                {
+                    "name": "dragableElement",
+                    "description": "HtmlElement that is checked for its allowed effects",
+                    "type": "HtmlElement"
+                }
+            ],
+            "return": {
+                "description": "allowed effects: \"move\", \"copy\" or \"all\"",
+                "type": "String"
+            },
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 266,
+            "description": "Default function for the `*:dd-drop`-event. Overrides the definition of the `drag`-module.",
+            "itemtype": "method",
+            "name": "_defFnDrop (extended by drag-drop)",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                },
+                {
+                    "name": "sourceNode",
+                    "description": "the original HtmlElement",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dragNode",
+                    "description": "the dragged HtmlElement (either original or clone)",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dropzoneSpecified",
+                    "description": "whether the sourceNode had a dropzone specified",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "relatives",
+                    "description": "hash with all draggables that are being move togerther with the master draggable",
+                    "type": "Array"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 316,
+            "description": "Default function for the `*:dropzone`-event",
+            "itemtype": "method",
+            "name": "_defFnOver",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 335,
+            "description": "Emitted when the draggable gets out of the dropzone.",
+            "itemtype": "event",
+            "name": "*:dropzone-out",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject including:",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "target",
+                            "description": "the dropzone",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "dragNode",
+                            "description": "The HtmlElement that is being dragged",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "dropzone",
+                            "description": "The Promise that gets fulfilled as soon as the draggable is dropped, or outside the dropzone\n       Will fulfill with one argument: `onDropzone` {Boolean} when `true`, the draggable is dropped inside the dropzone, otherwise\n       the draggable got outside the dropzone without beging dropped.",
+                            "type": "Promise"
+                        },
+                        {
+                            "name": "dropTarget",
+                            "description": "The dropzone HtmlElement. Equals e.target",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "ctrlKey",
+                            "description": "Whether the Ctrl/cmd key is pressed",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "isCopied",
+                            "description": "Whether the drag is a copy-drag",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "sourceNode",
+                            "description": "The original Element. Only when a `copy` is made --> e.dragNode is being moved while\n       e.sourceNode stand at its place.",
+                            "type": "HtmlElement",
+                            "optional": true
+                        },
+                        {
+                            "name": "currentTarget",
+                            "description": "the HtmlElement that is delegating the draggable",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "sourceTarget",
+                            "description": "the deepest HtmlElement of the draggable where the mouse lies upon",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "dd",
+                            "description": "Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.",
+                            "type": "Promise"
+                        },
+                        {
+                            "name": "xMouse",
+                            "description": "the current x-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "yMouse",
+                            "description": "the current y-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "clientX",
+                            "description": "the current x-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "clientY",
+                            "description": "the current y-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "xMouseOrigin",
+                            "description": "the original x-position in the document when drag started (incl. scrollOffset)",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "yMouseOrigin",
+                            "description": "the original y-position in the document when drag started (incl. scrollOffset)",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "relatives",
+                            "description": "an optional list that the user could set in a `before`-subscriber of the `dd`-event\n       to inform which nodes are related to the draggable node and should be dragged as well.",
+                            "type": "NodeList",
+                            "optional": true
+                        },
+                        {
+                            "name": "relativeDragNodes",
+                            "description": "an optional list that holds the HtmlElements that corresponds with\n       the `e.relative` list, but is a list with draggable Elements.",
+                            "type": "NodeList",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "since": "0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 370,
+            "description": "Defines the definition of the `dd-drop` event: the last phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)",
+            "itemtype": "method",
+            "name": "_defineDropEv",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                },
+                {
+                    "name": "sourceNode",
+                    "description": "the original HtmlElement",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dragNode",
+                    "description": "the dragged HtmlElement (either original or clone)",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dropzoneSpecified",
+                    "description": "whether the sourceNode had a dropzone specified",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "x",
+                    "description": "x-position in coordinaties relative to `document` (like getX())",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "y-position in coordinaties relative to `document` (like getX())",
+                    "type": "Number"
+                },
+                {
+                    "name": "inlineLeft",
+                    "description": "inline css `left` for the original sourceNode",
+                    "type": "String"
+                },
+                {
+                    "name": "inlineTop",
+                    "description": "inline css `top` for the original sourceNode",
+                    "type": "String"
+                },
+                {
+                    "name": "relatives",
+                    "description": "hash with all draggables that are being move togerther with the master draggable",
+                    "type": "Array"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 395,
+            "description": "Defines the definition of the `dropzone` event.\nAlso sets up listeners to tricker dd-over when the mouse is above an dropzone.",
+            "itemtype": "method",
+            "name": "_defineOverEv",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                },
+                {
+                    "name": "dropzones",
+                    "description": "list with dropzonenodes",
+                    "type": "NodeList"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 478,
+            "description": "Emitted when the draggable gets inside a dropzone.",
+            "itemtype": "event",
+            "name": "*:dropzone-over",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject including:",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "target",
+                            "description": "the dropzone",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "dragNode",
+                            "description": "The HtmlElement that is being dragged",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "dropzone",
+                            "description": "The Promise that gets fulfilled as soon as the draggable is dropped, or outside the dropzone\n       Will fulfill with one argument: `onDropzone` {Boolean} when `true`, the draggable is dropped inside the dropzone, otherwise\n       the draggable got outside the dropzone without beging dropped.",
+                            "type": "Promise"
+                        },
+                        {
+                            "name": "dropTarget",
+                            "description": "The dropzone HtmlElement. Equals e.target",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "ctrlKey",
+                            "description": "Whether the Ctrl/cmd key is pressed",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "isCopied",
+                            "description": "Whether the drag is a copy-drag",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "sourceNode",
+                            "description": "The original Element. Only when a `copy` is made --> e.dragNode is being moved while\n       e.sourceNode stand at its place.",
+                            "type": "HtmlElement",
+                            "optional": true
+                        },
+                        {
+                            "name": "currentTarget",
+                            "description": "the HtmlElement that is delegating the draggable",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "sourceTarget",
+                            "description": "the deepest HtmlElement of the draggable where the mouse lies upon",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "dd",
+                            "description": "Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.",
+                            "type": "Promise"
+                        },
+                        {
+                            "name": "xMouse",
+                            "description": "the current x-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "yMouse",
+                            "description": "the current y-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "clientX",
+                            "description": "the current x-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "clientY",
+                            "description": "the current y-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "xMouseOrigin",
+                            "description": "the original x-position in the document when drag started (incl. scrollOffset)",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "yMouseOrigin",
+                            "description": "the original y-position in the document when drag started (incl. scrollOffset)",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "relatives",
+                            "description": "an optional list that the user could set in a `before`-subscriber of the `dd`-event\n       to inform which nodes are related to the draggable node and should be dragged as well.",
+                            "type": "NodeList",
+                            "optional": true
+                        },
+                        {
+                            "name": "relativeDragNodes",
+                            "description": "an optional list that holds the HtmlElements that corresponds with\n       the `e.relative` list, but is a list with draggable Elements.",
+                            "type": "NodeList",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "since": "0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 517,
+            "description": "Emits a dropzone-drop event.",
+            "itemtype": "method",
+            "name": "_emitDropzoneDrop",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject to pass arround",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 526,
+            "description": "Emitted when a draggable gets dropped inside a dropzone.",
+            "itemtype": "event",
+            "name": "*:dropzone-drop",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject including:",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "target",
+                            "description": "the dropzone",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "dragNode",
+                            "description": "The HtmlElement that is being dragged",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "dropzone",
+                            "description": "The Promise that gets fulfilled as soon as the draggable is dropped, or outside the dropzone\n       Will fulfill with one argument: `onDropzone` {Boolean} when `true`, the draggable is dropped inside the dropzone, otherwise\n       the draggable got outside the dropzone without beging dropped.",
+                            "type": "Promise"
+                        },
+                        {
+                            "name": "dropTarget",
+                            "description": "The dropzone HtmlElement. Equals e.target",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "ctrlKey",
+                            "description": "Whether the Ctrl/cmd key is pressed",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "isCopied",
+                            "description": "Whether the drag is a copy-drag",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "sourceNode",
+                            "description": "The original Element. Only when a `copy` is made --> e.dragNode is being moved while\n       e.sourceNode stand at its place.",
+                            "type": "HtmlElement",
+                            "optional": true
+                        },
+                        {
+                            "name": "currentTarget",
+                            "description": "the HtmlElement that is delegating the draggable",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "sourceTarget",
+                            "description": "the deepest HtmlElement of the draggable where the mouse lies upon",
+                            "type": "HtmlElement"
+                        },
+                        {
+                            "name": "dd",
+                            "description": "Promise that gets fulfilled when dragging is ended. The fullfilled-callback has no arguments.",
+                            "type": "Promise"
+                        },
+                        {
+                            "name": "xMouse",
+                            "description": "the current x-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "yMouse",
+                            "description": "the current y-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "clientX",
+                            "description": "the current x-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "clientY",
+                            "description": "the current y-position in the window-view",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "xMouseOrigin",
+                            "description": "the original x-position in the document when drag started (incl. scrollOffset)",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "yMouseOrigin",
+                            "description": "the original y-position in the document when drag started (incl. scrollOffset)",
+                            "type": "Number"
+                        },
+                        {
+                            "name": "relatives",
+                            "description": "an optional list that the user could set in a `before`-subscriber of the `dd`-event\n       to inform which nodes are related to the draggable node and should be dragged as well.",
+                            "type": "NodeList",
+                            "optional": true
+                        },
+                        {
+                            "name": "relativeDragNodes",
+                            "description": "an optional list that holds the HtmlElements that corresponds with\n       the `e.relative` list, but is a list with draggable Elements.",
+                            "type": "NodeList",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "since": "0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 559,
+            "description": "Sets the draggable node back to its original position",
+            "itemtype": "method",
+            "name": "_handleDrop",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                },
+                {
+                    "name": "sourceNode",
+                    "description": "the original HtmlElement",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dragNode",
+                    "description": "the dragged HtmlElement (either original or clone)",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "relatives",
+                    "description": "hash with all draggables that are being move togerther with the master draggable",
+                    "type": "Array"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 725,
+            "description": "Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,\nso you can choose to do set the draggables back conditionally.",
+            "itemtype": "method",
+            "name": "_restoreDraggables",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                },
+                {
+                    "name": "sourceNode",
+                    "description": "the original HtmlElement",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dragNode",
+                    "description": "the dragged HtmlElement (either original or clone)",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dropzoneSpecified",
+                    "description": "whether the sourceNode had a dropzone specified",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "x",
+                    "description": "x-position in coordinaties relative to `document` (like getX())",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "y-position in coordinaties relative to `document` (like getX())",
+                    "type": "Number"
+                },
+                {
+                    "name": "inlineLeft",
+                    "description": "inline css `left` for the original sourceNode",
+                    "type": "String"
+                },
+                {
+                    "name": "inlineTop",
+                    "description": "inline css `top` for the original sourceNode",
+                    "type": "String"
+                },
+                {
+                    "name": "relatives",
+                    "description": "hash with all draggables that are being move togerther with the master draggable",
+                    "type": "Array"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 763,
+            "description": "Sets the draggable node back to its original position",
+            "itemtype": "method",
+            "name": "_setBack",
+            "params": [
+                {
+                    "name": "sourceNode",
+                    "description": "the original HtmlElement",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dragNode",
+                    "description": "the dragged HtmlElement (either original or clone)",
+                    "type": "HtmlElement"
+                },
+                {
+                    "name": "dropzoneSpecified",
+                    "description": "whether the sourceNode had a dropzone specified",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "x",
+                    "description": "x-position in coordinaties relative to `document` (like getX())",
+                    "type": "Number"
+                },
+                {
+                    "name": "y",
+                    "description": "y-position in coordinaties relative to `document` (like getX())",
+                    "type": "Number"
+                },
+                {
+                    "name": "inlineLeft",
+                    "description": "inline css `left` for the original sourceNode",
+                    "type": "String"
+                },
+                {
+                    "name": "inlineTop",
+                    "description": "inline css `top` for the original sourceNode",
+                    "type": "String"
+                },
+                {
+                    "name": "emitDropzoneEvent",
+                    "description": "whether dropzone-event should be emitted",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 838,
+            "description": "Sets up a `keydown` and `keyup` listener, to monitor whether a `ctrlKey` (windows) or `metaKey` (Mac)\nis pressed to support the copying of draggable items",
+            "itemtype": "method",
+            "name": "_setupKeyEv",
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 873,
+            "description": "Fired when the mouse comes back into the browser-window while dd-drag was busy yet no buttons are pressed.\nThis is a correction to the fact that the mouseup-event wasn't noticed because the mouse was outside the browser.",
+            "itemtype": "event",
+            "name": "dd-fake-mousemove",
+            "access": "private",
+            "tagname": "",
+            "since": "0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 886,
+            "description": "Cleansup the dragover subscriber and fulfills any dropzone-promise.",
+            "itemtype": "method",
+            "name": "_teardownOverEvent",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 910,
+            "description": "Returns true if the dropzone-HtmlElement accepts copy-dragables.\nIs determined by the attribute `dd-effect-allowed=\"copy\"` or `dd-effect-allowed=\"all\"`",
+            "itemtype": "method",
+            "name": "allowCopy",
+            "params": [
+                {
+                    "name": "dropzone",
+                    "description": "HtmlElement that is checked for its allowed effects",
+                    "type": "HtmlElement"
+                }
+            ],
+            "return": {
+                "description": "if copy-dragables are allowed",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 925,
+            "description": "Returns true if the dragable-HtmlElement allowes to switch between `copy` and `move`.",
+            "itemtype": "method",
+            "name": "allowSwitch",
+            "params": [
+                {
+                    "name": "dragableElement",
+                    "description": "HtmlElement that is checked for its allowed effects",
+                    "type": "HtmlElement"
+                }
+            ],
+            "return": {
+                "description": "if copy-dragables are allowed",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 938,
+            "description": "Returns the emitterName that the dropzone accepts.",
+            "itemtype": "method",
+            "name": "getDropzoneEmitter",
+            "params": [
+                {
+                    "name": "dropzone",
+                    "description": "dropzone attribute of the dropzone HtmlElement",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "the emitterName that is accepted",
+                "type": "String|null"
+            },
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 952,
+            "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
+            "itemtype": "method",
+            "name": "init (extended by drag-drop)",
+            "params": [
+                {
+                    "name": "dragableElement",
+                    "description": "HtmlElement that is checked for its allowed effects",
+                    "type": "HtmlElement"
+                }
+            ],
+            "return": {
+                "description": "if copy-dragables are allowed",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 1030,
+            "description": "Returns true if the dragable-HtmlElement accepts only copy-dragables (no moveable)\nIs determined by the attribute `dd-effect-allowed=\"copy\"`",
+            "itemtype": "method",
+            "name": "onlyCopy",
+            "params": [
+                {
+                    "name": "dragableElement",
+                    "description": "HtmlElement that is checked for its allowed effects",
+                    "type": "HtmlElement"
+                }
+            ],
+            "return": {
+                "description": "if only copy-dragables are allowed",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
+        },
+        {
+            "file": "src/drag-drop/drag-drop (origineel).js",
+            "line": 1044,
+            "description": "Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,\nso you can choose to do set the draggables back conditionally.",
+            "itemtype": "method",
+            "name": "restoreDraggables",
+            "access": "private",
+            "tagname": "",
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "DD",
+            "module": "drag-drop"
         },
         {
             "file": "src/drag-drop/drag-drop.js",
@@ -8814,7 +9991,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 250,
+            "line": 256,
             "description": "Returns the allowed effects on the dragable-HtmlElement. Is determined by the attribute `dd-effect-allowed`\nWill be set to \"move\" when undefined.",
             "itemtype": "method",
             "name": "_allowedEffects",
@@ -8837,7 +10014,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 266,
+            "line": 272,
             "description": "Default function for the `*:dd-drop`-event. Overrides the definition of the `drag`-module.",
             "itemtype": "method",
             "name": "_defFnDrop (extended by drag-drop)",
@@ -8876,7 +10053,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 316,
+            "line": 322,
             "description": "Default function for the `*:dropzone`-event",
             "itemtype": "method",
             "name": "_defFnOver",
@@ -8895,7 +10072,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 335,
+            "line": 341,
             "description": "Emitted when the draggable gets out of the dropzone.",
             "itemtype": "event",
             "name": "*:dropzone-out",
@@ -9007,7 +10184,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 370,
+            "line": 376,
             "description": "Defines the definition of the `dd-drop` event: the last phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)",
             "itemtype": "method",
             "name": "_defineDropEv",
@@ -9066,7 +10243,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 395,
+            "line": 401,
             "description": "Defines the definition of the `dropzone` event.\nAlso sets up listeners to tricker dd-over when the mouse is above an dropzone.",
             "itemtype": "method",
             "name": "_defineOverEv",
@@ -9090,7 +10267,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 478,
+            "line": 483,
             "description": "Emitted when the draggable gets inside a dropzone.",
             "itemtype": "event",
             "name": "*:dropzone-over",
@@ -9202,7 +10379,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 517,
+            "line": 522,
             "description": "Emits a dropzone-drop event.",
             "itemtype": "method",
             "name": "_emitDropzoneDrop",
@@ -9221,7 +10398,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 526,
+            "line": 531,
             "description": "Emitted when a draggable gets dropped inside a dropzone.",
             "itemtype": "event",
             "name": "*:dropzone-drop",
@@ -9333,7 +10510,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 559,
+            "line": 564,
             "description": "Sets the draggable node back to its original position",
             "itemtype": "method",
             "name": "_handleDrop",
@@ -9367,7 +10544,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 725,
+            "line": 736,
             "description": "Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,\nso you can choose to do set the draggables back conditionally.",
             "itemtype": "method",
             "name": "_restoreDraggables",
@@ -9426,7 +10603,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 763,
+            "line": 774,
             "description": "Sets the draggable node back to its original position",
             "itemtype": "method",
             "name": "_setBack",
@@ -9481,7 +10658,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 838,
+            "line": 849,
             "description": "Sets up a `keydown` and `keyup` listener, to monitor whether a `ctrlKey` (windows) or `metaKey` (Mac)\nis pressed to support the copying of draggable items",
             "itemtype": "method",
             "name": "_setupKeyEv",
@@ -9493,7 +10670,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 873,
+            "line": 884,
             "description": "Fired when the mouse comes back into the browser-window while dd-drag was busy yet no buttons are pressed.\nThis is a correction to the fact that the mouseup-event wasn't noticed because the mouse was outside the browser.",
             "itemtype": "event",
             "name": "dd-fake-mousemove",
@@ -9505,7 +10682,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 886,
+            "line": 897,
             "description": "Cleansup the dragover subscriber and fulfills any dropzone-promise.",
             "itemtype": "method",
             "name": "_teardownOverEvent",
@@ -9524,7 +10701,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 910,
+            "line": 921,
             "description": "Returns true if the dropzone-HtmlElement accepts copy-dragables.\nIs determined by the attribute `dd-effect-allowed=\"copy\"` or `dd-effect-allowed=\"all\"`",
             "itemtype": "method",
             "name": "allowCopy",
@@ -9545,7 +10722,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 925,
+            "line": 936,
             "description": "Returns true if the dragable-HtmlElement allowes to switch between `copy` and `move`.",
             "itemtype": "method",
             "name": "allowSwitch",
@@ -9566,7 +10743,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 938,
+            "line": 949,
             "description": "Returns the emitterName that the dropzone accepts.",
             "itemtype": "method",
             "name": "getDropzoneEmitter",
@@ -9587,7 +10764,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 952,
+            "line": 963,
             "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
             "itemtype": "method",
             "name": "init (extended by drag-drop)",
@@ -9608,7 +10785,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 1030,
+            "line": 1041,
             "description": "Returns true if the dragable-HtmlElement accepts only copy-dragables (no moveable)\nIs determined by the attribute `dd-effect-allowed=\"copy\"`",
             "itemtype": "method",
             "name": "onlyCopy",
@@ -9629,7 +10806,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 1044,
+            "line": 1055,
             "description": "Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,\nso you can choose to do set the draggables back conditionally.",
             "itemtype": "method",
             "name": "restoreDraggables",
@@ -13091,7 +14268,7 @@
         },
         {
             "file": "src/focusmanager/focusmanager.js",
-            "line": 439,
+            "line": 458,
             "description": "In case of a manual focus (node.focus()) the node will fire an `manualfocus`-event\nwhich can be prevented.",
             "itemtype": "event",
             "name": "manualfocus",
@@ -14182,7 +15359,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 136,
+            "line": 137,
             "description": "Reference to the `idGenerator` function in [utils](../modules/utils.html)",
             "itemtype": "property",
             "name": "idGenerator",
@@ -14468,7 +15645,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 390,
+            "line": 391,
             "description": "Base properties for every Class",
             "itemtype": "property",
             "name": "BASE_MEMBERS",
@@ -14482,7 +15659,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 400,
+            "line": 401,
             "description": "Transformed from `destroy` --> when `destroy` gets invoked, the instance will invoke `_destroy` through the whole chain.\nDefaults to `NOOP`, so that it can be always be invoked.",
             "itemtype": "method",
             "name": "_destroy",
@@ -14496,7 +15673,21 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 411,
+            "line": 412,
+            "description": "Transformed from `destroy` --> when `destroy` gets invoked, the instance will invoke `_destroy` through the whole chain.\nDefaults to `NOOP`, so that it can be always be invoked.",
+            "itemtype": "method",
+            "name": "afterInit",
+            "access": "private",
+            "tagname": "",
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Classes",
+            "module": "js-ext",
+            "submodule": "extra/classes.js"
+        },
+        {
+            "file": "src/js-ext/extra/classes.js",
+            "line": 423,
             "description": "Calls `_destroy` on through the class-chain on every level (bottom-up).\n_destroy gets defined when the itag defines `destroy` --> transformation under the hood.",
             "itemtype": "method",
             "name": "destroy",
@@ -14517,7 +15708,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 441,
+            "line": 453,
             "description": "Returns the instance, yet sets an internal flag to a higher Class (1 level up)",
             "itemtype": "property",
             "name": "$super",
@@ -14529,7 +15720,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 459,
+            "line": 471,
             "description": "Calculated value of the specified member at the parent-Class.",
             "itemtype": "method",
             "name": "$superProp",
@@ -14544,7 +15735,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 498,
+            "line": 510,
             "description": "Invokes the original method (from inside where $orig is invoked).\nAny arguments will be passed through to the original method.",
             "itemtype": "method",
             "name": "$orig",
@@ -14559,7 +15750,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 558,
+            "line": 570,
             "description": "Creates the base Class: the highest Class in the hierarchy of all Classes.\nWill get extra properties merge into its prototype, which leads into the formation of `BaseClass`.",
             "itemtype": "method",
             "name": "createBaseClass",
@@ -14576,7 +15767,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 573,
+            "line": 585,
             "description": "The base BaseClass: the highest Class in the hierarchy of all Classes.",
             "itemtype": "property",
             "name": "BaseClass",
@@ -14588,7 +15779,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 585,
+            "line": 597,
             "description": "Returns a base class with the given constructor and prototype methods",
             "itemtype": "method",
             "name": "createClass",
@@ -15041,6 +16232,13 @@
                             "optdefault": "false"
                         },
                         {
+                            "name": "replace",
+                            "description": "If true, only properties that already exist on the instance will be merged (forced replaced). No need to set force as well.",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
                             "name": "descriptors",
                             "description": "If true, the full descriptors will be set. This takes more time, but avoids any info to be lost.",
                             "type": "Boolean",
@@ -15057,7 +16255,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 410,
+            "line": 412,
             "description": "Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object",
             "itemtype": "method",
             "name": "isObject",
@@ -15072,7 +16270,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 421,
+            "line": 423,
             "description": "Creates a protected property on the object.",
             "itemtype": "method",
             "name": "protectedProp",
@@ -15083,7 +16281,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 436,
+            "line": 438,
             "description": "Returns a new object resulting of merging the properties of the given objects.\nThe copying is shallow, complex properties will reference the very same object.\nProperties in later objects do **not overwrite** properties of the same name in earlier objects.\nIf any of the objects is missing, it will be skiped.",
             "example": [
                 "\n\n var foo = function (config) {\n      config = Object.merge(config, defaultConfig);\n }"
@@ -15618,6 +16816,240 @@
             "submodule": "lib/string.js"
         },
         {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 69,
+            "description": "Default internal hash containing all DOM-events that will not directly call `event-finalize`\nbut after a delay of 1 second",
+            "itemtype": "property",
+            "name": "DEFAULT_DELAYED_FINALIZE_EVENTS",
+            "default": "{\n   mousedown: true,\n   mouseup: true,\n   mousemove: true,\n   panmove: true,\n   panstart: true,\n   panleft: true,\n   panright: true,\n   panup: true,\n   pandown: true,\n   pinchmove: true,\n   rotatemove: true,\n   focus: true,\n   manualfocus: true,\n   keydown: true,\n   keyup: true,\n   keypress: true,\n   blur: true,\n   resize: true,\n   scroll: true\n}",
+            "type": "Object",
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 245,
+            "description": "Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.",
+            "itemtype": "method",
+            "name": "isPlugged",
+            "params": [
+                {
+                    "name": "PluginClass",
+                    "description": "The plugin that should be plugged. Needs to be the Class, not an instance!",
+                    "type": "NodePlugin"
+                }
+            ],
+            "return": {
+                "description": "whether the plugin is plugged in",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 257,
+            "description": "Checks whether the plugin is ready to be used.",
+            "itemtype": "method",
+            "name": "pluginReady",
+            "params": [
+                {
+                    "name": "PluginClass",
+                    "description": "The plugin that should be plugged. Needs to be the Class, not an instance!",
+                    "type": "NodePlugin"
+                }
+            ],
+            "return": {
+                "description": "whether the plugin is plugged in",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 273,
+            "description": "Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.",
+            "itemtype": "method",
+            "name": "plug",
+            "params": [
+                {
+                    "name": "PluginClass",
+                    "description": "The plugin that should be plugged. Needs to be the Class, not an instance!",
+                    "type": "NodePlugin"
+                },
+                {
+                    "name": "config",
+                    "description": "any config that should be passed through when the class is instantiated.",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "model",
+                    "description": "model to used as `ns.model`",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 296,
+            "description": "Unplugs a NodePlugin from the HtmlElement.",
+            "itemtype": "method",
+            "name": "unplug",
+            "params": [
+                {
+                    "name": "PluginClass",
+                    "description": "The plugin that should be unplugged. Needs to be the Class, not an instance!",
+                    "type": "NodePlugin"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 328,
+            "description": "Binds a model to the plugin, making plugin.model equals the bound model.\nImmediately syncs the plugin with the new model-data.\n\nSyncs the new vnode's childNodes with the dom.",
+            "itemtype": "method",
+            "name": "bindModel",
+            "params": [
+                {
+                    "name": "model",
+                    "description": "the model to bind to the itag-element",
+                    "type": "Object"
+                },
+                {
+                    "name": "mergeCurrent",
+                    "description": "when set true, current properties on the plugin's model that aren't defined\n       in the new model, get merged into the new model.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 374,
+            "description": "Defines which domevents should lead to a direct sync by the Event-finalizer.\nOnly needed for events that are in the list set by DEFAULT_DELAYED_FINALIZE_EVENTS:\n\n<ul>\n    <li>mousedown</li>\n    <li>mouseup</li>\n    <li>mousemove</li>\n    <li>panmove</li>\n    <li>panstart</li>\n    <li>panleft</li>\n    <li>panright</li>\n    <li>panup</li>\n    <li>pandown</li>\n    <li>pinchmove</li>\n    <li>rotatemove</li>\n    <li>focus</li>\n    <li>manualfocus</li>\n    <li>keydown</li>\n    <li>keyup</li>\n    <li>keypress</li>\n    <li>blur</li>\n    <li>resize</li>\n    <li>scroll</li>\n</ul>\n\nEvents that are not in this list don't need to be set: they always go through the finalizer immediatly.\n\nYou need to set this if the itag-definition its `sync`-method should be updated after one of the events in the list.",
+            "itemtype": "method",
+            "name": "setItagDirectEventResponse",
+            "params": [
+                {
+                    "name": "ItagClass",
+                    "description": "The ItagClass that wants to register",
+                    "type": "Class"
+                },
+                {
+                    "name": "domEvents",
+                    "description": "the domevents that should directly make the itag sync",
+                    "type": "Array|String"
+                }
+            ],
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 509,
+            "description": "Creates a new Element-PluginClass.",
+            "itemtype": "method",
+            "name": "definePlugin",
+            "params": [
+                {
+                    "name": "ns",
+                    "description": "the namespace of the plugin",
+                    "type": "String"
+                },
+                {
+                    "name": "constructor",
+                    "description": "The function that will serve as constructor for the new class.\n       If `undefined` defaults to `NOOP`",
+                    "type": "Function",
+                    "optional": true
+                },
+                {
+                    "name": "prototypes",
+                    "description": "Hash map of properties to be added to the prototype of the new class.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "PluginClass"
+            },
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/lib/element-plugin.js",
+            "line": 541,
+            "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
+            "example": [
+                "\n\n var Circle = Shape.subClass(\n     function (x, y, r) {\n         // arguments will automaticly be passed through to Shape's constructor\n         this.r = r;\n     },\n     {\n         area: function () {\n             return this.r * this.r * Math.PI;\n         }\n     }\n );"
+            ],
+            "itemtype": "method",
+            "name": "subClass",
+            "params": [
+                {
+                    "name": "ns",
+                    "description": "the namespace of the plugin",
+                    "type": "String"
+                },
+                {
+                    "name": "constructor",
+                    "description": "The function that will serve as constructor for the new class.\n       If `undefined` defaults to `NOOP`",
+                    "type": "Function",
+                    "optional": true
+                },
+                {
+                    "name": "prototypes",
+                    "description": "Hash map of properties to be added to the prototype of the new class.",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "chainConstruct",
+                    "description": "Whether -during instance creation- to automaticly construct in the complete hierarchy with the given constructor arguments.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "true"
+                }
+            ],
+            "return": {
+                "description": "undefined when no valid namespace is given",
+                "type": "Plugin|undefined"
+            },
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 3,
             "description": "Wrapper for built-in http.js to emulate the browser XMLHttpRequest object.\n\nThis can be used with JS designed for browsers to improve reuse of code and\nallow the use of existing libraries.\n\nUsage: include(\"XMLHttpRequest.js\") and use XMLHttpRequest per W3C specs.",
@@ -15625,35 +17057,35 @@
             "contributor": "David Ellis <d.f.ellis@ieee.org>",
             "license": "MIT",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 22,
             "description": "Private variables",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 89,
             "description": "Constants",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 99,
             "description": "Public vars",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 115,
             "description": "Private methods",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15669,7 +17101,7 @@
                 "description": "boolean False if not allowed, otherwise true"
             },
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15685,14 +17117,14 @@
                 "description": "boolean False if not allowed, otherwise true"
             },
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 143,
             "description": "Public methods",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15721,7 +17153,7 @@
                 }
             ],
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15734,7 +17166,7 @@
                 }
             ],
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15751,7 +17183,7 @@
                 }
             ],
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15767,7 +17199,7 @@
                 "description": "string Text of the header or null if it doesn't exist."
             },
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15777,7 +17209,7 @@
                 "description": "string A string with all response headers separated by CR+LF"
             },
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15793,7 +17225,7 @@
                 "description": "string Returns the request header or empty string if not set"
             },
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15806,42 +17238,42 @@
                 }
             ],
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 515,
             "description": "Called when an error is encountered to deal with it.",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 526,
             "description": "Aborts a request.",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 548,
             "description": "Adds an event listener. Preferred method of binding to events.",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 559,
             "description": "Remove an event callback that has already been bound.\nOnly works on the matching funciton, cannot be a copy.",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 572,
             "description": "Dispatch any events, including both \"on\" methods and events attached using addEventListener.",
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15854,7 +17286,7 @@
                 }
             ],
             "class": "window",
-            "module": "js-ext"
+            "module": "vdom"
         },
         {
             "file": "src/polyfill/lib/mutationobserver.js",
@@ -16745,71 +18177,6 @@
             "class": "ElementArray",
             "module": "vdom",
             "submodule": "element-array"
-        },
-        {
-            "file": "src/vdom/partials/element-plugin.js",
-            "line": 41,
-            "description": "Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.",
-            "itemtype": "method",
-            "name": "isPlugged",
-            "params": [
-                {
-                    "name": "pluginClass",
-                    "description": "The plugin that should be plugged. Needs to be the Class, not an instance!",
-                    "type": "NodePlugin"
-                }
-            ],
-            "return": {
-                "description": "whether the plugin is plugged in",
-                "type": "Boolean"
-            },
-            "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
-        },
-        {
-            "file": "src/vdom/partials/element-plugin.js",
-            "line": 53,
-            "description": "Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.",
-            "itemtype": "method",
-            "name": "plug",
-            "params": [
-                {
-                    "name": "pluginClass",
-                    "description": "The plugin that should be plugged. Needs to be the Class, not an instance!",
-                    "type": "NodePlugin"
-                },
-                {
-                    "name": "config",
-                    "description": "any config that should be passed through when the class is instantiated.",
-                    "type": "Object"
-                }
-            ],
-            "chainable": 1,
-            "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
-        },
-        {
-            "file": "src/vdom/partials/element-plugin.js",
-            "line": 67,
-            "description": "Unplugs a NodePlugin from the HtmlElement.",
-            "itemtype": "method",
-            "name": "unplug",
-            "params": [
-                {
-                    "name": "pluginClass",
-                    "description": "The plugin that should be unplugged. Needs to be the Class, not an instance!",
-                    "type": "NodePlugin"
-                }
-            ],
-            "chainable": 1,
-            "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
         },
         {
             "file": "src/vdom/partials/extend-document.js",
@@ -18066,7 +19433,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1092,
+            "line": 1119,
             "description": "Compares the position of the current node against another node in any other document.\n\nReturnvalues are a composition of the following bitwise values:\n<ul>\n    <li>Node.DOCUMENT_POSITION_DISCONNECTED === 1 (one of the Elements is not part of the dom)</li>\n    <li>Node.DOCUMENT_POSITION_PRECEDING === 2 (this Element comes before otherElement)</li>\n    <li>Node.DOCUMENT_POSITION_FOLLOWING === 4 (this Element comes after otherElement)</li>\n    <li>Node.DOCUMENT_POSITION_CONTAINS === 8 (otherElement trully contains -not equals- this Element)</li>\n    <li>Node.DOCUMENT_POSITION_CONTAINED_BY === 16 (Element trully contains -not equals- otherElement)</li>\n</ul>",
             "itemtype": "method",
             "name": "compareDocumentPosition",
@@ -18087,7 +19454,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1179,
+            "line": 1206,
             "description": "Indicating whether this Element contains OR equals otherElement. If you need only to be sure the other Element lies inside,\nbut not equals itself, set `excludeItself` true.",
             "itemtype": "method",
             "name": "contains",
@@ -18121,7 +19488,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1196,
+            "line": 1223,
             "description": "Returns a newly created TreeWalker object with this Element as root.\n\nThe TreeWalker is life presentation of the dom. It gets updated when the dom changes.",
             "itemtype": "method",
             "name": "createTreeWalker",
@@ -18155,7 +19522,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1241,
+            "line": 1268,
             "description": "Sets the inline-style of the Element exactly to the specified `value`, overruling previous values.\nMaking the Element's inline-style look like: style=\"value\".\n\nThis is meant for a quick one-time setup. For individually inline style-properties to be set, you can use `setInlineStyle()`.",
             "itemtype": "method",
             "name": "defineInlineStyle",
@@ -18174,7 +19541,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1256,
+            "line": 1283,
             "description": "Empties the content of the Element.\nAlias for thisNode.vTextContent = '';",
             "itemtype": "method",
             "name": "empty",
@@ -18202,7 +19569,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1273,
+            "line": 1300,
             "description": "Reference to the first of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "method",
             "name": "first",
@@ -18231,7 +19598,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1292,
+            "line": 1319,
             "description": "Reference to the first child-Element, where the related dom-node an Element (nodeType===1).",
             "itemtype": "method",
             "name": "firstOfChildren",
@@ -18254,7 +19621,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1305,
+            "line": 1332,
             "description": "Forces the Element to be inside an ancestor-Element that has the `overfow=\"scroll\" set.",
             "itemtype": "method",
             "name": "forceIntoNodeView",
@@ -18274,7 +19641,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1369,
+            "line": 1396,
             "description": "Forces the Element to be inside the window-view. Differs from `scrollIntoView()` in a way\nthat `forceIntoView()` doesn't change the position when it's inside the view, whereas\n`scrollIntoView()` sets it on top of the view.",
             "itemtype": "method",
             "name": "forceIntoView",
@@ -18327,7 +19694,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1430,
+            "line": 1457,
             "description": "Gets an ElementArray of Elements that lie within this Element and match the css-selector.",
             "itemtype": "method",
             "name": "getAll",
@@ -18356,7 +19723,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1443,
+            "line": 1470,
             "description": "Gets an attribute of the Element.\n\nAlias for getAttribute().",
             "itemtype": "method",
             "name": "getAttr",
@@ -18378,7 +19745,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1457,
+            "line": 1484,
             "description": "Returns all attributes as defined as an key/value object.",
             "itemtype": "method",
             "name": "getAttrs",
@@ -18400,7 +19767,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1469,
+            "line": 1496,
             "description": "Gets an attribute of the Element.\n\nSame as getAttr().",
             "itemtype": "method",
             "name": "getAttribute",
@@ -18422,7 +19789,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1484,
+            "line": 1511,
             "description": "Returns a live collection of the Element-childNodes.",
             "itemtype": "method",
             "name": "getChildren",
@@ -18437,7 +19804,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1502,
+            "line": 1529,
             "description": "Returns a token list of the class attribute of the element.\nSee: https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList",
             "itemtype": "method",
             "name": "getClassList",
@@ -18451,7 +19818,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1520,
+            "line": 1547,
             "description": "Returns data set specified by `key`. If not set, `undefined` will be returned.\nThe data is efficiently stored on the vnode.",
             "itemtype": "method",
             "name": "getData",
@@ -18473,7 +19840,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1534,
+            "line": 1561,
             "description": "Gets one Element, specified by the css-selector. To retrieve a single element by id,\nyou need to prepend the id-name with a `#`. When multiple Element's match, the first is returned.",
             "itemtype": "method",
             "name": "getElement",
@@ -18502,7 +19869,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1548,
+            "line": 1575,
             "description": "Returns the Element matching the specified id, which should should be a descendant of this Element.",
             "itemtype": "method",
             "name": "getElementById",
@@ -18530,7 +19897,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1566,
+            "line": 1593,
             "description": "Gets innerHTML of the dom-node.\nGoes through the vdom, so it's superfast.\n\nUse this method instead of `innerHTML`",
             "itemtype": "method",
             "name": "getHTML",
@@ -18553,7 +19920,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1581,
+            "line": 1608,
             "description": "Returns the Elments `id`",
             "itemtype": "method",
             "name": "getId",
@@ -18568,7 +19935,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1592,
+            "line": 1619,
             "description": "Returns inline style of the specified property. `Inline` means: what is set directly on the Element,\nthis doesn't mean necesairy how it is looked like: when no css is set inline, the Element might still have\nan appearance because of other CSS-rules.\n\nIn most cases, you would be interesting in using `getStyle()` instead.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "getInlineStyle",
@@ -18596,7 +19963,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1618,
+            "line": 1645,
             "description": "Returns inline transition-css-property. `Inline` means: what is set directly on the Element,\nWhen `transition` is set inline, no `parent` transition-rules apply.",
             "itemtype": "method",
             "name": "getInlineTransition",
@@ -18625,7 +19992,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1643,
+            "line": 1670,
             "description": "Gets the outerHTML of the dom-node.\nGoes through the vdom, so it's superfast.\n\nUse this method instead of `outerHTML`",
             "itemtype": "method",
             "name": "getOuterHTML",
@@ -18640,7 +20007,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1657,
+            "line": 1684,
             "description": "Returns the Element's parent Element.",
             "itemtype": "method",
             "name": "getParent",
@@ -18654,7 +20021,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1668,
+            "line": 1695,
             "description": "Returns cascaded style of the specified property. `Cascaded` means: the actual present style,\nthe way it is visible (calculated through the DOM-tree).\n\n<ul>\n    <li>Note1: values are absolute: percentages and points are converted to absolute values, sizes are in pixels, colors in rgb/rgba-format.</li>\n    <li>Note2: you cannot query shotcut-properties: use `margin-left` instead of `margin`.</li>\n    <li>Note3: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine.</li>\n    <li>Note4: you can query `transition`, `transform`, `perspective` and `transform-origin` instead of their vendor-specific properties.</li>\n    <li>Note5: `transition` or `transform` return an Object instead of a String.</li>\n</ul>",
             "itemtype": "method",
             "name": "getCascadeStyle",
@@ -18682,7 +20049,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1699,
+            "line": 1726,
             "description": "Returns cascaded \"transition\" style of the specified trandform-property. `Cascaded` means: the actual present style,\nthe way it is visible (calculated through the DOM-tree).\n\nNote1: When \"transition\" is set inline, ONLY inline transtition is active!\nThus, if parentNode has \"transition: width 2s\" and inline has \"transition: height 3s\", then the transition\nwill be \"transition: height 3s\" --> returning \"undefined\" for transitionProperty=width.\nNote2: in case of \"transition: all\" --> these values will be returned for every \"transitionProperty\" (even when querying \"width\")",
             "itemtype": "method",
             "name": "getTransition",
@@ -18710,7 +20077,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1778,
+            "line": 1805,
             "description": "Elements tag-name in uppercase (same as nodeName).",
             "itemtype": "method",
             "name": "getTagName",
@@ -18725,7 +20092,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1789,
+            "line": 1816,
             "description": "Gets the innerContent of the Element as plain text.\nGoes through the vdom, so it's superfast.\n\nUse this method instead of `textContent`",
             "itemtype": "method",
             "name": "getText",
@@ -18739,7 +20106,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1803,
+            "line": 1830,
             "description": "Gets the value of the following Elements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>\n</ul>",
             "itemtype": "method",
             "name": "getValue",
@@ -18754,7 +20121,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1827,
+            "line": 1854,
             "description": "Whether the Element has the attribute set.\n\nAlias for hasAttribute().",
             "itemtype": "method",
             "name": "hasAttr",
@@ -18776,7 +20143,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1841,
+            "line": 1868,
             "description": "Whether the Element has the attribute set.\n\nSame as hasAttr().",
             "itemtype": "method",
             "name": "hasAttribute",
@@ -18798,7 +20165,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1855,
+            "line": 1882,
             "description": "Indicating if the current element has any attributes or not.",
             "itemtype": "method",
             "name": "hasAttributes",
@@ -18812,7 +20179,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1866,
+            "line": 1893,
             "description": "Indicating if the Element has any children (childNodes with nodeType of 1).",
             "itemtype": "method",
             "name": "hasChildren",
@@ -18827,7 +20194,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1877,
+            "line": 1904,
             "description": "Checks whether the className is present on the Element.",
             "itemtype": "method",
             "name": "hasClass",
@@ -18849,7 +20216,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1889,
+            "line": 1916,
             "description": "If the Element has data set specified by `key`. The data could be set with `setData()`.",
             "itemtype": "method",
             "name": "hasData",
@@ -18871,7 +20238,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1902,
+            "line": 1929,
             "description": "Indicates whether Element currently has the focus.",
             "itemtype": "method",
             "name": "hasFocus",
@@ -18886,7 +20253,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1913,
+            "line": 1940,
             "description": "Indicates whether the current focussed Element lies inside this Element (on a descendant Element).",
             "itemtype": "method",
             "name": "hasFocusInside",
@@ -18901,7 +20268,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1924,
+            "line": 1951,
             "description": "Returns whether the inline style of the specified property is present. `Inline` means: what is set directly on the Element.\n\nNote: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "hasInlineStyle",
@@ -18929,7 +20296,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1939,
+            "line": 1966,
             "description": "Returns whether the specified inline transform-css-property is present. `Inline` means: what is set directly on the Element.\n\nSee more about tranform-properties: https://developer.mozilla.org/en-US/docs/Web/CSS/transform",
             "itemtype": "method",
             "name": "hasInlineTransition",
@@ -18957,7 +20324,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1954,
+            "line": 1981,
             "description": "Returns whether the specified transform-property is active.\n\nNote1: When \"transition\" is set inline, ONLY inline transtition is active!\nThus, if parentNode has \"transition: width 2s\" and inline has \"transition: height 3s\",\nthen hasTransition('width') will return false.\nNote2: in case of \"transition: all\" --> hasTransition() will always `true` for every transitionProperty.",
             "itemtype": "method",
             "name": "hasTransition",
@@ -18985,7 +20352,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 1972,
+            "line": 1999,
             "description": "Hides a node by making it floated and removing it out of the visible screen.\nHides immediately without `fade`, or will fade when fade is specified.",
             "itemtype": "method",
             "name": "hide",
@@ -19008,7 +20375,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2032,
+            "line": 2059,
             "description": "Indicates whether the Element currently is part if the DOM.",
             "itemtype": "method",
             "name": "inDOM",
@@ -19023,7 +20390,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2046,
+            "line": 2073,
             "description": "Checks whether the Element lies within the specified selector (which can be a CSS-selector or a Element)",
             "example": [
                 "\nvar divnode = childnode.inside('div.red');",
@@ -19049,7 +20416,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2076,
+            "line": 2103,
             "description": "Checks whether a point specified with x,y is within the Element's region.",
             "itemtype": "method",
             "name": "insidePos",
@@ -19076,7 +20443,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2094,
+            "line": 2121,
             "description": "Inserts `domNode` before `refDomNode`.",
             "itemtype": "method",
             "name": "insertBefore",
@@ -19108,7 +20475,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2108,
+            "line": 2135,
             "description": "Whether the element is an Itag-element",
             "itemtype": "method",
             "name": "isItag",
@@ -19123,7 +20490,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2119,
+            "line": 2146,
             "description": "Reference to the last of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "method",
             "name": "last",
@@ -19152,7 +20519,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2139,
+            "line": 2166,
             "description": "Reference to the last child-Element, where the related dom-node an Element (nodeType===1).",
             "itemtype": "method",
             "name": "lastOfChildren",
@@ -19175,7 +20542,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2152,
+            "line": 2179,
             "description": "Indicates if the element would be selected by the specified selector string.\nAlias for matchesSelector()",
             "itemtype": "method",
             "name": "matches",
@@ -19198,7 +20565,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2165,
+            "line": 2192,
             "description": "Indicates if the element would be selected by the specified selector string.\nAlias for matches()",
             "itemtype": "method",
             "name": "matchesSelector",
@@ -19221,7 +20588,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2178,
+            "line": 2205,
             "description": "Reference to the next of sibbling Element, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "method",
             "name": "next",
@@ -19251,7 +20618,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2217,
+            "line": 2244,
             "description": "Prepends a Element or text at the start of Element's innerHTML, or before the `refElement`.",
             "itemtype": "method",
             "name": "prepend",
@@ -19299,7 +20666,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2290,
+            "line": 2317,
             "description": "Reference to the previous of sibbling Element, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "method",
             "name": "previous",
@@ -19329,7 +20696,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2330,
+            "line": 2357,
             "description": "Returns the first Element within the Element, that matches the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,\nthey need to be separated by a `comma`.",
             "itemtype": "method",
             "name": "querySelector",
@@ -19369,7 +20736,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2385,
+            "line": 2412,
             "description": "Returns an ElementArray of all Elements within the Element, that match the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,\nthey need to be separated by a `comma`.\n\nquerySelectorAll is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.",
             "itemtype": "method",
             "name": "querySelectorAll",
@@ -19409,7 +20776,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2440,
+            "line": 2467,
             "description": "Checks whether the Element has its rectangle inside the outbound-Element.\nThis is no check of the DOM-tree, but purely based upon coordinates.",
             "itemtype": "method",
             "name": "rectangleInside",
@@ -19431,7 +20798,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2459,
+            "line": 2486,
             "description": "Removes the Element from the DOM.\nAlias for thisNode.parentNode.removeChild(thisNode);",
             "itemtype": "method",
             "name": "remove",
@@ -19455,7 +20822,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2479,
+            "line": 2506,
             "description": "Removes the attribute from the Element.\n\nAlias for removeAttribute() BUT is chainable instead (removeAttribute is not).",
             "itemtype": "method",
             "name": "removeAttr",
@@ -19481,7 +20848,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2495,
+            "line": 2522,
             "description": "Removes multiple attributes on the Element.\nThe argument should be one ore more AttributeNames.",
             "example": [
                 "\ninstance.removeAttrs(['tabIndex', 'style']);"
@@ -19510,7 +20877,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2517,
+            "line": 2544,
             "description": "Removes the attribute from the Element.\n\nUse removeAttr() to be able to chain.",
             "itemtype": "method",
             "name": "removeAttr",
@@ -19535,7 +20902,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2535,
+            "line": 2562,
             "description": "Removes the attribute of the Elementinside a specified namespace",
             "itemtype": "method",
             "name": "removeAttributeNS",
@@ -19564,7 +20931,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2548,
+            "line": 2575,
             "description": "Removes the Element's child-Node from the DOM.",
             "itemtype": "method",
             "name": "removeChild",
@@ -19585,7 +20952,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2562,
+            "line": 2589,
             "description": "Removes a className from the Element.",
             "itemtype": "method",
             "name": "removeClass",
@@ -19625,7 +20992,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2605,
+            "line": 2632,
             "description": "Removes data specified by `key` that was set by using `setData()`.\nWhen no arguments are passed, all node-data (key-value pairs) will be removed.",
             "itemtype": "method",
             "name": "removeData",
@@ -19651,7 +21018,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2635,
+            "line": 2662,
             "description": "Removes the Elment's `id`.",
             "itemtype": "method",
             "name": "removeId",
@@ -19663,7 +21030,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2646,
+            "line": 2673,
             "description": "Removes a css-property (inline) out of the Element.\nNo need to use camelCase.",
             "itemtype": "method",
             "name": "removeInlineStyle",
@@ -19694,7 +21061,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2662,
+            "line": 2689,
             "description": "Removes multiple css-properties (inline) out of the Element. You need to supply an Array of Objects, with the properties:\n       <ul>\n           <li>property  {String}</li>\n           <li>pseudo  {String}</li>\n       <ul>\nNo need to use camelCase.",
             "itemtype": "method",
             "name": "removeInlineStyles",
@@ -19719,7 +21086,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2825,
+            "line": 2852,
             "description": "Removes a subtype `transform`-css-property of (inline) out of the Element.\nThis way you can sefely remove partial `transform`-properties while remaining the\nother inline `transform` css=properties.\n\nSee more about tranform-properties: https://developer.mozilla.org/en-US/docs/Web/CSS/transform",
             "itemtype": "method",
             "name": "removeInlineTransition",
@@ -19744,7 +21111,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2842,
+            "line": 2869,
             "description": "Removes multiple subtype `transform`-css-property of (inline) out of the Element.\nThis way you can sefely remove partial `transform`-properties while remaining the\nother inline `transform` css=properties.\nYou need to supply an Array of Objects, with the properties:\n       <ul>\n           <li>property  {String}</li>\n           <li>pseudo  {String}</li>\n       <ul>\n\nSee more about tranform-properties: https://developer.mozilla.org/en-US/docs/Web/CSS/transform",
             "itemtype": "method",
             "name": "removeInlineTransitions",
@@ -19763,7 +21130,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2889,
+            "line": 2916,
             "description": "Replaces the Element with a new Element.",
             "itemtype": "method",
             "name": "replace",
@@ -19791,7 +21158,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2910,
+            "line": 2937,
             "description": "Replaces the Element's child-Element with a new Element.",
             "itemtype": "method",
             "name": "replaceChild",
@@ -19824,7 +21191,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2925,
+            "line": 2952,
             "description": "Replaces the className of the Element with a new className.\nIf the previous className is not available, the new className is set nevertheless.",
             "itemtype": "method",
             "name": "replaceClass",
@@ -19874,7 +21241,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2974,
+            "line": 3001,
             "description": "Scrolls the content of the Element into the specified scrollposition.\nOnly available when the Element has overflow.",
             "itemtype": "method",
             "name": "scrollTo",
@@ -19898,7 +21265,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 2991,
+            "line": 3018,
             "description": "Sets the attribute on the Element with the specified value.\n\nAlias for setAttribute(), BUT differs in a way that setAttr is chainable, setAttribute is not.",
             "itemtype": "method",
             "name": "setAttr",
@@ -19929,7 +21296,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3009,
+            "line": 3036,
             "description": "Sets the attribute on the Element with the specified value.\n\nAlias for setAttr(), BUT differs in a way that setAttr is chainable, setAttribute is not.",
             "itemtype": "method",
             "name": "setAttribute",
@@ -19958,7 +21325,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3030,
+            "line": 3057,
             "description": "Sets the attribute on the Element with the specified value inside a specified namespace",
             "itemtype": "method",
             "name": "setAttributeNS",
@@ -19992,7 +21359,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3044,
+            "line": 3071,
             "description": "Sets multiple attributes on the Element with the specified value.\nThe argument should be one ore more Objects with the properties: `name` and `value`",
             "example": [
                 "\ninstance.setAttrs([\n                     {name: 'tabIndex', value: '0'},\n                     {name: 'style', value: 'color: #000;'}\n                 ]);"
@@ -20021,7 +21388,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3069,
+            "line": 3096,
             "description": "Adds a class to the Element. If the class already exists it won't be duplicated.",
             "itemtype": "method",
             "name": "setClass",
@@ -20061,7 +21428,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3112,
+            "line": 3139,
             "description": "Stores arbitary `data` at the Element (actually at vnode). This has nothing to do with node-attributes whatsoever,\nit is just a way to bind any data to the specific Element so it can be retrieved later on with `getData()`.",
             "itemtype": "method",
             "name": "setData",
@@ -20091,7 +21458,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3138,
+            "line": 3165,
             "description": "Sets the innerHTML of both the vnode as well as the representing dom-node.\nGoes through the vdom, so it's superfast.\n\nUse this method instead of `innerHTML`\n\nSyncs with the DOM.",
             "itemtype": "method",
             "name": "setHTML",
@@ -20124,7 +21491,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3162,
+            "line": 3189,
             "description": "Sets the Elments `id`",
             "itemtype": "method",
             "name": "setId",
@@ -20143,7 +21510,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3174,
+            "line": 3201,
             "description": "Sets a css-property (inline) for the Element.\n\nNote1: Do not use vendor-specific properties, but general (like `transform` instead of `-webkit-transform`)\n       This method will use the appropriate css-property.\nNote2: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "setInlineStyle",
@@ -20182,7 +21549,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3198,
+            "line": 3225,
             "description": "Sets multiple css-properties (inline) for the Element at once.\n\nNote1: Do not use vendor-specific properties, but general (like `transform` instead of `-webkit-transform`)\n       This method will use the appropriate css-property.\nNote2: no need to camelCase cssProperty: both `margin-left` as well as `marginLeft` are fine",
             "itemtype": "method",
             "name": "setInlineStyles",
@@ -20210,7 +21577,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3381,
+            "line": 3408,
             "description": "Sets a transform-css-property (inline) for the Element.\n\nSee more about transitions: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transitions",
             "itemtype": "method",
             "name": "setStyle",
@@ -20251,7 +21618,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3400,
+            "line": 3427,
             "description": "Sets a transform-css-property (inline) for the Element.\n\nSee more about transitions: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transitions",
             "itemtype": "method",
             "name": "setStyle",
@@ -20276,7 +21643,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3447,
+            "line": 3474,
             "description": "Gets or sets the outerHTML of both the Element as well as the representing dom-node.\nGoes through the vdom, so it's superfast.\n\nUse this property instead of `outerHTML`\n\nSyncs with the DOM.",
             "itemtype": "method",
             "name": "setOuterHTML",
@@ -20302,7 +21669,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3470,
+            "line": 3497,
             "description": "Sets the innerContent of the Element as plain text.\nGoes through the vdom, so it's superfast.\n\nUse this method instead of `textContent`\n\nSyncs with the DOM.",
             "itemtype": "method",
             "name": "setText",
@@ -20328,7 +21695,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3493,
+            "line": 3520,
             "description": "Sets the value of the following Elements:\n\n<ul>\n    <li>input</li>\n    <li>textarea</li>\n    <li>select</li>\n    <li>any container that is `contenteditable`</li>\n</ul>\n\nWill emit a `valuechange`-event when a new value is set and ITSA's `event`-module is active.",
             "itemtype": "method",
             "name": "setValue",
@@ -20354,7 +21721,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3543,
+            "line": 3570,
             "itemtype": "event",
             "name": "valuechange",
             "params": [
@@ -20375,7 +21742,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3552,
+            "line": 3579,
             "description": "Set the position of an html element in page coordinates.\nThe element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).\n\nIf the Element has the attribute `xy-constrian` set, then its position cannot exceed any matching container it lies within.",
             "itemtype": "method",
             "name": "setXY",
@@ -20415,7 +21782,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3698,
+            "line": 3725,
             "description": "Shows a previously hidden node.\nShows immediately without `fade`, or will fade-in when fade is specified.",
             "itemtype": "method",
             "name": "show",
@@ -20438,7 +21805,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3760,
+            "line": 3787,
             "description": "Transitions one ore more properties of the Element.",
             "itemtype": "method",
             "name": "toggleClass",
@@ -20466,7 +21833,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 3979,
+            "line": 4006,
             "description": "Toggles the className of the Element.",
             "itemtype": "method",
             "name": "toggleClass",
@@ -20511,7 +21878,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4025,
+            "line": 4052,
             "description": "Gets or set the height of the element in pixels. Included are padding and border, not any margins.\nBy setting the argument `overflow` you get the total height, included the invisible overflow.\n\nThe getter is calculating through `offsetHeight`, the setter will set inline css-style for the height.\n\nValues are numbers without unity.",
             "itemtype": "property",
             "name": "height",
@@ -20523,7 +21890,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4052,
+            "line": 4079,
             "description": "Gets the x-position (in the DOCUMENT) of the element in pixels.\nDOCUMENT-related: regardless of the window's scroll-position.",
             "itemtype": "property",
             "name": "left",
@@ -20534,7 +21901,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4068,
+            "line": 4095,
             "description": "Gets the y-position (in the DOCUMENT) of the element in pixels.\nDOCUMENT-related: regardless of the window's scroll-position.",
             "itemtype": "property",
             "name": "top",
@@ -20545,7 +21912,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4084,
+            "line": 4111,
             "description": "Gets or set the width of the element in pixels. Included are padding and border, not any margins.\nBy setting the argument `overflow` you get the total width, included the invisible overflow.\n\nThe getter is calculating through `offsetHeight`, the setter will set inline css-style for the width.\n\nValues are numbers without unity.",
             "itemtype": "property",
             "name": "width",
@@ -20557,7 +21924,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4190,
+            "line": 4221,
             "description": "Returns the specified attribute of the specified element, as an Attr node.",
             "itemtype": "method",
             "name": "getAttributeNode",
@@ -20571,7 +21938,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4197,
+            "line": 4228,
             "description": "Returns a text rectangle object that encloses a group of text rectangles. The returned value is\na TextRectangle object which is the union of the rectangles returned by getClientRects() for the element,\ni.e., the CSS border-boxes associated with the element.\n\nThe returned value is a TextRectangle object, which contains read-only left, top, right and bottom properties\ndescribing the border-box in pixels. top and left are relative to the top-left of the viewport.",
             "itemtype": "method",
             "name": "getBoundingClientRect",
@@ -20585,7 +21952,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4209,
+            "line": 4240,
             "description": "Returns a collection of rectangles that indicate the bounding rectangles for each box in a client.\n\nThe returned value is a collection of ClientRect objects, one for each CSS border box associated with the element.\nEach ClientRect object contains read-only left, top, right and bottom properties describing the border box, in pixels,\nwith the top-left relative to the top-left of the viewport. For tables with captions,\nthe caption is included even though it's outside the border box of the table.",
             "itemtype": "method",
             "name": "getClientRects",
@@ -20599,7 +21966,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4221,
+            "line": 4252,
             "description": "Returns a new NodeIterator object with this Element as root.\n\nThe NodeIterator is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.",
             "itemtype": "method",
             "name": "createNodeIterator",
@@ -20628,7 +21995,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4239,
+            "line": 4270,
             "description": "Returns an HTMLCollection of all Elements within this Element, that match their classes with the supplied `classNames` argument.\nTo match multiple different classes, separate them with a `comma`.\n\ngetElementsByClassName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByClassName",
@@ -20649,7 +22016,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4252,
+            "line": 4283,
             "description": "Returns an HTMLCollection of all Elements within this Element, that match their `name`-attribute with the supplied `name` argument.\n\ngetElementsByName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByName",
@@ -20670,7 +22037,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4265,
+            "line": 4296,
             "description": "Returns an HTMLCollection of all Elements within this Element, that match their `name`-attribute with the supplied `name` argument.\n\ngetElementsByTagName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByTagName",
@@ -20691,7 +22058,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4277,
+            "line": 4308,
             "description": "Parses the specified text as HTML and inserts the resulting nodes into the DOM tree at a specified position.",
             "itemtype": "method",
             "name": "insertAdjacentHTML",
@@ -20713,7 +22080,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4291,
+            "line": 4322,
             "description": "Removes the attribute specified by an attributeNode from the Element.",
             "itemtype": "method",
             "name": "removeAttributeNode",
@@ -20731,7 +22098,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4299,
+            "line": 4330,
             "description": "Scrolls the element into view.",
             "itemtype": "method",
             "name": "scrollIntoView",
@@ -20741,7 +22108,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4305,
+            "line": 4336,
             "description": "Sets the attribute on the Element specified by `attributeNode`",
             "itemtype": "method",
             "name": "setAttributeNode",
@@ -20758,7 +22125,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4314,
+            "line": 4345,
             "description": "Fired when a static `script` element  finishes executing its script. Does not fire if the element is added dynamically, eg with appendChild().",
             "itemtype": "event",
             "name": "afterscriptexecute",
@@ -20768,7 +22135,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4321,
+            "line": 4352,
             "description": "Fired when the code in a `script` element declared in an HTML document is about to start executing. Does not fire if the element is added dynamically, eg with appendChild().",
             "itemtype": "event",
             "name": "beforescriptexecute",
@@ -20778,7 +22145,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4329,
+            "line": 4360,
             "description": "sets or returns an accesskey for an element. An accesskey specifies a shortcut key to activate/focus an element.\nNote: The way of accessing the shortcut key is varying in different browsers: http://www.w3schools.com/jsref/prop_html_accesskey.asp",
             "itemtype": "property",
             "name": "accessKey",
@@ -20789,7 +22156,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4338,
+            "line": 4369,
             "description": "Returns a live collection of all attribute nodes registered to the specified node.\nIt is a NamedNodeMap, not an Array, so it has no Array methods and the Attr nodes' indexes may differ among browsers.\nTo be more specific, attributes is a key/value pair of strings that represents any information regarding that attribute.\n\nPrefer to use `getAttrs()` which is much quicker, but doesn't return a life-list.",
             "itemtype": "property",
             "name": "attributes",
@@ -20800,7 +22167,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4349,
+            "line": 4380,
             "description": "The absolute base URL of a node.",
             "itemtype": "property",
             "name": "baseURI",
@@ -20812,7 +22179,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4357,
+            "line": 4388,
             "description": "Returns the number of children (child Elements)",
             "itemtype": "property",
             "name": "childElementCount",
@@ -20824,7 +22191,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4365,
+            "line": 4396,
             "description": "Returns a live collection of childNodes of the given element, either Element, TextNode or CommentNode",
             "itemtype": "property",
             "name": "childNodes",
@@ -20836,7 +22203,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4373,
+            "line": 4404,
             "description": "Returns a live collection of child Element's of the given element.",
             "itemtype": "property",
             "name": "children",
@@ -20848,7 +22215,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4381,
+            "line": 4412,
             "description": "Gets and sets the value of the class attribute of the specified element.",
             "itemtype": "property",
             "name": "className",
@@ -20859,7 +22226,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4388,
+            "line": 4419,
             "description": "Returns the inner height of an element in pixels, including padding but not the horizontal scrollbar height, border, or margin.",
             "itemtype": "property",
             "name": "clientHeight",
@@ -20871,7 +22238,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4396,
+            "line": 4427,
             "description": "The width of the left border of an element in pixels. It includes the width of the vertical scrollbar if the text direction of the element is right–to–left\nand if there is an overflow causing a left vertical scrollbar to be rendered. clientLeft does not include the left margin or the left padding.",
             "itemtype": "property",
             "name": "clientLeft",
@@ -20883,7 +22250,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4405,
+            "line": 4436,
             "description": "The width of the top border of an element in pixels. It does not include the top margin or padding.",
             "itemtype": "property",
             "name": "clientTop",
@@ -20895,7 +22262,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4413,
+            "line": 4444,
             "description": "Returns the inner width of an element in pixels, including padding but not the vertical scrollbar height, border, or margin.",
             "itemtype": "property",
             "name": "clientWidth",
@@ -20907,7 +22274,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4421,
+            "line": 4452,
             "description": "Reference to the first childNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nBetter work with Elements only:  use `firstElementChild` instead, which returns the first Element-child.",
             "itemtype": "property",
             "name": "firstChild",
@@ -20920,7 +22287,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4432,
+            "line": 4463,
             "description": "Reference to the first Element-child, which is an Element (nodeType===1).",
             "itemtype": "property",
             "name": "firstElementChild",
@@ -20932,7 +22299,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4440,
+            "line": 4471,
             "description": "Gets or sets the element's attribute `href`. Only applies for the `a`-element.",
             "itemtype": "property",
             "name": "href",
@@ -20943,7 +22310,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4447,
+            "line": 4478,
             "description": "Gets or sets the element's identifier (attribute id).",
             "itemtype": "property",
             "name": "id",
@@ -20954,7 +22321,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4454,
+            "line": 4485,
             "description": "Reference to the last childNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nBetter use `lastElementChild` instead, which returns the last Element-child.",
             "itemtype": "property",
             "name": "lastChild",
@@ -20967,7 +22334,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4465,
+            "line": 4496,
             "description": "Reference to the last Element-child, where the related dom-node is an Element (nodeType===1).",
             "itemtype": "property",
             "name": "lastElementChild",
@@ -20979,7 +22346,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4473,
+            "line": 4504,
             "description": "Gets or sets the `name` property of a Element; it only applies to the following elements:\n`a`, `applet`, `button`, `form`, `frame`, `iframe`, `img`, `input`, `map`, `meta`, `object`, `param`, `select`, and `textarea`.",
             "itemtype": "property",
             "name": "name",
@@ -20990,7 +22357,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4481,
+            "line": 4512,
             "description": "Returns the Element immediately following the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs an Element (nodeType===1).",
             "itemtype": "property",
             "name": "nextElementSibling",
@@ -21002,7 +22369,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4490,
+            "line": 4521,
             "description": "Returns the Element immediately following the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nDo not use this, but use `lastElementChild` instead, which returns the next Element-child.",
             "itemtype": "property",
             "name": "nextElementSibling",
@@ -21015,7 +22382,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4502,
+            "line": 4533,
             "description": "Elements tag-name",
             "itemtype": "property",
             "name": "nodeName",
@@ -21027,7 +22394,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4510,
+            "line": 4541,
             "description": "Elements nodetype: 1==Element, 3==TextNode, 8===CommentNode",
             "itemtype": "property",
             "name": "nodeType",
@@ -21039,7 +22406,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4518,
+            "line": 4549,
             "description": "Value/text for non-Element Nodes",
             "itemtype": "property",
             "name": "nodeValue",
@@ -21051,7 +22418,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4526,
+            "line": 4557,
             "description": "The exact width of the Element on the screen.\nIncluded borders and padding (no margin).\n\nReturns a number without unity.\n\nBetter use `width` --> it's an alias, but has a setter as well",
             "itemtype": "property",
             "name": "offsetWidth",
@@ -21064,7 +22431,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4540,
+            "line": 4571,
             "description": "The exact height of the Element on the screen.\nIncluded borders and padding (no margin).\n\nReturns a number without unity.\n\nBetter use `height` --> it's an alias, but has a setter as well",
             "itemtype": "property",
             "name": "offsetHeight",
@@ -21076,7 +22443,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4553,
+            "line": 4584,
             "description": "Returns the Element's parent Element.\n\nSame as `parentNode`",
             "itemtype": "property",
             "name": "parentElement",
@@ -21087,7 +22454,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4562,
+            "line": 4593,
             "description": "Returns the Element's parent Element.\n\nSame as `parentElement`",
             "itemtype": "property",
             "name": "parentNode",
@@ -21098,7 +22465,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4571,
+            "line": 4602,
             "description": "Returns the Element immediately preceding the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs an Element (nodeType===1).",
             "itemtype": "property",
             "name": "previousElementSibling",
@@ -21110,7 +22477,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4580,
+            "line": 4611,
             "description": "Returns the Element immediately preceding the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nDo not use this, but use `previousElementSibling` instead, which returns the previous Element-child.",
             "itemtype": "property",
             "name": "previousSibling",
@@ -21123,7 +22490,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4593,
+            "line": 4624,
             "description": "A measurement of the height of an element's content, including content not visible on the screen due to overflow.\nThe scrollHeight value is equal to the minimum clientHeight the element would require in order to fit all the content in the viewpoint\nwithout using a vertical scrollbar. It includes the element padding but not its margin.\n\nReturns a number without unity.",
             "itemtype": "property",
             "name": "scrollHeight",
@@ -21135,7 +22502,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4605,
+            "line": 4636,
             "description": "Gets or sets the number of pixels that an element's content is scrolled to the left.",
             "itemtype": "property",
             "name": "scrollLeft",
@@ -21146,7 +22513,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4612,
+            "line": 4643,
             "description": "Gets or sets the number of pixels that the content of an element is scrolled upward. An element's scrollTop is a measurement\nof the distance of an element's top to its topmost visible content. When an element content does not generate a vertical scrollbar,\nthen its scrollTop value defaults to 0.",
             "itemtype": "property",
             "name": "scrollTop",
@@ -21157,7 +22524,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4621,
+            "line": 4652,
             "description": "Returns either the width in pixels of the content of an element or the width of the element itself, whichever is greater.\nIf the element is wider than its content area (for example, if there are scroll bars for scrolling through the content),\nthe scrollWidth is larger than the clientWidth.\n\nReturns a number without unity.",
             "itemtype": "property",
             "name": "scrollWidth",
@@ -21169,7 +22536,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4633,
+            "line": 4664,
             "description": "Gets or sets the element's attribute `type`. Only applies for the `script`, `img` and `style`-elements.",
             "itemtype": "property",
             "name": "src",
@@ -21180,7 +22547,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4640,
+            "line": 4671,
             "description": "Gets or sets the element's attribute `style`.",
             "itemtype": "property",
             "name": "style",
@@ -21191,7 +22558,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4647,
+            "line": 4678,
             "description": "Gets or sets the element's attribute `type`. Only applies for the `input`-element.",
             "itemtype": "property",
             "name": "type",
@@ -21202,7 +22569,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4654,
+            "line": 4685,
             "description": "Gets or sets the value of an input or select Element.\n\nNote it is highly preferable to use getValue() and setValue().",
             "itemtype": "property",
             "name": "value",

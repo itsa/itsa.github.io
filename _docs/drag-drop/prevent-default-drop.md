@@ -46,7 +46,7 @@ intro: "By default, any item dropped inside a dropzone will be visible inside th
     .body-content.module p.spaced {
         margin-top: 290px;
     }
-    .dropzone-awake[dd-dropzone] {
+    .dropzone-awake[dz-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -54,21 +54,21 @@ intro: "By default, any item dropped inside a dropzone will be visible inside th
 Drag the items to the dropzones.
 
 <div class="base-container">
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container">drag me nr. 1</div>
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container">drag me nr. 2</div>
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container">drag me nr. 3</div>
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container">drag me nr. 4</div>
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container">drag me nr. 5</div>
+    <div class="container" plugin-dd="true" dd-dropzone=".drop-container">drag me nr. 1</div>
+    <div class="container" plugin-dd="true" dd-dropzone=".drop-container">drag me nr. 2</div>
+    <div class="container" plugin-dd="true" dd-dropzone=".drop-container">drag me nr. 3</div>
+    <div class="container" plugin-dd="true" dd-dropzone=".drop-container">drag me nr. 4</div>
+    <div class="container" plugin-dd="true" dd-dropzone=".drop-container">drag me nr. 5</div>
 </div>
 
-<div class="drop-container return" dd-dropzone="true"><b>accept and return</b><br></div>
-<div class="drop-container absorb" dd-dropzone="true"><b>accept and absorb</b><br></div>
+<div class="drop-container return" plugin-dz="true"><b>accept and return</b><br></div>
+<div class="drop-container absorb" plugin-dz="true"><b>accept and absorb</b><br></div>
 
 <p class="spaced">Code-example:</p>
 
 ```css
 <style type="text/css">
-    .dropzone-awake[dd-dropzone] {
+    .dropzone-awake[dz-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -77,15 +77,15 @@ Drag the items to the dropzones.
 ```html
 <body>
     <div class="base-container">
-        <div class="container" dd-draggable="true" dd-dropzone=".drop-container">drag me nr. 1</div>
-        <div class="container" dd-draggable="true" dd-dropzone=".drop-container">drag me nr. 2</div>
-        <div class="container" dd-draggable="true" dd-dropzone=".drop-container">drag me nr. 3</div>
-        <div class="container" dd-draggable="true" dd-dropzone=".drop-container">drag me nr. 4</div>
-        <div class="container" dd-draggable="true" dd-dropzone=".drop-container">drag me nr. 5</div>
+        <div class="container" plugin-dd="true" dd-dropzone=".drop-container">drag me nr. 1</div>
+        <div class="container" plugin-dd="true" dd-dropzone=".drop-container">drag me nr. 2</div>
+        <div class="container" plugin-dd="true" dd-dropzone=".drop-container">drag me nr. 3</div>
+        <div class="container" plugin-dd="true" dd-dropzone=".drop-container">drag me nr. 4</div>
+        <div class="container" plugin-dd="true" dd-dropzone=".drop-container">drag me nr. 5</div>
     </div>
 
-    <div class="drop-container return" dd-dropzone="true"><b>accept and return</b><br></div>
-    <div class="drop-container absorb" dd-dropzone="true"><b>accept and absorb</b><br></div>
+    <div class="drop-container return" plugin-dz="true"><b>accept and return</b><br></div>
+    <div class="drop-container absorb" plugin-dz="true"><b>accept and absorb</b><br></div>
 </body>
 ```
 
@@ -109,10 +109,10 @@ Drag the items to the dropzones.
         // as well as the draggable: e.copyTarget.
         // also note that, when dragging multiple draggables, we have to handle e.relatives
         // which is a hash containing all draggable nodes as well as their originals.
-        e.target.remove();
-        e.copyTarget.remove();
         e.dropTarget.append('<br>'+e.target.getText()+' added');
-        ITSA.DD_emitDropzoneDrop(e); // fire the dropzone-drop event
+        e.sourceNode.remove();
+        e.dragNode.remove();
+        ITSA.DD._emitDropzoneDrop(e); // fire the dropzone-drop event
     };
 
     ITSA.Event.before(
@@ -130,6 +130,7 @@ Drag the items to the dropzones.
             return e.dropTarget && e.dropTarget.hasClass('absorb');
         }
     );
+
 </script>
 ```
 

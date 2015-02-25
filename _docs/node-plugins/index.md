@@ -1,6 +1,5 @@
 ---
-module: vdom
-functionality: node-plugins
+module: node-plugin
 itsaclassname:
 version: 0.0.1
 modulesize: 1.69
@@ -31,7 +30,7 @@ A plugin can be set on a Node (only Element), by using `Element.plugin`:
 ####Example plugin without options####
 ```js
 var myNode = document.getElement('#mynode');
-myNode.plug(ITSA.Plugins.nodeConstrain);
+myNode.plug(ITSA.Plugins.Constrain);
 // will constrain repositioning to the window
 ```
 
@@ -44,7 +43,7 @@ This leads into a HTML like this:
 ####Example plugin with options####
 ```js
 var myNode = document.getElement('#mynode');
-myNode.plug(ITSA.Plugins.nodeConstrain, {selector: '#container'});
+myNode.plug(ITSA.Plugins.Constrain, {selector: '#container'});
 // will constrain repositioning to the node with id=`container`
 ```
 
@@ -65,23 +64,21 @@ Or in relation with the rest of the page:
 
 ##Developing plugins##
 
-A plugin is created by using the method `nodePlugin.definePlugin`. nodePlugin is available at either:
+A plugin is created by using the method `document.definePlugin`.
 
+When using `definePlugin`, it requires at least one argument: the `namespace` of your Plugin. The namespace will be used to prepend attributes like this: `ns-`. This way, all attributes made by the plugin are well defined. The second argument is an optional constructor, the third an optional object, containing any default-values.
+
+####Samplecode of the constrain plugin####
 ```js
-nodePlugin = require('vdom')(window).Plugins.nodePlugin;
-```
-
-or at `ITSA`:
-
-```js
-nodePlugin = ITSA.Plugins.nodePlugin;
-```
-
-When using `definePlugin`, it requires at least one argument: the `namespace` of your Plugin. The namespace will be used to prepend attributes like this: `ns-`. This way, all attributes made by the plugin are well defined. The second argument is an optional object, containing any default-values.
-
-####Samplecode of the nodeConstrain plugin####
-```js
-ITSA.Plugins.nodeConstrain = nodePlugin.definePlugin('constrain', {selector: 'window'});
+ITSA.Plugins.Constrain = window.document.definePlugin('constrain', null, {
+        attrs: {
+            selector: 'string'
+        },
+        defaults: {
+            selector: 'window'
+        }
+    }
+);
 ```
 
 
@@ -89,4 +86,4 @@ ITSA.Plugins.nodeConstrain = nodePlugin.definePlugin('constrain', {selector: 'wi
 
 The vdom comes with one Node-plugin:
 
-###ITSA.Plugins.nodeConstrain###
+###ITSA.Plugins.Constrain###

@@ -22,18 +22,18 @@ intro: "This example shows how to set up a focusmanagers on a treeview. It is no
     }
 </style>
 
-<ul class="treeview" fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-noloop="true">
+<ul class="treeview" plugin-fm="true" fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-noloop="true">
     <li>item1</li>
     <li>item2</li>
     <li class="treeview-subgroup">
         <span>group 1</span>
-        <ul id="test1" fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-enter="39" fm-leave="37" fm-noloop="true">
+        <ul id="test1" plugin-fm="true" fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-keyenter="39" fm-keyleave="37" fm-noloop="true">
             <li>item3</li>
             <li>item4</li>
             <li>item5</li>
             <li class="treeview-subgroup">
                <span>group 1.1</span>
-                <ul id="test2" fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-enter="39" fm-leave="37" fm-noloop="true">
+                <ul id="test2" plugin-fm="true" fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-keyenter="39" fm-keyleave="37" fm-noloop="true">
                     <li>item6</li>
                     <li>item7</li>
                     <li>item8</li>
@@ -53,7 +53,7 @@ intro: "This example shows how to set up a focusmanagers on a treeview. It is no
     <li>item18</li>
     <li class="treeview-subgroup">
         <span>group 2</span>
-        <ul fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-enter="39" fm-leave="37" fm-noloop="true">
+        <ul plugin-fm="true" fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-keyenter="39" fm-keyleave="37" fm-noloop="true">
             <li>item19</li>
             <li>item20</li>
             <li>item21</li>
@@ -66,7 +66,7 @@ intro: "This example shows how to set up a focusmanagers on a treeview. It is no
     </li>
     <li class="treeview-subgroup">
         <span>group 3</span>
-        <ul fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-enter="39" fm-leave="37" fm-noloop="true">
+        <ul plugin-fm="true" fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-keyenter="39" fm-keyleave="37" fm-noloop="true">
             <li>item27</li>
             <li>item28</li>
             <li>item29</li>
@@ -99,18 +99,18 @@ intro: "This example shows how to set up a focusmanagers on a treeview. It is no
 
 ```html
 <body>
-    <ul class="treeview" fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-noloop="true">
+    <ul class="treeview" plugin-fm="true" fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-noloop="true">
         <li>item1</li>
         <li>item2</li>
         <li class="treeview-subgroup">
             <span>group 1</span>
-            <ul id="test1" fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-enter="39" fm-leave="37" fm-noloop="true">
+            <ul id="test1" plugin-fm="true" fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-keyenter="39" fm-keyleave="37" fm-noloop="true">
                 <li>item3</li>
                 <li>item4</li>
                 <li>item5</li>
                 <li class="treeview-subgroup">
                    <span>group 1.1</span>
-                    <ul id="test2" fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-enter="39" fm-leave="37" fm-noloop="true">
+                    <ul id="test2" plugin-fm="true" fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-keyenter="39" fm-keyleave="37" fm-noloop="true">
                         <li>item6</li>
                         <li>item7</li>
                         <li>item8</li>
@@ -130,7 +130,7 @@ intro: "This example shows how to set up a focusmanagers on a treeview. It is no
         <li>item18</li>
         <li class="treeview-subgroup">
             <span>group 2</span>
-            <ul fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-enter="39" fm-leave="37" fm-noloop="true">
+            <ul plugin-fm="true" fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-keyenter="39" fm-keyleave="37" fm-noloop="true">
                 <li>item19</li>
                 <li>item20</li>
                 <li>item21</li>
@@ -143,7 +143,7 @@ intro: "This example shows how to set up a focusmanagers on a treeview. It is no
         </li>
         <li class="treeview-subgroup">
             <span>group 3</span>
-            <ul fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-enter="39" fm-leave="37" fm-noloop="true">
+            <ul plugin-fm="true" fm-manage=">li:not(.treeview-subgroup), >li >ul" fm-keyup="38" fm-keydown="40" fm-keyenter="39" fm-keyleave="37" fm-noloop="true">
                 <li>item27</li>
                 <li>item28</li>
                 <li>item29</li>

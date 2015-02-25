@@ -44,7 +44,7 @@ intro: "Multiple items can be made draggable by specify <b>draggable=\"css-selec
 
 Drag the items, they are all draggable.
 
-<div class="base-container" dd-draggable="div">
+<div class="base-container" plugin-dd="true" dd-draggable="div">
     <div>drag me</div>
     <div>drag me</div>
     <div>drag me</div>
@@ -72,7 +72,7 @@ Drag the items, they are all draggable.
 ```
 ```html
 <body>
-    <div class="base-container" dd-draggable="div">
+    <div class="base-container" plugin-dd="true" dd-draggable="div">
         <div>drag me</div>
         <div>drag me</div>
         <div>drag me</div>

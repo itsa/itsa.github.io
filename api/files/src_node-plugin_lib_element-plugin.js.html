@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/node-plugin/lib/element-plugin.js - Itsa</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title="Itsa"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/Array.html">Array</a></li>
+            
+                <li><a href="../classes/BaseClass.html">BaseClass</a></li>
+            
+                <li><a href="../classes/Classes.html">Classes</a></li>
+            
+                <li><a href="../classes/DD.html">DD</a></li>
+            
+                <li><a href="../classes/document.html">document</a></li>
+            
+                <li><a href="../classes/Element.html">Element</a></li>
+            
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
+            
+                <li><a href="../classes/Event.html">Event</a></li>
+            
+                <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
+            
+                <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
+            
+                <li><a href="../classes/FocusManager.html">FocusManager</a></li>
+            
+                <li><a href="../classes/Function.html">Function</a></li>
+            
+                <li><a href="../classes/IO.html">IO</a></li>
+            
+                <li><a href="../classes/ITSA.html">ITSA</a></li>
+            
+                <li><a href="../classes/Node.html">Node</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
+            
+                <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
+            
+                <li><a href="../classes/Promise.html">Promise</a></li>
+            
+                <li><a href="../classes/String.html">String</a></li>
+            
+                <li><a href="../classes/USERAGENT.html">USERAGENT</a></li>
+            
+                <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
+            
+                <li><a href="../modules/drag.html">drag</a></li>
+            
+                <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
+            
+                <li><a href="../modules/event.html">event</a></li>
+            
+                <li><a href="../modules/event-blurnode.html">event-blurnode</a></li>
+            
+                <li><a href="../modules/event-dom.html">event-dom</a></li>
+            
+                <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-focusnode.html">event-focusnode</a></li>
+            
+                <li><a href="../modules/event-hover.html">event-hover</a></li>
+            
+                <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/extra_classes.js.html">extra/classes.js</a></li>
+            
+                <li><a href="../modules/focusmanager.html">focusmanager</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
+            
+                <li><a href="../modules/io.html">io</a></li>
+            
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
+            
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/js-ext.html">js-ext</a></li>
+            
+                <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
+            
+                <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
+            
+                <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
+            
+                <li><a href="../modules/lib_promise.s.html">lib/promise.s</a></li>
+            
+                <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
+            
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
+            
+                <li><a href="../modules/useragent.html">useragent</a></li>
+            
+                <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/node-plugin/lib/element-plugin.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+
+/**
+ * Integrates DOM-events to event. more about DOM-events:
+ * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module vdom
+ * @submodule element-plugin
+ * @class Plugins
+ * @since 0.0.1
+*/
+
+require(&#x27;js-ext/lib/object.js&#x27;);
+require(&#x27;js-ext/lib/string.js&#x27;);
+require(&#x27;js-ext/lib/promise.js&#x27;);
+require(&#x27;polyfill&#x27;);
+require(&#x27;event/extra/timer-finalize.js&#x27;);
+
+var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
+    fromCamelCase = function(input) {
+        return input.replace(/[a-z]([A-Z])/g, function(match, group) {
+            return match[0]+&#x27;-&#x27;+group.toLowerCase();
+        });
+    };
+
+module.exports = function (window) {
+
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
+
+    if (window._ITSAmodules.ElementPlugin) {
+        return; // ElementPlugin was already created
+    }
+
+    require(&#x27;vdom&#x27;)(window);
+
+    var NAME = &#x27;[ElementPlugin]: &#x27;,
+        Classes = require(&#x27;js-ext/extra/classes.js&#x27;),
+        timers = require(&#x27;utils/lib/timers.js&#x27;),
+        IO = require(&#x27;io&#x27;)(window),
+        Event = require(&#x27;event-dom&#x27;)(window),
+        asyncSilent = timers.asyncSilent,
+        laterSilent = timers.laterSilent,
+        DELAY_DESTRUCTION = 5000, // must be kept below vnode.js its DESTROY_DELAY (which is currently 60000)
+        DELAYED_EVT_TIME = 500,
+        NATIVE_OBJECT_OBSERVE = !!Object.observe,
+        DOCUMENT = window.document,
+        types = [],
+        NODE = &#x27;node&#x27;,
+        REMOVE = &#x27;remove&#x27;,
+        INSERT = &#x27;insert&#x27;,
+        CHANGE = &#x27;change&#x27;,
+        ATTRIBUTE = &#x27;attribute&#x27;,
+        NODE_REMOVE = NODE+REMOVE,
+        NODE_INSERT = NODE+INSERT,
+        NODE_CONTENT_CHANGE = NODE+&#x27;content&#x27;+CHANGE,
+        ATTRIBUTE_REMOVE = ATTRIBUTE+REMOVE,
+        ATTRIBUTE_CHANGE = ATTRIBUTE+CHANGE,
+        ATTRIBUTE_INSERT = ATTRIBUTE+INSERT,
+        MUTATION_EVENTS = [NODE_REMOVE, NODE_INSERT, NODE_CONTENT_CHANGE, ATTRIBUTE_REMOVE, ATTRIBUTE_CHANGE, ATTRIBUTE_INSERT],
+        Base, pluginDOM, modelToAttrs, attrsToModel, syncPlugin, autoRefreshPlugin, pluginDOMresync, DEFAULT_DELAYED_FINALIZE_EVENTS;
+
+    Object.protectedProp(window, &#x27;_ITSAPlugins&#x27;, createHashMap());
+
+    /**
+     * Default internal hash containing all DOM-events that will not directly call &#x60;event-finalize&#x60;
+     * but after a delay of 1 second
+     *
+     * @property DEFAULT_DELAYED_FINALIZE_EVENTS
+     * @default {
+     *    mousedown: true,
+     *    mouseup: true,
+     *    mousemove: true,
+     *    panmove: true,
+     *    panstart: true,
+     *    panleft: true,
+     *    panright: true,
+     *    panup: true,
+     *    pandown: true,
+     *    pinchmove: true,
+     *    rotatemove: true,
+     *    focus: true,
+     *    manualfocus: true,
+     *    keydown: true,
+     *    keyup: true,
+     *    keypress: true,
+     *    blur: true,
+     *    resize: true,
+     *    scroll: true
+     * }
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
+    DEFAULT_DELAYED_FINALIZE_EVENTS = {
+        mousedown: true,
+        mouseup: true,
+        mousemove: true,
+        panmove: true,
+        panstart: true,
+        panleft: true,
+        panright: true,
+        panup: true,
+        pandown: true,
+        pinchmove: true,
+        rotatemove: true,
+        focus: true,
+        manualfocus: true,
+        keydown: true,
+        keyup: true,
+        keypress: true,
+        blur: true,
+        resize: true,
+        scroll: true
+    };
+
+    pluginDOM = function(NewClass) {
+        // asynchroniously we check all current elements and render when needed:
+        var ns = NewClass.prototype.$ns;
+        asyncSilent(function() {
+            var elements = DOCUMENT.getAll(&#x27;[plugin-&#x27;+ns+&#x27;=&quot;true&quot;]&#x27;),
+                len = elements.length,
+                element, i;
+            for (i=0; i&lt;len; i++) {
+                element = elements[i];
+                element.plug(NewClass);
+            }
+        });
+    };
+
+    pluginDOMresync = function(NewClass) {
+        // asynchroniously we check all current elements and render when needed:
+        var ns = NewClass.prototype.$ns;
+        asyncSilent(function() {
+            var elements = DOCUMENT.getAll(&#x27;[plugin-&#x27;+ns+&#x27;=&quot;true&quot;]&#x27;),
+                len = elements.length,
+                element, i;
+            for (i=0; i&lt;len; i++) {
+                element = elements[i];
+                syncPlugin(element[ns]);
+            }
+        });
+    };
+
+    attrsToModel = function(plugin, config) {
+        var host = plugin.host,
+            attrs = plugin.attrs,
+            defaults = plugin.defaults,
+            ns = plugin.$ns + &#x27;-&#x27;,
+            attrValue, validValue;
+        config || (config={});
+        // read the current ns-attributes on the node, overrule them with config and set the new attributes
+        attrs.each(function(value, key) {
+            attrValue = config[key] || host.getAttr(ns+key) || defaults[key];
+            if (attrValue) {
+                switch (value.toLowerCase()) {
+                    case &#x27;boolean&#x27;:
+                        validValue = attrValue.validateBoolean();
+                        attrValue = (attrValue===&#x27;true&#x27;);
+                        break;
+                    case &#x27;number&#x27;:
+                        validValue = attrValue.validateFloat();
+                        attrValue = parseFloat(attrValue);
+                        break;
+                    case &#x27;date&#x27;:
+                        validValue = attrValue.validateDate();
+                        attrValue = attrValue.toDate();
+                        break;
+                    case &#x27;string&#x27;:
+                        validValue = true;
+                        break;
+                    default:
+                        validValue = false;
+                }
+            }
+            else if (value.toLowerCase()===&#x27;boolean&#x27;) {
+                // undefined &#x60;boolean&#x60; attributes need to be stored as &#x60;false&#x60;
+                validValue = true;
+                attrValue = false;
+            }
+            else {
+                validValue = false;
+            }
+            if (validValue &amp;&amp; !plugin.model[key]) {
+                plugin.model[key] = attrValue;
+            }
+        });
+    };
+
+    modelToAttrs = function(plugin) {
+        console.log(NAME+&#x27;modelToAttrs&#x27;);
+        var attrs = plugin.attrs,
+            model = plugin.model,
+            domElement = plugin.host,
+            ns = plugin.$ns,
+            newAttrs = [];
+        attrs.each(function(value, key) {
+            model[key] &amp;&amp; (newAttrs[newAttrs.length] = {name: ns+&#x27;-&#x27;+fromCamelCase(key), value: model[key]});
+        });
+        if (newAttrs.length&gt;0) {
+            domElement.setAttrs(newAttrs, true);
+        }
+    };
+
+    syncPlugin = function(plugin) {
+        modelToAttrs(plugin);
+        plugin.sync();
+    };
+
+    autoRefreshPlugin = function(plugin) {
+        if (!NATIVE_OBJECT_OBSERVE) {
+            plugin._EventFinalizer = Event.finalize(function(e) {
+                var type = e.type;
+                if (!e._noRender &amp;&amp; (!e.status || !e.status.renderPrevented)) {
+                    if (!MUTATION_EVENTS[type] &amp;&amp; !type.endsWith(&#x27;outside&#x27;)) {
+                        if (plugin._DELAYED_FINALIZE_EVENTS[type]) {
+                            types.push(type);
+                            plugin.constructor.$registerDelay || (plugin.constructor.$registerDelay = laterSilent(function() {
+                                console.info(&#x27;Event-finalizer will delayed-refresh itags because of events: &#x27;+JSON.stringify(types));
+                                syncPlugin(plugin);
+                                types.length = 0;
+                                plugin.constructor.$registerDelay = null;
+                            }, DELAYED_EVT_TIME));
+                        }
+                        else {
+                            console.info(&#x27;Event-finalizer will refresh itags because of event: &#x27;+type);
+                            syncPlugin(plugin);
+                        }
+                    }
+                }
+            });
+
+            plugin._IOFinalizer = IO.finalize(function() {
+                syncPlugin(plugin);
+            });
+        }
+    };
+
+    // extend window.Element:
+    window.Element &amp;&amp; (function(HTMLElementPrototype) {
+       /**
+        * Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.
+        *
+        * @method isPlugged
+        * @param PluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
+        * @return {Boolean} whether the plugin is plugged in
+        * @since 0.0.1
+        */
+        HTMLElementPrototype.isPlugged = function(PluginClass) {
+            return !!this.plugin &amp;&amp; !!this.plugin[PluginClass.prototype.$ns];
+        };
+
+       /**
+        * Checks whether the plugin is ready to be used.
+        *
+        * @method pluginReady
+        * @param PluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
+        * @return {Promise} whether the plugin is plugged in
+        * @since 0.0.1
+        */
+        HTMLElementPrototype.pluginReady = function(PluginClass) {
+            var instance = this,
+                ns = PluginClass.prototype.$ns;
+            instance._pluginReadyInfo || (instance._pluginReadyInfo={});
+            instance._pluginReadyInfo[ns] || (instance._pluginReadyInfo[ns]=window.Promise.manage());
+            return instance._pluginReadyInfo[ns];
+        };
+
+       /**
+        * Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.
+        *
+        * @method plug
+        * @param PluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
+        * @param [config] {Object} any config that should be passed through when the class is instantiated.
+        * @param [model] {Object} model to used as &#x60;ns.model&#x60;
+        * @chainable
+        * @since 0.0.1
+        */
+        HTMLElementPrototype.plug = function(PluginClass, config, model) {
+            var instance = this;
+            if (!instance.isPlugged(PluginClass)) {
+                instance.plugin || Object.protectedProp(instance, &#x27;plugin&#x27;, {});
+                instance.plugin[PluginClass.prototype.$ns] = new PluginClass(instance, config, model);
+            }
+            else {
+                console.info(&#x27;ElementPlugin &#x27;+PluginClass.prototype.$ns+&#x27; already plugged in&#x27;);
+                model &amp;&amp; instance.plugin[PluginClass.prototype.$ns].bindModel(model);
+            }
+            return instance;
+        };
+
+       /**
+        * Unplugs a NodePlugin from the HtmlElement.
+        *
+        * @method unplug
+        * @param PluginClass {NodePlugin} The plugin that should be unplugged. Needs to be the Class, not an instance!
+        * @chainable
+        * @since 0.0.1
+        */
+        HTMLElementPrototype.unplug = function(PluginClass) {
+            var instance = this;
+            if (instance.isPlugged(PluginClass)) {
+                instance.plugin[PluginClass.prototype.$ns].destroy();
+            }
+            return instance;
+        };
+    }(window.HTMLElement.prototype));
+
+    Base = Classes.createClass(
+        function (hostElement, config, model) {
+            var instance = this;
+            instance.host = hostElement;
+            instance.model = {};
+            attrsToModel(instance, config);
+            hostElement.setAttr(&#x27;plugin-&#x27;+instance.$ns, &#x27;true&#x27;, true);
+            model &amp;&amp; instance.bindModel(model, true);
+            syncPlugin(instance);
+            autoRefreshPlugin(instance);
+        },
+        {
+            _DELAYED_FINALIZE_EVENTS: DEFAULT_DELAYED_FINALIZE_EVENTS.shallowClone(),
+            attrs: {},
+            defaults: {},
+           /**
+            * Binds a model to the plugin, making plugin.model equals the bound model.
+            * Immediately syncs the plugin with the new model-data.
+            *
+            * Syncs the new vnode&#x27;s childNodes with the dom.
+            *
+            * @method bindModel
+            * @param model {Object} the model to bind to the itag-element
+            * @param [mergeCurrent=false] {Boolean} when set true, current properties on the plugin&#x27;s model that aren&#x27;t defined
+            *        in the new model, get merged into the new model.
+            * @since 0.0.1
+            */
+            bindModel: function(model, mergeCurrent) {
+                console.log(NAME+&#x27;bindModel&#x27;);
+                var instance = this,
+                    observer;
+                if (Object.isObject(model) &amp;&amp; (instance.model!==model)) {
+                    instance.host.removeAttr(&#x27;bound-model&#x27;);
+                    if (NATIVE_OBJECT_OBSERVE) {
+                        observer = instance._observer;
+                        observer &amp;&amp; Object.unobserve(instance.model, observer);
+                    }
+                    mergeCurrent &amp;&amp; (model.merge(instance.model, {full: true}));
+                    instance.model = model;
+                    if (NATIVE_OBJECT_OBSERVE) {
+                        observer = function() {
+                            syncPlugin(instance);
+                        };
+                        Object.observe(instance.model, observer);
+                        instance._observer = observer;
+                    }
+                    syncPlugin(instance);
+                }
+            },
+            afterInit: function() {
+                var instance = this,
+                    ns = instance.$ns,
+                    host = instance.host;
+                if (host.getAttr(ns+&#x27;-ready&#x27;)!==&#x27;true&#x27;) {
+                    instance.render();
+                    host.setAttr(ns+&#x27;-ready&#x27;, &#x27;true&#x27;, true);
+                }
+                host._pluginReadyInfo || (host._pluginReadyInfo={});
+                host._pluginReadyInfo[ns] || (host._pluginReadyInfo[ns]=window.Promise.manage());
+                host._pluginReadyInfo[ns].fulfill();
+            },
+           /**
+            * Defines which domevents should lead to a direct sync by the Event-finalizer.
+            * Only needed for events that are in the list set by DEFAULT_DELAYED_FINALIZE_EVENTS:
+            *
+            * &lt;ul&gt;
+            *     &lt;li&gt;mousedown&lt;/li&gt;
+            *     &lt;li&gt;mouseup&lt;/li&gt;
+            *     &lt;li&gt;mousemove&lt;/li&gt;
+            *     &lt;li&gt;panmove&lt;/li&gt;
+            *     &lt;li&gt;panstart&lt;/li&gt;
+            *     &lt;li&gt;panleft&lt;/li&gt;
+            *     &lt;li&gt;panright&lt;/li&gt;
+            *     &lt;li&gt;panup&lt;/li&gt;
+            *     &lt;li&gt;pandown&lt;/li&gt;
+            *     &lt;li&gt;pinchmove&lt;/li&gt;
+            *     &lt;li&gt;rotatemove&lt;/li&gt;
+            *     &lt;li&gt;focus&lt;/li&gt;
+            *     &lt;li&gt;manualfocus&lt;/li&gt;
+            *     &lt;li&gt;keydown&lt;/li&gt;
+            *     &lt;li&gt;keyup&lt;/li&gt;
+            *     &lt;li&gt;keypress&lt;/li&gt;
+            *     &lt;li&gt;blur&lt;/li&gt;
+            *     &lt;li&gt;resize&lt;/li&gt;
+            *     &lt;li&gt;scroll&lt;/li&gt;
+            * &lt;/ul&gt;
+            *
+            * Events that are not in this list don&#x27;t need to be set: they always go through the finalizer immediatly.
+            *
+            * You need to set this if the itag-definition its &#x60;sync&#x60;-method should be updated after one of the events in the list.
+            *
+            * @method setItagDirectEventResponse
+            * @param ItagClass {Class} The ItagClass that wants to register
+            * @param domEvents {Array|String} the domevents that should directly make the itag sync
+            * @since 0.0.1
+            */
+            setDirectEventResponse :function(domEvents) {
+                console.log(NAME+&#x27;setDirectEventResponse&#x27;);
+                var instance = this;
+                if (!NATIVE_OBJECT_OBSERVE) {
+                    Array.isArray(domEvents) || (domEvents=[domEvents]);
+                    domEvents.forEach(function(domEvent) {
+                        domEvent.endsWith(&#x27;outside&#x27;) &amp;&amp; (domEvent=domEvent.substr(0, domEvent.length-7));
+                        domEvent = domEvent.toLowerCase();
+                        if (domEvent===&#x27;blur&#x27;) {
+                            console.warn(&#x27;the event &quot;blur&quot; cannot be delayed, for it would lead to extremely many syncing before anything changes which you don\&#x27;t need&#x27;);
+                        }
+                        else {
+                            if (DEFAULT_DELAYED_FINALIZE_EVENTS[domEvent]) {
+                                (&#x27;DELAYED_FINALIZE_EVENTS&#x27; in instance.constructor.prototypes) || instance.mergePrototypes({&#x27;DELAYED_FINALIZE_EVENTS&#x27;: DEFAULT_DELAYED_FINALIZE_EVENTS.shallowClone()});
+                                delete instance.DELAYED_FINALIZE_EVENTS[domEvent];
+                            }
+                        }
+                    });
+                }
+            },
+            render: function() {
+                // defaults to NOOP
+            },
+            sync: function() {
+                // defaults to NOOP
+            },
+            destroy: function () {
+                var instance = this,
+                    host = instance.host,
+                    attrs = instance.attrs,
+                    ns = instance.$ns,
+                    observer;
+                if (NATIVE_OBJECT_OBSERVE) {
+                    observer = instance._observer;
+                    if (observer) {
+                        Object.unobserve(instance.model, observer);
+                        delete instance._observer;
+                    }
+                }
+                else {
+                    instance._EventFinalizer.detach();
+                    instance._IOFinalizer.detach();
+                }
+                attrs.each(
+                    function(value, key) {
+                        host.removeAttr(ns+&#x27;-&#x27;+fromCamelCase(key), true);
+                    }
+                );
+                host.removeAttr(&#x27;plugin-&#x27;+ns, true);
+                host.removeAttr(ns+&#x27;-ready&#x27;, true);
+                delete host.plugin[ns];
+            },
+            $ns: &#x27;undefined-namespace&#x27;
+        }
+    );
+
+    // Whenever elements are added: check for plugins and initialize them
+    Event.after(&#x27;UI:&#x27;+NODE_INSERT, function(e) {
+        var element = e.target;
+        // to prevent less userexperience, we plug asynchroniously
+        asyncSilent(function() {
+            var attrs = element.vnode.attrs,
+                ns, Plugin;
+            attrs &amp;&amp; attrs.each(function(value, key) {
+                if (key.substr(0, 7)===&#x27;plugin-&#x27;) {
+                    ns = key.substr(7);
+                    Plugin = window._ITSAPlugins[ns];
+                    Plugin &amp;&amp; element.plug(Plugin);
+                }
+            });
+        });
+    });
+
+    // Whenever elements are removed: check for plugins and destoy (unplug) them
+    Event.after(&#x27;UI:&#x27;+NODE_REMOVE, function(e) {
+        var element = e.target;
+        // to prevent less userexperience, we unplug after a delay
+        laterSilent(function() {
+            var attrs = element.vnode.attrs,
+                ns, Plugin;
+            attrs &amp;&amp; attrs.each(function(value, key) {
+                if (key.substr(0, 7)===&#x27;plugin-&#x27;) {
+                    ns = key.substr(7);
+                    Plugin = window._ITSAPlugins[ns];
+                    Plugin &amp;&amp; element.unplug(Plugin);
+                }
+            });
+        }, DELAY_DESTRUCTION);
+    });
+
+    Event.after(
+        [&#x27;*:prototypechange&#x27;, &#x27;*:prototyperemove&#x27;],
+        function(e) {
+            pluginDOMresync(e.target);
+        },
+        function(e) {
+            return !!e.target.prototype.$ns;
+        }
+    );
+
+   /**
+    * Creates a new Element-PluginClass.
+    *
+    * @method definePlugin
+    * @param ns {String} the namespace of the plugin
+    * @param [constructor] {Function} The function that will serve as constructor for the new class.
+    *        If &#x60;undefined&#x60; defaults to &#x60;NOOP&#x60;
+    * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
+    * @return {PluginClass}
+    * @since 0.0.1
+    */
+    DOCUMENT.definePlugin = function(ns, constructor, prototypes) {
+        var NewClass;
+        if ((typeof ns===&#x27;string&#x27;) &amp;&amp; (ns=ns.replaceAll(&#x27; &#x27;, &#x27;&#x27;)) &amp;&amp; (ns.length&gt;0) &amp;&amp; !ns.contains(&#x27;-&#x27;)) {
+/*jshint boss:true */
+            if (NewClass=window._ITSAPlugins[ns]) {
+/*jshint boss:false */
+                console.warn(NAME+&#x27;definePlugin cannot redefine Plugin &#x27;+ns+&#x27; --&gt; already exists&#x27;);
+            }
+            else {
+                console.log(NAME+&#x27;definePlugin&#x27;);
+                NewClass = Base.subClass(ns, constructor, prototypes).mergePrototypes({$ns: ns}, true);
+            }
+        }
+        else {
+            console.warn(NAME+&#x27;definePlugin cannot create Plugin: invalid ns: &#x27;+ns);
+        }
+        return NewClass;
+    };
+
+    (function(FunctionPrototype) {
+        var originalSubClass = FunctionPrototype.subClass;
+        /**
+         * Returns a newly created class inheriting from this class
+         * using the given &#x60;constructor&#x60; with the
+         * prototypes listed in &#x60;prototypes&#x60; merged in.
+         *
+         *
+         * The newly created class has the &#x60;$$super&#x60; static property
+         * available to access all of is ancestor&#x27;s instance methods.
+         *
+         * Further methods can be added via the [mergePrototypes](#method_mergePrototypes).
+         *
+         * @example
+         *
+         *  var Circle = Shape.subClass(
+         *      function (x, y, r) {
+         *          // arguments will automaticly be passed through to Shape&#x27;s constructor
+         *          this.r = r;
+         *      },
+         *      {
+         *          area: function () {
+         *              return this.r * this.r * Math.PI;
+         *          }
+         *      }
+         *  );
+         *
+         * @method subClass
+         * @param ns {String} the namespace of the plugin
+         * @param [constructor] {Function} The function that will serve as constructor for the new class.
+         *        If &#x60;undefined&#x60; defaults to &#x60;NOOP&#x60;
+         * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
+         * @param [chainConstruct=true] {Boolean} Whether -during instance creation- to automaticly construct in the complete hierarchy with the given constructor arguments.
+         * @return {Plugin|undefined} undefined when no valid namespace is given
+         */
+        FunctionPrototype.subClass = function (ns, constructor, prototypes /*, chainConstruct */) {
+            var instance = this,
+                NewClass;
+            if (instance.prototype.$ns) {
+                if ((typeof ns===&#x27;string&#x27;) &amp;&amp; (ns=ns.replaceAll(&#x27; &#x27;, &#x27;&#x27;)) &amp;&amp; (ns.length&gt;0) &amp;&amp; !ns.contains(&#x27;-&#x27;)) {
+/*jshint boss:true */
+                    if (NewClass=window._ITSAPlugins[ns]) {
+/*jshint boss:false */
+                        console.warn(NAME+&#x27;definePlugin cannot redefine Plugin &#x27;+ns+&#x27; --&gt; already exists&#x27;);
+                    }
+                    else {
+                        // change the constructor, so that it will end by calling &#x60;_finishInit&#x60;
+                        NewClass = originalSubClass.call(instance, constructor, prototypes).mergePrototypes({$ns: ns}, true);
+                        window._ITSAPlugins[ns] = NewClass;
+                        pluginDOM(NewClass);
+                    }
+                    return NewClass;
+                }
+                else {
+                    console.warn(NAME+&#x27;subClass cannot create Plugin: invalid ns: &#x27;+ns);
+                }
+            }
+            else {
+                // Original subclassing
+                return originalSubClass.apply(instance, arguments);
+            }
+        };
+    }(Function.prototype));
+
+    window._ITSAmodules.ElementPlugin = true;
+};
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

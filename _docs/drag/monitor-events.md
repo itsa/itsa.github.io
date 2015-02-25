@@ -35,14 +35,14 @@ intro: "Dragging can be monitored using the dd, dd-drag and dd-drop events. <br>
 Drag the item and watch for the events.
 
 
-<div class="container" dd-draggable="true" dd-effect-allowed="all">drag me</div>
+<div class="container" plugin-dd="true" dd-effect-allowed="all">drag me</div>
 <div class="monitor-container"></div>
 
 <p class="spaced">Code-example:</p>
 
 ```html
 <body>
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me</div>
+    <div class="container" plugin-dd="true" dd-effect-allowed="all">drag me</div>
     <div class="monitor-container"></div>
 </body>
 ```
@@ -51,8 +51,7 @@ Drag the item and watch for the events.
 <script src="itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa'),
-        monitorCont = document.getElement('.monitor-container'),
-        monitorContDropzone = document.getElement('.monitor-container.dz');
+        monitorCont = document.getElement('.monitor-container');
 
     ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
 
@@ -70,7 +69,7 @@ Drag the item and watch for the events.
         }
         else {
             monitorCont.append('<p class="monitor-drag">dd-drag --> item is dragging: 1 event</p>');
-            node = monitorCont.getElement('.monitor-drag'),
+            node = monitorCont.getElement('.monitor-drag');
             node.setData('count', 1);
         }
     });
@@ -78,6 +77,7 @@ Drag the item and watch for the events.
     ITSA.Event.after('dd-drop', function(e) {
         monitorCont.append('<p>dd-drop --> drag has finished</p>');
     });
+
 </script>
 ```
 
@@ -110,4 +110,5 @@ Drag the item and watch for the events.
     ITSA.Event.after('dd-drop', function(e) {
         monitorCont.append('<p>dd-drop --> drag has finished</p>');
     });
+
 </script>

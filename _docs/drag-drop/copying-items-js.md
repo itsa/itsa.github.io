@@ -42,7 +42,7 @@ intro: "Draggable items can be dropped inside dropzones. Dronzones are HtmlEleme
         font-size: 17px;
         padding-top: 105px;
     }
-    .dropzone-awake[dd-dropzone] {
+    .dropzone-awake[dz-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -64,7 +64,7 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
 
 ```css
 <style type="text/css">
-    .dropzone-awake[dd-dropzone] {
+    .dropzone-awake[dz-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -93,17 +93,18 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
 
     document.getAll('.container').forEach(
         function(node) {
-            var effect;
-            if (node.getText==='copyable') {
+            var effect,
+                innertext = node.getText();
+            if (innertext==='copyable') {
                 effect = 'copy';
             }
-            else if (node.getText==='movable') {
+            else if (innertext==='movable') {
                 effect = 'move';
             }
             else {
                 effect = 'all';
             }
-            node.plug(ITSA.Plugins.nodeDD, {effectAllowed: effect, dropzone: '.drop-container'});
+            node.plug(ITSA.Plugins.DD, {'effect-allowed': effect, dropzone: '.drop-container'});
         }
     );
 
@@ -112,7 +113,7 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
             var innertext = node.getText(),
                 move = (innertext!=='only copied items'),
                 copy = (innertext!=='only moved items');
-            node.plug(ITSA.Plugins.nodeDropzone, {
+            node.plug(ITSA.Plugins.Dropzone, {
                 dropzone: move ? (copy ? 'true' : 'move') : 'copy'
             });
         }
@@ -125,6 +126,7 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
             e.sourceNode.setText('movable');
         }
     });
+
 </script>
 ```
 
@@ -147,7 +149,7 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
             else {
                 effect = 'all';
             }
-            node.plug(ITSA.Plugins.nodeDD, {effectAllowed: effect, dropzone: '.drop-container'});
+            node.plug(ITSA.Plugins.DD, {'effect-allowed': effect, dropzone: '.drop-container'});
         }
     );
 
@@ -156,7 +158,7 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
             var innertext = node.getText(),
                 move = (innertext!=='only copied items'),
                 copy = (innertext!=='only moved items');
-            node.plug(ITSA.Plugins.nodeDropzone, {
+            node.plug(ITSA.Plugins.Dropzone, {
                 dropzone: move ? (copy ? 'true' : 'move') : 'copy'
             });
         }

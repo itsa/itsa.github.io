@@ -581,13 +581,14 @@ defineProperties(Object.prototype, {
      * @param [options.force=false] {Boolean} If true, the properties in &#x60;obj&#x60; will override those of the same name
      *        in the original object
      * @param [options.full=false] {Boolean} If true, also any non-enumerable properties will be merged
+     * @param [options.replace=false] {Boolean} If true, only properties that already exist on the instance will be merged (forced replaced). No need to set force as well.
      * @param [options.descriptors=false] {Boolean} If true, the full descriptors will be set. This takes more time, but avoids any info to be lost.
      * @chainable
      */
     merge: function (obj, options) {
         var instance = this,
             i = -1,
-            keys, l, key, force, descriptors, propDescriptor;
+            keys, l, key, force, replace, descriptors, propDescriptor;
         if (!Object.isObject(obj)) {
             return instance;
         }
@@ -595,11 +596,12 @@ defineProperties(Object.prototype, {
         keys = options.full ? Object.getOwnPropertyNames(obj) : Object.keys(obj);
         l = keys.length;
         force = options.force;
+        replace = options.replace;
         descriptors = options.descriptors;
         // we cannot use obj.each --&gt; obj might be an object defined through Object.create(null) and missing Object.prototype!
         while (++i &lt; l) {
             key = keys[i];
-            if (force || !(key in instance)) {
+            if ((force &amp;&amp; !replace) || (!replace &amp;&amp; !(key in instance)) || (replace &amp;&amp; (key in instance))) {
                 if (descriptors) {
                     propDescriptor = Object.getOwnPropertyDescriptor(obj, key);
                     if (!propDescriptor.writable) {

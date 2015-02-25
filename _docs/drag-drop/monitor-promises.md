@@ -44,7 +44,7 @@ intro: "Dragging can be monitored by listening to the 'dd' event and use the e.d
     .body-content.module p.spaced {
         margin-top: 25px;
     }
-    .dropzone-awake[dd-dropzone] {
+    .dropzone-awake[dz-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -52,8 +52,8 @@ intro: "Dragging can be monitored by listening to the 'dd' event and use the e.d
 Drag the item and watch for the events.
 
 
-<div id="dropzone-1" class="drop-container" dd-dropzone="true">dropzone</div>
-<div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me</div>
+<div id="dropzone-1" class="drop-container" plugin-dz="true">dropzone</div>
+<div class="container" plugin-dd="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me</div>
 
 <div class="monitor-container spaced"></div>
 <div class="monitor-container"></div>
@@ -62,7 +62,7 @@ Drag the item and watch for the events.
 
 ```css
 <style type="text/css">
-    .dropzone-awake[dd-dropzone] {
+    .dropzone-awake[dz-dropzone] {
         border-style: dashed;
     }
 </style>
@@ -70,8 +70,8 @@ Drag the item and watch for the events.
 
 ```html
 <body>
-    <div id="dropzone-1" class="drop-container" dd-dropzone="true">dropzone</div>
-    <div class="container" dd-draggable="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me</div>
+    <div id="dropzone-1" class="drop-container" plugin-dz="true">dropzone</div>
+    <div class="container" plugin-dd="true" dd-dropzone=".drop-container" dd-effect-allowed="all">drag me</div>
 
     <div class="monitor-container spaced"></div>
     <div class="monitor-container"></div>
@@ -110,26 +110,27 @@ Drag the item and watch for the events.
             function() {
                 var dropId = e.dropTarget && e.dropTarget.getId();
                 if (dropId) {
-                    monitorContStart.append('dd-drag --> dropped inside '+dropId);
+                    monitorContStart.append('e.dd.then() --> dropped inside '+dropId);
                 }
                 else {
-                    monitorContStart.append('dd-drag --> dropped outside any dropzone');
+                    monitorContStart.append('e.dd.then() --> dropped outside any dropzone');
                 }
             }
         );
     });
 
 
-    ITSA.Event.after('dropzone', function(e) {
+    ITSA.Event.after('dropzone-over', function(e) {
         var dropId = e.dropTarget.getId();
         monitorContOver.setHTML('dropzone --> dragged over dropzone '+dropId);
 
         e.dropzone.then(
             function(onDropzone) {
-                monitorContOver.append('<br>dropzone --> '+(onDropzone ? 'dropped inside ' : 'moved outside ')+dropId);
+                monitorContOver.append('<br>e.dropzone.then() --> '+(onDropzone ? 'dropped inside ' : 'moved outside ')+dropId);
             }
         );
     });
+
 </script>
 ```
 

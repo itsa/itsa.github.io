@@ -27,7 +27,7 @@ intro: "This example shows how to set up a simple focusmanagers with plain HTML.
     }
 </style>
 
-<div class="container pure-form" fm-manage="true">
+<div class="container pure-form" plugin-fm="true">
     <input type="text" value="first"/>
     <input type="text" value="second"/>
     <input type="checkbox" />
@@ -59,7 +59,7 @@ intro: "This example shows how to set up a simple focusmanagers with plain HTML.
 
 ```html
 <body>
-    <div class="container pure-form" fm-manage="true">
+    <div class="container pure-form" plugin-fm="true">
         <input type="text" value="first"/>
         <input type="text" value="second"/>
         <input type="checkbox" />

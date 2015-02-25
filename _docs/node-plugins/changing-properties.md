@@ -1,9 +1,10 @@
 ---
-module: drag
+module: node-plugin
 maintainer: Marco Asbreuk
-title: Constrained to a node
-intro: "Draggable elements can be constrained by setting the attribute <b>constrain-selector=\"css-selector\"</b>, or using javascript by using <b>node.plugin(ITSA.Plugins.NodeConstrain, {selector: 'css-selector'})</b>. The plugin does nothing more than add the right attribute to the draggable Element, and it just works.</b>"
+title: Changing properties
+intro: "An element can be made draggable by using <b>node.plugin(ITSA.Plugins.nodeDD)</b>. The plugin does nothing more than add the right attribute to the draggable Element, and it just works.</b>"
 ---
+
 
 <style type="text/css">
     .base-container {
@@ -27,9 +28,9 @@ intro: "Draggable elements can be constrained by setting the attribute <b>constr
 
 Drag the 2 rectangles: they will be constrained to their container. The first is constrained using html, the second is set up using javascript.
 
+<button id="switch" class="pure-button">Switch constrain</button>
 <div class="base-container">
-    <div class="container" plugin-dd="true" plugin-constrain="true" constrain-selector=".base-container"></div>
-    <div id="without" class="container" plugin-dd="true"></div>
+    <div id="dragnode" class="container" plugin-dd="true" plugin-constrain="true" constrain-selector=".base-container"></div>
 </div>
 
 <p class="spaced">Code-example:</p>
@@ -37,8 +38,8 @@ Drag the 2 rectangles: they will be constrained to their container. The first is
 ```html
 <body>
     <div class="base-container">
-        <div class="container" plugin-dd="true" plugin-constrain="true" constrain-selector=".base-container"></div>
-        <div id="without" class="container" plugin-dd="true"></div>
+        <div class="container" dd-draggable="true" constrain-selector=".base-container"></div>
+        <div id="without" class="container" dd-draggable="true"></div>
     </div>
 </body>
 ```
@@ -53,10 +54,17 @@ Drag the 2 rectangles: they will be constrained to their container. The first is
 </script>
 ```
 
-<script src="../../dist/itsabuild-min.js"></script>
+<script src="../../dist/itsabuild.js"></script>
 <script>
-    var ITSA = require('itsa');
+    var ITSA = require('itsa'),
+        dragnode = document.getElement('#dragnode'),
+        constrained = true;
 
     ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
-    document.getElement('#without').plug(ITSA.Plugins.Constrain, {selector: '.base-container'});
+
+    ITSA.Event.after('tap', function() {
+        constrained = !constrained;
+        dragnode.plugin.constrain.model.selector = constrained ? '.base-container' : 'window';
+    }, '#switch');
+
 </script>
