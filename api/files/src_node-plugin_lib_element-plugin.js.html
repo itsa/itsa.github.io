@@ -675,6 +675,44 @@ module.exports = function (window) {
     );
 
     // Whenever elements are added: check for plugins and initialize them
+    Event.after([&#x27;UI:&#x27;+ATTRIBUTE_CHANGE, &#x27;UI:&#x27;+ATTRIBUTE_INSERT], function(e) {
+        var element = e.target,
+            ns, Plugin;
+        e.changed.forEach(function(item) {
+            if (item.attribute.substr(0, 7)===&#x27;plugin-&#x27;) {
+                ns = item.attribute.substr(7);
+                Plugin = window._ITSAPlugins[ns];
+                if (Plugin) {
+                    if (item.newValue===&#x27;true&#x27;) {
+                        element.plug(Plugin);
+                        console.log(NAME, &#x27;plug: &#x27;+ns+&#x27; due to attribute change&#x27;);
+                    }
+                    else {
+                        element.unplug(Plugin);
+                        console.log(NAME, &#x27;unplug: &#x27;+ns+&#x27; due to attribute change&#x27;);
+                    }
+                }
+            }
+        });
+    });
+
+    // Whenever elements are added: check for plugins and initialize them
+    Event.after(&#x27;UI:&#x27;+ATTRIBUTE_REMOVE, function(e) {
+        var element = e.target,
+            ns, Plugin;
+        e.changed.forEach(function(attribute) {
+            if (attribute.substr(0, 7)===&#x27;plugin-&#x27;) {
+                ns = attribute.substr(7);
+                Plugin = window._ITSAPlugins[ns];
+                if (Plugin) {
+                    element.unplug(Plugin);
+                    console.log(NAME, &#x27;unplug: &#x27;+ns+&#x27; due to attribute removal&#x27;);
+                }
+            }
+        });
+    });
+
+    // Whenever elements are added: check for plugins and initialize them
     Event.after(&#x27;UI:&#x27;+NODE_INSERT, function(e) {
         var element = e.target;
         // to prevent less userexperience, we plug asynchroniously
@@ -685,7 +723,10 @@ module.exports = function (window) {
                 if (key.substr(0, 7)===&#x27;plugin-&#x27;) {
                     ns = key.substr(7);
                     Plugin = window._ITSAPlugins[ns];
-                    Plugin &amp;&amp; element.plug(Plugin);
+                    if (Plugin) {
+                        element.plug(Plugin);
+                        console.log(NAME, &#x27;plug: &#x27;+ns+&#x27; due to node insert with the plugin-attribute&#x27;);
+                    }
                 }
             });
         });
@@ -696,15 +737,16 @@ module.exports = function (window) {
         var element = e.target;
         // to prevent less userexperience, we unplug after a delay
         laterSilent(function() {
-            var attrs = element.vnode.attrs,
-                ns, Plugin;
-            attrs &amp;&amp; attrs.each(function(value, key) {
-                if (key.substr(0, 7)===&#x27;plugin-&#x27;) {
-                    ns = key.substr(7);
+            var Plugin;
+            if (element.plugin) {
+                element.plugin.each(function(value, ns) {
                     Plugin = window._ITSAPlugins[ns];
-                    Plugin &amp;&amp; element.unplug(Plugin);
-                }
-            });
+                    if (Plugin) {
+                        element.unplug(Plugin);
+                        console.log(NAME, &#x27;unplug: &#x27;+ns+&#x27; due to node removal with this plugin&#x27;);
+                    }
+                });
+            }
         }, DELAY_DESTRUCTION);
     });
 
