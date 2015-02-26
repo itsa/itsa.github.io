@@ -10601,6 +10601,34 @@ module.exports = function (window) {
                     // check for keyenter, but only when e.target equals a focusmanager:
                     if (sourceNode.matches('[plugin-fm="true"]')) {
                         actionkey = focusContainerNode.plugin.fm.model.keyenter;
+                        if (actionkey) {
+                            keys = actionkey.split('+');
+                            len = keys.length;
+                            lastIndex = len - 1;
+                            // double == --> keyCode is number, keys is a string
+                            if (keyCode==keys[lastIndex]) {
+                                // posible keyup --> check if special characters match:
+                                specialKeysMatch = true;
+                                SPECIAL_KEYS.some(function(value) {
+                                    specialKeysMatch = !e[value];
+                                    return !specialKeysMatch;
+                                });
+                                for (i=lastIndex-1; (i>=0) && !specialKeysMatch; i--) {
+                                    specialKey = keys[i].toLowerCase();
+                                    specialKeysMatch = e[SPECIAL_KEYS[specialKey]];
+                                }
+                            }
+                            if (specialKeysMatch) {
+                                resetLastValue(sourceNode);
+                                focusNode = searchFocusNode(sourceNode, true);
+                            }
+                        }
+                    }
+                }
+                if (!focusNode) {
+                    // check for keyleave:
+                    actionkey = focusContainerNode.plugin.fm.model.keyleave;
+                    if (actionkey) {
                         keys = actionkey.split('+');
                         len = keys.length;
                         lastIndex = len - 1;
@@ -10618,33 +10646,9 @@ module.exports = function (window) {
                             }
                         }
                         if (specialKeysMatch) {
-                            resetLastValue(sourceNode);
-                            focusNode = searchFocusNode(sourceNode, true);
+                            resetLastValue(focusContainerNode);
+                            focusNode = focusContainerNode;
                         }
-                    }
-                }
-                if (!focusNode) {
-                    // check for keyleave:
-                    actionkey = focusContainerNode.plugin.fm.model.keyleave;
-                    keys = actionkey.split('+');
-                    len = keys.length;
-                    lastIndex = len - 1;
-                    // double == --> keyCode is number, keys is a string
-                    if (keyCode==keys[lastIndex]) {
-                        // posible keyup --> check if special characters match:
-                        specialKeysMatch = true;
-                        SPECIAL_KEYS.some(function(value) {
-                            specialKeysMatch = !e[value];
-                            return !specialKeysMatch;
-                        });
-                        for (i=lastIndex-1; (i>=0) && !specialKeysMatch; i--) {
-                            specialKey = keys[i].toLowerCase();
-                            specialKeysMatch = e[SPECIAL_KEYS[specialKey]];
-                        }
-                    }
-                    if (specialKeysMatch) {
-                        resetLastValue(focusContainerNode);
-                        focusNode = focusContainerNode;
                     }
                 }
                 if (focusNode) {
@@ -14715,6 +14719,44 @@ module.exports = function (window) {
     );
 
     // Whenever elements are added: check for plugins and initialize them
+    Event.after(['UI:'+ATTRIBUTE_CHANGE, 'UI:'+ATTRIBUTE_INSERT], function(e) {
+        var element = e.target,
+            ns, Plugin;
+        e.changed.forEach(function(item) {
+            if (item.attribute.substr(0, 7)==='plugin-') {
+                ns = item.attribute.substr(7);
+                Plugin = window._ITSAPlugins[ns];
+                if (Plugin) {
+                    if (item.newValue==='true') {
+                        element.plug(Plugin);
+                        console.log(NAME, 'plug: '+ns+' due to attribute change');
+                    }
+                    else {
+                        element.unplug(Plugin);
+                        console.log(NAME, 'unplug: '+ns+' due to attribute change');
+                    }
+                }
+            }
+        });
+    });
+
+    // Whenever elements are added: check for plugins and initialize them
+    Event.after('UI:'+ATTRIBUTE_REMOVE, function(e) {
+        var element = e.target,
+            ns, Plugin;
+        e.changed.forEach(function(attribute) {
+            if (attribute.substr(0, 7)==='plugin-') {
+                ns = attribute.substr(7);
+                Plugin = window._ITSAPlugins[ns];
+                if (Plugin) {
+                    element.unplug(Plugin);
+                    console.log(NAME, 'unplug: '+ns+' due to attribute removal');
+                }
+            }
+        });
+    });
+
+    // Whenever elements are added: check for plugins and initialize them
     Event.after('UI:'+NODE_INSERT, function(e) {
         var element = e.target;
         // to prevent less userexperience, we plug asynchroniously
@@ -14725,7 +14767,10 @@ module.exports = function (window) {
                 if (key.substr(0, 7)==='plugin-') {
                     ns = key.substr(7);
                     Plugin = window._ITSAPlugins[ns];
-                    Plugin && element.plug(Plugin);
+                    if (Plugin) {
+                        element.plug(Plugin);
+                        console.log(NAME, 'plug: '+ns+' due to node insert with the plugin-attribute');
+                    }
                 }
             });
         });
@@ -14736,15 +14781,16 @@ module.exports = function (window) {
         var element = e.target;
         // to prevent less userexperience, we unplug after a delay
         laterSilent(function() {
-            var attrs = element.vnode.attrs,
-                ns, Plugin;
-            attrs && attrs.each(function(value, key) {
-                if (key.substr(0, 7)==='plugin-') {
-                    ns = key.substr(7);
+            var Plugin;
+            if (element.plugin) {
+                element.plugin.each(function(value, ns) {
                     Plugin = window._ITSAPlugins[ns];
-                    Plugin && element.unplug(Plugin);
-                }
-            });
+                    if (Plugin) {
+                        element.unplug(Plugin);
+                        console.log(NAME, 'unplug: '+ns+' due to node removal with this plugin');
+                    }
+                });
+            }
         }, DELAY_DESTRUCTION);
     });
 
@@ -24834,7 +24880,9 @@ module.exports = function (window) {
                 attributeNameSplitted, ns;
 
             if (instance.isItag && !force && !suppressItagRender && ((instance._unchangableAttrs && instance._unchangableAttrs[attributeName]) || ((attributeName.length===2) && (attributeName.toLowerCase()==='is')))) {
-                console.warn('Not allowed to set the attribute '+attributeName);
+                if (prevVal!=value) {
+                    console.warn('Not allowed to set the attribute '+attributeName);
+                }
                 return instance;
             }
             // don't check by !== --> value isn't parsed into a String yet
