@@ -14293,7 +14293,6 @@ module.exports = function (window) {
     }
 
     require('vdom')(window);
-
     var NAME = '[ElementPlugin]: ',
         Classes = require('js-ext/extra/classes.js'),
         timers = require('utils/lib/timers.js'),
@@ -14722,21 +14721,24 @@ module.exports = function (window) {
     Event.after(['UI:'+ATTRIBUTE_CHANGE, 'UI:'+ATTRIBUTE_INSERT], function(e) {
         var element = e.target,
             ns, Plugin;
-        e.changed.forEach(function(item) {
-            if (item.attribute.substr(0, 7)==='plugin-') {
-                ns = item.attribute.substr(7);
-                Plugin = window._ITSAPlugins[ns];
-                if (Plugin) {
-                    if (item.newValue==='true') {
-                        element.plug(Plugin);
-                        console.log(NAME, 'plug: '+ns+' due to attribute change');
-                    }
-                    else {
-                        element.unplug(Plugin);
-                        console.log(NAME, 'unplug: '+ns+' due to attribute change');
+        // to prevent less userexperience, we plug asynchroniously
+        asyncSilent(function() {
+            e.changed.forEach(function(item) {
+                if (item.attribute.substr(0, 7)==='plugin-') {
+                    ns = item.attribute.substr(7);
+                    Plugin = window._ITSAPlugins[ns];
+                    if (Plugin) {
+                        if (item.newValue==='true') {
+                            element.plug(Plugin);
+                            console.log(NAME, 'plug: '+ns+' due to attribute change');
+                        }
+                        else {
+                            element.unplug(Plugin);
+                            console.log(NAME, 'unplug: '+ns+' due to attribute change');
+                        }
                     }
                 }
-            }
+            });
         });
     });
 
@@ -14744,15 +14746,18 @@ module.exports = function (window) {
     Event.after('UI:'+ATTRIBUTE_REMOVE, function(e) {
         var element = e.target,
             ns, Plugin;
-        e.changed.forEach(function(attribute) {
-            if (attribute.substr(0, 7)==='plugin-') {
-                ns = attribute.substr(7);
-                Plugin = window._ITSAPlugins[ns];
-                if (Plugin) {
-                    element.unplug(Plugin);
-                    console.log(NAME, 'unplug: '+ns+' due to attribute removal');
+        // to prevent less userexperience, we plug asynchroniously
+        asyncSilent(function() {
+            e.changed.forEach(function(attribute) {
+                if (attribute.substr(0, 7)==='plugin-') {
+                    ns = attribute.substr(7);
+                    Plugin = window._ITSAPlugins[ns];
+                    if (Plugin) {
+                        element.unplug(Plugin);
+                        console.log(NAME, 'unplug: '+ns+' due to attribute removal');
+                    }
                 }
-            }
+            });
         });
     });
 
