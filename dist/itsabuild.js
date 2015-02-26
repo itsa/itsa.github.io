@@ -10829,11 +10829,16 @@ module.exports = function (window) {
             }
             else {
                 focusContainerNode = (this.getAttr('plugin-fm')==='true') ? focusElement : focusElement.inside('[plugin-fm="true"]');
-                focusContainerNode && focusContainerNode.pluginReady(FocusManager).then(
-                    function() {
-                        doEmit(searchFocusNode(focusElement));
-                    }
-                );
+                if (focusContainerNode) {
+                    focusContainerNode.pluginReady(FocusManager).then(
+                        function() {
+                            doEmit(searchFocusNode(focusElement));
+                        }
+                    );
+                }
+                else {
+                    doEmit(focusElement);
+                }
             }
         };
 
