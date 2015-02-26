@@ -249,7 +249,6 @@ module.exports = function (window) {
     }
 
     require(&#x27;vdom&#x27;)(window);
-
     var NAME = &#x27;[ElementPlugin]: &#x27;,
         Classes = require(&#x27;js-ext/extra/classes.js&#x27;),
         timers = require(&#x27;utils/lib/timers.js&#x27;),
@@ -678,21 +677,24 @@ module.exports = function (window) {
     Event.after([&#x27;UI:&#x27;+ATTRIBUTE_CHANGE, &#x27;UI:&#x27;+ATTRIBUTE_INSERT], function(e) {
         var element = e.target,
             ns, Plugin;
-        e.changed.forEach(function(item) {
-            if (item.attribute.substr(0, 7)===&#x27;plugin-&#x27;) {
-                ns = item.attribute.substr(7);
-                Plugin = window._ITSAPlugins[ns];
-                if (Plugin) {
-                    if (item.newValue===&#x27;true&#x27;) {
-                        element.plug(Plugin);
-                        console.log(NAME, &#x27;plug: &#x27;+ns+&#x27; due to attribute change&#x27;);
-                    }
-                    else {
-                        element.unplug(Plugin);
-                        console.log(NAME, &#x27;unplug: &#x27;+ns+&#x27; due to attribute change&#x27;);
+        // to prevent less userexperience, we plug asynchroniously
+        asyncSilent(function() {
+            e.changed.forEach(function(item) {
+                if (item.attribute.substr(0, 7)===&#x27;plugin-&#x27;) {
+                    ns = item.attribute.substr(7);
+                    Plugin = window._ITSAPlugins[ns];
+                    if (Plugin) {
+                        if (item.newValue===&#x27;true&#x27;) {
+                            element.plug(Plugin);
+                            console.log(NAME, &#x27;plug: &#x27;+ns+&#x27; due to attribute change&#x27;);
+                        }
+                        else {
+                            element.unplug(Plugin);
+                            console.log(NAME, &#x27;unplug: &#x27;+ns+&#x27; due to attribute change&#x27;);
+                        }
                     }
                 }
-            }
+            });
         });
     });
 
@@ -700,15 +702,18 @@ module.exports = function (window) {
     Event.after(&#x27;UI:&#x27;+ATTRIBUTE_REMOVE, function(e) {
         var element = e.target,
             ns, Plugin;
-        e.changed.forEach(function(attribute) {
-            if (attribute.substr(0, 7)===&#x27;plugin-&#x27;) {
-                ns = attribute.substr(7);
-                Plugin = window._ITSAPlugins[ns];
-                if (Plugin) {
-                    element.unplug(Plugin);
-                    console.log(NAME, &#x27;unplug: &#x27;+ns+&#x27; due to attribute removal&#x27;);
+        // to prevent less userexperience, we plug asynchroniously
+        asyncSilent(function() {
+            e.changed.forEach(function(attribute) {
+                if (attribute.substr(0, 7)===&#x27;plugin-&#x27;) {
+                    ns = attribute.substr(7);
+                    Plugin = window._ITSAPlugins[ns];
+                    if (Plugin) {
+                        element.unplug(Plugin);
+                        console.log(NAME, &#x27;unplug: &#x27;+ns+&#x27; due to attribute removal&#x27;);
+                    }
                 }
-            }
+            });
         });
     });
 
