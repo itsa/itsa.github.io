@@ -685,11 +685,16 @@ module.exports = function (window) {
             }
             else {
                 focusContainerNode = (this.getAttr(&#x27;plugin-fm&#x27;)===&#x27;true&#x27;) ? focusElement : focusElement.inside(&#x27;[plugin-fm=&quot;true&quot;]&#x27;);
-                focusContainerNode &amp;&amp; focusContainerNode.pluginReady(FocusManager).then(
-                    function() {
-                        doEmit(searchFocusNode(focusElement));
-                    }
-                );
+                if (focusContainerNode) {
+                    focusContainerNode.pluginReady(FocusManager).then(
+                        function() {
+                            doEmit(searchFocusNode(focusElement));
+                        }
+                    );
+                }
+                else {
+                    doEmit(focusElement);
+                }
             }
         };
 
