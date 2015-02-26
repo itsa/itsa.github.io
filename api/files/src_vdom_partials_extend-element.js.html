@@ -1415,6 +1415,7 @@ module.exports = function (window) {
             }
         };
 
+        ElementPrototype._contains = ElementPrototype.contains; // backup native _contains --&gt; mutationobserver needs it
         /**
          * Indicating whether this Element contains OR equals otherElement. If you need only to be sure the other Element lies inside,
          * but not equals itself, set &#x60;excludeItself&#x60; true.
@@ -1810,11 +1811,12 @@ module.exports = function (window) {
          *
          * @method getHTML
          * @param [exclude] {Array|HTMLElement} an array of HTMLElements - or just 1 - to be excluded
+         * @param [includeSystemNodes=false] {Boolean} whether system-nodes and i-tag inner-content should be returned. By default, they stay hidden.
          * @return {String}
          * @since 0.0.1
          */
-        ElementPrototype.getHTML = function(exclude) {
-            return exclude ? this.vnode.getHTML(exclude) : this.vnode.innerHTML;
+        ElementPrototype.getHTML = function(exclude, includeSystemNodes) {
+            return this.vnode.getHTML(exclude, includeSystemNodes);
         };
 
        /**
@@ -1886,11 +1888,13 @@ module.exports = function (window) {
          * Use this method instead of &#x60;outerHTML&#x60;
          *
          * @method getOuterHTML
+         * @param [exclude] {Array|HTMLElement} an array of HTMLElements - or just 1 - to be excluded
+         * @param [includeSystemNodes=false] {Boolean} whether system-nodes and i-tag inner-content should be returned. By default, they stay hidden.
          * @return {String}
          * @since 0.0.1
          */
-        ElementPrototype.getOuterHTML = function() {
-            return this.vnode.outerHTML;
+        ElementPrototype.getOuterHTML = function(exclude, includeSystemNodes) {
+            return this.vnode.getOuterHTML(exclude, includeSystemNodes);
         };
 
         /**
@@ -4368,7 +4372,7 @@ module.exports = function (window) {
                     attribute = mutation.attributeName,
                     addedChildNodes = mutation.addedNodes,
                     removedChildNodes = mutation.removedNodes,
-                    i, len, childDomNode, childVNode, index, vchildnode;
+                    i, len, childDomNode, childVNode, index, vchildnode, inDom;
                 if (vnode &amp;&amp; !vnode._nosync) {
                     if (type===&#x27;attributes&#x27;) {
                         vnode.reloadAttr(attribute);
@@ -4385,7 +4389,8 @@ module.exports = function (window) {
                         for (i=len-1; i&gt;=0; i--) {
                             childDomNode = removedChildNodes[i];
                             childVNode = childDomNode.vnode;
-                            childVNode &amp;&amp; (!childDomNode.inDOM || !childDomNode.inDOM()) &amp;&amp; childVNode._destroy();
+                            // need to cheack with native &#x60;_contains&#x60; --&gt; the vdom its &#x60;contains&#x60; won&#x27;t work for it isn&#x27;t updated yet:
+                            childVNode &amp;&amp; !DOCUMENT.documentElement._contains(childDomNode) &amp;&amp; childVNode._destroy();
                         }
                        // add the new childNodes:
                         len = addedChildNodes.length;
