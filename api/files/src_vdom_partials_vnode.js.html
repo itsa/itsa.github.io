@@ -1198,14 +1198,17 @@ module.exports = function (window) {
          *
          * @method getHTML
          * @param [exclude] {Array|HTMLElement} an array of HTMLElements - or just 1 - to be excluded
+         * @param [includeSystemNodes=false] {Boolean} whether system-nodes and i-tag inner-content should be returned. By default, they stay hidden.
          * @return {String|undefined} the innerHTML without the elements specified, or &#x60;undefined&#x60; when not an HTMLElement
          * @since 0.0.1
          */
-        getHTML: function(exclude) {
+        getHTML: function(exclude, includeSystemNodes) {
             var instance = this,
                 html, vChildNodes, len, i, vChildNode;
             if (instance.nodeType===1) {
-                Array.isArray(exclude) || (exclude=[exclude]);
+                if (exclude) {
+                    Array.isArray(exclude) || (exclude=[exclude]);
+                }
                 html = &#x27;&#x27;;
                 vChildNodes = instance.vChildNodes;
                 len = vChildNodes ? vChildNodes.length : 0;
@@ -1213,7 +1216,7 @@ module.exports = function (window) {
                     vChildNode = vChildNodes[i];
                     switch (vChildNode.nodeType) {
                         case 1:
-                            exclude.contains(vChildNode.domNode) || vChildNode._systemNode || (html+=vChildNode.outerHTML);
+                            (exclude &amp;&amp; exclude.contains(vChildNode.domNode)) || (!includeSystemNodes &amp;&amp; vChildNode._systemNode) || (html+=vChildNode.getOuterHTML(exclude, includeSystemNodes));
                             break;
                         case 3:
                             html += vChildNode.text.replace(/&lt;/g, &#x27;&amp;lt;&#x27;).replace(/&gt;/g, &#x27;&amp;gt;&#x27;);
@@ -1221,6 +1224,37 @@ module.exports = function (window) {
                         case 8:
                             html += &#x27;&lt;!--&#x27; + vChildNode.text.replace(/&lt;/g, &#x27;&amp;lt;&#x27;).replace(/&gt;/g, &#x27;&amp;gt;&#x27;) + &#x27;--&gt;&#x27;;
                     }
+                }
+            }
+            return html;
+        },
+
+        /**
+         * Gets the outerHTML of the vnode representing the dom-node.
+         * You may exclude HTMLElement (node-type=1) by specifying &#x60;exclude&#x60;.
+         *
+         * @method getOuterHTML
+         * @param [exclude] {Array|HTMLElement} an array of HTMLElements - or just 1 - to be excluded
+         * @param [includeSystemNodes=false] {Boolean} whether system-nodes and i-tag inner-content should be returned. By default, they stay hidden.
+         * @return {String} the outerHTML
+         * @since 0.0.1
+         */
+        getOuterHTML: function(exclude, includeSystemNodes) {
+            var instance = this,
+                html,
+                attrs = instance.attrs;
+            if (instance.nodeType===1) {
+                if (instance.nodeType!==1) {
+                    return instance.textContent;
+                }
+                html = &#x27;&lt;&#x27; + instance.tag.toLowerCase();
+                attrs.each(function(value, key) {
+                    html += &#x27; &#x27;+key+&#x27;=&quot;&#x27;+value+&#x27;&quot;&#x27;;
+                });
+                instance.isVoid &amp;&amp; (html += &#x27;/&#x27;);
+                html += &#x27;&gt;&#x27;;
+                if (!instance.isVoid) {
+                    html += ((!includeSystemNodes &amp;&amp; instance.isItag) ? &#x27;&#x27; : instance.getHTML(exclude, includeSystemNodes)) + &#x27;&lt;/&#x27; + instance.tag.toLowerCase() + &#x27;&gt;&#x27;;
                 }
             }
             return html;
@@ -2578,24 +2612,7 @@ module.exports = function (window) {
          */
         outerHTML: {
             get: function() {
-                var instance = this,
-                    html,
-                    attrs = instance.attrs;
-                if (instance.nodeType===1) {
-                    if (instance.nodeType!==1) {
-                        return instance.textContent;
-                    }
-                    html = &#x27;&lt;&#x27; + instance.tag.toLowerCase();
-                    attrs.each(function(value, key) {
-                        html += &#x27; &#x27;+key+&#x27;=&quot;&#x27;+value+&#x27;&quot;&#x27;;
-                    });
-                    instance.isVoid &amp;&amp; (html += &#x27;/&#x27;);
-                    html += &#x27;&gt;&#x27;;
-                    if (!instance.isVoid) {
-                        html += (instance.isItag ? &#x27;&#x27; : instance.innerHTML) + &#x27;&lt;/&#x27; + instance.tag.toLowerCase() + &#x27;&gt;&#x27;;
-                    }
-                }
-                return html;
+                return this.getOuterHTML();
             },
             set: function(v) {
                 var instance = this,

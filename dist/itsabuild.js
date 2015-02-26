@@ -18759,6 +18759,7 @@ module.exports = function (window) {
             }
         };
 
+        ElementPrototype._contains = ElementPrototype.contains; // backup native _contains --> mutationobserver needs it
         /**
          * Indicating whether this Element contains OR equals otherElement. If you need only to be sure the other Element lies inside,
          * but not equals itself, set `excludeItself` true.
@@ -19154,11 +19155,12 @@ module.exports = function (window) {
          *
          * @method getHTML
          * @param [exclude] {Array|HTMLElement} an array of HTMLElements - or just 1 - to be excluded
+         * @param [includeSystemNodes=false] {Boolean} whether system-nodes and i-tag inner-content should be returned. By default, they stay hidden.
          * @return {String}
          * @since 0.0.1
          */
-        ElementPrototype.getHTML = function(exclude) {
-            return exclude ? this.vnode.getHTML(exclude) : this.vnode.innerHTML;
+        ElementPrototype.getHTML = function(exclude, includeSystemNodes) {
+            return this.vnode.getHTML(exclude, includeSystemNodes);
         };
 
        /**
@@ -19230,11 +19232,13 @@ module.exports = function (window) {
          * Use this method instead of `outerHTML`
          *
          * @method getOuterHTML
+         * @param [exclude] {Array|HTMLElement} an array of HTMLElements - or just 1 - to be excluded
+         * @param [includeSystemNodes=false] {Boolean} whether system-nodes and i-tag inner-content should be returned. By default, they stay hidden.
          * @return {String}
          * @since 0.0.1
          */
-        ElementPrototype.getOuterHTML = function() {
-            return this.vnode.outerHTML;
+        ElementPrototype.getOuterHTML = function(exclude, includeSystemNodes) {
+            return this.vnode.getOuterHTML(exclude, includeSystemNodes);
         };
 
         /**
@@ -21712,7 +21716,7 @@ module.exports = function (window) {
                     attribute = mutation.attributeName,
                     addedChildNodes = mutation.addedNodes,
                     removedChildNodes = mutation.removedNodes,
-                    i, len, childDomNode, childVNode, index, vchildnode;
+                    i, len, childDomNode, childVNode, index, vchildnode, inDom;
                 if (vnode && !vnode._nosync) {
                     if (type==='attributes') {
                         vnode.reloadAttr(attribute);
@@ -21729,7 +21733,8 @@ module.exports = function (window) {
                         for (i=len-1; i>=0; i--) {
                             childDomNode = removedChildNodes[i];
                             childVNode = childDomNode.vnode;
-                            childVNode && (!childDomNode.inDOM || !childDomNode.inDOM()) && childVNode._destroy();
+                            // need to cheack with native `_contains` --> the vdom its `contains` won't work for it isn't updated yet:
+                            childVNode && !DOCUMENT.documentElement._contains(childDomNode) && childVNode._destroy();
                         }
                        // add the new childNodes:
                         len = addedChildNodes.length;
@@ -23978,14 +23983,17 @@ module.exports = function (window) {
          *
          * @method getHTML
          * @param [exclude] {Array|HTMLElement} an array of HTMLElements - or just 1 - to be excluded
+         * @param [includeSystemNodes=false] {Boolean} whether system-nodes and i-tag inner-content should be returned. By default, they stay hidden.
          * @return {String|undefined} the innerHTML without the elements specified, or `undefined` when not an HTMLElement
          * @since 0.0.1
          */
-        getHTML: function(exclude) {
+        getHTML: function(exclude, includeSystemNodes) {
             var instance = this,
                 html, vChildNodes, len, i, vChildNode;
             if (instance.nodeType===1) {
-                Array.isArray(exclude) || (exclude=[exclude]);
+                if (exclude) {
+                    Array.isArray(exclude) || (exclude=[exclude]);
+                }
                 html = '';
                 vChildNodes = instance.vChildNodes;
                 len = vChildNodes ? vChildNodes.length : 0;
@@ -23993,7 +24001,7 @@ module.exports = function (window) {
                     vChildNode = vChildNodes[i];
                     switch (vChildNode.nodeType) {
                         case 1:
-                            exclude.contains(vChildNode.domNode) || vChildNode._systemNode || (html+=vChildNode.outerHTML);
+                            (exclude && exclude.contains(vChildNode.domNode)) || (!includeSystemNodes && vChildNode._systemNode) || (html+=vChildNode.getOuterHTML(exclude, includeSystemNodes));
                             break;
                         case 3:
                             html += vChildNode.text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -24001,6 +24009,37 @@ module.exports = function (window) {
                         case 8:
                             html += '<!--' + vChildNode.text.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '-->';
                     }
+                }
+            }
+            return html;
+        },
+
+        /**
+         * Gets the outerHTML of the vnode representing the dom-node.
+         * You may exclude HTMLElement (node-type=1) by specifying `exclude`.
+         *
+         * @method getOuterHTML
+         * @param [exclude] {Array|HTMLElement} an array of HTMLElements - or just 1 - to be excluded
+         * @param [includeSystemNodes=false] {Boolean} whether system-nodes and i-tag inner-content should be returned. By default, they stay hidden.
+         * @return {String} the outerHTML
+         * @since 0.0.1
+         */
+        getOuterHTML: function(exclude, includeSystemNodes) {
+            var instance = this,
+                html,
+                attrs = instance.attrs;
+            if (instance.nodeType===1) {
+                if (instance.nodeType!==1) {
+                    return instance.textContent;
+                }
+                html = '<' + instance.tag.toLowerCase();
+                attrs.each(function(value, key) {
+                    html += ' '+key+'="'+value+'"';
+                });
+                instance.isVoid && (html += '/');
+                html += '>';
+                if (!instance.isVoid) {
+                    html += ((!includeSystemNodes && instance.isItag) ? '' : instance.getHTML(exclude, includeSystemNodes)) + '</' + instance.tag.toLowerCase() + '>';
                 }
             }
             return html;
@@ -25358,24 +25397,7 @@ module.exports = function (window) {
          */
         outerHTML: {
             get: function() {
-                var instance = this,
-                    html,
-                    attrs = instance.attrs;
-                if (instance.nodeType===1) {
-                    if (instance.nodeType!==1) {
-                        return instance.textContent;
-                    }
-                    html = '<' + instance.tag.toLowerCase();
-                    attrs.each(function(value, key) {
-                        html += ' '+key+'="'+value+'"';
-                    });
-                    instance.isVoid && (html += '/');
-                    html += '>';
-                    if (!instance.isVoid) {
-                        html += (instance.isItag ? '' : instance.innerHTML) + '</' + instance.tag.toLowerCase() + '>';
-                    }
-                }
-                return html;
+                return this.getOuterHTML();
             },
             set: function(v) {
                 var instance = this,
