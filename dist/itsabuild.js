@@ -10384,8 +10384,8 @@ var NAME = '[focusmanager]: ',
     },
     DEFAULT_KEYUP = 'shift+9',
     DEFAULT_KEYDOWN = '9',
-    DEFAULT_ENTER = '39',
-    DEFAULT_LEAVE = '27',
+    // DEFAULT_ENTER = '39',
+    // DEFAULT_LEAVE = '27',
     FM_SELECTION = 'fm-selection',
     FM_SELECTION_START = FM_SELECTION+'start',
     FM_SELECTION_END = FM_SELECTION+'end',
@@ -10786,8 +10786,8 @@ module.exports = function (window) {
                     alwaysdefault: false,
                     keyup: DEFAULT_KEYUP,
                     keydown: DEFAULT_KEYDOWN,
-                    keyenter: DEFAULT_ENTER,
-                    keyleave: DEFAULT_LEAVE,
+                    // keyenter: DEFAULT_ENTER,
+                    // keyleave: DEFAULT_LEAVE,
                     noloop: 'boolean'
                 }
             });
@@ -15808,8 +15808,7 @@ require('./lib/mutationobserver.js'); // needs weakmap
 require('polyfill');
 require('js-ext/lib/object.js');
 
-var NAME = '[useragent]: ',
-    createHashMap = require('js-ext/extra/hashmap.js').createMap;
+var createHashMap = require('js-ext/extra/hashmap.js').createMap;
 
 module.exports = function (window) {
 
@@ -16902,11 +16901,12 @@ module.exports = function (window) {
      * @method contains
      * @param otherElement {Element}
      * @param [insideItags=false] {Boolean} no deepsearch in iTags --> by default, these elements should be hidden
+     * @param [inspectProtectedNodes=false] {Boolean} no deepsearch in protected Nodes or iTags --> by default, these elements should be hidden
      * @return {Boolean} whether the Element is inside the dom.
      * @since 0.0.1
      */
-    DOCUMENT.contains = function(otherElement, insideItags) {
-        return DOCUMENT.documentElement.contains(otherElement, insideItags);
+    DOCUMENT.contains = function(otherElement, insideItags, inspectProtectedNodes) {
+        return DOCUMENT.documentElement.contains(otherElement, insideItags, inspectProtectedNodes);
     };
 
     /**
@@ -18696,7 +18696,7 @@ module.exports = function (window) {
             if (instance===otherElement) {
                 return 0;
             }
-            if (!DOCUMENT.contains(instance) || !DOCUMENT.contains(otherElement)) {
+            if (!DOCUMENT.contains(instance, null, true) || !DOCUMENT.contains(otherElement, null, true)) {
                 return 1;
             }
             else if (instance.contains(otherElement)) {
@@ -21716,7 +21716,7 @@ module.exports = function (window) {
                     attribute = mutation.attributeName,
                     addedChildNodes = mutation.addedNodes,
                     removedChildNodes = mutation.removedNodes,
-                    i, len, childDomNode, childVNode, index, vchildnode, inDom;
+                    i, len, childDomNode, childVNode, index, vchildnode;
                 if (vnode && !vnode._nosync) {
                     if (type==='attributes') {
                         vnode.reloadAttr(attribute);
