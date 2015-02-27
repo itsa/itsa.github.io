@@ -83,8 +83,6 @@ Drag the item and watch for the events.
         monitorCont = document.getElement('.monitor-container'),
         monitorContDropzone = document.getElement('.monitor-container.dz');
 
-    ITSA.DD.init();
-
     //=======================================================================
 
     ITSA.Event.after('dd', function(e) {
@@ -130,8 +128,6 @@ Drag the item and watch for the events.
     var ITSA = require('itsa'),
         monitorCont = document.getElement('.monitor-container'),
         monitorContDropzone = document.getElement('.monitor-container.dz');
-
-    ITSA.DD.init();
 
     //=======================================================================
 

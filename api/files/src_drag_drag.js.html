@@ -294,7 +294,7 @@ module.exports = function (window) {
         bodyNode = DOCUMENT.body,
         supportHammer = !!Event.Hammer,
         mobileEvents = supportHammer &amp;&amp; isMobile,
-        DD, DD_Object;
+        DD;
 
     require(&#x27;vdom&#x27;)(window);
     require(&#x27;node-plugin&#x27;)(window);
@@ -852,24 +852,20 @@ module.exports = function (window) {
 
     };
 
-    DD_Object = window._ITSAmodules.Drag = {
-        DD: DD,
-        Plugins: {
-            DD: DOCUMENT.definePlugin(&#x27;dd&#x27;, null, {
-                attrs: {
-                    draggable: &#x27;string&#x27;,
-                    constrain: &#x27;string&#x27;,
-                    handle: &#x27;string&#x27;,
-                    emitter: &#x27;string&#x27;
-                },
-                defaults: {
-                    draggable: &#x27;true&#x27;
-                }
-            })
+    DOCUMENT.definePlugin(&#x27;dd&#x27;, null, {
+        attrs: {
+            draggable: &#x27;string&#x27;,
+            handle: &#x27;string&#x27;,
+            emitter: &#x27;string&#x27;
+        },
+        defaults: {
+            draggable: &#x27;true&#x27;
         }
-    };
+    });
 
-    return DD_Object;
+    window._ITSAmodules.Drag = DD;
+
+    return DD;
 };
     </pre>
 </div>

@@ -333,7 +333,7 @@ module.exports = function (window) {
         // asynchroniously we check all current elements and render when needed:
         var ns = NewClass.prototype.$ns;
         asyncSilent(function() {
-            var elements = DOCUMENT.getAll(&#x27;[plugin-&#x27;+ns+&#x27;=&quot;true&quot;]&#x27;),
+            var elements = DOCUMENT.getAll(&#x27;[plugin-&#x27;+ns+&#x27;=&quot;true&quot;]&#x27;, true),
                 len = elements.length,
                 element, i;
             for (i=0; i&lt;len; i++) {
@@ -347,7 +347,7 @@ module.exports = function (window) {
         // asynchroniously we check all current elements and render when needed:
         var ns = NewClass.prototype.$ns;
         asyncSilent(function() {
-            var elements = DOCUMENT.getAll(&#x27;[plugin-&#x27;+ns+&#x27;=&quot;true&quot;]&#x27;),
+            var elements = DOCUMENT.getAll(&#x27;[plugin-&#x27;+ns+&#x27;=&quot;true&quot;]&#x27;, true),
                 len = elements.length,
                 element, i;
             for (i=0; i&lt;len; i++) {
@@ -367,6 +367,7 @@ module.exports = function (window) {
         // read the current ns-attributes on the node, overrule them with config and set the new attributes
         attrs.each(function(value, key) {
             attrValue = config[key] || host.getAttr(ns+key) || defaults[key];
+            attrValue = String(attrValue);
             if (attrValue) {
                 switch (value.toLowerCase()) {
                     case &#x27;boolean&#x27;:
@@ -410,7 +411,7 @@ module.exports = function (window) {
             ns = plugin.$ns,
             newAttrs = [];
         attrs.each(function(value, key) {
-            model[key] &amp;&amp; (newAttrs[newAttrs.length] = {name: ns+&#x27;-&#x27;+fromCamelCase(key), value: model[key]});
+            model[key] &amp;&amp; (model[key]!==&#x27;undefined&#x27;) &amp;&amp; (newAttrs[newAttrs.length] = {name: ns+&#x27;-&#x27;+fromCamelCase(key), value: model[key]});
         });
         if (newAttrs.length&gt;0) {
             domElement.setAttrs(newAttrs, true);
@@ -529,8 +530,7 @@ module.exports = function (window) {
             attrsToModel(instance, config);
             hostElement.setAttr(&#x27;plugin-&#x27;+instance.$ns, &#x27;true&#x27;, true);
             model &amp;&amp; instance.bindModel(model, true);
-            syncPlugin(instance);
-            autoRefreshPlugin(instance);
+            modelToAttrs(instance);
         },
         {
             _DELAYED_FINALIZE_EVENTS: DEFAULT_DELAYED_FINALIZE_EVENTS.shallowClone(),
@@ -578,6 +578,8 @@ module.exports = function (window) {
                     instance.render();
                     host.setAttr(ns+&#x27;-ready&#x27;, &#x27;true&#x27;, true);
                 }
+                syncPlugin(instance);
+                autoRefreshPlugin(instance);
                 host._pluginReadyInfo || (host._pluginReadyInfo={});
                 host._pluginReadyInfo[ns] || (host._pluginReadyInfo[ns]=window.Promise.manage());
                 host._pluginReadyInfo[ns].fulfill();

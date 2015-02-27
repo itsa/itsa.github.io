@@ -52,8 +52,6 @@ Drag the item and watch for the events.
     var ITSA = require('itsa'),
         monitorContStart = document.getElement('.monitor-container');
 
-    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
-
     ITSA.Event.after('dd', function(e) {
         monitorContStart.setHTML('dd --> drag started');
 
@@ -92,8 +90,6 @@ Drag the item and watch for the events.
 <script>
     var ITSA = require('itsa'),
         monitorContStart = document.getElement('.monitor-container');
-
-    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
 
     ITSA.Event.after('dd', function(e) {
         monitorContStart.setHTML('dd --> drag started');

@@ -105,8 +105,6 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init();
-
     // we will change the text of copied items, so that it is clear they are only movable
     ITSA.Event.after('dropzone-drop', function(e) {
         e.dragNode.setText('movable');
@@ -120,8 +118,6 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
-
-    ITSA.DD.init();
 
     // we will change the text of copied items, so that it is clear they are only movable
     ITSA.Event.after('dropzone-drop', function(e) {

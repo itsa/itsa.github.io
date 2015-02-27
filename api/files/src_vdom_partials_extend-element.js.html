@@ -1169,7 +1169,7 @@ module.exports = function (window) {
          * @method addSystemElement
          * @param content {Element|ElementArray|String} content to append
          * @param [escape] {Boolean} whether to insert &#x60;escaped&#x60; content, leading it into only text inserted
-         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
+         * @param [silent=true] {Boolean} prevent node-mutation events by the Event-module to emit --&gt; defaults TRUE
          * @return {Element} the created Element (or the last when multiple)
          */
         ElementPrototype.addSystemElement = function(content, escape, silent) {
@@ -1177,11 +1177,13 @@ module.exports = function (window) {
                 vChildNodes = instance.vnode.vChildNodes,
                 len = vChildNodes.length,
                 systemElement, refElement, i;
+            (typeof silent === &#x27;boolean&#x27;) || (silent=true);
             for (i=0; (i&lt;len) &amp;&amp; !refElement; i++) {
                 vChildNodes[i]._systemNode || (refElement=vChildNodes[i].domNode);
             }
             systemElement = refElement ? instance.prepend(content, escape, refElement, silent) : instance.append(content, escape, refElement, silent);
             systemElement.vnode._systemNode = true;
+            systemElement.setAttr(&#x27;is&#x27;, &#x27;system-node&#x27;, true);
             return systemElement;
         };
 
@@ -1782,7 +1784,7 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         ElementPrototype.getElement = function(cssSelector, inspectProtectedNodes) {
-            return ((cssSelector[0]===&#x27;#&#x27;) &amp;&amp; (cssSelector.indexOf(&#x27; &#x27;)===-1)) ? this.getElementById(cssSelector.substr(1)) : this.querySelector(cssSelector, inspectProtectedNodes);
+            return ((cssSelector[0]===&#x27;#&#x27;) &amp;&amp; (cssSelector.indexOf(&#x27; &#x27;)===-1)) ? this.getElementById(cssSelector.substr(1), inspectProtectedNodes) : this.querySelector(cssSelector, inspectProtectedNodes);
         };
 
         /**

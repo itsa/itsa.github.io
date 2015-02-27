@@ -48,7 +48,6 @@ Drag the 2 rectangles: they will be constrained to their container. The first is
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
     document.getElement('#without').plug(ITSA.Plugins.Constrain, {selector: '.base-container'});
 </script>
 ```
@@ -57,6 +56,5 @@ Drag the 2 rectangles: they will be constrained to their container. The first is
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
-    document.getElement('#without').plug(ITSA.Plugins.Constrain, {selector: '.base-container'});
+    document.getElement('#without').plug(ITSA.Plugins.constrain, {selector: '.base-container'});
 </script>

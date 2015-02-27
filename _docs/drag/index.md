@@ -27,32 +27,14 @@ This module makes HtmlElement draggable in a very easy way, no clientside render
 
 #The Basics#
 
-Draggable items are HtmlElements. This Functionalities is made operational by setting the appropriate `attributes` the the HtmlElements. Once the code:
+Draggable items are HtmlElements. This Functionalities is made operational by setting the appropriate `attributes` the the HtmlElements Once the code:
 
-```js
-ITSA.DD.init();
-```
-is executed, delegated eventlisteners will make sure that any Element act as they should, as long as it has the right attributes. You can even set the attributes later on: it just will work, without any additional code.
 
-HtmlElements are made draggable by defining the attribute `dd-draggable="true"`:
+HtmlElements are made draggable by defining the attribute `plugin-dd="true"`:
 
 ```html
-<div dd-draggable="true">drag me</div>
+<div plugin-dd="true">drag me</div>
 ```
-
-When this module gets imported, it returns an object like this:
-
-```js
-{
-    DD: DD,
-    Plugins: {
-        nodeDD: nodeDD
-    }
-}
-```
-This Object is available at the `ITSA` instance. This means, you need to call `ITSA.DD.init()` to inititalize the dragging features. Also, you have `ITSA.Plugins.nodeDD` as a node-plugin available.
-
-**Note:** ITSA.DD is actually a drag-drop instance, though it could have been a drag-instance, which would mean you had only the drag-functionalities of this module. In reality, ITSA.DD has all features of the [drag-drop module](../drag-drop/index.html), which extends this module.
 
 
 
@@ -64,14 +46,11 @@ Items can be made draggable by plain HTML, or by setting the right attributes wi
 A fully defined draggable HtmlElement with all features will look like this (note that the `drag-drop`-module offers additional attributes):
 
 ```html
-<div dd-draggable="true" dd-constrain=".container" dd-handle="h1">
+<div plugin-dd="true" dd-handle="h1">
     <h1>drag me</h1>
     <p>Some content</p>
 </div>
 ```
-
-###dd-constrain###
-Should equal `window` or a `css-selector` of an ancestor where the draggable should be constrained within.
 
 ###dd-handle###
 Should equal a `css-selector` of a descendant that should act as a handle where the draggable can be picked up.
@@ -84,22 +63,20 @@ When this module gets imported, it defines the node-plugin: `ITSA.Plugins.nodeDD
 
 ###Define draggable###
 ```js
-document.getElement('#someNode').plug(ITSA.Plugins.nodeDD);
+document.getElement('#someNode').plug(ITSA.Plugins.dd);
 ```
 
 ###Remove draggablity###
 ```js
-document.getElement('#someNode').unplug(ITSA.Plugins.nodeDD);
+document.getElement('#someNode').unplug(ITSA.Plugins.dd);
 ```
 
 ###Define draggable with options###
 ```js
 document.getElement('#someNode').plug(
-    ITSA.Plugins.nodeDD,
+    ITSA.Plugins.d,
     {
-        draggable: true, //
-        constrain: '.container',
-        emitter: 'redItem'
+        emitter: 'redItem',
         handle: 'h1'
     }
 );
@@ -111,7 +88,7 @@ document.getElement('#someNode').plug(
 You can also define draggable behaviour at a container-HtmlElement, so you don't have to define the draggable-attributes on every single HtmlElement. Working this way, you need to specify which **descendants** need to be draggable by setting a css-selector `dd-draggable="css-selector"`:
 
 ```html
-<div dd-draggable="div" dd-handle="h1"> <!-- this div is not draggable -->
+<div plugin-dd="true" dd-draggable="div" dd-handle="h1"> <!-- this div is not draggable -->
     <div><h1>drag me</h1></div> <!-- draggable -->
     <div><h1>drag me</h1></div> <!-- draggable -->
     <div><h1>drag me</h1></div> <!-- draggable -->

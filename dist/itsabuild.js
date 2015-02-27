@@ -2636,7 +2636,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":75}],6:[function(require,module,exports){
+},{"_process":77}],6:[function(require,module,exports){
 var css = "*:focus {\n    outline: 0;\n}\n\na[target=\"_blank\"]:focus {\n    outline: 1px solid #129fea;\n}\n\n/* because we think the padding and margin should always be part of the size,\n   we define \"box-sizing: border-box\" for all elements */\n\n* {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],7:[function(require,module,exports){
 var css = ".pure-menu.pure-menu-open {\n    z-index: 3; /* prevent graph from crossing the menuarea */\n}\n\n.pure-button.pure-button-bordered,\n.pure-button.pure-button-bordered[disabled] {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;\n}\n\n.pure-button-active,\n.pure-button:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button.pure-button-bordered.pure-button-active[disabled],\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered[disabled]:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.4) inset, 0 0 6px rgba(0,0,0, 0.2) inset;\n}\n\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.6) inset;\n}\n\n/* restore pure-button:active */\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button:active:focus,\n.pure-button.pure-button-active:focus {\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6) inset, 0 0 10px rgba(0, 0, 0, 0.2) inset;\n}\n\n.pure-button.pure-button-rounded {\n    border-radius: 0.3em;\n}\n\n.pure-button.pure-button-heavyrounded {\n    border-radius: 0.5em;\n}\n\n.pure-button.pure-button-oval {\n    border-radius: 50%;\n}\n\n.pure-button.pure-button-halfoval {\n    border-radius: 25%;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -2890,14 +2890,14 @@ module.exports = function (window) {
 
     var Event = require('event-dom')(window),
         DragModule = require('drag')(window),
-        $superInit = DragModule.DD.init,
+        $superInit = DragModule.init,
         ctrlPressed = false,
         dropEffect = MOVE,
         DOCUMENT = window.document,
         isMobile = require('useragent')(window).isMobile,
         supportHammer = !!Event.Hammer,
         mobileEvents = supportHammer && isMobile,
-        DD, DD_Object;
+        DD;
 
     require('vdom')(window);
     require('node-plugin')(window);
@@ -3716,11 +3716,11 @@ module.exports = function (window) {
 
     };
 
-    DragModule.DD.merge(DD, {force: true});
-    DragModule.Plugins.DD.mergePrototypes({
+    DragModule.merge(DD, {force: true});
+
+    window._ITSAPlugins.dd.mergePrototypes({
         attrs: {
             draggable: 'string',
-            constrain: 'string',
             handle: 'string',
             emitter: 'string',
             'effect-allowed': 'string',
@@ -3729,25 +3729,21 @@ module.exports = function (window) {
         }
     }, true);
 
-    DD_Object = window._ITSAmodules.DragDrop = {
-        DD: DragModule.DD,
-        Plugins: {
-            DD: DragModule.Plugins.DD,
-            Dropzone: DOCUMENT.definePlugin('dz', null, {
-                attrs: {
-                    dropzone: 'string'
-                },
-                defaults: {
-                    dropzone: 'true'
-                }
-            })
+    DOCUMENT.definePlugin('dz', null, {
+        attrs: {
+            dropzone: 'string'
+        },
+        defaults: {
+            dropzone: 'true'
         }
-    };
+    });
 
-    return DD_Object;
+    window._ITSAmodules.DragDrop = DragModule.DD;
+
+    return DragModule;
 
 };
-},{"./css/drag-drop.css":10,"drag":13,"event-dom":14,"js-ext":37,"js-ext/extra/hashmap.js":34,"node-plugin":45,"polyfill/polyfill-base.js":57,"useragent":59,"vdom":72,"window-ext":73}],12:[function(require,module,exports){
+},{"./css/drag-drop.css":10,"drag":13,"event-dom":14,"js-ext":37,"js-ext/extra/hashmap.js":34,"node-plugin":45,"polyfill/polyfill-base.js":57,"useragent":61,"vdom":74,"window-ext":75}],12:[function(require,module,exports){
 module.exports=require(10)
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],13:[function(require,module,exports){
 "use strict";
@@ -3834,7 +3830,7 @@ module.exports = function (window) {
         bodyNode = DOCUMENT.body,
         supportHammer = !!Event.Hammer,
         mobileEvents = supportHammer && isMobile,
-        DD, DD_Object;
+        DD;
 
     require('vdom')(window);
     require('node-plugin')(window);
@@ -4392,26 +4388,22 @@ module.exports = function (window) {
 
     };
 
-    DD_Object = window._ITSAmodules.Drag = {
-        DD: DD,
-        Plugins: {
-            DD: DOCUMENT.definePlugin('dd', null, {
-                attrs: {
-                    draggable: 'string',
-                    constrain: 'string',
-                    handle: 'string',
-                    emitter: 'string'
-                },
-                defaults: {
-                    draggable: 'true'
-                }
-            })
+    DOCUMENT.definePlugin('dd', null, {
+        attrs: {
+            draggable: 'string',
+            handle: 'string',
+            emitter: 'string'
+        },
+        defaults: {
+            draggable: 'true'
         }
-    };
+    });
 
-    return DD_Object;
+    window._ITSAmodules.Drag = DD;
+
+    return DD;
 };
-},{"./css/drag.css":12,"event-dom":14,"js-ext":37,"js-ext/extra/hashmap.js":34,"node-plugin":45,"polyfill":57,"useragent":59,"vdom":72,"window-ext":73}],14:[function(require,module,exports){
+},{"./css/drag.css":12,"event-dom":14,"js-ext":37,"js-ext/extra/hashmap.js":34,"node-plugin":45,"polyfill":57,"useragent":61,"vdom":74,"window-ext":75}],14:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5171,7 +5163,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":26,"js-ext/extra/hashmap.js":34,"js-ext/lib/array.js":39,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill/polyfill-base.js":57,"utils":60,"vdom":72}],15:[function(require,module,exports){
+},{"event":26,"js-ext/extra/hashmap.js":34,"js-ext/lib/array.js":39,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill/polyfill-base.js":57,"utils":62,"vdom":74}],15:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5761,7 +5753,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":14,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"utils":60,"vdom":72}],19:[function(require,module,exports){
+},{"../event-dom.js":14,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"utils":62,"vdom":74}],19:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8256,7 +8248,7 @@ module.exports = function (window) {
 
 };
 
-},{"utils":60}],21:[function(require,module,exports){
+},{"utils":62}],21:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -10270,7 +10262,7 @@ module.exports = function (window) {
     module.exports = Event;
 
 };
-},{"../event-base.js":21,"./timer-finalize.js":25,"io":32,"js-ext/lib/object.js":42,"utils":60}],25:[function(require,module,exports){
+},{"../event-base.js":21,"./timer-finalize.js":25,"io":32,"js-ext/lib/object.js":42,"utils":62}],25:[function(require,module,exports){
 (function (global){
 (function (global) {
 
@@ -10384,8 +10376,7 @@ var NAME = '[focusmanager]: ',
     },
     DEFAULT_KEYUP = 'shift+9',
     DEFAULT_KEYDOWN = '9',
-    // DEFAULT_ENTER = '39',
-    // DEFAULT_LEAVE = '27',
+    DEFAULT_NOLOOP = false,
     FM_SELECTION = 'fm-selection',
     FM_SELECTION_START = FM_SELECTION+'start',
     FM_SELECTION_END = FM_SELECTION+'end',
@@ -10790,9 +10781,7 @@ module.exports = function (window) {
                     alwaysdefault: false,
                     keyup: DEFAULT_KEYUP,
                     keydown: DEFAULT_KEYDOWN,
-                    // keyenter: DEFAULT_ENTER,
-                    // keyleave: DEFAULT_LEAVE,
-                    noloop: 'boolean'
+                    noloop: DEFAULT_NOLOOP
                 }
             });
 
@@ -10851,7 +10840,7 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"event-mobile":19,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"node-plugin":45,"polyfill":57,"utils":60,"window-ext":73}],28:[function(require,module,exports){
+},{"event-mobile":19,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"node-plugin":45,"polyfill":57,"utils":62,"window-ext":75}],28:[function(require,module,exports){
 
 "use strict";
 
@@ -12090,7 +12079,7 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":37,"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":57,"utils":60}],33:[function(require,module,exports){
+},{"js-ext":37,"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":57,"utils":62}],33:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -14377,7 +14366,7 @@ module.exports = function (window) {
         // asynchroniously we check all current elements and render when needed:
         var ns = NewClass.prototype.$ns;
         asyncSilent(function() {
-            var elements = DOCUMENT.getAll('[plugin-'+ns+'="true"]'),
+            var elements = DOCUMENT.getAll('[plugin-'+ns+'="true"]', true),
                 len = elements.length,
                 element, i;
             for (i=0; i<len; i++) {
@@ -14391,7 +14380,7 @@ module.exports = function (window) {
         // asynchroniously we check all current elements and render when needed:
         var ns = NewClass.prototype.$ns;
         asyncSilent(function() {
-            var elements = DOCUMENT.getAll('[plugin-'+ns+'="true"]'),
+            var elements = DOCUMENT.getAll('[plugin-'+ns+'="true"]', true),
                 len = elements.length,
                 element, i;
             for (i=0; i<len; i++) {
@@ -14411,6 +14400,7 @@ module.exports = function (window) {
         // read the current ns-attributes on the node, overrule them with config and set the new attributes
         attrs.each(function(value, key) {
             attrValue = config[key] || host.getAttr(ns+key) || defaults[key];
+            attrValue = String(attrValue);
             if (attrValue) {
                 switch (value.toLowerCase()) {
                     case 'boolean':
@@ -14454,7 +14444,7 @@ module.exports = function (window) {
             ns = plugin.$ns,
             newAttrs = [];
         attrs.each(function(value, key) {
-            model[key] && (newAttrs[newAttrs.length] = {name: ns+'-'+fromCamelCase(key), value: model[key]});
+            model[key] && (model[key]!=='undefined') && (newAttrs[newAttrs.length] = {name: ns+'-'+fromCamelCase(key), value: model[key]});
         });
         if (newAttrs.length>0) {
             domElement.setAttrs(newAttrs, true);
@@ -14573,8 +14563,7 @@ module.exports = function (window) {
             attrsToModel(instance, config);
             hostElement.setAttr('plugin-'+instance.$ns, 'true', true);
             model && instance.bindModel(model, true);
-            syncPlugin(instance);
-            autoRefreshPlugin(instance);
+            modelToAttrs(instance);
         },
         {
             _DELAYED_FINALIZE_EVENTS: DEFAULT_DELAYED_FINALIZE_EVENTS.shallowClone(),
@@ -14622,6 +14611,8 @@ module.exports = function (window) {
                     instance.render();
                     host.setAttr(ns+'-ready', 'true', true);
                 }
+                syncPlugin(instance);
+                autoRefreshPlugin(instance);
                 host._pluginReadyInfo || (host._pluginReadyInfo={});
                 host._pluginReadyInfo[ns] || (host._pluginReadyInfo[ns]=window.Promise.manage());
                 host._pluginReadyInfo[ns].fulfill();
@@ -14905,7 +14896,7 @@ module.exports = function (window) {
 
     window._ITSAmodules.ElementPlugin = true;
 };
-},{"event-dom":14,"event/extra/timer-finalize.js":25,"io":32,"js-ext/extra/classes.js":33,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/promise.js":43,"js-ext/lib/string.js":44,"polyfill":57,"utils/lib/timers.js":62,"vdom":72}],48:[function(require,module,exports){
+},{"event-dom":14,"event/extra/timer-finalize.js":25,"io":32,"js-ext/extra/classes.js":33,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/promise.js":43,"js-ext/lib/string.js":44,"polyfill":57,"utils/lib/timers.js":64,"vdom":74}],48:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -15847,6 +15838,161 @@ require('./lib/promise.js');
 require('./lib/weakmap.js');
 require('./lib/mutationobserver.js'); // needs weakmap
 },{"./lib/mutationobserver.js":53,"./lib/promise.js":54,"./lib/weakmap.js":55,"./polyfill-base.js":57}],59:[function(require,module,exports){
+var css = "[plugin-scroll=\"true\"] {\n    overflow: hidden !important;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont,\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    position: absolute;\n    display: block;\n    left: -9999px;\n    top: -9999px;\n    opacity: 0;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-vscroll-cont.itsa-visible {\n    opacity: 1;\n    width: 0.8em;\n    height: 100%;\n    right: 0;\n    top: 0;\n    left: auto;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-hscroll-cont.itsa-visible {\n    opacity: 1;\n    height: 0.8em;\n    width: 100%;\n    left: 0;\n    bottom: 0;\n    top: auto;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont span {\n    position: relative;\n    display: block;\n    width: 100%;\n    min-height: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont span {\n    position: relative;\n    display: block;\n    height: 100%;\n    min-width: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-vscroll-cont span,\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-hscroll-cont span {\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n[plugin-scroll=\"true\"] >span span.dd-dragging {\n    cursor: default;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],60:[function(require,module,exports){
+"use strict";
+
+require('js-ext/lib/object.js');
+require('polyfill');
+require('./css/scrollable.css');
+
+/**
+ *
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module focusmanager
+ * @class FocusManager
+ * @since 0.0.1
+*/
+
+var NAME = '[scrollable]: ',
+    async = require('utils').async,
+    SCROLL_HANDLE = '<span plugin-dd="true" plugin-constrain="true" constrain-selector="span"></span>',
+    VERTICAL_CONT = '<span class="itsa-vscroll-cont">'+SCROLL_HANDLE+'</span>',
+    HORIZONTAL_CONT = '<span class="itsa-hscroll-cont">'+SCROLL_HANDLE+'</span>',
+    createHashMap = require('js-ext/extra/hashmap.js').createMap;
+
+module.exports = function (window) {
+
+    var DOCUMENT = window.document,
+        Scrollable, Event, setupEvents, DD;
+
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
+
+/*jshint boss:true */
+    if (Scrollable=window._ITSAmodules.Scrollable) {
+/*jshint boss:false */
+        return Scrollable; // Scrollable was already created
+    }
+
+    require('window-ext')(window);
+    require('node-plugin')(window);
+
+    Event = require('event-mobile')(window);
+    DD = require('drag')(window);
+    DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
+
+    setupEvents = function() {
+        Event.after('UI:dd-drag', function(e) {
+            var dragNode = e.target,
+                dragContainer = dragNode.getParent(),
+                top = parseInt(dragNode.getInlineStyle('top'), 10),
+                height = dragNode.height,
+                heightContainer = dragContainer.height,
+                effectiveRegion = heightContainer - height,
+                percentedMoved = top/effectiveRegion,
+                host = dragContainer.getParent(),
+                hostScrollHeight = host.scrollHeight,
+                hostHeight = host.height,
+                model = host.plugin.scroll.model;
+            model.top = Math.round(percentedMoved*(hostScrollHeight-hostHeight));
+        }, '[plugin-scroll="true"] >span.itsa-vscroll-cont span');
+
+        Event.after('UI:dd-drag', function(e) {
+            var dragNode = e.target,
+                dragContainer = dragNode.getParent(),
+                left = parseInt(dragNode.getInlineStyle('left'), 10),
+                width = dragNode.width,
+                widthContainer = dragContainer.width,
+                effectiveRegion = widthContainer - width,
+                percentedMoved = left/effectiveRegion,
+                host = dragContainer.getParent(),
+                hostScrollWidth = host.scrollWidth,
+                hostWidth = host.width,
+                model = host.plugin.scroll.model;
+            model.left = Math.round(percentedMoved*(hostScrollWidth-hostWidth));
+        }, '[plugin-scroll="true"] >span.itsa-hscroll-cont span');
+
+    };
+
+    setupEvents();
+
+    window._ITSAmodules.Scrollable = Scrollable = DOCUMENT.definePlugin('scroll', null, {
+        attrs: {
+            x: 'boolean',
+            y: 'boolean',
+            left: 'number',
+            top: 'number',
+            light: 'boolean',
+            autohide: 'boolean',
+            disabled: 'boolean'
+        },
+        defaults: {
+            x: true,
+            y: true,
+            left: 0,
+            top: 0,
+        },
+        render: function() {
+            var instance = this,
+                host = instance.host;
+            host.setInlineStyle('position', 'relative');
+            host.hasInlineStyle('overflow') && host.removeInlineStyle('overflow');
+            host.addSystemElement(VERTICAL_CONT, false, false); // don't want silent insert --> need to render the plugins
+            host.addSystemElement(HORIZONTAL_CONT, false, false);
+        },
+        sync: function() {
+            var instance = this,
+                host = instance.host,
+                model = instance.model,
+                scrollHeight = host.scrollHeight,
+                scrollWidth = host.scrollWidth,
+                height = host.height,
+                width = host.width,
+                scrollLeft = model.left,
+                scrollTop = model.top,
+                vScrollerVisible = (scrollHeight>height),
+                hScrollerVisible = (scrollWidth>width),
+                vscroller = host.getElement('span.itsa-vscroll-cont', true),
+                hscroller = host.getElement('span.itsa-hscroll-cont', true),
+                sizeHandle, effectiveRegion, maxScrollAmount, scrollAmount, handleNode;
+
+            vscroller.toggleClass('itsa-visible', vScrollerVisible);
+            hscroller.toggleClass('itsa-visible', hScrollerVisible);
+
+            if (vScrollerVisible) {
+                handleNode = vscroller.getElement('span');
+                if (!handleNode.hasClass('dd-dragging')) {
+                    sizeHandle = Math.round(height*(height/scrollHeight));
+                    effectiveRegion = height - sizeHandle;
+                    maxScrollAmount - scrollHeight - height;
+                    scrollAmount = Math.max(1, (scrollTop/maxScrollAmount)) * effectiveRegion;
+                    handleNode.setInlineStyle('top', scrollAmount+'px')
+                              .setInlineStyle('height', sizeHandle+'px');
+                }
+            }
+            if (hScrollerVisible) {
+                handleNode = hscroller.getElement('span');
+                if (!handleNode.hasClass('dd-dragging')) {
+                    sizeHandle = Math.round(width*(width/scrollWidth));
+                    effectiveRegion = width - sizeHandle;
+                    maxScrollAmount - scrollWidth - width;
+                    scrollAmount = Math.max(1, (scrollLeft/maxScrollAmount)) * effectiveRegion;
+                    handleNode.setInlineStyle('left', scrollAmount+'px')
+                              .setInlineStyle('width', sizeHandle+'px');
+                }
+            }
+            host.scrollTop = scrollTop;
+            host.scrollLeft = scrollLeft;
+        }
+    });
+
+    return Scrollable;
+};
+},{"./css/scrollable.css":59,"drag":13,"event-mobile":19,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"node-plugin":45,"polyfill":57,"utils":62,"window-ext":75}],61:[function(require,module,exports){
 "use strict";
 
 /**
@@ -15885,7 +16031,7 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":57}],60:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":57}],62:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
@@ -15893,7 +16039,7 @@ module.exports = {
     async: require('./lib/timers.js').async,
     asyncSilent: require('./lib/timers.js').asyncSilent
 };
-},{"./lib/idgenerator.js":61,"./lib/timers.js":62}],61:[function(require,module,exports){
+},{"./lib/idgenerator.js":63,"./lib/timers.js":64}],63:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -15951,7 +16097,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":57}],62:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"polyfill/polyfill-base.js":57}],64:[function(require,module,exports){
 (function (global){
 /**
  * Collection of various utility functions.
@@ -16166,9 +16312,9 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"polyfill/polyfill-base.js":57}],63:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":57}],65:[function(require,module,exports){
 var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],64:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],66:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16466,7 +16612,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":57,"polyfill/extra/transition.js":49,"polyfill/extra/vendorCSS.js":51}],65:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":57,"polyfill/extra/transition.js":49,"polyfill/extra/vendorCSS.js":51}],67:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16894,7 +17040,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":57}],66:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":57}],68:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17608,7 +17754,7 @@ module.exports = function (window) {
 
 
 
-},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":57}],67:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":57}],69:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -18569,7 +18715,7 @@ module.exports = function (window) {
          * @method addSystemElement
          * @param content {Element|ElementArray|String} content to append
          * @param [escape] {Boolean} whether to insert `escaped` content, leading it into only text inserted
-         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
+         * @param [silent=true] {Boolean} prevent node-mutation events by the Event-module to emit --> defaults TRUE
          * @return {Element} the created Element (or the last when multiple)
          */
         ElementPrototype.addSystemElement = function(content, escape, silent) {
@@ -18577,11 +18723,13 @@ module.exports = function (window) {
                 vChildNodes = instance.vnode.vChildNodes,
                 len = vChildNodes.length,
                 systemElement, refElement, i;
+            (typeof silent === 'boolean') || (silent=true);
             for (i=0; (i<len) && !refElement; i++) {
                 vChildNodes[i]._systemNode || (refElement=vChildNodes[i].domNode);
             }
             systemElement = refElement ? instance.prepend(content, escape, refElement, silent) : instance.append(content, escape, refElement, silent);
             systemElement.vnode._systemNode = true;
+            systemElement.setAttr('is', 'system-node', true);
             return systemElement;
         };
 
@@ -19182,7 +19330,7 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         ElementPrototype.getElement = function(cssSelector, inspectProtectedNodes) {
-            return ((cssSelector[0]==='#') && (cssSelector.indexOf(' ')===-1)) ? this.getElementById(cssSelector.substr(1)) : this.querySelector(cssSelector, inspectProtectedNodes);
+            return ((cssSelector[0]==='#') && (cssSelector.indexOf(' ')===-1)) ? this.getElementById(cssSelector.substr(1), inspectProtectedNodes) : this.querySelector(cssSelector, inspectProtectedNodes);
         };
 
         /**
@@ -22309,7 +22457,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":63,"./attribute-extractor.js":64,"./element-array.js":65,"./html-parser.js":68,"./node-parser.js":69,"./vdom-ns.js":70,"./vnode.js":71,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/promise.js":43,"js-ext/lib/string.js":44,"polyfill":57,"polyfill/extra/transition.js":49,"polyfill/extra/transitionend.js":50,"polyfill/extra/vendorCSS.js":51,"utils":60,"window-ext":73}],68:[function(require,module,exports){
+},{"../css/element.css":65,"./attribute-extractor.js":66,"./element-array.js":67,"./html-parser.js":70,"./node-parser.js":71,"./vdom-ns.js":72,"./vnode.js":73,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"js-ext/lib/promise.js":43,"js-ext/lib/string.js":44,"polyfill":57,"polyfill/extra/transition.js":49,"polyfill/extra/transitionend.js":50,"polyfill/extra/vendorCSS.js":51,"utils":62,"window-ext":75}],70:[function(require,module,exports){
 "use strict";
 
 /**
@@ -22480,6 +22628,7 @@ module.exports = function (window) {
                         extractStyle.attrStyle && (vnode.attrs.style=extractStyle.attrStyle);
                         vnode.styles = extractStyle.styles;
 
+                        (vnode.attrs.is==='system-node') && (vnode._systemNode=true);
                     }
 
                     if (!vnode.isVoid) {
@@ -22680,7 +22829,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":64,"./vdom-ns.js":70,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":57}],69:[function(require,module,exports){
+},{"./attribute-extractor.js":66,"./vdom-ns.js":72,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":57}],71:[function(require,module,exports){
 "use strict";
 
 /**
@@ -22770,6 +22919,8 @@ module.exports = function (window) {
                 extractStyle.attrStyle && (vnode.attrs.style=extractStyle.attrStyle);
                 vnode.styles = extractStyle.styles;
 
+                (vnode.attrs.is==='system-node') && (vnode._systemNode=true);
+
                 if (voidElements[tag]) {
                     vnode.isVoid = true;
                 }
@@ -22819,7 +22970,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":64,"./vdom-ns.js":70,"./vnode.js":71,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":57}],70:[function(require,module,exports){
+},{"./attribute-extractor.js":66,"./vdom-ns.js":72,"./vnode.js":73,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":57}],72:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -23050,7 +23201,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":57}],71:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"polyfill":57}],73:[function(require,module,exports){
 "use strict";
 
 /**
@@ -25782,7 +25933,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":64,"./html-parser.js":68,"./vdom-ns.js":70,"js-ext/extra/hashmap.js":34,"js-ext/extra/lightmap.js":35,"js-ext/lib/array.js":39,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":57,"utils/lib/timers.js":62}],72:[function(require,module,exports){
+},{"./attribute-extractor.js":66,"./html-parser.js":70,"./vdom-ns.js":72,"js-ext/extra/hashmap.js":34,"js-ext/extra/lightmap.js":35,"js-ext/lib/array.js":39,"js-ext/lib/object.js":42,"js-ext/lib/string.js":44,"polyfill":57,"utils/lib/timers.js":64}],74:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -25825,13 +25976,13 @@ module.exports = function (window) {
 
     window._ITSAmodules.VDOM = true;
 };
-},{"./partials/extend-document.js":66,"./partials/extend-element.js":67,"./partials/node-parser.js":69,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"utils/lib/timers.js":62}],73:[function(require,module,exports){
+},{"./partials/extend-document.js":68,"./partials/extend-element.js":69,"./partials/node-parser.js":71,"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42,"utils/lib/timers.js":64}],75:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":74}],74:[function(require,module,exports){
+},{"./lib/sizes.js":76}],76:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -25935,7 +26086,7 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42}],75:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":34,"js-ext/lib/object.js":42}],77:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -26094,10 +26245,6 @@ process.chdir = function (dir) {
         base: '/components'
     };
 
-    ITSA.Plugins = {
-
-    };
-
     /**
      * Reference to `Classes` in [js-ext/extra/classes.js](../modules/js-ext.html)
      *
@@ -26145,7 +26292,8 @@ process.chdir = function (dir) {
      * @type function
      * @static
     */
-    ITSA.Plugins.merge(require('node-plugin')(window));
+    require('node-plugin')(window);
+    ITSA.Plugins = window._ITSAPlugins;
 
     ITSA.merge(require('utils'));
     ITSA.RESERVED_WORDS = require('js-ext/extra/reserved-words.js');
@@ -26157,10 +26305,12 @@ process.chdir = function (dir) {
         require('event-dom/extra/focusnode.js')(window);
         // setup dragdrop:
         dragdrop = require('drag-drop')(window);
-        ITSA.DD = dragdrop.DD;
-        ITSA.Plugins.merge(dragdrop.Plugins);
-        ITSA.Plugins.focusManager = require('focusmanager')(window);
+        ITSA.DD = dragdrop;
+        ITSA.DD.init();
+        require('focusmanager')(window);
     }
+
+    require('scrollable')(window);
 
     /**
      * Reference to the [IO](io.html) object
@@ -26195,4 +26345,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"css":9,"drag-drop":11,"event":26,"event-dom/extra/blurnode.js":15,"event-dom/extra/focusnode.js":16,"event-dom/extra/hover.js":17,"event-dom/extra/valuechange.js":18,"event-mobile":19,"event/extra/objectobserve.js":24,"focusmanager":27,"io/extra/io-cors-ie9.js":28,"io/extra/io-stream.js":29,"io/extra/io-transfer.js":30,"io/extra/io-xml.js":31,"js-ext/extra/reserved-words.js":36,"js-ext/js-ext.js":38,"node-plugin":45,"node-win":undefined,"polyfill/polyfill.js":58,"useragent":59,"utils":60,"vdom":72,"window-ext":73}]},{},[]);
+},{"css":9,"drag-drop":11,"event":26,"event-dom/extra/blurnode.js":15,"event-dom/extra/focusnode.js":16,"event-dom/extra/hover.js":17,"event-dom/extra/valuechange.js":18,"event-mobile":19,"event/extra/objectobserve.js":24,"focusmanager":27,"io/extra/io-cors-ie9.js":28,"io/extra/io-stream.js":29,"io/extra/io-transfer.js":30,"io/extra/io-xml.js":31,"js-ext/extra/reserved-words.js":36,"js-ext/js-ext.js":38,"node-plugin":45,"node-win":undefined,"polyfill/polyfill.js":58,"scrollable":60,"useragent":61,"utils":62,"vdom":74,"window-ext":75}]},{},[]);

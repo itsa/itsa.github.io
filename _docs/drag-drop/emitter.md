@@ -97,10 +97,9 @@ Drag the items to the dropzones..
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init();
-    document.getElement('#without').plug(ITSA.Plugins.DD, {emitter: 'red'});
-    document.getElement('#without-emitter').plug(ITSA.Plugins.DD);
-    document.getElement('#dropzone-without').plug(ITSA.Plugins.Dropzone, {dropzone: 'true emitter=red'});
+    document.getElement('#without').plug(ITSA.Plugins.dd, {emitter: 'red'});
+    document.getElement('#without-emitter').plug(ITSA.Plugins.dd);
+    document.getElement('#dropzone-without').plug(ITSA.Plugins.dz, {dropzone: 'true emitter=red'});
 
     ITSA.Event.before('dd', function(e) {
         e.emitter = "blue";
@@ -114,10 +113,9 @@ Drag the items to the dropzones..
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init();
-    document.getElement('#without').plug(ITSA.Plugins.DD, {emitter: 'red'});
-    document.getElement('#without-emitter').plug(ITSA.Plugins.DD);
-    document.getElement('#dropzone-without').plug(ITSA.Plugins.Dropzone, {dropzone: 'true emitter=red'});
+    document.getElement('#without').plug(ITSA.Plugins.dd, {emitter: 'red'});
+    document.getElement('#without-emitter').plug(ITSA.Plugins.dd);
+    document.getElement('#dropzone-without').plug(ITSA.Plugins.dz, {dropzone: 'true emitter=red'});
 
     ITSA.Event.before('dd', function(e) {
         e.emitter = "blue";

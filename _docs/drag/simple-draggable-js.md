@@ -38,8 +38,7 @@ Drag the rectangle. The Node is made draggable by a plugin.
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
-    document.getElement('.container').plug(ITSA.Plugins.DD);
+    document.getElement('.container').plug(ITSA.Plugins.dd);
 </script>
 ```
 
@@ -47,6 +46,5 @@ Drag the rectangle. The Node is made draggable by a plugin.
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
-    document.getElement('.container').plug(ITSA.Plugins.DD);
+    document.getElement('.container').plug(ITSA.Plugins.dd);
 </script>
