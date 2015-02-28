@@ -59,7 +59,7 @@ Drag the 2 rectangles. The first is constrained using html, the second is set up
 <script>
     var ITSA = require('itsa');
 
-    document.getElement('#without').plug(ITSA.Plugins.dd, {handle: 'h1'});
+    document.getElement('#without').plug('dd', {handle: 'h1'});
 </script>
 ```
 
@@ -67,5 +67,5 @@ Drag the 2 rectangles. The first is constrained using html, the second is set up
 <script>
     var ITSA = require('itsa');
 
-    document.getElement('#without').plug(ITSA.Plugins.dd, {handle: 'h1'});
+    document.getElement('#without').plug('dd', {handle: 'h1'});
 </script>

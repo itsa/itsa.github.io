@@ -87,8 +87,8 @@ Drag the items to the dropzones. The items can be copied by pressing the `Ctrl`-
 <script>
     var ITSA = require('itsa');
 
-    document.getElement('#without').plug(ITSA.Plugins.dd, {'effect-allowed': 'all', dropzone: '.drop-container'});
-    document.getElement('#dropzone-without').plug(ITSA.Plugins.Dropzone);
+    document.getElement('#without').plug('dd', {'effect-allowed': 'all', dropzone: '.drop-container'});
+    document.getElement('#dropzone-without').plug('dz');
 
     // we will change the text of copied items, so that it is clear they are only movable
     ITSA.Event.after('dropzone-drop', function(e) {
@@ -105,8 +105,8 @@ Drag the items to the dropzones. The items can be copied by pressing the `Ctrl`-
 <script>
     var ITSA = require('itsa');
 
-    document.getElement('#without').plug(ITSA.Plugins.dd, {'effect-allowed': 'all', dropzone: '.drop-container'});
-    document.getElement('#dropzone-without').plug(ITSA.Plugins.dz);
+    document.getElement('#without').plug('dd', {'effect-allowed': 'all', dropzone: '.drop-container'});
+    document.getElement('#dropzone-without').plug('dz');
 
     // we will change the text of copied items, so that it is clear they are only movable
     ITSA.Event.after('dropzone-drop', function(e) {

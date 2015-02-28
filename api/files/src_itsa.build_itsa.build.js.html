@@ -350,7 +350,7 @@
      * @static
     */
     require(&#x27;node-plugin&#x27;)(window);
-    ITSA.Plugins = window._ITSAPlugins;
+    require(&#x27;constrain&#x27;)(window);
 
     ITSA.merge(require(&#x27;utils&#x27;));
     ITSA.RESERVED_WORDS = require(&#x27;js-ext/extra/reserved-words.js&#x27;);

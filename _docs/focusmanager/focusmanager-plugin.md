@@ -107,6 +107,6 @@ intro: "This example shows how to set up a simple focusmanagers with the plugin 
     var ITSA = require('itsa'),
         container = document.getElement('.container');
 
-    container.plug(ITSA.Plugins.fm, {manage: 'button, input, .area'});
+    container.plug('fm', {manage: 'button, input, .area'});
     document.getElement('.container').focus();
 </script>

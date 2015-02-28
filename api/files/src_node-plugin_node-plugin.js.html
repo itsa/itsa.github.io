@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/node-plugin/lib/element-plugin.js - Itsa</title>
+    <title>src/node-plugin/node-plugin.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -206,7 +206,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/node-plugin/lib/element-plugin.js</h1>
+                        <h1 class="file-heading">File: src/node-plugin/node-plugin.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -232,6 +232,7 @@ require(&#x27;js-ext/lib/string.js&#x27;);
 require(&#x27;js-ext/lib/promise.js&#x27;);
 require(&#x27;polyfill&#x27;);
 require(&#x27;event/extra/timer-finalize.js&#x27;);
+require(&#x27;event/extra/promise-finalize.js&#x27;);
 
 var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
     fromCamelCase = function(input) {
@@ -252,7 +253,6 @@ module.exports = function (window) {
     var NAME = &#x27;[ElementPlugin]: &#x27;,
         Classes = require(&#x27;js-ext/extra/classes.js&#x27;),
         timers = require(&#x27;utils/lib/timers.js&#x27;),
-        IO = require(&#x27;io&#x27;)(window),
         Event = require(&#x27;event-dom&#x27;)(window),
         asyncSilent = timers.asyncSilent,
         laterSilent = timers.laterSilent,
@@ -338,7 +338,7 @@ module.exports = function (window) {
                 element, i;
             for (i=0; i&lt;len; i++) {
                 element = elements[i];
-                element.plug(NewClass);
+                element.plug(ns);
             }
         });
     };
@@ -418,7 +418,27 @@ module.exports = function (window) {
         }
     };
 
-    syncPlugin = function(plugin) {
+    syncPlugin = function(plugin, compareWithPrevData) {
+        var stringifiedModel;
+        if (compareWithPrevData) {
+            try {
+                stringifiedModel = JSON.stringify(plugin.model);
+                if (stringifiedModel!==plugin._bkpModel) {
+                    plugin._bkpModel = stringifiedModel;
+                }
+                else {
+                    return;
+                }
+            }
+            catch (err) {
+                console.warn(err);
+                console.warn(&#x27;Invalid model-structure for plugin &#x27;+plugin.$ns+&#x27;: possibly it is cycle referenced --&gt; will NEVER refresh the plugin:&#x27;);
+                console.warn(plugin.host);
+                console.warn(&#x27;related model:&#x27;);
+                console.warn(plugin.model);
+                return;
+            }
+        }
         modelToAttrs(plugin);
         plugin.sync();
     };
@@ -433,21 +453,17 @@ module.exports = function (window) {
                             types.push(type);
                             plugin.constructor.$registerDelay || (plugin.constructor.$registerDelay = laterSilent(function() {
                                 console.info(&#x27;Event-finalizer will delayed-refresh itags because of events: &#x27;+JSON.stringify(types));
-                                syncPlugin(plugin);
+                                syncPlugin(plugin, true);
                                 types.length = 0;
                                 plugin.constructor.$registerDelay = null;
                             }, DELAYED_EVT_TIME));
                         }
                         else {
                             console.info(&#x27;Event-finalizer will refresh itags because of event: &#x27;+type);
-                            syncPlugin(plugin);
+                            syncPlugin(plugin, true);
                         }
                     }
                 }
-            });
-
-            plugin._IOFinalizer = IO.finalize(function() {
-                syncPlugin(plugin);
             });
         }
     };
@@ -458,51 +474,77 @@ module.exports = function (window) {
         * Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.
         *
         * @method isPlugged
-        * @param PluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
+        * @param plugin {String} The name of the plugin that should be plugged. Needs to be the Class, not an instance!
         * @return {Boolean} whether the plugin is plugged in
         * @since 0.0.1
         */
-        HTMLElementPrototype.isPlugged = function(PluginClass) {
-            return !!this.plugin &amp;&amp; !!this.plugin[PluginClass.prototype.$ns];
+        HTMLElementPrototype.isPlugged = function(plugin) {
+            // to prevent the need os waiting for initialisation, we will check the attribute
+            return (this.getAttr(&#x27;plugin-&#x27;+plugin)===&#x27;true&#x27;);
         };
 
        /**
         * Checks whether the plugin is ready to be used.
         *
         * @method pluginReady
-        * @param PluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
+        * @param plugin {String} The name of the plugin that should be ready.
         * @return {Promise} whether the plugin is plugged in
         * @since 0.0.1
         */
-        HTMLElementPrototype.pluginReady = function(PluginClass) {
-            var instance = this,
-                ns = PluginClass.prototype.$ns;
+        HTMLElementPrototype.pluginReady = function(plugin) {
+            var instance = this;
             instance._pluginReadyInfo || (instance._pluginReadyInfo={});
-            instance._pluginReadyInfo[ns] || (instance._pluginReadyInfo[ns]=window.Promise.manage());
-            return instance._pluginReadyInfo[ns];
+            instance._pluginReadyInfo[plugin] || (instance._pluginReadyInfo[plugin]=window.Promise.manage());
+            return instance._pluginReadyInfo[plugin];
         };
 
        /**
         * Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.
         *
         * @method plug
-        * @param PluginClass {NodePlugin} The plugin that should be plugged. Needs to be the Class, not an instance!
+        * @param plugin {String} The name of the plugin that should be plugged.
         * @param [config] {Object} any config that should be passed through when the class is instantiated.
         * @param [model] {Object} model to used as &#x60;ns.model&#x60;
         * @chainable
         * @since 0.0.1
         */
-        HTMLElementPrototype.plug = function(PluginClass, config, model) {
-            var instance = this;
-            if (!instance.isPlugged(PluginClass)) {
-                instance.plugin || Object.protectedProp(instance, &#x27;plugin&#x27;, {});
-                instance.plugin[PluginClass.prototype.$ns] = new PluginClass(instance, config, model);
-            }
-            else {
-                console.info(&#x27;ElementPlugin &#x27;+PluginClass.prototype.$ns+&#x27; already plugged in&#x27;);
-                model &amp;&amp; instance.plugin[PluginClass.prototype.$ns].bindModel(model);
+        HTMLElementPrototype.plug = function(plugin, config, model) {
+            var instance = this,
+                Plugin;
+            if (typeof plugin===&#x27;string&#x27;) {
+                Plugin = window._ITSAPlugins[plugin];
+                if (Plugin) {
+                    if (!instance.isPlugged(Plugin)) {
+                        instance._plugin || Object.protectedProp(instance, &#x27;_plugin&#x27;, {});
+                        instance._plugin[plugin] = new Plugin(instance, config, model);
+                    }
+                    else {
+                        console.info(&#x27;ElementPlugin &#x27;+plugin+&#x27; already plugged in&#x27;);
+                        model &amp;&amp; instance._plugin[plugin].bindModel(model);
+                    }
+                }
+                else {
+                    console.warn(&#x27;Plugin &#x27;+plugin+&#x27; is not registered&#x27;);
+                }
             }
             return instance;
+        };
+
+       /**
+        * Gets the plugin-instance of the specified plugin-name. Will fulfill as soon as the plugin is ready.
+        *
+        * @method getPlugin
+        * @param plugin {String} The name of the plugin that should be plugged.
+        * @return {Promise} the plugin-instance of the specified plugin-name
+        * @since 0.0.1
+        */
+        HTMLElementPrototype.getPlugin = function(plugin) {
+            var instance = this;
+            return instance.pluginReady(plugin).then(
+                function() {
+                    return instance._plugin[plugin];
+                }
+            );
         };
 
        /**
@@ -513,10 +555,10 @@ module.exports = function (window) {
         * @chainable
         * @since 0.0.1
         */
-        HTMLElementPrototype.unplug = function(PluginClass) {
+        HTMLElementPrototype.unplug = function(plugin) {
             var instance = this;
-            if (instance.isPlugged(PluginClass)) {
-                instance.plugin[PluginClass.prototype.$ns].destroy();
+            if (instance.isPlugged(plugin)) {
+                instance._plugin[plugin].destroy();
             }
             return instance;
         };
@@ -660,7 +702,6 @@ module.exports = function (window) {
                 }
                 else {
                     instance._EventFinalizer.detach();
-                    instance._IOFinalizer.detach();
                 }
                 attrs.each(
                     function(value, key) {
@@ -669,7 +710,7 @@ module.exports = function (window) {
                 );
                 host.removeAttr(&#x27;plugin-&#x27;+ns, true);
                 host.removeAttr(ns+&#x27;-ready&#x27;, true);
-                delete host.plugin[ns];
+                delete host._plugin[ns];
             },
             $ns: &#x27;undefined-namespace&#x27;
         }
@@ -687,11 +728,11 @@ module.exports = function (window) {
                     Plugin = window._ITSAPlugins[ns];
                     if (Plugin) {
                         if (item.newValue===&#x27;true&#x27;) {
-                            element.plug(Plugin);
+                            element.plug(ns);
                             console.log(NAME, &#x27;plug: &#x27;+ns+&#x27; due to attribute change&#x27;);
                         }
                         else {
-                            element.unplug(Plugin);
+                            element.unplug(ns);
                             console.log(NAME, &#x27;unplug: &#x27;+ns+&#x27; due to attribute change&#x27;);
                         }
                     }
@@ -711,7 +752,7 @@ module.exports = function (window) {
                     ns = attribute.substr(7);
                     Plugin = window._ITSAPlugins[ns];
                     if (Plugin) {
-                        element.unplug(Plugin);
+                        element.unplug(ns);
                         console.log(NAME, &#x27;unplug: &#x27;+ns+&#x27; due to attribute removal&#x27;);
                     }
                 }
@@ -731,7 +772,7 @@ module.exports = function (window) {
                     ns = key.substr(7);
                     Plugin = window._ITSAPlugins[ns];
                     if (Plugin) {
-                        element.plug(Plugin);
+                        element.plug(ns);
                         console.log(NAME, &#x27;plug: &#x27;+ns+&#x27; due to node insert with the plugin-attribute&#x27;);
                     }
                 }
@@ -749,7 +790,7 @@ module.exports = function (window) {
                 element.plugin.each(function(value, ns) {
                     Plugin = window._ITSAPlugins[ns];
                     if (Plugin) {
-                        element.unplug(Plugin);
+                        element.unplug(ns);
                         console.log(NAME, &#x27;unplug: &#x27;+ns+&#x27; due to node removal with this plugin&#x27;);
                     }
                 });
@@ -771,30 +812,42 @@ module.exports = function (window) {
     * Creates a new Element-PluginClass.
     *
     * @method definePlugin
-    * @param ns {String} the namespace of the plugin
+    * @param plugin {String} the namespace of the plugin
     * @param [constructor] {Function} The function that will serve as constructor for the new class.
     *        If &#x60;undefined&#x60; defaults to &#x60;NOOP&#x60;
     * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
     * @return {PluginClass}
     * @since 0.0.1
     */
-    DOCUMENT.definePlugin = function(ns, constructor, prototypes) {
+    DOCUMENT.definePlugin = function(plugin, constructor, prototypes) {
         var NewClass;
-        if ((typeof ns===&#x27;string&#x27;) &amp;&amp; (ns=ns.replaceAll(&#x27; &#x27;, &#x27;&#x27;)) &amp;&amp; (ns.length&gt;0) &amp;&amp; !ns.contains(&#x27;-&#x27;)) {
+        if ((typeof plugin===&#x27;string&#x27;) &amp;&amp; (plugin=plugin.replaceAll(&#x27; &#x27;, &#x27;&#x27;)) &amp;&amp; (plugin.length&gt;0) &amp;&amp; !plugin.contains(&#x27;-&#x27;)) {
 /*jshint boss:true */
-            if (NewClass=window._ITSAPlugins[ns]) {
+            if (NewClass=window._ITSAPlugins[plugin]) {
 /*jshint boss:false */
-                console.warn(NAME+&#x27;definePlugin cannot redefine Plugin &#x27;+ns+&#x27; --&gt; already exists&#x27;);
+                console.warn(NAME+&#x27;definePlugin cannot redefine Plugin &#x27;+plugin+&#x27; --&gt; already exists&#x27;);
             }
             else {
                 console.log(NAME+&#x27;definePlugin&#x27;);
-                NewClass = Base.subClass(ns, constructor, prototypes).mergePrototypes({$ns: ns}, true);
+                NewClass = Base.subClass(plugin, constructor, prototypes).mergePrototypes({$ns: plugin}, true);
             }
         }
         else {
-            console.warn(NAME+&#x27;definePlugin cannot create Plugin: invalid ns: &#x27;+ns);
+            console.warn(NAME+&#x27;definePlugin cannot create Plugin: invalid plugin: &#x27;+plugin);
         }
         return NewClass;
+    };
+
+   /**
+    * Returns the PluginClass that belongs with the specified &#x60;plugin&#x60;-name.
+    *
+    * @method getPluginClass
+    * @param plugin {String} the namespace of the plugin
+    * @return {PluginClass|indefined}
+    * @since 0.0.1
+    */
+    DOCUMENT.getPluginClass = function(plugin) {
+        return window._ITSAPlugins[plugin];
     };
 
     (function(FunctionPrototype) {
@@ -825,33 +878,33 @@ module.exports = function (window) {
          *  );
          *
          * @method subClass
-         * @param ns {String} the namespace of the plugin
+         * @param plugin {String} the namespace of the plugin
          * @param [constructor] {Function} The function that will serve as constructor for the new class.
          *        If &#x60;undefined&#x60; defaults to &#x60;NOOP&#x60;
          * @param [prototypes] {Object} Hash map of properties to be added to the prototype of the new class.
          * @param [chainConstruct=true] {Boolean} Whether -during instance creation- to automaticly construct in the complete hierarchy with the given constructor arguments.
          * @return {Plugin|undefined} undefined when no valid namespace is given
          */
-        FunctionPrototype.subClass = function (ns, constructor, prototypes /*, chainConstruct */) {
+        FunctionPrototype.subClass = function (plugin, constructor, prototypes /*, chainConstruct */) {
             var instance = this,
                 NewClass;
             if (instance.prototype.$ns) {
-                if ((typeof ns===&#x27;string&#x27;) &amp;&amp; (ns=ns.replaceAll(&#x27; &#x27;, &#x27;&#x27;)) &amp;&amp; (ns.length&gt;0) &amp;&amp; !ns.contains(&#x27;-&#x27;)) {
+                if ((typeof plugin===&#x27;string&#x27;) &amp;&amp; (plugin=plugin.replaceAll(&#x27; &#x27;, &#x27;&#x27;)) &amp;&amp; (plugin.length&gt;0) &amp;&amp; !plugin.contains(&#x27;-&#x27;)) {
 /*jshint boss:true */
-                    if (NewClass=window._ITSAPlugins[ns]) {
+                    if (NewClass=window._ITSAPlugins[plugin]) {
 /*jshint boss:false */
-                        console.warn(NAME+&#x27;definePlugin cannot redefine Plugin &#x27;+ns+&#x27; --&gt; already exists&#x27;);
+                        console.warn(NAME+&#x27;definePlugin cannot redefine Plugin &#x27;+plugin+&#x27; --&gt; already exists&#x27;);
                     }
                     else {
                         // change the constructor, so that it will end by calling &#x60;_finishInit&#x60;
-                        NewClass = originalSubClass.call(instance, constructor, prototypes).mergePrototypes({$ns: ns}, true);
-                        window._ITSAPlugins[ns] = NewClass;
+                        NewClass = originalSubClass.call(instance, constructor, prototypes).mergePrototypes({$ns: plugin}, true);
+                        window._ITSAPlugins[plugin] = NewClass;
                         pluginDOM(NewClass);
                     }
                     return NewClass;
                 }
                 else {
-                    console.warn(NAME+&#x27;subClass cannot create Plugin: invalid ns: &#x27;+ns);
+                    console.warn(NAME+&#x27;subClass cannot create Plugin: invalid plugin: &#x27;+plugin);
                 }
             }
             else {

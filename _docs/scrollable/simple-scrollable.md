@@ -11,13 +11,11 @@ intro: "This example shows how to interrupt a transition. Interruption can be do
         margin: 2em 0;
         padding: 1em;
         border: solid 1px #000;
-        position: absolute;
-        top: 0em;
-        left: 23em;
         z-index: 1;
         color: #FFF;
         height: 300px;
         width: 300px;
+        color: #000;
     }
     .body-content.module p.spaced {
         margin-top: 4em;
@@ -27,7 +25,7 @@ intro: "This example shows how to interrupt a transition. Interruption can be do
 Click on the button to toggle the className:
 
 <div class="container" plugin-scroll="true" scroll-light="true">
-    <p>This example shows how to interrupt a transition. Interruption can be done when using the interruption-methods that return a Promise, like node\'s class-methods or transition. These methods return Promise with extra methods: cancel, freeze and finish, which all interrupt the transition and force to the initial, current or final state immediately.<br><br>Start switching the class, while during transition experiment with canceling, freezing or finishing.</p>
+    <p>Thisexampleshowshowtointerruptatransition.Interruptioncanbedonewhenusingtheinterruption-methodsthatreturnaPromise, likenode\'sclass-methodsortransition.ThesemethodsreturnPromise with extra methods: cancel, freeze and finish, which all interrupt the transition and force to the initial, current or final state immediately.<br><br>Start switching the class, while during transition experiment with canceling, freezing or finishing.</p>
     <p>This example shows how to interrupt a transition. Interruption can be done when using the interruption-methods that return a Promise, like node\'s class-methods or transition. These methods return Promise with extra methods: cancel, freeze and finish, which all interrupt the transition and force to the initial, current or final state immediately.<br><br>Start switching the class, while during transition experiment with canceling, freezing or finishing.</p>
     <p>This example shows how to interrupt a transition. Interruption can be done when using the interruption-methods that return a Promise, like node\'s class-methods or transition. These methods return Promise with extra methods: cancel, freeze and finish, which all interrupt the transition and force to the initial, current or final state immediately.<br><br>Start switching the class, while during transition experiment with canceling, freezing or finishing.</p>
 </div>
@@ -127,7 +125,7 @@ Click on the button to toggle the className:
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
 </script>

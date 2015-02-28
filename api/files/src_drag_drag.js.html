@@ -429,7 +429,7 @@ module.exports = function (window) {
             PLUGIN_ATTRS.forEach(function(attribute) {
                 var data = &#x27;_del_&#x27;+attribute;
                 if (dragNode.getData(data)) {
-                    delete dragNode.plugin.dd.model[attribute];
+                    delete dragNode._plugin.dd.model[attribute];
                     dragNode.removeData(data);
                 }
             });
@@ -781,7 +781,8 @@ module.exports = function (window) {
                         var attr = container.getAttr(attribute);
                         if (attr &amp;&amp; !foundNode.hasAttr(attribute)) {
                             foundNode.setData(&#x27;_del_&#x27;+attribute, attr);
-                            foundNode.plugin.dd.model[attribute] = attr;
+                            foundNode.setAttr(attribute, attr);
+                            // foundNode._plugin.dd.model[attribute] = attr;
                         }
                     });
                     nodeTargetFn(e);

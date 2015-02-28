@@ -214,7 +214,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_node-plugin_lib_element-plugin.js.html#l3"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:3</code></a>
+            Defined in: <a href="../files/src_node-plugin_node-plugin.js.html#l3"><code>src&#x2F;node-plugin&#x2F;node-plugin.js:3</code></a>
         </div>
     
 
@@ -273,6 +273,20 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item method">
                                 <a href="#method_definePlugin">definePlugin</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getPlugin">getPlugin</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getPluginClass">getPluginClass</a>
 
                                 
                                 
@@ -399,7 +413,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l327"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:327</code></a>
+        <a href="../files/src_node-plugin_node-plugin.js.html#l369"><code>src&#x2F;node-plugin&#x2F;node-plugin.js:369</code></a>
         
         </p>
 
@@ -477,7 +491,7 @@ Immediately syncs the plugin with the new model-data.</p>
             
                 <li class="arg">
                     
-                        <code>ns</code>
+                        <code>plugin</code>
                     
                 </li>
             
@@ -526,7 +540,7 @@ Immediately syncs the plugin with the new model-data.</p>
             
         
         
-        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l558"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:558</code></a>
+        <a href="../files/src_node-plugin_node-plugin.js.html#l599"><code>src&#x2F;node-plugin&#x2F;node-plugin.js:599</code></a>
         
         </p>
 
@@ -551,7 +565,7 @@ Immediately syncs the plugin with the new model-data.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">ns</code>
+                        <code class="param-name">plugin</code>
                         <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
                     
 
@@ -622,6 +636,222 @@ Immediately syncs the plugin with the new model-data.</p>
 </div>
 
                 
+                    <div id="method_getPlugin" class="method item">
+    <h3 class="name"><code>getPlugin</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>plugin</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Promise.html" class="crosslink">Promise</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_node-plugin_node-plugin.js.html#l321"><code>src&#x2F;node-plugin&#x2F;node-plugin.js:321</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Gets the plugin-instance of the specified plugin-name. Will fulfill as soon as the plugin is ready.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">plugin</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The name of the plugin that should be plugged.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Promise.html" class="crosslink">Promise</a></span>:
+                    
+                    <p>the plugin-instance of the specified plugin-name</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_getPluginClass" class="method item">
+    <h3 class="name"><code>getPluginClass</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>plugin</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">PluginClass | Indefined</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_node-plugin_node-plugin.js.html#l629"><code>src&#x2F;node-plugin&#x2F;node-plugin.js:629</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Returns the PluginClass that belongs with the specified <code>plugin</code>-name.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">plugin</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the namespace of the plugin</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">PluginClass | Indefined</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_isPlugged" class="method item">
     <h3 class="name"><code>isPlugged</code></h3>
 
@@ -631,7 +861,7 @@ Immediately syncs the plugin with the new model-data.</p>
             
                 <li class="arg">
                     
-                        <code>PluginClass</code>
+                        <code>plugin</code>
                     
                 </li>
             
@@ -668,7 +898,7 @@ Immediately syncs the plugin with the new model-data.</p>
             
         
         
-        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l245"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:245</code></a>
+        <a href="../files/src_node-plugin_node-plugin.js.html#l261"><code>src&#x2F;node-plugin&#x2F;node-plugin.js:261</code></a>
         
         </p>
 
@@ -693,14 +923,14 @@ Immediately syncs the plugin with the new model-data.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">PluginClass</code>
-                        <span class="type">NodePlugin</span>
+                        <code class="param-name">plugin</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The plugin that should be plugged. Needs to be the Class, not an instance!</p>
+                        <p>The name of the plugin that should be plugged. Needs to be the Class, not an instance!</p>
 
                     </div>
 
@@ -740,7 +970,7 @@ Immediately syncs the plugin with the new model-data.</p>
             
                 <li class="arg">
                     
-                        <code>PluginClass</code>
+                        <code>plugin</code>
                     
                 </li>
             
@@ -787,7 +1017,7 @@ Immediately syncs the plugin with the new model-data.</p>
             
         
         
-        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l273"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:273</code></a>
+        <a href="../files/src_node-plugin_node-plugin.js.html#l289"><code>src&#x2F;node-plugin&#x2F;node-plugin.js:289</code></a>
         
         </p>
 
@@ -812,14 +1042,14 @@ Immediately syncs the plugin with the new model-data.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">PluginClass</code>
-                        <span class="type">NodePlugin</span>
+                        <code class="param-name">plugin</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The plugin that should be plugged. Needs to be the Class, not an instance!</p>
+                        <p>The name of the plugin that should be plugged.</p>
 
                     </div>
 
@@ -879,7 +1109,7 @@ Immediately syncs the plugin with the new model-data.</p>
             
                 <li class="arg">
                     
-                        <code>PluginClass</code>
+                        <code>plugin</code>
                     
                 </li>
             
@@ -916,7 +1146,7 @@ Immediately syncs the plugin with the new model-data.</p>
             
         
         
-        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l257"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:257</code></a>
+        <a href="../files/src_node-plugin_node-plugin.js.html#l274"><code>src&#x2F;node-plugin&#x2F;node-plugin.js:274</code></a>
         
         </p>
 
@@ -941,14 +1171,14 @@ Immediately syncs the plugin with the new model-data.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">PluginClass</code>
-                        <span class="type">NodePlugin</span>
+                        <code class="param-name">plugin</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The plugin that should be plugged. Needs to be the Class, not an instance!</p>
+                        <p>The name of the plugin that should be ready.</p>
 
                     </div>
 
@@ -1027,7 +1257,7 @@ Immediately syncs the plugin with the new model-data.</p>
             
         
         
-        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l375"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:375</code></a>
+        <a href="../files/src_node-plugin_node-plugin.js.html#l417"><code>src&#x2F;node-plugin&#x2F;node-plugin.js:417</code></a>
         
         </p>
 
@@ -1126,7 +1356,7 @@ Only needed for events that are in the list set by DEFAULT_DELAYED_FINALIZE_EVEN
             
                 <li class="arg">
                     
-                        <code>ns</code>
+                        <code>plugin</code>
                     
                 </li>
             
@@ -1181,7 +1411,7 @@ Only needed for events that are in the list set by DEFAULT_DELAYED_FINALIZE_EVEN
             
         
         
-        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l590"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:590</code></a>
+        <a href="../files/src_node-plugin_node-plugin.js.html#l643"><code>src&#x2F;node-plugin&#x2F;node-plugin.js:643</code></a>
         
         </p>
 
@@ -1209,7 +1439,7 @@ available to access all of is ancestor&#39;s instance methods.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">ns</code>
+                        <code class="param-name">plugin</code>
                         <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
                     
 
@@ -1362,7 +1592,7 @@ available to access all of is ancestor&#39;s instance methods.</p>
             
         
         
-        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l296"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:296</code></a>
+        <a href="../files/src_node-plugin_node-plugin.js.html#l338"><code>src&#x2F;node-plugin&#x2F;node-plugin.js:338</code></a>
         
         </p>
 
@@ -1444,7 +1674,7 @@ available to access all of is ancestor&#39;s instance methods.</p>
             
         
         
-        <a href="../files/src_node-plugin_lib_element-plugin.js.html#l68"><code>src&#x2F;node-plugin&#x2F;lib&#x2F;element-plugin.js:68</code></a>
+        <a href="../files/src_node-plugin_node-plugin.js.html#l68"><code>src&#x2F;node-plugin&#x2F;node-plugin.js:68</code></a>
         
         </p>
 

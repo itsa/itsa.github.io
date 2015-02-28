@@ -132,7 +132,7 @@ Drag the items to the dropzones.
 </script>
 ```
 
-<script src="../../dist/itsabuild-min.js"></script>
+<script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa'),
         returnItem, absorbItem;

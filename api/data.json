@@ -342,8 +342,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/node-plugin/lib/element-plugin.js": {
-            "name": "src/node-plugin/lib/element-plugin.js",
+        "src/node-plugin/node-plugin.js": {
+            "name": "src/node-plugin/node-plugin.js",
             "modules": {
                 "element-plugin": 1
             },
@@ -1022,7 +1022,7 @@
             "namespaces": {},
             "module": "vdom",
             "namespace": "",
-            "file": "src/node-plugin/lib/element-plugin.js",
+            "file": "src/node-plugin/node-plugin.js",
             "line": 3,
             "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "since": "0.0.1"
@@ -1439,7 +1439,7 @@
             "module": "vdom",
             "submodule": "element-plugin",
             "namespace": "",
-            "file": "src/node-plugin/lib/element-plugin.js",
+            "file": "src/node-plugin/node-plugin.js",
             "line": 3,
             "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
@@ -8426,7 +8426,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 589,
+            "line": 590,
             "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
             "itemtype": "method",
             "name": "init",
@@ -8447,7 +8447,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 613,
+            "line": 614,
             "description": "Creates a notifier to response after each `Drag` event is set up, or teared down.\nYou can use this to hook in into the drag-eventcycle: the `drop`-module uses it this way.",
             "static": 1,
             "itemtype": "method",
@@ -9649,7 +9649,7 @@
         },
         {
             "file": "src/event/extra/objectobserve.js",
-            "line": 50,
+            "line": 51,
             "description": "The function that gets invoked when object-observed objects get changed.",
             "itemtype": "method",
             "name": "callbackFn",
@@ -9674,7 +9674,7 @@
         },
         {
             "file": "src/event/extra/objectobserve.js",
-            "line": 65,
+            "line": 66,
             "description": "The function that gets invoked in Event's finalizer in case there is no native Object.observe\nThis function will inspect all registered object for changes and invoke `callbackFn` for objects\nthat have been changed.",
             "itemtype": "method",
             "name": "checkObjects",
@@ -9694,7 +9694,7 @@
         },
         {
             "file": "src/event/extra/objectobserve.js",
-            "line": 95,
+            "line": 96,
             "description": "Sets up the native Object.observe for the specified object.",
             "itemtype": "method",
             "name": "observeNative",
@@ -9719,7 +9719,7 @@
         },
         {
             "file": "src/event/extra/objectobserve.js",
-            "line": 118,
+            "line": 119,
             "description": "Sets up the polyfill for Object.observe for the specified object.\nIs not really a polyfill, but an alternative way of inspecting: the specified object\ngets registered and with every Event.finalize it will be inspected for changes.",
             "itemtype": "method",
             "name": "observePolyfill",
@@ -9744,7 +9744,7 @@
         },
         {
             "file": "src/event/extra/objectobserve.js",
-            "line": 155,
+            "line": 156,
             "description": "Unobserves (unregisters) a native observed object.",
             "itemtype": "method",
             "name": "unobserveNative",
@@ -9764,7 +9764,7 @@
         },
         {
             "file": "src/event/extra/objectobserve.js",
-            "line": 172,
+            "line": 173,
             "description": "Unobserves (unregisters) a polyfilled observed object.",
             "itemtype": "method",
             "name": "unobserveNative",
@@ -9784,7 +9784,7 @@
         },
         {
             "file": "src/event/extra/objectobserve.js",
-            "line": 189,
+            "line": 190,
             "description": "Sets up a Object.observe for the specified object. Either native (Object.observe) or polyfilled,\ndependend on the environment.",
             "itemtype": "method",
             "name": "observePolyfill",
@@ -9811,7 +9811,7 @@
         },
         {
             "file": "src/event/extra/objectobserve.js",
-            "line": 209,
+            "line": 210,
             "description": "Unobserves (unregisters) a observed object.",
             "itemtype": "method",
             "name": "unobserveNative",
@@ -9830,7 +9830,7 @@
         },
         {
             "file": "src/event/extra/objectobserve.js",
-            "line": 223,
+            "line": 224,
             "description": "Unobserves (unregisters) a observed object.",
             "itemtype": "method",
             "name": "unobserveNative",
@@ -15646,7 +15646,7 @@
             "submodule": "lib/string.js"
         },
         {
-            "file": "src/node-plugin/lib/element-plugin.js",
+            "file": "src/node-plugin/node-plugin.js",
             "line": 68,
             "description": "Default internal hash containing all DOM-events that will not directly call `event-finalize`\nbut after a delay of 1 second",
             "itemtype": "property",
@@ -15661,16 +15661,16 @@
             "submodule": "element-plugin"
         },
         {
-            "file": "src/node-plugin/lib/element-plugin.js",
-            "line": 245,
+            "file": "src/node-plugin/node-plugin.js",
+            "line": 261,
             "description": "Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.",
             "itemtype": "method",
             "name": "isPlugged",
             "params": [
                 {
-                    "name": "PluginClass",
-                    "description": "The plugin that should be plugged. Needs to be the Class, not an instance!",
-                    "type": "NodePlugin"
+                    "name": "plugin",
+                    "description": "The name of the plugin that should be plugged. Needs to be the Class, not an instance!",
+                    "type": "String"
                 }
             ],
             "return": {
@@ -15683,16 +15683,16 @@
             "submodule": "element-plugin"
         },
         {
-            "file": "src/node-plugin/lib/element-plugin.js",
-            "line": 257,
+            "file": "src/node-plugin/node-plugin.js",
+            "line": 274,
             "description": "Checks whether the plugin is ready to be used.",
             "itemtype": "method",
             "name": "pluginReady",
             "params": [
                 {
-                    "name": "PluginClass",
-                    "description": "The plugin that should be plugged. Needs to be the Class, not an instance!",
-                    "type": "NodePlugin"
+                    "name": "plugin",
+                    "description": "The name of the plugin that should be ready.",
+                    "type": "String"
                 }
             ],
             "return": {
@@ -15705,16 +15705,16 @@
             "submodule": "element-plugin"
         },
         {
-            "file": "src/node-plugin/lib/element-plugin.js",
-            "line": 273,
+            "file": "src/node-plugin/node-plugin.js",
+            "line": 289,
             "description": "Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.",
             "itemtype": "method",
             "name": "plug",
             "params": [
                 {
-                    "name": "PluginClass",
-                    "description": "The plugin that should be plugged. Needs to be the Class, not an instance!",
-                    "type": "NodePlugin"
+                    "name": "plugin",
+                    "description": "The name of the plugin that should be plugged.",
+                    "type": "String"
                 },
                 {
                     "name": "config",
@@ -15736,8 +15736,30 @@
             "submodule": "element-plugin"
         },
         {
-            "file": "src/node-plugin/lib/element-plugin.js",
-            "line": 296,
+            "file": "src/node-plugin/node-plugin.js",
+            "line": 321,
+            "description": "Gets the plugin-instance of the specified plugin-name. Will fulfill as soon as the plugin is ready.",
+            "itemtype": "method",
+            "name": "getPlugin",
+            "params": [
+                {
+                    "name": "plugin",
+                    "description": "The name of the plugin that should be plugged.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "the plugin-instance of the specified plugin-name",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/node-plugin.js",
+            "line": 338,
             "description": "Unplugs a NodePlugin from the HtmlElement.",
             "itemtype": "method",
             "name": "unplug",
@@ -15755,8 +15777,8 @@
             "submodule": "element-plugin"
         },
         {
-            "file": "src/node-plugin/lib/element-plugin.js",
-            "line": 327,
+            "file": "src/node-plugin/node-plugin.js",
+            "line": 369,
             "description": "Binds a model to the plugin, making plugin.model equals the bound model.\nImmediately syncs the plugin with the new model-data.\n\nSyncs the new vnode's childNodes with the dom.",
             "itemtype": "method",
             "name": "bindModel",
@@ -15780,8 +15802,8 @@
             "submodule": "element-plugin"
         },
         {
-            "file": "src/node-plugin/lib/element-plugin.js",
-            "line": 375,
+            "file": "src/node-plugin/node-plugin.js",
+            "line": 417,
             "description": "Defines which domevents should lead to a direct sync by the Event-finalizer.\nOnly needed for events that are in the list set by DEFAULT_DELAYED_FINALIZE_EVENTS:\n\n<ul>\n    <li>mousedown</li>\n    <li>mouseup</li>\n    <li>mousemove</li>\n    <li>panmove</li>\n    <li>panstart</li>\n    <li>panleft</li>\n    <li>panright</li>\n    <li>panup</li>\n    <li>pandown</li>\n    <li>pinchmove</li>\n    <li>rotatemove</li>\n    <li>focus</li>\n    <li>manualfocus</li>\n    <li>keydown</li>\n    <li>keyup</li>\n    <li>keypress</li>\n    <li>blur</li>\n    <li>resize</li>\n    <li>scroll</li>\n</ul>\n\nEvents that are not in this list don't need to be set: they always go through the finalizer immediatly.\n\nYou need to set this if the itag-definition its `sync`-method should be updated after one of the events in the list.",
             "itemtype": "method",
             "name": "setItagDirectEventResponse",
@@ -15803,14 +15825,14 @@
             "submodule": "element-plugin"
         },
         {
-            "file": "src/node-plugin/lib/element-plugin.js",
-            "line": 558,
+            "file": "src/node-plugin/node-plugin.js",
+            "line": 599,
             "description": "Creates a new Element-PluginClass.",
             "itemtype": "method",
             "name": "definePlugin",
             "params": [
                 {
-                    "name": "ns",
+                    "name": "plugin",
                     "description": "the namespace of the plugin",
                     "type": "String"
                 },
@@ -15837,8 +15859,30 @@
             "submodule": "element-plugin"
         },
         {
-            "file": "src/node-plugin/lib/element-plugin.js",
-            "line": 590,
+            "file": "src/node-plugin/node-plugin.js",
+            "line": 629,
+            "description": "Returns the PluginClass that belongs with the specified `plugin`-name.",
+            "itemtype": "method",
+            "name": "getPluginClass",
+            "params": [
+                {
+                    "name": "plugin",
+                    "description": "the namespace of the plugin",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "PluginClass|indefined"
+            },
+            "since": "0.0.1",
+            "class": "Plugins",
+            "module": "vdom",
+            "submodule": "element-plugin"
+        },
+        {
+            "file": "src/node-plugin/node-plugin.js",
+            "line": 643,
             "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
             "example": [
                 "\n\n var Circle = Shape.subClass(\n     function (x, y, r) {\n         // arguments will automaticly be passed through to Shape's constructor\n         this.r = r;\n     },\n     {\n         area: function () {\n             return this.r * this.r * Math.PI;\n         }\n     }\n );"
@@ -15847,7 +15891,7 @@
             "name": "subClass",
             "params": [
                 {
-                    "name": "ns",
+                    "name": "plugin",
                     "description": "the namespace of the plugin",
                     "type": "String"
                 },

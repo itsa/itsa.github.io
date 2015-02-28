@@ -40,7 +40,7 @@ Drag the 2 rectangles: they will be constrained inside the window. The first is 
 <script>
     var ITSA = require('itsa');
 
-    document.getElement('#without').plug(ITSA.Plugins.Constrain);
+    document.getElement('#without').plug('constrain');
 </script>
 ```
 
@@ -48,5 +48,5 @@ Drag the 2 rectangles: they will be constrained inside the window. The first is 
 <script>
     var ITSA = require('itsa');
 
-    document.getElement('#without').plug(ITSA.Plugins.constrain);
+    document.getElement('#without').plug('constrain');
 </script>

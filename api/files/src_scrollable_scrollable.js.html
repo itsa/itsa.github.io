@@ -229,7 +229,9 @@ require(&#x27;./css/scrollable.css&#x27;);
 */
 
 var NAME = &#x27;[scrollable]: &#x27;,
-    async = require(&#x27;utils&#x27;).async,
+    POSITION = &#x27;position&#x27;,
+    OVERFLOW = &#x27;overflow&#x27;,
+    SYNC_TIMER = 1000,
     SCROLL_HANDLE = &#x27;&lt;span plugin-dd=&quot;true&quot; plugin-constrain=&quot;true&quot; constrain-selector=&quot;span&quot;&gt;&lt;/span&gt;&#x27;,
     VERTICAL_CONT = &#x27;&lt;span class=&quot;itsa-vscroll-cont&quot;&gt;&#x27;+SCROLL_HANDLE+&#x27;&lt;/span&gt;&#x27;,
     HORIZONTAL_CONT = &#x27;&lt;span class=&quot;itsa-hscroll-cont&quot;&gt;&#x27;+SCROLL_HANDLE+&#x27;&lt;/span&gt;&#x27;,
@@ -238,6 +240,7 @@ var NAME = &#x27;[scrollable]: &#x27;,
 module.exports = function (window) {
 
     var DOCUMENT = window.document,
+        laterSilent = require(&#x27;utils&#x27;).laterSilent,
         Scrollable, Event, setupEvents, DD;
 
     window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
@@ -259,7 +262,7 @@ module.exports = function (window) {
         Event.after(&#x27;UI:dd-drag&#x27;, function(e) {
             var dragNode = e.target,
                 dragContainer = dragNode.getParent(),
-                top = parseInt(dragNode.getInlineStyle(&#x27;top&#x27;), 10),
+                top = dragNode.top - dragContainer.top,
                 height = dragNode.height,
                 heightContainer = dragContainer.height,
                 effectiveRegion = heightContainer - height,
@@ -267,7 +270,7 @@ module.exports = function (window) {
                 host = dragContainer.getParent(),
                 hostScrollHeight = host.scrollHeight,
                 hostHeight = host.height,
-                model = host.plugin.scroll.model;
+                model = host._plugin.scroll.model;
             model.top = Math.round(percentedMoved*(hostScrollHeight-hostHeight));
         }, &#x27;[plugin-scroll=&quot;true&quot;] &gt;span.itsa-vscroll-cont span&#x27;);
 
@@ -282,15 +285,27 @@ module.exports = function (window) {
                 host = dragContainer.getParent(),
                 hostScrollWidth = host.scrollWidth,
                 hostWidth = host.width,
-                model = host.plugin.scroll.model;
+                model = host._plugin.scroll.model;
             model.left = Math.round(percentedMoved*(hostScrollWidth-hostWidth));
         }, &#x27;[plugin-scroll=&quot;true&quot;] &gt;span.itsa-hscroll-cont span&#x27;);
+
+        Event.after(&#x27;UI:nodecontentchange&#x27;, function(e) {
+            var node = e.target;
+            node._plugin &amp;&amp; node._plugin.scroll &amp;&amp; node._plugin.scroll.sync();
+        }, &#x27;[plugin-scroll=&quot;true&quot;][scroll-ready=&quot;true&quot;]&#x27;);
 
     };
 
     setupEvents();
 
-    window._ITSAmodules.Scrollable = Scrollable = DOCUMENT.definePlugin(&#x27;scroll&#x27;, null, {
+    window._ITSAmodules.Scrollable = Scrollable = DOCUMENT.definePlugin(&#x27;scroll&#x27;,
+        function() {
+            // initializer
+            // because we cannot predict if the size of the container are goiig to change (fe by ancestor-classes)
+            // we need to sync by timer as well:
+            var instance = this;
+            instance._syncTimer = laterSilent(instance.sync.bind(instance), SYNC_TIMER);
+        }, {
         attrs: {
             x: &#x27;boolean&#x27;,
             y: &#x27;boolean&#x27;,
@@ -308,9 +323,18 @@ module.exports = function (window) {
         },
         render: function() {
             var instance = this,
-                host = instance.host;
-            host.setInlineStyle(&#x27;position&#x27;, &#x27;relative&#x27;);
-            host.hasInlineStyle(&#x27;overflow&#x27;) &amp;&amp; host.removeInlineStyle(&#x27;overflow&#x27;);
+                host = instance.host,
+                inlinePosition, globalPosition;
+
+            // default position to relative: check first inlinestyle because this goes quicker
+            instance._inlinePosition = inlinePosition = host.getInlineStyle(POSITION);
+            inlinePosition || (globalPosition=host.getStyle(POSITION));
+            if ((inlinePosition===&#x27;static&#x27;) || (inlinePosition===&#x27;fixed&#x27;) || (globalPosition===&#x27;static&#x27;) || (globalPosition===&#x27;fixed&#x27;)) {
+                inlinePosition = &#x27;relative&#x27;;
+                host.setInlineStyle(POSITION, inlinePosition);
+            }
+            instance._inlineOverflow = host.getInlineStyle(OVERFLOW);
+            instance._inlineOverflow &amp;&amp; host.removeInlineStyle(OVERFLOW);
             host.addSystemElement(VERTICAL_CONT, false, false); // don&#x27;t want silent insert --&gt; need to render the plugins
             host.addSystemElement(HORIZONTAL_CONT, false, false);
         },
@@ -333,30 +357,60 @@ module.exports = function (window) {
             vscroller.toggleClass(&#x27;itsa-visible&#x27;, vScrollerVisible);
             hscroller.toggleClass(&#x27;itsa-visible&#x27;, hScrollerVisible);
 
+            host.scrollTop = scrollTop;
+            host.scrollLeft = scrollLeft;
+            // because scrollTop and scrollLeft have their restrictions, we need to reset them into the model (in case a corrcetion has taken place)
+            model.top = scrollTop = host.scrollTop;
+            model.left = scrollLeft = host.scrollLeft;
+
             if (vScrollerVisible) {
                 handleNode = vscroller.getElement(&#x27;span&#x27;);
                 if (!handleNode.hasClass(&#x27;dd-dragging&#x27;)) {
                     sizeHandle = Math.round(height*(height/scrollHeight));
                     effectiveRegion = height - sizeHandle;
-                    maxScrollAmount - scrollHeight - height;
-                    scrollAmount = Math.max(1, (scrollTop/maxScrollAmount)) * effectiveRegion;
+                    maxScrollAmount = scrollHeight - height;
+                    scrollAmount = effectiveRegion * Math.max(0, Math.min(1, (scrollTop/maxScrollAmount)));
                     handleNode.setInlineStyle(&#x27;top&#x27;, scrollAmount+&#x27;px&#x27;)
                               .setInlineStyle(&#x27;height&#x27;, sizeHandle+&#x27;px&#x27;);
                 }
+                vscroller.setInlineStyle(&#x27;top&#x27;, scrollTop+&#x27;px&#x27;)
+                         .setInlineStyle(&#x27;right&#x27;, -scrollLeft+&#x27;px&#x27;);
             }
             if (hScrollerVisible) {
                 handleNode = hscroller.getElement(&#x27;span&#x27;);
                 if (!handleNode.hasClass(&#x27;dd-dragging&#x27;)) {
                     sizeHandle = Math.round(width*(width/scrollWidth));
                     effectiveRegion = width - sizeHandle;
-                    maxScrollAmount - scrollWidth - width;
-                    scrollAmount = Math.max(1, (scrollLeft/maxScrollAmount)) * effectiveRegion;
+                    maxScrollAmount = scrollWidth - width;
+                    scrollAmount = effectiveRegion * Math.max(0, Math.min(1, (scrollLeft/maxScrollAmount)));
                     handleNode.setInlineStyle(&#x27;left&#x27;, scrollAmount+&#x27;px&#x27;)
                               .setInlineStyle(&#x27;width&#x27;, sizeHandle+&#x27;px&#x27;);
                 }
+                hscroller.setInlineStyle(&#x27;bottom&#x27;, -scrollTop+&#x27;px&#x27;)
+                         .setInlineStyle(&#x27;left&#x27;, scrollLeft+&#x27;px&#x27;);
             }
-            host.scrollTop = scrollTop;
-            host.scrollLeft = scrollLeft;
+        },
+        destroy: function() {
+            var instance = this,
+                host = instance.host,
+                inlinePosition, inlineOverflow;
+            instance._syncTimer.cancel();
+/*jshint boss:true */
+            if (inlinePosition=instance._inlinePosition) {
+/*jshint boss:false */
+                host.setInlineStyle(POSITION, inlinePosition);
+            }
+            else {
+                host.removeInlineStyle(POSITION);
+            }
+/*jshint boss:true */
+            if (inlineOverflow=instance._inlineOverflow) {
+/*jshint boss:false */
+                host.setInlineStyle(OVERFLOW, inlineOverflow);
+            }
+            else {
+                host.removeInlineStyle(OVERFLOW);
+            }
         }
     });
 
