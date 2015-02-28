@@ -89,8 +89,6 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init();
-
     document.getAll('.container').forEach(
         function(node) {
             var effect,
@@ -104,7 +102,7 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
             else {
                 effect = 'all';
             }
-            node.plug(ITSA.Plugins.DD, {'effect-allowed': effect, dropzone: '.drop-container'});
+            node.plug(ITSA.Plugins.dd, {'effect-allowed': effect, dropzone: '.drop-container'});
         }
     );
 
@@ -134,8 +132,6 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
 <script>
     var ITSA = require('itsa');
 
-    ITSA.DD.init();
-
     document.getAll('.container').forEach(
         function(node) {
             var effect,
@@ -149,7 +145,7 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
             else {
                 effect = 'all';
             }
-            node.plug(ITSA.Plugins.DD, {'effect-allowed': effect, dropzone: '.drop-container'});
+            node.plug('dd', {'effect-allowed': effect, dropzone: '.drop-container'});
         }
     );
 
@@ -158,7 +154,7 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
             var innertext = node.getText(),
                 move = (innertext!=='only copied items'),
                 copy = (innertext!=='only moved items');
-            node.plug(ITSA.Plugins.Dropzone, {
+            node.plug('dz', {
                 dropzone: move ? (copy ? 'true' : 'move') : 'copy'
             });
         }

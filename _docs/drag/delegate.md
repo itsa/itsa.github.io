@@ -86,12 +86,10 @@ Drag the items, they are all draggable.
 <script src="itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
-    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
 </script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
-    ITSA.DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
 </script>

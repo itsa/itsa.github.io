@@ -85,9 +85,6 @@ Drag the item and watch for the events.
         monitorContStart = document.getElement('.monitor-container.spaced'),
         monitorContOver = document.getElement('.monitor-container:not(.spaced)');
 
-    ITSA.DD.init();
-
-
     ITSA.Event.after('dd', function(e) {
         monitorContStart.setHTML('dd --> drag started');
 
@@ -139,9 +136,6 @@ Drag the item and watch for the events.
     var ITSA = require('itsa'),
         monitorContStart = document.getElement('.monitor-container.spaced'),
         monitorContOver = document.getElement('.monitor-container:not(.spaced)');
-
-    ITSA.DD.init();
-
 
     ITSA.Event.after('dd', function(e) {
         monitorContStart.setHTML('dd --> drag started');

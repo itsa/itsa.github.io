@@ -95,8 +95,6 @@ Drag the items to the dropzones.
     var ITSA = require('itsa'),
         returnItem, absorbItem;
 
-    ITSA.DD.init();
-
     returnItem = function(e) {
         e.preventDefault();
         ITSA.DD.restoreDraggables();
@@ -134,12 +132,10 @@ Drag the items to the dropzones.
 </script>
 ```
 
-<script src="../../dist/itsabuild-min.js"></script>
+<script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa'),
         returnItem, absorbItem;
-
-    ITSA.DD.init();
 
     returnItem = function(e) {
         e.preventDefault();

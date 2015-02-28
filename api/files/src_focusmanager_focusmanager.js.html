@@ -240,8 +240,7 @@ var NAME = &#x27;[focusmanager]: &#x27;,
     },
     DEFAULT_KEYUP = &#x27;shift+9&#x27;,
     DEFAULT_KEYDOWN = &#x27;9&#x27;,
-    // DEFAULT_ENTER = &#x27;39&#x27;,
-    // DEFAULT_LEAVE = &#x27;27&#x27;,
+    DEFAULT_NOLOOP = false,
     FM_SELECTION = &#x27;fm-selection&#x27;,
     FM_SELECTION_START = FM_SELECTION+&#x27;start&#x27;,
     FM_SELECTION_END = FM_SELECTION+&#x27;end&#x27;,
@@ -267,7 +266,7 @@ module.exports = function (window) {
     Event = require(&#x27;event-mobile&#x27;)(window);
 
     getFocusManagerSelector = function(focusContainerNode) {
-        var selector = focusContainerNode.plugin.fm.model.manage;
+        var selector = focusContainerNode._plugin.fm.model.manage;
         (selector.toLowerCase()===&#x27;true&#x27;) &amp;&amp; (selector=DEFAULT_SELECTOR);
         return selector;
     };
@@ -322,7 +321,7 @@ module.exports = function (window) {
             }
         }
         if (specialKeysMatch) {
-            noloop = focusContainerNode.plugin.fm.model.noloop;
+            noloop = focusContainerNode._plugin.fm.model.noloop;
             // in case sourceNode is an innernode of a selector, we need to start from the selector:
             sourceNode.matches(selector) || (sourceNode=sourceNode.inside(selector));
             if (downwards) {
@@ -398,7 +397,7 @@ module.exports = function (window) {
             else {
                 // find the right node that should get focus
 /*jshint boss:true */
-                alwaysDefault = focusContainerNode.plugin.fm.model.alwaysdefault;
+                alwaysDefault = focusContainerNode._plugin.fm.model.alwaysdefault;
 /*jshint boss:false */
                 alwaysDefault &amp;&amp; (focusNode=focusContainerNode.getElement(&#x27;[fm-defaultitem=&quot;true&quot;]&#x27;));
                 if (!focusNode) {
@@ -446,17 +445,17 @@ module.exports = function (window) {
                 keyCode = e.keyCode;
 
                 // first check for keydown:
-                actionkey = focusContainerNode.plugin.fm.model.keydown;
+                actionkey = focusContainerNode._plugin.fm.model.keydown;
                 focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, true);
                 if (!focusNode) {
                     // check for keyup:
-                    actionkey = focusContainerNode.plugin.fm.model.keyup;
+                    actionkey = focusContainerNode._plugin.fm.model.keyup;
                     focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector);
                 }
                 if (!focusNode) {
                     // check for keyenter, but only when e.target equals a focusmanager:
                     if (sourceNode.matches(&#x27;[plugin-fm=&quot;true&quot;]&#x27;)) {
-                        actionkey = focusContainerNode.plugin.fm.model.keyenter;
+                        actionkey = focusContainerNode._plugin.fm.model.keyenter;
                         if (actionkey) {
                             keys = actionkey.split(&#x27;+&#x27;);
                             len = keys.length;
@@ -483,7 +482,7 @@ module.exports = function (window) {
                 }
                 if (!focusNode) {
                     // check for keyleave:
-                    actionkey = focusContainerNode.plugin.fm.model.keyleave;
+                    actionkey = focusContainerNode._plugin.fm.model.keyleave;
                     if (actionkey) {
                         keys = actionkey.split(&#x27;+&#x27;);
                         len = keys.length;
@@ -646,9 +645,7 @@ module.exports = function (window) {
                     alwaysdefault: false,
                     keyup: DEFAULT_KEYUP,
                     keydown: DEFAULT_KEYDOWN,
-                    // keyenter: DEFAULT_ENTER,
-                    // keyleave: DEFAULT_LEAVE,
-                    noloop: &#x27;boolean&#x27;
+                    noloop: DEFAULT_NOLOOP
                 }
             });
 
@@ -690,7 +687,7 @@ module.exports = function (window) {
             else {
                 focusContainerNode = (this.getAttr(&#x27;plugin-fm&#x27;)===&#x27;true&#x27;) ? focusElement : focusElement.inside(&#x27;[plugin-fm=&quot;true&quot;]&#x27;);
                 if (focusContainerNode) {
-                    focusContainerNode.pluginReady(FocusManager).then(
+                    focusContainerNode.pluginReady(&#x27;fm&#x27;).then(
                         function() {
                             doEmit(searchFocusNode(focusElement));
                         }

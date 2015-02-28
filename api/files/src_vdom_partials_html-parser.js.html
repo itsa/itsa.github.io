@@ -380,6 +380,7 @@ module.exports = function (window) {
                         extractStyle.attrStyle &amp;&amp; (vnode.attrs.style=extractStyle.attrStyle);
                         vnode.styles = extractStyle.styles;
 
+                        (vnode.attrs.is===&#x27;system-node&#x27;) &amp;&amp; (vnode._systemNode=true);
                     }
 
                     if (!vnode.isVoid) {

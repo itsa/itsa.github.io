@@ -36,19 +36,14 @@ Inherited from the [drag-module](../drag/index.html):
 
 #The Basics#
 
-Drag and Drop consist of two different parts: `drag` and `drop`. Both parts are related to HtmlElements: `draggable nodes` or `dropzone nodes` that act as a container where the draggable items can be dropped into. The draggable features are deliverd by the [drag-module](../drag/index.html) and extended with `copy`-support. The functionalities of the dropzones are made operational by setting the appropriate `attributes` the the dropzone-HtmlElements. Once the code:
-
-```js
-ITSA.DD.init();
-```
-is executed, delegated eventlisteners will make sure that any HtmlElement act as they should, as long as it has the right attributes. You can even set the attributes later on: it just will work, without any additional code.
+Drag and Drop consist of two different parts: `drag` and `drop`. Both parts are related to HtmlElements: `draggable nodes` or `dropzone nodes` that act as a container where the draggable items can be dropped into. The draggable features are deliverd by the [drag-module](../drag/index.html) and extended with `copy`-support. The functionalities of the dropzones are made operational by setting the appropriate `attributes` the the dropzone-HtmlElements.
 
 HtmlElements can act as a `dropzone` where draggable items can be dropped inside. Dropzones are defined with the attribute `dropzone="true | move | copy"`. The type of dropzone determines wheter it accepts only copyable items, movable items, or both. As you can see later on, a dropzone can be limites to accept special emitters as well.
 
 Not only do you need to define dropzones, you also need to tell the draggable items that they should go into a specific dropzone. This should be done by setting the attribute `dd-dropzone="css-selector"` on the draggable item:
 
 ```html
-<div dd-draggable="true" dd-dropzone=".drop-container">drag me</div>
+<div plugin-dd="true" dd-dropzone=".drop-container">drag me</div>
 <div class="drop-container" dropzone="true"></div>
 ```
 
@@ -94,14 +89,14 @@ When this module gets imported, it defines the node-plugin: `ITSA.Plugins.NodeDr
 
 ###Define a dropzone###
 ```js
-document.getElement('#someNode').plug(ITSA.Plugins.NodeDropzone);
+document.getElement('#someNode').plug(ITSA.Plugins.dz);
 ```
 
 
 ###Define a dropzone with options###
 ```js
 document.getElement('#someNode').plug(
-    ITSA.Plugins.NodeDropzone,
+    ITSA.Plugins.dz,
     {
         move: true,
         copy: true,
@@ -116,24 +111,23 @@ The draggable HtmlElements could be set up in a way that they tell the system wh
 In order to be able to drop a draggable, either the attribute `dd-dropzone` or `dd-emitter` should be set on the draggable (or its delegated container).
 
 ```html
-<div dd-draggable="true" dd-dropzone=".container">drag me</div>
+<div plugin-dd="true" dd-dropzone=".container">drag me</div>
 ```
 
 or
 
 ```html
-<div dd-draggable="true" dd-emitter="redItem">drag me</div>
+<div plugin-dd="true" dd-emitter="redItem">drag me</div>
 ```
 
 ##HTML-attributes##
-Beside the attribute `dd-constrain`, `dd-handle` and `dd-emitter` -which are defined by the drag-module- you can define the next additional attributes on the draggables. Like shown above, at least `dd-dropzone` or `dd-emitter` is required:
+Beside the attribute `dd-draggable`, `dd-handle` and `dd-emitter` -which are defined by the drag-module- you can define the next additional attributes on the draggables. Like shown above, at least `dd-dropzone` or `dd-emitter` is required:
 
 ```html
-<div dd-draggable="true" dd-dropzone".container" >drag me</div>
+<div plugin-dd="true" dd-dropzone".container" >drag me</div>
 ```
 
-###dd-constrain###
-Should equal `window` or a `css-selector` of an ancestor where the draggable should be constrained within.
+###dd-draggable###
 
 ###dd-handle###
 Should equal a `css-selector` of a descendant that should act as a handle where the draggable can be picked up.
@@ -159,10 +153,9 @@ The node-plugin: `ITSA.Plugins.nodeDD` can be used as [explained here](../drag/i
 
 ```js
 document.getElement('#someNode').plug(
-    ITSA.Plugins.nodeDD,
+    ITSA.Plugins.dd,
     {
         draggable: true,
-        constrain: '.container',
         handle: 'h1',
         dropzone: true
         emitter: 'blueItem'
@@ -185,7 +178,7 @@ The same way as draggable containers can [delegate](../drag/index.html#delegate-
 A dropzone that can delegate to its draggabels could look like this:
 
 ```html
-<div dropzone="true" dd-draggable="div" dd-handle="h1">
+<div plugin-dd dd-dropzone="true" dd-draggable="div" dd-handle="h1">
     <div><h1>drag me</h1></div> <!-- draggable item that is part of the dropzone -->
     <div><h1>drag me</h1></div> <!-- draggable item that is part of the dropzone -->
     <div><h1>drag me</h1></div> <!-- draggable item that is part of the dropzone -->
@@ -202,19 +195,19 @@ A dropzone that can delegate to its draggabels could look like this:
 Items can be `moved` or `copied`, where copying can only be done when the draggable has `dd-dropzone` or `dd-emitter` defined. The move/copy behaviour is determined **by the draggable** be setting `dd-effect-allowed`:
 
 ```html
-<div dd-draggable="true" dd-dropzone="true" dd-effect-allowed="copy">I will copy</div>
+<div plugin-dd="true" dd-dropzone="true" dd-effect-allowed="copy">I will copy</div>
 ```
 
 or
 
 ```html
-<div dd-draggable="true" dd-dropzone="true" dd-effect-allowed="move">I will move</div>
+<div plugin-dd="true" dd-dropzone="true" dd-effect-allowed="move">I will move</div>
 ```
 
 or
 
 ```html
-<div dd-draggable="true" dd-dropzone="true" dd-effect-allowed="all">I will move or copy</div>
+<div plugin-dd="true" dd-dropzone="true" dd-effect-allowed="all">I will move or copy</div>
 ```
 
 Any draggable that is defined with `dd-effect-allowed="all"` will change its behaviour when the `Ctrl`-key (or `cmd`-key on a Mac) is pressed. These keys can be pressed before, or during dragging.
@@ -300,7 +293,7 @@ The default-function of `dd-drop`, is defined as doing this:
 You can overrule this behaviour by creating a before-subscriber at the dd-drop event and prevent its default behaviour. When define your own behaviuor, you might need two specific methods of DD:
 
 * `ITSA.DD.restoreDraggables()` --> repositions all draggable items to their original position
-* `ITSA.DD_emitDropzoneDrop(e)` fire a dropzone-drop event
+* `ITSA.DD._emitDropzoneDrop(e)` fire a dropzone-drop event
 
 ####Example:####
 ```js
@@ -313,7 +306,7 @@ absorbItem = function(e) {
     e.target.remove();
     e.dragNode.remove();
     e.dropTarget.append('<br>'+e.target.getText()+' added');
-    ITSA.DD_emitDropzoneDrop(e); // fire thr dropzone-drop event
+    ITSA.DD._emitDropzoneDrop(e); // fire thr dropzone-drop event
 };
 
 ITSA.Event.before(
