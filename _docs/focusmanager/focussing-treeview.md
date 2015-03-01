@@ -167,7 +167,7 @@ intro: "This example shows how to set up a focusmanagers on a treeview. It is no
 </script>
 ```
 
-<script src="../../dist/itsabuild-min.js"></script>
+<script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa');
     document.getElement('.treeview').focus();

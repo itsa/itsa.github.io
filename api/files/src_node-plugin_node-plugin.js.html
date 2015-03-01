@@ -512,10 +512,10 @@ module.exports = function (window) {
             var instance = this,
                 Plugin;
             if (typeof plugin===&#x27;string&#x27;) {
-                Plugin = window._ITSAPlugins[plugin];
-                if (Plugin) {
-                    if (!instance.isPlugged(Plugin)) {
+                if (window._ITSAPlugins[plugin]) {
+                    if (!instance._plugin || !instance._plugin[plugin]) {
                         instance._plugin || Object.protectedProp(instance, &#x27;_plugin&#x27;, {});
+                        Plugin = window._ITSAPlugins[plugin];
                         instance._plugin[plugin] = new Plugin(instance, config, model);
                     }
                     else {
@@ -557,7 +557,7 @@ module.exports = function (window) {
         */
         HTMLElementPrototype.unplug = function(plugin) {
             var instance = this;
-            if (instance.isPlugged(plugin)) {
+            if (instance._plugin &amp;&amp; instance._plugin[plugin]) {
                 instance._plugin[plugin].destroy();
             }
             return instance;
@@ -593,9 +593,10 @@ module.exports = function (window) {
             bindModel: function(model, mergeCurrent) {
                 console.log(NAME+&#x27;bindModel&#x27;);
                 var instance = this,
+                    host = instance.host,
                     observer;
                 if (Object.isObject(model) &amp;&amp; (instance.model!==model)) {
-                    instance.host.removeAttr(&#x27;bound-model&#x27;);
+                    host.removeAttr(&#x27;bound-model&#x27;);
                     if (NATIVE_OBJECT_OBSERVE) {
                         observer = instance._observer;
                         observer &amp;&amp; Object.unobserve(instance.model, observer);
@@ -609,18 +610,16 @@ module.exports = function (window) {
                         Object.observe(instance.model, observer);
                         instance._observer = observer;
                     }
-                    syncPlugin(instance);
+                    (host.getAttr(instance.$ns+&#x27;-ready&#x27;)===&#x27;true&#x27;) &amp;&amp; syncPlugin(instance);
                 }
             },
             afterInit: function() {
                 var instance = this,
                     ns = instance.$ns,
                     host = instance.host;
-                if (host.getAttr(ns+&#x27;-ready&#x27;)!==&#x27;true&#x27;) {
-                    instance.render();
-                    host.setAttr(ns+&#x27;-ready&#x27;, &#x27;true&#x27;, true);
-                }
+                (host.getAttr(ns+&#x27;-ready&#x27;)===&#x27;true&#x27;) || instance.render();
                 syncPlugin(instance);
+                host.setAttr(ns+&#x27;-ready&#x27;, &#x27;true&#x27;, true);
                 autoRefreshPlugin(instance);
                 host._pluginReadyInfo || (host._pluginReadyInfo={});
                 host._pluginReadyInfo[ns] || (host._pluginReadyInfo[ns]=window.Promise.manage());

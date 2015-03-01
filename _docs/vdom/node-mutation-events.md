@@ -150,11 +150,11 @@ Add or change Nodes by using the buttons:
         treeContainer.setText(container.getOuterHTML());
     };
 
-    ITSA.Event.after('click', insertNode, '#insertNode');
-    ITSA.Event.after('click', removeNode, '#removeNode');
-    ITSA.Event.after('click', setAttribute, '#setAttribute');
-    ITSA.Event.after('click', changeAttribute, '#changeAttribute');
-    ITSA.Event.after('click', removeAttribute, '#removeAttribute');
+    ITSA.Event.after('tap', insertNode, '#insertNode');
+    ITSA.Event.after('tap', removeNode, '#removeNode');
+    ITSA.Event.after('tap', setAttribute, '#setAttribute');
+    ITSA.Event.after('tap', changeAttribute, '#changeAttribute');
+    ITSA.Event.after('tap', removeAttribute, '#removeAttribute');
 
     ITSA.Event.after(
         ['nodeinsert', 'noderemove', 'nodecontentchange', 'attributeinsert', 'attributeremove', 'attributechange'],
@@ -229,11 +229,11 @@ Add or change Nodes by using the buttons:
         treeContainer.setText(container.getOuterHTML());
     };
 
-    ITSA.Event.after('click', insertNode, '#insertNode');
-    ITSA.Event.after('click', removeNode, '#removeNode');
-    ITSA.Event.after('click', setAttribute, '#setAttribute');
-    ITSA.Event.after('click', changeAttribute, '#changeAttribute');
-    ITSA.Event.after('click', removeAttribute, '#removeAttribute');
+    ITSA.Event.after('tap', insertNode, '#insertNode');
+    ITSA.Event.after('tap', removeNode, '#removeNode');
+    ITSA.Event.after('tap', setAttribute, '#setAttribute');
+    ITSA.Event.after('tap', changeAttribute, '#changeAttribute');
+    ITSA.Event.after('tap', removeAttribute, '#removeAttribute');
 
     ITSA.Event.after(
         ['nodeinsert', 'noderemove', 'nodecontentchange', 'attributeinsert', 'attributeremove', 'attributechange'],

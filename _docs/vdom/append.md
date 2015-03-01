@@ -53,7 +53,7 @@ Code-example:
     };
 
     ITSA.Event.after(
-        'click',
+        'tap',
         addContent,
         '#button-get'
     );
@@ -73,7 +73,7 @@ document.getElement('#test').setHTML('<div>I am inner</div>');
     };
 
     ITSA.Event.after(
-        'click',
+        'tap',
         addContent,
         '#button-get'
     );

@@ -2636,7 +2636,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":77}],6:[function(require,module,exports){
+},{"_process":79}],6:[function(require,module,exports){
 "use strict";
 module.exports = function (window) {
     require('node-plugin')(window);
@@ -2675,7 +2675,7 @@ require('./css/default.css');
 require('./css/purecss-0.5.0.css');
 require('./css/pure-finetuned.css');
 },{"./css/default.css":7,"./css/pure-finetuned.css":8,"./css/purecss-0.5.0.css":9}],11:[function(require,module,exports){
-var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 999 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+var css = "[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],12:[function(require,module,exports){
 "use strict";
 
@@ -3770,8 +3770,8 @@ module.exports = function (window) {
     return DragModule;
 
 };
-},{"./css/drag-drop.css":11,"drag":14,"event-dom":15,"js-ext":39,"js-ext/extra/hashmap.js":36,"node-plugin":47,"polyfill/polyfill-base.js":57,"useragent":61,"vdom":74,"window-ext":75}],13:[function(require,module,exports){
-module.exports=require(11)
+},{"./css/drag-drop.css":11,"drag":14,"event-dom":15,"js-ext":39,"js-ext/extra/hashmap.js":36,"node-plugin":47,"polyfill/polyfill-base.js":59,"useragent":63,"vdom":76,"window-ext":77}],13:[function(require,module,exports){
+var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -ms-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 3001 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],14:[function(require,module,exports){
 "use strict";
 
@@ -4431,7 +4431,7 @@ module.exports = function (window) {
 
     return DD;
 };
-},{"./css/drag.css":13,"event-dom":15,"js-ext":39,"js-ext/extra/hashmap.js":36,"node-plugin":47,"polyfill":57,"useragent":61,"vdom":74,"window-ext":75}],15:[function(require,module,exports){
+},{"./css/drag.css":13,"event-dom":15,"js-ext":39,"js-ext/extra/hashmap.js":36,"node-plugin":47,"polyfill":59,"useragent":63,"vdom":76,"window-ext":77}],15:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5191,7 +5191,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":28,"js-ext/extra/hashmap.js":36,"js-ext/lib/array.js":41,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill/polyfill-base.js":57,"utils":62,"vdom":74}],16:[function(require,module,exports){
+},{"event":28,"js-ext/extra/hashmap.js":36,"js-ext/lib/array.js":41,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill/polyfill-base.js":59,"utils":64,"vdom":76}],16:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5781,7 +5781,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":15,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"utils":62,"vdom":74}],20:[function(require,module,exports){
+},{"../event-dom.js":15,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"utils":64,"vdom":76}],20:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8276,7 +8276,7 @@ module.exports = function (window) {
 
 };
 
-},{"utils":62}],22:[function(require,module,exports){
+},{"utils":64}],22:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -9655,7 +9655,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill/polyfill-base.js":57}],23:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill/polyfill-base.js":59}],23:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10291,7 +10291,7 @@ module.exports = function (window) {
     module.exports = Event;
 
 };
-},{"../event-base.js":22,"./promise-finalize.js":26,"./timer-finalize.js":27,"io":34,"js-ext/lib/object.js":44,"utils":62}],26:[function(require,module,exports){
+},{"../event-base.js":22,"./promise-finalize.js":26,"./timer-finalize.js":27,"io":34,"js-ext/lib/object.js":44,"utils":64}],26:[function(require,module,exports){
 (function (global){
 (function (global) {
 
@@ -10560,10 +10560,32 @@ module.exports = function (window) {
             // in case sourceNode is an innernode of a selector, we need to start from the selector:
             sourceNode.matches(selector) || (sourceNode=sourceNode.inside(selector));
             if (downwards) {
-                nodeHit = sourceNode.next(selector, focusContainerNode) || (noloop ? sourceNode.last(selector, focusContainerNode) : sourceNode.first(selector, focusContainerNode));
+                nodeHit = sourceNode;
+/*jshint noempty:true */
+                while ((nodeHit=nodeHit.next(selector, focusContainerNode)) && (nodeHit.getStyle('display')==='none')) {}
+/*jshint noempty:false */
+                if (!nodeHit) {
+                    nodeHit = noloop ? sourceNode.last(selector, focusContainerNode) : sourceNode.first(selector, focusContainerNode);
+                    if (nodeHit.getStyle('display')==='none') {
+/*jshint noempty:true */
+                        while ((nodeHit=nodeHit[noloop ? 'previous' : 'next'](selector, focusContainerNode)) && (nodeHit.getStyle('display')==='none')) {}
+/*jshint noempty:false */
+                    }
+                }
             }
             else {
-                nodeHit = sourceNode.previous(selector, focusContainerNode) || (noloop ? sourceNode.first(selector, focusContainerNode) : sourceNode.last(selector, focusContainerNode));
+                nodeHit = sourceNode;
+/*jshint noempty:true */
+                while ((nodeHit=nodeHit.previous(selector, focusContainerNode)) && (nodeHit.getStyle('display')==='none')) {}
+/*jshint noempty:false */
+                if (!nodeHit) {
+                    nodeHit = noloop ? sourceNode.first(selector, focusContainerNode) : sourceNode.last(selector, focusContainerNode);
+                    if (nodeHit.getStyle('display')==='none') {
+/*jshint noempty:true */
+                        while ((nodeHit=nodeHit[noloop ? 'next' : 'previous'](selector, focusContainerNode)) && (nodeHit.getStyle('display')==='none')) {}
+/*jshint noempty:false */
+                    }
+                }
             }
             if (nodeHit===sourceNode) {
                 // cannot found another, return itself, BUT return `initialSourceNode` if it is available
@@ -10690,7 +10712,7 @@ module.exports = function (window) {
                 if (!focusNode) {
                     // check for keyenter, but only when e.target equals a focusmanager:
                     if (sourceNode.matches('[plugin-fm="true"]')) {
-                        actionkey = focusContainerNode._plugin.fm.model.keyenter;
+                        actionkey = sourceNode._plugin.fm.model.keyenter;
                         if (actionkey) {
                             keys = actionkey.split('+');
                             len = keys.length;
@@ -10939,7 +10961,7 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"event-mobile":20,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"node-plugin":47,"polyfill":57,"utils":62,"window-ext":75}],30:[function(require,module,exports){
+},{"event-mobile":20,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"node-plugin":47,"polyfill":59,"utils":64,"window-ext":77}],30:[function(require,module,exports){
 
 "use strict";
 
@@ -11664,7 +11686,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":34,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill/polyfill-base.js":57}],33:[function(require,module,exports){
+},{"../io.js":34,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill/polyfill-base.js":59}],33:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12178,7 +12200,7 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":39,"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":57,"utils":62}],35:[function(require,module,exports){
+},{"js-ext":39,"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":59,"utils":64}],35:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -12791,7 +12813,7 @@ require('../lib/object.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/object.js":44,"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":57}],36:[function(require,module,exports){
+},{"../lib/object.js":44,"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":59}],36:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -12926,7 +12948,7 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":41,"../lib/object.js":44,"./classes.js":35,"js-ext/extra/hashmap.js":36,"polyfill/lib/weakmap.js":55}],38:[function(require,module,exports){
+},{"../lib/array.js":41,"../lib/object.js":44,"./classes.js":35,"js-ext/extra/hashmap.js":36,"polyfill/lib/weakmap.js":57}],38:[function(require,module,exports){
 "use strict";
 
 var createHashMap = require('./hashmap.js').createMap;
@@ -13172,7 +13194,7 @@ var cloneObj = function(obj) {
      };
 
 }(Array.prototype));
-},{"polyfill/polyfill-base.js":57}],42:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":59}],42:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -13231,7 +13253,7 @@ var NAME = '[Function]: ';
 
 }(Function.prototype));
 
-},{"polyfill/polyfill-base.js":57}],43:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":59}],43:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -13256,7 +13278,7 @@ var REVIVER = function(key, value) {
 JSON.parseWithDate = function(stringifiedObj) {
     return this.parse(stringifiedObj, REVIVER);
 };
-},{"polyfill/polyfill-base.js":57}],44:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":59}],44:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -13718,7 +13740,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":57}],45:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":59}],45:[function(require,module,exports){
 "use strict";
 
 /**
@@ -14023,7 +14045,7 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill":57}],46:[function(require,module,exports){
+},{"polyfill":59}],46:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -14608,10 +14630,10 @@ module.exports = function (window) {
             var instance = this,
                 Plugin;
             if (typeof plugin==='string') {
-                Plugin = window._ITSAPlugins[plugin];
-                if (Plugin) {
-                    if (!instance.isPlugged(Plugin)) {
+                if (window._ITSAPlugins[plugin]) {
+                    if (!instance._plugin || !instance._plugin[plugin]) {
                         instance._plugin || Object.protectedProp(instance, '_plugin', {});
+                        Plugin = window._ITSAPlugins[plugin];
                         instance._plugin[plugin] = new Plugin(instance, config, model);
                     }
                     else {
@@ -14653,7 +14675,7 @@ module.exports = function (window) {
         */
         HTMLElementPrototype.unplug = function(plugin) {
             var instance = this;
-            if (instance.isPlugged(plugin)) {
+            if (instance._plugin && instance._plugin[plugin]) {
                 instance._plugin[plugin].destroy();
             }
             return instance;
@@ -14689,9 +14711,10 @@ module.exports = function (window) {
             bindModel: function(model, mergeCurrent) {
                 console.log(NAME+'bindModel');
                 var instance = this,
+                    host = instance.host,
                     observer;
                 if (Object.isObject(model) && (instance.model!==model)) {
-                    instance.host.removeAttr('bound-model');
+                    host.removeAttr('bound-model');
                     if (NATIVE_OBJECT_OBSERVE) {
                         observer = instance._observer;
                         observer && Object.unobserve(instance.model, observer);
@@ -14705,18 +14728,16 @@ module.exports = function (window) {
                         Object.observe(instance.model, observer);
                         instance._observer = observer;
                     }
-                    syncPlugin(instance);
+                    (host.getAttr(instance.$ns+'-ready')==='true') && syncPlugin(instance);
                 }
             },
             afterInit: function() {
                 var instance = this,
                     ns = instance.$ns,
                     host = instance.host;
-                if (host.getAttr(ns+'-ready')!=='true') {
-                    instance.render();
-                    host.setAttr(ns+'-ready', 'true', true);
-                }
+                (host.getAttr(ns+'-ready')==='true') || instance.render();
                 syncPlugin(instance);
+                host.setAttr(ns+'-ready', 'true', true);
                 autoRefreshPlugin(instance);
                 host._pluginReadyInfo || (host._pluginReadyInfo={});
                 host._pluginReadyInfo[ns] || (host._pluginReadyInfo[ns]=window.Promise.manage());
@@ -15012,7 +15033,246 @@ module.exports = function (window) {
 
     window._ITSAmodules.ElementPlugin = true;
 };
-},{"event-dom":15,"event/extra/promise-finalize.js":26,"event/extra/timer-finalize.js":27,"js-ext/extra/classes.js":35,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/promise.js":45,"js-ext/lib/string.js":46,"polyfill":57,"utils/lib/timers.js":64,"vdom":74}],48:[function(require,module,exports){
+},{"event-dom":15,"event/extra/promise-finalize.js":26,"event/extra/timer-finalize.js":27,"js-ext/extra/classes.js":35,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/promise.js":45,"js-ext/lib/string.js":46,"polyfill":59,"utils/lib/timers.js":66,"vdom":76}],48:[function(require,module,exports){
+var css = "[plugin-panel=\"true\"] {\n    position: absolute !important;\n    background-color: #FFF;\n    max-width: 90%;\n    min-width: 150px;\n    min-height: 75px;\n    box-shadow: 5px 5px 6px rgba(50, 50, 50, 0.45);\n    border: solid 1px #000;\n}\n\n[plugin-panel=\"true\"],\n[plugin-panel=\"true\"] >div {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n[plugin-panel=\"true\"] >div[is=\"header\"] {\n    vertical-align: middle;\n    background-color: rgb(0, 100, 192);\n    color: #FFF;\n    padding: 0.3em 2em 0.3em 0.7em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    vertical-align: middle;\n    line-height: 1em;\n    width: 100%;\n    min-height: 24px;\n}\n\n[plugin-panel=\"true\"] >div[is=\"content\"] {\n    padding: 1.6em 1.2em;\n    line-height: 115%;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] {\n    border-top: 1px solid #EAE6DB;\n    overflow: hidden;\n    vertical-align: middle;\n    text-align: right;\n    line-height: 1em;\n    padding: 0.55em 0.7em;\n    width: 100%;\n    min-height: 24px;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0.5em;\n}\n\n[plugin-panel=\"true\"].itsa-full-draggable {\n    cursor: default;\n}\n\n[plugin-panel=\"true\"]:not(.itsa-full-draggable) >div[is=\"content\"],\n[plugin-panel=\"true\"]:not(.itsa-full-draggable) >div[is=\"footer\"] {\n    -moz-user-select: text;\n    -khtml-user-select: text;\n    -webkit-user-select: text;\n    -ms-user-select: text;\n    user-select: text;\n}\n\n[plugin-panel=\"true\"] >button {\n    padding: 0.5em;\n    position: absolute;\n    right: 0.2em;\n    top: 0.2em;\n    z-index: 1;\n}\n\nbody >div[is=\"system-node\"].itsa-modal-layer {\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 100% !important;\n    height: 100% !important;\n    -webkit-box-sizing: border-box !important;\n    -moz-box-sizing: border-box !important;\n    box-sizing: border-box !important;\n    z-index: 1000 !important;\n    background-color: #000 !important;\n    opacity: 0.2 !important;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],49:[function(require,module,exports){
+"use strict";
+
+require('js-ext/lib/object.js');
+require('polyfill');
+require('./css/panel.css');
+
+/**
+ *
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module focusmanager
+ * @class FocusManager
+ * @since 0.0.1
+*/
+
+var NAME = '[panel]: ',
+    SYNC_TIMER = 1000,
+    PANEL_Z = 1000,
+    MODAL_Z = 2000,
+    PANEL_TOP = 999,
+    createHashMap = require('js-ext/extra/hashmap.js').createMap;
+
+module.exports = function (window) {
+
+    var DOCUMENT = window.document,
+        LightMap = require('js-ext/extra/lightmap.js'),
+        Panel, Event, setupEvents, DD, stackManager, insertModalLayer;
+
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
+
+/*jshint boss:true */
+    if (Panel=window._ITSAmodules.Panel) {
+/*jshint boss:false */
+        return Panel; // Panel was already created
+    }
+
+    require('window-ext')(window);
+    require('node-plugin')(window);
+    require('focusmanager')(window);
+
+    Event = require('event-mobile')(window);
+    DD = require('drag')(window);
+    DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
+
+    insertModalLayer = function() {
+       DOCUMENT.body.addSystemElement('<div class="itsa-modal-layer itsa-no-display"></div>', null, true);
+    };
+
+    insertModalLayer();
+
+    setupEvents = function() {
+        Event.after('tap', function(e) {
+            var buttonNode = e.target,
+                panel = buttonNode.inside('[plugin-panel="true"]');
+            panel._plugin.panel.model.visible = false;
+        }, '[plugin-panel="true"] >div[is="header"] button, [plugin-panel="true"] >div[is="footer"] button, [plugin-panel="true"] >button');
+    };
+
+    setupEvents();
+
+    stackManager = DOCUMENT.stackManager = {
+        elements: new LightMap(),
+        isOnTop: function(host) {
+            return (this.topElement===host);
+        },
+        setOnTop: function(host) {
+            this.topElement = host;
+        },
+        registerModal: function(host) {
+            var instance = this;
+            instance.elements.set(host, true);
+            instance.showModalLayer(true);
+        },
+        unRegisterModal: function(host) {
+            var instance = this;
+            instance.elements.delete(host);
+            instance.hasModalElements() || instance.showModalLayer(false);
+        },
+        hasModalElements: function() {
+            return (this.elements.size()>0);
+        },
+        showModalLayer: function(show) {
+            var modalLayer = DOCUMENT.getElement('body >div[is="system-node"].itsa-modal-layer', true);
+            modalLayer.toggleClass('itsa-no-display', !show);
+        }
+    };
+
+    DOCUMENT.createPanel = function(data, systemNode) {
+        var panel;
+        if (!Object.isObject(data)) {
+            data = {
+                content: data
+            };
+        }
+        if (systemNode) {
+            panel = DOCUMENT.body.addSystemElement('<div></div>');
+        }
+        else {
+            panel = DOCUMENT.body.prepend('<div></div>');
+        }
+        panel.plug('panel', null, data);
+        // does NOT return the node, but `model` so it can be controled!
+        return data;
+    };
+
+    window._ITSAmodules.Panel = Panel = DOCUMENT.definePlugin('panel', null, {
+        attrs: {
+            header: 'string',
+            content: 'string',
+            footer: 'string',
+            visible: 'boolean',
+            onTopWhenShowed: 'boolean',
+            headerCloseBtn: 'boolean',
+            stack: 'number',
+            left: 'number',
+            top: 'number',
+            center: 'boolean',
+            modal: 'boolean',
+            draggable: 'boolean',
+            focusmanaged: 'boolean'
+        },
+        defaults: {
+            visible: false,
+            onTopWhenShowed: true,
+            stack: 1,
+            center: true,
+            modal: true,
+            focusmanaged: true,
+            headerCloseBtn: false
+        },
+        render: function() {
+            var instance = this,
+                host = instance.host,
+                newContent;
+            host.setClass('itsa-hidden');
+            newContent = '<div is="header"></div>'+
+                         '<div is="content"></div>'+
+                         '<div is="footer"></div>' +
+                         '<button class="panel-close">x</button>';
+            host.setHTML(newContent);
+        },
+        sync: function() {
+            var instance = this,
+                host = instance.host,
+                model = instance.model,
+                header = model.header,
+                content = model.content,
+                footer = model.footer,
+                stack = model.stack,
+                divs = host.getAll('>div'),
+                headerNode = divs[0],
+                contentNode = divs[1],
+                footerNode = divs[2],
+                buttonCloseNode = host.getElement('>button'),
+                zIndex, isOnTop;
+            (header==='undefined') && (header=undefined);
+            (footer==='undefined') && (footer=undefined);
+            if (model.headerCloseBtn && !header) {
+                header = '';
+            }
+            header && headerNode.setHTML(header || '');
+            buttonCloseNode.toggleClass('itsa-no-display', !model.headerCloseBtn);
+            headerNode.toggleClass('itsa-hidden', !header);
+            contentNode.setHTML(content || '');
+            contentNode.plug('scroll');
+            footer && footerNode.setHTML(footer || '');
+            footerNode.toggleClass('itsa-hidden', !footer);
+
+            zIndex = (model.modal ? MODAL_Z : PANEL_Z);
+
+            if (model.visible && model.modal) {
+                stackManager.registerModal(host);
+            }
+            else {
+                stackManager.unRegisterModal(host);
+            }
+
+            if (model.onTopWhenShowed && model.visible && host.hasClass('itsa-hidden')) {
+                instance.showOnTop();
+            }
+
+            isOnTop = stackManager.isOnTop(host);
+            zIndex += isOnTop ? PANEL_TOP : stack;
+
+            host.setInlineStyle('z-index', zIndex);
+
+            if (model.center && (!instance._prevCenter || !model.draggable)) {
+                model.left = Math.round((window.getWidth()-host.width)/2);
+                model.top = Math.round((window.getHeight()-host.height)/2);
+                host.setInlineStyles([
+                    {property: 'left', value: model.left+'px'},
+                    {property: 'top', value: model.top+'px'}
+                ]);
+            }
+            else if (!model.center && !host.hasClass('dd-dragging')) {
+                host.setInlineStyles([
+                    {property: 'left', value: model.left+'px'},
+                    {property: 'top', value: model.top+'px'}
+                ]);
+            }
+            // prevent re-centering: that would be unhandy when the panel is draggable:
+            instance._prevCenter = model.center;
+            // we can plug/unplug multiple times --> node-plugin won't do anything when there are no changes
+            host[(model.draggable ? '' : 'un')+'plug']('dd');
+            host[(model.focusmanaged ? '' : 'un')+'plug']('fm');
+            host.toggleClass('itsa-full-draggable', model.draggable && !header);
+            if (model.draggable && header) {
+                 host.hasAttr('dd-handle') || host.setAttr('dd-handle', 'div[is="header"]');
+            }
+            else {
+                 host.hasAttr('dd-handle') && host.removeAttr('dd-handle');
+            }
+
+            host.toggleClass('itsa-hidden', !model.visible);
+            if (isOnTop && model.modal && !host.hasClass('focussed')) {
+                host.focus();
+            }
+        },
+        showOnTop: function() {
+            stackManager.setOnTop(this.host);
+        },
+        destroy: function() {
+            var host = this.host;
+            host.removeInlineStyle('z-index');
+            host.unplug('dd');
+            host.unplug('fm');
+            host.removeClass(['itsa-hidden', 'itsa-full-draggable']);
+            stackManager.unRegisterModal(host);
+        }
+    });
+
+    return Panel;
+};
+},{"./css/panel.css":48,"drag":14,"event-mobile":20,"focusmanager":29,"js-ext/extra/hashmap.js":36,"js-ext/extra/lightmap.js":37,"js-ext/lib/object.js":44,"node-plugin":47,"polyfill":59,"window-ext":77}],50:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -15035,7 +15295,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],49:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 "use strict";
 
 /*
@@ -15088,7 +15348,7 @@ module.exports = function (window) {
 
     return transition;
 };
-},{"../bin/local-hashmap.js":48}],50:[function(require,module,exports){
+},{"../bin/local-hashmap.js":50}],52:[function(require,module,exports){
 "use strict";
 
 // CAUTIOUS: need a copy of hashmap --> we cannot use js-ext/extra/hashap.js for that would lead to circular references!
@@ -15133,7 +15393,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{"../bin/local-hashmap.js":48}],51:[function(require,module,exports){
+},{"../bin/local-hashmap.js":50}],53:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -15204,7 +15464,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../bin/local-hashmap.js":48}],52:[function(require,module,exports){
+},{"../bin/local-hashmap.js":50}],54:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -15228,7 +15488,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],53:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 (function (global){
 /*
  * Copyright 2012 The Polymer Authors. All rights reserved.
@@ -15814,9 +16074,9 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],54:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 require('ypromise');
-},{"ypromise":5}],55:[function(require,module,exports){
+},{"ypromise":5}],57:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/Gozala/1269991
 
@@ -15926,7 +16186,7 @@ require('ypromise');
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],56:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -15945,17 +16205,17 @@ require('ypromise');
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],57:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":52,"./lib/window.console.js":56}],58:[function(require,module,exports){
+},{"./lib/matchesselector.js":54,"./lib/window.console.js":58}],60:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/promise.js');
 require('./lib/weakmap.js');
 require('./lib/mutationobserver.js'); // needs weakmap
-},{"./lib/mutationobserver.js":53,"./lib/promise.js":54,"./lib/weakmap.js":55,"./polyfill-base.js":57}],59:[function(require,module,exports){
+},{"./lib/mutationobserver.js":55,"./lib/promise.js":56,"./lib/weakmap.js":57,"./polyfill-base.js":59}],61:[function(require,module,exports){
 var css = "[plugin-scroll=\"true\"] {\n    overflow: hidden !important;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont,\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    position: absolute;\n    display: block;\n    left: -9999px;\n    top: -9999px;\n    opacity: 0;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-vscroll-cont.itsa-visible {\n    opacity: 1;\n    width: 0.8em;\n    height: 100%;\n    right: 0;\n    top: 0;\n    left: auto;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-hscroll-cont.itsa-visible {\n    opacity: 1;\n    height: 0.8em;\n    width: 100%;\n    left: 0;\n    bottom: 0;\n    top: auto;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont span {\n    position: relative;\n    display: block;\n    width: 100%;\n    min-height: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont span {\n    position: relative;\n    display: block;\n    height: 100%;\n    min-width: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-vscroll-cont span,\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-hscroll-cont span {\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n[plugin-scroll=\"true\"] >span span.dd-dragging {\n    cursor: default;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],60:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],62:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -16162,7 +16422,7 @@ module.exports = function (window) {
 
     return Scrollable;
 };
-},{"./css/scrollable.css":59,"drag":14,"event-mobile":20,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"node-plugin":47,"polyfill":57,"utils":62,"window-ext":75}],61:[function(require,module,exports){
+},{"./css/scrollable.css":61,"drag":14,"event-mobile":20,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"node-plugin":47,"polyfill":59,"utils":64,"window-ext":77}],63:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16201,7 +16461,7 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":57}],62:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":59}],64:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
@@ -16209,7 +16469,7 @@ module.exports = {
     async: require('./lib/timers.js').async,
     asyncSilent: require('./lib/timers.js').asyncSilent
 };
-},{"./lib/idgenerator.js":63,"./lib/timers.js":64}],63:[function(require,module,exports){
+},{"./lib/idgenerator.js":65,"./lib/timers.js":66}],65:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -16267,7 +16527,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":57}],64:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":59}],66:[function(require,module,exports){
 (function (global){
 /**
  * Collection of various utility functions.
@@ -16482,9 +16742,9 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"polyfill/polyfill-base.js":57}],65:[function(require,module,exports){
-var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],66:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":59}],67:[function(require,module,exports){
+var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-no-display {\n    display: none; !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],68:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16782,7 +17042,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":57,"polyfill/extra/transition.js":49,"polyfill/extra/vendorCSS.js":51}],67:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":59,"polyfill/extra/transition.js":51,"polyfill/extra/vendorCSS.js":53}],69:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17210,7 +17470,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":57}],68:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":59}],70:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17924,7 +18184,7 @@ module.exports = function (window) {
 
 
 
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":57}],69:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":59}],71:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -20326,6 +20586,9 @@ module.exports = function (window) {
                             if (vChildNode._systemNode || (vChildNode.isItag && vChildNode.domNode.contentHidden)) {
                                 noDeep = true;
                             }
+                            else {
+                                noDeep = false;
+                            }
                         }
                         else {
                             noDeep = false;
@@ -20381,6 +20644,9 @@ module.exports = function (window) {
                     if (!inspectProtectedNodes) {
                         if (vChildNode._systemNode || (vChildNode.isItag && vChildNode.domNode.contentHidden)) {
                             noDeep = true;
+                        }
+                        else {
+                            noDeep = false;
                         }
                     }
                     else {
@@ -22627,7 +22893,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":65,"./attribute-extractor.js":66,"./element-array.js":67,"./html-parser.js":70,"./node-parser.js":71,"./vdom-ns.js":72,"./vnode.js":73,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/promise.js":45,"js-ext/lib/string.js":46,"polyfill":57,"polyfill/extra/transition.js":49,"polyfill/extra/transitionend.js":50,"polyfill/extra/vendorCSS.js":51,"utils":62,"window-ext":75}],70:[function(require,module,exports){
+},{"../css/element.css":67,"./attribute-extractor.js":68,"./element-array.js":69,"./html-parser.js":72,"./node-parser.js":73,"./vdom-ns.js":74,"./vnode.js":75,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/promise.js":45,"js-ext/lib/string.js":46,"polyfill":59,"polyfill/extra/transition.js":51,"polyfill/extra/transitionend.js":52,"polyfill/extra/vendorCSS.js":53,"utils":64,"window-ext":77}],72:[function(require,module,exports){
 "use strict";
 
 /**
@@ -22999,7 +23265,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":66,"./vdom-ns.js":72,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":57}],71:[function(require,module,exports){
+},{"./attribute-extractor.js":68,"./vdom-ns.js":74,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":59}],73:[function(require,module,exports){
 "use strict";
 
 /**
@@ -23140,7 +23406,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":66,"./vdom-ns.js":72,"./vnode.js":73,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":57}],72:[function(require,module,exports){
+},{"./attribute-extractor.js":68,"./vdom-ns.js":74,"./vnode.js":75,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":59}],74:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -23371,7 +23637,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":57}],73:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":59}],75:[function(require,module,exports){
 "use strict";
 
 /**
@@ -26103,7 +26369,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":66,"./html-parser.js":70,"./vdom-ns.js":72,"js-ext/extra/hashmap.js":36,"js-ext/extra/lightmap.js":37,"js-ext/lib/array.js":41,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":57,"utils/lib/timers.js":64}],74:[function(require,module,exports){
+},{"./attribute-extractor.js":68,"./html-parser.js":72,"./vdom-ns.js":74,"js-ext/extra/hashmap.js":36,"js-ext/extra/lightmap.js":37,"js-ext/lib/array.js":41,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":59,"utils/lib/timers.js":66}],76:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -26146,13 +26412,13 @@ module.exports = function (window) {
 
     window._ITSAmodules.VDOM = true;
 };
-},{"./partials/extend-document.js":68,"./partials/extend-element.js":69,"./partials/node-parser.js":71,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"utils/lib/timers.js":64}],75:[function(require,module,exports){
+},{"./partials/extend-document.js":70,"./partials/extend-element.js":71,"./partials/node-parser.js":73,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"utils/lib/timers.js":66}],77:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":76}],76:[function(require,module,exports){
+},{"./lib/sizes.js":78}],78:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -26256,7 +26522,7 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],77:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],79:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -26464,6 +26730,7 @@ process.chdir = function (dir) {
     */
     require('node-plugin')(window);
     require('constrain')(window);
+    require('panel')(window);
 
     ITSA.merge(require('utils'));
     ITSA.RESERVED_WORDS = require('js-ext/extra/reserved-words.js');
@@ -26515,4 +26782,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"constrain":6,"css":10,"drag-drop":12,"event":28,"event-dom/extra/blurnode.js":16,"event-dom/extra/focusnode.js":17,"event-dom/extra/hover.js":18,"event-dom/extra/valuechange.js":19,"event-mobile":20,"event/extra/objectobserve.js":25,"focusmanager":29,"io/extra/io-cors-ie9.js":30,"io/extra/io-stream.js":31,"io/extra/io-transfer.js":32,"io/extra/io-xml.js":33,"js-ext/extra/reserved-words.js":38,"js-ext/js-ext.js":40,"node-plugin":47,"node-win":undefined,"polyfill/polyfill.js":58,"scrollable":60,"useragent":61,"utils":62,"vdom":74,"window-ext":75}]},{},[]);
+},{"constrain":6,"css":10,"drag-drop":12,"event":28,"event-dom/extra/blurnode.js":16,"event-dom/extra/focusnode.js":17,"event-dom/extra/hover.js":18,"event-dom/extra/valuechange.js":19,"event-mobile":20,"event/extra/objectobserve.js":25,"focusmanager":29,"io/extra/io-cors-ie9.js":30,"io/extra/io-stream.js":31,"io/extra/io-transfer.js":32,"io/extra/io-xml.js":33,"js-ext/extra/reserved-words.js":38,"js-ext/js-ext.js":40,"node-plugin":47,"node-win":undefined,"panel":49,"polyfill/polyfill.js":60,"scrollable":62,"useragent":63,"utils":64,"vdom":76,"window-ext":77}]},{},[]);

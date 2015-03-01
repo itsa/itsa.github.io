@@ -63,8 +63,8 @@ Code-example:
         container.top = 600;
     };
 
-    ITSA.Event.after('click', move1, '#button-move1');
-    ITSA.Event.after('click', move2, '#button-move2');
+    ITSA.Event.after('tap', move1, '#button-move1');
+    ITSA.Event.after('tap', move2, '#button-move2');
 
 </script>
 ```
@@ -84,6 +84,6 @@ Code-example:
         container.top = 600;
     };
 
-    ITSA.Event.after('click', move1, '#button-move1');
-    ITSA.Event.after('click', move2, '#button-move2');
+    ITSA.Event.after('tap', move1, '#button-move1');
+    ITSA.Event.after('tap', move2, '#button-move2');
 </script>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/panel/panel.js - Itsa</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title="Itsa"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/Array.html">Array</a></li>
+            
+                <li><a href="../classes/BaseClass.html">BaseClass</a></li>
+            
+                <li><a href="../classes/Classes.html">Classes</a></li>
+            
+                <li><a href="../classes/DD.html">DD</a></li>
+            
+                <li><a href="../classes/document.html">document</a></li>
+            
+                <li><a href="../classes/Element.html">Element</a></li>
+            
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
+            
+                <li><a href="../classes/Event.html">Event</a></li>
+            
+                <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
+            
+                <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
+            
+                <li><a href="../classes/FocusManager.html">FocusManager</a></li>
+            
+                <li><a href="../classes/Function.html">Function</a></li>
+            
+                <li><a href="../classes/IO.html">IO</a></li>
+            
+                <li><a href="../classes/ITSA.html">ITSA</a></li>
+            
+                <li><a href="../classes/Node.html">Node</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
+            
+                <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Plugins.html">Plugins</a></li>
+            
+                <li><a href="../classes/Promise.html">Promise</a></li>
+            
+                <li><a href="../classes/String.html">String</a></li>
+            
+                <li><a href="../classes/USERAGENT.html">USERAGENT</a></li>
+            
+                <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
+            
+                <li><a href="../modules/drag.html">drag</a></li>
+            
+                <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
+            
+                <li><a href="../modules/event.html">event</a></li>
+            
+                <li><a href="../modules/event-blurnode.html">event-blurnode</a></li>
+            
+                <li><a href="../modules/event-dom.html">event-dom</a></li>
+            
+                <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-focusnode.html">event-focusnode</a></li>
+            
+                <li><a href="../modules/event-hover.html">event-hover</a></li>
+            
+                <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/extra_classes.js.html">extra/classes.js</a></li>
+            
+                <li><a href="../modules/focusmanager.html">focusmanager</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
+            
+                <li><a href="../modules/io.html">io</a></li>
+            
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
+            
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/js-ext.html">js-ext</a></li>
+            
+                <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
+            
+                <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
+            
+                <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
+            
+                <li><a href="../modules/lib_promise.s.html">lib/promise.s</a></li>
+            
+                <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
+            
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
+            
+                <li><a href="../modules/useragent.html">useragent</a></li>
+            
+                <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/panel/panel.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+
+require(&#x27;js-ext/lib/object.js&#x27;);
+require(&#x27;polyfill&#x27;);
+require(&#x27;./css/panel.css&#x27;);
+
+/**
+ *
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module focusmanager
+ * @class FocusManager
+ * @since 0.0.1
+*/
+
+var NAME = &#x27;[panel]: &#x27;,
+    SYNC_TIMER = 1000,
+    PANEL_Z = 1000,
+    MODAL_Z = 2000,
+    PANEL_TOP = 999,
+    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
+
+module.exports = function (window) {
+
+    var DOCUMENT = window.document,
+        LightMap = require(&#x27;js-ext/extra/lightmap.js&#x27;),
+        Panel, Event, setupEvents, DD, stackManager, insertModalLayer;
+
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
+
+/*jshint boss:true */
+    if (Panel=window._ITSAmodules.Panel) {
+/*jshint boss:false */
+        return Panel; // Panel was already created
+    }
+
+    require(&#x27;window-ext&#x27;)(window);
+    require(&#x27;node-plugin&#x27;)(window);
+    require(&#x27;focusmanager&#x27;)(window);
+
+    Event = require(&#x27;event-mobile&#x27;)(window);
+    DD = require(&#x27;drag&#x27;)(window);
+    DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
+
+    insertModalLayer = function() {
+       DOCUMENT.body.addSystemElement(&#x27;&lt;div class=&quot;itsa-modal-layer itsa-no-display&quot;&gt;&lt;/div&gt;&#x27;, null, true);
+    };
+
+    insertModalLayer();
+
+    setupEvents = function() {
+        Event.after(&#x27;tap&#x27;, function(e) {
+            var buttonNode = e.target,
+                panel = buttonNode.inside(&#x27;[plugin-panel=&quot;true&quot;]&#x27;);
+            panel._plugin.panel.model.visible = false;
+        }, &#x27;[plugin-panel=&quot;true&quot;] &gt;div[is=&quot;header&quot;] button, [plugin-panel=&quot;true&quot;] &gt;div[is=&quot;footer&quot;] button, [plugin-panel=&quot;true&quot;] &gt;button&#x27;);
+    };
+
+    setupEvents();
+
+    stackManager = DOCUMENT.stackManager = {
+        elements: new LightMap(),
+        isOnTop: function(host) {
+            return (this.topElement===host);
+        },
+        setOnTop: function(host) {
+            this.topElement = host;
+        },
+        registerModal: function(host) {
+            var instance = this;
+            instance.elements.set(host, true);
+            instance.showModalLayer(true);
+        },
+        unRegisterModal: function(host) {
+            var instance = this;
+            instance.elements.delete(host);
+            instance.hasModalElements() || instance.showModalLayer(false);
+        },
+        hasModalElements: function() {
+            return (this.elements.size()&gt;0);
+        },
+        showModalLayer: function(show) {
+            var modalLayer = DOCUMENT.getElement(&#x27;body &gt;div[is=&quot;system-node&quot;].itsa-modal-layer&#x27;, true);
+            modalLayer.toggleClass(&#x27;itsa-no-display&#x27;, !show);
+        }
+    };
+
+    DOCUMENT.createPanel = function(data, systemNode) {
+        var panel;
+        if (!Object.isObject(data)) {
+            data = {
+                content: data
+            };
+        }
+        if (systemNode) {
+            panel = DOCUMENT.body.addSystemElement(&#x27;&lt;div&gt;&lt;/div&gt;&#x27;);
+        }
+        else {
+            panel = DOCUMENT.body.prepend(&#x27;&lt;div&gt;&lt;/div&gt;&#x27;);
+        }
+        panel.plug(&#x27;panel&#x27;, null, data);
+        // does NOT return the node, but &#x60;model&#x60; so it can be controled!
+        return data;
+    };
+
+    window._ITSAmodules.Panel = Panel = DOCUMENT.definePlugin(&#x27;panel&#x27;, null, {
+        attrs: {
+            header: &#x27;string&#x27;,
+            content: &#x27;string&#x27;,
+            footer: &#x27;string&#x27;,
+            visible: &#x27;boolean&#x27;,
+            onTopWhenShowed: &#x27;boolean&#x27;,
+            headerCloseBtn: &#x27;boolean&#x27;,
+            stack: &#x27;number&#x27;,
+            left: &#x27;number&#x27;,
+            top: &#x27;number&#x27;,
+            center: &#x27;boolean&#x27;,
+            modal: &#x27;boolean&#x27;,
+            draggable: &#x27;boolean&#x27;,
+            focusmanaged: &#x27;boolean&#x27;
+        },
+        defaults: {
+            visible: false,
+            onTopWhenShowed: true,
+            stack: 1,
+            center: true,
+            modal: true,
+            focusmanaged: true,
+            headerCloseBtn: false
+        },
+        render: function() {
+            var instance = this,
+                host = instance.host,
+                newContent;
+            host.setClass(&#x27;itsa-hidden&#x27;);
+            newContent = &#x27;&lt;div is=&quot;header&quot;&gt;&lt;/div&gt;&#x27;+
+                         &#x27;&lt;div is=&quot;content&quot;&gt;&lt;/div&gt;&#x27;+
+                         &#x27;&lt;div is=&quot;footer&quot;&gt;&lt;/div&gt;&#x27; +
+                         &#x27;&lt;button class=&quot;panel-close&quot;&gt;x&lt;/button&gt;&#x27;;
+            host.setHTML(newContent);
+        },
+        sync: function() {
+            var instance = this,
+                host = instance.host,
+                model = instance.model,
+                header = model.header,
+                content = model.content,
+                footer = model.footer,
+                stack = model.stack,
+                divs = host.getAll(&#x27;&gt;div&#x27;),
+                headerNode = divs[0],
+                contentNode = divs[1],
+                footerNode = divs[2],
+                buttonCloseNode = host.getElement(&#x27;&gt;button&#x27;),
+                zIndex, isOnTop;
+            (header===&#x27;undefined&#x27;) &amp;&amp; (header=undefined);
+            (footer===&#x27;undefined&#x27;) &amp;&amp; (footer=undefined);
+            if (model.headerCloseBtn &amp;&amp; !header) {
+                header = &#x27;&#x27;;
+            }
+            header &amp;&amp; headerNode.setHTML(header || &#x27;&#x27;);
+            buttonCloseNode.toggleClass(&#x27;itsa-no-display&#x27;, !model.headerCloseBtn);
+            headerNode.toggleClass(&#x27;itsa-hidden&#x27;, !header);
+            contentNode.setHTML(content || &#x27;&#x27;);
+            contentNode.plug(&#x27;scroll&#x27;);
+            footer &amp;&amp; footerNode.setHTML(footer || &#x27;&#x27;);
+            footerNode.toggleClass(&#x27;itsa-hidden&#x27;, !footer);
+
+            zIndex = (model.modal ? MODAL_Z : PANEL_Z);
+
+            if (model.visible &amp;&amp; model.modal) {
+                stackManager.registerModal(host);
+            }
+            else {
+                stackManager.unRegisterModal(host);
+            }
+
+            if (model.onTopWhenShowed &amp;&amp; model.visible &amp;&amp; host.hasClass(&#x27;itsa-hidden&#x27;)) {
+                instance.showOnTop();
+            }
+
+            isOnTop = stackManager.isOnTop(host);
+            zIndex += isOnTop ? PANEL_TOP : stack;
+
+            host.setInlineStyle(&#x27;z-index&#x27;, zIndex);
+
+            if (model.center &amp;&amp; (!instance._prevCenter || !model.draggable)) {
+                model.left = Math.round((window.getWidth()-host.width)/2);
+                model.top = Math.round((window.getHeight()-host.height)/2);
+                host.setInlineStyles([
+                    {property: &#x27;left&#x27;, value: model.left+&#x27;px&#x27;},
+                    {property: &#x27;top&#x27;, value: model.top+&#x27;px&#x27;}
+                ]);
+            }
+            else if (!model.center &amp;&amp; !host.hasClass(&#x27;dd-dragging&#x27;)) {
+                host.setInlineStyles([
+                    {property: &#x27;left&#x27;, value: model.left+&#x27;px&#x27;},
+                    {property: &#x27;top&#x27;, value: model.top+&#x27;px&#x27;}
+                ]);
+            }
+            // prevent re-centering: that would be unhandy when the panel is draggable:
+            instance._prevCenter = model.center;
+            // we can plug/unplug multiple times --&gt; node-plugin won&#x27;t do anything when there are no changes
+            host[(model.draggable ? &#x27;&#x27; : &#x27;un&#x27;)+&#x27;plug&#x27;](&#x27;dd&#x27;);
+            host[(model.focusmanaged ? &#x27;&#x27; : &#x27;un&#x27;)+&#x27;plug&#x27;](&#x27;fm&#x27;);
+            host.toggleClass(&#x27;itsa-full-draggable&#x27;, model.draggable &amp;&amp; !header);
+            if (model.draggable &amp;&amp; header) {
+                 host.hasAttr(&#x27;dd-handle&#x27;) || host.setAttr(&#x27;dd-handle&#x27;, &#x27;div[is=&quot;header&quot;]&#x27;);
+            }
+            else {
+                 host.hasAttr(&#x27;dd-handle&#x27;) &amp;&amp; host.removeAttr(&#x27;dd-handle&#x27;);
+            }
+
+            host.toggleClass(&#x27;itsa-hidden&#x27;, !model.visible);
+            if (isOnTop &amp;&amp; model.modal &amp;&amp; !host.hasClass(&#x27;focussed&#x27;)) {
+                host.focus();
+            }
+        },
+        showOnTop: function() {
+            stackManager.setOnTop(this.host);
+        },
+        destroy: function() {
+            var host = this.host;
+            host.removeInlineStyle(&#x27;z-index&#x27;);
+            host.unplug(&#x27;dd&#x27;);
+            host.unplug(&#x27;fm&#x27;);
+            host.removeClass([&#x27;itsa-hidden&#x27;, &#x27;itsa-full-draggable&#x27;]);
+            stackManager.unRegisterModal(host);
+        }
+    });
+
+    return Panel;
+};
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

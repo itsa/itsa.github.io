@@ -51,7 +51,7 @@ Code-example:
         container.remove();
     };
 
-    ITSA.Event.after('click', removeContainer, '#button-get');
+    ITSA.Event.after('tap', removeContainer, '#button-get');
 </script>
 ```
 
@@ -65,5 +65,5 @@ Code-example:
         container.remove();
     };
 
-    ITSA.Event.after('click', removeContainer, '#button-get');
+    ITSA.Event.after('tap', removeContainer, '#button-get');
 </script>
