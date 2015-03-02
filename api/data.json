@@ -345,12 +345,14 @@
         "src/node-plugin/node-plugin.js": {
             "name": "src/node-plugin/node-plugin.js",
             "modules": {
-                "element-plugin": 1
+                "node-plugin": 1
             },
             "classes": {
-                "Plugins": 1
+                "NodePlugin": 1
             },
-            "fors": {},
+            "fors": {
+                "HTMLElement": 1
+            },
             "namespaces": {}
         },
         "src/node-win/lib/XMLHttpRequest.js": {
@@ -374,9 +376,11 @@
         "src/panel/panel.js": {
             "name": "src/panel/panel.js",
             "modules": {
-                "focusmanager": 1
+                "panel": 1
             },
-            "classes": {},
+            "classes": {
+                "Panel": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -396,7 +400,9 @@
         },
         "src/scrollable/scrollable.js": {
             "name": "src/scrollable/scrollable.js",
-            "modules": {},
+            "modules": {
+                "focusmanager": 1
+            },
             "classes": {
                 "FocusManager": 1
             },
@@ -988,50 +994,21 @@
             "line": 3,
             "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
-        "vdom": {
-            "name": "vdom",
-            "submodules": {
-                "element-plugin": 1,
-                "attribute-extractor": 1,
-                "element-array": 1,
-                "extend-document": 1,
-                "extend-element": 1,
-                "html-parser": 1,
-                "node-parser": 1,
-                "vdom-ns": 1,
-                "vnode": 1
-            },
-            "classes": {
-                "Plugins": 1,
-                "ElementArray": 1,
-                "document": 1,
-                "Element": 1,
-                "Node": 1,
-                "NS-vdom": 1,
-                "vnode": 1
-            },
-            "fors": {
-                "Node": 1,
-                "Element": 1
-            },
-            "namespaces": {},
-            "file": "src/vdom/partials/vnode.js",
-            "line": 3
-        },
-        "element-plugin": {
-            "name": "element-plugin",
+        "node-plugin": {
+            "name": "node-plugin",
             "submodules": {},
             "classes": {
-                "Plugins": 1
+                "NodePlugin": 1,
+                "HTMLElement": 1
             },
-            "fors": {},
-            "is_submodule": 1,
+            "fors": {
+                "HTMLElement": 1
+            },
             "namespaces": {},
-            "module": "vdom",
-            "namespace": "",
+            "tag": "module",
             "file": "src/node-plugin/node-plugin.js",
             "line": 3,
-            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "description": "Basic NodePlugin Class for plugin's on HTMLElements.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "since": "0.0.1"
         },
         "node-win": {
@@ -1047,6 +1024,20 @@
             "line": 3,
             "description": "Emulation of browser `window` and `dom`. Just enough to make ITSA work.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "static": 1
+        },
+        "panel": {
+            "name": "panel",
+            "submodules": {},
+            "classes": {
+                "Panel": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "src/panel/panel.js",
+            "line": 2,
+            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "since": "0.0.1"
         },
         "useragent": {
             "name": "useragent",
@@ -1075,6 +1066,34 @@
             "line": 1,
             "description": "Collection of various utility functions.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "static": 1
+        },
+        "vdom": {
+            "name": "vdom",
+            "submodules": {
+                "attribute-extractor": 1,
+                "element-array": 1,
+                "extend-document": 1,
+                "extend-element": 1,
+                "html-parser": 1,
+                "node-parser": 1,
+                "vdom-ns": 1,
+                "vnode": 1
+            },
+            "classes": {
+                "ElementArray": 1,
+                "document": 1,
+                "Element": 1,
+                "Node": 1,
+                "NS-vdom": 1,
+                "vnode": 1
+            },
+            "fors": {
+                "Node": 1,
+                "Element": 1
+            },
+            "namespaces": {},
+            "file": "src/vdom/partials/vnode.js",
+            "line": 3
         },
         "attribute-extractor": {
             "name": "attribute-extractor",
@@ -1435,20 +1454,30 @@
             "line": 3,
             "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
-        "Plugins": {
-            "name": "Plugins",
-            "shortname": "Plugins",
+        "NodePlugin": {
+            "name": "NodePlugin",
+            "shortname": "NodePlugin",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "vdom",
-            "submodule": "element-plugin",
+            "module": "node-plugin",
             "namespace": "",
             "file": "src/node-plugin/node-plugin.js",
             "line": 3,
-            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+            "description": "Basic NodePlugin Class for plugin's on HTMLElements.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        "HTMLElement": {
+            "name": "HTMLElement",
+            "shortname": "HTMLElement",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "node-plugin",
+            "namespace": ""
         },
         "window": {
             "name": "window",
@@ -1463,6 +1492,20 @@
             "file": "src/node-win/node-win.js",
             "line": 3,
             "description": "Emulation of browser `window` and `dom`. Just enough to make ITSA work.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        "Panel": {
+            "name": "Panel",
+            "shortname": "Panel",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "panel",
+            "namespace": "",
+            "file": "src/panel/panel.js",
+            "line": 2,
+            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "USERAGENT": {
             "name": "USERAGENT",
@@ -13105,7 +13148,7 @@
         },
         {
             "file": "src/focusmanager/focusmanager.js",
-            "line": 481,
+            "line": 482,
             "description": "In case of a manual focus (node.focus()) the node will fire an `manualfocus`-event\nwhich can be prevented.",
             "itemtype": "event",
             "name": "manualfocus",
@@ -15654,7 +15697,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 68,
+            "line": 66,
             "description": "Default internal hash containing all DOM-events that will not directly call `event-finalize`\nbut after a delay of 1 second",
             "itemtype": "property",
             "name": "DEFAULT_DELAYED_FINALIZE_EVENTS",
@@ -15663,13 +15706,12 @@
             "access": "private",
             "tagname": "",
             "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
+            "class": "NodePlugin",
+            "module": "node-plugin"
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 261,
+            "line": 310,
             "description": "Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.",
             "itemtype": "method",
             "name": "isPlugged",
@@ -15685,13 +15727,12 @@
                 "type": "Boolean"
             },
             "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
+            "class": "HTMLElement",
+            "module": "node-plugin"
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 274,
+            "line": 324,
             "description": "Checks whether the plugin is ready to be used.",
             "itemtype": "method",
             "name": "pluginReady",
@@ -15707,13 +15748,12 @@
                 "type": "Promise"
             },
             "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
+            "class": "HTMLElement",
+            "module": "node-plugin"
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 289,
+            "line": 339,
             "description": "Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.",
             "itemtype": "method",
             "name": "plug",
@@ -15736,15 +15776,17 @@
                     "optional": true
                 }
             ],
-            "chainable": 1,
+            "return": {
+                "description": "the plugin's instance, or undefined in case of an unregistered plugin",
+                "type": "Object|undefined"
+            },
             "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
+            "class": "HTMLElement",
+            "module": "node-plugin"
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 321,
+            "line": 371,
             "description": "Gets the plugin-instance of the specified plugin-name. Will fulfill as soon as the plugin is ready.",
             "itemtype": "method",
             "name": "getPlugin",
@@ -15760,13 +15802,12 @@
                 "type": "Promise"
             },
             "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
+            "class": "HTMLElement",
+            "module": "node-plugin"
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 338,
+            "line": 388,
             "description": "Unplugs a NodePlugin from the HtmlElement.",
             "itemtype": "method",
             "name": "unplug",
@@ -15779,13 +15820,12 @@
             ],
             "chainable": 1,
             "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
+            "class": "HTMLElement",
+            "module": "node-plugin"
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 369,
+            "line": 468,
             "description": "Binds a model to the plugin, making plugin.model equals the bound model.\nImmediately syncs the plugin with the new model-data.\n\nSyncs the new vnode's childNodes with the dom.",
             "itemtype": "method",
             "name": "bindModel",
@@ -15804,13 +15844,12 @@
                 }
             ],
             "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
+            "class": "HTMLElement",
+            "module": "node-plugin"
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 416,
+            "line": 523,
             "description": "Defines which domevents should lead to a direct sync by the Event-finalizer.\nOnly needed for events that are in the list set by DEFAULT_DELAYED_FINALIZE_EVENTS:\n\n<ul>\n    <li>mousedown</li>\n    <li>mouseup</li>\n    <li>mousemove</li>\n    <li>panmove</li>\n    <li>panstart</li>\n    <li>panleft</li>\n    <li>panright</li>\n    <li>panup</li>\n    <li>pandown</li>\n    <li>pinchmove</li>\n    <li>rotatemove</li>\n    <li>focus</li>\n    <li>manualfocus</li>\n    <li>keydown</li>\n    <li>keyup</li>\n    <li>keypress</li>\n    <li>blur</li>\n    <li>resize</li>\n    <li>scroll</li>\n</ul>\n\nEvents that are not in this list don't need to be set: they always go through the finalizer immediatly.\n\nYou need to set this if the itag-definition its `sync`-method should be updated after one of the events in the list.",
             "itemtype": "method",
             "name": "setItagDirectEventResponse",
@@ -15827,13 +15866,35 @@
                 }
             ],
             "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
+            "class": "HTMLElement",
+            "module": "node-plugin"
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 598,
+            "line": 599,
+            "description": "Defines the `key`-property on element.model, but only when is hasn't been defined before.",
+            "itemtype": "method",
+            "name": "defineWhenUndefined",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "plugin.model's property",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "its value to be set",
+                    "type": "Any"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "HTMLElement",
+            "module": "node-plugin"
+        },
+        {
+            "file": "src/node-plugin/node-plugin.js",
+            "line": 741,
             "description": "Creates a new Element-PluginClass.",
             "itemtype": "method",
             "name": "definePlugin",
@@ -15861,13 +15922,12 @@
                 "type": "PluginClass"
             },
             "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
+            "class": "HTMLElement",
+            "module": "node-plugin"
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 628,
+            "line": 771,
             "description": "Returns the PluginClass that belongs with the specified `plugin`-name.",
             "itemtype": "method",
             "name": "getPluginClass",
@@ -15883,13 +15943,12 @@
                 "type": "PluginClass|indefined"
             },
             "since": "0.0.1",
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
+            "class": "HTMLElement",
+            "module": "node-plugin"
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 642,
+            "line": 785,
             "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
             "example": [
                 "\n\n var Circle = Shape.subClass(\n     function (x, y, r) {\n         // arguments will automaticly be passed through to Shape's constructor\n         this.r = r;\n     },\n     {\n         area: function () {\n             return this.r * this.r * Math.PI;\n         }\n     }\n );"
@@ -15926,9 +15985,8 @@
                 "description": "undefined when no valid namespace is given",
                 "type": "Plugin|undefined"
             },
-            "class": "Plugins",
-            "module": "vdom",
-            "submodule": "element-plugin"
+            "class": "HTMLElement",
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15938,35 +15996,35 @@
             "contributor": "David Ellis <d.f.ellis@ieee.org>",
             "license": "MIT",
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 22,
             "description": "Private variables",
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 89,
             "description": "Constants",
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 99,
             "description": "Public vars",
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 115,
             "description": "Private methods",
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15982,7 +16040,7 @@
                 "description": "boolean False if not allowed, otherwise true"
             },
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -15998,14 +16056,14 @@
                 "description": "boolean False if not allowed, otherwise true"
             },
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 143,
             "description": "Public methods",
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -16034,7 +16092,7 @@
                 }
             ],
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -16047,7 +16105,7 @@
                 }
             ],
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -16064,7 +16122,7 @@
                 }
             ],
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -16080,7 +16138,7 @@
                 "description": "string Text of the header or null if it doesn't exist."
             },
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -16090,7 +16148,7 @@
                 "description": "string A string with all response headers separated by CR+LF"
             },
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -16106,7 +16164,7 @@
                 "description": "string Returns the request header or empty string if not set"
             },
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -16119,42 +16177,42 @@
                 }
             ],
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 515,
             "description": "Called when an error is encountered to deal with it.",
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 526,
             "description": "Aborts a request.",
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 548,
             "description": "Adds an event listener. Preferred method of binding to events.",
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 559,
             "description": "Remove an event callback that has already been bound.\nOnly works on the matching funciton, cannot be a copy.",
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
             "line": 572,
             "description": "Dispatch any events, including both \"on\" methods and events attached using addEventListener.",
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/node-win/lib/XMLHttpRequest.js",
@@ -16167,7 +16225,7 @@
                 }
             ],
             "class": "window",
-            "module": "vdom"
+            "module": "node-plugin"
         },
         {
             "file": "src/polyfill/lib/mutationobserver.js",
@@ -16181,7 +16239,7 @@
                 }
             ],
             "class": "FocusManager",
-            "module": "focusmanager"
+            "module": "panel"
         },
         {
             "file": "src/polyfill/lib/mutationobserver.js",
@@ -16200,7 +16258,7 @@
                 }
             ],
             "class": "FocusManager",
-            "module": "focusmanager"
+            "module": "panel"
         },
         {
             "file": "src/polyfill/lib/mutationobserver.js",
@@ -16215,7 +16273,7 @@
             ],
             "is_constructor": 1,
             "class": "FocusManager",
-            "module": "focusmanager"
+            "module": "panel"
         },
         {
             "file": "src/polyfill/lib/mutationobserver.js",
@@ -16234,7 +16292,7 @@
             ],
             "is_constructor": 1,
             "class": "FocusManager",
-            "module": "focusmanager"
+            "module": "panel"
         },
         {
             "file": "src/polyfill/lib/mutationobserver.js",
@@ -16252,7 +16310,7 @@
                 "type": "MutationRecord"
             },
             "class": "FocusManager",
-            "module": "focusmanager"
+            "module": "panel"
         },
         {
             "file": "src/polyfill/lib/mutationobserver.js",
@@ -16270,7 +16328,7 @@
                 "type": "MutationRecord"
             },
             "class": "FocusManager",
-            "module": "focusmanager"
+            "module": "panel"
         },
         {
             "file": "src/polyfill/lib/mutationobserver.js",
@@ -16287,7 +16345,7 @@
                 "type": "Boolean"
             },
             "class": "FocusManager",
-            "module": "focusmanager"
+            "module": "panel"
         },
         {
             "file": "src/polyfill/lib/mutationobserver.js",
@@ -16311,7 +16369,7 @@
                 }
             ],
             "class": "FocusManager",
-            "module": "focusmanager"
+            "module": "panel"
         },
         {
             "file": "src/polyfill/lib/mutationobserver.js",
@@ -16336,7 +16394,7 @@
             ],
             "is_constructor": 1,
             "class": "FocusManager",
-            "module": "focusmanager"
+            "module": "panel"
         },
         {
             "file": "src/polyfill/lib/mutationobserver.js",
@@ -16350,35 +16408,35 @@
                 }
             ],
             "class": "FocusManager",
-            "module": "focusmanager"
+            "module": "panel"
         },
         {
             "file": "src/polyfill/lib/weakmap.js",
             "line": 9,
             "description": "Utility function takes `object` and `namespace` and overrides `valueOf`\nmethod of `object`, so that when called with a `namespace` argument,\n`private` object associated with this `namespace` is returned. If argument\nis different, `valueOf` falls back to original `valueOf` property.",
             "class": "FocusManager",
-            "module": "focusmanager"
+            "module": "panel"
         },
         {
             "file": "src/polyfill/lib/weakmap.js",
             "line": 33,
             "description": "Desugared implementation of private names proposal. API is different as\nit's not possible to implement API proposed for harmony with in ES5. In\nterms of provided functionality it supposed to be same.\nhttp://wiki.ecmascript.org/doku.php?id=strawman:private_names",
             "class": "FocusManager",
-            "module": "focusmanager"
+            "module": "panel"
         },
         {
             "file": "src/polyfill/lib/weakmap.js",
             "line": 48,
             "description": "Utility function to guard WeakMap methods from keys that are not\na non-null objects.",
             "class": "FocusManager",
-            "module": "focusmanager"
+            "module": "panel"
         },
         {
             "file": "src/polyfill/lib/weakmap.js",
             "line": 60,
             "description": "Implementation of harmony `WeakMaps`, in ES5. This implementation will\nwork only with keys that have configurable `valueOf` property (which is\na default for all non-frozen objects).\nhttp://wiki.ecmascript.org/doku.php?id=harmony:weak_maps",
             "class": "FocusManager",
-            "module": "focusmanager"
+            "module": "panel"
         },
         {
             "file": "src/utils/lib/idgenerator.js",

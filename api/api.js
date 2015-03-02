@@ -12,12 +12,14 @@ YUI.add("yuidoc-meta", function(Y) {
         "Event.Listener",
         "FocusManager",
         "Function",
+        "HTMLElement",
         "IO",
         "ITSA",
         "NS-vdom",
         "Node",
+        "NodePlugin",
         "Object",
-        "Plugins",
+        "Panel",
         "Promise",
         "String",
         "USERAGENT",
@@ -31,7 +33,6 @@ YUI.add("yuidoc-meta", function(Y) {
         "drag",
         "drag-drop",
         "element-array",
-        "element-plugin",
         "event",
         "event-blurnode",
         "event-dom",
@@ -60,7 +61,9 @@ YUI.add("yuidoc-meta", function(Y) {
         "lib/promise.s",
         "lib/string.js",
         "node-parser",
+        "node-plugin",
         "node-win",
+        "panel",
         "useragent",
         "utils",
         "vdom",
@@ -87,11 +90,6 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "element-array",
             "name": "element-array",
             "description": "Extends Array into an array with special utility-methods that can be applied upon its members.\nThe membres should be vElement's\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        {
-            "displayName": "element-plugin",
-            "name": "element-plugin",
-            "description": "Integrates DOM-events to event. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "event",
@@ -233,9 +231,19 @@ YUI.add("yuidoc-meta", function(Y) {
             "description": "Exports `domNodeToVNode` which transforms dom-nodes into vnodes.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i><br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
+            "displayName": "node-plugin",
+            "name": "node-plugin",
+            "description": "Basic NodePlugin Class for plugin's on HTMLElements.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
             "displayName": "node-win",
             "name": "node-win",
             "description": "Emulation of browser `window` and `dom`. Just enough to make ITSA work.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "panel",
+            "name": "panel",
+            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "useragent",

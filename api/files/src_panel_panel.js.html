@@ -65,17 +65,21 @@
             
                 <li><a href="../classes/Function.html">Function</a></li>
             
+                <li><a href="../classes/HTMLElement.html">HTMLElement</a></li>
+            
                 <li><a href="../classes/IO.html">IO</a></li>
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
                 <li><a href="../classes/Node.html">Node</a></li>
             
+                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
                 <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
             
-                <li><a href="../classes/Plugins.html">Plugins</a></li>
+                <li><a href="../classes/Panel.html">Panel</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -100,8 +104,6 @@
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
             
                 <li><a href="../modules/element-array.html">element-array</a></li>
-            
-                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -159,7 +161,11 @@
             
                 <li><a href="../modules/node-parser.html">node-parser</a></li>
             
+                <li><a href="../modules/node-plugin.html">node-plugin</a></li>
+            
                 <li><a href="../modules/node-win.html">node-win</a></li>
+            
+                <li><a href="../modules/panel.html">panel</a></li>
             
                 <li><a href="../modules/useragent.html">useragent</a></li>
             
@@ -211,28 +217,30 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 &quot;use strict&quot;;
-
-require(&#x27;js-ext/lib/object.js&#x27;);
-require(&#x27;polyfill&#x27;);
-require(&#x27;./css/panel.css&#x27;);
-
 /**
- *
+ * Creating floating Panel-nodes which can be shown and hidden.
  *
  *
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
- * @module focusmanager
- * @class FocusManager
+ *
+ * @module panel
+ * @class Panel
  * @since 0.0.1
 */
 
+require(&#x27;js-ext/lib/object.js&#x27;);
+require(&#x27;js-ext/lib/string.js&#x27;);
+require(&#x27;polyfill&#x27;);
+require(&#x27;./css/panel.css&#x27;);
+
+
 var NAME = &#x27;[panel]: &#x27;,
-    SYNC_TIMER = 1000,
     PANEL_Z = 1000,
     MODAL_Z = 2000,
     PANEL_TOP = 999,
+    MAX_WIDTH_FULL_BUTTONS = 150,
     createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
 
 module.exports = function (window) {
@@ -257,22 +265,57 @@ module.exports = function (window) {
     DD = require(&#x27;drag&#x27;)(window);
     DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
 
+    /*
+     * Generates a modal-layer.
+     *
+     * @method insertModalLayer
+     * @protected
+     * @since 0.0.1
+     */
     insertModalLayer = function() {
        DOCUMENT.body.addSystemElement(&#x27;&lt;div class=&quot;itsa-modal-layer itsa-no-display&quot;&gt;&lt;/div&gt;&#x27;, null, true);
     };
 
     insertModalLayer();
 
+    /*
+     * Sets up all events needed for Panel&#x27;s to work well.
+     *
+     * @method setupEvents
+     * @protected
+     * @since 0.0.1
+     */
     setupEvents = function() {
+        Event.defineEvent(&#x27;panel:buttonhide&#x27;).defaultFn(function(e) {
+            var model = e.model;
+            model.visible = false;
+            (typeof model.callback===&#x27;function&#x27;) &amp;&amp; model.callback(e.button);
+        });
+        Event.before(&#x27;panel:buttonhide&#x27;, function(e) {
+            var model = e.model;
+            if (typeof model.validate===&#x27;function&#x27;) {
+                model.validate(e) || e.preventDefault();
+            }
+        });
         Event.after(&#x27;tap&#x27;, function(e) {
             var buttonNode = e.target,
-                panel = buttonNode.inside(&#x27;[plugin-panel=&quot;true&quot;]&#x27;);
-            panel._plugin.panel.model.visible = false;
+                panelNode = buttonNode.inside(&#x27;[plugin-panel=&quot;true&quot;]&#x27;),
+                plugin = panelNode._plugin.panel,
+                model = plugin.model;
+            Event.emit(panelNode, &#x27;panel:buttonhide&#x27;, {button: buttonNode, plugin: plugin, model: model});
         }, &#x27;[plugin-panel=&quot;true&quot;] &gt;div[is=&quot;header&quot;] button, [plugin-panel=&quot;true&quot;] &gt;div[is=&quot;footer&quot;] button, [plugin-panel=&quot;true&quot;] &gt;button&#x27;);
     };
 
     setupEvents();
 
+    /*
+     * An object with several method to control stacked panels.
+     *
+     * @property stackManager
+     * @type Object
+     * @protected
+     * @since 0.0.1
+     */
     stackManager = DOCUMENT.stackManager = {
         elements: new LightMap(),
         isOnTop: function(host) {
@@ -300,12 +343,21 @@ module.exports = function (window) {
         }
     };
 
+    /*
+     * Creates a new Panel-node which is prepended to body.
+     *
+     * @for document
+     * @method createPanel
+     * @param data {Object} the panel plugin&#x27;s &#x60;model&#x60;-object
+     * @param [systemNode] {boolean} whether the created node should be a systemnode
+     * @return {HTMLElement} the created panelNode
+     * @since 0.0.1
+     */
     DOCUMENT.createPanel = function(data, systemNode) {
         var panel;
         if (!Object.isObject(data)) {
-            data = {
-                content: data
-            };
+            console.warn(&#x27;document.createPanel should be invoked with an object as first argument.&#x27;);
+            return;
         }
         if (systemNode) {
             panel = DOCUMENT.body.addSystemElement(&#x27;&lt;div&gt;&lt;/div&gt;&#x27;);
@@ -314,15 +366,68 @@ module.exports = function (window) {
             panel = DOCUMENT.body.prepend(&#x27;&lt;div&gt;&lt;/div&gt;&#x27;);
         }
         panel.plug(&#x27;panel&#x27;, null, data);
-        // does NOT return the node, but &#x60;model&#x60; so it can be controled!
-        return data;
+        return panel;
     };
 
-    window._ITSAmodules.Panel = Panel = DOCUMENT.definePlugin(&#x27;panel&#x27;, null, {
+    window._ITSAmodules.Panel = Panel = DOCUMENT.definePlugin(&#x27;panel&#x27;, function() {
+        var instance = this,
+            model = instance.model,
+            host = instance.host,
+            footer = model.footer,
+            allDivs, serverHeader, serverContent, serverFooter;
+
+        instance._previousVisible = model.visible;
+        if (host.getAttr(&#x27;panel-rendered&#x27;)===&#x27;true&#x27;) {
+            // serverside rendered --&gt; we might need to catch header, content and footer
+            // for they aren&#x27;t set in the attributes
+            allDivs = host.getAll(&#x27;&gt;div&#x27;);
+            serverHeader = allDivs[0] &amp;&amp; allDivs[0].getHTML();
+            serverContent = allDivs[1] &amp;&amp; allDivs[1].getHTML();
+            serverFooter = allDivs[2] &amp;&amp; allDivs[2].getHTML();
+            serverHeader &amp;&amp; instance.defineWhenUndefined(&#x27;header&#x27;, serverHeader);
+            serverContent &amp;&amp; instance.defineWhenUndefined(&#x27;content&#x27;, serverContent);
+            if (serverFooter) {
+                instance.defineWhenUndefined(&#x27;footer&#x27;, serverFooter);
+                // need to redefine &#x60;footer&#x60;
+                footer = model.footer;
+            }
+        }
+        if (!footer || !footer.contains(&#x27;button&#x27;)) {
+            model.headerCloseBtn = true;
+        }
+        instance._resizeHandler = Event.after(&#x27;UI:resize&#x27;, function() {
+            var isMobileWidth = (window.getWidth()&lt;=480);
+            model.center &amp;&amp; instance.centerPanel();
+            host[((model.draggable &amp;&amp; !isMobileWidth) ? &#x27;&#x27; : &#x27;un&#x27;)+&#x27;plug&#x27;](&#x27;dd&#x27;);
+            instance.setPanelWidth(isMobileWidth);
+        });
+    }, {
+        /*
+         * All panel&#x27;s attributes: these attributes will be read during initalization and updated during &#x60;sync&#x60;
+         * In the dom, the attributenames are prepended with &#x60;pluginName-&#x60;. The property-values should be the property-types
+         * that belong to the property, this way the attributes get right casted into model.
+         *
+         * @property attrs
+         * @default {
+         *    visible: &#x27;boolean&#x27;,
+         *    onTopWhenShowed: &#x27;boolean&#x27;,
+         *    headerCloseBtn: &#x27;boolean&#x27;,
+         *    stack: &#x27;number&#x27;,
+         *    left: &#x27;number&#x27;,
+         *    top: &#x27;number&#x27;,
+         *    center: &#x27;boolean&#x27;,
+         *    minWidth: &#x27;number&#x27;,
+         *    maxWidth: &#x27;number&#x27;,
+         *    minHeight: &#x27;number&#x27;,
+         *    maxHeight: &#x27;number&#x27;,
+         *    modal: &#x27;boolean&#x27;,
+         *    draggable: &#x27;boolean&#x27;,
+         *    focusmanaged: &#x27;boolean&#x27;
+         * }
+         * @type Object
+         * @since 0.0.1
+        */
         attrs: {
-            header: &#x27;string&#x27;,
-            content: &#x27;string&#x27;,
-            footer: &#x27;string&#x27;,
             visible: &#x27;boolean&#x27;,
             onTopWhenShowed: &#x27;boolean&#x27;,
             headerCloseBtn: &#x27;boolean&#x27;,
@@ -330,10 +435,30 @@ module.exports = function (window) {
             left: &#x27;number&#x27;,
             top: &#x27;number&#x27;,
             center: &#x27;boolean&#x27;,
+            minWidth: &#x27;number&#x27;,
+            maxWidth: &#x27;number&#x27;,
+            minHeight: &#x27;number&#x27;,
+            maxHeight: &#x27;number&#x27;,
             modal: &#x27;boolean&#x27;,
             draggable: &#x27;boolean&#x27;,
             focusmanaged: &#x27;boolean&#x27;
         },
+        /*
+         * Any default values for attributes specified by &#x60;attrs&#x60;.
+         *
+         * @property defaults
+         * @default {
+         *    visible: false,
+         *    onTopWhenShowed: true,
+         *    stack: 1,
+         *    center: true,
+         *    modal: true,
+         *    focusmanaged: true,
+         *    headerCloseBtn: false
+         * }
+         * @type Object
+         * @since 0.0.1
+        */
         defaults: {
             visible: false,
             onTopWhenShowed: true,
@@ -343,6 +468,13 @@ module.exports = function (window) {
             focusmanaged: true,
             headerCloseBtn: false
         },
+        /*
+         * Renders the plugin. This method is invoked only once: at the end of initialization.
+         * It should be used to render any nodes inside the host. Not all plugins need this.
+         *
+         * @method render
+         * @since 0.0.1
+         */
         render: function() {
             var instance = this,
                 host = instance.host,
@@ -351,9 +483,16 @@ module.exports = function (window) {
             newContent = &#x27;&lt;div is=&quot;header&quot;&gt;&lt;/div&gt;&#x27;+
                          &#x27;&lt;div is=&quot;content&quot;&gt;&lt;/div&gt;&#x27;+
                          &#x27;&lt;div is=&quot;footer&quot;&gt;&lt;/div&gt;&#x27; +
-                         &#x27;&lt;button class=&quot;panel-close&quot;&gt;x&lt;/button&gt;&#x27;;
+                         &#x27;&lt;button class=&quot;panel-close pure-button&quot;&gt;x&lt;/button&gt;&#x27;;
             host.setHTML(newContent);
         },
+        /*
+         * Syncs plugin.model&#x27;s data with the host. Not its attributes: they will be synced automaticly.
+         * Is invoked after every change of plugin.model&#x27;s data.
+         *
+         * @method sync
+         * @since 0.0.1
+         */
         sync: function() {
             var instance = this,
                 host = instance.host,
@@ -366,6 +505,7 @@ module.exports = function (window) {
                 headerNode = divs[0],
                 contentNode = divs[1],
                 footerNode = divs[2],
+                isMobileWidth = (window.getWidth()&lt;=480),
                 buttonCloseNode = host.getElement(&#x27;&gt;button&#x27;),
                 zIndex, isOnTop;
             (header===&#x27;undefined&#x27;) &amp;&amp; (header=undefined);
@@ -373,13 +513,14 @@ module.exports = function (window) {
             if (model.headerCloseBtn &amp;&amp; !header) {
                 header = &#x27;&#x27;;
             }
-            header &amp;&amp; headerNode.setHTML(header || &#x27;&#x27;);
+            (header!==undefined) &amp;&amp; headerNode.setHTML(header || &#x27;&#x27;);
             buttonCloseNode.toggleClass(&#x27;itsa-no-display&#x27;, !model.headerCloseBtn);
-            headerNode.toggleClass(&#x27;itsa-hidden&#x27;, !header);
+
+            headerNode.toggleClass(&#x27;itsa-hidden&#x27;, (header===undefined));
             contentNode.setHTML(content || &#x27;&#x27;);
             contentNode.plug(&#x27;scroll&#x27;);
-            footer &amp;&amp; footerNode.setHTML(footer || &#x27;&#x27;);
-            footerNode.toggleClass(&#x27;itsa-hidden&#x27;, !footer);
+            (footer!==undefined) &amp;&amp; footerNode.setHTML(footer || &#x27;&#x27;);
+            footerNode.toggleClass(&#x27;itsa-hidden&#x27;, (footer===undefined));
 
             zIndex = (model.modal ? MODAL_Z : PANEL_Z);
 
@@ -399,13 +540,13 @@ module.exports = function (window) {
 
             host.setInlineStyle(&#x27;z-index&#x27;, zIndex);
 
+            model.minWidth &amp;&amp; host.setInlineStyle(&#x27;minWidth&#x27;, model.minWidth);
+            model.minHeight &amp;&amp; host.setInlineStyle(&#x27;minHeight&#x27;, model.minHeight);
+            model.maxHeight &amp;&amp; host.setInlineStyle(&#x27;maxHeight&#x27;, model.maxHeight);
+            instance.setPanelWidth(isMobileWidth);
+
             if (model.center &amp;&amp; (!instance._prevCenter || !model.draggable)) {
-                model.left = Math.round((window.getWidth()-host.width)/2);
-                model.top = Math.round((window.getHeight()-host.height)/2);
-                host.setInlineStyles([
-                    {property: &#x27;left&#x27;, value: model.left+&#x27;px&#x27;},
-                    {property: &#x27;top&#x27;, value: model.top+&#x27;px&#x27;}
-                ]);
+                instance.centerPanel();
             }
             else if (!model.center &amp;&amp; !host.hasClass(&#x27;dd-dragging&#x27;)) {
                 host.setInlineStyles([
@@ -416,31 +557,98 @@ module.exports = function (window) {
             // prevent re-centering: that would be unhandy when the panel is draggable:
             instance._prevCenter = model.center;
             // we can plug/unplug multiple times --&gt; node-plugin won&#x27;t do anything when there are no changes
-            host[(model.draggable ? &#x27;&#x27; : &#x27;un&#x27;)+&#x27;plug&#x27;](&#x27;dd&#x27;);
+            host[((model.draggable &amp;&amp; !isMobileWidth) ? &#x27;&#x27; : &#x27;un&#x27;)+&#x27;plug&#x27;](&#x27;dd&#x27;);
             host[(model.focusmanaged ? &#x27;&#x27; : &#x27;un&#x27;)+&#x27;plug&#x27;](&#x27;fm&#x27;);
             host.toggleClass(&#x27;itsa-full-draggable&#x27;, model.draggable &amp;&amp; !header);
             if (model.draggable &amp;&amp; header) {
-                 host.hasAttr(&#x27;dd-handle&#x27;) || host.setAttr(&#x27;dd-handle&#x27;, &#x27;div[is=&quot;header&quot;]&#x27;);
+                 host.hasAttr(&#x27;dd-handle&#x27;) || host.setAttr(&#x27;dd-handle&#x27;, &#x27;&gt;div:first-child&#x27;);
             }
             else {
                  host.hasAttr(&#x27;dd-handle&#x27;) &amp;&amp; host.removeAttr(&#x27;dd-handle&#x27;);
             }
 
             host.toggleClass(&#x27;itsa-hidden&#x27;, !model.visible);
+            // if there is a change of model.visible, the fire an event:
+            if (instance._previousVisible!==model.visible) {
+                Event.emit(host, &#x27;panel:&#x27;+ (model.visible ? &#x27;shown&#x27; : &#x27;hidden&#x27;), {plugin: instance, model: model});
+                instance._previousVisible = model.visible;
+            }
             if (isOnTop &amp;&amp; model.modal &amp;&amp; !host.hasClass(&#x27;focussed&#x27;)) {
                 host.focus();
             }
         },
+        /*
+         * Centeres the panel on the screen.
+         *
+         * @method centerPanel
+         * @since 0.0.1
+         */
+        centerPanel: function() {
+            var instance = this,
+                host = instance.host,
+                model = instance.model;
+            model.left = Math.round((window.getWidth()-host.width)/2);
+            model.top = Math.round((window.getHeight()-host.height)/2);
+            host.setInlineStyles([
+                {property: &#x27;left&#x27;, value: model.left+&#x27;px&#x27;},
+                {property: &#x27;top&#x27;, value: model.top+&#x27;px&#x27;}
+            ]);
+        },
+        /*
+         * Sets the style &#x60;maxWidth&#x60; and the attribute &#x60;expand-buttons&#x60;. These need to be set after width-changes of either the panel or the screen.
+         *
+         * @method setPanelWidth
+         * @param isMobileWidth {Boolean} whether the current screen-width is &#x60;mobile-width&#x60;
+         * @since 0.0.1
+         */
+        setPanelWidth: function(isMobileWidth) {
+            var instance = this,
+                host = instance.host,
+                model = instance.model;
+            if (isMobileWidth) {
+                host.hasInlineStyle(&#x27;maxWidth&#x27;) &amp;&amp; host.removeInlineStyle(&#x27;maxWidth&#x27;);
+                host.setAttr(&#x27;expand-buttons&#x27;, &#x27;true&#x27;);
+            }
+            else {
+                if (model.maxWidth) {
+                    host.setInlineStyle(&#x27;maxWidth&#x27;, model.maxWidth);
+                    if (host.width&gt;MAX_WIDTH_FULL_BUTTONS) {
+                        host.removeAttr(&#x27;expand-buttons&#x27;);
+                    }
+                    else {
+                        host.setAttr(&#x27;expand-buttons&#x27;, &#x27;true&#x27;);
+                    }
+                }
+                else {
+                     host.removeAttr(&#x27;expand-buttons&#x27;);
+                }
+            }
+        },
+        /*
+         * Maes this panel as the &#x60;top&#x60;-panel of the stack.
+         *
+         * @method showOnTop
+         * @since 0.0.1
+         */
         showOnTop: function() {
             stackManager.setOnTop(this.host);
         },
+        /*
+         * Cleansup the plugin. Is invoked whenever a plugin gets unplugged or its host gets removed from the dom.
+         *
+         * @method destroy
+         * @since 0.0.1
+         */
         destroy: function() {
-            var host = this.host;
+            var instance = this,
+                host = instance.host;
+            instance._resizeHandler.detach();
             host.removeInlineStyle(&#x27;z-index&#x27;);
             host.unplug(&#x27;dd&#x27;);
             host.unplug(&#x27;fm&#x27;);
             host.removeClass([&#x27;itsa-hidden&#x27;, &#x27;itsa-full-draggable&#x27;]);
             stackManager.unRegisterModal(host);
+            host.empty();
         }
     });
 
