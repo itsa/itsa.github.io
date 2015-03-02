@@ -2,7 +2,7 @@
 module: node-plugin
 maintainer: Marco Asbreuk
 title: Changing properties
-intro: "An element can be made draggable by using <b>node.plugin(ITSA.Plugins.nodeDD)</b>. The plugin does nothing more than add the right attribute to the draggable Element, and it just works.</b>"
+intro: "Plugin-properties can be changed by using plugin.model. This example shows how the property <b>selector</b> can be changed."
 ---
 
 
@@ -26,7 +26,7 @@ intro: "An element can be made draggable by using <b>node.plugin(ITSA.Plugins.no
     }
 </style>
 
-Drag the 2 rectangles: they will be constrained to their container. The first is constrained using html, the second is set up using javascript.
+Click on the button to change the draggable's constrain.
 
 <button id="switch" class="pure-button">Switch constrain</button>
 <div class="base-container">
@@ -37,9 +37,9 @@ Drag the 2 rectangles: they will be constrained to their container. The first is
 
 ```html
 <body>
+    <button id="switch" class="pure-button">Switch constrain</button>
     <div class="base-container">
-        <div class="container" dd-draggable="true" constrain-selector=".base-container"></div>
-        <div id="without" class="container" dd-draggable="true"></div>
+        <div id="dragnode" class="container" plugin-dd="true" plugin-constrain="true" constrain-selector=".base-container"></div>
     </div>
 </body>
 ```
@@ -47,13 +47,22 @@ Drag the 2 rectangles: they will be constrained to their container. The first is
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
+    var ITSA = require('itsa'),
+        dragnode = document.getElement('#dragnode'),
+        constrained = true;
 
-    document.getElement('#without').plug(ITSA.Plugins.Constrain, {selector: '.base-container'});
+    ITSA.Event.after('tap', function() {
+        constrained = !constrained;
+        dragnode.getPlugin('constrain').then(
+            function(plugin) {
+                plugin.model.selector = constrained ? '.base-container' : 'window';
+            }
+        );
+    }, '#switch');
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa'),
         dragnode = document.getElement('#dragnode'),
@@ -61,7 +70,11 @@ Drag the 2 rectangles: they will be constrained to their container. The first is
 
     ITSA.Event.after('tap', function() {
         constrained = !constrained;
-        dragnode.plugin.constrain.model.selector = constrained ? '.base-container' : 'window';
+        dragnode.getPlugin('constrain').then(
+            function(plugin) {
+                plugin.model.selector = constrained ? '.base-container' : 'window';
+            }
+        );
     }, '#switch');
 
 </script>

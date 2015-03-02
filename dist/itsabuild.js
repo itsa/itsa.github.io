@@ -2636,7 +2636,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":77}],6:[function(require,module,exports){
+},{"_process":80}],6:[function(require,module,exports){
 "use strict";
 module.exports = function (window) {
     require('node-plugin')(window);
@@ -2664,7 +2664,7 @@ module.exports = function (window) {
 
     return PluginConstrain;
 };
-},{"js-ext/extra/hashmap.js":36,"node-plugin":47}],7:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"node-plugin":48}],7:[function(require,module,exports){
 var css = "*:focus {\n    outline: 0;\n}\n\na[target=\"_blank\"]:focus {\n    outline: 1px solid #129fea;\n}\n\n/* because we think the padding and margin should always be part of the size,\n   we define \"box-sizing: border-box\" for all elements */\n\n* {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],8:[function(require,module,exports){
 var css = ".pure-menu.pure-menu-open {\n    z-index: 3; /* prevent graph from crossing the menuarea */\n}\n\n.pure-button.pure-button-bordered,\n.pure-button.pure-button-bordered[disabled] {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;\n}\n\n.pure-button-active,\n.pure-button:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button.pure-button-bordered.pure-button-active[disabled],\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered[disabled]:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.4) inset, 0 0 6px rgba(0,0,0, 0.2) inset;\n}\n\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.6) inset;\n}\n\n/* restore pure-button:active */\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button:active:focus,\n.pure-button.pure-button-active:focus {\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6) inset, 0 0 10px rgba(0, 0, 0, 0.2) inset;\n}\n\n.pure-button.pure-button-rounded {\n    border-radius: 0.3em;\n}\n\n.pure-button.pure-button-heavyrounded {\n    border-radius: 0.5em;\n}\n\n.pure-button.pure-button-oval {\n    border-radius: 50%;\n}\n\n.pure-button.pure-button-halfoval {\n    border-radius: 25%;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -2675,7 +2675,7 @@ require('./css/default.css');
 require('./css/purecss-0.5.0.css');
 require('./css/pure-finetuned.css');
 },{"./css/default.css":7,"./css/pure-finetuned.css":8,"./css/purecss-0.5.0.css":9}],11:[function(require,module,exports){
-var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 999 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+var css = "[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],12:[function(require,module,exports){
 "use strict";
 
@@ -3770,8 +3770,8 @@ module.exports = function (window) {
     return DragModule;
 
 };
-},{"./css/drag-drop.css":11,"drag":14,"event-dom":15,"js-ext":39,"js-ext/extra/hashmap.js":36,"node-plugin":47,"polyfill/polyfill-base.js":57,"useragent":61,"vdom":74,"window-ext":75}],13:[function(require,module,exports){
-module.exports=require(11)
+},{"./css/drag-drop.css":11,"drag":14,"event-dom":15,"js-ext":40,"js-ext/extra/hashmap.js":37,"node-plugin":48,"polyfill/polyfill-base.js":60,"useragent":64,"vdom":77,"window-ext":78}],13:[function(require,module,exports){
+var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -ms-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 3001 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],14:[function(require,module,exports){
 "use strict";
 
@@ -4431,7 +4431,7 @@ module.exports = function (window) {
 
     return DD;
 };
-},{"./css/drag.css":13,"event-dom":15,"js-ext":39,"js-ext/extra/hashmap.js":36,"node-plugin":47,"polyfill":57,"useragent":61,"vdom":74,"window-ext":75}],15:[function(require,module,exports){
+},{"./css/drag.css":13,"event-dom":15,"js-ext":40,"js-ext/extra/hashmap.js":37,"node-plugin":48,"polyfill":60,"useragent":64,"vdom":77,"window-ext":78}],15:[function(require,module,exports){
 "use strict";
 
 /**
@@ -4521,7 +4521,7 @@ module.exports = function (window) {
     /*
      * Transforms the selector to a valid function
      *
-     * @method _evCallback
+     * @method _selToFunc
      * @param customEvent {String} the customEvent that is transported to the eventsystem
      * @param subscriber {Object} subscriber
      * @param subscriber.o {Object} context
@@ -5191,7 +5191,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":28,"js-ext/extra/hashmap.js":36,"js-ext/lib/array.js":41,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill/polyfill-base.js":57,"utils":62,"vdom":74}],16:[function(require,module,exports){
+},{"event":28,"js-ext/extra/hashmap.js":37,"js-ext/lib/array.js":42,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"polyfill/polyfill-base.js":60,"utils":65,"vdom":77}],16:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5291,7 +5291,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":15,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],17:[function(require,module,exports){
+},{"../event-dom.js":15,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45}],17:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5392,7 +5392,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":15,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],18:[function(require,module,exports){
+},{"../event-dom.js":15,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45}],18:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5494,7 +5494,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":15,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],19:[function(require,module,exports){
+},{"../event-dom.js":15,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45}],19:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5781,7 +5781,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":15,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"utils":62,"vdom":74}],20:[function(require,module,exports){
+},{"../event-dom.js":15,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"utils":65,"vdom":77}],20:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8276,7 +8276,7 @@ module.exports = function (window) {
 
 };
 
-},{"utils":62}],22:[function(require,module,exports){
+},{"utils":65}],22:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -9655,7 +9655,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill/polyfill-base.js":57}],23:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill/polyfill-base.js":60}],23:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10044,7 +10044,7 @@ Classes.BaseClass.mergePrototypes(Event.Listener, true)
                  .mergePrototypes(ClassListener, true, {}, {});
 
 module.exports = Event;
-},{"./event-base.js":22,"js-ext/extra/classes.js":35,"js-ext/lib/object.js":44}],25:[function(require,module,exports){
+},{"./event-base.js":22,"js-ext/extra/classes.js":36,"js-ext/lib/object.js":45}],25:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10291,7 +10291,7 @@ module.exports = function (window) {
     module.exports = Event;
 
 };
-},{"../event-base.js":22,"./promise-finalize.js":26,"./timer-finalize.js":27,"io":34,"js-ext/lib/object.js":44,"utils":62}],26:[function(require,module,exports){
+},{"../event-base.js":22,"./promise-finalize.js":26,"./timer-finalize.js":27,"io":35,"js-ext/lib/object.js":45,"utils":65}],26:[function(require,module,exports){
 (function (global){
 (function (global) {
 
@@ -10352,7 +10352,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/promise.js":45}],27:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"js-ext/lib/promise.js":46}],27:[function(require,module,exports){
 (function (global){
 (function (global) {
 
@@ -10440,15 +10440,18 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../event-base.js":22,"js-ext/extra/hashmap.js":36}],28:[function(require,module,exports){
+},{"../event-base.js":22,"js-ext/extra/hashmap.js":37}],28:[function(require,module,exports){
 module.exports = require('./event-base.js');
 require('./event-emitter.js');
 require('./event-listener.js');
 },{"./event-base.js":22,"./event-emitter.js":23,"./event-listener.js":24}],29:[function(require,module,exports){
+var css = "[plugin-fm=\"true\"] {\n    /* NEVER can we select the text: when the focusmanager is active it will refocus on the active item */\n    -moz-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    cursor: default;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],30:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
 require('polyfill');
+require('./css/focusmanager.css');
 
 /**
  *
@@ -10560,10 +10563,32 @@ module.exports = function (window) {
             // in case sourceNode is an innernode of a selector, we need to start from the selector:
             sourceNode.matches(selector) || (sourceNode=sourceNode.inside(selector));
             if (downwards) {
-                nodeHit = sourceNode.next(selector, focusContainerNode) || (noloop ? sourceNode.last(selector, focusContainerNode) : sourceNode.first(selector, focusContainerNode));
+                nodeHit = sourceNode;
+/*jshint noempty:true */
+                while ((nodeHit=nodeHit.next(selector, focusContainerNode)) && (nodeHit.getStyle('display')==='none')) {}
+/*jshint noempty:false */
+                if (!nodeHit) {
+                    nodeHit = noloop ? sourceNode.last(selector, focusContainerNode) : sourceNode.first(selector, focusContainerNode);
+                    if (nodeHit.getStyle('display')==='none') {
+/*jshint noempty:true */
+                        while ((nodeHit=nodeHit[noloop ? 'previous' : 'next'](selector, focusContainerNode)) && (nodeHit.getStyle('display')==='none')) {}
+/*jshint noempty:false */
+                    }
+                }
             }
             else {
-                nodeHit = sourceNode.previous(selector, focusContainerNode) || (noloop ? sourceNode.first(selector, focusContainerNode) : sourceNode.last(selector, focusContainerNode));
+                nodeHit = sourceNode;
+/*jshint noempty:true */
+                while ((nodeHit=nodeHit.previous(selector, focusContainerNode)) && (nodeHit.getStyle('display')==='none')) {}
+/*jshint noempty:false */
+                if (!nodeHit) {
+                    nodeHit = noloop ? sourceNode.first(selector, focusContainerNode) : sourceNode.last(selector, focusContainerNode);
+                    if (nodeHit.getStyle('display')==='none') {
+/*jshint noempty:true */
+                        while ((nodeHit=nodeHit[noloop ? 'next' : 'previous'](selector, focusContainerNode)) && (nodeHit.getStyle('display')==='none')) {}
+/*jshint noempty:false */
+                    }
+                }
             }
             if (nodeHit===sourceNode) {
                 // cannot found another, return itself, BUT return `initialSourceNode` if it is available
@@ -10690,7 +10715,7 @@ module.exports = function (window) {
                 if (!focusNode) {
                     // check for keyenter, but only when e.target equals a focusmanager:
                     if (sourceNode.matches('[plugin-fm="true"]')) {
-                        actionkey = focusContainerNode._plugin.fm.model.keyenter;
+                        actionkey = sourceNode._plugin.fm.model.keyenter;
                         if (actionkey) {
                             keys = actionkey.split('+');
                             len = keys.length;
@@ -10939,7 +10964,7 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"event-mobile":20,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"node-plugin":47,"polyfill":57,"utils":62,"window-ext":75}],30:[function(require,module,exports){
+},{"./css/focusmanager.css":29,"event-mobile":20,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"node-plugin":48,"polyfill":60,"utils":65,"window-ext":78}],31:[function(require,module,exports){
 
 "use strict";
 
@@ -11067,7 +11092,7 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"../io.js":34,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"xmldom":2}],31:[function(require,module,exports){
+},{"../io.js":35,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"xmldom":2}],32:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -11194,7 +11219,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":34,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],32:[function(require,module,exports){
+},{"../io.js":35,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45}],33:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11664,7 +11689,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":34,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill/polyfill-base.js":57}],33:[function(require,module,exports){
+},{"../io.js":35,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"polyfill/polyfill-base.js":60}],34:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11816,7 +11841,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":34,"js-ext":39,"js-ext/extra/hashmap.js":36}],34:[function(require,module,exports){
+},{"../io.js":35,"js-ext":40,"js-ext/extra/hashmap.js":37}],35:[function(require,module,exports){
 (function (global){
 /**
  * Provides core IO-functionality.
@@ -12178,7 +12203,7 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":39,"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":57,"utils":62}],35:[function(require,module,exports){
+},{"js-ext":40,"js-ext/extra/hashmap.js":37,"polyfill/polyfill-base.js":60,"utils":65}],36:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -12791,7 +12816,7 @@ require('../lib/object.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/object.js":44,"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":57}],36:[function(require,module,exports){
+},{"../lib/object.js":45,"js-ext/extra/hashmap.js":37,"polyfill/polyfill-base.js":60}],37:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -12814,7 +12839,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -12926,7 +12951,7 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":41,"../lib/object.js":44,"./classes.js":35,"js-ext/extra/hashmap.js":36,"polyfill/lib/weakmap.js":55}],38:[function(require,module,exports){
+},{"../lib/array.js":42,"../lib/object.js":45,"./classes.js":36,"js-ext/extra/hashmap.js":37,"polyfill/lib/weakmap.js":58}],39:[function(require,module,exports){
 "use strict";
 
 var createHashMap = require('./hashmap.js').createMap;
@@ -12999,14 +13024,14 @@ module.exports = createHashMap({
     'with': true,
     'yield': true
 });
-},{"./hashmap.js":36}],39:[function(require,module,exports){
+},{"./hashmap.js":37}],40:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
 require('./lib/array.js');
 require('./lib/json.js');
 require('./lib/promise.js');
-},{"./lib/array.js":41,"./lib/function.js":42,"./lib/json.js":43,"./lib/object.js":44,"./lib/promise.js":45,"./lib/string.js":46}],40:[function(require,module,exports){
+},{"./lib/array.js":42,"./lib/function.js":43,"./lib/json.js":44,"./lib/object.js":45,"./lib/promise.js":46,"./lib/string.js":47}],41:[function(require,module,exports){
 "use strict";
 
 require('./lib/function.js');
@@ -13021,7 +13046,7 @@ module.exports = {
     Classes: require('./extra/classes.js'),
     LightMap: require('./extra/lightmap.js')
 };
-},{"./extra/classes.js":35,"./extra/hashmap.js":36,"./extra/lightmap.js":37,"./lib/array.js":41,"./lib/function.js":42,"./lib/json.js":43,"./lib/object.js":44,"./lib/promise.js":45,"./lib/string.js":46}],41:[function(require,module,exports){
+},{"./extra/classes.js":36,"./extra/hashmap.js":37,"./extra/lightmap.js":38,"./lib/array.js":42,"./lib/function.js":43,"./lib/json.js":44,"./lib/object.js":45,"./lib/promise.js":46,"./lib/string.js":47}],42:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -13172,7 +13197,7 @@ var cloneObj = function(obj) {
      };
 
 }(Array.prototype));
-},{"polyfill/polyfill-base.js":57}],42:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":60}],43:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -13231,7 +13256,7 @@ var NAME = '[Function]: ';
 
 }(Function.prototype));
 
-},{"polyfill/polyfill-base.js":57}],43:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":60}],44:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -13256,7 +13281,7 @@ var REVIVER = function(key, value) {
 JSON.parseWithDate = function(stringifiedObj) {
     return this.parse(stringifiedObj, REVIVER);
 };
-},{"polyfill/polyfill-base.js":57}],44:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":60}],45:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -13718,7 +13743,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":57}],45:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"polyfill/polyfill-base.js":60}],46:[function(require,module,exports){
 "use strict";
 
 /**
@@ -14023,7 +14048,7 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill":57}],46:[function(require,module,exports){
+},{"polyfill":60}],47:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -14305,21 +14330,19 @@ Promise.manage = function (callbackFn) {
 
 }(String.prototype));
 
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 "use strict";
 
 /**
- * Integrates DOM-events to event. more about DOM-events:
- * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+ * Basic NodePlugin Class for plugin's on HTMLElements.
  *
  *
  * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  *
- * @module vdom
- * @submodule element-plugin
- * @class Plugins
+ * @module node-plugin
+ * @class NodePlugin
  * @since 0.0.1
 */
 
@@ -14425,6 +14448,14 @@ module.exports = function (window) {
         scroll: true
     };
 
+    /*
+     * Inspects the DOM for Elements that have the plugin defined by their html and plugs the Plugin-Class.
+     *
+     * @method pluginDOM
+     * @param NewClass {Class} the class to be inspected
+     * @protected
+     * @since 0.0.1
+     */
     pluginDOM = function(NewClass) {
         // asynchroniously we check all current elements and render when needed:
         var ns = NewClass.prototype.$ns;
@@ -14439,11 +14470,19 @@ module.exports = function (window) {
         });
     };
 
+    /*
+     * Inspects the DOM for Elements that have the plugin defined and and initialized. Then it will resyncs the plugin.
+     *
+     * @method pluginDOMresync
+     * @param NewClass {Class} the class to be inspected
+     * @protected
+     * @since 0.0.1
+     */
     pluginDOMresync = function(NewClass) {
         // asynchroniously we check all current elements and render when needed:
         var ns = NewClass.prototype.$ns;
         asyncSilent(function() {
-            var elements = DOCUMENT.getAll('[plugin-'+ns+'="true"]', true),
+            var elements = DOCUMENT.getAll('[plugin-'+ns+'="true"]['+ns+'-ready="true"]', true),
                 len = elements.length,
                 element, i;
             for (i=0; i<len; i++) {
@@ -14453,6 +14492,15 @@ module.exports = function (window) {
         });
     };
 
+    /*
+     * Sets the config (first) and then the attribute-values into the plugin's model.
+     *
+     * @method attrsToModel
+     * @param plugin {Object} the plugin-instance
+     * @param config {Object} config
+     * @protected
+     * @since 0.0.1
+     */
     attrsToModel = function(plugin, config) {
         var host = plugin.host,
             attrs = plugin.attrs,
@@ -14499,6 +14547,14 @@ module.exports = function (window) {
         });
     };
 
+    /*
+     * Sets the plugin.model properties into the attributes. Only those properties that are specified by `attrs` are set.
+     *
+     * @method modelToAttrs
+     * @param plugin {Object} the plugin-instance
+     * @protected
+     * @since 0.0.1
+     */
     modelToAttrs = function(plugin) {
         console.log(NAME+'modelToAttrs');
         var attrs = plugin.attrs,
@@ -14514,6 +14570,15 @@ module.exports = function (window) {
         }
     };
 
+    /*
+     * Syncs the plugin: both sets the attributes as well invoking `sync`.
+     *
+     * @method syncPlugin
+     * @param plugin {Object} the plugin-instance
+     * @param compareWithPrevData {Boolean} whether to sync "no matter what" or only when pervious modeldata was changed.
+     * @protected
+     * @since 0.0.1
+     */
     syncPlugin = function(plugin, compareWithPrevData) {
         var stringifiedModel;
         if (compareWithPrevData) {
@@ -14539,6 +14604,15 @@ module.exports = function (window) {
         plugin.sync();
     };
 
+    /*
+     * In case `object.observe` is not present, will setup automaticly refresing the plugin on model-changes.
+     * Does not do anything when `object.observe` is present, because the object-observer takes care of this.
+     *
+     * @method autoRefreshPlugin
+     * @param plugin {Object} the plugin-instance
+     * @protected
+     * @since 0.0.1
+     */
     autoRefreshPlugin = function(plugin) {
         if (!NATIVE_OBJECT_OBSERVE) {
             plugin._EventFinalizer = Event.finalize(function(e) {
@@ -14569,6 +14643,7 @@ module.exports = function (window) {
        /**
         * Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.
         *
+        * @for HTMLElement
         * @method isPlugged
         * @param plugin {String} The name of the plugin that should be plugged. Needs to be the Class, not an instance!
         * @return {Boolean} whether the plugin is plugged in
@@ -14601,29 +14676,29 @@ module.exports = function (window) {
         * @param plugin {String} The name of the plugin that should be plugged.
         * @param [config] {Object} any config that should be passed through when the class is instantiated.
         * @param [model] {Object} model to used as `ns.model`
-        * @chainable
+        * @return {Object|undefined} the plugin's instance, or undefined in case of an unregistered plugin
         * @since 0.0.1
         */
         HTMLElementPrototype.plug = function(plugin, config, model) {
             var instance = this,
                 Plugin;
             if (typeof plugin==='string') {
-                Plugin = window._ITSAPlugins[plugin];
-                if (Plugin) {
-                    if (!instance.isPlugged(Plugin)) {
+                if (window._ITSAPlugins[plugin]) {
+                    if (!instance._plugin || !instance._plugin[plugin]) {
                         instance._plugin || Object.protectedProp(instance, '_plugin', {});
+                        Plugin = window._ITSAPlugins[plugin];
                         instance._plugin[plugin] = new Plugin(instance, config, model);
                     }
                     else {
                         console.info('ElementPlugin '+plugin+' already plugged in');
                         model && instance._plugin[plugin].bindModel(model);
                     }
+                    return instance._plugin[plugin];
                 }
                 else {
                     console.warn('Plugin '+plugin+' is not registered');
                 }
             }
-            return instance;
         };
 
        /**
@@ -14653,7 +14728,7 @@ module.exports = function (window) {
         */
         HTMLElementPrototype.unplug = function(plugin) {
             var instance = this;
-            if (instance.isPlugged(plugin)) {
+            if (instance._plugin && instance._plugin[plugin]) {
                 instance._plugin[plugin].destroy();
             }
             return instance;
@@ -14671,8 +14746,57 @@ module.exports = function (window) {
             modelToAttrs(instance);
         },
         {
+            /*
+             * Internal hash containing the events which have a delayed Event-finalize synchronisation
+             * on browsers that don't support object.observe.
+             * Members of this object can be removed by calling `setDirectEventResponse`
+             *
+             * @property _DELAYED_FINALIZE_EVENTS
+             * @default {
+             *    mousedown: true,
+             *    mouseup: true,
+             *    mousemove: true,
+             *    panmove: true,
+             *    panstart: true,
+             *    panleft: true,
+             *    panright: true,
+             *    panup: true,
+             *    pandown: true,
+             *    pinchmove: true,
+             *    rotatemove: true,
+             *    focus: true,
+             *    manualfocus: true,
+             *    keydown: true,
+             *    keyup: true,
+             *    keypress: true,
+             *    blur: true,
+             *    resize: true,
+             *    scroll: true
+             * }
+             * @type Object
+             * @private
+             * @since 0.0.1
+            */
             _DELAYED_FINALIZE_EVENTS: DEFAULT_DELAYED_FINALIZE_EVENTS.shallowClone(),
+            /*
+             * Definition of all attributes: these attributes will be read during initalization and updated during `sync`
+             * In the dom, the attributenames are prepended with `pluginName-`. The property-values should be the property-types
+             * that belong to the property, this way the attributes get right casted into model.
+             *
+             * @property attrs
+             * @default {}
+             * @type Object
+             * @since 0.0.1
+            */
             attrs: {},
+            /*
+             * Any default values for attributes specified by `attrs`.
+             *
+             * @property defaults
+             * @default {}
+             * @type Object
+             * @since 0.0.1
+            */
             defaults: {},
            /**
             * Binds a model to the plugin, making plugin.model equals the bound model.
@@ -14689,9 +14813,10 @@ module.exports = function (window) {
             bindModel: function(model, mergeCurrent) {
                 console.log(NAME+'bindModel');
                 var instance = this,
+                    host = instance.host,
                     observer;
                 if (Object.isObject(model) && (instance.model!==model)) {
-                    instance.host.removeAttr('bound-model');
+                    host.removeAttr('bound-model');
                     if (NATIVE_OBJECT_OBSERVE) {
                         observer = instance._observer;
                         observer && Object.unobserve(instance.model, observer);
@@ -14705,18 +14830,24 @@ module.exports = function (window) {
                         Object.observe(instance.model, observer);
                         instance._observer = observer;
                     }
-                    syncPlugin(instance);
+                    (host.getAttr(instance.$ns+'-ready')==='true') && syncPlugin(instance);
                 }
             },
+            /*
+             * Gets invoked after the complete initialization of all constructors in the chain.
+             * This method assures it will happen as last stage of the initialisation.
+             * This method also will invoke `render` (unless render was already done on the server)
+             *
+             * @method afterInit
+             * @since 0.0.1
+             */
             afterInit: function() {
                 var instance = this,
                     ns = instance.$ns,
                     host = instance.host;
-                if (host.getAttr(ns+'-ready')!=='true') {
-                    instance.render();
-                    host.setAttr(ns+'-ready', 'true', true);
-                }
+                (host.getAttr(ns+'-ready')==='true') || instance.render();
                 syncPlugin(instance);
+                host.setAttr(ns+'-ready', 'true', true);
                 autoRefreshPlugin(instance);
                 host._pluginReadyInfo || (host._pluginReadyInfo={});
                 host._pluginReadyInfo[ns] || (host._pluginReadyInfo[ns]=window.Promise.manage());
@@ -14777,12 +14908,48 @@ module.exports = function (window) {
                     });
                 }
             },
+            /*
+             * Renders the plugin. This method is invoked only once: at the end of initialization.
+             * It should be used to render any nodes inside the host. Not all plugins need this.
+             * Defaults to NOOP.
+             *
+             * @method render
+             * @since 0.0.1
+             */
             render: function() {
                 // defaults to NOOP
             },
+            /*
+             * Syncs plugin.model's data with the host. Not its attributes: they will be synced automaticly.
+             * Is invoked after every change of plugin.model's data.
+             *
+             * @method sync
+             * @since 0.0.1
+             */
             sync: function() {
                 // defaults to NOOP
             },
+           /**
+            * Defines the `key`-property on element.model, but only when is hasn't been defined before.
+            *
+            * @method defineWhenUndefined
+            * @param key {String} plugin.model's property
+            * @param value {any} its value to be set
+            * @chainable
+            * @since 0.0.1
+            */
+            defineWhenUndefined: function(key, value) {
+                var instance = this,
+                    model = this.model;
+                model[key] || (model[key]=value);
+                return instance;
+            },
+            /*
+             * Cleansup the plugin. Is invoked whenever a plugin gets unplugged or its host gets removed from the dom.
+             *
+             * @method destroy
+             * @since 0.0.1
+             */
             destroy: function () {
                 var instance = this,
                     host = instance.host,
@@ -15012,7 +15179,448 @@ module.exports = function (window) {
 
     window._ITSAmodules.ElementPlugin = true;
 };
-},{"event-dom":15,"event/extra/promise-finalize.js":26,"event/extra/timer-finalize.js":27,"js-ext/extra/classes.js":35,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/promise.js":45,"js-ext/lib/string.js":46,"polyfill":57,"utils/lib/timers.js":64,"vdom":74}],48:[function(require,module,exports){
+},{"event-dom":15,"event/extra/promise-finalize.js":26,"event/extra/timer-finalize.js":27,"js-ext/extra/classes.js":36,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"js-ext/lib/promise.js":46,"js-ext/lib/string.js":47,"polyfill":60,"utils/lib/timers.js":67,"vdom":77}],49:[function(require,module,exports){
+var css = "[plugin-panel=\"true\"] {\n    position: absolute !important;\n    background-color: #FFF;\n    max-width: 90%;\n    min-width: 150px;\n    min-height: 75px;\n    box-shadow: 5px 5px 6px rgba(50, 50, 50, 0.45);\n    border: solid 1px #000;\n}\n\n[plugin-panel=\"true\"],\n[plugin-panel=\"true\"] >div {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n[plugin-panel=\"true\"] >div[is=\"header\"] {\n    vertical-align: middle;\n    background-color: rgb(0, 100, 192);\n    color: #FFF;\n    padding: 0 1.5em 0 0.7em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    vertical-align: middle;\n    line-height: 1.75em;\n    width: 100%;\n    min-height: 1.75em;\n}\n\n[plugin-panel=\"true\"] >div[is=\"content\"] {\n    padding: 1.6em 1.2em;\n    line-height: 115%;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] {\n    border-top: 1px solid #EAE6DB;\n    overflow: hidden;\n    vertical-align: middle;\n    text-align: right;\n    line-height: 1em;\n    padding: 0.5em 0.7em;\n    width: 100%;\n    min-height: 24px;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0.5em;\n}\n\n[plugin-panel=\"true\"].itsa-full-draggable {\n    cursor: default;\n}\n\n[plugin-panel=\"true\"] >button {\n    padding: 0 0.4em 0.1em;\n    position: absolute;\n    right: 0.2em;\n    top: 0.2em;\n    z-index: 1;\n}\n\nbody >div[is=\"system-node\"].itsa-modal-layer {\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 100% !important;\n    height: 100% !important;\n    -webkit-box-sizing: border-box !important;\n    -moz-box-sizing: border-box !important;\n    box-sizing: border-box !important;\n    z-index: 1000 !important;\n    background-color: #000 !important;\n    opacity: 0.2 !important;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button {\n    display: block;\n    width: 100%;\n    margin: 0 0 0.5em;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button:last-child,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button:last-child {\n    margin-bottom: 0;\n}\n\n@media only screen and (max-width : 480px) {\n    [plugin-panel=\"true\"] {\n        width: 90%;\n        box-shadow: 0 0 6px 6px rgba(50, 50, 50, 0.45);\n    }\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],50:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('js-ext/lib/object.js');
+require('js-ext/lib/string.js');
+require('polyfill');
+require('./css/panel.css');
+
+
+var NAME = '[panel]: ',
+    PANEL_Z = 1000,
+    MODAL_Z = 2000,
+    PANEL_TOP = 999,
+    MAX_WIDTH_FULL_BUTTONS = 150,
+    createHashMap = require('js-ext/extra/hashmap.js').createMap;
+
+module.exports = function (window) {
+
+    var DOCUMENT = window.document,
+        LightMap = require('js-ext/extra/lightmap.js'),
+        Panel, Event, setupEvents, DD, stackManager, insertModalLayer;
+
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
+
+/*jshint boss:true */
+    if (Panel=window._ITSAmodules.Panel) {
+/*jshint boss:false */
+        return Panel; // Panel was already created
+    }
+
+    require('window-ext')(window);
+    require('node-plugin')(window);
+    require('focusmanager')(window);
+
+    Event = require('event-mobile')(window);
+    DD = require('drag')(window);
+    DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
+
+    /*
+     * Generates a modal-layer.
+     *
+     * @method insertModalLayer
+     * @protected
+     * @since 0.0.1
+     */
+    insertModalLayer = function() {
+       DOCUMENT.body.addSystemElement('<div class="itsa-modal-layer itsa-no-display"></div>', null, true);
+    };
+
+    insertModalLayer();
+
+    /*
+     * Sets up all events needed for Panel's to work well.
+     *
+     * @method setupEvents
+     * @protected
+     * @since 0.0.1
+     */
+    setupEvents = function() {
+        Event.defineEvent('panel:buttonhide').defaultFn(function(e) {
+            var model = e.model;
+            model.visible = false;
+            (typeof model.callback==='function') && model.callback(e.button);
+        });
+        Event.before('panel:buttonhide', function(e) {
+            var model = e.model;
+            if (typeof model.validate==='function') {
+                model.validate(e) || e.preventDefault();
+            }
+        });
+        Event.after('tap', function(e) {
+            var buttonNode = e.target,
+                panelNode = buttonNode.inside('[plugin-panel="true"]'),
+                plugin = panelNode._plugin.panel,
+                model = plugin.model;
+            Event.emit(panelNode, 'panel:buttonhide', {button: buttonNode, plugin: plugin, model: model});
+        }, '[plugin-panel="true"] >div[is="header"] button, [plugin-panel="true"] >div[is="footer"] button, [plugin-panel="true"] >button');
+    };
+
+    setupEvents();
+
+    /*
+     * An object with several method to control stacked panels.
+     *
+     * @property stackManager
+     * @type Object
+     * @protected
+     * @since 0.0.1
+     */
+    stackManager = DOCUMENT.stackManager = {
+        elements: new LightMap(),
+        isOnTop: function(host) {
+            return (this.topElement===host);
+        },
+        setOnTop: function(host) {
+            this.topElement = host;
+        },
+        registerModal: function(host) {
+            var instance = this;
+            instance.elements.set(host, true);
+            instance.showModalLayer(true);
+        },
+        unRegisterModal: function(host) {
+            var instance = this;
+            instance.elements.delete(host);
+            instance.hasModalElements() || instance.showModalLayer(false);
+        },
+        hasModalElements: function() {
+            return (this.elements.size()>0);
+        },
+        showModalLayer: function(show) {
+            var modalLayer = DOCUMENT.getElement('body >div[is="system-node"].itsa-modal-layer', true);
+            modalLayer.toggleClass('itsa-no-display', !show);
+        }
+    };
+
+    /*
+     * Creates a new Panel-node which is prepended to body.
+     *
+     * @for document
+     * @method createPanel
+     * @param data {Object} the panel plugin's `model`-object
+     * @param [systemNode] {boolean} whether the created node should be a systemnode
+     * @return {HTMLElement} the created panelNode
+     * @since 0.0.1
+     */
+    DOCUMENT.createPanel = function(data, systemNode) {
+        var panel;
+        if (!Object.isObject(data)) {
+            console.warn('document.createPanel should be invoked with an object as first argument.');
+            return;
+        }
+        if (systemNode) {
+            panel = DOCUMENT.body.addSystemElement('<div></div>');
+        }
+        else {
+            panel = DOCUMENT.body.prepend('<div></div>');
+        }
+        panel.plug('panel', null, data);
+        return panel;
+    };
+
+    window._ITSAmodules.Panel = Panel = DOCUMENT.definePlugin('panel', function() {
+        var instance = this,
+            model = instance.model,
+            host = instance.host,
+            footer = model.footer,
+            allDivs, serverHeader, serverContent, serverFooter;
+
+        instance._previousVisible = model.visible;
+        if (host.getAttr('panel-rendered')==='true') {
+            // serverside rendered --> we might need to catch header, content and footer
+            // for they aren't set in the attributes
+            allDivs = host.getAll('>div');
+            serverHeader = allDivs[0] && allDivs[0].getHTML();
+            serverContent = allDivs[1] && allDivs[1].getHTML();
+            serverFooter = allDivs[2] && allDivs[2].getHTML();
+            serverHeader && instance.defineWhenUndefined('header', serverHeader);
+            serverContent && instance.defineWhenUndefined('content', serverContent);
+            if (serverFooter) {
+                instance.defineWhenUndefined('footer', serverFooter);
+                // need to redefine `footer`
+                footer = model.footer;
+            }
+        }
+        if (!footer || !footer.contains('button')) {
+            model.headerCloseBtn = true;
+        }
+        instance._resizeHandler = Event.after('UI:resize', function() {
+            var isMobileWidth = (window.getWidth()<=480);
+            model.center && instance.centerPanel();
+            host[((model.draggable && !isMobileWidth) ? '' : 'un')+'plug']('dd');
+            instance.setPanelWidth(isMobileWidth);
+        });
+    }, {
+        /*
+         * All panel's attributes: these attributes will be read during initalization and updated during `sync`
+         * In the dom, the attributenames are prepended with `pluginName-`. The property-values should be the property-types
+         * that belong to the property, this way the attributes get right casted into model.
+         *
+         * @property attrs
+         * @default {
+         *    visible: 'boolean',
+         *    onTopWhenShowed: 'boolean',
+         *    headerCloseBtn: 'boolean',
+         *    stack: 'number',
+         *    left: 'number',
+         *    top: 'number',
+         *    center: 'boolean',
+         *    minWidth: 'number',
+         *    maxWidth: 'number',
+         *    minHeight: 'number',
+         *    maxHeight: 'number',
+         *    modal: 'boolean',
+         *    draggable: 'boolean',
+         *    focusmanaged: 'boolean'
+         * }
+         * @type Object
+         * @since 0.0.1
+        */
+        attrs: {
+            visible: 'boolean',
+            onTopWhenShowed: 'boolean',
+            headerCloseBtn: 'boolean',
+            stack: 'number',
+            left: 'number',
+            top: 'number',
+            center: 'boolean',
+            minWidth: 'number',
+            maxWidth: 'number',
+            minHeight: 'number',
+            maxHeight: 'number',
+            modal: 'boolean',
+            draggable: 'boolean',
+            focusmanaged: 'boolean'
+        },
+        /*
+         * Any default values for attributes specified by `attrs`.
+         *
+         * @property defaults
+         * @default {
+         *    visible: false,
+         *    onTopWhenShowed: true,
+         *    stack: 1,
+         *    center: true,
+         *    modal: true,
+         *    focusmanaged: true,
+         *    headerCloseBtn: false
+         * }
+         * @type Object
+         * @since 0.0.1
+        */
+        defaults: {
+            visible: false,
+            onTopWhenShowed: true,
+            stack: 1,
+            center: true,
+            modal: true,
+            focusmanaged: true,
+            headerCloseBtn: false
+        },
+        /*
+         * Renders the plugin. This method is invoked only once: at the end of initialization.
+         * It should be used to render any nodes inside the host. Not all plugins need this.
+         *
+         * @method render
+         * @since 0.0.1
+         */
+        render: function() {
+            var instance = this,
+                host = instance.host,
+                newContent;
+            host.setClass('itsa-hidden');
+            newContent = '<div is="header"></div>'+
+                         '<div is="content"></div>'+
+                         '<div is="footer"></div>' +
+                         '<button class="panel-close pure-button">x</button>';
+            host.setHTML(newContent);
+        },
+        /*
+         * Syncs plugin.model's data with the host. Not its attributes: they will be synced automaticly.
+         * Is invoked after every change of plugin.model's data.
+         *
+         * @method sync
+         * @since 0.0.1
+         */
+        sync: function() {
+            var instance = this,
+                host = instance.host,
+                model = instance.model,
+                header = model.header,
+                content = model.content,
+                footer = model.footer,
+                stack = model.stack,
+                divs = host.getAll('>div'),
+                headerNode = divs[0],
+                contentNode = divs[1],
+                footerNode = divs[2],
+                isMobileWidth = (window.getWidth()<=480),
+                buttonCloseNode = host.getElement('>button'),
+                zIndex, isOnTop;
+            (header==='undefined') && (header=undefined);
+            (footer==='undefined') && (footer=undefined);
+            if (model.headerCloseBtn && !header) {
+                header = '';
+            }
+            (header!==undefined) && headerNode.setHTML(header || '');
+            buttonCloseNode.toggleClass('itsa-no-display', !model.headerCloseBtn);
+
+            headerNode.toggleClass('itsa-hidden', (header===undefined));
+            contentNode.setHTML(content || '');
+            contentNode.plug('scroll');
+            (footer!==undefined) && footerNode.setHTML(footer || '');
+            footerNode.toggleClass('itsa-hidden', (footer===undefined));
+
+            zIndex = (model.modal ? MODAL_Z : PANEL_Z);
+
+            if (model.visible && model.modal) {
+                stackManager.registerModal(host);
+            }
+            else {
+                stackManager.unRegisterModal(host);
+            }
+
+            if (model.onTopWhenShowed && model.visible && host.hasClass('itsa-hidden')) {
+                instance.showOnTop();
+            }
+
+            isOnTop = stackManager.isOnTop(host);
+            zIndex += isOnTop ? PANEL_TOP : stack;
+
+            host.setInlineStyle('z-index', zIndex);
+
+            model.minWidth && host.setInlineStyle('minWidth', model.minWidth);
+            model.minHeight && host.setInlineStyle('minHeight', model.minHeight);
+            model.maxHeight && host.setInlineStyle('maxHeight', model.maxHeight);
+            instance.setPanelWidth(isMobileWidth);
+
+            if (model.center && (!instance._prevCenter || !model.draggable)) {
+                instance.centerPanel();
+            }
+            else if (!model.center && !host.hasClass('dd-dragging')) {
+                host.setInlineStyles([
+                    {property: 'left', value: model.left+'px'},
+                    {property: 'top', value: model.top+'px'}
+                ]);
+            }
+            // prevent re-centering: that would be unhandy when the panel is draggable:
+            instance._prevCenter = model.center;
+            // we can plug/unplug multiple times --> node-plugin won't do anything when there are no changes
+            host[((model.draggable && !isMobileWidth) ? '' : 'un')+'plug']('dd');
+            host[(model.focusmanaged ? '' : 'un')+'plug']('fm');
+            host.toggleClass('itsa-full-draggable', model.draggable && !header);
+            if (model.draggable && header) {
+                 host.hasAttr('dd-handle') || host.setAttr('dd-handle', '>div:first-child');
+            }
+            else {
+                 host.hasAttr('dd-handle') && host.removeAttr('dd-handle');
+            }
+
+            host.toggleClass('itsa-hidden', !model.visible);
+            // if there is a change of model.visible, the fire an event:
+            if (instance._previousVisible!==model.visible) {
+                Event.emit(host, 'panel:'+ (model.visible ? 'shown' : 'hidden'), {plugin: instance, model: model});
+                instance._previousVisible = model.visible;
+            }
+            if (isOnTop && model.modal && !host.hasClass('focussed')) {
+                host.focus();
+            }
+        },
+        /*
+         * Centeres the panel on the screen.
+         *
+         * @method centerPanel
+         * @since 0.0.1
+         */
+        centerPanel: function() {
+            var instance = this,
+                host = instance.host,
+                model = instance.model;
+            model.left = Math.round((window.getWidth()-host.width)/2);
+            model.top = Math.round((window.getHeight()-host.height)/2);
+            host.setInlineStyles([
+                {property: 'left', value: model.left+'px'},
+                {property: 'top', value: model.top+'px'}
+            ]);
+        },
+        /*
+         * Sets the style `maxWidth` and the attribute `expand-buttons`. These need to be set after width-changes of either the panel or the screen.
+         *
+         * @method setPanelWidth
+         * @param isMobileWidth {Boolean} whether the current screen-width is `mobile-width`
+         * @since 0.0.1
+         */
+        setPanelWidth: function(isMobileWidth) {
+            var instance = this,
+                host = instance.host,
+                model = instance.model;
+            if (isMobileWidth) {
+                host.hasInlineStyle('maxWidth') && host.removeInlineStyle('maxWidth');
+                host.setAttr('expand-buttons', 'true');
+            }
+            else {
+                if (model.maxWidth) {
+                    host.setInlineStyle('maxWidth', model.maxWidth);
+                    if (host.width>MAX_WIDTH_FULL_BUTTONS) {
+                        host.removeAttr('expand-buttons');
+                    }
+                    else {
+                        host.setAttr('expand-buttons', 'true');
+                    }
+                }
+                else {
+                     host.removeAttr('expand-buttons');
+                }
+            }
+        },
+        /*
+         * Maes this panel as the `top`-panel of the stack.
+         *
+         * @method showOnTop
+         * @since 0.0.1
+         */
+        showOnTop: function() {
+            stackManager.setOnTop(this.host);
+        },
+        /*
+         * Cleansup the plugin. Is invoked whenever a plugin gets unplugged or its host gets removed from the dom.
+         *
+         * @method destroy
+         * @since 0.0.1
+         */
+        destroy: function() {
+            var instance = this,
+                host = instance.host;
+            instance._resizeHandler.detach();
+            host.removeInlineStyle('z-index');
+            host.unplug('dd');
+            host.unplug('fm');
+            host.removeClass(['itsa-hidden', 'itsa-full-draggable']);
+            stackManager.unRegisterModal(host);
+            host.empty();
+        }
+    });
+
+    return Panel;
+};
+},{"./css/panel.css":49,"drag":14,"event-mobile":20,"focusmanager":30,"js-ext/extra/hashmap.js":37,"js-ext/extra/lightmap.js":38,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"node-plugin":48,"polyfill":60,"window-ext":78}],51:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -15035,7 +15643,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],49:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 "use strict";
 
 /*
@@ -15088,7 +15696,7 @@ module.exports = function (window) {
 
     return transition;
 };
-},{"../bin/local-hashmap.js":48}],50:[function(require,module,exports){
+},{"../bin/local-hashmap.js":51}],53:[function(require,module,exports){
 "use strict";
 
 // CAUTIOUS: need a copy of hashmap --> we cannot use js-ext/extra/hashap.js for that would lead to circular references!
@@ -15133,7 +15741,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{"../bin/local-hashmap.js":48}],51:[function(require,module,exports){
+},{"../bin/local-hashmap.js":51}],54:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -15204,7 +15812,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../bin/local-hashmap.js":48}],52:[function(require,module,exports){
+},{"../bin/local-hashmap.js":51}],55:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -15228,7 +15836,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],53:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 (function (global){
 /*
  * Copyright 2012 The Polymer Authors. All rights reserved.
@@ -15814,9 +16422,9 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],54:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 require('ypromise');
-},{"ypromise":5}],55:[function(require,module,exports){
+},{"ypromise":5}],58:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/Gozala/1269991
 
@@ -15926,7 +16534,7 @@ require('ypromise');
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],56:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -15945,17 +16553,17 @@ require('ypromise');
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],57:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":52,"./lib/window.console.js":56}],58:[function(require,module,exports){
+},{"./lib/matchesselector.js":55,"./lib/window.console.js":59}],61:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/promise.js');
 require('./lib/weakmap.js');
 require('./lib/mutationobserver.js'); // needs weakmap
-},{"./lib/mutationobserver.js":53,"./lib/promise.js":54,"./lib/weakmap.js":55,"./polyfill-base.js":57}],59:[function(require,module,exports){
+},{"./lib/mutationobserver.js":56,"./lib/promise.js":57,"./lib/weakmap.js":58,"./polyfill-base.js":60}],62:[function(require,module,exports){
 var css = "[plugin-scroll=\"true\"] {\n    overflow: hidden !important;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont,\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    position: absolute;\n    display: block;\n    left: -9999px;\n    top: -9999px;\n    opacity: 0;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-vscroll-cont.itsa-visible {\n    opacity: 1;\n    width: 0.8em;\n    height: 100%;\n    right: 0;\n    top: 0;\n    left: auto;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-hscroll-cont.itsa-visible {\n    opacity: 1;\n    height: 0.8em;\n    width: 100%;\n    left: 0;\n    bottom: 0;\n    top: auto;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont span {\n    position: relative;\n    display: block;\n    width: 100%;\n    min-height: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont span {\n    position: relative;\n    display: block;\n    height: 100%;\n    min-width: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-vscroll-cont span,\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-hscroll-cont span {\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n[plugin-scroll=\"true\"] >span span.dd-dragging {\n    cursor: default;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],60:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],63:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -16162,7 +16770,7 @@ module.exports = function (window) {
 
     return Scrollable;
 };
-},{"./css/scrollable.css":59,"drag":14,"event-mobile":20,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"node-plugin":47,"polyfill":57,"utils":62,"window-ext":75}],61:[function(require,module,exports){
+},{"./css/scrollable.css":62,"drag":14,"event-mobile":20,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"node-plugin":48,"polyfill":60,"utils":65,"window-ext":78}],64:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16201,7 +16809,7 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":57}],62:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill":60}],65:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
@@ -16209,7 +16817,7 @@ module.exports = {
     async: require('./lib/timers.js').async,
     asyncSilent: require('./lib/timers.js').asyncSilent
 };
-},{"./lib/idgenerator.js":63,"./lib/timers.js":64}],63:[function(require,module,exports){
+},{"./lib/idgenerator.js":66,"./lib/timers.js":67}],66:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -16267,7 +16875,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":57}],64:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"polyfill/polyfill-base.js":60}],67:[function(require,module,exports){
 (function (global){
 /**
  * Collection of various utility functions.
@@ -16482,9 +17090,9 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"polyfill/polyfill-base.js":57}],65:[function(require,module,exports){
-var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],66:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":60}],68:[function(require,module,exports){
+var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-no-display {\n    display: none; !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],69:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16782,7 +17390,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":57,"polyfill/extra/transition.js":49,"polyfill/extra/vendorCSS.js":51}],67:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"polyfill":60,"polyfill/extra/transition.js":52,"polyfill/extra/vendorCSS.js":54}],70:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17210,7 +17818,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":57}],68:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill":60}],71:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17924,7 +18532,7 @@ module.exports = function (window) {
 
 
 
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":57}],69:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"polyfill":60}],72:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -20326,6 +20934,9 @@ module.exports = function (window) {
                             if (vChildNode._systemNode || (vChildNode.isItag && vChildNode.domNode.contentHidden)) {
                                 noDeep = true;
                             }
+                            else {
+                                noDeep = false;
+                            }
                         }
                         else {
                             noDeep = false;
@@ -20381,6 +20992,9 @@ module.exports = function (window) {
                     if (!inspectProtectedNodes) {
                         if (vChildNode._systemNode || (vChildNode.isItag && vChildNode.domNode.contentHidden)) {
                             noDeep = true;
+                        }
+                        else {
+                            noDeep = false;
                         }
                     }
                     else {
@@ -22627,7 +23241,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":65,"./attribute-extractor.js":66,"./element-array.js":67,"./html-parser.js":70,"./node-parser.js":71,"./vdom-ns.js":72,"./vnode.js":73,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/promise.js":45,"js-ext/lib/string.js":46,"polyfill":57,"polyfill/extra/transition.js":49,"polyfill/extra/transitionend.js":50,"polyfill/extra/vendorCSS.js":51,"utils":62,"window-ext":75}],70:[function(require,module,exports){
+},{"../css/element.css":68,"./attribute-extractor.js":69,"./element-array.js":70,"./html-parser.js":73,"./node-parser.js":74,"./vdom-ns.js":75,"./vnode.js":76,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"js-ext/lib/promise.js":46,"js-ext/lib/string.js":47,"polyfill":60,"polyfill/extra/transition.js":52,"polyfill/extra/transitionend.js":53,"polyfill/extra/vendorCSS.js":54,"utils":65,"window-ext":78}],73:[function(require,module,exports){
 "use strict";
 
 /**
@@ -22999,7 +23613,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":66,"./vdom-ns.js":72,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":57}],71:[function(require,module,exports){
+},{"./attribute-extractor.js":69,"./vdom-ns.js":75,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill":60}],74:[function(require,module,exports){
 "use strict";
 
 /**
@@ -23140,7 +23754,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":66,"./vdom-ns.js":72,"./vnode.js":73,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":57}],72:[function(require,module,exports){
+},{"./attribute-extractor.js":69,"./vdom-ns.js":75,"./vnode.js":76,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill":60}],75:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -23371,7 +23985,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":57}],73:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill":60}],76:[function(require,module,exports){
 "use strict";
 
 /**
@@ -26103,7 +26717,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":66,"./html-parser.js":70,"./vdom-ns.js":72,"js-ext/extra/hashmap.js":36,"js-ext/extra/lightmap.js":37,"js-ext/lib/array.js":41,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":57,"utils/lib/timers.js":64}],74:[function(require,module,exports){
+},{"./attribute-extractor.js":69,"./html-parser.js":73,"./vdom-ns.js":75,"js-ext/extra/hashmap.js":37,"js-ext/extra/lightmap.js":38,"js-ext/lib/array.js":42,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"polyfill":60,"utils/lib/timers.js":67}],77:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -26146,13 +26760,13 @@ module.exports = function (window) {
 
     window._ITSAmodules.VDOM = true;
 };
-},{"./partials/extend-document.js":68,"./partials/extend-element.js":69,"./partials/node-parser.js":71,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"utils/lib/timers.js":64}],75:[function(require,module,exports){
+},{"./partials/extend-document.js":71,"./partials/extend-element.js":72,"./partials/node-parser.js":74,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"utils/lib/timers.js":67}],78:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":76}],76:[function(require,module,exports){
+},{"./lib/sizes.js":79}],79:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -26256,7 +26870,7 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],77:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45}],80:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -26464,6 +27078,7 @@ process.chdir = function (dir) {
     */
     require('node-plugin')(window);
     require('constrain')(window);
+    require('panel')(window);
 
     ITSA.merge(require('utils'));
     ITSA.RESERVED_WORDS = require('js-ext/extra/reserved-words.js');
@@ -26515,4 +27130,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"constrain":6,"css":10,"drag-drop":12,"event":28,"event-dom/extra/blurnode.js":16,"event-dom/extra/focusnode.js":17,"event-dom/extra/hover.js":18,"event-dom/extra/valuechange.js":19,"event-mobile":20,"event/extra/objectobserve.js":25,"focusmanager":29,"io/extra/io-cors-ie9.js":30,"io/extra/io-stream.js":31,"io/extra/io-transfer.js":32,"io/extra/io-xml.js":33,"js-ext/extra/reserved-words.js":38,"js-ext/js-ext.js":40,"node-plugin":47,"node-win":undefined,"polyfill/polyfill.js":58,"scrollable":60,"useragent":61,"utils":62,"vdom":74,"window-ext":75}]},{},[]);
+},{"constrain":6,"css":10,"drag-drop":12,"event":28,"event-dom/extra/blurnode.js":16,"event-dom/extra/focusnode.js":17,"event-dom/extra/hover.js":18,"event-dom/extra/valuechange.js":19,"event-mobile":20,"event/extra/objectobserve.js":25,"focusmanager":30,"io/extra/io-cors-ie9.js":31,"io/extra/io-stream.js":32,"io/extra/io-transfer.js":33,"io/extra/io-xml.js":34,"js-ext/extra/reserved-words.js":39,"js-ext/js-ext.js":41,"node-plugin":48,"node-win":undefined,"panel":50,"polyfill/polyfill.js":61,"scrollable":63,"useragent":64,"utils":65,"vdom":77,"window-ext":78}]},{},[]);

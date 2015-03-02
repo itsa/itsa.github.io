@@ -84,7 +84,7 @@ Clik on the button to toggle the className:
         }
     };
 
-    ITSA.Event.after('click', action, 'button');
+    ITSA.Event.after('tap', action, 'button');
 
 </script>
 ```
@@ -106,5 +106,5 @@ Clik on the button to toggle the className:
         }
     };
 
-    ITSA.Event.after('click', action, 'button');
+    ITSA.Event.after('tap', action, 'button');
 </script>

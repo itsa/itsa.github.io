@@ -1,8 +1,8 @@
 ---
 module: node-plugin
 maintainer: Marco Asbreuk
-title: Plugin by markup
-intro: "An element can be made draggable by using <b>node.plugin(ITSA.Plugins.dd)</b>. The plugin does nothing more than add the right attribute to the draggable Element, and it just works.</b>"
+title: Plugin by html markup
+intro: "This example shows how the dd-plugin is activated by its html."
 ---
 
 <style type="text/css">
@@ -21,7 +21,7 @@ intro: "An element can be made draggable by using <b>node.plugin(ITSA.Plugins.dd
     }
 </style>
 
-Drag the rectangle. The Node is made draggable by a plugin.
+Drag the rectangle. The Node is made draggable its html.
 
 <div class="container" plugin-dd="true"></div>
 
@@ -29,7 +29,7 @@ Drag the rectangle. The Node is made draggable by a plugin.
 
 ```html
 <body>
-    <div class="container"></div>
+    <div class="container" plugin-dd="true"></div>
 </body>
 ```
 
@@ -40,7 +40,7 @@ Drag the rectangle. The Node is made draggable by a plugin.
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
 </script>

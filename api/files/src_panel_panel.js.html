@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/panel/panel.js - Itsa</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title="Itsa"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/Array.html">Array</a></li>
+            
+                <li><a href="../classes/BaseClass.html">BaseClass</a></li>
+            
+                <li><a href="../classes/Classes.html">Classes</a></li>
+            
+                <li><a href="../classes/DD.html">DD</a></li>
+            
+                <li><a href="../classes/document.html">document</a></li>
+            
+                <li><a href="../classes/Element.html">Element</a></li>
+            
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
+            
+                <li><a href="../classes/Event.html">Event</a></li>
+            
+                <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
+            
+                <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
+            
+                <li><a href="../classes/FocusManager.html">FocusManager</a></li>
+            
+                <li><a href="../classes/Function.html">Function</a></li>
+            
+                <li><a href="../classes/HTMLElement.html">HTMLElement</a></li>
+            
+                <li><a href="../classes/IO.html">IO</a></li>
+            
+                <li><a href="../classes/ITSA.html">ITSA</a></li>
+            
+                <li><a href="../classes/Node.html">Node</a></li>
+            
+                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
+            
+                <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Panel.html">Panel</a></li>
+            
+                <li><a href="../classes/Promise.html">Promise</a></li>
+            
+                <li><a href="../classes/String.html">String</a></li>
+            
+                <li><a href="../classes/USERAGENT.html">USERAGENT</a></li>
+            
+                <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
+            
+                <li><a href="../modules/drag.html">drag</a></li>
+            
+                <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/event.html">event</a></li>
+            
+                <li><a href="../modules/event-blurnode.html">event-blurnode</a></li>
+            
+                <li><a href="../modules/event-dom.html">event-dom</a></li>
+            
+                <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-focusnode.html">event-focusnode</a></li>
+            
+                <li><a href="../modules/event-hover.html">event-hover</a></li>
+            
+                <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/extra_classes.js.html">extra/classes.js</a></li>
+            
+                <li><a href="../modules/focusmanager.html">focusmanager</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
+            
+                <li><a href="../modules/io.html">io</a></li>
+            
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
+            
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/js-ext.html">js-ext</a></li>
+            
+                <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
+            
+                <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
+            
+                <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
+            
+                <li><a href="../modules/lib_promise.s.html">lib/promise.s</a></li>
+            
+                <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
+            
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
+                <li><a href="../modules/node-plugin.html">node-plugin</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
+            
+                <li><a href="../modules/panel.html">panel</a></li>
+            
+                <li><a href="../modules/useragent.html">useragent</a></li>
+            
+                <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/panel/panel.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require(&#x27;js-ext/lib/object.js&#x27;);
+require(&#x27;js-ext/lib/string.js&#x27;);
+require(&#x27;polyfill&#x27;);
+require(&#x27;./css/panel.css&#x27;);
+
+
+var NAME = &#x27;[panel]: &#x27;,
+    PANEL_Z = 1000,
+    MODAL_Z = 2000,
+    PANEL_TOP = 999,
+    MAX_WIDTH_FULL_BUTTONS = 150,
+    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
+
+module.exports = function (window) {
+
+    var DOCUMENT = window.document,
+        LightMap = require(&#x27;js-ext/extra/lightmap.js&#x27;),
+        Panel, Event, setupEvents, DD, stackManager, insertModalLayer;
+
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
+
+/*jshint boss:true */
+    if (Panel=window._ITSAmodules.Panel) {
+/*jshint boss:false */
+        return Panel; // Panel was already created
+    }
+
+    require(&#x27;window-ext&#x27;)(window);
+    require(&#x27;node-plugin&#x27;)(window);
+    require(&#x27;focusmanager&#x27;)(window);
+
+    Event = require(&#x27;event-mobile&#x27;)(window);
+    DD = require(&#x27;drag&#x27;)(window);
+    DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
+
+    /*
+     * Generates a modal-layer.
+     *
+     * @method insertModalLayer
+     * @protected
+     * @since 0.0.1
+     */
+    insertModalLayer = function() {
+       DOCUMENT.body.addSystemElement(&#x27;&lt;div class=&quot;itsa-modal-layer itsa-no-display&quot;&gt;&lt;/div&gt;&#x27;, null, true);
+    };
+
+    insertModalLayer();
+
+    /*
+     * Sets up all events needed for Panel&#x27;s to work well.
+     *
+     * @method setupEvents
+     * @protected
+     * @since 0.0.1
+     */
+    setupEvents = function() {
+        Event.defineEvent(&#x27;panel:buttonhide&#x27;).defaultFn(function(e) {
+            var model = e.model;
+            model.visible = false;
+            (typeof model.callback===&#x27;function&#x27;) &amp;&amp; model.callback(e.button);
+        });
+        Event.before(&#x27;panel:buttonhide&#x27;, function(e) {
+            var model = e.model;
+            if (typeof model.validate===&#x27;function&#x27;) {
+                model.validate(e) || e.preventDefault();
+            }
+        });
+        Event.after(&#x27;tap&#x27;, function(e) {
+            var buttonNode = e.target,
+                panelNode = buttonNode.inside(&#x27;[plugin-panel=&quot;true&quot;]&#x27;),
+                plugin = panelNode._plugin.panel,
+                model = plugin.model;
+            Event.emit(panelNode, &#x27;panel:buttonhide&#x27;, {button: buttonNode, plugin: plugin, model: model});
+        }, &#x27;[plugin-panel=&quot;true&quot;] &gt;div[is=&quot;header&quot;] button, [plugin-panel=&quot;true&quot;] &gt;div[is=&quot;footer&quot;] button, [plugin-panel=&quot;true&quot;] &gt;button&#x27;);
+    };
+
+    setupEvents();
+
+    /*
+     * An object with several method to control stacked panels.
+     *
+     * @property stackManager
+     * @type Object
+     * @protected
+     * @since 0.0.1
+     */
+    stackManager = DOCUMENT.stackManager = {
+        elements: new LightMap(),
+        isOnTop: function(host) {
+            return (this.topElement===host);
+        },
+        setOnTop: function(host) {
+            this.topElement = host;
+        },
+        registerModal: function(host) {
+            var instance = this;
+            instance.elements.set(host, true);
+            instance.showModalLayer(true);
+        },
+        unRegisterModal: function(host) {
+            var instance = this;
+            instance.elements.delete(host);
+            instance.hasModalElements() || instance.showModalLayer(false);
+        },
+        hasModalElements: function() {
+            return (this.elements.size()&gt;0);
+        },
+        showModalLayer: function(show) {
+            var modalLayer = DOCUMENT.getElement(&#x27;body &gt;div[is=&quot;system-node&quot;].itsa-modal-layer&#x27;, true);
+            modalLayer.toggleClass(&#x27;itsa-no-display&#x27;, !show);
+        }
+    };
+
+    /*
+     * Creates a new Panel-node which is prepended to body.
+     *
+     * @for document
+     * @method createPanel
+     * @param data {Object} the panel plugin&#x27;s &#x60;model&#x60;-object
+     * @param [systemNode] {boolean} whether the created node should be a systemnode
+     * @return {HTMLElement} the created panelNode
+     * @since 0.0.1
+     */
+    DOCUMENT.createPanel = function(data, systemNode) {
+        var panel;
+        if (!Object.isObject(data)) {
+            console.warn(&#x27;document.createPanel should be invoked with an object as first argument.&#x27;);
+            return;
+        }
+        if (systemNode) {
+            panel = DOCUMENT.body.addSystemElement(&#x27;&lt;div&gt;&lt;/div&gt;&#x27;);
+        }
+        else {
+            panel = DOCUMENT.body.prepend(&#x27;&lt;div&gt;&lt;/div&gt;&#x27;);
+        }
+        panel.plug(&#x27;panel&#x27;, null, data);
+        return panel;
+    };
+
+    window._ITSAmodules.Panel = Panel = DOCUMENT.definePlugin(&#x27;panel&#x27;, function() {
+        var instance = this,
+            model = instance.model,
+            host = instance.host,
+            footer = model.footer,
+            allDivs, serverHeader, serverContent, serverFooter;
+
+        instance._previousVisible = model.visible;
+        if (host.getAttr(&#x27;panel-rendered&#x27;)===&#x27;true&#x27;) {
+            // serverside rendered --&gt; we might need to catch header, content and footer
+            // for they aren&#x27;t set in the attributes
+            allDivs = host.getAll(&#x27;&gt;div&#x27;);
+            serverHeader = allDivs[0] &amp;&amp; allDivs[0].getHTML();
+            serverContent = allDivs[1] &amp;&amp; allDivs[1].getHTML();
+            serverFooter = allDivs[2] &amp;&amp; allDivs[2].getHTML();
+            serverHeader &amp;&amp; instance.defineWhenUndefined(&#x27;header&#x27;, serverHeader);
+            serverContent &amp;&amp; instance.defineWhenUndefined(&#x27;content&#x27;, serverContent);
+            if (serverFooter) {
+                instance.defineWhenUndefined(&#x27;footer&#x27;, serverFooter);
+                // need to redefine &#x60;footer&#x60;
+                footer = model.footer;
+            }
+        }
+        if (!footer || !footer.contains(&#x27;button&#x27;)) {
+            model.headerCloseBtn = true;
+        }
+        instance._resizeHandler = Event.after(&#x27;UI:resize&#x27;, function() {
+            var isMobileWidth = (window.getWidth()&lt;=480);
+            model.center &amp;&amp; instance.centerPanel();
+            host[((model.draggable &amp;&amp; !isMobileWidth) ? &#x27;&#x27; : &#x27;un&#x27;)+&#x27;plug&#x27;](&#x27;dd&#x27;);
+            instance.setPanelWidth(isMobileWidth);
+        });
+    }, {
+        /*
+         * All panel&#x27;s attributes: these attributes will be read during initalization and updated during &#x60;sync&#x60;
+         * In the dom, the attributenames are prepended with &#x60;pluginName-&#x60;. The property-values should be the property-types
+         * that belong to the property, this way the attributes get right casted into model.
+         *
+         * @property attrs
+         * @default {
+         *    visible: &#x27;boolean&#x27;,
+         *    onTopWhenShowed: &#x27;boolean&#x27;,
+         *    headerCloseBtn: &#x27;boolean&#x27;,
+         *    stack: &#x27;number&#x27;,
+         *    left: &#x27;number&#x27;,
+         *    top: &#x27;number&#x27;,
+         *    center: &#x27;boolean&#x27;,
+         *    minWidth: &#x27;number&#x27;,
+         *    maxWidth: &#x27;number&#x27;,
+         *    minHeight: &#x27;number&#x27;,
+         *    maxHeight: &#x27;number&#x27;,
+         *    modal: &#x27;boolean&#x27;,
+         *    draggable: &#x27;boolean&#x27;,
+         *    focusmanaged: &#x27;boolean&#x27;
+         * }
+         * @type Object
+         * @since 0.0.1
+        */
+        attrs: {
+            visible: &#x27;boolean&#x27;,
+            onTopWhenShowed: &#x27;boolean&#x27;,
+            headerCloseBtn: &#x27;boolean&#x27;,
+            stack: &#x27;number&#x27;,
+            left: &#x27;number&#x27;,
+            top: &#x27;number&#x27;,
+            center: &#x27;boolean&#x27;,
+            minWidth: &#x27;number&#x27;,
+            maxWidth: &#x27;number&#x27;,
+            minHeight: &#x27;number&#x27;,
+            maxHeight: &#x27;number&#x27;,
+            modal: &#x27;boolean&#x27;,
+            draggable: &#x27;boolean&#x27;,
+            focusmanaged: &#x27;boolean&#x27;
+        },
+        /*
+         * Any default values for attributes specified by &#x60;attrs&#x60;.
+         *
+         * @property defaults
+         * @default {
+         *    visible: false,
+         *    onTopWhenShowed: true,
+         *    stack: 1,
+         *    center: true,
+         *    modal: true,
+         *    focusmanaged: true,
+         *    headerCloseBtn: false
+         * }
+         * @type Object
+         * @since 0.0.1
+        */
+        defaults: {
+            visible: false,
+            onTopWhenShowed: true,
+            stack: 1,
+            center: true,
+            modal: true,
+            focusmanaged: true,
+            headerCloseBtn: false
+        },
+        /*
+         * Renders the plugin. This method is invoked only once: at the end of initialization.
+         * It should be used to render any nodes inside the host. Not all plugins need this.
+         *
+         * @method render
+         * @since 0.0.1
+         */
+        render: function() {
+            var instance = this,
+                host = instance.host,
+                newContent;
+            host.setClass(&#x27;itsa-hidden&#x27;);
+            newContent = &#x27;&lt;div is=&quot;header&quot;&gt;&lt;/div&gt;&#x27;+
+                         &#x27;&lt;div is=&quot;content&quot;&gt;&lt;/div&gt;&#x27;+
+                         &#x27;&lt;div is=&quot;footer&quot;&gt;&lt;/div&gt;&#x27; +
+                         &#x27;&lt;button class=&quot;panel-close pure-button&quot;&gt;x&lt;/button&gt;&#x27;;
+            host.setHTML(newContent);
+        },
+        /*
+         * Syncs plugin.model&#x27;s data with the host. Not its attributes: they will be synced automaticly.
+         * Is invoked after every change of plugin.model&#x27;s data.
+         *
+         * @method sync
+         * @since 0.0.1
+         */
+        sync: function() {
+            var instance = this,
+                host = instance.host,
+                model = instance.model,
+                header = model.header,
+                content = model.content,
+                footer = model.footer,
+                stack = model.stack,
+                divs = host.getAll(&#x27;&gt;div&#x27;),
+                headerNode = divs[0],
+                contentNode = divs[1],
+                footerNode = divs[2],
+                isMobileWidth = (window.getWidth()&lt;=480),
+                buttonCloseNode = host.getElement(&#x27;&gt;button&#x27;),
+                zIndex, isOnTop;
+            (header===&#x27;undefined&#x27;) &amp;&amp; (header=undefined);
+            (footer===&#x27;undefined&#x27;) &amp;&amp; (footer=undefined);
+            if (model.headerCloseBtn &amp;&amp; !header) {
+                header = &#x27;&#x27;;
+            }
+            (header!==undefined) &amp;&amp; headerNode.setHTML(header || &#x27;&#x27;);
+            buttonCloseNode.toggleClass(&#x27;itsa-no-display&#x27;, !model.headerCloseBtn);
+
+            headerNode.toggleClass(&#x27;itsa-hidden&#x27;, (header===undefined));
+            contentNode.setHTML(content || &#x27;&#x27;);
+            contentNode.plug(&#x27;scroll&#x27;);
+            (footer!==undefined) &amp;&amp; footerNode.setHTML(footer || &#x27;&#x27;);
+            footerNode.toggleClass(&#x27;itsa-hidden&#x27;, (footer===undefined));
+
+            zIndex = (model.modal ? MODAL_Z : PANEL_Z);
+
+            if (model.visible &amp;&amp; model.modal) {
+                stackManager.registerModal(host);
+            }
+            else {
+                stackManager.unRegisterModal(host);
+            }
+
+            if (model.onTopWhenShowed &amp;&amp; model.visible &amp;&amp; host.hasClass(&#x27;itsa-hidden&#x27;)) {
+                instance.showOnTop();
+            }
+
+            isOnTop = stackManager.isOnTop(host);
+            zIndex += isOnTop ? PANEL_TOP : stack;
+
+            host.setInlineStyle(&#x27;z-index&#x27;, zIndex);
+
+            model.minWidth &amp;&amp; host.setInlineStyle(&#x27;minWidth&#x27;, model.minWidth);
+            model.minHeight &amp;&amp; host.setInlineStyle(&#x27;minHeight&#x27;, model.minHeight);
+            model.maxHeight &amp;&amp; host.setInlineStyle(&#x27;maxHeight&#x27;, model.maxHeight);
+            instance.setPanelWidth(isMobileWidth);
+
+            if (model.center &amp;&amp; (!instance._prevCenter || !model.draggable)) {
+                instance.centerPanel();
+            }
+            else if (!model.center &amp;&amp; !host.hasClass(&#x27;dd-dragging&#x27;)) {
+                host.setInlineStyles([
+                    {property: &#x27;left&#x27;, value: model.left+&#x27;px&#x27;},
+                    {property: &#x27;top&#x27;, value: model.top+&#x27;px&#x27;}
+                ]);
+            }
+            // prevent re-centering: that would be unhandy when the panel is draggable:
+            instance._prevCenter = model.center;
+            // we can plug/unplug multiple times --&gt; node-plugin won&#x27;t do anything when there are no changes
+            host[((model.draggable &amp;&amp; !isMobileWidth) ? &#x27;&#x27; : &#x27;un&#x27;)+&#x27;plug&#x27;](&#x27;dd&#x27;);
+            host[(model.focusmanaged ? &#x27;&#x27; : &#x27;un&#x27;)+&#x27;plug&#x27;](&#x27;fm&#x27;);
+            host.toggleClass(&#x27;itsa-full-draggable&#x27;, model.draggable &amp;&amp; !header);
+            if (model.draggable &amp;&amp; header) {
+                 host.hasAttr(&#x27;dd-handle&#x27;) || host.setAttr(&#x27;dd-handle&#x27;, &#x27;&gt;div:first-child&#x27;);
+            }
+            else {
+                 host.hasAttr(&#x27;dd-handle&#x27;) &amp;&amp; host.removeAttr(&#x27;dd-handle&#x27;);
+            }
+
+            host.toggleClass(&#x27;itsa-hidden&#x27;, !model.visible);
+            // if there is a change of model.visible, the fire an event:
+            if (instance._previousVisible!==model.visible) {
+                Event.emit(host, &#x27;panel:&#x27;+ (model.visible ? &#x27;shown&#x27; : &#x27;hidden&#x27;), {plugin: instance, model: model});
+                instance._previousVisible = model.visible;
+            }
+            if (isOnTop &amp;&amp; model.modal &amp;&amp; !host.hasClass(&#x27;focussed&#x27;)) {
+                host.focus();
+            }
+        },
+        /*
+         * Centeres the panel on the screen.
+         *
+         * @method centerPanel
+         * @since 0.0.1
+         */
+        centerPanel: function() {
+            var instance = this,
+                host = instance.host,
+                model = instance.model;
+            model.left = Math.round((window.getWidth()-host.width)/2);
+            model.top = Math.round((window.getHeight()-host.height)/2);
+            host.setInlineStyles([
+                {property: &#x27;left&#x27;, value: model.left+&#x27;px&#x27;},
+                {property: &#x27;top&#x27;, value: model.top+&#x27;px&#x27;}
+            ]);
+        },
+        /*
+         * Sets the style &#x60;maxWidth&#x60; and the attribute &#x60;expand-buttons&#x60;. These need to be set after width-changes of either the panel or the screen.
+         *
+         * @method setPanelWidth
+         * @param isMobileWidth {Boolean} whether the current screen-width is &#x60;mobile-width&#x60;
+         * @since 0.0.1
+         */
+        setPanelWidth: function(isMobileWidth) {
+            var instance = this,
+                host = instance.host,
+                model = instance.model;
+            if (isMobileWidth) {
+                host.hasInlineStyle(&#x27;maxWidth&#x27;) &amp;&amp; host.removeInlineStyle(&#x27;maxWidth&#x27;);
+                host.setAttr(&#x27;expand-buttons&#x27;, &#x27;true&#x27;);
+            }
+            else {
+                if (model.maxWidth) {
+                    host.setInlineStyle(&#x27;maxWidth&#x27;, model.maxWidth);
+                    if (host.width&gt;MAX_WIDTH_FULL_BUTTONS) {
+                        host.removeAttr(&#x27;expand-buttons&#x27;);
+                    }
+                    else {
+                        host.setAttr(&#x27;expand-buttons&#x27;, &#x27;true&#x27;);
+                    }
+                }
+                else {
+                     host.removeAttr(&#x27;expand-buttons&#x27;);
+                }
+            }
+        },
+        /*
+         * Maes this panel as the &#x60;top&#x60;-panel of the stack.
+         *
+         * @method showOnTop
+         * @since 0.0.1
+         */
+        showOnTop: function() {
+            stackManager.setOnTop(this.host);
+        },
+        /*
+         * Cleansup the plugin. Is invoked whenever a plugin gets unplugged or its host gets removed from the dom.
+         *
+         * @method destroy
+         * @since 0.0.1
+         */
+        destroy: function() {
+            var instance = this,
+                host = instance.host;
+            instance._resizeHandler.detach();
+            host.removeInlineStyle(&#x27;z-index&#x27;);
+            host.unplug(&#x27;dd&#x27;);
+            host.unplug(&#x27;fm&#x27;);
+            host.removeClass([&#x27;itsa-hidden&#x27;, &#x27;itsa-full-draggable&#x27;]);
+            stackManager.unRegisterModal(host);
+            host.empty();
+        }
+    });
+
+    return Panel;
+};
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

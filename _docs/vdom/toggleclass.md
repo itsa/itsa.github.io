@@ -111,7 +111,7 @@ Clik on the button to toggle the className:
         containers.toggleClass('red');
     };
 
-    ITSA.Event.after('click', toggle, '#button-toggle');
+    ITSA.Event.after('tap', toggle, '#button-toggle');
 </script>
 ```
 
@@ -124,5 +124,5 @@ Clik on the button to toggle the className:
         containers.toggleClass('red');
     };
 
-    ITSA.Event.after('click', toggle, '#button-toggle');
+    ITSA.Event.after('tap', toggle, '#button-toggle');
 </script>

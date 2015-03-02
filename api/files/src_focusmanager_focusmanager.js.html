@@ -65,17 +65,21 @@
             
                 <li><a href="../classes/Function.html">Function</a></li>
             
+                <li><a href="../classes/HTMLElement.html">HTMLElement</a></li>
+            
                 <li><a href="../classes/IO.html">IO</a></li>
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
                 <li><a href="../classes/Node.html">Node</a></li>
             
+                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
                 <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
             
-                <li><a href="../classes/Plugins.html">Plugins</a></li>
+                <li><a href="../classes/Panel.html">Panel</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -100,8 +104,6 @@
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
             
                 <li><a href="../modules/element-array.html">element-array</a></li>
-            
-                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -159,7 +161,11 @@
             
                 <li><a href="../modules/node-parser.html">node-parser</a></li>
             
+                <li><a href="../modules/node-plugin.html">node-plugin</a></li>
+            
                 <li><a href="../modules/node-win.html">node-win</a></li>
+            
+                <li><a href="../modules/panel.html">panel</a></li>
             
                 <li><a href="../modules/useragent.html">useragent</a></li>
             
@@ -214,6 +220,7 @@
 
 require(&#x27;js-ext/lib/object.js&#x27;);
 require(&#x27;polyfill&#x27;);
+require(&#x27;./css/focusmanager.css&#x27;);
 
 /**
  *
@@ -325,10 +332,32 @@ module.exports = function (window) {
             // in case sourceNode is an innernode of a selector, we need to start from the selector:
             sourceNode.matches(selector) || (sourceNode=sourceNode.inside(selector));
             if (downwards) {
-                nodeHit = sourceNode.next(selector, focusContainerNode) || (noloop ? sourceNode.last(selector, focusContainerNode) : sourceNode.first(selector, focusContainerNode));
+                nodeHit = sourceNode;
+/*jshint noempty:true */
+                while ((nodeHit=nodeHit.next(selector, focusContainerNode)) &amp;&amp; (nodeHit.getStyle(&#x27;display&#x27;)===&#x27;none&#x27;)) {}
+/*jshint noempty:false */
+                if (!nodeHit) {
+                    nodeHit = noloop ? sourceNode.last(selector, focusContainerNode) : sourceNode.first(selector, focusContainerNode);
+                    if (nodeHit.getStyle(&#x27;display&#x27;)===&#x27;none&#x27;) {
+/*jshint noempty:true */
+                        while ((nodeHit=nodeHit[noloop ? &#x27;previous&#x27; : &#x27;next&#x27;](selector, focusContainerNode)) &amp;&amp; (nodeHit.getStyle(&#x27;display&#x27;)===&#x27;none&#x27;)) {}
+/*jshint noempty:false */
+                    }
+                }
             }
             else {
-                nodeHit = sourceNode.previous(selector, focusContainerNode) || (noloop ? sourceNode.first(selector, focusContainerNode) : sourceNode.last(selector, focusContainerNode));
+                nodeHit = sourceNode;
+/*jshint noempty:true */
+                while ((nodeHit=nodeHit.previous(selector, focusContainerNode)) &amp;&amp; (nodeHit.getStyle(&#x27;display&#x27;)===&#x27;none&#x27;)) {}
+/*jshint noempty:false */
+                if (!nodeHit) {
+                    nodeHit = noloop ? sourceNode.first(selector, focusContainerNode) : sourceNode.last(selector, focusContainerNode);
+                    if (nodeHit.getStyle(&#x27;display&#x27;)===&#x27;none&#x27;) {
+/*jshint noempty:true */
+                        while ((nodeHit=nodeHit[noloop ? &#x27;next&#x27; : &#x27;previous&#x27;](selector, focusContainerNode)) &amp;&amp; (nodeHit.getStyle(&#x27;display&#x27;)===&#x27;none&#x27;)) {}
+/*jshint noempty:false */
+                    }
+                }
             }
             if (nodeHit===sourceNode) {
                 // cannot found another, return itself, BUT return &#x60;initialSourceNode&#x60; if it is available
@@ -455,7 +484,7 @@ module.exports = function (window) {
                 if (!focusNode) {
                     // check for keyenter, but only when e.target equals a focusmanager:
                     if (sourceNode.matches(&#x27;[plugin-fm=&quot;true&quot;]&#x27;)) {
-                        actionkey = focusContainerNode._plugin.fm.model.keyenter;
+                        actionkey = sourceNode._plugin.fm.model.keyenter;
                         if (actionkey) {
                             keys = actionkey.split(&#x27;+&#x27;);
                             len = keys.length;

@@ -65,17 +65,21 @@
             
                 <li><a href="../classes/Function.html">Function</a></li>
             
+                <li><a href="../classes/HTMLElement.html">HTMLElement</a></li>
+            
                 <li><a href="../classes/IO.html">IO</a></li>
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
                 <li><a href="../classes/Node.html">Node</a></li>
             
+                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
                 <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
             
                 <li><a href="../classes/Object.html">Object</a></li>
             
-                <li><a href="../classes/Plugins.html">Plugins</a></li>
+                <li><a href="../classes/Panel.html">Panel</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
             
@@ -100,8 +104,6 @@
                 <li><a href="../modules/drag-drop.html">drag-drop</a></li>
             
                 <li><a href="../modules/element-array.html">element-array</a></li>
-            
-                <li><a href="../modules/element-plugin.html">element-plugin</a></li>
             
                 <li><a href="../modules/event.html">event</a></li>
             
@@ -159,7 +161,11 @@
             
                 <li><a href="../modules/node-parser.html">node-parser</a></li>
             
+                <li><a href="../modules/node-plugin.html">node-plugin</a></li>
+            
                 <li><a href="../modules/node-win.html">node-win</a></li>
+            
+                <li><a href="../modules/panel.html">panel</a></li>
             
                 <li><a href="../modules/useragent.html">useragent</a></li>
             
@@ -213,17 +219,15 @@
 &quot;use strict&quot;;
 
 /**
- * Integrates DOM-events to event. more about DOM-events:
- * http://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/
+ * Basic NodePlugin Class for plugin&#x27;s on HTMLElements.
  *
  *
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  *
- * @module vdom
- * @submodule element-plugin
- * @class Plugins
+ * @module node-plugin
+ * @class NodePlugin
  * @since 0.0.1
 */
 
@@ -329,6 +333,14 @@ module.exports = function (window) {
         scroll: true
     };
 
+    /*
+     * Inspects the DOM for Elements that have the plugin defined by their html and plugs the Plugin-Class.
+     *
+     * @method pluginDOM
+     * @param NewClass {Class} the class to be inspected
+     * @protected
+     * @since 0.0.1
+     */
     pluginDOM = function(NewClass) {
         // asynchroniously we check all current elements and render when needed:
         var ns = NewClass.prototype.$ns;
@@ -343,11 +355,19 @@ module.exports = function (window) {
         });
     };
 
+    /*
+     * Inspects the DOM for Elements that have the plugin defined and and initialized. Then it will resyncs the plugin.
+     *
+     * @method pluginDOMresync
+     * @param NewClass {Class} the class to be inspected
+     * @protected
+     * @since 0.0.1
+     */
     pluginDOMresync = function(NewClass) {
         // asynchroniously we check all current elements and render when needed:
         var ns = NewClass.prototype.$ns;
         asyncSilent(function() {
-            var elements = DOCUMENT.getAll(&#x27;[plugin-&#x27;+ns+&#x27;=&quot;true&quot;]&#x27;, true),
+            var elements = DOCUMENT.getAll(&#x27;[plugin-&#x27;+ns+&#x27;=&quot;true&quot;][&#x27;+ns+&#x27;-ready=&quot;true&quot;]&#x27;, true),
                 len = elements.length,
                 element, i;
             for (i=0; i&lt;len; i++) {
@@ -357,6 +377,15 @@ module.exports = function (window) {
         });
     };
 
+    /*
+     * Sets the config (first) and then the attribute-values into the plugin&#x27;s model.
+     *
+     * @method attrsToModel
+     * @param plugin {Object} the plugin-instance
+     * @param config {Object} config
+     * @protected
+     * @since 0.0.1
+     */
     attrsToModel = function(plugin, config) {
         var host = plugin.host,
             attrs = plugin.attrs,
@@ -403,6 +432,14 @@ module.exports = function (window) {
         });
     };
 
+    /*
+     * Sets the plugin.model properties into the attributes. Only those properties that are specified by &#x60;attrs&#x60; are set.
+     *
+     * @method modelToAttrs
+     * @param plugin {Object} the plugin-instance
+     * @protected
+     * @since 0.0.1
+     */
     modelToAttrs = function(plugin) {
         console.log(NAME+&#x27;modelToAttrs&#x27;);
         var attrs = plugin.attrs,
@@ -418,6 +455,15 @@ module.exports = function (window) {
         }
     };
 
+    /*
+     * Syncs the plugin: both sets the attributes as well invoking &#x60;sync&#x60;.
+     *
+     * @method syncPlugin
+     * @param plugin {Object} the plugin-instance
+     * @param compareWithPrevData {Boolean} whether to sync &quot;no matter what&quot; or only when pervious modeldata was changed.
+     * @protected
+     * @since 0.0.1
+     */
     syncPlugin = function(plugin, compareWithPrevData) {
         var stringifiedModel;
         if (compareWithPrevData) {
@@ -443,6 +489,15 @@ module.exports = function (window) {
         plugin.sync();
     };
 
+    /*
+     * In case &#x60;object.observe&#x60; is not present, will setup automaticly refresing the plugin on model-changes.
+     * Does not do anything when &#x60;object.observe&#x60; is present, because the object-observer takes care of this.
+     *
+     * @method autoRefreshPlugin
+     * @param plugin {Object} the plugin-instance
+     * @protected
+     * @since 0.0.1
+     */
     autoRefreshPlugin = function(plugin) {
         if (!NATIVE_OBJECT_OBSERVE) {
             plugin._EventFinalizer = Event.finalize(function(e) {
@@ -473,6 +528,7 @@ module.exports = function (window) {
        /**
         * Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.
         *
+        * @for HTMLElement
         * @method isPlugged
         * @param plugin {String} The name of the plugin that should be plugged. Needs to be the Class, not an instance!
         * @return {Boolean} whether the plugin is plugged in
@@ -505,29 +561,29 @@ module.exports = function (window) {
         * @param plugin {String} The name of the plugin that should be plugged.
         * @param [config] {Object} any config that should be passed through when the class is instantiated.
         * @param [model] {Object} model to used as &#x60;ns.model&#x60;
-        * @chainable
+        * @return {Object|undefined} the plugin&#x27;s instance, or undefined in case of an unregistered plugin
         * @since 0.0.1
         */
         HTMLElementPrototype.plug = function(plugin, config, model) {
             var instance = this,
                 Plugin;
             if (typeof plugin===&#x27;string&#x27;) {
-                Plugin = window._ITSAPlugins[plugin];
-                if (Plugin) {
-                    if (!instance.isPlugged(Plugin)) {
+                if (window._ITSAPlugins[plugin]) {
+                    if (!instance._plugin || !instance._plugin[plugin]) {
                         instance._plugin || Object.protectedProp(instance, &#x27;_plugin&#x27;, {});
+                        Plugin = window._ITSAPlugins[plugin];
                         instance._plugin[plugin] = new Plugin(instance, config, model);
                     }
                     else {
                         console.info(&#x27;ElementPlugin &#x27;+plugin+&#x27; already plugged in&#x27;);
                         model &amp;&amp; instance._plugin[plugin].bindModel(model);
                     }
+                    return instance._plugin[plugin];
                 }
                 else {
                     console.warn(&#x27;Plugin &#x27;+plugin+&#x27; is not registered&#x27;);
                 }
             }
-            return instance;
         };
 
        /**
@@ -557,7 +613,7 @@ module.exports = function (window) {
         */
         HTMLElementPrototype.unplug = function(plugin) {
             var instance = this;
-            if (instance.isPlugged(plugin)) {
+            if (instance._plugin &amp;&amp; instance._plugin[plugin]) {
                 instance._plugin[plugin].destroy();
             }
             return instance;
@@ -575,8 +631,57 @@ module.exports = function (window) {
             modelToAttrs(instance);
         },
         {
+            /*
+             * Internal hash containing the events which have a delayed Event-finalize synchronisation
+             * on browsers that don&#x27;t support object.observe.
+             * Members of this object can be removed by calling &#x60;setDirectEventResponse&#x60;
+             *
+             * @property _DELAYED_FINALIZE_EVENTS
+             * @default {
+             *    mousedown: true,
+             *    mouseup: true,
+             *    mousemove: true,
+             *    panmove: true,
+             *    panstart: true,
+             *    panleft: true,
+             *    panright: true,
+             *    panup: true,
+             *    pandown: true,
+             *    pinchmove: true,
+             *    rotatemove: true,
+             *    focus: true,
+             *    manualfocus: true,
+             *    keydown: true,
+             *    keyup: true,
+             *    keypress: true,
+             *    blur: true,
+             *    resize: true,
+             *    scroll: true
+             * }
+             * @type Object
+             * @private
+             * @since 0.0.1
+            */
             _DELAYED_FINALIZE_EVENTS: DEFAULT_DELAYED_FINALIZE_EVENTS.shallowClone(),
+            /*
+             * Definition of all attributes: these attributes will be read during initalization and updated during &#x60;sync&#x60;
+             * In the dom, the attributenames are prepended with &#x60;pluginName-&#x60;. The property-values should be the property-types
+             * that belong to the property, this way the attributes get right casted into model.
+             *
+             * @property attrs
+             * @default {}
+             * @type Object
+             * @since 0.0.1
+            */
             attrs: {},
+            /*
+             * Any default values for attributes specified by &#x60;attrs&#x60;.
+             *
+             * @property defaults
+             * @default {}
+             * @type Object
+             * @since 0.0.1
+            */
             defaults: {},
            /**
             * Binds a model to the plugin, making plugin.model equals the bound model.
@@ -593,9 +698,10 @@ module.exports = function (window) {
             bindModel: function(model, mergeCurrent) {
                 console.log(NAME+&#x27;bindModel&#x27;);
                 var instance = this,
+                    host = instance.host,
                     observer;
                 if (Object.isObject(model) &amp;&amp; (instance.model!==model)) {
-                    instance.host.removeAttr(&#x27;bound-model&#x27;);
+                    host.removeAttr(&#x27;bound-model&#x27;);
                     if (NATIVE_OBJECT_OBSERVE) {
                         observer = instance._observer;
                         observer &amp;&amp; Object.unobserve(instance.model, observer);
@@ -609,18 +715,24 @@ module.exports = function (window) {
                         Object.observe(instance.model, observer);
                         instance._observer = observer;
                     }
-                    syncPlugin(instance);
+                    (host.getAttr(instance.$ns+&#x27;-ready&#x27;)===&#x27;true&#x27;) &amp;&amp; syncPlugin(instance);
                 }
             },
+            /*
+             * Gets invoked after the complete initialization of all constructors in the chain.
+             * This method assures it will happen as last stage of the initialisation.
+             * This method also will invoke &#x60;render&#x60; (unless render was already done on the server)
+             *
+             * @method afterInit
+             * @since 0.0.1
+             */
             afterInit: function() {
                 var instance = this,
                     ns = instance.$ns,
                     host = instance.host;
-                if (host.getAttr(ns+&#x27;-ready&#x27;)!==&#x27;true&#x27;) {
-                    instance.render();
-                    host.setAttr(ns+&#x27;-ready&#x27;, &#x27;true&#x27;, true);
-                }
+                (host.getAttr(ns+&#x27;-ready&#x27;)===&#x27;true&#x27;) || instance.render();
                 syncPlugin(instance);
+                host.setAttr(ns+&#x27;-ready&#x27;, &#x27;true&#x27;, true);
                 autoRefreshPlugin(instance);
                 host._pluginReadyInfo || (host._pluginReadyInfo={});
                 host._pluginReadyInfo[ns] || (host._pluginReadyInfo[ns]=window.Promise.manage());
@@ -681,12 +793,48 @@ module.exports = function (window) {
                     });
                 }
             },
+            /*
+             * Renders the plugin. This method is invoked only once: at the end of initialization.
+             * It should be used to render any nodes inside the host. Not all plugins need this.
+             * Defaults to NOOP.
+             *
+             * @method render
+             * @since 0.0.1
+             */
             render: function() {
                 // defaults to NOOP
             },
+            /*
+             * Syncs plugin.model&#x27;s data with the host. Not its attributes: they will be synced automaticly.
+             * Is invoked after every change of plugin.model&#x27;s data.
+             *
+             * @method sync
+             * @since 0.0.1
+             */
             sync: function() {
                 // defaults to NOOP
             },
+           /**
+            * Defines the &#x60;key&#x60;-property on element.model, but only when is hasn&#x27;t been defined before.
+            *
+            * @method defineWhenUndefined
+            * @param key {String} plugin.model&#x27;s property
+            * @param value {any} its value to be set
+            * @chainable
+            * @since 0.0.1
+            */
+            defineWhenUndefined: function(key, value) {
+                var instance = this,
+                    model = this.model;
+                model[key] || (model[key]=value);
+                return instance;
+            },
+            /*
+             * Cleansup the plugin. Is invoked whenever a plugin gets unplugged or its host gets removed from the dom.
+             *
+             * @method destroy
+             * @since 0.0.1
+             */
             destroy: function () {
                 var instance = this,
                     host = instance.host,
