@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/itsa.build/itsa.build.js - Itsa</title>
+    <title>src/messages/messages.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -212,203 +212,121 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/itsa.build/itsa.build.js</h1>
+                        <h1 class="file-heading">File: src/messages/messages.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- * The ITSA module is an aggregator for all the individual modules that the library uses.
- * The developer is free to use it as it is or tailor it to contain whatever modules
- * he/she might need in the global namespace.
- *
- * The modules themselves work quite well independent of this module and can be used
- * separately without the need of them being integrated under one globa namespace.
+ * Creating floating Panel-nodes which can be shown and hidden.
  *
  *
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
- * @module itsa.build
  *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
 */
-(function (window) {
+
+require(&#x27;js-ext&#x27;);
+require(&#x27;polyfill&#x27;);
+
+(function (global) {
 
     &quot;use strict&quot;;
 
-    /**
-     * The ITSA class provides the core functionality for the ITSA library
-     * and is the root namespace for all the additional modules.
-     *
-     * The ITSA class cannot be instantiated.
-     * Instead, the ITSA function takes a configuration object to allow for tailoring of the library.
-     * The ITSA function returns itself to allow for further chaining.
-     *
-     * Calling the ITSA function is optional. If the default configuration is acceptable,
-     * the ITSA class can be used directly.
-     *
-     * The ITSA name is usually used only once in an application, when configuring it
-     * and when calling the [&#x60;ready&#x60;](#method_ready) or [&#x60;require&#x60;](#method_require) methods.
-     * The callback to these two methods provide a reference to ITSA itself as their argument.
-     * These methods allow the developer to rename ITSA to a shorter name, usually &#x60;P&#x60;,
-     * for use within the local scope.
-     *
-     *  ITSA( config )
-     *      .require(&#x27;dialog&#x27;, &#x27;event&#x27;, ...)
-     *      .then(function (P) {
-     *          // P is an alias of ITSA
-     *      });
-     *
-     *  // If the default configuration is acceptable, you can simply do:
-     *  ITSA.require(&#x27;dialog&#x27;, &#x27;event&#x27;, ...)
-     *      .then(function (P) {
-     *          // P is an alias of ITSA
-     *      });
-     *
-     *  // If extra modules are to be loaded later, you can simply do:
-     *  ITSA( config ).ready
-     *      .then(function (P) {
-     *          // P is an alias of ITSA
-     *      });
-     *
-     *  // And if no configuration is needed:
-     *  ITSA.ready
-     *      .then(function (P) {
-     *          // P is an alias of ITSA
-     *      });
-     *
-     *
-     *
-     * @class ITSA
-     * @static
-     * @param config {Object} Configuration options for the ITSA Library
-     * @return self {Object}
-    */
-
-    require(&#x27;css&#x27;);
-    require(&#x27;polyfill/polyfill.js&#x27;); // want the full version
-
-    var jsExt = require(&#x27;js-ext/js-ext.js&#x27;); // want the full version: include it at the top, so that object.merge is available
-
-    var ITSA = function (config) {
-        ITSA._config.merge(config, {force: true});
-        return ITSA;
-    };
-    /**
-     * Global configuration properties for the ITSA object.
-     * It can only be set on initialization via the [&#x60;ITSA&#x60;](#docs-main) function.
-     *
-     * The config is set at a default-configutation
-     *
-     * @property _config
-     * @type Object
-     * @private
-    */
-    ITSA._config = {
-        debug: true,
-        base: &#x27;/components&#x27;
-    };
-
-    /**
-     * Reference to &#x60;Classes&#x60; in [js-ext/extra/classes.js](../modules/js-ext.html)
-     *
-     * @property Classes
-     * @type Object
-     * @static
-    */
-
-    /**
-     * Reference to the &#x60;LightMap&#x60;-Class in [js-ext/extra/lightmap.js](../modules/js-ext.html)
-     *
-     * @property LightMap
-     * @type Class
-     * @static
-    */
-
-    /**
-     * Reference to the &#x60;createHashMap&#x60; function in [js-ext/extra/hashmap.js](../modules/js-ext.html)
-     *
-     * @property createHashMap
-     * @type function
-     * @static
-    */
-
-    // Note: we can only merge them after je-ext is required --&gt; ITSA.merge is only then available
-    ITSA.merge(jsExt);
-    require(&#x27;window-ext&#x27;)(window);
-
-    var fakedom = window.navigator.userAgent===&#x27;fake&#x27;,
-        Event = fakedom ? require(&#x27;event&#x27;) : require(&#x27;event-mobile&#x27;)(window),
-        io_config = {
-            // timeout: 3000,
-            debug: true,
-            base: &#x27;/build&#x27;
+    var NAME = &#x27;[messages]: &#x27;,
+        MESSAGE_LEVELS = {
+            1: &#x27;message&#x27;,
+            2: &#x27;warning&#x27;,
+            3: &#x27;error&#x27;
         },
-        dragdrop;
+        createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
+        later = require(&#x27;utils&#x27;).later,
+        messages, Event;
 
-    require(&#x27;event/extra/objectobserve.js&#x27;)(window);
-    require(&#x27;vdom&#x27;)(window);
+    global._ITSAmodules || Object.protectedProp(global, &#x27;_ITSAmodules&#x27;, createHashMap());
 
-    /**
-     * Reference to the &#x60;idGenerator&#x60; function in [utils](../modules/utils.html)
-     *
-     * @property idGenerator
-     * @type function
-     * @static
-    */
-    require(&#x27;node-plugin&#x27;)(window);
-    require(&#x27;constrain&#x27;)(window);
-    require(&#x27;panel&#x27;)(window);
-
-    ITSA.merge(require(&#x27;utils&#x27;));
-    ITSA.RESERVED_WORDS = require(&#x27;js-ext/extra/reserved-words.js&#x27;);
-
-    if (!fakedom) {
-        require(&#x27;event-dom/extra/hover.js&#x27;)(window);
-        require(&#x27;event-dom/extra/valuechange.js&#x27;)(window);
-        require(&#x27;event-dom/extra/blurnode.js&#x27;)(window);
-        require(&#x27;event-dom/extra/focusnode.js&#x27;)(window);
-        // setup dragdrop:
-        dragdrop = require(&#x27;drag-drop&#x27;)(window);
-        ITSA.DD = dragdrop;
-        ITSA.DD.init();
-        require(&#x27;focusmanager&#x27;)(window);
+/*jshint boss:true */
+    if (messages=global._ITSAmodules.messages) {
+/*jshint boss:false */
+        module.exports = messages; // messages was already created
+        return;
     }
 
-    ITSA.merge(require(&#x27;messages&#x27;));
-    require(&#x27;dialog&#x27;)(window);
-    require(&#x27;scrollable&#x27;)(window);
+    Event = require(&#x27;event&#x27;);
 
-    /**
-     * Reference to the [IO](io.html) object
-     * @property IO
-     * @type Object
-     * @static
-    */
-    ITSA.IO = require(&#x27;io/extra/io-transfer.js&#x27;)(window);
-    ITSA.IO.config.merge(io_config);
-    require(&#x27;io/extra/io-cors-ie9.js&#x27;)(window);
-    require(&#x27;io/extra/io-stream.js&#x27;)(window);
-    require(&#x27;io/extra/io-xml.js&#x27;)(window);
+    messages = {
+        message: function(message, options) {
+            var messagePromise = global.Promise.manage(),
+                emitter, level, timeout;
+            options || (options={});
+            emitter = options.emitter || &#x27;global&#x27;;
+            level = MESSAGE_LEVELS[options.level] || MESSAGE_LEVELS[1];
+            timeout = options.timeout;
+            messagePromise.merge(options);
+            messagePromise.content = message || &#x27;&#x27;;
+            if ((typeof timeout===&#x27;number&#x27;) &amp;&amp; (timeout&gt;0)) {
+                // with nothing to notify it was timeout
+                later(messagePromise.fulfill, timeout);
+            }
+            Event.emit(options.target || global, emitter+&#x27;:&#x27;+level, {messagePromise: messagePromise});
+            return messagePromise;
+        },
+        alert: function(message) {
+            return this.message(message, {
+                footer: &#x27;&lt;button class=&quot;pure-button pure-button-primary&quot;&gt;Ok&lt;/button&gt;&#x27;
+            });
+        },
+        warn: function(message) {
+            return this.message(message, {
+                footer: &#x27;&lt;button class=&quot;pure-button pure-button-primary&quot;&gt;Ok&lt;/button&gt;&#x27;,
+                level: 2
+            });
+        },
+        prompt: function(message, defaultValue, label) {
+            var placeholder = defaultValue ? &#x27; value=&quot;&#x27;+String(defaultValue)+&#x27;&quot;&#x27; : &#x27;&#x27;;
+            if ((typeof message ===&#x27;string&#x27;) || (message!==&#x27;&#x27;)) {
+                message = &#x27;&lt;div class=&quot;message&quot;&gt;&#x27;+message+&#x27;&lt;/div&gt;&#x27;;
+            }
+            else {
+                message = &#x27;&#x27;;
+            }
+            label = (typeof label===&#x27;string&#x27;) ? (label=&#x27;&lt;label for=&quot;iprompt&quot;&gt;&#x27;+label+&#x27;&lt;/label&gt;&#x27;) : &#x27;&#x27;;
+            return this.message(
+                &#x27;&lt;div class=&quot;pure-form&quot;&gt;&#x27;+message+label+&#x27;&lt;input id=&quot;iprompt&quot; type=&quot;text&quot;&#x27;+placeholder+&#x27; fm-defaultitem=&quot;true&quot; fm-primaryonenter=&quot;true&quot;&gt;&lt;/div&gt;&#x27;,
+                {
+                   footer: &#x27;&lt;button is=&quot;cancel&quot; class=&quot;pure-button&quot;&gt;Cancel&lt;/button&gt;&lt;button is=&quot;ok&quot; class=&quot;pure-button pure-button-primary&quot;&gt;Ok&lt;/button&gt;&#x27;
+                }
+            ).then(function(container) {
+                var button = container.getElement(&#x27;button&#x27;);
+                if (button.getAttr(&#x27;is&#x27;)===&#x27;ok&#x27;) {
+                    return container.getElement(&#x27;input&#x27;).getValue();
+                }
+            });
+        },
+        catchErrors: function(catchOrNot) {
+            // DO NOT use &#x60;this&#x60; --&gt; when merged, &#x60;this&#x60; will become the host
+            // while &#x60;global.onerror&#x60; refers to &#x60;messages&#x60;
+            messages._catchErrors = catchOrNot;
+        }
+    };
 
-    /**
-     * Reference to the [UserAgent](useragent.html) object
-     * @property UA
-     * @type Object
-     * @static
-    */
-    ITSA.UA = require(&#x27;useragent&#x27;)(window);
+    global.onerror = function(msg, url, line) {
+        if (messages._catchErrors) {
+            messages.message(msg, {
+                header: &#x27;Javascript-error (line &#x27;+line+&#x27;)&#x27;,
+                footer: url,
+                level: 3
+            });
+            return true;
+        }
+    };
 
-    /**
-     * [Event](Event.html)-instance
-     * @property Event
-     * @type Event
-     * @static
-    */
-    ITSA.Event = Event;
+    module.exports = messages;
 
-    module.exports = ITSA;
-
-})(global.window || require(&#x27;node-win&#x27;));
+}(typeof global !== &#x27;undefined&#x27; ? global : /* istanbul ignore next */ this));
 
     </pre>
 </div>
