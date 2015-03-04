@@ -2753,6 +2753,7 @@ module.exports = function (window) {
             model.callback = function(buttonNode) {
                 var containerNode = DOCUMENT.createElement('div'),
                     contentNode = instance.panel.getElement('>div[is="content"]'),
+                    messagePromise = model.messagePromise,
                     node;
                 // move all childNodes from contentNode inside the new DIV
                 // we need to start with position 2 --> the first 2 nodes are the scroller-nodes
@@ -2763,8 +2764,8 @@ module.exports = function (window) {
                 }
                 // now append a copy of the buttonNode:
                 containerNode.append(buttonNode.getOuterHTML());
-                model.messagePromise.fulfill(containerNode);
-                // we can sefely remove the newly created container-node: the vdom holds it for 1 minute
+                messagePromise.fulfill(containerNode);
+                // we can safely remove the newly created container-node: the vdom holds it for 1 minute
                 containerNode.remove();
             };
             instance.panel = DOCUMENT.createPanel(model);
@@ -14146,12 +14147,13 @@ Promise.chainFns = function (funcs, finishAll) {
 };
 
 /**
- * Returns a Promise with 4 additional methods:
+ * Returns a Promise with 5 additional methods:
  *
  * promise.fulfill
  * promise.reject
  * promise.callback
  * promise.setCallback
+ * promise.pending
  *
  * With Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.
  * You can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any.
@@ -14203,6 +14205,10 @@ Promise.manage = function (callbackFn) {
         console.log(NAME, 'manage.reject '+((typeof reason==='string') ? reason : reason && (reason.message || reason.description)));
         finished = true;
         rejectHandler(reason);
+    };
+
+    promise.pending = function () {
+        return !finished;
     };
 
     promise.callback = function () {
@@ -25630,16 +25636,23 @@ module.exports = function (window) {
                 removal = [],
                 vChildren = instance.vChildren,
                 len = vChildren.length,
-                vChild, i, styleContent;
+                vChild, i, styleContent, vChildInner;
             for (i=0; i<len; i++) {
                 vChild = vChildren[i];
                 if (vChild.tag==='STYLE') {
-                    styleContent = vChild.vChildNodes[0].text;
-                    if (compare.contains(styleContent)) {
-                        removal[removal.length] = vChild;
+                    vChildInner = vChild.vChildNodes[0];
+                    if (vChildInner) {
+                        styleContent = vChildInner.text;
+                        if (compare.contains(styleContent)) {
+                            removal[removal.length] = vChild;
+                        }
+                        else {
+                            compare[compare.length] = styleContent;
+                        }
                     }
                     else {
-                        compare[compare.length] = styleContent;
+                        // empty style-tag
+                        removal[removal.length] = vChild;
                     }
                 }
             }

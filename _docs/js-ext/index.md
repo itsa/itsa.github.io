@@ -301,6 +301,7 @@ Promise.**manage**(`callbackFn`) returns a new Promise that is supposed to be ma
 * promise.reject
 * promise.callback
 * promise.setCallback
+* promise.pending
 
 You can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any, or the callback which is set at a later time using `setCallback()`. The method promise.**fulfill**() and promise.**reject**() are meant to resolve the promise from outside, just like deferred can do.
 

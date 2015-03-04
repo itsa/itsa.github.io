@@ -810,11 +810,12 @@ its transformed into a resolved promise.</p>
     </div>
 
     <div class="description">
-        <p>Returns a Promise with 4 additional methods:</p>
+        <p>Returns a Promise with 5 additional methods:</p>
 <p>promise.fulfill
 promise.reject
 promise.callback
-promise.setCallback</p>
+promise.setCallback
+promise.pending</p>
 <p>With Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.
 You can invoke promise.<strong>callback</strong>() which will invoke the original passed-in callbackFn - if any.
 promise.<strong>fulfill</strong>() and promise.<strong>reject</strong>() are meant to resolve the promise from outside, just like deferred can do.</p>
