@@ -2636,7 +2636,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":80}],6:[function(require,module,exports){
+},{"_process":83}],6:[function(require,module,exports){
 "use strict";
 module.exports = function (window) {
     require('node-plugin')(window);
@@ -2664,7 +2664,7 @@ module.exports = function (window) {
 
     return PluginConstrain;
 };
-},{"js-ext/extra/hashmap.js":37,"node-plugin":48}],7:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":39,"node-plugin":51}],7:[function(require,module,exports){
 var css = "*:focus {\n    outline: 0;\n}\n\na[target=\"_blank\"]:focus {\n    outline: 1px solid #129fea;\n}\n\n/* because we think the padding and margin should always be part of the size,\n   we define \"box-sizing: border-box\" for all elements */\n\n* {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],8:[function(require,module,exports){
 var css = ".pure-menu.pure-menu-open {\n    z-index: 3; /* prevent graph from crossing the menuarea */\n}\n\n.pure-button.pure-button-bordered,\n.pure-button.pure-button-bordered[disabled] {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;\n}\n\n.pure-button-active,\n.pure-button:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button.pure-button-bordered.pure-button-active[disabled],\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered[disabled]:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.4) inset, 0 0 6px rgba(0,0,0, 0.2) inset;\n}\n\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.6) inset;\n}\n\n/* restore pure-button:active */\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button:active:focus,\n.pure-button.pure-button-active:focus {\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6) inset, 0 0 10px rgba(0, 0, 0, 0.2) inset;\n}\n\n.pure-button.pure-button-rounded {\n    border-radius: 0.3em;\n}\n\n.pure-button.pure-button-heavyrounded {\n    border-radius: 0.5em;\n}\n\n.pure-button.pure-button-oval {\n    border-radius: 50%;\n}\n\n.pure-button.pure-button-halfoval {\n    border-radius: 25%;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -2675,8 +2675,180 @@ require('./css/default.css');
 require('./css/purecss-0.5.0.css');
 require('./css/pure-finetuned.css');
 },{"./css/default.css":7,"./css/pure-finetuned.css":8,"./css/purecss-0.5.0.css":9}],11:[function(require,module,exports){
-var css = "[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+var css = "[plugin-panel=\"true\"] div.message {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    padding: 0;\n    margin: 0 0 1.8em;\n}\n\n[plugin-panel=\"true\"] label[for=\"iprompt\"] {\n    margin-right: 1em;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],12:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('js-ext');
+require('messages');
+require('polyfill');
+require('./css/dialog.css');
+
+var NAME = '[dialog]: ',
+    MESSAGE_LEVELS = {
+        'message': 1,
+        'warning': 2,
+        'error': 3
+    },
+    MESSAGE_HASHES = {
+        'message': 'messages',
+        'warning': 'warnings',
+        'error': 'errors'
+    },
+    MESSAGE_HASHES_NR = {
+        1: 'messages',
+        2: 'warnings',
+        3: 'errors'
+    },
+    FOLLOWUP_DELAY = 200,
+    createHashMap = require('js-ext/extra/hashmap.js').createMap;
+
+module.exports = function (window) {
+
+    var DOCUMENT = window.document,
+        Classes = require('js-ext/extra/classes.js'),
+        UTILS = require('utils'),
+        later = UTILS.later,
+        async = UTILS.async,
+        dialog, Dialog, Event;
+
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
+
+/*jshint boss:true */
+    if (Dialog=window._ITSAmodules.Dialog) {
+/*jshint boss:false */
+        return Dialog; // Dialog was already created
+    }
+
+    require('panel')(window);
+    Event = require('event');
+
+    Dialog = Classes.createClass(function() {
+        var instance = this;
+        instance.model = {
+            draggable: true
+        };
+        instance.currentMessageLevel = 0;
+        instance.messages = [];
+        instance.warnings = [];
+        instance.errors = [];
+        instance.createContainer();
+        instance.setupListeners();
+    }, {
+        createContainer: function() {
+            var instance = this,
+                model = instance.model;
+            model.callback = function(buttonNode) {
+                var containerNode = DOCUMENT.createElement('div'),
+                    contentNode = instance.panel.getElement('>div[is="content"]'),
+                    messagePromise = model.messagePromise,
+                    node;
+                // move all childNodes from contentNode inside the new DIV
+                // we need to start with position 2 --> the first 2 nodes are the scroller-nodes
+/*jshint boss:true */
+                while (node=contentNode.childNodes[2]) {
+/*jshint boss:false */
+                    containerNode.appendChild(node);
+                }
+                // now append a copy of the buttonNode:
+                containerNode.append(buttonNode.getOuterHTML());
+                messagePromise.fulfill(containerNode);
+                // we can safely remove the newly created container-node: the vdom holds it for 1 minute
+                containerNode.remove();
+            };
+            instance.panel = DOCUMENT.createPanel(model);
+        },
+        processMessage: function(e) {
+            var instance = this,
+                messagePromise = e.messagePromise,
+                type = e.type,
+                level = MESSAGE_LEVELS[type],
+                list = instance[MESSAGE_HASHES[type]];
+            list[list.length] = messagePromise;
+            messagePromise.finally(
+                function() {
+                    list.remove(messagePromise);
+                    // handle the next message (if there)
+                    instance.handleMessage(true);
+                }
+            );
+            (level>instance.currentMessageLevel) && instance.handleMessage(!instance.isWaiting(), level);
+        },
+        setupListeners: function() {
+            var instance = this;
+            Event.after(['*:message', '*:warning', '*:error'], instance.processMessage.bind(instance));
+        },
+        isWaiting: function() {
+            return (this.currentMessageLevel===0);
+        },
+        handleMessage: function(delay, level) {
+            var instance = this,
+                model = instance.model,
+                messagePromise;
+            if (!level) {
+                // search level
+                if (instance.errors.length>0) {
+                    level = 3;
+                }
+                else if (instance.warnings.length>0) {
+                    level = 2;
+                }
+                else if (instance.messages.length>0) {
+                    level = 1;
+                }
+            }
+            if (!level || (instance[MESSAGE_HASHES_NR[level]].length===0)) {
+                // DO NOT make messagePromise null: it sould be there as return value
+                // of the last message
+                instance.currentMessageLevel = 0;
+                model.header = null;
+                model.content = '';
+                model.footer = null;
+                model.visible = false;
+                return;
+            }
+            instance.currentMessageLevel = level;
+            // now process the highest message
+            messagePromise = instance[MESSAGE_HASHES_NR[level]][0];
+            if (delay) {
+                model.visible = false;
+                later(instance.showMessage.bind(instance, messagePromise), FOLLOWUP_DELAY);
+            }
+            else {
+                async(instance.showMessage.bind(instance, messagePromise));
+            }
+        },
+        showMessage: function(messagePromise) {
+            var model = this.model;
+            model.messagePromise = messagePromise;
+            model.header = messagePromise.header;
+            model.content = messagePromise.content;
+            model.footer = messagePromise.footer;
+            model.visible = true;
+        }
+    });
+
+    // instantiate Dialog and make it operational:
+    dialog = new Dialog();
+
+    // return the Class, so it can be subclassed:
+    return Dialog;
+};
+},{"./css/dialog.css":11,"event":30,"js-ext":42,"js-ext/extra/classes.js":38,"js-ext/extra/hashmap.js":39,"messages":50,"panel":53,"polyfill":63,"utils":68}],13:[function(require,module,exports){
+var css = "[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],14:[function(require,module,exports){
 "use strict";
 
 /**
@@ -3770,9 +3942,9 @@ module.exports = function (window) {
     return DragModule;
 
 };
-},{"./css/drag-drop.css":11,"drag":14,"event-dom":15,"js-ext":40,"js-ext/extra/hashmap.js":37,"node-plugin":48,"polyfill/polyfill-base.js":60,"useragent":64,"vdom":77,"window-ext":78}],13:[function(require,module,exports){
+},{"./css/drag-drop.css":13,"drag":16,"event-dom":17,"js-ext":42,"js-ext/extra/hashmap.js":39,"node-plugin":51,"polyfill/polyfill-base.js":63,"useragent":67,"vdom":80,"window-ext":81}],15:[function(require,module,exports){
 var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -ms-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 3001 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],14:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],16:[function(require,module,exports){
 "use strict";
 
 /**
@@ -4431,7 +4603,7 @@ module.exports = function (window) {
 
     return DD;
 };
-},{"./css/drag.css":13,"event-dom":15,"js-ext":40,"js-ext/extra/hashmap.js":37,"node-plugin":48,"polyfill":60,"useragent":64,"vdom":77,"window-ext":78}],15:[function(require,module,exports){
+},{"./css/drag.css":15,"event-dom":17,"js-ext":42,"js-ext/extra/hashmap.js":39,"node-plugin":51,"polyfill":63,"useragent":67,"vdom":80,"window-ext":81}],17:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5191,7 +5363,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":28,"js-ext/extra/hashmap.js":37,"js-ext/lib/array.js":42,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"polyfill/polyfill-base.js":60,"utils":65,"vdom":77}],16:[function(require,module,exports){
+},{"event":30,"js-ext/extra/hashmap.js":39,"js-ext/lib/array.js":44,"js-ext/lib/object.js":47,"js-ext/lib/string.js":49,"polyfill/polyfill-base.js":63,"utils":68,"vdom":80}],18:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5291,7 +5463,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":15,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45}],17:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47}],19:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5392,7 +5564,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":15,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45}],18:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47}],20:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5494,7 +5666,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":15,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45}],19:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47}],21:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5781,7 +5953,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":15,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"utils":65,"vdom":77}],20:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"utils":68,"vdom":80}],22:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5885,7 +6057,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"./lib/hammer-2.0.4.js":21,"event-dom":15}],21:[function(require,module,exports){
+},{"./lib/hammer-2.0.4.js":23,"event-dom":17}],23:[function(require,module,exports){
 /* Changes mad to native hammerjs:
  *
  * Wrapped "(function(window, DOCUMENT, exportName, undefined) {"
@@ -8276,7 +8448,7 @@ module.exports = function (window) {
 
 };
 
-},{"utils":65}],22:[function(require,module,exports){
+},{"utils":68}],24:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -9655,7 +9827,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill/polyfill-base.js":60}],23:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"polyfill/polyfill-base.js":63}],25:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9776,7 +9948,7 @@ Event.Emitter = function(emitterName) {
 };
 
 module.exports = Event;
-},{"./event-base.js":22}],24:[function(require,module,exports){
+},{"./event-base.js":24}],26:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10044,7 +10216,7 @@ Classes.BaseClass.mergePrototypes(Event.Listener, true)
                  .mergePrototypes(ClassListener, true, {}, {});
 
 module.exports = Event;
-},{"./event-base.js":22,"js-ext/extra/classes.js":36,"js-ext/lib/object.js":45}],25:[function(require,module,exports){
+},{"./event-base.js":24,"js-ext/extra/classes.js":38,"js-ext/lib/object.js":47}],27:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10291,7 +10463,7 @@ module.exports = function (window) {
     module.exports = Event;
 
 };
-},{"../event-base.js":22,"./promise-finalize.js":26,"./timer-finalize.js":27,"io":35,"js-ext/lib/object.js":45,"utils":65}],26:[function(require,module,exports){
+},{"../event-base.js":24,"./promise-finalize.js":28,"./timer-finalize.js":29,"io":37,"js-ext/lib/object.js":47,"utils":68}],28:[function(require,module,exports){
 (function (global){
 (function (global) {
 
@@ -10352,7 +10524,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":37,"js-ext/lib/promise.js":46}],27:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":39,"js-ext/lib/promise.js":48}],29:[function(require,module,exports){
 (function (global){
 (function (global) {
 
@@ -10440,13 +10612,13 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../event-base.js":22,"js-ext/extra/hashmap.js":37}],28:[function(require,module,exports){
+},{"../event-base.js":24,"js-ext/extra/hashmap.js":39}],30:[function(require,module,exports){
 module.exports = require('./event-base.js');
 require('./event-emitter.js');
 require('./event-listener.js');
-},{"./event-base.js":22,"./event-emitter.js":23,"./event-listener.js":24}],29:[function(require,module,exports){
+},{"./event-base.js":24,"./event-emitter.js":25,"./event-listener.js":26}],31:[function(require,module,exports){
 var css = "[plugin-fm=\"true\"] {\n    /* NEVER can we select the text: when the focusmanager is active it will refocus on the active item */\n    -moz-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    cursor: default;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],30:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],32:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -10964,7 +11136,7 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"./css/focusmanager.css":29,"event-mobile":20,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"node-plugin":48,"polyfill":60,"utils":65,"window-ext":78}],31:[function(require,module,exports){
+},{"./css/focusmanager.css":31,"event-mobile":22,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"node-plugin":51,"polyfill":63,"utils":68,"window-ext":81}],33:[function(require,module,exports){
 
 "use strict";
 
@@ -11092,7 +11264,7 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"../io.js":35,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"xmldom":2}],32:[function(require,module,exports){
+},{"../io.js":37,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"xmldom":2}],34:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -11219,7 +11391,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":35,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45}],33:[function(require,module,exports){
+},{"../io.js":37,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47}],35:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11689,7 +11861,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":35,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"polyfill/polyfill-base.js":60}],34:[function(require,module,exports){
+},{"../io.js":37,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"js-ext/lib/string.js":49,"polyfill/polyfill-base.js":63}],36:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11841,7 +12013,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":35,"js-ext":40,"js-ext/extra/hashmap.js":37}],35:[function(require,module,exports){
+},{"../io.js":37,"js-ext":42,"js-ext/extra/hashmap.js":39}],37:[function(require,module,exports){
 (function (global){
 /**
  * Provides core IO-functionality.
@@ -12203,7 +12375,7 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":40,"js-ext/extra/hashmap.js":37,"polyfill/polyfill-base.js":60,"utils":65}],36:[function(require,module,exports){
+},{"js-ext":42,"js-ext/extra/hashmap.js":39,"polyfill/polyfill-base.js":63,"utils":68}],38:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -12816,7 +12988,7 @@ require('../lib/object.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/object.js":45,"js-ext/extra/hashmap.js":37,"polyfill/polyfill-base.js":60}],37:[function(require,module,exports){
+},{"../lib/object.js":47,"js-ext/extra/hashmap.js":39,"polyfill/polyfill-base.js":63}],39:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -12839,7 +13011,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],38:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -12951,7 +13123,7 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":42,"../lib/object.js":45,"./classes.js":36,"js-ext/extra/hashmap.js":37,"polyfill/lib/weakmap.js":58}],39:[function(require,module,exports){
+},{"../lib/array.js":44,"../lib/object.js":47,"./classes.js":38,"js-ext/extra/hashmap.js":39,"polyfill/lib/weakmap.js":61}],41:[function(require,module,exports){
 "use strict";
 
 var createHashMap = require('./hashmap.js').createMap;
@@ -13024,14 +13196,14 @@ module.exports = createHashMap({
     'with': true,
     'yield': true
 });
-},{"./hashmap.js":37}],40:[function(require,module,exports){
+},{"./hashmap.js":39}],42:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
 require('./lib/array.js');
 require('./lib/json.js');
 require('./lib/promise.js');
-},{"./lib/array.js":42,"./lib/function.js":43,"./lib/json.js":44,"./lib/object.js":45,"./lib/promise.js":46,"./lib/string.js":47}],41:[function(require,module,exports){
+},{"./lib/array.js":44,"./lib/function.js":45,"./lib/json.js":46,"./lib/object.js":47,"./lib/promise.js":48,"./lib/string.js":49}],43:[function(require,module,exports){
 "use strict";
 
 require('./lib/function.js');
@@ -13046,7 +13218,7 @@ module.exports = {
     Classes: require('./extra/classes.js'),
     LightMap: require('./extra/lightmap.js')
 };
-},{"./extra/classes.js":36,"./extra/hashmap.js":37,"./extra/lightmap.js":38,"./lib/array.js":42,"./lib/function.js":43,"./lib/json.js":44,"./lib/object.js":45,"./lib/promise.js":46,"./lib/string.js":47}],42:[function(require,module,exports){
+},{"./extra/classes.js":38,"./extra/hashmap.js":39,"./extra/lightmap.js":40,"./lib/array.js":44,"./lib/function.js":45,"./lib/json.js":46,"./lib/object.js":47,"./lib/promise.js":48,"./lib/string.js":49}],44:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -13197,7 +13369,7 @@ var cloneObj = function(obj) {
      };
 
 }(Array.prototype));
-},{"polyfill/polyfill-base.js":60}],43:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":63}],45:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -13256,7 +13428,7 @@ var NAME = '[Function]: ';
 
 }(Function.prototype));
 
-},{"polyfill/polyfill-base.js":60}],44:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":63}],46:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -13281,7 +13453,7 @@ var REVIVER = function(key, value) {
 JSON.parseWithDate = function(stringifiedObj) {
     return this.parse(stringifiedObj, REVIVER);
 };
-},{"polyfill/polyfill-base.js":60}],45:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":63}],47:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -13743,7 +13915,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"js-ext/extra/hashmap.js":37,"polyfill/polyfill-base.js":60}],46:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":39,"polyfill/polyfill-base.js":63}],48:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13975,12 +14147,13 @@ Promise.chainFns = function (funcs, finishAll) {
 };
 
 /**
- * Returns a Promise with 4 additional methods:
+ * Returns a Promise with 5 additional methods:
  *
  * promise.fulfill
  * promise.reject
  * promise.callback
  * promise.setCallback
+ * promise.pending
  *
  * With Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.
  * You can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any.
@@ -14034,6 +14207,10 @@ Promise.manage = function (callbackFn) {
         rejectHandler(reason);
     };
 
+    promise.pending = function () {
+        return !finished;
+    };
+
     promise.callback = function () {
         if (!finished && callbackFn) {
             console.log(NAME, 'manage.callback is invoked');
@@ -14048,7 +14225,7 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill":60}],47:[function(require,module,exports){
+},{"polyfill":63}],49:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -14330,7 +14507,122 @@ Promise.manage = function (callbackFn) {
 
 }(String.prototype));
 
-},{}],48:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
+(function (global){
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('js-ext');
+require('polyfill');
+
+(function (global) {
+
+    "use strict";
+
+    var NAME = '[messages]: ',
+        MESSAGE_LEVELS = {
+            1: 'message',
+            2: 'warning',
+            3: 'error'
+        },
+        createHashMap = require('js-ext/extra/hashmap.js').createMap,
+        later = require('utils').later,
+        messages, Event;
+
+    global._ITSAmodules || Object.protectedProp(global, '_ITSAmodules', createHashMap());
+
+/*jshint boss:true */
+    if (messages=global._ITSAmodules.messages) {
+/*jshint boss:false */
+        module.exports = messages; // messages was already created
+        return;
+    }
+
+    Event = require('event');
+
+    messages = {
+        message: function(message, options) {
+            var messagePromise = global.Promise.manage(),
+                emitter, level, timeout;
+            options || (options={});
+            emitter = options.emitter || 'global';
+            level = MESSAGE_LEVELS[options.level] || MESSAGE_LEVELS[1];
+            timeout = options.timeout;
+            messagePromise.merge(options);
+            messagePromise.content = message || '';
+            if ((typeof timeout==='number') && (timeout>0)) {
+                // with nothing to notify it was timeout
+                later(messagePromise.fulfill, timeout);
+            }
+            Event.emit(options.target || global, emitter+':'+level, {messagePromise: messagePromise});
+            return messagePromise;
+        },
+        alert: function(message) {
+            return this.message(message, {
+                footer: '<button class="pure-button pure-button-primary">Ok</button>'
+            });
+        },
+        warn: function(message) {
+            return this.message(message, {
+                footer: '<button class="pure-button pure-button-primary">Ok</button>',
+                level: 2
+            });
+        },
+        prompt: function(message, defaultValue, label) {
+            var placeholder = defaultValue ? ' value="'+String(defaultValue)+'"' : '';
+            if ((typeof message ==='string') || (message!=='')) {
+                message = '<div class="message">'+message+'</div>';
+            }
+            else {
+                message = '';
+            }
+            label = (typeof label==='string') ? (label='<label for="iprompt">'+label+'</label>') : '';
+            return this.message(
+                '<div class="pure-form">'+message+label+'<input id="iprompt" type="text"'+placeholder+' fm-defaultitem="true" fm-primaryonenter="true"></div>',
+                {
+                   footer: '<button is="cancel" class="pure-button">Cancel</button><button is="ok" class="pure-button pure-button-primary">Ok</button>'
+                }
+            ).then(function(container) {
+                var button = container.getElement('button');
+                if (button.getAttr('is')==='ok') {
+                    return container.getElement('input').getValue();
+                }
+            });
+        },
+        catchErrors: function(catchOrNot) {
+            // DO NOT use `this` --> when merged, `this` will become the host
+            // while `global.onerror` refers to `messages`
+            messages._catchErrors = catchOrNot;
+        }
+    };
+
+    global.onerror = function(msg, url, line) {
+        if (messages._catchErrors) {
+            messages.message(msg, {
+                header: 'Javascript-error (line '+line+')',
+                footer: url,
+                level: 3
+            });
+            return true;
+        }
+    };
+
+    module.exports = messages;
+
+}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"event":30,"js-ext":42,"js-ext/extra/hashmap.js":39,"polyfill":63,"utils":68}],51:[function(require,module,exports){
 "use strict";
 
 /**
@@ -15179,9 +15471,9 @@ module.exports = function (window) {
 
     window._ITSAmodules.ElementPlugin = true;
 };
-},{"event-dom":15,"event/extra/promise-finalize.js":26,"event/extra/timer-finalize.js":27,"js-ext/extra/classes.js":36,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"js-ext/lib/promise.js":46,"js-ext/lib/string.js":47,"polyfill":60,"utils/lib/timers.js":67,"vdom":77}],49:[function(require,module,exports){
-var css = "[plugin-panel=\"true\"] {\n    position: absolute !important;\n    background-color: #FFF;\n    max-width: 90%;\n    min-width: 150px;\n    min-height: 75px;\n    box-shadow: 5px 5px 6px rgba(50, 50, 50, 0.45);\n    border: solid 1px #000;\n}\n\n[plugin-panel=\"true\"],\n[plugin-panel=\"true\"] >div {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n[plugin-panel=\"true\"] >div[is=\"header\"] {\n    vertical-align: middle;\n    background-color: rgb(0, 100, 192);\n    color: #FFF;\n    padding: 0 1.5em 0 0.7em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    vertical-align: middle;\n    line-height: 1.75em;\n    width: 100%;\n    min-height: 1.75em;\n}\n\n[plugin-panel=\"true\"] >div[is=\"content\"] {\n    padding: 1.6em 1.2em;\n    line-height: 115%;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] {\n    border-top: 1px solid #EAE6DB;\n    overflow: hidden;\n    vertical-align: middle;\n    text-align: right;\n    line-height: 1em;\n    padding: 0.5em 0.7em;\n    width: 100%;\n    min-height: 24px;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0.5em;\n}\n\n[plugin-panel=\"true\"].itsa-full-draggable {\n    cursor: default;\n}\n\n[plugin-panel=\"true\"] >button {\n    padding: 0 0.4em 0.1em;\n    position: absolute;\n    right: 0.2em;\n    top: 0.2em;\n    z-index: 1;\n}\n\nbody >div[is=\"system-node\"].itsa-modal-layer {\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 100% !important;\n    height: 100% !important;\n    -webkit-box-sizing: border-box !important;\n    -moz-box-sizing: border-box !important;\n    box-sizing: border-box !important;\n    z-index: 1000 !important;\n    background-color: #000 !important;\n    opacity: 0.2 !important;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button {\n    display: block;\n    width: 100%;\n    margin: 0 0 0.5em;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button:last-child,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button:last-child {\n    margin-bottom: 0;\n}\n\n@media only screen and (max-width : 480px) {\n    [plugin-panel=\"true\"] {\n        width: 90%;\n        box-shadow: 0 0 6px 6px rgba(50, 50, 50, 0.45);\n    }\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],50:[function(require,module,exports){
+},{"event-dom":17,"event/extra/promise-finalize.js":28,"event/extra/timer-finalize.js":29,"js-ext/extra/classes.js":38,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"js-ext/lib/promise.js":48,"js-ext/lib/string.js":49,"polyfill":63,"utils/lib/timers.js":70,"vdom":80}],52:[function(require,module,exports){
+var css = "[plugin-panel=\"true\"] {\n    position: absolute !important;\n    background-color: #FFF;\n    max-width: 90%;\n    min-width: 200px;\n    min-height: 75px;\n    box-shadow: inset 0 0 5px rgba(50, 50, 50, 0.30), 5px 5px 6px rgba(50, 50, 50, 0.45);\n    border: solid 1px #000;\n}\n\n[plugin-panel=\"true\"],\n[plugin-panel=\"true\"] >div {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n[plugin-panel=\"true\"] >div[is=\"header\"] {\n    vertical-align: middle;\n    background-color: rgb(0, 100, 192);\n    color: #FFF;\n    padding: 0 1.5em 0 0.7em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    vertical-align: middle;\n    line-height: 1.75em;\n    width: 100%;\n    min-height: 1.75em;\n}\n\n[plugin-panel=\"true\"] >div[is=\"content\"] {\n    padding: 1.6em 1.2em;\n    line-height: 115%;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] {\n    border-top: 1px solid #EAE6DB;\n    overflow: hidden;\n    vertical-align: middle;\n    text-align: right;\n    line-height: 1em;\n    padding: 0.5em 0.7em;\n    width: 100%;\n    min-height: 24px;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0.5em;\n}\n\n[plugin-panel=\"true\"].itsa-full-draggable {\n    cursor: default;\n}\n\n[plugin-panel=\"true\"] >button {\n    padding: 0 0.4em 0.1em;\n    position: absolute;\n    right: 0.2em;\n    top: 0.2em;\n    z-index: 1;\n}\n\nbody >div[is=\"system-node\"].itsa-modal-layer {\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 100% !important;\n    height: 100% !important;\n    -webkit-box-sizing: border-box !important;\n    -moz-box-sizing: border-box !important;\n    box-sizing: border-box !important;\n    z-index: 1000 !important;\n    background-color: #000 !important;\n    opacity: 0.2 !important;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button {\n    display: block;\n    width: 100%;\n    margin: 0 0 0.5em;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button:last-child,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button:last-child {\n    margin-bottom: 0;\n}\n\n@media only screen and (max-width : 480px) {\n    [plugin-panel=\"true\"] {\n        width: 90%;\n        box-shadow: 0 0 6px 6px rgba(50, 50, 50, 0.45);\n    }\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],53:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -15226,6 +15518,7 @@ module.exports = function (window) {
     require('window-ext')(window);
     require('node-plugin')(window);
     require('focusmanager')(window);
+    require('scrollable')(window);
 
     Event = require('event-mobile')(window);
     DD = require('drag')(window);
@@ -15339,7 +15632,6 @@ module.exports = function (window) {
         var instance = this,
             model = instance.model,
             host = instance.host,
-            footer = model.footer,
             allDivs, serverHeader, serverContent, serverFooter;
 
         instance._previousVisible = model.visible;
@@ -15354,12 +15646,7 @@ module.exports = function (window) {
             serverContent && instance.defineWhenUndefined('content', serverContent);
             if (serverFooter) {
                 instance.defineWhenUndefined('footer', serverFooter);
-                // need to redefine `footer`
-                footer = model.footer;
             }
-        }
-        if (!footer || !footer.contains('button')) {
-            model.headerCloseBtn = true;
         }
         instance._resizeHandler = Event.after('UI:resize', function() {
             var isMobileWidth = (window.getWidth()<=480);
@@ -15473,14 +15760,18 @@ module.exports = function (window) {
                 footerNode = divs[2],
                 isMobileWidth = (window.getWidth()<=480),
                 buttonCloseNode = host.getElement('>button'),
+                showHeaderCloseBtn = model.headerCloseBtn,
                 zIndex, isOnTop;
             (header==='undefined') && (header=undefined);
             (footer==='undefined') && (footer=undefined);
-            if (model.headerCloseBtn && !header) {
+            if (!footer || !footer.contains('button')) {
+                showHeaderCloseBtn = true;
+            }
+            if (showHeaderCloseBtn && !header) {
                 header = '';
             }
             (header!==undefined) && headerNode.setHTML(header || '');
-            buttonCloseNode.toggleClass('itsa-no-display', !model.headerCloseBtn);
+            buttonCloseNode.toggleClass('itsa-no-display', !showHeaderCloseBtn);
 
             headerNode.toggleClass('itsa-hidden', (header===undefined));
             contentNode.setHTML(content || '');
@@ -15511,7 +15802,7 @@ module.exports = function (window) {
             model.maxHeight && host.setInlineStyle('maxHeight', model.maxHeight);
             instance.setPanelWidth(isMobileWidth);
 
-            if (model.center && (!instance._prevCenter || !model.draggable)) {
+            if (model.center && (!model.draggable || (!instance._previousVisible && model.visible))) {
                 instance.centerPanel();
             }
             else if (!model.center && !host.hasClass('dd-dragging')) {
@@ -15520,8 +15811,6 @@ module.exports = function (window) {
                     {property: 'top', value: model.top+'px'}
                 ]);
             }
-            // prevent re-centering: that would be unhandy when the panel is draggable:
-            instance._prevCenter = model.center;
             // we can plug/unplug multiple times --> node-plugin won't do anything when there are no changes
             host[((model.draggable && !isMobileWidth) ? '' : 'un')+'plug']('dd');
             host[(model.focusmanaged ? '' : 'un')+'plug']('fm');
@@ -15539,7 +15828,7 @@ module.exports = function (window) {
                 Event.emit(host, 'panel:'+ (model.visible ? 'shown' : 'hidden'), {plugin: instance, model: model});
                 instance._previousVisible = model.visible;
             }
-            if (isOnTop && model.modal && !host.hasClass('focussed')) {
+            if (isOnTop && model.modal) {
                 host.focus();
             }
         },
@@ -15620,7 +15909,7 @@ module.exports = function (window) {
 
     return Panel;
 };
-},{"./css/panel.css":49,"drag":14,"event-mobile":20,"focusmanager":30,"js-ext/extra/hashmap.js":37,"js-ext/extra/lightmap.js":38,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"node-plugin":48,"polyfill":60,"window-ext":78}],51:[function(require,module,exports){
+},{"./css/panel.css":52,"drag":16,"event-mobile":22,"focusmanager":32,"js-ext/extra/hashmap.js":39,"js-ext/extra/lightmap.js":40,"js-ext/lib/object.js":47,"js-ext/lib/string.js":49,"node-plugin":51,"polyfill":63,"scrollable":66,"window-ext":81}],54:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -15643,7 +15932,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],52:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 "use strict";
 
 /*
@@ -15696,7 +15985,7 @@ module.exports = function (window) {
 
     return transition;
 };
-},{"../bin/local-hashmap.js":51}],53:[function(require,module,exports){
+},{"../bin/local-hashmap.js":54}],56:[function(require,module,exports){
 "use strict";
 
 // CAUTIOUS: need a copy of hashmap --> we cannot use js-ext/extra/hashap.js for that would lead to circular references!
@@ -15741,7 +16030,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{"../bin/local-hashmap.js":51}],54:[function(require,module,exports){
+},{"../bin/local-hashmap.js":54}],57:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -15812,7 +16101,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../bin/local-hashmap.js":51}],55:[function(require,module,exports){
+},{"../bin/local-hashmap.js":54}],58:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -15836,7 +16125,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],56:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 (function (global){
 /*
  * Copyright 2012 The Polymer Authors. All rights reserved.
@@ -16422,9 +16711,9 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],57:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 require('ypromise');
-},{"ypromise":5}],58:[function(require,module,exports){
+},{"ypromise":5}],61:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/Gozala/1269991
 
@@ -16534,7 +16823,7 @@ require('ypromise');
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],59:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -16553,17 +16842,17 @@ require('ypromise');
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],60:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":55,"./lib/window.console.js":59}],61:[function(require,module,exports){
+},{"./lib/matchesselector.js":58,"./lib/window.console.js":62}],64:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/promise.js');
 require('./lib/weakmap.js');
 require('./lib/mutationobserver.js'); // needs weakmap
-},{"./lib/mutationobserver.js":56,"./lib/promise.js":57,"./lib/weakmap.js":58,"./polyfill-base.js":60}],62:[function(require,module,exports){
+},{"./lib/mutationobserver.js":59,"./lib/promise.js":60,"./lib/weakmap.js":61,"./polyfill-base.js":63}],65:[function(require,module,exports){
 var css = "[plugin-scroll=\"true\"] {\n    overflow: hidden !important;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont,\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    position: absolute;\n    display: block;\n    left: -9999px;\n    top: -9999px;\n    opacity: 0;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-vscroll-cont.itsa-visible {\n    opacity: 1;\n    width: 0.8em;\n    height: 100%;\n    right: 0;\n    top: 0;\n    left: auto;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-hscroll-cont.itsa-visible {\n    opacity: 1;\n    height: 0.8em;\n    width: 100%;\n    left: 0;\n    bottom: 0;\n    top: auto;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont span {\n    position: relative;\n    display: block;\n    width: 100%;\n    min-height: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont span {\n    position: relative;\n    display: block;\n    height: 100%;\n    min-width: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-vscroll-cont span,\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-hscroll-cont span {\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n[plugin-scroll=\"true\"] >span span.dd-dragging {\n    cursor: default;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],63:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],66:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -16770,7 +17059,7 @@ module.exports = function (window) {
 
     return Scrollable;
 };
-},{"./css/scrollable.css":62,"drag":14,"event-mobile":20,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"node-plugin":48,"polyfill":60,"utils":65,"window-ext":78}],64:[function(require,module,exports){
+},{"./css/scrollable.css":65,"drag":16,"event-mobile":22,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"node-plugin":51,"polyfill":63,"utils":68,"window-ext":81}],67:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16809,7 +17098,7 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill":60}],65:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"polyfill":63}],68:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
@@ -16817,7 +17106,7 @@ module.exports = {
     async: require('./lib/timers.js').async,
     asyncSilent: require('./lib/timers.js').asyncSilent
 };
-},{"./lib/idgenerator.js":66,"./lib/timers.js":67}],66:[function(require,module,exports){
+},{"./lib/idgenerator.js":69,"./lib/timers.js":70}],69:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -16875,7 +17164,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"js-ext/extra/hashmap.js":37,"polyfill/polyfill-base.js":60}],67:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":39,"polyfill/polyfill-base.js":63}],70:[function(require,module,exports){
 (function (global){
 /**
  * Collection of various utility functions.
@@ -17090,9 +17379,9 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"polyfill/polyfill-base.js":60}],68:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":63}],71:[function(require,module,exports){
 var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-no-display {\n    display: none; !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],69:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],72:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17390,7 +17679,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"polyfill":60,"polyfill/extra/transition.js":52,"polyfill/extra/vendorCSS.js":54}],70:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"js-ext/lib/string.js":49,"polyfill":63,"polyfill/extra/transition.js":55,"polyfill/extra/vendorCSS.js":57}],73:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17818,7 +18107,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill":60}],71:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"polyfill":63}],74:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18532,7 +18821,7 @@ module.exports = function (window) {
 
 
 
-},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"polyfill":60}],72:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"js-ext/lib/string.js":49,"polyfill":63}],75:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -23241,7 +23530,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":68,"./attribute-extractor.js":69,"./element-array.js":70,"./html-parser.js":73,"./node-parser.js":74,"./vdom-ns.js":75,"./vnode.js":76,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"js-ext/lib/promise.js":46,"js-ext/lib/string.js":47,"polyfill":60,"polyfill/extra/transition.js":52,"polyfill/extra/transitionend.js":53,"polyfill/extra/vendorCSS.js":54,"utils":65,"window-ext":78}],73:[function(require,module,exports){
+},{"../css/element.css":71,"./attribute-extractor.js":72,"./element-array.js":73,"./html-parser.js":76,"./node-parser.js":77,"./vdom-ns.js":78,"./vnode.js":79,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"js-ext/lib/promise.js":48,"js-ext/lib/string.js":49,"polyfill":63,"polyfill/extra/transition.js":55,"polyfill/extra/transitionend.js":56,"polyfill/extra/vendorCSS.js":57,"utils":68,"window-ext":81}],76:[function(require,module,exports){
 "use strict";
 
 /**
@@ -23613,7 +23902,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":69,"./vdom-ns.js":75,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill":60}],74:[function(require,module,exports){
+},{"./attribute-extractor.js":72,"./vdom-ns.js":78,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"polyfill":63}],77:[function(require,module,exports){
 "use strict";
 
 /**
@@ -23754,7 +24043,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":69,"./vdom-ns.js":75,"./vnode.js":76,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill":60}],75:[function(require,module,exports){
+},{"./attribute-extractor.js":72,"./vdom-ns.js":78,"./vnode.js":79,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"polyfill":63}],78:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -23985,7 +24274,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill":60}],76:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"polyfill":63}],79:[function(require,module,exports){
 "use strict";
 
 /**
@@ -25347,16 +25636,23 @@ module.exports = function (window) {
                 removal = [],
                 vChildren = instance.vChildren,
                 len = vChildren.length,
-                vChild, i, styleContent;
+                vChild, i, styleContent, vChildInner;
             for (i=0; i<len; i++) {
                 vChild = vChildren[i];
                 if (vChild.tag==='STYLE') {
-                    styleContent = vChild.vChildNodes[0].text;
-                    if (compare.contains(styleContent)) {
-                        removal[removal.length] = vChild;
+                    vChildInner = vChild.vChildNodes[0];
+                    if (vChildInner) {
+                        styleContent = vChildInner.text;
+                        if (compare.contains(styleContent)) {
+                            removal[removal.length] = vChild;
+                        }
+                        else {
+                            compare[compare.length] = styleContent;
+                        }
                     }
                     else {
-                        compare[compare.length] = styleContent;
+                        // empty style-tag
+                        removal[removal.length] = vChild;
                     }
                 }
             }
@@ -26717,7 +27013,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":69,"./html-parser.js":73,"./vdom-ns.js":75,"js-ext/extra/hashmap.js":37,"js-ext/extra/lightmap.js":38,"js-ext/lib/array.js":42,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"polyfill":60,"utils/lib/timers.js":67}],77:[function(require,module,exports){
+},{"./attribute-extractor.js":72,"./html-parser.js":76,"./vdom-ns.js":78,"js-ext/extra/hashmap.js":39,"js-ext/extra/lightmap.js":40,"js-ext/lib/array.js":44,"js-ext/lib/object.js":47,"js-ext/lib/string.js":49,"polyfill":63,"utils/lib/timers.js":70}],80:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -26760,13 +27056,13 @@ module.exports = function (window) {
 
     window._ITSAmodules.VDOM = true;
 };
-},{"./partials/extend-document.js":71,"./partials/extend-element.js":72,"./partials/node-parser.js":74,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"utils/lib/timers.js":67}],78:[function(require,module,exports){
+},{"./partials/extend-document.js":74,"./partials/extend-element.js":75,"./partials/node-parser.js":77,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"utils/lib/timers.js":70}],81:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":79}],79:[function(require,module,exports){
+},{"./lib/sizes.js":82}],82:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -26870,7 +27166,7 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45}],80:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47}],83:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -27095,6 +27391,8 @@ process.chdir = function (dir) {
         require('focusmanager')(window);
     }
 
+    ITSA.merge(require('messages'));
+    require('dialog')(window);
     require('scrollable')(window);
 
     /**
@@ -27130,4 +27428,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"constrain":6,"css":10,"drag-drop":12,"event":28,"event-dom/extra/blurnode.js":16,"event-dom/extra/focusnode.js":17,"event-dom/extra/hover.js":18,"event-dom/extra/valuechange.js":19,"event-mobile":20,"event/extra/objectobserve.js":25,"focusmanager":30,"io/extra/io-cors-ie9.js":31,"io/extra/io-stream.js":32,"io/extra/io-transfer.js":33,"io/extra/io-xml.js":34,"js-ext/extra/reserved-words.js":39,"js-ext/js-ext.js":41,"node-plugin":48,"node-win":undefined,"panel":50,"polyfill/polyfill.js":61,"scrollable":63,"useragent":64,"utils":65,"vdom":77,"window-ext":78}]},{},[]);
+},{"constrain":6,"css":10,"dialog":12,"drag-drop":14,"event":30,"event-dom/extra/blurnode.js":18,"event-dom/extra/focusnode.js":19,"event-dom/extra/hover.js":20,"event-dom/extra/valuechange.js":21,"event-mobile":22,"event/extra/objectobserve.js":27,"focusmanager":32,"io/extra/io-cors-ie9.js":33,"io/extra/io-stream.js":34,"io/extra/io-transfer.js":35,"io/extra/io-xml.js":36,"js-ext/extra/reserved-words.js":41,"js-ext/js-ext.js":43,"messages":50,"node-plugin":51,"node-win":undefined,"panel":53,"polyfill/polyfill.js":64,"scrollable":66,"useragent":67,"utils":68,"vdom":80,"window-ext":81}]},{},[]);

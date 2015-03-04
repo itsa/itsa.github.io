@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/itsa.build/itsa.build.js - Itsa</title>
+    <title>src/dialog/dialog.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -212,204 +212,179 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/itsa.build/itsa.build.js</h1>
+                        <h1 class="file-heading">File: src/dialog/dialog.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
 /**
- * The ITSA module is an aggregator for all the individual modules that the library uses.
- * The developer is free to use it as it is or tailor it to contain whatever modules
- * he/she might need in the global namespace.
- *
- * The modules themselves work quite well independent of this module and can be used
- * separately without the need of them being integrated under one globa namespace.
+ * Creating floating Panel-nodes which can be shown and hidden.
  *
  *
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
- * @module itsa.build
  *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
 */
-(function (window) {
 
-    &quot;use strict&quot;;
+require(&#x27;js-ext&#x27;);
+require(&#x27;messages&#x27;);
+require(&#x27;polyfill&#x27;);
+require(&#x27;./css/dialog.css&#x27;);
 
-    /**
-     * The ITSA class provides the core functionality for the ITSA library
-     * and is the root namespace for all the additional modules.
-     *
-     * The ITSA class cannot be instantiated.
-     * Instead, the ITSA function takes a configuration object to allow for tailoring of the library.
-     * The ITSA function returns itself to allow for further chaining.
-     *
-     * Calling the ITSA function is optional. If the default configuration is acceptable,
-     * the ITSA class can be used directly.
-     *
-     * The ITSA name is usually used only once in an application, when configuring it
-     * and when calling the [&#x60;ready&#x60;](#method_ready) or [&#x60;require&#x60;](#method_require) methods.
-     * The callback to these two methods provide a reference to ITSA itself as their argument.
-     * These methods allow the developer to rename ITSA to a shorter name, usually &#x60;P&#x60;,
-     * for use within the local scope.
-     *
-     *  ITSA( config )
-     *      .require(&#x27;dialog&#x27;, &#x27;event&#x27;, ...)
-     *      .then(function (P) {
-     *          // P is an alias of ITSA
-     *      });
-     *
-     *  // If the default configuration is acceptable, you can simply do:
-     *  ITSA.require(&#x27;dialog&#x27;, &#x27;event&#x27;, ...)
-     *      .then(function (P) {
-     *          // P is an alias of ITSA
-     *      });
-     *
-     *  // If extra modules are to be loaded later, you can simply do:
-     *  ITSA( config ).ready
-     *      .then(function (P) {
-     *          // P is an alias of ITSA
-     *      });
-     *
-     *  // And if no configuration is needed:
-     *  ITSA.ready
-     *      .then(function (P) {
-     *          // P is an alias of ITSA
-     *      });
-     *
-     *
-     *
-     * @class ITSA
-     * @static
-     * @param config {Object} Configuration options for the ITSA Library
-     * @return self {Object}
-    */
+var NAME = &#x27;[dialog]: &#x27;,
+    MESSAGE_LEVELS = {
+        &#x27;message&#x27;: 1,
+        &#x27;warning&#x27;: 2,
+        &#x27;error&#x27;: 3
+    },
+    MESSAGE_HASHES = {
+        &#x27;message&#x27;: &#x27;messages&#x27;,
+        &#x27;warning&#x27;: &#x27;warnings&#x27;,
+        &#x27;error&#x27;: &#x27;errors&#x27;
+    },
+    MESSAGE_HASHES_NR = {
+        1: &#x27;messages&#x27;,
+        2: &#x27;warnings&#x27;,
+        3: &#x27;errors&#x27;
+    },
+    FOLLOWUP_DELAY = 200,
+    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
 
-    require(&#x27;css&#x27;);
-    require(&#x27;polyfill/polyfill.js&#x27;); // want the full version
+module.exports = function (window) {
 
-    var jsExt = require(&#x27;js-ext/js-ext.js&#x27;); // want the full version: include it at the top, so that object.merge is available
+    var DOCUMENT = window.document,
+        Classes = require(&#x27;js-ext/extra/classes.js&#x27;),
+        UTILS = require(&#x27;utils&#x27;),
+        later = UTILS.later,
+        async = UTILS.async,
+        dialog, Dialog, Event;
 
-    var ITSA = function (config) {
-        ITSA._config.merge(config, {force: true});
-        return ITSA;
-    };
-    /**
-     * Global configuration properties for the ITSA object.
-     * It can only be set on initialization via the [&#x60;ITSA&#x60;](#docs-main) function.
-     *
-     * The config is set at a default-configutation
-     *
-     * @property _config
-     * @type Object
-     * @private
-    */
-    ITSA._config = {
-        debug: true,
-        base: &#x27;/components&#x27;
-    };
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
-    /**
-     * Reference to &#x60;Classes&#x60; in [js-ext/extra/classes.js](../modules/js-ext.html)
-     *
-     * @property Classes
-     * @type Object
-     * @static
-    */
-
-    /**
-     * Reference to the &#x60;LightMap&#x60;-Class in [js-ext/extra/lightmap.js](../modules/js-ext.html)
-     *
-     * @property LightMap
-     * @type Class
-     * @static
-    */
-
-    /**
-     * Reference to the &#x60;createHashMap&#x60; function in [js-ext/extra/hashmap.js](../modules/js-ext.html)
-     *
-     * @property createHashMap
-     * @type function
-     * @static
-    */
-
-    // Note: we can only merge them after je-ext is required --&gt; ITSA.merge is only then available
-    ITSA.merge(jsExt);
-    require(&#x27;window-ext&#x27;)(window);
-
-    var fakedom = window.navigator.userAgent===&#x27;fake&#x27;,
-        Event = fakedom ? require(&#x27;event&#x27;) : require(&#x27;event-mobile&#x27;)(window),
-        io_config = {
-            // timeout: 3000,
-            debug: true,
-            base: &#x27;/build&#x27;
-        },
-        dragdrop;
-
-    require(&#x27;event/extra/objectobserve.js&#x27;)(window);
-    require(&#x27;vdom&#x27;)(window);
-
-    /**
-     * Reference to the &#x60;idGenerator&#x60; function in [utils](../modules/utils.html)
-     *
-     * @property idGenerator
-     * @type function
-     * @static
-    */
-    require(&#x27;node-plugin&#x27;)(window);
-    require(&#x27;constrain&#x27;)(window);
-    require(&#x27;panel&#x27;)(window);
-
-    ITSA.merge(require(&#x27;utils&#x27;));
-    ITSA.RESERVED_WORDS = require(&#x27;js-ext/extra/reserved-words.js&#x27;);
-
-    if (!fakedom) {
-        require(&#x27;event-dom/extra/hover.js&#x27;)(window);
-        require(&#x27;event-dom/extra/valuechange.js&#x27;)(window);
-        require(&#x27;event-dom/extra/blurnode.js&#x27;)(window);
-        require(&#x27;event-dom/extra/focusnode.js&#x27;)(window);
-        // setup dragdrop:
-        dragdrop = require(&#x27;drag-drop&#x27;)(window);
-        ITSA.DD = dragdrop;
-        ITSA.DD.init();
-        require(&#x27;focusmanager&#x27;)(window);
+/*jshint boss:true */
+    if (Dialog=window._ITSAmodules.Dialog) {
+/*jshint boss:false */
+        return Dialog; // Dialog was already created
     }
 
-    ITSA.merge(require(&#x27;messages&#x27;));
-    require(&#x27;dialog&#x27;)(window);
-    require(&#x27;scrollable&#x27;)(window);
+    require(&#x27;panel&#x27;)(window);
+    Event = require(&#x27;event&#x27;);
 
-    /**
-     * Reference to the [IO](io.html) object
-     * @property IO
-     * @type Object
-     * @static
-    */
-    ITSA.IO = require(&#x27;io/extra/io-transfer.js&#x27;)(window);
-    ITSA.IO.config.merge(io_config);
-    require(&#x27;io/extra/io-cors-ie9.js&#x27;)(window);
-    require(&#x27;io/extra/io-stream.js&#x27;)(window);
-    require(&#x27;io/extra/io-xml.js&#x27;)(window);
+    Dialog = Classes.createClass(function() {
+        var instance = this;
+        instance.model = {
+            draggable: true
+        };
+        instance.currentMessageLevel = 0;
+        instance.messages = [];
+        instance.warnings = [];
+        instance.errors = [];
+        instance.createContainer();
+        instance.setupListeners();
+    }, {
+        createContainer: function() {
+            var instance = this,
+                model = instance.model;
+            model.callback = function(buttonNode) {
+                var containerNode = DOCUMENT.createElement(&#x27;div&#x27;),
+                    contentNode = instance.panel.getElement(&#x27;&gt;div[is=&quot;content&quot;]&#x27;),
+                    messagePromise = model.messagePromise,
+                    node;
+                // move all childNodes from contentNode inside the new DIV
+                // we need to start with position 2 --&gt; the first 2 nodes are the scroller-nodes
+/*jshint boss:true */
+                while (node=contentNode.childNodes[2]) {
+/*jshint boss:false */
+                    containerNode.appendChild(node);
+                }
+                // now append a copy of the buttonNode:
+                containerNode.append(buttonNode.getOuterHTML());
+                messagePromise.fulfill(containerNode);
+                // we can safely remove the newly created container-node: the vdom holds it for 1 minute
+                containerNode.remove();
+            };
+            instance.panel = DOCUMENT.createPanel(model);
+        },
+        processMessage: function(e) {
+            var instance = this,
+                messagePromise = e.messagePromise,
+                type = e.type,
+                level = MESSAGE_LEVELS[type],
+                list = instance[MESSAGE_HASHES[type]];
+            list[list.length] = messagePromise;
+            messagePromise.finally(
+                function() {
+                    list.remove(messagePromise);
+                    // handle the next message (if there)
+                    instance.handleMessage(true);
+                }
+            );
+            (level&gt;instance.currentMessageLevel) &amp;&amp; instance.handleMessage(!instance.isWaiting(), level);
+        },
+        setupListeners: function() {
+            var instance = this;
+            Event.after([&#x27;*:message&#x27;, &#x27;*:warning&#x27;, &#x27;*:error&#x27;], instance.processMessage.bind(instance));
+        },
+        isWaiting: function() {
+            return (this.currentMessageLevel===0);
+        },
+        handleMessage: function(delay, level) {
+            var instance = this,
+                model = instance.model,
+                messagePromise;
+            if (!level) {
+                // search level
+                if (instance.errors.length&gt;0) {
+                    level = 3;
+                }
+                else if (instance.warnings.length&gt;0) {
+                    level = 2;
+                }
+                else if (instance.messages.length&gt;0) {
+                    level = 1;
+                }
+            }
+            if (!level || (instance[MESSAGE_HASHES_NR[level]].length===0)) {
+                // DO NOT make messagePromise null: it sould be there as return value
+                // of the last message
+                instance.currentMessageLevel = 0;
+                model.header = null;
+                model.content = &#x27;&#x27;;
+                model.footer = null;
+                model.visible = false;
+                return;
+            }
+            instance.currentMessageLevel = level;
+            // now process the highest message
+            messagePromise = instance[MESSAGE_HASHES_NR[level]][0];
+            if (delay) {
+                model.visible = false;
+                later(instance.showMessage.bind(instance, messagePromise), FOLLOWUP_DELAY);
+            }
+            else {
+                async(instance.showMessage.bind(instance, messagePromise));
+            }
+        },
+        showMessage: function(messagePromise) {
+            var model = this.model;
+            model.messagePromise = messagePromise;
+            model.header = messagePromise.header;
+            model.content = messagePromise.content;
+            model.footer = messagePromise.footer;
+            model.visible = true;
+        }
+    });
 
-    /**
-     * Reference to the [UserAgent](useragent.html) object
-     * @property UA
-     * @type Object
-     * @static
-    */
-    ITSA.UA = require(&#x27;useragent&#x27;)(window);
+    // instantiate Dialog and make it operational:
+    dialog = new Dialog();
 
-    /**
-     * [Event](Event.html)-instance
-     * @property Event
-     * @type Event
-     * @static
-    */
-    ITSA.Event = Event;
-
-    module.exports = ITSA;
-
-})(global.window || require(&#x27;node-win&#x27;));
-
+    // return the Class, so it can be subclassed:
+    return Dialog;
+};
     </pre>
 </div>
 

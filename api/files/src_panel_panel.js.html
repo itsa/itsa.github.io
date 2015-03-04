@@ -260,6 +260,7 @@ module.exports = function (window) {
     require(&#x27;window-ext&#x27;)(window);
     require(&#x27;node-plugin&#x27;)(window);
     require(&#x27;focusmanager&#x27;)(window);
+    require(&#x27;scrollable&#x27;)(window);
 
     Event = require(&#x27;event-mobile&#x27;)(window);
     DD = require(&#x27;drag&#x27;)(window);
@@ -373,7 +374,6 @@ module.exports = function (window) {
         var instance = this,
             model = instance.model,
             host = instance.host,
-            footer = model.footer,
             allDivs, serverHeader, serverContent, serverFooter;
 
         instance._previousVisible = model.visible;
@@ -388,12 +388,7 @@ module.exports = function (window) {
             serverContent &amp;&amp; instance.defineWhenUndefined(&#x27;content&#x27;, serverContent);
             if (serverFooter) {
                 instance.defineWhenUndefined(&#x27;footer&#x27;, serverFooter);
-                // need to redefine &#x60;footer&#x60;
-                footer = model.footer;
             }
-        }
-        if (!footer || !footer.contains(&#x27;button&#x27;)) {
-            model.headerCloseBtn = true;
         }
         instance._resizeHandler = Event.after(&#x27;UI:resize&#x27;, function() {
             var isMobileWidth = (window.getWidth()&lt;=480);
@@ -507,14 +502,18 @@ module.exports = function (window) {
                 footerNode = divs[2],
                 isMobileWidth = (window.getWidth()&lt;=480),
                 buttonCloseNode = host.getElement(&#x27;&gt;button&#x27;),
+                showHeaderCloseBtn = model.headerCloseBtn,
                 zIndex, isOnTop;
             (header===&#x27;undefined&#x27;) &amp;&amp; (header=undefined);
             (footer===&#x27;undefined&#x27;) &amp;&amp; (footer=undefined);
-            if (model.headerCloseBtn &amp;&amp; !header) {
+            if (!footer || !footer.contains(&#x27;button&#x27;)) {
+                showHeaderCloseBtn = true;
+            }
+            if (showHeaderCloseBtn &amp;&amp; !header) {
                 header = &#x27;&#x27;;
             }
             (header!==undefined) &amp;&amp; headerNode.setHTML(header || &#x27;&#x27;);
-            buttonCloseNode.toggleClass(&#x27;itsa-no-display&#x27;, !model.headerCloseBtn);
+            buttonCloseNode.toggleClass(&#x27;itsa-no-display&#x27;, !showHeaderCloseBtn);
 
             headerNode.toggleClass(&#x27;itsa-hidden&#x27;, (header===undefined));
             contentNode.setHTML(content || &#x27;&#x27;);
@@ -545,7 +544,7 @@ module.exports = function (window) {
             model.maxHeight &amp;&amp; host.setInlineStyle(&#x27;maxHeight&#x27;, model.maxHeight);
             instance.setPanelWidth(isMobileWidth);
 
-            if (model.center &amp;&amp; (!instance._prevCenter || !model.draggable)) {
+            if (model.center &amp;&amp; (!model.draggable || (!instance._previousVisible &amp;&amp; model.visible))) {
                 instance.centerPanel();
             }
             else if (!model.center &amp;&amp; !host.hasClass(&#x27;dd-dragging&#x27;)) {
@@ -554,8 +553,6 @@ module.exports = function (window) {
                     {property: &#x27;top&#x27;, value: model.top+&#x27;px&#x27;}
                 ]);
             }
-            // prevent re-centering: that would be unhandy when the panel is draggable:
-            instance._prevCenter = model.center;
             // we can plug/unplug multiple times --&gt; node-plugin won&#x27;t do anything when there are no changes
             host[((model.draggable &amp;&amp; !isMobileWidth) ? &#x27;&#x27; : &#x27;un&#x27;)+&#x27;plug&#x27;](&#x27;dd&#x27;);
             host[(model.focusmanaged ? &#x27;&#x27; : &#x27;un&#x27;)+&#x27;plug&#x27;](&#x27;fm&#x27;);
@@ -573,7 +570,7 @@ module.exports = function (window) {
                 Event.emit(host, &#x27;panel:&#x27;+ (model.visible ? &#x27;shown&#x27; : &#x27;hidden&#x27;), {plugin: instance, model: model});
                 instance._previousVisible = model.visible;
             }
-            if (isOnTop &amp;&amp; model.modal &amp;&amp; !host.hasClass(&#x27;focussed&#x27;)) {
+            if (isOnTop &amp;&amp; model.modal) {
                 host.focus();
             }
         },

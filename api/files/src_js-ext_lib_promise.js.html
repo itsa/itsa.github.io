@@ -447,12 +447,13 @@ Promise.chainFns = function (funcs, finishAll) {
 };
 
 /**
- * Returns a Promise with 4 additional methods:
+ * Returns a Promise with 5 additional methods:
  *
  * promise.fulfill
  * promise.reject
  * promise.callback
  * promise.setCallback
+ * promise.pending
  *
  * With Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.
  * You can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any.
@@ -504,6 +505,10 @@ Promise.manage = function (callbackFn) {
         console.log(NAME, &#x27;manage.reject &#x27;+((typeof reason===&#x27;string&#x27;) ? reason : reason &amp;&amp; (reason.message || reason.description)));
         finished = true;
         rejectHandler(reason);
+    };
+
+    promise.pending = function () {
+        return !finished;
     };
 
     promise.callback = function () {
