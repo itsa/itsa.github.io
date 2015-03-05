@@ -247,7 +247,7 @@ module.exports = function (window) {
 
     var DOCUMENT = window.document,
         laterSilent = require(&#x27;utils&#x27;).laterSilent,
-        Scrollable, Event, setupEvents, DD;
+        Scrollable, Event, setupEvents, DD, isSafari;
 
     window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
@@ -263,6 +263,8 @@ module.exports = function (window) {
     Event = require(&#x27;event-mobile&#x27;)(window);
     DD = require(&#x27;drag&#x27;)(window);
     DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
+
+    isSafari = require(&#x27;useragent&#x27;)(window).isSafari;
 
     setupEvents = function() {
         Event.after(&#x27;UI:dd-drag&#x27;, function(e) {
@@ -354,12 +356,21 @@ module.exports = function (window) {
                 width = host.width,
                 scrollLeft = model.left,
                 scrollTop = model.top,
-                vScrollerVisible = (scrollHeight&gt;height),
-                hScrollerVisible = (scrollWidth&gt;width),
                 vscroller = host.getElement(&#x27;span.itsa-vscroll-cont&#x27;, true),
                 hscroller = host.getElement(&#x27;span.itsa-hscroll-cont&#x27;, true),
-                sizeHandle, effectiveRegion, maxScrollAmount, scrollAmount, handleNode;
+                sizeHandle, effectiveRegion, maxScrollAmount, scrollAmount, handleNode,
+                vScrollerVisible, hScrollerVisible;
 
+            // safari showed it miscalculates scrollWidth (perhaps also scrollHeight)
+            // in certain circumstances by returning 1px too much
+            // this may lead into a scroller when it shouldn;t be there:
+            if (isSafari) {
+                (scrollHeight===(height+1)) &amp;&amp; (scrollHeight=height);
+                (scrollWidth===(width+1)) &amp;&amp; (scrollWidth=width);
+            }
+
+            vScrollerVisible = (scrollHeight&gt;height),
+            hScrollerVisible = (scrollWidth&gt;width),
             vscroller.toggleClass(&#x27;itsa-visible&#x27;, vScrollerVisible);
             hscroller.toggleClass(&#x27;itsa-visible&#x27;, hScrollerVisible);
 

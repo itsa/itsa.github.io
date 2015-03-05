@@ -15634,7 +15634,6 @@ module.exports = function (window) {
             host = instance.host,
             allDivs, serverHeader, serverContent, serverFooter;
 
-        instance._previousVisible = model.visible;
         if (host.getAttr('panel-rendered')==='true') {
             // serverside rendered --> we might need to catch header, content and footer
             // for they aren't set in the attributes
@@ -15802,7 +15801,7 @@ module.exports = function (window) {
             model.maxHeight && host.setInlineStyle('maxHeight', model.maxHeight);
             instance.setPanelWidth(isMobileWidth);
 
-            if (model.center && (!model.draggable || (!instance._previousVisible && model.visible))) {
+            if (model.center && (!model.draggable || ((instance._previousVisible!==true) && model.visible))) {
                 instance.centerPanel();
             }
             else if (!model.center && !host.hasClass('dd-dragging')) {
@@ -16884,7 +16883,7 @@ module.exports = function (window) {
 
     var DOCUMENT = window.document,
         laterSilent = require('utils').laterSilent,
-        Scrollable, Event, setupEvents, DD;
+        Scrollable, Event, setupEvents, DD, isSafari;
 
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
@@ -16900,6 +16899,8 @@ module.exports = function (window) {
     Event = require('event-mobile')(window);
     DD = require('drag')(window);
     DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
+
+    isSafari = require('useragent')(window).isSafari;
 
     setupEvents = function() {
         Event.after('UI:dd-drag', function(e) {
@@ -16991,12 +16992,21 @@ module.exports = function (window) {
                 width = host.width,
                 scrollLeft = model.left,
                 scrollTop = model.top,
-                vScrollerVisible = (scrollHeight>height),
-                hScrollerVisible = (scrollWidth>width),
                 vscroller = host.getElement('span.itsa-vscroll-cont', true),
                 hscroller = host.getElement('span.itsa-hscroll-cont', true),
-                sizeHandle, effectiveRegion, maxScrollAmount, scrollAmount, handleNode;
+                sizeHandle, effectiveRegion, maxScrollAmount, scrollAmount, handleNode,
+                vScrollerVisible, hScrollerVisible;
 
+            // safari showed it miscalculates scrollWidth (perhaps also scrollHeight)
+            // in certain circumstances by returning 1px too much
+            // this may lead into a scroller when it shouldn;t be there:
+            if (isSafari) {
+                (scrollHeight===(height+1)) && (scrollHeight=height);
+                (scrollWidth===(width+1)) && (scrollWidth=width);
+            }
+
+            vScrollerVisible = (scrollHeight>height),
+            hScrollerVisible = (scrollWidth>width),
             vscroller.toggleClass('itsa-visible', vScrollerVisible);
             hscroller.toggleClass('itsa-visible', hScrollerVisible);
 
@@ -17059,7 +17069,7 @@ module.exports = function (window) {
 
     return Scrollable;
 };
-},{"./css/scrollable.css":65,"drag":16,"event-mobile":22,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"node-plugin":51,"polyfill":63,"utils":68,"window-ext":81}],67:[function(require,module,exports){
+},{"./css/scrollable.css":65,"drag":16,"event-mobile":22,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"node-plugin":51,"polyfill":63,"useragent":67,"utils":68,"window-ext":81}],67:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17076,6 +17086,7 @@ module.exports = function (window) {
 
 require('polyfill');
 require('js-ext/lib/object.js');
+require('js-ext/lib/string.js');
 
 var createHashMap = require('js-ext/extra/hashmap.js').createMap;
 
@@ -17093,12 +17104,13 @@ module.exports = function (window) {
     }
 
     window._ITSAmodules.UserAgent = UserAgent = {
-        isMobile: ('ontouchstart' in window) || (window.navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
+        isMobile: ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0),
+        isSafari: navigator.userAgent.contains('AppleWebKit')
     };
 
     return UserAgent;
 };
-},{"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"polyfill":63}],68:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"js-ext/lib/string.js":49,"polyfill":63}],68:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
