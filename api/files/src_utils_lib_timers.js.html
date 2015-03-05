@@ -302,7 +302,6 @@
         if (typeof callbackFn===&#x27;function&#x27;) {
             callback = function () {
                 if (!canceled) {
-                    console.log(NAME, &#x27;async is running its callbackFn&#x27;);
                     callbackFn();
                 }
             };
@@ -371,7 +370,6 @@
                 // IE 8- and also nodejs may execute a callback, so in order to preserve
                 // the cancel() === no more runny-run, we have to build in an extra conditional
                 if (!canceled) {
-                    console.log(NAME, &#x27;later is running its callbakcFn&#x27;);
                     callbackFn();
                     if (secondtimeout) {
                         secondairId = originalTimer ? global.setInterval(wrapperInterval, interval) : global._setInterval(wrapperInterval, interval);
@@ -385,7 +383,6 @@
                 // after clearInterval was called, so in order to preserve
                 // the cancel() === no more runny-run, we have to build in an extra conditional
                 if (!canceled) {
-                    console.log(NAME, &#x27;later is running its callbakcFn&#x27;);
                     callbackFn();
                 }
             },
