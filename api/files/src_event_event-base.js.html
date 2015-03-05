@@ -368,10 +368,6 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
          *     &lt;li&gt;unHaltable() --&gt; makes the customEvent cannot be halted&lt;/li&gt;
          *     &lt;li&gt;unPreventable() --&gt; makes the customEvent&#x27;s defaultFn cannot be prevented&lt;/li&gt;
          *     &lt;li&gt;unSilencable() --&gt; makes that emitters cannot make this event to perform silently (using e.silent)&lt;/li&gt;
-         *     &lt;li&gt;unRenderPreventable() --&gt; makes that the customEvent&#x27;s render cannot be prevented&lt;/li&gt;
-         *     &lt;li&gt;unFinalizePreventable() --&gt; makes that the customEvent&#x27;s finalizer cannot be prevented&lt;/li&gt;
-         *     &lt;li&gt;noRender() --&gt; prevents this customEvent from render the dom. Overrules unRenderPreventable()&lt;/li&gt;
-         *     &lt;li&gt;noFinalize() --&gt; prevents this customEvent from running its finalizer. Overrules unFinalizePreventable()&lt;/li&gt;
          * &lt;/ul&gt;
          *
          * @static
@@ -380,16 +376,12 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
          * @return {Object} with extra methods that can be chained:
          * &lt;ul&gt;
          *      &lt;li&gt;unPreventable() --&gt; makes the customEvent&#x27;s defaultFn cannot be prevented&lt;/li&gt;
-         *      &lt;li&gt;unRenderPreventable() --&gt; makes that the customEvent&#x27;s render cannot be prevented&lt;/li&gt;
-         *      &lt;li&gt;unFinalizePreventable() --&gt; makes that the customEvent&#x27;s finalizer cannot be prevented/li&gt;
          *      &lt;li&gt;forceAssign() --&gt; overrides any previous definition&lt;/li&gt;
          *      &lt;li&gt;defaultFn() --&gt; the default-function of the event&lt;/li&gt;
          *      &lt;li&gt;preventedFn() --&gt; the function that should be invoked when the event is defaultPrevented&lt;/li&gt;
          *      &lt;li&gt;forceAssign() --&gt; overrides any previous definition&lt;/li&gt;
          *      &lt;li&gt;unHaltable() --&gt; makes the customEvent cannot be halted&lt;/li&gt;
          *      &lt;li&gt;unSilencable() --&gt; makes that emitters cannot make this event to perform silently (using e.silent)&lt;/li&gt;
-         *      &lt;li&gt;noRender() --&gt; prevents this customEvent from render the dom. Overrules unRenderPreventable()&lt;/li&gt;
-         *      &lt;li&gt;noFinalize() --&gt; prevents this customEvent from running its finalizer. Overrules unFinalizePreventable()&lt;/li&gt;
          * &lt;/ul&gt;
          * @since 0.0.1
          */
@@ -409,9 +401,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
                 return;
             }
             newCustomEvent = {
-                preventable: true,
-                renderPreventable: true,
-                finalizePreventable: true
+                preventable: true
             };
             exists = customevents[customEvent];
             // if customEvent not yet exists, we can add it
@@ -439,22 +429,6 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
                 },
                 unPreventable: function() {
                     newCustomEvent.unPreventable = true;
-                    return this;
-                },
-                unRenderPreventable: function() {
-                    newCustomEvent.unRenderPreventable = true;
-                    return this;
-                },
-                unFinalizePreventable: function() {
-                    newCustomEvent.unFinalizePreventable = true;
-                    return this;
-                },
-                noRender: function() {
-                    newCustomEvent.noRender = true;
-                    return this;
-                },
-                noFinalize: function() {
-                    newCustomEvent.noFinalize = true;
                     return this;
                 },
                 forceAssign: function() {
@@ -522,12 +496,8 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
          *               &lt;li&gt;e.status.ok --&gt; &#x60;true|false&#x60; whether the event got executed (not halted or defaultPrevented)&lt;/li&gt;
          *               &lt;li&gt;e.status.defaultFn (optional) --&gt; &#x60;true&#x60; if any defaultFn got invoked&lt;/li&gt;
          *               &lt;li&gt;e.status.preventedFn (optional) --&gt; &#x60;true&#x60; if any preventedFn got invoked&lt;/li&gt;
-         *               &lt;li&gt;e.status.rendered (optional) --&gt; &#x60;true&#x60; the vDOM rendered the dom&lt;/li&gt;
-         *               &lt;li&gt;e.status.finalized (optional) --&gt; &#x60;true&#x60; ran its finalizer&lt;/li&gt;
          *               &lt;li&gt;e.status.halted (optional) --&gt; &#x60;reason|true&#x60; if the event got halted and optional the why&lt;/li&gt;
          *               &lt;li&gt;e.status.defaultPrevented (optional) --&gt;  &#x60;reason|true&#x60; if the event got defaultPrevented and optional the why&lt;/li&gt;
-         *               &lt;li&gt;e.status.renderPrevented (optional) --&gt;  &#x60;reason|true&#x60; if the event got renderPrevented and optional the why&lt;/li&gt;
-         *               &lt;li&gt;e.status.finalizePrevented (optional) --&gt;  &#x60;reason|true&#x60; if the event got finalizePrevented and optional the why&lt;/li&gt;
          *          &lt;/ul&gt;
          *     &lt;/li&gt;
          * &lt;/ul&gt;
@@ -540,15 +510,12 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
          * &lt;ul&gt;
          *     &lt;li&gt;e.halt() --&gt; stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn&lt;/li&gt;
          *     &lt;li&gt;e.preventDefault() --&gt; instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers&lt;/li&gt;
-         *     &lt;li&gt;e.preventRender() --&gt; by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()&lt;/li&gt;
-         *     &lt;li&gt;e.preventFinalize() --&gt; by default, any event will endup running the finalizer, this can be prevented by calling e.preventFinalize()&lt;/li&gt;
          * &lt;/ul&gt;
          *
          * &lt;ul&gt;
-         *     &lt;li&gt;First, before-subscribers are invoked: this is the place where you might call &#x60;e.halt()&#x60;, &#x60;a.preventDefault()&#x60;, &#x60;e.preventRender() or &#x60;e.preventFinalize()&#x60;&lt;/li&gt;
+         *     &lt;li&gt;First, before-subscribers are invoked: this is the place where you might call &#x60;e.halt()&#x60;, &#x60;a.preventDefault()&#x60;&lt;/li&gt;
          *     &lt;li&gt;Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called&lt;/li&gt;
-         *     &lt;li&gt;Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)&lt;/li&gt;
-         *     &lt;li&gt;Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called&lt;/li&gt;
+         *     &lt;li&gt;Finally, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)&lt;/li&gt;
          * &lt;ul&gt;
          *
          * @static
@@ -570,29 +537,6 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
                 emitter = instance;
             }
             return instance._emit(emitter, customEvent, payload);
-        },
-
-        /**
-         * Adds a subscriber to the finalization-cycle, which happens after the after-subscribers.
-         * Only get invoked when the cycle was not preventDefaulted or halted.
-         *
-         * @method finalize
-         * @param finallySubscriber {Function} callback to be invoked
-         *        Function recieves the eventobject as its only argument
-         * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the subscriber
-         * @since 0.0.1
-         */
-        finalize: function (finallySubscriber) {
-            console.log(NAME, &#x27;finalize&#x27;);
-            var finalHash = this._final;
-            finalHash.push(finallySubscriber);
-            return {
-                detach: function() {
-                    console.log(NAME, &#x27;detach finalizer&#x27;);
-                    var index = finalHash.indexOf(finallySubscriber);
-                    (index===-1) || finalHash.splice(index, 1);
-                }
-            };
         },
 
         /**
@@ -757,36 +701,6 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
             };
             handler = instance._addMultiSubs(true, customEvent, wrapperFn, context, filter, prepend);
             return handler;
-        },
-
-        /**
-         * Runs all registered finalizers. Sets &#x60;e.finalized&#x60; true if none of the finalizers turns e.silent into &#x60;true&#x60;
-         * and thus every single finalizer got invoked.
-         *
-         * @static
-         * @method runFinalizers
-         * @param e {Object} eventobject
-         * @since 0.0.2
-         */
-        runFinalizers: function(e) {
-            var instance = this,
-                allFinalized = true;
-            if (instance._running) {
-                return;
-            }
-            // prevent re-initialize finalization within a finalizer:
-            instance._running = true;
-            this._final.some(function(finallySubscriber) {
-                !e.silent &amp;&amp; finallySubscriber(e);
-                if (e.status &amp;&amp; e.status.unSilencable &amp;&amp; e.silent) {
-                    console.warn(NAME, &#x27; event &#x27;+e.emitter+&#x27;:&#x27;+e.type+&#x27; cannot made silent: this customEvent is defined as unSilencable&#x27;);
-                    e.silent = false;
-                }
-                allFinalized = !e.silent;
-                return !allFinalized;
-            });
-            e.finalized = allFinalized;
-            instance._running = false;
         },
 
         /**
@@ -1070,12 +984,8 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
          *               &lt;li&gt;e.status.ok --&gt; &#x60;true|false&#x60; whether the event got executed (not halted or defaultPrevented)&lt;/li&gt;
          *               &lt;li&gt;e.status.defaultFn (optional) --&gt; &#x60;true&#x60; if any defaultFn got invoked&lt;/li&gt;
          *               &lt;li&gt;e.status.preventedFn (optional) --&gt; &#x60;true&#x60; if any preventedFn got invoked&lt;/li&gt;
-         *               &lt;li&gt;e.status.rendered (optional) --&gt; &#x60;true&#x60; the vDOM rendered the dom&lt;/li&gt;
-         *               &lt;li&gt;e.status.finalized (optional) --&gt; &#x60;true&#x60; if finlize was invoked&lt;/li&gt;
          *               &lt;li&gt;e.status.halted (optional) --&gt; &#x60;reason|true&#x60; if the event got halted and optional the why&lt;/li&gt;
          *               &lt;li&gt;e.status.defaultPrevented (optional) --&gt;  &#x60;reason|true&#x60; if the event got defaultPrevented and optional the why&lt;/li&gt;
-         *               &lt;li&gt;e.status.renderPrevented (optional) --&gt;  &#x60;reason|true&#x60; if the event got renderPrevented and optional the why&lt;/li&gt;
-         *               &lt;li&gt;e.status.finalizePrevented (optional) --&gt;  &#x60;reason|true&#x60; if the event got finalizePrevented and optional the why&lt;/li&gt;
          *          &lt;/ul&gt;
          *     &lt;/li&gt;
          * &lt;/ul&gt;
@@ -1088,15 +998,12 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
          * &lt;ul&gt;
          *     &lt;li&gt;e.halt() --&gt; stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn&lt;/li&gt;
          *     &lt;li&gt;e.preventDefault() --&gt; instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers&lt;/li&gt;
-         *     &lt;li&gt;e.preventRender() --&gt; by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()&lt;/li&gt;
-         *     &lt;li&gt;e.preventFinalize() --&gt; by default, any event end up with running the finalizer, this can be prevented by calling e.preventFinalize()&lt;/li&gt;
          * &lt;/ul&gt;
          *
          * &lt;ul&gt;
          *     &lt;li&gt;First, before-subscribers are invoked: this is the place where you might call &#x60;e.halt()&#x60;, &#x60;a.preventDefault()&#x60;, &#x60;e.preventRender()&#x60; or &#x60;e.preventFinalize()&#x60;&lt;/li&gt;
          *     &lt;li&gt;Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called&lt;/li&gt;
-         *     &lt;li&gt;Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)&lt;/li&gt;
-         *     &lt;li&gt;Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called&lt;/li&gt;
+         *     &lt;li&gt;Finally, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)&lt;/li&gt;
          * &lt;ul&gt;
          *
          * @static
@@ -1117,11 +1024,10 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
          *                       &lt;b&gt;should not be used&lt;/b&gt; other than by any submodule like &#x60;event-dom&#x60;.
          * @param [keepPayload=false] {Boolean} whether &#x60;payload&#x60; should be used as the ventobject instead of creating a new
          *                      eventobject and merge payload. &lt;b&gt;should not be used&lt;/b&gt; other than by any submodule like &#x60;event-dom&#x60;.
-         * @param [noFinalize=false] {Boolean} To supress finalization
          * @return {Object|undefined} eventobject or undefined when the event was halted or preventDefaulted.
          * @since 0.0.1
          */
-        _emit: function (emitter, customEvent, payload, beforeSubscribers, afterSubscribers, preProcessor, keepPayload, noFinalize) {
+        _emit: function (emitter, customEvent, payload, beforeSubscribers, afterSubscribers, preProcessor, keepPayload) {
             // NOTE: emit() needs to be synchronous! otherwise we wouldn&#x27;t be able
             // to preventDefault DOM-events in time.
             var instance = this,
@@ -1160,10 +1066,6 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
                 if (customEventDefinition) {
                     e._unPreventable = customEventDefinition.unPreventable;
                     e._unHaltable = customEventDefinition.unHaltable;
-                    e._unRenderPreventable = customEventDefinition.unRenderPreventable;
-                    e._unFinalizePreventable = customEventDefinition.unFinalizePreventable;
-                    e._noRender = customEventDefinition.noRender;
-                    e._noFinalize = customEventDefinition.noFinalize;
                     customEventDefinition.unSilencable &amp;&amp; (e.status.unSilencable = true);
                 }
                 if (payload) {
@@ -1211,23 +1113,6 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
                 else {
                     invokeSubs = instance._invokeSubs.bind(instance, e, true, false, false);
                     [subs, named_wildcard_subs, wildcard_named_subs, wildcard_wildcard_subs].forEach(invokeSubs);
-                }
-                if (!e.silent) {
-                    // in case any subscriber changed e.target inside its filter (event-dom does this),
-                    // then we reset e.target to its original:
-                    e.sourceTarget &amp;&amp; (e.target=e.sourceTarget);
-                    if (!noFinalize) {
-                        subscribedSize = 0;
-                        beforeSubscribers &amp;&amp; (subscribedSize+=beforeSubscribers.size());
-                        afterSubscribers &amp;&amp; (subscribedSize+=afterSubscribers.size());
-                        if (!beforeSubscribers || !afterSubscribers) {
-                            subs &amp;&amp; (subscribedSize += subs.size());
-                            named_wildcard_subs &amp;&amp; (subscribedSize += named_wildcard_subs.size());
-                            wildcard_named_subs &amp;&amp; (subscribedSize += wildcard_named_subs.size());
-                            wildcard_wildcard_subs &amp;&amp; (subscribedSize += wildcard_wildcard_subs.size());
-                        }
-                        (subscribedSize&gt;0) &amp;&amp; !e._noFinalize &amp;&amp; !e.status.finalizePrevented &amp;&amp; instance.runFinalizers(e);
-                    }
                 }
             }
             return e;
@@ -1431,16 +1316,12 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
      *     &#x27;UI:tap&#x27;: {
      *         preventable: true,
      *         defaultFn: function(){...},
-     *         preventedFn: function(){...},
-     *         renderPreventable: true,
-     *         finalizePreventable: true
+     *         preventedFn: function(){...}
      *     },
      *     &#x27;redmodel:save&#x27;: {
      *         preventable: true,
      *         defaultFn: function(){...},
-     *         preventedFn: function(){...},
-     *         renderPreventable: true,
-     *         finalizePreventable: true
+     *         preventedFn: function(){...}
      *     }
      * }
      *
@@ -1509,27 +1390,13 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
     Object.protectedProp(Event, &#x27;_subs&#x27;, {});
 
     /**
-     * Internal list of finalize-subscribers which are invoked at the finalization-cycle, which happens after the after-subscribers.
-     * Is an array of function-references.
-     *
-     * @property _final
-     * @default []
-     * @type Array
-     * @private
-     * @since 0.0.1
-    */
-    Object.protectedProp(Event, &#x27;_final&#x27;, []);
-
-    /**
      * Object that acts as the prototype of the eventobject.
      * To add more methods, you can use &#x60;_setEventObjProperty&#x60;
      *
      * @property _defaultEventObj
      * @default {
-     *    halt: function()
+     *    halt: function(),
      *    preventDefault: function()
-     *    preventRender: function()
-     *    preventFinalize: function()
      * }
      * @type Object
      * @private
@@ -1594,8 +1461,6 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
     Event._setEventObjProperty(&#x27;halt&#x27;, function(reason) {this.status.ok || this._unHaltable || (this.status.halted = (reason || true));})
          ._setEventObjProperty(&#x27;preventDefault&#x27;, function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPrevented = (reason || true));})
          ._setEventObjProperty(&#x27;preventDefaultContinue&#x27;, function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPreventedContinue = (reason || true));})
-         ._setEventObjProperty(&#x27;preventFinalize&#x27;, function(reason) {this.status.ok || this._unFinalizePreventable || (this.status.finalizePrevented = (reason || true));})
-         ._setEventObjProperty(&#x27;preventRender&#x27;, function(reason) {this.status.ok || this._unRenderPreventable || (this.status.renderPrevented = (reason || true));});
 
     return Event;
 }));

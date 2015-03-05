@@ -329,7 +329,7 @@
      * called before the callback function, the callback function won&#x27;t be called.
     **/
     module.exports.async = _async;
-    module.exports.asyncSilent = function() {
+    module.exports.async = function() {
         return _async.call(this, arguments[0], false);
     };
 
@@ -412,7 +412,7 @@
 
     module.exports.later = _later;
 
-    module.exports.laterSilent = function() {
+    module.exports.later = function() {
         var args = arguments,
             newArgs = [];
         newArgs[0] = args[0];

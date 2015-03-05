@@ -2636,7 +2636,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":83}],6:[function(require,module,exports){
+},{"_process":81}],6:[function(require,module,exports){
 "use strict";
 module.exports = function (window) {
     require('node-plugin')(window);
@@ -2664,7 +2664,7 @@ module.exports = function (window) {
 
     return PluginConstrain;
 };
-},{"js-ext/extra/hashmap.js":39,"node-plugin":51}],7:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"node-plugin":49}],7:[function(require,module,exports){
 var css = "*:focus {\n    outline: 0;\n}\n\na[target=\"_blank\"]:focus {\n    outline: 1px solid #129fea;\n}\n\n/* because we think the padding and margin should always be part of the size,\n   we define \"box-sizing: border-box\" for all elements */\n\n* {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],8:[function(require,module,exports){
 var css = ".pure-menu.pure-menu-open {\n    z-index: 3; /* prevent graph from crossing the menuarea */\n}\n\n.pure-button.pure-button-bordered,\n.pure-button.pure-button-bordered[disabled] {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;\n}\n\n.pure-button-active,\n.pure-button:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button.pure-button-bordered.pure-button-active[disabled],\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered[disabled]:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.4) inset, 0 0 6px rgba(0,0,0, 0.2) inset;\n}\n\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.6) inset;\n}\n\n/* restore pure-button:active */\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button:active:focus,\n.pure-button.pure-button-active:focus {\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6) inset, 0 0 10px rgba(0, 0, 0, 0.2) inset;\n}\n\n.pure-button.pure-button-rounded {\n    border-radius: 0.3em;\n}\n\n.pure-button.pure-button-heavyrounded {\n    border-radius: 0.5em;\n}\n\n.pure-button.pure-button-oval {\n    border-radius: 50%;\n}\n\n.pure-button.pure-button-halfoval {\n    border-radius: 25%;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -2846,7 +2846,7 @@ module.exports = function (window) {
     // return the Class, so it can be subclassed:
     return Dialog;
 };
-},{"./css/dialog.css":11,"event":30,"js-ext":42,"js-ext/extra/classes.js":38,"js-ext/extra/hashmap.js":39,"messages":50,"panel":53,"polyfill":63,"utils":68}],13:[function(require,module,exports){
+},{"./css/dialog.css":11,"event":28,"js-ext":40,"js-ext/extra/classes.js":36,"js-ext/extra/hashmap.js":37,"messages":48,"panel":51,"polyfill":61,"utils":66}],13:[function(require,module,exports){
 var css = "[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],14:[function(require,module,exports){
 "use strict";
@@ -3942,7 +3942,7 @@ module.exports = function (window) {
     return DragModule;
 
 };
-},{"./css/drag-drop.css":13,"drag":16,"event-dom":17,"js-ext":42,"js-ext/extra/hashmap.js":39,"node-plugin":51,"polyfill/polyfill-base.js":63,"useragent":67,"vdom":80,"window-ext":81}],15:[function(require,module,exports){
+},{"./css/drag-drop.css":13,"drag":16,"event-dom":17,"js-ext":40,"js-ext/extra/hashmap.js":37,"node-plugin":49,"polyfill/polyfill-base.js":61,"useragent":65,"vdom":78,"window-ext":79}],15:[function(require,module,exports){
 var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -ms-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 3001 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],16:[function(require,module,exports){
 "use strict";
@@ -4603,7 +4603,7 @@ module.exports = function (window) {
 
     return DD;
 };
-},{"./css/drag.css":15,"event-dom":17,"js-ext":42,"js-ext/extra/hashmap.js":39,"node-plugin":51,"polyfill":63,"useragent":67,"vdom":80,"window-ext":81}],17:[function(require,module,exports){
+},{"./css/drag.css":15,"event-dom":17,"js-ext":40,"js-ext/extra/hashmap.js":37,"node-plugin":49,"polyfill":61,"useragent":65,"vdom":78,"window-ext":79}],17:[function(require,module,exports){
 "use strict";
 
 /**
@@ -4626,7 +4626,7 @@ module.exports = function (window) {
 
 var NAME = '[event-dom]: ',
     Event = require('event'),
-    laterSilent = require('utils').laterSilent,
+    later = require('utils').later,
     createHashMap = require('js-ext/extra/hashmap.js').createMap,
     OUTSIDE = 'outside',
     REGEXP_NODE_ID = /^#\S+$/,
@@ -4932,11 +4932,11 @@ module.exports = function (window) {
             // we need to do this asynchronous: this way we pass them AFTER the DOM-event's defaultFn
             // also make sure to paas-in the payload of the manipulated eventobject
             subscribers = _getSubscribers(e, false, subs, wildcard_named_subs, named_wildcard_subs, wildcard_wildcard_subs);
-            (subscribers.length>0) && laterSilent(Event._emit.bind(Event, e.target, customEvent, eventobject, [], subscribers, _preProcessor, true), 10);
+            (subscribers.length>0) && later(Event._emit.bind(Event, e.target, customEvent, eventobject, [], subscribers, _preProcessor, true), 10);
 
             // now check outside subscribers
             subscribers = _getSubscribers(e, false, subsOutside, wildcard_named_subsOutside);
-            (subscribers.length>0) && laterSilent(Event._emit.bind(Event, e.target, customEvent+OUTSIDE, eventobjectOutside, [], subscribers, _preProcessor, true), 10);
+            (subscribers.length>0) && later(Event._emit.bind(Event, e.target, customEvent+OUTSIDE, eventobjectOutside, [], subscribers, _preProcessor, true), 10);
         }
     };
 
@@ -5133,7 +5133,7 @@ module.exports = function (window) {
                     e._noRender = true;
                     // even if the node isn't in the DOM, we can still try to manipulate it:
                     // the vdom makes sure no errors occur when the node is already removed
-                    laterSilent(buttonNode.removeClass.bind(buttonNode, PURE_BUTTON_ACTIVE), TIME_BTN_PRESSED);
+                    later(buttonNode.removeClass.bind(buttonNode, PURE_BUTTON_ACTIVE), TIME_BTN_PRESSED);
                 }
             }
         );
@@ -5363,7 +5363,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":30,"js-ext/extra/hashmap.js":39,"js-ext/lib/array.js":44,"js-ext/lib/object.js":47,"js-ext/lib/string.js":49,"polyfill/polyfill-base.js":63,"utils":68,"vdom":80}],18:[function(require,module,exports){
+},{"event":28,"js-ext/extra/hashmap.js":37,"js-ext/lib/array.js":42,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"polyfill/polyfill-base.js":61,"utils":66,"vdom":78}],18:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5463,7 +5463,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47}],19:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45}],19:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5564,7 +5564,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47}],20:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45}],20:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5666,7 +5666,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47}],21:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45}],21:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5849,7 +5849,7 @@ module.exports = function (window) {
         // cancel previous timer: we don't want multiple timers:
         valueChangeData._pollTimer && valueChangeData._pollTimer.cancel();
         // setup a new timer:
-        valueChangeData._pollTimer = UTILS.laterSilent(checkChanged.bind(null, e), POLL_INTERVAL, true);
+        valueChangeData._pollTimer = UTILS.later(checkChanged.bind(null, e), POLL_INTERVAL, true);
     },
 
 
@@ -5953,7 +5953,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"utils":68,"vdom":80}],22:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"utils":66,"vdom":78}],22:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6066,8 +6066,8 @@ module.exports = function (window) {
  * Created variables: DOCUMENT=window.DOCUMENT
  * replaced 'DOCUMENT' by DOCUMENT furtheron in the code (ondly while word and case-sensitive)
  *
- * required laterSilent = require('utils').laterSilent
- * Changed the function "setTimeoutContext" into using laterSilent instead of setTimeout
+ * required later = require('utils').later
+ * Changed the function "setTimeoutContext" into using later instead of setTimeout
 */
 
 module.exports = function (window) {
@@ -6075,7 +6075,7 @@ module.exports = function (window) {
     'use strict';
 
     var DOCUMENT = window.document,
-        laterSilent = require('utils').laterSilent,
+        later = require('utils').later,
         VENDOR_PREFIXES = ['', 'webkit', 'moz', 'MS', 'ms', 'o'],
         TEST_ELEMENT = DOCUMENT.createElement('div'),
         TYPE_FUNCTION = 'function',
@@ -6091,7 +6091,7 @@ module.exports = function (window) {
      * @returns {number}
      */
     function setTimeoutContext(fn, timeout, context) {
-        return laterSilent(bindFn(fn, context), timeout);
+        return later(bindFn(fn, context), timeout);
     }
 
     /**
@@ -8448,7 +8448,7 @@ module.exports = function (window) {
 
 };
 
-},{"utils":68}],24:[function(require,module,exports){
+},{"utils":66}],24:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -8602,10 +8602,6 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
          *     <li>unHaltable() --> makes the customEvent cannot be halted</li>
          *     <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>
          *     <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>
-         *     <li>unRenderPreventable() --> makes that the customEvent's render cannot be prevented</li>
-         *     <li>unFinalizePreventable() --> makes that the customEvent's finalizer cannot be prevented</li>
-         *     <li>noRender() --> prevents this customEvent from render the dom. Overrules unRenderPreventable()</li>
-         *     <li>noFinalize() --> prevents this customEvent from running its finalizer. Overrules unFinalizePreventable()</li>
          * </ul>
          *
          * @static
@@ -8614,16 +8610,12 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
          * @return {Object} with extra methods that can be chained:
          * <ul>
          *      <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>
-         *      <li>unRenderPreventable() --> makes that the customEvent's render cannot be prevented</li>
-         *      <li>unFinalizePreventable() --> makes that the customEvent's finalizer cannot be prevented/li>
          *      <li>forceAssign() --> overrides any previous definition</li>
          *      <li>defaultFn() --> the default-function of the event</li>
          *      <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>
          *      <li>forceAssign() --> overrides any previous definition</li>
          *      <li>unHaltable() --> makes the customEvent cannot be halted</li>
          *      <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>
-         *      <li>noRender() --> prevents this customEvent from render the dom. Overrules unRenderPreventable()</li>
-         *      <li>noFinalize() --> prevents this customEvent from running its finalizer. Overrules unFinalizePreventable()</li>
          * </ul>
          * @since 0.0.1
          */
@@ -8643,9 +8635,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                 return;
             }
             newCustomEvent = {
-                preventable: true,
-                renderPreventable: true,
-                finalizePreventable: true
+                preventable: true
             };
             exists = customevents[customEvent];
             // if customEvent not yet exists, we can add it
@@ -8673,22 +8663,6 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                 },
                 unPreventable: function() {
                     newCustomEvent.unPreventable = true;
-                    return this;
-                },
-                unRenderPreventable: function() {
-                    newCustomEvent.unRenderPreventable = true;
-                    return this;
-                },
-                unFinalizePreventable: function() {
-                    newCustomEvent.unFinalizePreventable = true;
-                    return this;
-                },
-                noRender: function() {
-                    newCustomEvent.noRender = true;
-                    return this;
-                },
-                noFinalize: function() {
-                    newCustomEvent.noFinalize = true;
                     return this;
                 },
                 forceAssign: function() {
@@ -8756,12 +8730,8 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
          *               <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>
          *               <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>
          *               <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>
-         *               <li>e.status.rendered (optional) --> `true` the vDOM rendered the dom</li>
-         *               <li>e.status.finalized (optional) --> `true` ran its finalizer</li>
          *               <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>
          *               <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>
-         *               <li>e.status.renderPrevented (optional) -->  `reason|true` if the event got renderPrevented and optional the why</li>
-         *               <li>e.status.finalizePrevented (optional) -->  `reason|true` if the event got finalizePrevented and optional the why</li>
          *          </ul>
          *     </li>
          * </ul>
@@ -8774,15 +8744,12 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
          * <ul>
          *     <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>
          *     <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>
-         *     <li>e.preventRender() --> by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>
-         *     <li>e.preventFinalize() --> by default, any event will endup running the finalizer, this can be prevented by calling e.preventFinalize()</li>
          * </ul>
          *
          * <ul>
-         *     <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()`, `e.preventRender() or `e.preventFinalize()`</li>
+         *     <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()`</li>
          *     <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>
-         *     <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>
-         *     <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li>
+         *     <li>Finally, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>
          * <ul>
          *
          * @static
@@ -8804,29 +8771,6 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                 emitter = instance;
             }
             return instance._emit(emitter, customEvent, payload);
-        },
-
-        /**
-         * Adds a subscriber to the finalization-cycle, which happens after the after-subscribers.
-         * Only get invoked when the cycle was not preventDefaulted or halted.
-         *
-         * @method finalize
-         * @param finallySubscriber {Function} callback to be invoked
-         *        Function recieves the eventobject as its only argument
-         * @return {Object} handler with a `detach()`-method which can be used to detach the subscriber
-         * @since 0.0.1
-         */
-        finalize: function (finallySubscriber) {
-            console.log(NAME, 'finalize');
-            var finalHash = this._final;
-            finalHash.push(finallySubscriber);
-            return {
-                detach: function() {
-                    console.log(NAME, 'detach finalizer');
-                    var index = finalHash.indexOf(finallySubscriber);
-                    (index===-1) || finalHash.splice(index, 1);
-                }
-            };
         },
 
         /**
@@ -8991,36 +8935,6 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
             };
             handler = instance._addMultiSubs(true, customEvent, wrapperFn, context, filter, prepend);
             return handler;
-        },
-
-        /**
-         * Runs all registered finalizers. Sets `e.finalized` true if none of the finalizers turns e.silent into `true`
-         * and thus every single finalizer got invoked.
-         *
-         * @static
-         * @method runFinalizers
-         * @param e {Object} eventobject
-         * @since 0.0.2
-         */
-        runFinalizers: function(e) {
-            var instance = this,
-                allFinalized = true;
-            if (instance._running) {
-                return;
-            }
-            // prevent re-initialize finalization within a finalizer:
-            instance._running = true;
-            this._final.some(function(finallySubscriber) {
-                !e.silent && finallySubscriber(e);
-                if (e.status && e.status.unSilencable && e.silent) {
-                    console.warn(NAME, ' event '+e.emitter+':'+e.type+' cannot made silent: this customEvent is defined as unSilencable');
-                    e.silent = false;
-                }
-                allFinalized = !e.silent;
-                return !allFinalized;
-            });
-            e.finalized = allFinalized;
-            instance._running = false;
         },
 
         /**
@@ -9304,12 +9218,8 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
          *               <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>
          *               <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>
          *               <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>
-         *               <li>e.status.rendered (optional) --> `true` the vDOM rendered the dom</li>
-         *               <li>e.status.finalized (optional) --> `true` if finlize was invoked</li>
          *               <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>
          *               <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>
-         *               <li>e.status.renderPrevented (optional) -->  `reason|true` if the event got renderPrevented and optional the why</li>
-         *               <li>e.status.finalizePrevented (optional) -->  `reason|true` if the event got finalizePrevented and optional the why</li>
          *          </ul>
          *     </li>
          * </ul>
@@ -9322,15 +9232,12 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
          * <ul>
          *     <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>
          *     <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>
-         *     <li>e.preventRender() --> by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>
-         *     <li>e.preventFinalize() --> by default, any event end up with running the finalizer, this can be prevented by calling e.preventFinalize()</li>
          * </ul>
          *
          * <ul>
          *     <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()`, `e.preventRender()` or `e.preventFinalize()`</li>
          *     <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>
-         *     <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>
-         *     <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li>
+         *     <li>Finally, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>
          * <ul>
          *
          * @static
@@ -9351,11 +9258,10 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
          *                       <b>should not be used</b> other than by any submodule like `event-dom`.
          * @param [keepPayload=false] {Boolean} whether `payload` should be used as the ventobject instead of creating a new
          *                      eventobject and merge payload. <b>should not be used</b> other than by any submodule like `event-dom`.
-         * @param [noFinalize=false] {Boolean} To supress finalization
          * @return {Object|undefined} eventobject or undefined when the event was halted or preventDefaulted.
          * @since 0.0.1
          */
-        _emit: function (emitter, customEvent, payload, beforeSubscribers, afterSubscribers, preProcessor, keepPayload, noFinalize) {
+        _emit: function (emitter, customEvent, payload, beforeSubscribers, afterSubscribers, preProcessor, keepPayload) {
             // NOTE: emit() needs to be synchronous! otherwise we wouldn't be able
             // to preventDefault DOM-events in time.
             var instance = this,
@@ -9394,10 +9300,6 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                 if (customEventDefinition) {
                     e._unPreventable = customEventDefinition.unPreventable;
                     e._unHaltable = customEventDefinition.unHaltable;
-                    e._unRenderPreventable = customEventDefinition.unRenderPreventable;
-                    e._unFinalizePreventable = customEventDefinition.unFinalizePreventable;
-                    e._noRender = customEventDefinition.noRender;
-                    e._noFinalize = customEventDefinition.noFinalize;
                     customEventDefinition.unSilencable && (e.status.unSilencable = true);
                 }
                 if (payload) {
@@ -9445,23 +9347,6 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                 else {
                     invokeSubs = instance._invokeSubs.bind(instance, e, true, false, false);
                     [subs, named_wildcard_subs, wildcard_named_subs, wildcard_wildcard_subs].forEach(invokeSubs);
-                }
-                if (!e.silent) {
-                    // in case any subscriber changed e.target inside its filter (event-dom does this),
-                    // then we reset e.target to its original:
-                    e.sourceTarget && (e.target=e.sourceTarget);
-                    if (!noFinalize) {
-                        subscribedSize = 0;
-                        beforeSubscribers && (subscribedSize+=beforeSubscribers.size());
-                        afterSubscribers && (subscribedSize+=afterSubscribers.size());
-                        if (!beforeSubscribers || !afterSubscribers) {
-                            subs && (subscribedSize += subs.size());
-                            named_wildcard_subs && (subscribedSize += named_wildcard_subs.size());
-                            wildcard_named_subs && (subscribedSize += wildcard_named_subs.size());
-                            wildcard_wildcard_subs && (subscribedSize += wildcard_wildcard_subs.size());
-                        }
-                        (subscribedSize>0) && !e._noFinalize && !e.status.finalizePrevented && instance.runFinalizers(e);
-                    }
                 }
             }
             return e;
@@ -9665,16 +9550,12 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
      *     'UI:tap': {
      *         preventable: true,
      *         defaultFn: function(){...},
-     *         preventedFn: function(){...},
-     *         renderPreventable: true,
-     *         finalizePreventable: true
+     *         preventedFn: function(){...}
      *     },
      *     'redmodel:save': {
      *         preventable: true,
      *         defaultFn: function(){...},
-     *         preventedFn: function(){...},
-     *         renderPreventable: true,
-     *         finalizePreventable: true
+     *         preventedFn: function(){...}
      *     }
      * }
      *
@@ -9743,27 +9624,13 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
     Object.protectedProp(Event, '_subs', {});
 
     /**
-     * Internal list of finalize-subscribers which are invoked at the finalization-cycle, which happens after the after-subscribers.
-     * Is an array of function-references.
-     *
-     * @property _final
-     * @default []
-     * @type Array
-     * @private
-     * @since 0.0.1
-    */
-    Object.protectedProp(Event, '_final', []);
-
-    /**
      * Object that acts as the prototype of the eventobject.
      * To add more methods, you can use `_setEventObjProperty`
      *
      * @property _defaultEventObj
      * @default {
-     *    halt: function()
+     *    halt: function(),
      *    preventDefault: function()
-     *    preventRender: function()
-     *    preventFinalize: function()
      * }
      * @type Object
      * @private
@@ -9828,13 +9695,11 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
     Event._setEventObjProperty('halt', function(reason) {this.status.ok || this._unHaltable || (this.status.halted = (reason || true));})
          ._setEventObjProperty('preventDefault', function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPrevented = (reason || true));})
          ._setEventObjProperty('preventDefaultContinue', function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPreventedContinue = (reason || true));})
-         ._setEventObjProperty('preventFinalize', function(reason) {this.status.ok || this._unFinalizePreventable || (this.status.finalizePrevented = (reason || true));})
-         ._setEventObjProperty('preventRender', function(reason) {this.status.ok || this._unRenderPreventable || (this.status.renderPrevented = (reason || true));});
 
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"polyfill/polyfill-base.js":63}],25:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill/polyfill-base.js":61}],25:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10223,7 +10088,7 @@ Classes.BaseClass.mergePrototypes(Event.Listener, true)
                  .mergePrototypes(ClassListener, true, {}, {});
 
 module.exports = Event;
-},{"./event-base.js":24,"js-ext/extra/classes.js":38,"js-ext/lib/object.js":47}],27:[function(require,module,exports){
+},{"./event-base.js":24,"js-ext/extra/classes.js":36,"js-ext/lib/object.js":45}],27:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10261,8 +10126,6 @@ module.exports = Event;
 */
 
 require('js-ext/lib/object.js');
-require('./timer-finalize.js');
-require('./promise-finalize.js');
 
 module.exports = function (window) {
 
@@ -10270,7 +10133,7 @@ module.exports = function (window) {
         IO = require('io')(window),
         NATIVE_OBJECT_OBSERVE = !!Object.observe,
         Event = require('../event-base.js'),
-        asyncSilent = require('utils').asyncSilent,
+        async = require('utils').async,
         definitions = {},
         callbackFn, checkObjects, observeNative, observePolyfill, unobserveNative, unobservePolyfill, finalizer;
 
@@ -10376,7 +10239,7 @@ module.exports = function (window) {
         // because it could happen that someone sets up the observer and in the SAME eventloop changes the model.
         // we must prevent the modelchange from being registered.
         // that's why a manual `checkObjects` must be ran in a next event-cycle:
-        asyncSilent(checkObjects.bind(null, {}));
+        async(checkObjects.bind(null, {}));
     };
 
    /**
@@ -10470,159 +10333,13 @@ module.exports = function (window) {
     module.exports = Event;
 
 };
-},{"../event-base.js":24,"./promise-finalize.js":28,"./timer-finalize.js":29,"io":37,"js-ext/lib/object.js":47,"utils":68}],28:[function(require,module,exports){
-(function (global){
-(function (global) {
-
-    "use strict";
-
-    var NAME = '[promise-finalize]: ',
-        NATIVE_OBJECT_OBSERVE = !!Object.observe,
-        createHashMap = require('js-ext/extra/hashmap.js').createMap,
-        afterFunc, afterFuncReject, finallyBKP, catchBKP, thenFulfillBKP;
-
-    global._ITSAmodules || Object.protectedProp(global, '_ITSAmodules', createHashMap());
-
-    if (global._ITSAmodules.PromiseFinalize) {
-        return;
-    }
-
-    require('js-ext/lib/promise.js');
-
-    afterFunc = function(response) {
-        // we will run a NOOP every 500ms --> even if we tried to catch all async-actions, there still might be
-        // situations where we miss model-updates.
-        global.setTimeout(function() { /* NOOP */ }, 0);
-        return response;
-    };
-
-    afterFuncReject = function(response) {
-        // we will run a NOOP every 500ms --> even if we tried to catch all async-actions, there still might be
-        // situations where we miss model-updates.
-        global.setTimeout(function() { /* NOOP */ }, 0);
-        throw new Error(response);
-    };
-
-    if (!NATIVE_OBJECT_OBSERVE) {
-        (function(PromisePrototype) {
-            finallyBKP = PromisePrototype.finally;
-            PromisePrototype.finally = function () {
-                return finallyBKP.apply(this, arguments)._originalThen(afterFunc, afterFuncReject);
-            };
-
-            catchBKP = PromisePrototype.catch;
-            PromisePrototype.catch = function () {
-                return catchBKP.apply(this, arguments)._originalThen(afterFunc, afterFuncReject);
-            };
-
-            PromisePrototype._originalThen = PromisePrototype.then;
-            PromisePrototype.then = function () {
-                return this._originalThen.apply(this, arguments)._originalThen(afterFunc, afterFuncReject);
-            };
-
-            thenFulfillBKP = PromisePrototype.thenFulfill;
-            PromisePrototype.thenFulfill = function () {
-                return thenFulfillBKP.apply(this, arguments)._originalThen(afterFunc, afterFuncReject);
-            };
-        }(Promise.prototype));
-    }
-
-    global._ITSAmodules.PromiseFinalize = true;
-
-}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":39,"js-ext/lib/promise.js":48}],29:[function(require,module,exports){
-(function (global){
-(function (global) {
-
-    "use strict";
-
-    var NAME = '[event-timer-finalize]: ',
-        INTERVAL_AUTOFINALIZE = 500,
-        createHashMap = require('js-ext/extra/hashmap.js').createMap,
-        NATIVE_OBJECT_OBSERVE = !!Object.observe,
-        Event, setTimeoutBKP, setIntervalBKP, setImmediateBKP;
-
-    global._ITSAmodules || Object.protectedProp(global, '_ITSAmodules', createHashMap());
-
-    if (global._ITSAmodules.EventTimerFinalize) {
-        return;
-    }
-
-    Event = require('../event-base.js');
-    // we patch the global timer functions in order to run `refreshItags` afterwards:
-    setTimeoutBKP = global.setTimeout;
-    setIntervalBKP = global.setInterval;
-
-    global.setTimeout = function() {
-        var args = arguments;
-        args[0] = (function(originalFn) {
-            return function() {
-                var eventObject = {
-                        type: '',
-                        emitter: 'global',
-                        target: global
-                    };
-                originalFn();
-                Event.runFinalizers(eventObject);
-            };
-        })(args[0]);
-        setTimeoutBKP.apply(this, arguments);
-    };
-
-    global.setInterval = function() {
-        var args = arguments;
-        args[0] = (function(originalFn) {
-            return function() {
-                var eventObject = {
-                        type: '',
-                        emitter: 'global',
-                        target: global
-                    };
-                originalFn();
-                Event.runFinalizers(eventObject);
-            };
-        })(args[0]);
-        setIntervalBKP.apply(this, arguments);
-    };
-
-    if (typeof global.setImmediate !== 'undefined') {
-        setImmediateBKP = global.setInterval;
-        global.setImmediate = function() {
-            var args = arguments;
-            args[0] = (function(originalFn) {
-                return function() {
-                    var eventObject = {
-                            type: '',
-                            emitter: 'global',
-                            target: global
-                        };
-                    originalFn();
-                    Event.runFinalizers(eventObject);
-                };
-            })(args[0]);
-            setImmediateBKP.apply(this, arguments);
-        };
-    }
-
-    global._ITSAmodules.EventTimerFinalize = true;
-
-    if (!NATIVE_OBJECT_OBSERVE) {
-        // we will run a NOOP every 500ms --> even if we tried to catch all async-actions, there still might be
-        // situations where we miss model-updates.
-        global.setTimeout(function() { /* NOOP */ }, 0);
-        global.setInterval(function() { /* NOOP */ }, INTERVAL_AUTOFINALIZE);
-    }
-
-}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../event-base.js":24,"js-ext/extra/hashmap.js":39}],30:[function(require,module,exports){
+},{"../event-base.js":24,"io":35,"js-ext/lib/object.js":45,"utils":66}],28:[function(require,module,exports){
 module.exports = require('./event-base.js');
 require('./event-emitter.js');
 require('./event-listener.js');
-},{"./event-base.js":24,"./event-emitter.js":25,"./event-listener.js":26}],31:[function(require,module,exports){
+},{"./event-base.js":24,"./event-emitter.js":25,"./event-listener.js":26}],29:[function(require,module,exports){
 var css = "[plugin-fm=\"true\"] {\n    /* NEVER can we select the text: when the focusmanager is active it will refocus on the active item */\n    -moz-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    cursor: default;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],32:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],30:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -11140,7 +10857,7 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"./css/focusmanager.css":31,"event-mobile":22,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"node-plugin":51,"polyfill":63,"utils":68,"window-ext":81}],33:[function(require,module,exports){
+},{"./css/focusmanager.css":29,"event-mobile":22,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"node-plugin":49,"polyfill":61,"utils":66,"window-ext":79}],31:[function(require,module,exports){
 
 "use strict";
 
@@ -11268,7 +10985,7 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"../io.js":37,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"xmldom":2}],34:[function(require,module,exports){
+},{"../io.js":35,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"xmldom":2}],32:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -11395,7 +11112,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":37,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47}],35:[function(require,module,exports){
+},{"../io.js":35,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45}],33:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11865,7 +11582,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":37,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"js-ext/lib/string.js":49,"polyfill/polyfill-base.js":63}],36:[function(require,module,exports){
+},{"../io.js":35,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"polyfill/polyfill-base.js":61}],34:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12017,7 +11734,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":37,"js-ext":42,"js-ext/extra/hashmap.js":39}],37:[function(require,module,exports){
+},{"../io.js":35,"js-ext":40,"js-ext/extra/hashmap.js":37}],35:[function(require,module,exports){
 (function (global){
 /**
  * Provides core IO-functionality.
@@ -12038,7 +11755,8 @@ require('js-ext');
 var NAME = '[io]: ',
     GET = 'GET',
     createHashMap = require('js-ext/extra/hashmap.js').createMap,
-    asyncSilent = require('utils').asyncSilent,
+    Event = require(event),
+    async = require('utils').async,
     DEF_REQ_TIMEOUT = 300000, // don't create an ever-lasting request: always quit after 5 minutes
     BODY_METHODS = createHashMap({
         POST: 1,
@@ -12318,56 +12036,19 @@ module.exports = function (window) {
 
             instance._initXHR(xhr, options, promise);
 
-            // to make any routine informed for the end of xhr.
-            // to make sure they get informed after aother routines have handled the response,
+            // to make any routine informed for the end of xhr, we emit an event
+            // to make sure they get informed after another routines have handled the response,
             // we go async
             promise.then(function() {
-                asyncSilent(function() {
-                    instance._final.forEach(function(finallySubscriber) {
-                        finallySubscriber(xhr);
-                    });
+                async(function() {
+                    Event.emit(promise, 'IO:finish');
                 });
             });
 
             return promise;
-        },
-
-        /**
-         * Adds a subscriber to the finalization-cycle, which happens after the xhr finishes.
-         * Only gets invoked on fulfilled io.
-         *
-         * @method finalize
-         * @param finallySubscriber {Function} callback to be invoked
-         *        Function recieves `xhr` as its only argument
-         * @return {Object} handler with a `detach()`-method which can be used to detach the subscriber
-         * @since 0.0.1
-         */
-        finalize: function (finallySubscriber) {
-            console.log(NAME, 'finalize');
-            var finalHash = this._final;
-            finalHash.push(finallySubscriber);
-            return {
-                detach: function() {
-                    console.log(NAME, 'detach finalizer');
-                    var index = finalHash.indexOf(finallySubscriber);
-                    (index===-1) || finalHash.splice(index, 1);
-                }
-            };
         }
 
     };
-
-    /**
-     * Internal list of finalize-subscribers which are invoked at the end of a successful xhr,
-     * Is an array of function-references.
-     *
-     * @property _final
-     * @default []
-     * @type Array
-     * @private
-     * @since 0.0.1
-    */
-    Object.protectedProp(IO, '_final', []);
 
     IO._xhrInitList = [
         IO._setReadyHandle,
@@ -12379,7 +12060,7 @@ module.exports = function (window) {
     return IO;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext":42,"js-ext/extra/hashmap.js":39,"polyfill/polyfill-base.js":63,"utils":68}],38:[function(require,module,exports){
+},{"js-ext":40,"js-ext/extra/hashmap.js":37,"polyfill/polyfill-base.js":61,"utils":66}],36:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -12992,7 +12673,7 @@ require('../lib/object.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/object.js":47,"js-ext/extra/hashmap.js":39,"polyfill/polyfill-base.js":63}],39:[function(require,module,exports){
+},{"../lib/object.js":45,"js-ext/extra/hashmap.js":37,"polyfill/polyfill-base.js":61}],37:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -13015,7 +12696,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],40:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -13127,7 +12808,7 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":44,"../lib/object.js":47,"./classes.js":38,"js-ext/extra/hashmap.js":39,"polyfill/lib/weakmap.js":61}],41:[function(require,module,exports){
+},{"../lib/array.js":42,"../lib/object.js":45,"./classes.js":36,"js-ext/extra/hashmap.js":37,"polyfill/lib/weakmap.js":59}],39:[function(require,module,exports){
 "use strict";
 
 var createHashMap = require('./hashmap.js').createMap;
@@ -13200,14 +12881,14 @@ module.exports = createHashMap({
     'with': true,
     'yield': true
 });
-},{"./hashmap.js":39}],42:[function(require,module,exports){
+},{"./hashmap.js":37}],40:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
 require('./lib/array.js');
 require('./lib/json.js');
 require('./lib/promise.js');
-},{"./lib/array.js":44,"./lib/function.js":45,"./lib/json.js":46,"./lib/object.js":47,"./lib/promise.js":48,"./lib/string.js":49}],43:[function(require,module,exports){
+},{"./lib/array.js":42,"./lib/function.js":43,"./lib/json.js":44,"./lib/object.js":45,"./lib/promise.js":46,"./lib/string.js":47}],41:[function(require,module,exports){
 "use strict";
 
 require('./lib/function.js');
@@ -13222,7 +12903,7 @@ module.exports = {
     Classes: require('./extra/classes.js'),
     LightMap: require('./extra/lightmap.js')
 };
-},{"./extra/classes.js":38,"./extra/hashmap.js":39,"./extra/lightmap.js":40,"./lib/array.js":44,"./lib/function.js":45,"./lib/json.js":46,"./lib/object.js":47,"./lib/promise.js":48,"./lib/string.js":49}],44:[function(require,module,exports){
+},{"./extra/classes.js":36,"./extra/hashmap.js":37,"./extra/lightmap.js":38,"./lib/array.js":42,"./lib/function.js":43,"./lib/json.js":44,"./lib/object.js":45,"./lib/promise.js":46,"./lib/string.js":47}],42:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -13373,7 +13054,7 @@ var cloneObj = function(obj) {
      };
 
 }(Array.prototype));
-},{"polyfill/polyfill-base.js":63}],45:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":61}],43:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -13432,7 +13113,7 @@ var NAME = '[Function]: ';
 
 }(Function.prototype));
 
-},{"polyfill/polyfill-base.js":63}],46:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":61}],44:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -13457,7 +13138,7 @@ var REVIVER = function(key, value) {
 JSON.parseWithDate = function(stringifiedObj) {
     return this.parse(stringifiedObj, REVIVER);
 };
-},{"polyfill/polyfill-base.js":63}],47:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":61}],45:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -13919,7 +13600,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"js-ext/extra/hashmap.js":39,"polyfill/polyfill-base.js":63}],48:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"polyfill/polyfill-base.js":61}],46:[function(require,module,exports){
 "use strict";
 
 /**
@@ -14229,7 +13910,7 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill":63}],49:[function(require,module,exports){
+},{"polyfill":61}],47:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -14511,7 +14192,7 @@ Promise.manage = function (callbackFn) {
 
 }(String.prototype));
 
-},{}],50:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 (function (global){
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -14626,7 +14307,7 @@ require('polyfill');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"event":30,"js-ext":42,"js-ext/extra/hashmap.js":39,"polyfill":63,"utils":68}],51:[function(require,module,exports){
+},{"event":28,"js-ext":40,"js-ext/extra/hashmap.js":37,"polyfill":61,"utils":66}],49:[function(require,module,exports){
 "use strict";
 
 /**
@@ -14646,8 +14327,6 @@ require('js-ext/lib/object.js');
 require('js-ext/lib/string.js');
 require('js-ext/lib/promise.js');
 require('polyfill');
-require('event/extra/timer-finalize.js');
-require('event/extra/promise-finalize.js');
 
 var createHashMap = require('js-ext/extra/hashmap.js').createMap,
     fromCamelCase = function(input) {
@@ -14666,11 +14345,12 @@ module.exports = function (window) {
 
     require('vdom')(window);
     var NAME = '[ElementPlugin]: ',
+        CHECK_MUTATION_DELAY = 500,
         Classes = require('js-ext/extra/classes.js'),
         timers = require('utils/lib/timers.js'),
         Event = require('event-dom')(window),
-        asyncSilent = timers.asyncSilent,
-        laterSilent = timers.laterSilent,
+        async = timers.async,
+        later = timers.later,
         DELAY_DESTRUCTION = 5000, // must be kept below vnode.js its DESTROY_DELAY (which is currently 60000)
         DELAYED_EVT_TIME = 500,
         NATIVE_OBJECT_OBSERVE = !!Object.observe,
@@ -14688,61 +14368,9 @@ module.exports = function (window) {
         ATTRIBUTE_CHANGE = ATTRIBUTE+CHANGE,
         ATTRIBUTE_INSERT = ATTRIBUTE+INSERT,
         MUTATION_EVENTS = [NODE_REMOVE, NODE_INSERT, NODE_CONTENT_CHANGE, ATTRIBUTE_REMOVE, ATTRIBUTE_CHANGE, ATTRIBUTE_INSERT],
-        Base, pluginDOM, modelToAttrs, attrsToModel, syncPlugin, autoRefreshPlugin, pluginDOMresync, DEFAULT_DELAYED_FINALIZE_EVENTS;
+        Base, pluginDOM, modelToAttrs, attrsToModel, syncPlugin, pluginDOMresync;
 
     Object.protectedProp(window, '_ITSAPlugins', createHashMap());
-
-    /**
-     * Default internal hash containing all DOM-events that will not directly call `event-finalize`
-     * but after a delay of 1 second
-     *
-     * @property DEFAULT_DELAYED_FINALIZE_EVENTS
-     * @default {
-     *    mousedown: true,
-     *    mouseup: true,
-     *    mousemove: true,
-     *    panmove: true,
-     *    panstart: true,
-     *    panleft: true,
-     *    panright: true,
-     *    panup: true,
-     *    pandown: true,
-     *    pinchmove: true,
-     *    rotatemove: true,
-     *    focus: true,
-     *    manualfocus: true,
-     *    keydown: true,
-     *    keyup: true,
-     *    keypress: true,
-     *    blur: true,
-     *    resize: true,
-     *    scroll: true
-     * }
-     * @type Object
-     * @private
-     * @since 0.0.1
-    */
-    DEFAULT_DELAYED_FINALIZE_EVENTS = {
-        mousedown: true,
-        mouseup: true,
-        mousemove: true,
-        panmove: true,
-        panstart: true,
-        panleft: true,
-        panright: true,
-        panup: true,
-        pandown: true,
-        pinchmove: true,
-        rotatemove: true,
-        focus: true,
-        manualfocus: true,
-        keydown: true,
-        keyup: true,
-        keypress: true,
-        blur: true,
-        resize: true,
-        scroll: true
-    };
 
     /*
      * Inspects the DOM for Elements that have the plugin defined by their html and plugs the Plugin-Class.
@@ -14755,7 +14383,7 @@ module.exports = function (window) {
     pluginDOM = function(NewClass) {
         // asynchroniously we check all current elements and render when needed:
         var ns = NewClass.prototype.$ns;
-        asyncSilent(function() {
+        async(function() {
             var elements = DOCUMENT.getAll('[plugin-'+ns+'="true"]', true),
                 len = elements.length,
                 element, i;
@@ -14777,7 +14405,7 @@ module.exports = function (window) {
     pluginDOMresync = function(NewClass) {
         // asynchroniously we check all current elements and render when needed:
         var ns = NewClass.prototype.$ns;
-        asyncSilent(function() {
+        async(function() {
             var elements = DOCUMENT.getAll('[plugin-'+ns+'="true"]['+ns+'-ready="true"]', true),
                 len = elements.length,
                 element, i;
@@ -14900,40 +14528,6 @@ module.exports = function (window) {
         plugin.sync();
     };
 
-    /*
-     * In case `object.observe` is not present, will setup automaticly refresing the plugin on model-changes.
-     * Does not do anything when `object.observe` is present, because the object-observer takes care of this.
-     *
-     * @method autoRefreshPlugin
-     * @param plugin {Object} the plugin-instance
-     * @protected
-     * @since 0.0.1
-     */
-    autoRefreshPlugin = function(plugin) {
-        if (!NATIVE_OBJECT_OBSERVE) {
-            plugin._EventFinalizer = Event.finalize(function(e) {
-                var type = e.type;
-                if (!e._noRender && (!e.status || !e.status.renderPrevented)) {
-                    if (!MUTATION_EVENTS[type] && !type.endsWith('outside')) {
-                        if (plugin._DELAYED_FINALIZE_EVENTS[type]) {
-                            types.push(type);
-                            plugin.constructor.$registerDelay || (plugin.constructor.$registerDelay = laterSilent(function() {
-                                console.info('Event-finalizer will delayed-refresh itags because of events: '+JSON.stringify(types));
-                                syncPlugin(plugin, true);
-                                types.length = 0;
-                                plugin.constructor.$registerDelay = null;
-                            }, DELAYED_EVT_TIME));
-                        }
-                        else {
-                            console.info('Event-finalizer will refresh itags because of event: '+type);
-                            syncPlugin(plugin, true);
-                        }
-                    }
-                }
-            });
-        }
-    };
-
     // extend window.Element:
     window.Element && (function(HTMLElementPrototype) {
        /**
@@ -15043,38 +14637,6 @@ module.exports = function (window) {
         },
         {
             /*
-             * Internal hash containing the events which have a delayed Event-finalize synchronisation
-             * on browsers that don't support object.observe.
-             * Members of this object can be removed by calling `setDirectEventResponse`
-             *
-             * @property _DELAYED_FINALIZE_EVENTS
-             * @default {
-             *    mousedown: true,
-             *    mouseup: true,
-             *    mousemove: true,
-             *    panmove: true,
-             *    panstart: true,
-             *    panleft: true,
-             *    panright: true,
-             *    panup: true,
-             *    pandown: true,
-             *    pinchmove: true,
-             *    rotatemove: true,
-             *    focus: true,
-             *    manualfocus: true,
-             *    keydown: true,
-             *    keyup: true,
-             *    keypress: true,
-             *    blur: true,
-             *    resize: true,
-             *    scroll: true
-             * }
-             * @type Object
-             * @private
-             * @since 0.0.1
-            */
-            _DELAYED_FINALIZE_EVENTS: DEFAULT_DELAYED_FINALIZE_EVENTS.shallowClone(),
-            /*
              * Definition of all attributes: these attributes will be read during initalization and updated during `sync`
              * In the dom, the attributenames are prepended with `pluginName-`. The property-values should be the property-types
              * that belong to the property, this way the attributes get right casted into model.
@@ -15119,13 +14681,6 @@ module.exports = function (window) {
                     }
                     mergeCurrent && (model.merge(instance.model, {full: true}));
                     instance.model = model;
-                    if (NATIVE_OBJECT_OBSERVE) {
-                        observer = function() {
-                            syncPlugin(instance);
-                        };
-                        Object.observe(instance.model, observer);
-                        instance._observer = observer;
-                    }
                     (host.getAttr(instance.$ns+'-ready')==='true') && syncPlugin(instance);
                 }
             },
@@ -15144,65 +14699,22 @@ module.exports = function (window) {
                 (host.getAttr(ns+'-ready')==='true') || instance.render();
                 syncPlugin(instance);
                 host.setAttr(ns+'-ready', 'true', true);
+
+                if (NATIVE_OBJECT_OBSERVE) {
+                    observer = function() {
+                        syncPlugin(instance);
+                    };
+                    Object.observe(instance.model, observer);
+                    instance._observer = observer;
+                }
+                else {
+                    instance._mutationCheck = later(syncPlugin.bind(null, plugin, true), CHECK_MUTATION_DELAY);
+                }
+
                 autoRefreshPlugin(instance);
                 host._pluginReadyInfo || (host._pluginReadyInfo={});
                 host._pluginReadyInfo[ns] || (host._pluginReadyInfo[ns]=window.Promise.manage());
                 host._pluginReadyInfo[ns].fulfill();
-            },
-           /**
-            * Defines which domevents should lead to a direct sync by the Event-finalizer.
-            * Only needed for events that are in the list set by DEFAULT_DELAYED_FINALIZE_EVENTS:
-            *
-            * <ul>
-            *     <li>mousedown</li>
-            *     <li>mouseup</li>
-            *     <li>mousemove</li>
-            *     <li>panmove</li>
-            *     <li>panstart</li>
-            *     <li>panleft</li>
-            *     <li>panright</li>
-            *     <li>panup</li>
-            *     <li>pandown</li>
-            *     <li>pinchmove</li>
-            *     <li>rotatemove</li>
-            *     <li>focus</li>
-            *     <li>manualfocus</li>
-            *     <li>keydown</li>
-            *     <li>keyup</li>
-            *     <li>keypress</li>
-            *     <li>blur</li>
-            *     <li>resize</li>
-            *     <li>scroll</li>
-            * </ul>
-            *
-            * Events that are not in this list don't need to be set: they always go through the finalizer immediatly.
-            *
-            * You need to set this if the itag-definition its `sync`-method should be updated after one of the events in the list.
-            *
-            * @method setItagDirectEventResponse
-            * @param ItagClass {Class} The ItagClass that wants to register
-            * @param domEvents {Array|String} the domevents that should directly make the itag sync
-            * @since 0.0.1
-            */
-            setDirectEventResponse :function(domEvents) {
-                console.log(NAME+'setDirectEventResponse');
-                var instance = this;
-                if (!NATIVE_OBJECT_OBSERVE) {
-                    Array.isArray(domEvents) || (domEvents=[domEvents]);
-                    domEvents.forEach(function(domEvent) {
-                        domEvent.endsWith('outside') && (domEvent=domEvent.substr(0, domEvent.length-7));
-                        domEvent = domEvent.toLowerCase();
-                        if (domEvent==='blur') {
-                            console.warn('the event "blur" cannot be delayed, for it would lead to extremely many syncing before anything changes which you don\'t need');
-                        }
-                        else {
-                            if (DEFAULT_DELAYED_FINALIZE_EVENTS[domEvent]) {
-                                ('DELAYED_FINALIZE_EVENTS' in instance.constructor.prototypes) || instance.mergePrototypes({'DELAYED_FINALIZE_EVENTS': DEFAULT_DELAYED_FINALIZE_EVENTS.shallowClone()});
-                                delete instance.DELAYED_FINALIZE_EVENTS[domEvent];
-                            }
-                        }
-                    });
-                }
             },
             /*
              * Renders the plugin. This method is invoked only once: at the end of initialization.
@@ -15260,7 +14772,7 @@ module.exports = function (window) {
                     }
                 }
                 else {
-                    instance._EventFinalizer.detach();
+                    instance._mutationCheck.cancel();
                 }
                 attrs.each(
                     function(value, key) {
@@ -15280,7 +14792,7 @@ module.exports = function (window) {
         var element = e.target,
             ns, Plugin;
         // to prevent less userexperience, we plug asynchroniously
-        asyncSilent(function() {
+        async(function() {
             e.changed.forEach(function(item) {
                 if (item.attribute.substr(0, 7)==='plugin-') {
                     ns = item.attribute.substr(7);
@@ -15305,7 +14817,7 @@ module.exports = function (window) {
         var element = e.target,
             ns, Plugin;
         // to prevent less userexperience, we plug asynchroniously
-        asyncSilent(function() {
+        async(function() {
             e.changed.forEach(function(attribute) {
                 if (attribute.substr(0, 7)==='plugin-') {
                     ns = attribute.substr(7);
@@ -15323,7 +14835,7 @@ module.exports = function (window) {
     Event.after('UI:'+NODE_INSERT, function(e) {
         var element = e.target;
         // to prevent less userexperience, we plug asynchroniously
-        asyncSilent(function() {
+        async(function() {
             var attrs = element.vnode.attrs,
                 ns, Plugin;
             attrs && attrs.each(function(value, key) {
@@ -15343,7 +14855,7 @@ module.exports = function (window) {
     Event.after('UI:'+NODE_REMOVE, function(e) {
         var element = e.target;
         // to prevent less userexperience, we unplug after a delay
-        laterSilent(function() {
+        later(function() {
             var Plugin;
             if (element.plugin) {
                 element.plugin.each(function(value, ns) {
@@ -15475,9 +14987,9 @@ module.exports = function (window) {
 
     window._ITSAmodules.ElementPlugin = true;
 };
-},{"event-dom":17,"event/extra/promise-finalize.js":28,"event/extra/timer-finalize.js":29,"js-ext/extra/classes.js":38,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"js-ext/lib/promise.js":48,"js-ext/lib/string.js":49,"polyfill":63,"utils/lib/timers.js":70,"vdom":80}],52:[function(require,module,exports){
+},{"event-dom":17,"js-ext/extra/classes.js":36,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"js-ext/lib/promise.js":46,"js-ext/lib/string.js":47,"polyfill":61,"utils/lib/timers.js":68,"vdom":78}],50:[function(require,module,exports){
 var css = "[plugin-panel=\"true\"] {\n    position: absolute !important;\n    background-color: #FFF;\n    max-width: 90%;\n    min-width: 200px;\n    min-height: 75px;\n    box-shadow: inset 0 0 5px rgba(50, 50, 50, 0.30), 5px 5px 6px rgba(50, 50, 50, 0.45);\n    border: solid 1px #000;\n}\n\n[plugin-panel=\"true\"],\n[plugin-panel=\"true\"] >div {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n[plugin-panel=\"true\"] >div[is=\"header\"] {\n    vertical-align: middle;\n    background-color: rgb(0, 100, 192);\n    color: #FFF;\n    padding: 0 1.5em 0 0.7em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    vertical-align: middle;\n    line-height: 1.75em;\n    width: 100%;\n    min-height: 1.75em;\n}\n\n[plugin-panel=\"true\"] >div[is=\"content\"] {\n    padding: 1.6em 1.2em;\n    line-height: 115%;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] {\n    border-top: 1px solid #EAE6DB;\n    overflow: hidden;\n    vertical-align: middle;\n    text-align: right;\n    line-height: 1em;\n    padding: 0.5em 0.7em;\n    width: 100%;\n    min-height: 24px;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0.5em;\n}\n\n[plugin-panel=\"true\"].itsa-full-draggable {\n    cursor: default;\n}\n\n[plugin-panel=\"true\"] >button {\n    padding: 0 0.4em 0.1em;\n    position: absolute;\n    right: 0.2em;\n    top: 0.2em;\n    z-index: 1;\n}\n\nbody >div[is=\"system-node\"].itsa-modal-layer {\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 100% !important;\n    height: 100% !important;\n    -webkit-box-sizing: border-box !important;\n    -moz-box-sizing: border-box !important;\n    box-sizing: border-box !important;\n    z-index: 1000 !important;\n    background-color: #000 !important;\n    opacity: 0.2 !important;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button {\n    display: block;\n    width: 100%;\n    margin: 0 0 0.5em;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button:last-child,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button:last-child {\n    margin-bottom: 0;\n}\n\n@media only screen and (max-width : 480px) {\n    [plugin-panel=\"true\"] {\n        width: 90%;\n        box-shadow: 0 0 6px 6px rgba(50, 50, 50, 0.45);\n    }\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],53:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],51:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -15912,7 +15424,7 @@ module.exports = function (window) {
 
     return Panel;
 };
-},{"./css/panel.css":52,"drag":16,"event-mobile":22,"focusmanager":32,"js-ext/extra/hashmap.js":39,"js-ext/extra/lightmap.js":40,"js-ext/lib/object.js":47,"js-ext/lib/string.js":49,"node-plugin":51,"polyfill":63,"scrollable":66,"window-ext":81}],54:[function(require,module,exports){
+},{"./css/panel.css":50,"drag":16,"event-mobile":22,"focusmanager":30,"js-ext/extra/hashmap.js":37,"js-ext/extra/lightmap.js":38,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"node-plugin":49,"polyfill":61,"scrollable":64,"window-ext":79}],52:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -15935,7 +15447,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],55:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 "use strict";
 
 /*
@@ -15988,7 +15500,7 @@ module.exports = function (window) {
 
     return transition;
 };
-},{"../bin/local-hashmap.js":54}],56:[function(require,module,exports){
+},{"../bin/local-hashmap.js":52}],54:[function(require,module,exports){
 "use strict";
 
 // CAUTIOUS: need a copy of hashmap --> we cannot use js-ext/extra/hashap.js for that would lead to circular references!
@@ -16033,7 +15545,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{"../bin/local-hashmap.js":54}],57:[function(require,module,exports){
+},{"../bin/local-hashmap.js":52}],55:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -16104,7 +15616,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../bin/local-hashmap.js":54}],58:[function(require,module,exports){
+},{"../bin/local-hashmap.js":52}],56:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -16128,7 +15640,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],59:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 (function (global){
 /*
  * Copyright 2012 The Polymer Authors. All rights reserved.
@@ -16714,9 +16226,9 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],60:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 require('ypromise');
-},{"ypromise":5}],61:[function(require,module,exports){
+},{"ypromise":5}],59:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/Gozala/1269991
 
@@ -16826,7 +16338,7 @@ require('ypromise');
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],62:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -16845,17 +16357,17 @@ require('ypromise');
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],63:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":58,"./lib/window.console.js":62}],64:[function(require,module,exports){
+},{"./lib/matchesselector.js":56,"./lib/window.console.js":60}],62:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/promise.js');
 require('./lib/weakmap.js');
 require('./lib/mutationobserver.js'); // needs weakmap
-},{"./lib/mutationobserver.js":59,"./lib/promise.js":60,"./lib/weakmap.js":61,"./polyfill-base.js":63}],65:[function(require,module,exports){
+},{"./lib/mutationobserver.js":57,"./lib/promise.js":58,"./lib/weakmap.js":59,"./polyfill-base.js":61}],63:[function(require,module,exports){
 var css = "[plugin-scroll=\"true\"] {\n    overflow: hidden !important;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont,\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    position: absolute;\n    display: block;\n    left: -9999px;\n    top: -9999px;\n    opacity: 0;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-vscroll-cont.itsa-visible {\n    opacity: 1;\n    width: 0.8em;\n    height: 100%;\n    right: 0;\n    top: 0;\n    left: auto;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-hscroll-cont.itsa-visible {\n    opacity: 1;\n    height: 0.8em;\n    width: 100%;\n    left: 0;\n    bottom: 0;\n    top: auto;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont span {\n    position: relative;\n    display: block;\n    width: 100%;\n    min-height: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont span {\n    position: relative;\n    display: block;\n    height: 100%;\n    min-width: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-vscroll-cont span,\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-hscroll-cont span {\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n[plugin-scroll=\"true\"] >span span.dd-dragging {\n    cursor: default;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],66:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],64:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -16886,7 +16398,7 @@ var NAME = '[scrollable]: ',
 module.exports = function (window) {
 
     var DOCUMENT = window.document,
-        laterSilent = require('utils').laterSilent,
+        later = require('utils').later,
         Scrollable, Event, setupEvents, DD, isSafari;
 
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
@@ -16952,7 +16464,7 @@ module.exports = function (window) {
             // because we cannot predict if the size of the container are goiig to change (fe by ancestor-classes)
             // we need to sync by timer as well:
             var instance = this;
-            instance._syncTimer = laterSilent(instance.sync.bind(instance), SYNC_TIMER);
+            instance._syncTimer = later(instance.sync.bind(instance), SYNC_TIMER);
         }, {
         attrs: {
             x: 'boolean',
@@ -17073,7 +16585,7 @@ module.exports = function (window) {
 
     return Scrollable;
 };
-},{"./css/scrollable.css":65,"drag":16,"event-mobile":22,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"node-plugin":51,"polyfill":63,"useragent":67,"utils":68,"window-ext":81}],67:[function(require,module,exports){
+},{"./css/scrollable.css":63,"drag":16,"event-mobile":22,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"node-plugin":49,"polyfill":61,"useragent":65,"utils":66,"window-ext":79}],65:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17114,15 +16626,15 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"js-ext/lib/string.js":49,"polyfill":63}],68:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"polyfill":61}],66:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
-    laterSilent: require('./lib/timers.js').laterSilent,
+    later: require('./lib/timers.js').later,
     async: require('./lib/timers.js').async,
-    asyncSilent: require('./lib/timers.js').asyncSilent
+    async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":69,"./lib/timers.js":70}],69:[function(require,module,exports){
+},{"./lib/idgenerator.js":67,"./lib/timers.js":68}],67:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -17180,7 +16692,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"js-ext/extra/hashmap.js":39,"polyfill/polyfill-base.js":63}],70:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"polyfill/polyfill-base.js":61}],68:[function(require,module,exports){
 (function (global){
 /**
  * Collection of various utility functions.
@@ -17295,7 +16807,7 @@ module.exports.idGenerator = function(namespace, start) {
 	 * called before the callback function, the callback function won't be called.
 	**/
 	module.exports.async = _async;
-	module.exports.asyncSilent = function() {
+	module.exports.async = function() {
 		return _async.call(this, arguments[0], false);
 	};
 
@@ -17378,7 +16890,7 @@ module.exports.idGenerator = function(namespace, start) {
 
 	module.exports.later = _later;
 
-	module.exports.laterSilent = function() {
+	module.exports.later = function() {
 		var args = arguments,
 			newArgs = [];
 		newArgs[0] = args[0];
@@ -17392,9 +16904,9 @@ module.exports.idGenerator = function(namespace, start) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"polyfill/polyfill-base.js":63}],71:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":61}],69:[function(require,module,exports){
 var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-no-display {\n    display: none; !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],72:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],70:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17692,7 +17204,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"js-ext/lib/string.js":49,"polyfill":63,"polyfill/extra/transition.js":55,"polyfill/extra/vendorCSS.js":57}],73:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"polyfill":61,"polyfill/extra/transition.js":53,"polyfill/extra/vendorCSS.js":55}],71:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18120,7 +17632,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"polyfill":63}],74:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill":61}],72:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18834,7 +18346,7 @@ module.exports = function (window) {
 
 
 
-},{"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"js-ext/lib/string.js":49,"polyfill":63}],75:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"polyfill":61}],73:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -18893,8 +18405,8 @@ module.exports = function (window) {
         _AFTER = ':before',
         extractor = require('./attribute-extractor.js')(window),
         UTILS = require('utils'),
-        later = UTILS.laterSilent,
-        async = UTILS.asyncSilent,
+        later = UTILS.later,
+        async = UTILS.async,
         idGenerator = UTILS.idGenerator,
         DOCUMENT = window.document,
         nodeids = NS.nodeids,
@@ -23543,7 +23055,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":71,"./attribute-extractor.js":72,"./element-array.js":73,"./html-parser.js":76,"./node-parser.js":77,"./vdom-ns.js":78,"./vnode.js":79,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"js-ext/lib/promise.js":48,"js-ext/lib/string.js":49,"polyfill":63,"polyfill/extra/transition.js":55,"polyfill/extra/transitionend.js":56,"polyfill/extra/vendorCSS.js":57,"utils":68,"window-ext":81}],76:[function(require,module,exports){
+},{"../css/element.css":69,"./attribute-extractor.js":70,"./element-array.js":71,"./html-parser.js":74,"./node-parser.js":75,"./vdom-ns.js":76,"./vnode.js":77,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"js-ext/lib/promise.js":46,"js-ext/lib/string.js":47,"polyfill":61,"polyfill/extra/transition.js":53,"polyfill/extra/transitionend.js":54,"polyfill/extra/vendorCSS.js":55,"utils":66,"window-ext":79}],74:[function(require,module,exports){
 "use strict";
 
 /**
@@ -23915,7 +23427,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":72,"./vdom-ns.js":78,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"polyfill":63}],77:[function(require,module,exports){
+},{"./attribute-extractor.js":70,"./vdom-ns.js":76,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill":61}],75:[function(require,module,exports){
 "use strict";
 
 /**
@@ -24056,7 +23568,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":72,"./vdom-ns.js":78,"./vnode.js":79,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"polyfill":63}],78:[function(require,module,exports){
+},{"./attribute-extractor.js":70,"./vdom-ns.js":76,"./vnode.js":77,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill":61}],76:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -24287,7 +23799,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"polyfill":63}],79:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"polyfill":61}],77:[function(require,module,exports){
 "use strict";
 
 /**
@@ -24334,8 +23846,8 @@ module.exports = function (window) {
         nodeids = NS.nodeids,
         htmlToVNodes = require('./html-parser.js')(window),
         timers = require('utils/lib/timers.js'),
-        async = timers.asyncSilent,
-        later = timers.laterSilent,
+        async = timers.async,
+        later = timers.later,
 /*jshint proto:true */
         PROTO_SUPPORTED = !!Object.__proto__,
 /*jshint proto:false */
@@ -27026,13 +26538,13 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":72,"./html-parser.js":76,"./vdom-ns.js":78,"js-ext/extra/hashmap.js":39,"js-ext/extra/lightmap.js":40,"js-ext/lib/array.js":44,"js-ext/lib/object.js":47,"js-ext/lib/string.js":49,"polyfill":63,"utils/lib/timers.js":70}],80:[function(require,module,exports){
+},{"./attribute-extractor.js":70,"./html-parser.js":74,"./vdom-ns.js":76,"js-ext/extra/hashmap.js":37,"js-ext/extra/lightmap.js":38,"js-ext/lib/array.js":42,"js-ext/lib/object.js":45,"js-ext/lib/string.js":47,"polyfill":61,"utils/lib/timers.js":68}],78:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
 
 var createHashMap = require('js-ext/extra/hashmap.js').createMap,
-    laterSilent = require('utils/lib/timers.js').laterSilent;
+    later = require('utils/lib/timers.js').later;
 
 module.exports = function (window) {
 
@@ -27061,7 +26573,7 @@ module.exports = function (window) {
         });
         // cleanup duplicated `style` elements - if any
         // this can be done async with a small delay: no one will notice
-        laterSilent(function() {
+        later(function() {
             var head = DOCUMENT.getElement('head');
             head.vnode._cleanupStyle();
         }, 500);
@@ -27069,13 +26581,13 @@ module.exports = function (window) {
 
     window._ITSAmodules.VDOM = true;
 };
-},{"./partials/extend-document.js":74,"./partials/extend-element.js":75,"./partials/node-parser.js":77,"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47,"utils/lib/timers.js":70}],81:[function(require,module,exports){
+},{"./partials/extend-document.js":72,"./partials/extend-element.js":73,"./partials/node-parser.js":75,"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45,"utils/lib/timers.js":68}],79:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":82}],82:[function(require,module,exports){
+},{"./lib/sizes.js":80}],80:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -27179,7 +26691,7 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/extra/hashmap.js":39,"js-ext/lib/object.js":47}],83:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":37,"js-ext/lib/object.js":45}],81:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -27441,4 +26953,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"constrain":6,"css":10,"dialog":12,"drag-drop":14,"event":30,"event-dom/extra/blurnode.js":18,"event-dom/extra/focusnode.js":19,"event-dom/extra/hover.js":20,"event-dom/extra/valuechange.js":21,"event-mobile":22,"event/extra/objectobserve.js":27,"focusmanager":32,"io/extra/io-cors-ie9.js":33,"io/extra/io-stream.js":34,"io/extra/io-transfer.js":35,"io/extra/io-xml.js":36,"js-ext/extra/reserved-words.js":41,"js-ext/js-ext.js":43,"messages":50,"node-plugin":51,"node-win":undefined,"panel":53,"polyfill/polyfill.js":64,"scrollable":66,"useragent":67,"utils":68,"vdom":80,"window-ext":81}]},{},[]);
+},{"constrain":6,"css":10,"dialog":12,"drag-drop":14,"event":28,"event-dom/extra/blurnode.js":18,"event-dom/extra/focusnode.js":19,"event-dom/extra/hover.js":20,"event-dom/extra/valuechange.js":21,"event-mobile":22,"event/extra/objectobserve.js":27,"focusmanager":30,"io/extra/io-cors-ie9.js":31,"io/extra/io-stream.js":32,"io/extra/io-transfer.js":33,"io/extra/io-xml.js":34,"js-ext/extra/reserved-words.js":39,"js-ext/js-ext.js":41,"messages":48,"node-plugin":49,"node-win":undefined,"panel":51,"polyfill/polyfill.js":62,"scrollable":64,"useragent":65,"utils":66,"vdom":78,"window-ext":79}]},{},[]);

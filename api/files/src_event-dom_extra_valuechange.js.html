@@ -398,7 +398,7 @@ module.exports = function (window) {
         // cancel previous timer: we don&#x27;t want multiple timers:
         valueChangeData._pollTimer &amp;&amp; valueChangeData._pollTimer.cancel();
         // setup a new timer:
-        valueChangeData._pollTimer = UTILS.laterSilent(checkChanged.bind(null, e), POLL_INTERVAL, true);
+        valueChangeData._pollTimer = UTILS.later(checkChanged.bind(null, e), POLL_INTERVAL, true);
     },
 
 
