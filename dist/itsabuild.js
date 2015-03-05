@@ -9003,7 +9003,13 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
          * @since 0.0.2
          */
         runFinalizers: function(e) {
-            var allFinalized = true;
+            var instance = this,
+                allFinalized = true;
+            if (instance._running) {
+                return;
+            }
+            // prevent re-initialize finalization within a finalizer:
+            instance._running = true;
             this._final.some(function(finallySubscriber) {
                 !e.silent && finallySubscriber(e);
                 if (e.status && e.status.unSilencable && e.silent) {
@@ -9014,6 +9020,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                 return !allFinalized;
             });
             e.finalized = allFinalized;
+            instance._running = false;
         },
 
         /**
@@ -10557,7 +10564,6 @@ module.exports = function (window) {
                         target: global
                     };
                 originalFn();
-                console.log(NAME, 'setTimeOut will run Event.runFinalizers');
                 Event.runFinalizers(eventObject);
             };
         })(args[0]);
@@ -10574,7 +10580,6 @@ module.exports = function (window) {
                         target: global
                     };
                 originalFn();
-                console.log(NAME, 'setInterval will run Event.runFinalizers');
                 Event.runFinalizers(eventObject);
             };
         })(args[0]);
@@ -10593,7 +10598,6 @@ module.exports = function (window) {
                             target: global
                         };
                     originalFn();
-                    console.log(NAME, 'setImmediate will run Event.runFinalizers');
                     Event.runFinalizers(eventObject);
                 };
             })(args[0]);
@@ -17264,7 +17268,6 @@ module.exports.idGenerator = function(namespace, start) {
 		if (typeof callbackFn==='function') {
 			callback = function () {
 				if (!canceled) {
-		        	console.log(NAME, 'async is running its callbackFn');
 					callbackFn();
 				}
 			};
@@ -17333,7 +17336,6 @@ module.exports.idGenerator = function(namespace, start) {
 				// IE 8- and also nodejs may execute a callback, so in order to preserve
 				// the cancel() === no more runny-run, we have to build in an extra conditional
 				if (!canceled) {
-	            	console.log(NAME, 'later is running its callbakcFn');
 					callbackFn();
 					if (secondtimeout) {
 						secondairId = originalTimer ? global.setInterval(wrapperInterval, interval) : global._setInterval(wrapperInterval, interval);
@@ -17347,7 +17349,6 @@ module.exports.idGenerator = function(namespace, start) {
 				// after clearInterval was called, so in order to preserve
 				// the cancel() === no more runny-run, we have to build in an extra conditional
 				if (!canceled) {
-	            	console.log(NAME, 'later is running its callbakcFn');
 					callbackFn();
 				}
 			},
