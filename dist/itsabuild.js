@@ -11495,7 +11495,6 @@ module.exports = function (window) {
     return IO;
 };
 },{"../io.js":34,"js-ext":39,"js-ext/extra/hashmap.js":36}],34:[function(require,module,exports){
-(function (global){
 /**
  * Provides core IO-functionality.
  *
@@ -11534,21 +11533,21 @@ var NAME = '[io]: ',
 
 module.exports = function (window) {
 
+    var ENCODE_URI_COMPONENT = encodeURIComponent,
+        IO;
+
     // to prevent multiple IO instances
     // (which might happen: http://nodejs.org/docs/latest/api/modules.html#modules_module_caching_caveats)
     // we make sure IO is defined only once. Therefore we bind it to `window` and return it if created before
     // We need a singleton IO, because submodules might merge in. You can't have them merging
     // into some other IO-instance than which is used.
-    var Glob = (typeof global !== 'undefined' ? global : /* istanbul ignore next */ this);
 
-    Glob._ITSAmodules || Object.protectedProp(Glob, '_ITSAmodules', createHashMap());
-
-    if (Glob._ITSAmodules.IO) {
-        return Glob._ITSAmodules.IO;
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
+/*jshint boss:true */
+    if (IO=window._ITSAmodules.IO) {
+/*jshint boss:false */
+        return IO; // IO was already created
     }
-
-    var ENCODE_URI_COMPONENT = encodeURIComponent,
-        IO;
 
     IO = {
         config: {},
@@ -11815,11 +11814,10 @@ module.exports = function (window) {
         IO._setHeaders
     ];
 
-    Glob._ITSAmodules.IO = IO;
+    window._ITSAmodules.IO = IO;
 
     return IO;
 };
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"event":27,"js-ext":39,"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":60,"utils":65}],35:[function(require,module,exports){
 (function (global){
 /**
@@ -26594,7 +26592,15 @@ process.chdir = function (dir) {
     require('css');
     require('polyfill/polyfill.js'); // want the full version
 
-    var jsExt = require('js-ext/js-ext.js'); // want the full version: include it at the top, so that object.merge is available
+    var jsExt = require('js-ext/js-ext.js'), // want the full version: include it at the top, so that object.merge is available
+        createHashMap = require('js-ext/extra/hashmap.js').createMap;
+
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
+/*jshint boss:true */
+    if (window._ITSAmodules.ITSA) {
+/*jshint boss:false */
+        return ITSA; // ITSA was already created
+    }
 
     var ITSA = function (config) {
         ITSA._config.merge(config, {force: true});
@@ -26712,9 +26718,11 @@ process.chdir = function (dir) {
     */
     ITSA.Event = Event;
 
+    window._ITSAmodules.ITSA = ITSA;
+
     module.exports = ITSA;
 
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"constrain":6,"css":10,"dialog":12,"drag-drop":14,"event":27,"event-dom/extra/blurnode.js":18,"event-dom/extra/focusnode.js":19,"event-dom/extra/hover.js":20,"event-dom/extra/valuechange.js":21,"event-mobile":22,"focusmanager":29,"io/extra/io-cors-ie9.js":30,"io/extra/io-stream.js":31,"io/extra/io-transfer.js":32,"io/extra/io-xml.js":33,"js-ext/extra/reserved-words.js":38,"js-ext/js-ext.js":40,"messages":47,"node-plugin":48,"node-win":undefined,"panel":50,"polyfill/polyfill.js":61,"scrollable":63,"useragent":64,"utils":65,"vdom":77,"window-ext":78}]},{},[]);
+},{"constrain":6,"css":10,"dialog":12,"drag-drop":14,"event":27,"event-dom/extra/blurnode.js":18,"event-dom/extra/focusnode.js":19,"event-dom/extra/hover.js":20,"event-dom/extra/valuechange.js":21,"event-mobile":22,"focusmanager":29,"io/extra/io-cors-ie9.js":30,"io/extra/io-stream.js":31,"io/extra/io-transfer.js":32,"io/extra/io-xml.js":33,"js-ext/extra/hashmap.js":36,"js-ext/extra/reserved-words.js":38,"js-ext/js-ext.js":40,"messages":47,"node-plugin":48,"node-win":undefined,"panel":50,"polyfill/polyfill.js":61,"scrollable":63,"useragent":64,"utils":65,"vdom":77,"window-ext":78}]},{},[]);

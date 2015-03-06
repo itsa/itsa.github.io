@@ -285,7 +285,15 @@
     require(&#x27;css&#x27;);
     require(&#x27;polyfill/polyfill.js&#x27;); // want the full version
 
-    var jsExt = require(&#x27;js-ext/js-ext.js&#x27;); // want the full version: include it at the top, so that object.merge is available
+    var jsExt = require(&#x27;js-ext/js-ext.js&#x27;), // want the full version: include it at the top, so that object.merge is available
+        createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
+
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
+/*jshint boss:true */
+    if (window._ITSAmodules.ITSA) {
+/*jshint boss:false */
+        return ITSA; // ITSA was already created
+    }
 
     var ITSA = function (config) {
         ITSA._config.merge(config, {force: true});
@@ -402,6 +410,8 @@
      * @static
     */
     ITSA.Event = Event;
+
+    window._ITSAmodules.ITSA = ITSA;
 
     module.exports = ITSA;
 

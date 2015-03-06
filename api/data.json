@@ -13892,7 +13892,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 78,
+            "line": 86,
             "description": "Global configuration properties for the ITSA object.\nIt can only be set on initialization via the [`ITSA`](#docs-main) function.\n\nThe config is set at a default-configutation",
             "itemtype": "property",
             "name": "_config",
@@ -13904,7 +13904,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 93,
+            "line": 101,
             "description": "Reference to `Classes` in [js-ext/extra/classes.js](../modules/js-ext.html)",
             "itemtype": "property",
             "name": "Classes",
@@ -13915,7 +13915,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 101,
+            "line": 109,
             "description": "Reference to the `LightMap`-Class in [js-ext/extra/lightmap.js](../modules/js-ext.html)",
             "itemtype": "property",
             "name": "LightMap",
@@ -13926,7 +13926,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 109,
+            "line": 117,
             "description": "Reference to the `createHashMap` function in [js-ext/extra/hashmap.js](../modules/js-ext.html)",
             "itemtype": "property",
             "name": "createHashMap",
@@ -13937,7 +13937,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 132,
+            "line": 140,
             "description": "Reference to the `idGenerator` function in [utils](../modules/utils.html)",
             "itemtype": "property",
             "name": "idGenerator",
@@ -13948,7 +13948,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 162,
+            "line": 170,
             "description": "Reference to the [IO](io.html) object",
             "itemtype": "property",
             "name": "IO",
@@ -13959,7 +13959,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 174,
+            "line": 182,
             "description": "Reference to the [UserAgent](useragent.html) object",
             "itemtype": "property",
             "name": "UA",
@@ -13970,7 +13970,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 182,
+            "line": 190,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",
