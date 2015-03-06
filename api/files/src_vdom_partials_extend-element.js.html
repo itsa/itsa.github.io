@@ -121,8 +121,6 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
-                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
-            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -273,8 +271,8 @@ module.exports = function (window) {
         _AFTER = &#x27;:before&#x27;,
         extractor = require(&#x27;./attribute-extractor.js&#x27;)(window),
         UTILS = require(&#x27;utils&#x27;),
-        later = UTILS.laterSilent,
-        async = UTILS.asyncSilent,
+        later = UTILS.later,
+        async = UTILS.async,
         idGenerator = UTILS.idGenerator,
         DOCUMENT = window.document,
         nodeids = NS.nodeids,

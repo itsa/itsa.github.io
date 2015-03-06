@@ -121,8 +121,6 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
-                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
-            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -229,202 +227,122 @@
 */
 
 
-(function (global) {
+&quot;use strict&quot;;
 
-    &quot;use strict&quot;;
+require(&#x27;polyfill/polyfill-base.js&#x27;);
 
-    require(&#x27;polyfill/polyfill-base.js&#x27;);
+var NAME = &#x27;[utils-timers]: &#x27;,
+    _asynchronizer, _async;
 
-    var NAME = &#x27;[utils-timers]: &#x27;,
-        _asynchronizer, _async, _asynchronizerSilent, _later;
+/**
+ * Forces a function to be run asynchronously, but as fast as possible. In Node.js
+ * this is achieved using &#x60;setImmediate&#x60; or &#x60;process.nextTick&#x60;.
+ *
+ * @method _asynchronizer
+ * @param callbackFn {Function} The function to call asynchronously
+ * @static
+ * @private
+**/
+_asynchronizer = (typeof setImmediate !== &#x27;undefined&#x27;) ? function (fn) {setImmediate(fn);} :
+                    ((typeof process !== &#x27;undefined&#x27;) &amp;&amp; process.nextTick) ? process.nextTick : function (fn) {setTimeout(fn, 0);};
 
-    // make _setTimeout and _setInterval available, so the code always works
-    // both methods may be overruled by itags
-    global._setTimeout = global.setTimeout;
-    global._setInterval = global.setInterval;
+/**
+ * Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function
+ * requires a specific execution context or arguments, wrap it with Function.bind.
+ *
+ * I.async returns an object with a cancel method.  If the cancel method is
+ * called before the callback function, the callback function won&#x27;t be called.
+ *
+ * @method async
+ * @param {Function} callbackFn
+ * @param [invokeAfterFn=true] {boolean} set to false to prevent the _afterSyncFn to be invoked
+ * @return {Object} An object with a cancel method.  If the cancel method is
+ * called before the callback function, the callback function won&#x27;t be called.
+**/
+_async = function (callbackFn, invokeAfterFn) {
+    console.log(NAME, &#x27;async&#x27;);
+    var canceled;
 
-    /**
-     * Forces a function to be run asynchronously, but as fast as possible. In Node.js
-     * this is achieved using &#x60;setImmediate&#x60; or &#x60;process.nextTick&#x60;.
-     *
-     * @method _asynchronizer
-     * @param callbackFn {Function} The function to call asynchronously
-     * @static
-     * @private
-    **/
-    _asynchronizer = (typeof global.setImmediate !== &#x27;undefined&#x27;) ?
-                        function (fn) {
-                            global.setImmediate(fn);
-                        } :
-                    ((typeof global.process !== &#x27;undefined&#x27;) &amp;&amp; global.process.nextTick) ?
-                        global.process.nextTick :
-                        function (fn) {
-                            global.setTimeout(fn, 0);
-                        };
-
-    /**
-     * Forces a function to be run asynchronously, but as fast as possible. In Node.js
-     * this is achieved using &#x60;setImmediate&#x60; or &#x60;process.nextTick&#x60;.
-     *
-     * @method _asynchronizerSilent
-     * @param callbackFn {Function} The function to call asynchronously
-     * @static
-     * @private
-    **/
-    _asynchronizerSilent = (typeof global.setImmediate !== &#x27;undefined&#x27;) ?
-                                function (fn) {
-                                    global._setImmediate(fn);
-                                } :
-                                function (fn) {
-                                    global._setTimeout(fn, 0);
-                                };
-
-    /**
-     * Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function
-     * requires a specific execution context or arguments, wrap it with Function.bind.
-     *
-     * I.async returns an object with a cancel method.  If the cancel method is
-     * called before the callback function, the callback function won&#x27;t be called.
-     *
-     * @method async
-     * @param {Function} callbackFn
-     * @param [invokeAfterFn=true] {boolean} set to false to prevent the _afterSyncFn to be invoked
-     * @return {Object} An object with a cancel method.  If the cancel method is
-     * called before the callback function, the callback function won&#x27;t be called.
-    **/
-    _async = function (callbackFn, invokeAfterFn) {
-        console.log(NAME, &#x27;async&#x27;);
-        invokeAfterFn = (typeof invokeAfterFn === &#x27;boolean&#x27;) ? invokeAfterFn : true;
-        var canceled, callback,
-            // if not available, then don&#x27;t invoke the afterFn:
-            originalTimer = (invokeAfterFn || !global._setTimeout);
-
-        if (typeof callbackFn===&#x27;function&#x27;) {
-            callback = function () {
-                if (!canceled) {
-                    callbackFn();
-                }
-            };
-            originalTimer ? _asynchronizer(callback) : _asynchronizerSilent(callback);
+    invokeAfterFn = (typeof invokeAfterFn === &#x27;boolean&#x27;) ? invokeAfterFn : true;
+    (typeof callbackFn===&#x27;function&#x27;) &amp;&amp; _asynchronizer(function () {
+        if (!canceled) {
+            console.log(NAME, &#x27;async is running its callbakcFn&#x27;);
+            callbackFn();
         }
+    });
 
-        return {
-            cancel: function () {
-                canceled = true;
-            }
-        };
-    };
-
-    /**
-     * Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function
-     * requires a specific execution context or arguments, wrap it with Function.bind.
-     *
-     * I.async returns an object with a cancel method.  If the cancel method is
-     * called before the callback function, the callback function won&#x27;t be called.
-     *
-     * @method async
-     * @param {Function} callbackFn
-     * @param [invokeAfterFn=true] {boolean} set to false to prevent the _afterSyncFn to be invoked
-     * @return {Object} An object with a cancel method.  If the cancel method is
-     * called before the callback function, the callback function won&#x27;t be called.
-    **/
-    module.exports.async = _async;
-    module.exports.asyncSilent = function() {
-        return _async.call(this, arguments[0], false);
-    };
-
-    /**
-     * Invokes the callbackFn after a timeout (asynchronous). If the function
-     * requires a specific execution context or arguments, wrap it with Function.bind.
-     *
-     * To invoke the callback function periodic, set &#x27;periodic&#x27; either &#x27;true&#x27;, or specify a second timeout.
-     * If number, then periodic is considered &#x27;true&#x27; but with a perdiod defined by &#x27;periodic&#x27;,
-     * which means: the first timer executes after &#x27;timeout&#x27; and next timers after &#x27;period&#x27;.
-     *
-     * I.later returns an object with a cancel method.  If the cancel() method is
-     * called before the callback function, the callback function won&#x27;t be called.
-     *
-     * @method later
-     * @param callbackFn {Function} the function to execute.
-     * @param [timeout] {Number} the number of milliseconds to wait until the callbackFn is executed.
-     * when not set, the callback function is invoked once in the next turn of the JavaScript event loop.
-     * @param [periodic] {boolean|Number} if true, executes continuously at supplied, if number, then periodic is considered &#x27;true&#x27; but with a perdiod
-     * defined by &#x27;periodic&#x27;, which means: the first timer executes after &#x27;timeout&#x27; and next timers after &#x27;period&#x27;.
-     * The interval executes until canceled.
-     * @param [invokeAfterFn=true] {boolean} set to false to prevent the _afterSyncFn to be invoked
-     * @return {object} a timer object. Call the cancel() method on this object to stop the timer.
-    */
-    _later = function (callbackFn, timeout, periodic, invokeAfterFn) {
-        console.log(NAME, &#x27;later --&gt; timeout: &#x27;+timeout+&#x27;ms | periodic: &#x27;+periodic);
-        // if not available, then don&#x27;t invoke the afterFn:
-        invokeAfterFn = (typeof invokeAfterFn === &#x27;boolean&#x27;) ? invokeAfterFn : true;
-        if (!timeout) {
-            return _async(callbackFn, invokeAfterFn);
+    return {
+        cancel: function () {
+            canceled = true;
         }
-        var interval = periodic,
-            secondtimeout = (typeof interval===&#x27;number&#x27;),
-            canceled = false,
-            originalTimer = (invokeAfterFn || !global._setTimeout),
-            secondairId,
-            wrapper = function() {
-                // IE 8- and also nodejs may execute a callback, so in order to preserve
-                // the cancel() === no more runny-run, we have to build in an extra conditional
-                if (!canceled) {
-                    callbackFn();
-                    if (secondtimeout) {
-                        secondairId = originalTimer ? global.setInterval(wrapperInterval, interval) : global._setInterval(wrapperInterval, interval);
-                    }
-                    // break closure inside returned object:
-                    id = null;
-                }
-            },
-            wrapperInterval = function() {
-                // IE 8- and also nodejs may execute a setInterval callback one last time
-                // after clearInterval was called, so in order to preserve
-                // the cancel() === no more runny-run, we have to build in an extra conditional
-                if (!canceled) {
-                    callbackFn();
-                }
-            },
-            id;
-        if (typeof callbackFn===&#x27;function&#x27;) {
-/*jshint boss:true */
-            if (id=(interval &amp;&amp; !secondtimeout)) {
-/*jshint boss:false */
-                originalTimer ? global.setInterval(wrapperInterval, timeout) : global._setInterval(wrapperInterval, timeout);
+    };
+};
+
+/**
+ * Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function
+ * requires a specific execution context or arguments, wrap it with Function.bind.
+ *
+ * I.async returns an object with a cancel method.  If the cancel method is
+ * called before the callback function, the callback function won&#x27;t be called.
+ *
+ * @method async
+ * @param {Function} callbackFn
+ * @param [invokeAfterFn=true] {boolean} set to false to prevent the _afterSyncFn to be invoked
+ * @return {Object} An object with a cancel method.  If the cancel method is
+ * called before the callback function, the callback function won&#x27;t be called.
+**/
+module.exports.async = _async;
+
+/**
+ * Invokes the callbackFn after a timeout (asynchronous). If the function
+ * requires a specific execution context or arguments, wrap it with Function.bind.
+ *
+ * To invoke the callback function periodic, set &#x27;periodic&#x27; either &#x27;true&#x27;, or specify a second timeout.
+ * If number, then periodic is considered &#x27;true&#x27; but with a perdiod defined by &#x27;periodic&#x27;,
+ * which means: the first timer executes after &#x27;timeout&#x27; and next timers after &#x27;period&#x27;.
+ *
+ * I.later returns an object with a cancel method.  If the cancel() method is
+ * called before the callback function, the callback function won&#x27;t be called.
+ *
+ * @method later
+ * @param callbackFn {Function} the function to execute.
+ * @param [timeout] {Number} the number of milliseconds to wait until the callbackFn is executed.
+ * when not set, the callback function is invoked once in the next turn of the JavaScript event loop.
+ * @param [periodic] {boolean|Number} if true, executes continuously at supplied, if number, then periodic is considered &#x27;true&#x27; but with a perdiod
+ * defined by &#x27;periodic&#x27;, which means: the first timer executes after &#x27;timeout&#x27; and next timers after &#x27;period&#x27;.
+ * The interval executes until canceled.
+ * @return {object} a timer object. Call the cancel() method on this object to stop the timer.
+*/
+module.exports.later = function (callbackFn, timeout, periodic) {
+    console.log(NAME, &#x27;later --&gt; timeout: &#x27;+timeout+&#x27;ms | periodic: &#x27;+periodic);
+    var canceled = false;
+    if (!timeout) {
+        return _async(callbackFn);
+    }
+    var wrapper = function() {
+            // nodejs may execute a callback, so in order to preserve
+            // the cancel() === no more runny-run, we have to build in an extra conditional
+            if (!canceled) {
+                console.log(NAME, &#x27;later is running its callbackFn&#x27;);
+                callbackFn();
+                // we are NOT using setInterval, because that leads to problems when the callback
+                // lasts longer than the interval. Instead, we use the interval as inbetween-phase
+                // between the separate callbacks.
+                id = periodic ? setTimeout(wrapper, (typeof periodic===&#x27;number&#x27;) ? periodic : timeout) : null;
             }
-            else {
-                originalTimer ? global.setTimeout(wrapper, timeout) : global._setTimeout(wrapper, timeout);
-            }
+        },
+        id;
+    (typeof callbackFn===&#x27;function&#x27;) &amp;&amp; (id=setTimeout(wrapper, timeout));
+
+    return {
+        cancel: function() {
+            canceled = true;
+            id &amp;&amp; clearTimeout(id);
+            // break closure:
+            id = null;
         }
-
-        return {
-            cancel: function() {
-                canceled = true;
-                (interval &amp;&amp; !secondtimeout) ? clearInterval(id) : clearTimeout(id);
-                secondairId &amp;&amp; clearInterval(secondairId);
-                // break closure:
-                id = null;
-                secondairId = null;
-            }
-        };
     };
-
-    module.exports.later = _later;
-
-    module.exports.laterSilent = function() {
-        var args = arguments,
-            newArgs = [];
-        newArgs[0] = args[0];
-        newArgs[1] = args[1];
-        newArgs[2] = args[2];
-        newArgs[3] = false;
-        return _later.apply(this, newArgs);
-    };
-
-
-}(typeof global !== &#x27;undefined&#x27; ? global : /* istanbul ignore next */ this));
-
+};
     </pre>
 </div>
 

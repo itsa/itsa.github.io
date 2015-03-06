@@ -45,7 +45,7 @@ intro: "This example shows how the focusmanager works when nested."
             <label for="pw">Password</label>
             <input id="pw" type="password" value="second"/>
         </div>
-        <div class="container2 pure-form pure-form-aligned" plugin-fm="true">
+        <div class="container2 pure-form pure-form-aligned" plugin-fm="true" fm-keyenter="39" fm-keyleave="27">
             <div class="pure-form-message-inline">Enter with key-right and leave with Esc</div>
             <div class="pure-form-message-inline">Navigate with tab and shift+tab</div>
             <fieldset>

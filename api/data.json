@@ -82,15 +82,6 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/event/extra/objectobserve.js": {
-            "name": "src/event/extra/objectobserve.js",
-            "modules": {
-                "event-objectobserve": 1
-            },
-            "classes": {},
-            "fors": {},
-            "namespaces": {}
-        },
         "src/event/event-base.js": {
             "name": "src/event/event-base.js",
             "modules": {
@@ -595,7 +586,6 @@
         "event": {
             "name": "event",
             "submodules": {
-                "event-objectobserve": 1,
                 "event-emitter": 1,
                 "event-listener": 1,
                 "event-blurnode": 1,
@@ -619,24 +609,6 @@
             "description": "Defines the Event-Class, which should be instantiated to get its functionality\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "is_constructor": 1,
             "since": "0.0.1"
-        },
-        "event-objectobserve": {
-            "name": "event-objectobserve",
-            "submodules": {},
-            "classes": {},
-            "fors": {},
-            "is_submodule": 1,
-            "namespaces": {},
-            "module": "event",
-            "namespace": "",
-            "file": "src/event/extra/objectobserve.js",
-            "line": 3,
-            "description": "Adds the `objectobserve` event, to monitor changes in objects.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
-            "example": [
-                "\nEvent = require('event/extra/objectobserve.js');\n\nEvent.observe('myEmitterName', datamodel);\nEvent.after('myEmitterName:datachanged', function(e) {\n    var datamodel = e.target,\n        emitter = e.emitter;\n});\n\nor",
-                "\nEvent = require('event');\nrequire('event/extra/objectobserve.js');\n\nEvent.observe('myEmitterName', datamodel);\nEvent.after('myEmitterName:datachanged', function(e) {\n    var datamodel = e.target,\n        emitter = e.emitter;\n});"
-            ],
-            "since": "0.0.2"
         },
         "event-emitter": {
             "name": "event-emitter",
@@ -1004,7 +976,7 @@
             "module": "js-ext",
             "namespace": "",
             "file": "src/js-ext/lib/object.js",
-            "line": 96,
+            "line": 162,
             "description": "Pollyfils for often used functionality for Objects\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "lib/promise.s": {
@@ -1277,14 +1249,14 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "event",
-            "submodule": "event-mobile",
             "namespace": "",
             "file": "src/event-mobile/event-mobile.js",
             "line": 3,
             "description": "Integrates mobile-events to event-dom. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "example": [
                 "\nEvent = require('event-mobile')(window);"
-            ]
+            ],
+            "submodule": "event-mobile"
         },
         "Event.Emitter": {
             "name": "Event.Emitter",
@@ -1464,7 +1436,7 @@
             "submodule": "lib/object.js",
             "namespace": "",
             "file": "src/js-ext/lib/object.js",
-            "line": 96,
+            "line": 162,
             "description": "Pollyfils for often used functionality for objects"
         },
         "Promise": {
@@ -8177,7 +8149,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 232,
+            "line": 234,
             "description": "Default function for the `*:dd`-event",
             "itemtype": "method",
             "name": "_defFnStart",
@@ -8196,7 +8168,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 250,
+            "line": 252,
             "description": "Defines the definition of the `dd` event: the first phase of the drag-eventcycle (dd, *:dd-drag, *:dd-drop)",
             "itemtype": "method",
             "name": "_defineDDStart",
@@ -8215,7 +8187,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 268,
+            "line": 270,
             "description": "Default function for the `*:dd-drag`-event",
             "itemtype": "method",
             "name": "_initializeDrag",
@@ -8234,7 +8206,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 350,
+            "line": 352,
             "description": "Emitted during the drag-cycle of a draggable Element (while it is dragged).",
             "itemtype": "event",
             "name": "*:dd-drag",
@@ -8309,7 +8281,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 399,
+            "line": 401,
             "description": "Emitted when drag-cycle of a draggable Element is ended.",
             "itemtype": "event",
             "name": "*:dd-drop",
@@ -8384,7 +8356,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 457,
+            "line": 459,
             "description": "Prevented function for the `*:dd-start`-event",
             "itemtype": "method",
             "name": "_prevFnStart",
@@ -8403,7 +8375,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 470,
+            "line": 472,
             "description": "Engine behind the drag-drop-cycle.\nSets up a `mousedown` listener to initiate a drag-drop eventcycle. The eventcycle start whenever\none of these events happens on a HtmlElement with the attribute `dd-draggable=\"true\"`.\nThe drag-drop eventcycle consists of the events: `dd-start`, `emitterName:dd-drag` and `emitterName:dd-drop`",
             "itemtype": "method",
             "name": "_setupMouseEv",
@@ -8415,7 +8387,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 526,
+            "line": 528,
             "description": "Emitted when a draggable Element's drag-cycle starts. You can use a `before`-subscriber to specify\ne.relatives, which should be a nodelist with HtmlElements, that should be dragged togehter with the master\ndraggable Element.",
             "itemtype": "event",
             "name": "*:dd",
@@ -8490,7 +8462,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 590,
+            "line": 591,
             "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
             "itemtype": "method",
             "name": "init",
@@ -8511,7 +8483,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 614,
+            "line": 615,
             "description": "Creates a notifier to response after each `Drag` event is set up, or teared down.\nYou can use this to hook in into the drag-eventcycle: the `drop`-module uses it this way.",
             "static": 1,
             "itemtype": "method",
@@ -8947,7 +8919,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 322,
+            "line": 324,
             "description": "Default function for the `*:dropzone`-event",
             "itemtype": "method",
             "name": "_defFnOver",
@@ -8966,7 +8938,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 341,
+            "line": 343,
             "description": "Emitted when the draggable gets out of the dropzone.",
             "itemtype": "event",
             "name": "*:dropzone-out",
@@ -9078,7 +9050,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 376,
+            "line": 378,
             "description": "Defines the definition of the `dd-drop` event: the last phase of the drag-eventcycle (dd-start, *:dd-drag, *:dd-drop)",
             "itemtype": "method",
             "name": "_defineDropEv",
@@ -9137,7 +9109,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 401,
+            "line": 403,
             "description": "Defines the definition of the `dropzone` event.\nAlso sets up listeners to tricker dd-over when the mouse is above an dropzone.",
             "itemtype": "method",
             "name": "_defineOverEv",
@@ -9161,7 +9133,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 483,
+            "line": 485,
             "description": "Emitted when the draggable gets inside a dropzone.",
             "itemtype": "event",
             "name": "*:dropzone-over",
@@ -9273,7 +9245,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 522,
+            "line": 524,
             "description": "Emits a dropzone-drop event.",
             "itemtype": "method",
             "name": "_emitDropzoneDrop",
@@ -9292,7 +9264,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 531,
+            "line": 533,
             "description": "Emitted when a draggable gets dropped inside a dropzone.",
             "itemtype": "event",
             "name": "*:dropzone-drop",
@@ -9404,7 +9376,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 564,
+            "line": 566,
             "description": "Sets the draggable node back to its original position",
             "itemtype": "method",
             "name": "_handleDrop",
@@ -9438,7 +9410,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 736,
+            "line": 758,
             "description": "Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,\nso you can choose to do set the draggables back conditionally.",
             "itemtype": "method",
             "name": "_restoreDraggables",
@@ -9497,7 +9469,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 774,
+            "line": 796,
             "description": "Sets the draggable node back to its original position",
             "itemtype": "method",
             "name": "_setBack",
@@ -9552,7 +9524,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 849,
+            "line": 873,
             "description": "Sets up a `keydown` and `keyup` listener, to monitor whether a `ctrlKey` (windows) or `metaKey` (Mac)\nis pressed to support the copying of draggable items",
             "itemtype": "method",
             "name": "_setupKeyEv",
@@ -9564,7 +9536,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 884,
+            "line": 908,
             "description": "Fired when the mouse comes back into the browser-window while dd-drag was busy yet no buttons are pressed.\nThis is a correction to the fact that the mouseup-event wasn't noticed because the mouse was outside the browser.",
             "itemtype": "event",
             "name": "dd-fake-mousemove",
@@ -9576,7 +9548,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 897,
+            "line": 921,
             "description": "Cleansup the dragover subscriber and fulfills any dropzone-promise.",
             "itemtype": "method",
             "name": "_teardownOverEvent",
@@ -9595,7 +9567,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 921,
+            "line": 945,
             "description": "Returns true if the dropzone-HtmlElement accepts copy-dragables.\nIs determined by the attribute `dd-effect-allowed=\"copy\"` or `dd-effect-allowed=\"all\"`",
             "itemtype": "method",
             "name": "allowCopy",
@@ -9616,7 +9588,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 936,
+            "line": 960,
             "description": "Returns true if the dragable-HtmlElement allowes to switch between `copy` and `move`.",
             "itemtype": "method",
             "name": "allowSwitch",
@@ -9637,7 +9609,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 949,
+            "line": 973,
             "description": "Returns the emitterName that the dropzone accepts.",
             "itemtype": "method",
             "name": "getDropzoneEmitter",
@@ -9658,7 +9630,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 963,
+            "line": 987,
             "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
             "itemtype": "method",
             "name": "init (extended by drag-drop)",
@@ -9679,7 +9651,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 1041,
+            "line": 1065,
             "description": "Returns true if the dragable-HtmlElement accepts only copy-dragables (no moveable)\nIs determined by the attribute `dd-effect-allowed=\"copy\"`",
             "itemtype": "method",
             "name": "onlyCopy",
@@ -9700,7 +9672,7 @@
         },
         {
             "file": "src/drag-drop/drag-drop.js",
-            "line": 1055,
+            "line": 1079,
             "description": "Sets the draggable items back to their original place. Should only be used when you prevent the default-function of `dd-drop`,\nso you can choose to do set the draggables back conditionally.",
             "itemtype": "method",
             "name": "restoreDraggables",
@@ -9710,199 +9682,6 @@
             "since": "0.0.1",
             "class": "DD",
             "module": "drag-drop"
-        },
-        {
-            "file": "src/event/extra/objectobserve.js",
-            "line": 51,
-            "description": "The function that gets invoked when object-observed objects get changed.",
-            "itemtype": "method",
-            "name": "callbackFn",
-            "params": [
-                {
-                    "name": "emitterName",
-                    "description": "The emitter-name that was set on the oberver-object",
-                    "type": "String"
-                },
-                {
-                    "name": "obj",
-                    "description": "the object that was changed",
-                    "type": "Object"
-                }
-            ],
-            "access": "protected",
-            "tagname": "",
-            "since": "0.0.1",
-            "class": "Event",
-            "module": "event",
-            "submodule": "event-objectobserve"
-        },
-        {
-            "file": "src/event/extra/objectobserve.js",
-            "line": 66,
-            "description": "The function that gets invoked in Event's finalizer in case there is no native Object.observe\nThis function will inspect all registered object for changes and invoke `callbackFn` for objects\nthat have been changed.",
-            "itemtype": "method",
-            "name": "checkObjects",
-            "params": [
-                {
-                    "name": "e",
-                    "description": "the eventobject",
-                    "type": "Object"
-                }
-            ],
-            "access": "protected",
-            "tagname": "",
-            "since": "0.0.1",
-            "class": "Event",
-            "module": "event",
-            "submodule": "event-objectobserve"
-        },
-        {
-            "file": "src/event/extra/objectobserve.js",
-            "line": 96,
-            "description": "Sets up the native Object.observe for the specified object.",
-            "itemtype": "method",
-            "name": "observeNative",
-            "params": [
-                {
-                    "name": "emitterName",
-                    "description": "The emitter-name to be set as the `emitterName` for the `datachanged` events",
-                    "type": "String"
-                },
-                {
-                    "name": "obj",
-                    "description": "the object that was changed",
-                    "type": "Object"
-                }
-            ],
-            "access": "protected",
-            "tagname": "",
-            "since": "0.0.1",
-            "class": "Event",
-            "module": "event",
-            "submodule": "event-objectobserve"
-        },
-        {
-            "file": "src/event/extra/objectobserve.js",
-            "line": 119,
-            "description": "Sets up the polyfill for Object.observe for the specified object.\nIs not really a polyfill, but an alternative way of inspecting: the specified object\ngets registered and with every Event.finalize it will be inspected for changes.",
-            "itemtype": "method",
-            "name": "observePolyfill",
-            "params": [
-                {
-                    "name": "emitterName",
-                    "description": "The emitter-name to be set as the `emitterName` for the `datachanged` events",
-                    "type": "String"
-                },
-                {
-                    "name": "obj",
-                    "description": "the object that was changed",
-                    "type": "Object"
-                }
-            ],
-            "access": "protected",
-            "tagname": "",
-            "since": "0.0.1",
-            "class": "Event",
-            "module": "event",
-            "submodule": "event-objectobserve"
-        },
-        {
-            "file": "src/event/extra/objectobserve.js",
-            "line": 156,
-            "description": "Unobserves (unregisters) a native observed object.",
-            "itemtype": "method",
-            "name": "unobserveNative",
-            "params": [
-                {
-                    "name": "emitterName",
-                    "description": "The emitter-name to be set as the `emitterName` for the `datachanged` events",
-                    "type": "String"
-                }
-            ],
-            "access": "protected",
-            "tagname": "",
-            "since": "0.0.1",
-            "class": "Event",
-            "module": "event",
-            "submodule": "event-objectobserve"
-        },
-        {
-            "file": "src/event/extra/objectobserve.js",
-            "line": 173,
-            "description": "Unobserves (unregisters) a polyfilled observed object.",
-            "itemtype": "method",
-            "name": "unobserveNative",
-            "params": [
-                {
-                    "name": "emitterName",
-                    "description": "The emitter-name to be set as the `emitterName` for the `datachanged` events",
-                    "type": "String"
-                }
-            ],
-            "access": "protected",
-            "tagname": "",
-            "since": "0.0.1",
-            "class": "Event",
-            "module": "event",
-            "submodule": "event-objectobserve"
-        },
-        {
-            "file": "src/event/extra/objectobserve.js",
-            "line": 190,
-            "description": "Sets up a Object.observe for the specified object. Either native (Object.observe) or polyfilled,\ndependend on the environment.",
-            "itemtype": "method",
-            "name": "observePolyfill",
-            "params": [
-                {
-                    "name": "emitterName",
-                    "description": "The emitter-name to be set as the `emitterName` for the `datachanged` events",
-                    "type": "String"
-                },
-                {
-                    "name": "obj",
-                    "description": "the object that was changed",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "handler with a `detach()`-method which can be used to detach the observer",
-                "type": "Object"
-            },
-            "since": "0.0.1",
-            "class": "Event",
-            "module": "event",
-            "submodule": "event-objectobserve"
-        },
-        {
-            "file": "src/event/extra/objectobserve.js",
-            "line": 210,
-            "description": "Unobserves (unregisters) a observed object.",
-            "itemtype": "method",
-            "name": "unobserveNative",
-            "params": [
-                {
-                    "name": "emitterName",
-                    "description": "The emitter-name to be set as the `emitterName` for the `datachanged` events",
-                    "type": "String"
-                }
-            ],
-            "chainable": 1,
-            "since": "0.0.1",
-            "class": "Event",
-            "module": "event",
-            "submodule": "event-objectobserve"
-        },
-        {
-            "file": "src/event/extra/objectobserve.js",
-            "line": 224,
-            "description": "Unobserves (unregisters) a observed object.",
-            "itemtype": "method",
-            "name": "unobserveNative",
-            "chainable": 1,
-            "since": "0.0.1",
-            "class": "Event",
-            "module": "event",
-            "submodule": "event-objectobserve"
         },
         {
             "file": "src/event/event-base.js",
@@ -10022,7 +9801,7 @@
         {
             "file": "src/event/event-base.js",
             "line": 140,
-            "description": "Defines a CustomEvent. If the eventtype already exists, it will not be overridden,\nunless you force to assign with `.forceAssign()`\n\nThe returned object comes with 8 methods which can be invoked chainable:\n\n<ul>\n    <li>defaultFn() --> the default-function of the event</li>\n    <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n    <li>forceAssign() --> overrides any previous definition</li>\n    <li>unHaltable() --> makes the customEvent cannot be halted</li>\n    <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n    <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>\n    <li>unRenderPreventable() --> makes that the customEvent's render cannot be prevented</li>\n    <li>unFinalizePreventable() --> makes that the customEvent's finalizer cannot be prevented</li>\n    <li>noRender() --> prevents this customEvent from render the dom. Overrules unRenderPreventable()</li>\n    <li>noFinalize() --> prevents this customEvent from running its finalizer. Overrules unFinalizePreventable()</li>\n</ul>",
+            "description": "Defines a CustomEvent. If the eventtype already exists, it will not be overridden,\nunless you force to assign with `.forceAssign()`\n\nThe returned object comes with 8 methods which can be invoked chainable:\n\n<ul>\n    <li>defaultFn() --> the default-function of the event</li>\n    <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n    <li>forceAssign() --> overrides any previous definition</li>\n    <li>unHaltable() --> makes the customEvent cannot be halted</li>\n    <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n    <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
             "name": "defineEvent",
@@ -10034,7 +9813,7 @@
                 }
             ],
             "return": {
-                "description": "with extra methods that can be chained:\n<ul>\n     <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n     <li>unRenderPreventable() --> makes that the customEvent's render cannot be prevented</li>\n     <li>unFinalizePreventable() --> makes that the customEvent's finalizer cannot be prevented/li>\n     <li>forceAssign() --> overrides any previous definition</li>\n     <li>defaultFn() --> the default-function of the event</li>\n     <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n     <li>forceAssign() --> overrides any previous definition</li>\n     <li>unHaltable() --> makes the customEvent cannot be halted</li>\n     <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>\n     <li>noRender() --> prevents this customEvent from render the dom. Overrules unRenderPreventable()</li>\n     <li>noFinalize() --> prevents this customEvent from running its finalizer. Overrules unFinalizePreventable()</li>\n</ul>",
+                "description": "with extra methods that can be chained:\n<ul>\n     <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n     <li>forceAssign() --> overrides any previous definition</li>\n     <li>defaultFn() --> the default-function of the event</li>\n     <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n     <li>forceAssign() --> overrides any previous definition</li>\n     <li>unHaltable() --> makes the customEvent cannot be halted</li>\n     <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>\n</ul>",
                 "type": "Object"
             },
             "since": "0.0.1",
@@ -10043,7 +9822,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 251,
+            "line": 225,
             "description": "Detaches (unsubscribes) the listener from the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -10067,7 +9846,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 269,
+            "line": 243,
             "description": "Detaches (unsubscribes) the listener from all customevents.",
             "static": 1,
             "itemtype": "method",
@@ -10085,8 +9864,8 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 293,
-            "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.rendered (optional) --> `true` the vDOM rendered the dom</li>\n              <li>e.status.finalized (optional) --> `true` ran its finalizer</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n              <li>e.status.renderPrevented (optional) -->  `reason|true` if the event got renderPrevented and optional the why</li>\n              <li>e.status.finalizePrevented (optional) -->  `reason|true` if the event got finalizePrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n    <li>e.preventRender() --> by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>\n    <li>e.preventFinalize() --> by default, any event will endup running the finalizer, this can be prevented by calling e.preventFinalize()</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()`, `e.preventRender() or `e.preventFinalize()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li>\n<ul>",
+            "line": 267,
+            "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Finally, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n<ul>",
             "static": 1,
             "itemtype": "method",
             "name": "emit",
@@ -10118,28 +9897,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 357,
-            "description": "Adds a subscriber to the finalization-cycle, which happens after the after-subscribers.\nOnly get invoked when the cycle was not preventDefaulted or halted.",
-            "itemtype": "method",
-            "name": "finalize",
-            "params": [
-                {
-                    "name": "finallySubscriber",
-                    "description": "callback to be invoked\n       Function recieves the eventobject as its only argument",
-                    "type": "Function"
-                }
-            ],
-            "return": {
-                "description": "handler with a `detach()`-method which can be used to detach the subscriber",
-                "type": "Object"
-            },
-            "since": "0.0.1",
-            "class": "Event",
-            "module": "event"
-        },
-        {
-            "file": "src/event/event-base.js",
-            "line": 380,
+            "line": 324,
             "description": "Creates a notifier for the customEvent.\nYou can use this to create delayed `defineEvents`. When the customEvent is called, the callback gets invoked\n(even before the subsrcibers). Use this callback for delayed customEvent-definitions.\n\nYou may use wildcards for both emitterName and eventName.\n\nYou **must** specify the full `emitterName:eventName` syntax.\nThe module `core-event-dom` uses `notify` to auto-define DOM-events (UI:*).",
             "static": 1,
             "itemtype": "method",
@@ -10175,7 +9933,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 418,
+            "line": 362,
             "description": "Creates a detach-notifier for the customEvent.\nYou can use this to get informed whenever a subscriber detaches.\n\nUse **no** wildcards for the emitterName. You might use wildcards for the eventName. Without wildcards, the\nnotification will be unNotified (callback automaticly detached) on the first time the event occurs.\n\nYou **must** specify the full `emitterName:eventName` syntax.\nThe module `core-event-dom` uses `notify` to auto-define DOM-events (UI:*).",
             "static": 1,
             "itemtype": "method",
@@ -10211,7 +9969,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 456,
+            "line": 400,
             "description": "Subscribes to a customEvent. The callback will be executed `after` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
             "itemtype": "method",
@@ -10257,7 +10015,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 500,
+            "line": 444,
             "description": "Subscribes to a customEvent. The callback will be executed `before` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
             "itemtype": "method",
@@ -10303,25 +10061,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 544,
-            "description": "Runs all registered finalizers. Sets `e.finalized` true if none of the finalizers turns e.silent into `true`\nand thus every single finalizer got invoked.",
-            "static": 1,
-            "itemtype": "method",
-            "name": "runFinalizers",
-            "params": [
-                {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
-                }
-            ],
-            "since": "0.0.2",
-            "class": "Event",
-            "module": "event"
-        },
-        {
-            "file": "src/event/event-base.js",
-            "line": 574,
+            "line": 488,
             "description": "Removes all event-definitions of an emitter, specified by its `emitterName`.\nWhen `emitterName` is not set, ALL event-definitions will be removed.",
             "static": 1,
             "itemtype": "method",
@@ -10340,7 +10080,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 604,
+            "line": 518,
             "description": "Removes the event-definition of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -10358,7 +10098,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 617,
+            "line": 531,
             "description": "unNotifies (unsubscribes) the notifier of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -10376,7 +10116,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 630,
+            "line": 544,
             "description": "unNotifies (unsubscribes) the detach-notifier of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -10394,7 +10134,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 647,
+            "line": 561,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:tap'</li>\n    <li>'tap' --> alias for 'UI:tap'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -10446,7 +10186,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 719,
+            "line": 633,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:tap'</li>\n    <li>'tap' --> alias for 'UI:tap'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -10498,8 +10238,8 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 841,
-            "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.rendered (optional) --> `true` the vDOM rendered the dom</li>\n              <li>e.status.finalized (optional) --> `true` if finlize was invoked</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n              <li>e.status.renderPrevented (optional) -->  `reason|true` if the event got renderPrevented and optional the why</li>\n              <li>e.status.finalizePrevented (optional) -->  `reason|true` if the event got finalizePrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n    <li>e.preventRender() --> by default, any event will trigger the vDOM (if exists) to re-render, this can be prevented by calling e.preventRender()</li>\n    <li>e.preventFinalize() --> by default, any event end up with running the finalizer, this can be prevented by calling e.preventFinalize()</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()`, `e.preventRender()` or `e.preventFinalize()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Next, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n    <li>Finally, the finalization takes place: any subscribers are invoked, unless e.halt() or a.preventDefault() has been called</li>\n<ul>",
+            "line": 755,
+            "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()` or `a.preventDefault()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Finally, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n<ul>",
             "static": 1,
             "itemtype": "method",
             "name": "emit",
@@ -10544,13 +10284,6 @@
                     "type": "Boolean",
                     "optional": true,
                     "optdefault": "false"
-                },
-                {
-                    "name": "noFinalize",
-                    "description": "To supress finalization",
-                    "type": "Boolean",
-                    "optional": true,
-                    "optdefault": "false"
                 }
             ],
             "return": {
@@ -10563,7 +10296,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1018,
+            "line": 903,
             "description": "Does the actual invocation of a subscriber.",
             "itemtype": "method",
             "name": "_invokeSubs",
@@ -10605,7 +10338,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1068,
+            "line": 953,
             "description": "Removes a subscriber from the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`.",
             "static": 1,
             "itemtype": "method",
@@ -10641,7 +10374,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1133,
+            "line": 1018,
             "description": "Removes subscribers from the multiple customevents. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:tap'</li>\n    <li>'tap' --> alias for 'UI:tap'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -10666,7 +10399,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1188,
+            "line": 1073,
             "description": "Adds a property to the default eventobject's prototype which passes through all eventcycles.\nGoes through Object.defineProperty with configurable, enumerable and writable\nall set to false.",
             "itemtype": "method",
             "name": "_setEventObjProperty",
@@ -10691,8 +10424,8 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1208,
-            "description": "Objecthash containing all defined custom-events\nwhich has a structure like this:\n\n_ce = {\n    'UI:tap': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true,\n        finalizePreventable: true\n    },\n    'redmodel:save': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...},\n        renderPreventable: true,\n        finalizePreventable: true\n    }\n}",
+            "line": 1093,
+            "description": "Objecthash containing all defined custom-events\nwhich has a structure like this:\n\n_ce = {\n    'UI:tap': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...}\n    },\n    'redmodel:save': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...}\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
             "default": "{}",
@@ -10705,7 +10438,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1242,
+            "line": 1123,
             "description": "Objecthash containing all defined before and after subscribers\nwhich has a structure like this (`b` represents `before` and `a` represents `after`)\nEvery item that gets in the array consist by itself of 3 properties:\n                                                         subscriberitem = {\n                                                             o: listener,\n                                                             cb: callbackFn(e),\n                                                             f: filter\n                                                         };\n\n_subs = {\n    'UI:tap': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    '*:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    'redmodel:save': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -10719,25 +10452,11 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1293,
-            "description": "Internal list of finalize-subscribers which are invoked at the finalization-cycle, which happens after the after-subscribers.\nIs an array of function-references.",
-            "itemtype": "property",
-            "name": "_final",
-            "default": "[]",
-            "type": "Array",
-            "access": "private",
-            "tagname": "",
-            "since": "0.0.1",
-            "class": "Event",
-            "module": "event"
-        },
-        {
-            "file": "src/event/event-base.js",
-            "line": 1305,
+            "line": 1174,
             "description": "Object that acts as the prototype of the eventobject.\nTo add more methods, you can use `_setEventObjProperty`",
             "itemtype": "property",
             "name": "_defaultEventObj",
-            "default": "{\n   halt: function()\n   preventDefault: function()\n   preventRender: function()\n   preventFinalize: function()\n}",
+            "default": "{\n   halt: function(),\n   preventDefault: function()\n}",
             "type": "Object",
             "access": "private",
             "tagname": "",
@@ -10747,7 +10466,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1322,
+            "line": 1189,
             "description": "Objecthash containing all detach-notifiers, keyed by customEvent name.\nThis list is maintained by `notifyDetach` and `unNotifyDetach`\n\n_detachNotifiers = {\n    'UI:tap': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_detachNotifiers",
@@ -10761,7 +10480,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1349,
+            "line": 1216,
             "description": "Objecthash containing all notifiers, keyed by customEvent name.\nThis list is maintained by `notify` and `unNotify`\n\n_notifiers = {\n    'UI:tap': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_notifiers",
@@ -10776,7 +10495,7 @@
         {
             "file": "src/event/event-emitter.js",
             "line": 37,
-            "description": "Defines a CustomEvent. If the eventtype already exists, it will not be overridden,\nunless you force to assign with `.forceAssign()`\n\nThe returned object comes with 4 methods which can be invoked chainable:\n\n<ul>\n    <li>defaultFn() --> the default-function of the event</li>\n    <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n    <li>forceAssign() --> overrides any previous definition</li>\n    <li>unHaltable() --> makes the customEvent cannot be halted</li>\n    <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n    <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>\n    <li>unRenderPreventable() --> makes that the customEvent's render cannot be prevented</li>\n    <li>noRender() --> prevents this customEvent from render the dom. Overrules unRenderPreventable()</li>\n</ul>",
+            "description": "Defines a CustomEvent. If the eventtype already exists, it will not be overridden,\nunless you force to assign with `.forceAssign()`\n\nThe returned object comes with 4 methods which can be invoked chainable:\n\n<ul>\n    <li>defaultFn() --> the default-function of the event</li>\n    <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n    <li>forceAssign() --> overrides any previous definition</li>\n    <li>unHaltable() --> makes the customEvent cannot be halted</li>\n    <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n    <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>\n</ul>",
             "itemtype": "method",
             "name": "defineEvent",
             "params": [
@@ -10787,7 +10506,7 @@
                 }
             ],
             "return": {
-                "description": "with extra methods that can be chained:\n<ul>\n     <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n     <li>unRenderPreventable() --> makes that the customEvent's render cannot be prevented</li>\n     <li>forceAssign() --> overrides any previous definition</li>\n     <li>defaultFn() --> the default-function of the event</li>\n     <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n</ul>",
+                "description": "with extra methods that can be chained:\n<ul>\n     <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n     <li>forceAssign() --> overrides any previous definition</li>\n     <li>defaultFn() --> the default-function of the event</li>\n     <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n</ul>",
                 "type": "Object"
             },
             "since": "0.0.1",
@@ -10797,7 +10516,7 @@
         },
         {
             "file": "src/event/event-emitter.js",
-            "line": 72,
+            "line": 69,
             "description": "Emits the event `eventName` on behalf of the instance holding this method.",
             "itemtype": "method",
             "name": "emit",
@@ -10824,7 +10543,7 @@
         },
         {
             "file": "src/event/event-emitter.js",
-            "line": 91,
+            "line": 88,
             "description": "Removes all event-definitions of the instance holding this method.",
             "itemtype": "method",
             "name": "undefAllEvents",
@@ -10835,7 +10554,7 @@
         },
         {
             "file": "src/event/event-emitter.js",
-            "line": 101,
+            "line": 98,
             "description": "Removes the event-definition of the specified customEvent.",
             "itemtype": "method",
             "name": "undefEvent",
@@ -11191,7 +10910,7 @@
         },
         {
             "file": "src/event-dom/extra/valuechange.js",
-            "line": 274,
+            "line": 265,
             "itemtype": "event",
             "name": "valuechange",
             "params": [
@@ -13162,7 +12881,7 @@
         },
         {
             "file": "src/focusmanager/focusmanager.js",
-            "line": 482,
+            "line": 478,
             "description": "In case of a manual focus (node.focus()) the node will fire an `manualfocus`-event\nwhich can be prevented.",
             "itemtype": "event",
             "name": "manualfocus",
@@ -13923,7 +13642,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 63,
+            "line": 64,
             "description": "Initializes the xhr-instance, based on the config-params.\nThis method is the standard way of doing xhr-requests without processing streams.",
             "itemtype": "method",
             "name": "_initXHR",
@@ -14015,7 +13734,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 144,
+            "line": 145,
             "description": "Adds the `headers`-object to `xhr`-headers.",
             "itemtype": "method",
             "name": "_setHeaders",
@@ -14043,7 +13762,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 174,
+            "line": 175,
             "description": "Adds 2 methods on the xhr-instance which are used by xhr when events occur:\n\nxhr.onreadystatechange()\nxhr.ontimeout()  // only XMLHttpRequest2\n\nThese events are responsible for making the Promise resolve.",
             "itemtype": "method",
             "name": "_setReadyHandle",
@@ -14071,7 +13790,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 218,
+            "line": 219,
             "description": "Stringifies an object into one string with every pair separated by `&`",
             "itemtype": "method",
             "name": "_toQueryString",
@@ -14093,7 +13812,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 239,
+            "line": 240,
             "description": "Sends a HTTP request to the server and returns a Promise with an additional .abort() method to cancel the request.\nThis method is the standard way of doing xhr-requests without processing streams.",
             "itemtype": "method",
             "name": "request",
@@ -14172,41 +13891,6 @@
             "module": "io"
         },
         {
-            "file": "src/io/io.js",
-            "line": 314,
-            "description": "Adds a subscriber to the finalization-cycle, which happens after the xhr finishes.\nOnly gets invoked on fulfilled io.",
-            "itemtype": "method",
-            "name": "finalize",
-            "params": [
-                {
-                    "name": "finallySubscriber",
-                    "description": "callback to be invoked\n       Function recieves `xhr` as its only argument",
-                    "type": "Function"
-                }
-            ],
-            "return": {
-                "description": "handler with a `detach()`-method which can be used to detach the subscriber",
-                "type": "Object"
-            },
-            "since": "0.0.1",
-            "class": "IO",
-            "module": "io"
-        },
-        {
-            "file": "src/io/io.js",
-            "line": 339,
-            "description": "Internal list of finalize-subscribers which are invoked at the end of a successful xhr,\nIs an array of function-references.",
-            "itemtype": "property",
-            "name": "_final",
-            "default": "[]",
-            "type": "Array",
-            "access": "private",
-            "tagname": "",
-            "since": "0.0.1",
-            "class": "IO",
-            "module": "io"
-        },
-        {
             "file": "src/itsa.build/itsa.build.js",
             "line": 78,
             "description": "Global configuration properties for the ITSA object.\nIt can only be set on initialization via the [`ITSA`](#docs-main) function.\n\nThe config is set at a default-configutation",
@@ -14253,7 +13937,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 133,
+            "line": 132,
             "description": "Reference to the `idGenerator` function in [utils](../modules/utils.html)",
             "itemtype": "property",
             "name": "idGenerator",
@@ -14264,7 +13948,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 163,
+            "line": 162,
             "description": "Reference to the [IO](io.html) object",
             "itemtype": "property",
             "name": "IO",
@@ -14275,7 +13959,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 175,
+            "line": 174,
             "description": "Reference to the [UserAgent](useragent.html) object",
             "itemtype": "property",
             "name": "UA",
@@ -14286,7 +13970,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 183,
+            "line": 182,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",
@@ -14846,7 +14530,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 101,
+            "line": 167,
             "description": "Loops through all properties in the object.  Equivalent to Array.forEach.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "each",
@@ -14864,7 +14548,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 127,
+            "line": 193,
             "description": "Loops through the properties in an object until the callback function returns *truish*.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe order in which the elements are visited is not predictable.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "some",
@@ -14885,7 +14569,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 155,
+            "line": 221,
             "description": "Loops through the properties in an object until the callback assembling a new object\nwith its properties set to the values returned by the callback function.\nIf the callback function returns `undefined` the property will not be copied to the new object.\nThe resulting object will have the same keys as the original, except for those where the callback\nreturned `undefined` which will have dissapeared.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "map",
@@ -14906,7 +14590,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 187,
+            "line": 254,
             "description": "Returns the keys of the object: the enumerable properties.",
             "itemtype": "method",
             "name": "keys",
@@ -14920,7 +14604,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 196,
+            "line": 264,
             "description": "Checks whether the given property is a key: an enumerable property.",
             "itemtype": "method",
             "name": "hasKey",
@@ -14941,7 +14625,29 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 207,
+            "line": 275,
+            "description": "Observes changes of the instance. On any changes, the callback will be invoked.\nUses a polyfill on environments that don't support native Object.observe.\n\nThe callback comes without arguments (native Object.oserve does, but non-native doesn't)\nso, they cannot be used.",
+            "itemtype": "method",
+            "name": "observe",
+            "chainable": 1,
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "lib/object.js"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 297,
+            "description": "Un-observes changes that are registered with `observe`.\nUses a polyfill on environments that don't support native Object.observe.",
+            "itemtype": "method",
+            "name": "observe",
+            "chainable": 1,
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "lib/object.js"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 316,
             "description": "Returns the number of keys of the object",
             "itemtype": "method",
             "name": "size",
@@ -14955,7 +14661,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 216,
+            "line": 326,
             "description": "Loops through the object collection the values of all its properties.\nIt is the counterpart of the [`keys`](#method_keys).",
             "itemtype": "method",
             "name": "values",
@@ -14969,7 +14675,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 236,
+            "line": 346,
             "description": "Returns true if the object has no own members",
             "itemtype": "method",
             "name": "isEmpty",
@@ -14983,7 +14689,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 249,
+            "line": 359,
             "description": "Returns a shallow copy of the object.\nIt does not clone objects within the object, it does a simple, shallow clone.\nFast, mostly useful for plain hash maps.",
             "itemtype": "method",
             "name": "shallowClone",
@@ -15006,7 +14712,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 283,
+            "line": 393,
             "description": "Compares this object with the reference-object whether they have the same value.\nNot by reference, but their content as simple types.\n\nCompares both JSON.stringify objects",
             "itemtype": "method",
             "name": "sameValue",
@@ -15027,7 +14733,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 297,
+            "line": 418,
             "description": "Returns a deep copy of the object.\nOnly handles members of primary types, Dates, Arrays and Objects.\nWill clone all the properties, also the non-enumerable.",
             "itemtype": "method",
             "name": "deepClone",
@@ -15056,7 +14762,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 336,
+            "line": 457,
             "description": "Transforms the object into an array with  'key/value' objects",
             "example": [
                 "\n{country: 'USA', Continent: 'North America'} --> [{key: 'country', value: 'USA'}, {key: 'Continent', value: 'North America'}]"
@@ -15095,7 +14801,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 361,
+            "line": 482,
             "description": "Merges into this object the properties of the given object.\nIf the second argument is true, the properties on the source object will be overwritten\nby those of the second object of the same name, otherwise, they are preserved.",
             "itemtype": "method",
             "name": "merge",
@@ -15149,7 +14855,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 412,
+            "line": 533,
             "description": "Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object",
             "itemtype": "method",
             "name": "isObject",
@@ -15164,7 +14870,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 423,
+            "line": 544,
             "description": "Creates a protected property on the object.",
             "itemtype": "method",
             "name": "protectedProp",
@@ -15175,7 +14881,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 438,
+            "line": 559,
             "description": "Returns a new object resulting of merging the properties of the given objects.\nThe copying is shallow, complex properties will reference the very same object.\nProperties in later objects do **not overwrite** properties of the same name in earlier objects.\nIf any of the objects is missing, it will be skiped.",
             "example": [
                 "\n\n var foo = function (config) {\n      config = Object.merge(config, defaultConfig);\n }"
@@ -15711,21 +15417,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 66,
-            "description": "Default internal hash containing all DOM-events that will not directly call `event-finalize`\nbut after a delay of 1 second",
-            "itemtype": "property",
-            "name": "DEFAULT_DELAYED_FINALIZE_EVENTS",
-            "default": "{\n   mousedown: true,\n   mouseup: true,\n   mousemove: true,\n   panmove: true,\n   panstart: true,\n   panleft: true,\n   panright: true,\n   panup: true,\n   pandown: true,\n   pinchmove: true,\n   rotatemove: true,\n   focus: true,\n   manualfocus: true,\n   keydown: true,\n   keyup: true,\n   keypress: true,\n   blur: true,\n   resize: true,\n   scroll: true\n}",
-            "type": "Object",
-            "access": "private",
-            "tagname": "",
-            "since": "0.0.1",
-            "class": "NodePlugin",
-            "module": "node-plugin"
-        },
-        {
-            "file": "src/node-plugin/node-plugin.js",
-            "line": 310,
+            "line": 198,
             "description": "Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.",
             "itemtype": "method",
             "name": "isPlugged",
@@ -15746,7 +15438,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 324,
+            "line": 212,
             "description": "Checks whether the plugin is ready to be used.",
             "itemtype": "method",
             "name": "pluginReady",
@@ -15767,7 +15459,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 339,
+            "line": 227,
             "description": "Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.",
             "itemtype": "method",
             "name": "plug",
@@ -15800,7 +15492,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 371,
+            "line": 259,
             "description": "Gets the plugin-instance of the specified plugin-name. Will fulfill as soon as the plugin is ready.",
             "itemtype": "method",
             "name": "getPlugin",
@@ -15821,7 +15513,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 388,
+            "line": 276,
             "description": "Unplugs a NodePlugin from the HtmlElement.",
             "itemtype": "method",
             "name": "unplug",
@@ -15839,7 +15531,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 468,
+            "line": 330,
             "description": "Binds a model to the plugin, making plugin.model equals the bound model.\nImmediately syncs the plugin with the new model-data.\n\nSyncs the new vnode's childNodes with the dom.",
             "itemtype": "method",
             "name": "bindModel",
@@ -15863,29 +15555,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 523,
-            "description": "Defines which domevents should lead to a direct sync by the Event-finalizer.\nOnly needed for events that are in the list set by DEFAULT_DELAYED_FINALIZE_EVENTS:\n\n<ul>\n    <li>mousedown</li>\n    <li>mouseup</li>\n    <li>mousemove</li>\n    <li>panmove</li>\n    <li>panstart</li>\n    <li>panleft</li>\n    <li>panright</li>\n    <li>panup</li>\n    <li>pandown</li>\n    <li>pinchmove</li>\n    <li>rotatemove</li>\n    <li>focus</li>\n    <li>manualfocus</li>\n    <li>keydown</li>\n    <li>keyup</li>\n    <li>keypress</li>\n    <li>blur</li>\n    <li>resize</li>\n    <li>scroll</li>\n</ul>\n\nEvents that are not in this list don't need to be set: they always go through the finalizer immediatly.\n\nYou need to set this if the itag-definition its `sync`-method should be updated after one of the events in the list.",
-            "itemtype": "method",
-            "name": "setItagDirectEventResponse",
-            "params": [
-                {
-                    "name": "ItagClass",
-                    "description": "The ItagClass that wants to register",
-                    "type": "Class"
-                },
-                {
-                    "name": "domEvents",
-                    "description": "the domevents that should directly make the itag sync",
-                    "type": "Array|String"
-                }
-            ],
-            "since": "0.0.1",
-            "class": "HTMLElement",
-            "module": "node-plugin"
-        },
-        {
-            "file": "src/node-plugin/node-plugin.js",
-            "line": 599,
+            "line": 404,
             "description": "Defines the `key`-property on element.model, but only when is hasn't been defined before.",
             "itemtype": "method",
             "name": "defineWhenUndefined",
@@ -15908,7 +15578,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 741,
+            "line": 538,
             "description": "Creates a new Element-PluginClass.",
             "itemtype": "method",
             "name": "definePlugin",
@@ -15941,7 +15611,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 771,
+            "line": 568,
             "description": "Returns the PluginClass that belongs with the specified `plugin`-name.",
             "itemtype": "method",
             "name": "getPluginClass",
@@ -15962,7 +15632,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 785,
+            "line": 582,
             "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
             "example": [
                 "\n\n var Circle = Shape.subClass(\n     function (x, y, r) {\n         // arguments will automaticly be passed through to Shape's constructor\n         this.r = r;\n     },\n     {\n         area: function () {\n             return this.r * this.r * Math.PI;\n         }\n     }\n );"
@@ -16484,7 +16154,7 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 28,
+            "line": 21,
             "description": "Forces a function to be run asynchronously, but as fast as possible. In Node.js\nthis is achieved using `setImmediate` or `process.nextTick`.",
             "itemtype": "method",
             "name": "_asynchronizer",
@@ -16503,26 +16173,7 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 47,
-            "description": "Forces a function to be run asynchronously, but as fast as possible. In Node.js\nthis is achieved using `setImmediate` or `process.nextTick`.",
-            "itemtype": "method",
-            "name": "_asynchronizerSilent",
-            "params": [
-                {
-                    "name": "callbackFn",
-                    "description": "The function to call asynchronously",
-                    "type": "Function"
-                }
-            ],
-            "static": 1,
-            "access": "private",
-            "tagname": "",
-            "class": "Utils",
-            "module": "utils"
-        },
-        {
-            "file": "src/utils/lib/timers.js",
-            "line": 64,
+            "line": 33,
             "description": "Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function\nrequires a specific execution context or arguments, wrap it with Function.bind.\n\nI.async returns an object with a cancel method.  If the cancel method is\ncalled before the callback function, the callback function won't be called.",
             "itemtype": "method",
             "name": "async",
@@ -16549,7 +16200,7 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 100,
+            "line": 65,
             "description": "Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function\nrequires a specific execution context or arguments, wrap it with Function.bind.\n\nI.async returns an object with a cancel method.  If the cancel method is\ncalled before the callback function, the callback function won't be called.",
             "itemtype": "method",
             "name": "async",
@@ -16576,7 +16227,7 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 118,
+            "line": 80,
             "description": "Invokes the callbackFn after a timeout (asynchronous). If the function\nrequires a specific execution context or arguments, wrap it with Function.bind.\n\nTo invoke the callback function periodic, set 'periodic' either 'true', or specify a second timeout.\nIf number, then periodic is considered 'true' but with a perdiod defined by 'periodic',\nwhich means: the first timer executes after 'timeout' and next timers after 'period'.\n\nI.later returns an object with a cancel method.  If the cancel() method is\ncalled before the callback function, the callback function won't be called.",
             "itemtype": "method",
             "name": "later",
@@ -16597,13 +16248,6 @@
                     "description": "if true, executes continuously at supplied, if number, then periodic is considered 'true' but with a perdiod\ndefined by 'periodic', which means: the first timer executes after 'timeout' and next timers after 'period'.\nThe interval executes until canceled.",
                     "type": "Boolean|Number",
                     "optional": true
-                },
-                {
-                    "name": "invokeAfterFn",
-                    "description": "set to false to prevent the _afterSyncFn to be invoked",
-                    "type": "Boolean",
-                    "optional": true,
-                    "optdefault": "true"
                 }
             ],
             "return": {

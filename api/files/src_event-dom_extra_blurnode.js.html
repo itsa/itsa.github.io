@@ -121,8 +121,6 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
-                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
-            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -301,9 +299,7 @@ module.exports = function (window) {
         }
     };
 
-    Event.defineEvent(&#x27;UI:blurnode&#x27;)
-         .unPreventable()
-         .noRender();
+    Event.defineEvent(&#x27;UI:blurnode&#x27;).unPreventable();
 
     Event.notify(&#x27;UI:blurnode&#x27;, setupBlurNode, Event, true);
     Event.notifyDetach(&#x27;UI:blurnode&#x27;, teardownBlurNode, Event);

@@ -121,8 +121,6 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
-                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
-            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -262,8 +260,8 @@ module.exports = function (window) {
         nodeids = NS.nodeids,
         htmlToVNodes = require(&#x27;./html-parser.js&#x27;)(window),
         timers = require(&#x27;utils/lib/timers.js&#x27;),
-        async = timers.asyncSilent,
-        later = timers.laterSilent,
+        async = timers.async,
+        later = timers.later,
 /*jshint proto:true */
         PROTO_SUPPORTED = !!Object.__proto__,
 /*jshint proto:false */

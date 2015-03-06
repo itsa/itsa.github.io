@@ -121,8 +121,6 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
-                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
-            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -224,8 +222,8 @@
  * Created variables: DOCUMENT=window.DOCUMENT
  * replaced &#x27;DOCUMENT&#x27; by DOCUMENT furtheron in the code (ondly while word and case-sensitive)
  *
- * required laterSilent = require(&#x27;utils&#x27;).laterSilent
- * Changed the function &quot;setTimeoutContext&quot; into using laterSilent instead of setTimeout
+ * required later = require(&#x27;utils&#x27;).later
+ * Changed the function &quot;setTimeoutContext&quot; into using later instead of setTimeout
 */
 
 module.exports = function (window) {
@@ -233,7 +231,7 @@ module.exports = function (window) {
     &#x27;use strict&#x27;;
 
     var DOCUMENT = window.document,
-        laterSilent = require(&#x27;utils&#x27;).laterSilent,
+        later = require(&#x27;utils&#x27;).later,
         VENDOR_PREFIXES = [&#x27;&#x27;, &#x27;webkit&#x27;, &#x27;moz&#x27;, &#x27;MS&#x27;, &#x27;ms&#x27;, &#x27;o&#x27;],
         TEST_ELEMENT = DOCUMENT.createElement(&#x27;div&#x27;),
         TYPE_FUNCTION = &#x27;function&#x27;,
@@ -249,7 +247,7 @@ module.exports = function (window) {
      * @returns {number}
      */
     function setTimeoutContext(fn, timeout, context) {
-        return laterSilent(bindFn(fn, context), timeout);
+        return later(bindFn(fn, context), timeout);
     }
 
     /**
