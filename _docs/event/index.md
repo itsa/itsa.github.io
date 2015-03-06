@@ -24,7 +24,7 @@ When events are emitted, they go through 3 phases: `before`-, `action`- and an `
 
 ###Before phase###
 
-Whenever an event is emitted, all the `before`-subscribers will be called first in the order in which they subscribed, unless the subscription took place with _prepend=true_ (see API). The `before`-listeners can call any of the methods listed [above](#e.preventdefault(),-e.halt()-and-e.preventrender()) to alter the execution of the event lifecycle. They also have access to the payload so they can make decisions based on the information in it and can also add or modify information contained in it for later subscribers.
+Whenever an event is emitted, all the `before`-subscribers will be called first in the order in which they subscribed, unless the subscription took place with _prepend=true_ (see API). The `before`-listeners can call any of the methods listed [above](#e.preventdefault()-and-e.halt()) to alter the execution of the event lifecycle. They also have access to the payload so they can make decisions based on the information in it and can also add or modify information contained in it for later subscribers.
 
 
 Since any `before`-subscriber can interrupt the chain of execution of an event, in this stage, the eventobject should not be used to learn about an event that has happened (because at that point it might not) but to vote on its happening or adding information about it.
@@ -221,7 +221,7 @@ myMembers.after('click', afterClick, '#buttongo');
 After-subscribers always get invoked <u>after</u> the before-subscribers and after the defaultFn (if any).
 
 
-###e.preventDefault(), e.halt() and e.preventRender()###
+###e.preventDefault() and e.halt()###
 
 The eventobject has several methods which can change the event-lifecycle, for instance:
 
@@ -244,7 +244,6 @@ The `eventobject` holds these methods that can be invoked (only inside the befor
 
 * e.**halt**(reason) stops further processing the eventchain: no more subscribers get invoked (nor before- neither after) and no defaultFn or preventedFn gets invoked
 * e.**preventDefault**(reason) all beforesubscribers keep getting invoked, and the events preventedFn gets invoked. The defaultFn will not be invoked, neither any aftersubscribers.
-* e.**preventRender**(reason) maked the virtualDOM not to re-render the true DOM
 
 By passing `reason` to the method, the eventobject is extended with extra information into its _e.status_-property. This won't be useful inside any after-subscribers (for they are not invoked), but it could be inside the preventedFn, or when you use the returned object that emit() creates. See the [example above](#examine-the-emit-method).
 
@@ -602,7 +601,6 @@ Events can be emitted right out of the box. However, is you want them more power
 * Define a defaultFn
 * Define a preventedFn
 * PreventDefault inside before-subscribers
-* PreventRender of the DOM (by the vDOM- inside before-subscribers
 
 
 Customevents can be defined by using the `defineEvent()`-method, which is available on Event or any object that got merged with Event.Emitter. Every customEvent **needs to conform the syntax "emitterName:eventName"**. If you use _defineEvent_ on an instance -which got extended with Event.Emitter-, you don't need to pass the emitterName. When invoking this method, you need to pass the applyable `emitterName` as its only parameter. After invocation of _defineEvent()_, you can invoke more options in a chained way:

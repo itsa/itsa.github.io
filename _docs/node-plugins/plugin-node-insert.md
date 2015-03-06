@@ -41,7 +41,7 @@ Drag the rectangle. The Node is made draggable the html that gets inserted.
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
     document.getElement('.base').setHTML('<div class="container" plugin-dd="true"></div>');

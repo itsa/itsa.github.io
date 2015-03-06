@@ -121,8 +121,6 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
-                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
-            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -537,7 +535,6 @@ module.exports = function (window) {
                 }
                 if (focusNode) {
                     e.preventDefaultContinue();
-                    e.preventRender(); // don&#x27;t double render --&gt; focus does this
                     // prevent default action --&gt; we just want to re-focus, but we DO want afterlisteners
                     // to be handled in the after-listener: someone else might want to halt the keydown event.
                     e._focusNode = focusNode;
@@ -549,7 +546,6 @@ module.exports = function (window) {
             console.log(NAME+&#x27;after keydown-event&#x27;);
             var focusNode = e._focusNode;
             if (focusNode &amp;&amp; focusNode.focus) {
-                e.preventRender(); // don&#x27;t double render --&gt; focus does this
                 focusNode.focus();
             }
         });
@@ -587,7 +583,6 @@ module.exports = function (window) {
             console.log(NAME+&#x27;after focus-event&#x27;);
             var node = e.target;
             if (!node.hasFocus()) {
-                e.preventRender(); // don&#x27;t double render --&gt; focus does this
                 node.focus();
             }
         }, &#x27;button&#x27;);
@@ -610,7 +605,6 @@ module.exports = function (window) {
                     markAsFocussed(focusContainerNode, focusNode);
                 }
                 else {
-                    e.preventRender(); // don&#x27;t double render --&gt; let focus do this
                     focusNode.focus();
                 }
             }
@@ -695,7 +689,7 @@ module.exports = function (window) {
     (function(HTMLElementPrototype) {
 
         HTMLElementPrototype._focus = HTMLElementPrototype.focus;
-        HTMLElementPrototype.focus = function(noRender, noRefocus) {
+        HTMLElementPrototype.focus = function(noRefocus) {
             console.log(NAME+&#x27;focus&#x27;);
             /**
              * In case of a manual focus (node.focus()) the node will fire an &#x60;manualfocus&#x60;-event
@@ -708,7 +702,7 @@ module.exports = function (window) {
                 var emitterName = focusNode._emitterName,
                     customevent = emitterName+&#x27;:manualfocus&#x27;;
                 Event._ce[customevent] || defineFocusEvent(customevent);
-                focusNode.emit(&#x27;manualfocus&#x27;, noRender ? {_noRender: true} : null);
+                focusNode.emit(&#x27;manualfocus&#x27;);
             };
             if (noRefocus) {
                 doEmit(focusElement);

@@ -121,8 +121,6 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
-                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
-            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -253,17 +251,13 @@ module.exports = function (window) {
 
     require(&#x27;vdom&#x27;)(window);
     var NAME = &#x27;[ElementPlugin]: &#x27;,
-        CHECK_MUTATION_DELAY = 500,
         Classes = require(&#x27;js-ext/extra/classes.js&#x27;),
         timers = require(&#x27;utils/lib/timers.js&#x27;),
         Event = require(&#x27;event-dom&#x27;)(window),
         async = timers.async,
         later = timers.later,
         DELAY_DESTRUCTION = 5000, // must be kept below vnode.js its DESTROY_DELAY (which is currently 60000)
-        DELAYED_EVT_TIME = 500,
-        NATIVE_OBJECT_OBSERVE = !!Object.observe,
         DOCUMENT = window.document,
-        types = [],
         NODE = &#x27;node&#x27;,
         REMOVE = &#x27;remove&#x27;,
         INSERT = &#x27;insert&#x27;,
@@ -271,11 +265,9 @@ module.exports = function (window) {
         ATTRIBUTE = &#x27;attribute&#x27;,
         NODE_REMOVE = NODE+REMOVE,
         NODE_INSERT = NODE+INSERT,
-        NODE_CONTENT_CHANGE = NODE+&#x27;content&#x27;+CHANGE,
         ATTRIBUTE_REMOVE = ATTRIBUTE+REMOVE,
         ATTRIBUTE_CHANGE = ATTRIBUTE+CHANGE,
         ATTRIBUTE_INSERT = ATTRIBUTE+INSERT,
-        MUTATION_EVENTS = [NODE_REMOVE, NODE_INSERT, NODE_CONTENT_CHANGE, ATTRIBUTE_REMOVE, ATTRIBUTE_CHANGE, ATTRIBUTE_INSERT],
         Base, pluginDOM, modelToAttrs, attrsToModel, syncPlugin, pluginDOMresync;
 
     Object.protectedProp(window, &#x27;_ITSAPlugins&#x27;, createHashMap());
@@ -411,27 +403,8 @@ module.exports = function (window) {
      * @protected
      * @since 0.0.1
      */
-    syncPlugin = function(plugin, compareWithPrevData) {
-        var stringifiedModel;
-        if (compareWithPrevData) {
-            try {
-                stringifiedModel = JSON.stringify(plugin.model);
-                if (stringifiedModel!==plugin._bkpModel) {
-                    plugin._bkpModel = stringifiedModel;
-                }
-                else {
-                    return;
-                }
-            }
-            catch (err) {
-                console.warn(err);
-                console.warn(&#x27;Invalid model-structure for plugin &#x27;+plugin.$ns+&#x27;: possibly it is cycle referenced --&gt; will NEVER refresh the plugin:&#x27;);
-                console.warn(plugin.host);
-                console.warn(&#x27;related model:&#x27;);
-                console.warn(plugin.model);
-                return;
-            }
-        }
+    syncPlugin = function() {
+        var plugin = this; // is bound with the plugin
         modelToAttrs(plugin);
         plugin.sync();
     };
@@ -540,7 +513,13 @@ module.exports = function (window) {
             instance.model = {};
             attrsToModel(instance, config);
             hostElement.setAttr(&#x27;plugin-&#x27;+instance.$ns, &#x27;true&#x27;, true);
-            model &amp;&amp; instance.bindModel(model, true);
+            if (model) {
+                instance.bindModel(model, true);
+            }
+            else if (hostElement.getAttr(instance.$ns+&#x27;-ready&#x27;)===&#x27;true&#x27;) {
+                instance._observer = syncPlugin.bind(instance);
+                instance.model.observe(instance._observer);
+            }
             modelToAttrs(instance);
         },
         {
@@ -579,17 +558,18 @@ module.exports = function (window) {
             bindModel: function(model, mergeCurrent) {
                 console.log(NAME+&#x27;bindModel&#x27;);
                 var instance = this,
-                    host = instance.host,
-                    observer;
+                    host = instance.host;
                 if (Object.isObject(model) &amp;&amp; (instance.model!==model)) {
                     host.removeAttr(&#x27;bound-model&#x27;);
-                    if (NATIVE_OBJECT_OBSERVE) {
-                        observer = instance._observer;
-                        observer &amp;&amp; Object.unobserve(instance.model, observer);
-                    }
+                    instance.model.unobserve(instance._observer);
+                    instance._observer = null;
                     mergeCurrent &amp;&amp; (model.merge(instance.model, {full: true}));
                     instance.model = model;
-                    (host.getAttr(instance.$ns+&#x27;-ready&#x27;)===&#x27;true&#x27;) &amp;&amp; syncPlugin(instance);
+                    if (host.getAttr(instance.$ns+&#x27;-ready&#x27;)===&#x27;true&#x27;) {
+                        instance._observer = syncPlugin.bind(instance);
+                        instance.model.observe(instance._observer);
+                        syncPlugin.call(instance);
+                    }
                 }
             },
             /*
@@ -604,22 +584,14 @@ module.exports = function (window) {
                 var instance = this,
                     ns = instance.$ns,
                     host = instance.host;
+
+                if (!instance._observer) {
+                    instance._observer = syncPlugin.bind(instance);
+                    instance.model.observe(instance._observer);
+                }
                 (host.getAttr(ns+&#x27;-ready&#x27;)===&#x27;true&#x27;) || instance.render();
-                syncPlugin(instance);
+                syncPlugin.call(instance);
                 host.setAttr(ns+&#x27;-ready&#x27;, &#x27;true&#x27;, true);
-
-                if (NATIVE_OBJECT_OBSERVE) {
-                    observer = function() {
-                        syncPlugin(instance);
-                    };
-                    Object.observe(instance.model, observer);
-                    instance._observer = observer;
-                }
-                else {
-                    instance._mutationCheck = later(syncPlugin.bind(null, plugin, true), CHECK_MUTATION_DELAY);
-                }
-
-                autoRefreshPlugin(instance);
                 host._pluginReadyInfo || (host._pluginReadyInfo={});
                 host._pluginReadyInfo[ns] || (host._pluginReadyInfo[ns]=window.Promise.manage());
                 host._pluginReadyInfo[ns].fulfill();
@@ -670,18 +642,10 @@ module.exports = function (window) {
                 var instance = this,
                     host = instance.host,
                     attrs = instance.attrs,
-                    ns = instance.$ns,
-                    observer;
-                if (NATIVE_OBJECT_OBSERVE) {
-                    observer = instance._observer;
-                    if (observer) {
-                        Object.unobserve(instance.model, observer);
-                        delete instance._observer;
-                    }
-                }
-                else {
-                    instance._mutationCheck.cancel();
-                }
+                    ns = instance.$ns;
+
+                instance.model.unobserve(instance.model, instance._observer);
+                instance._observer = null;
                 attrs.each(
                     function(value, key) {
                         host.removeAttr(ns+&#x27;-&#x27;+fromCamelCase(key), true);

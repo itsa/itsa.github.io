@@ -121,8 +121,6 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
-                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
-            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -277,7 +275,6 @@ module.exports = function (window) {
     subscriberBlur,
     subscriberFocus,
     subscriberRemoval,
-    finalizer,
 
     /*
      * Checks if the HtmlElement is editable.
@@ -336,8 +333,6 @@ module.exports = function (window) {
                                     return (e2.target===node);
                                 }
                             );
-        finalizer &amp;&amp; finalizer.detach();
-        finalizer = Event.finalize(checkChanged.bind(null, e));
         startPolling(e);
     },
 
@@ -352,10 +347,6 @@ module.exports = function (window) {
     endFocus = function(e) {
         console.log(NAME, &#x27;endFocus&#x27;);
         stopPolling(e.target);
-        if (finalizer) {
-            finalizer.detach();
-            finalizer = null;
-        }
         // because we could come here by 2 different events,
         // we need to detach them both
         subscriberBlur.detach();
@@ -468,9 +459,7 @@ module.exports = function (window) {
         }
     };
 
-    Event.defineEvent(&#x27;UI:valuechange&#x27;)
-         .unHaltable()
-         .noFinalize(); // NOT noRender!
+    Event.defineEvent(&#x27;UI:valuechange&#x27;).unHaltable();
 
     Event.notify(&#x27;UI:valuechange&#x27;, setupValueChange, Event, true);
     Event.notifyDetach(&#x27;UI:valuechange&#x27;, teardownValueChange, Event);

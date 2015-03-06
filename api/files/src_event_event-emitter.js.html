@@ -121,8 +121,6 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
-                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
-            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -265,8 +263,6 @@ Event.Emitter = function(emitterName) {
          *     &lt;li&gt;unHaltable() --&gt; makes the customEvent cannot be halted&lt;/li&gt;
          *     &lt;li&gt;unPreventable() --&gt; makes the customEvent&#x27;s defaultFn cannot be prevented&lt;/li&gt;
          *     &lt;li&gt;unSilencable() --&gt; makes that emitters cannot make this event to perform silently (using e.silent)&lt;/li&gt;
-         *     &lt;li&gt;unRenderPreventable() --&gt; makes that the customEvent&#x27;s render cannot be prevented&lt;/li&gt;
-         *     &lt;li&gt;noRender() --&gt; prevents this customEvent from render the dom. Overrules unRenderPreventable()&lt;/li&gt;
          * &lt;/ul&gt;
          *
          * @method defineEvent
@@ -276,7 +272,6 @@ Event.Emitter = function(emitterName) {
          * @return {Object} with extra methods that can be chained:
          * &lt;ul&gt;
          *      &lt;li&gt;unPreventable() --&gt; makes the customEvent&#x27;s defaultFn cannot be prevented&lt;/li&gt;
-         *      &lt;li&gt;unRenderPreventable() --&gt; makes that the customEvent&#x27;s render cannot be prevented&lt;/li&gt;
          *      &lt;li&gt;forceAssign() --&gt; overrides any previous definition&lt;/li&gt;
          *      &lt;li&gt;defaultFn() --&gt; the default-function of the event&lt;/li&gt;
          *      &lt;li&gt;preventedFn() --&gt; the function that should be invoked when the event is defaultPrevented&lt;/li&gt;

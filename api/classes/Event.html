@@ -121,8 +121,6 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
-                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
-            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -347,20 +345,6 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                                 
                             </li>
                         
-                            <li class="index-item method protected">
-                                <a href="#method_callbackFn">callbackFn</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method protected">
-                                <a href="#method_checkObjects">checkObjects</a>
-
-                                
-                                
-                            </li>
-                        
                             <li class="index-item method">
                                 <a href="#method_defineEmitter">defineEmitter</a>
 
@@ -447,27 +431,6 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                                 
                             </li>
                         
-                            <li class="index-item method protected">
-                                <a href="#method_observeNative">observeNative</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method protected">
-                                <a href="#method_observePolyfill">observePolyfill</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_observePolyfill">observePolyfill</a>
-
-                                
-                                
-                            </li>
-                        
                             <li class="index-item method">
                                 <a href="#method_onceAfter">onceAfter</a>
 
@@ -518,34 +481,6 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
 
                                 
                                     <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_unobserveNative">unobserveNative</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method protected">
-                                <a href="#method_unobserveNative">unobserveNative</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method protected">
-                                <a href="#method_unobserveNative">unobserveNative</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_unobserveNative">unobserveNative</a>
-
                                 
                                 
                             </li>
@@ -1471,136 +1406,6 @@ the Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will 
             
                 <li class="arg">
                     
-                        <code>customEvent</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/event.html">event</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_event_event-base.js.html#l1018"><code>src&#x2F;event&#x2F;event-base.js:1018</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Removes subscribers from the multiple customevents. The customEvent must conform the syntax:
-<code>emitterName:eventName</code>. Wildcard <code>*</code> may be used for both <code>emitterName</code> as well as <code>eventName</code>
-If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
-<p>Examples of valid customevents:</p>
-<ul>
-    <li>&#39;redmodel:save&#39;</li>
-    <li>&#39;UI:tap&#39;</li>
-    <li>&#39;tap&#39; --&gt; alias for &#39;UI:tap&#39;</li>
-    <li>&#39;<code>*</code>:click&#39; --&gt; careful: will listen to both UIs and non-UI- click-events</li>
-    <li>&#39;redmodel:<code>*</code>&#39;</li>
-    <li>&#39;<code>*</code>:<code>*</code>&#39;</li>
-</ul>
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">listener</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Object that creates the subscriber (and will be listening by <code>listener.after(...)</code>)</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">customEvent</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>conform the syntax: <code>emitterName:eventName</code>, wildcard <code>*</code> may be used for both
-       <code>emitterName</code> as well as only <code>eventName</code>, in which case &#39;UI&#39; will become the emmiterName.</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method__removeSubscriber" class="method item private">
-    <h3 class="name"><code>_removeSubscriber</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>listener</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
                         <code>before</code>
                     
                 </li>
@@ -1737,6 +1542,136 @@ If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
                     <div class="param-description">
                         <p>subscriber to the event, when not set, all subscribers of the listener to this customEvent
                   will be removed.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method__removeSubscriber" class="method item private">
+    <h3 class="name"><code>_removeSubscriber</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>customEvent</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/event.html">event</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_event_event-base.js.html#l1018"><code>src&#x2F;event&#x2F;event-base.js:1018</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Removes subscribers from the multiple customevents. The customEvent must conform the syntax:
+<code>emitterName:eventName</code>. Wildcard <code>*</code> may be used for both <code>emitterName</code> as well as <code>eventName</code>
+If <code>emitterName</code> is not defined, <code>UI</code> is assumed.</p>
+<p>Examples of valid customevents:</p>
+<ul>
+    <li>&#39;redmodel:save&#39;</li>
+    <li>&#39;UI:tap&#39;</li>
+    <li>&#39;tap&#39; --&gt; alias for &#39;UI:tap&#39;</li>
+    <li>&#39;<code>*</code>:click&#39; --&gt; careful: will listen to both UIs and non-UI- click-events</li>
+    <li>&#39;redmodel:<code>*</code>&#39;</li>
+    <li>&#39;<code>*</code>:<code>*</code>&#39;</li>
+</ul>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Object that creates the subscriber (and will be listening by <code>listener.after(...)</code>)</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">customEvent</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>conform the syntax: <code>emitterName:eventName</code>, wildcard <code>*</code> may be used for both
+       <code>emitterName</code> as well as only <code>eventName</code>, in which case &#39;UI&#39; will become the emmiterName.</p>
 
                     </div>
 
@@ -2293,220 +2228,6 @@ all set to false.</p>
                 
             </div>
         </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_callbackFn" class="method item protected">
-    <h3 class="name"><code>callbackFn</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>emitterName</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>obj</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-        <span class="flag protected">protected</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/event-objectobserve.html">event-objectobserve</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_event_extra_objectobserve.js.html#l49"><code>src&#x2F;event&#x2F;extra&#x2F;objectobserve.js:49</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>The function that gets invoked when object-observed objects get changed.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">emitterName</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The emitter-name that was set on the oberver-object</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">obj</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the object that was changed</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_checkObjects" class="method item protected">
-    <h3 class="name"><code>checkObjects</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>e</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-        <span class="flag protected">protected</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/event-objectobserve.html">event-objectobserve</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_event_extra_objectobserve.js.html#l64"><code>src&#x2F;event&#x2F;extra&#x2F;objectobserve.js:64</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>The function that gets invoked in Event&#39;s finalizer in case there is no native Object.observe
-This function will inspect all registered object for changes and invoke <code>callbackFn</code> for objects
-that have been changed.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">e</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the eventobject</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
     
 
     
@@ -3291,7 +3012,7 @@ If payload.silent is set true, the subscribers are not getting invoked: only the
 </ul>
 
 <p><ul>
-    <li>First, before-subscribers are invoked: this is the place where you might call <code>e.halt()</code>, <code>a.preventDefault()</code>, <code>e.preventRender()</code> or <code>e.preventFinalize()</code></li>
+    <li>First, before-subscribers are invoked: this is the place where you might call <code>e.halt()</code> or <code>a.preventDefault()</code></li>
     <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>
     <li>Finally, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li></p>
 <ul>
@@ -4036,376 +3757,6 @@ The module <code>core-event-dom</code> uses <code>notify</code> to auto-define D
         </div>
     
 
-    
-
-    
-</div>
-
-                
-                    <div id="method_observeNative" class="method item protected">
-    <h3 class="name"><code>observeNative</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>emitterName</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>obj</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-        <span class="flag protected">protected</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/event-objectobserve.html">event-objectobserve</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_event_extra_objectobserve.js.html#l94"><code>src&#x2F;event&#x2F;extra&#x2F;objectobserve.js:94</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Sets up the native Object.observe for the specified object.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">emitterName</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The emitter-name to be set as the <code>emitterName</code> for the <code>datachanged</code> events</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">obj</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the object that was changed</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_observePolyfill" class="method item protected">
-    <h3 class="name"><code>observePolyfill</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>emitterName</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>obj</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-        <span class="flag protected">protected</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/event-objectobserve.html">event-objectobserve</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_event_extra_objectobserve.js.html#l117"><code>src&#x2F;event&#x2F;extra&#x2F;objectobserve.js:117</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Sets up the polyfill for Object.observe for the specified object.
-Is not really a polyfill, but an alternative way of inspecting: the specified object
-gets registered and with every Event.finalize it will be inspected for changes.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">emitterName</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The emitter-name to be set as the <code>emitterName</code> for the <code>datachanged</code> events</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">obj</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the object that was changed</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_observePolyfill" class="method item">
-    <h3 class="name"><code>observePolyfill</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>emitterName</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>obj</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/event-objectobserve.html">event-objectobserve</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_event_extra_objectobserve.js.html#l188"><code>src&#x2F;event&#x2F;extra&#x2F;objectobserve.js:188</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Sets up a Object.observe for the specified object. Either native (Object.observe) or polyfilled,
-dependend on the environment.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">emitterName</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The emitter-name to be set as the <code>emitterName</code> for the <code>datachanged</code> events</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">obj</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the object that was changed</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
-                    
-                    <p>handler with a <code>detach()</code>-method which can be used to detach the observer</p>
-
-                
-            </div>
-        </div>
     
 
     
@@ -5224,352 +4575,6 @@ When <code>emitterName</code> is not set, ALL event-definitions will be removed.
 </div>
 
                 
-                    <div id="method_unobserveNative" class="method item">
-    <h3 class="name"><code>unobserveNative</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag chainable">chainable</span>
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/event-objectobserve.html">event-objectobserve</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_event_extra_objectobserve.js.html#l222"><code>src&#x2F;event&#x2F;extra&#x2F;objectobserve.js:222</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Unobserves (unregisters) a observed object.</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_unobserveNative" class="method item protected">
-    <h3 class="name"><code>unobserveNative</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>emitterName</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-        <span class="flag protected">protected</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/event-objectobserve.html">event-objectobserve</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_event_extra_objectobserve.js.html#l171"><code>src&#x2F;event&#x2F;extra&#x2F;objectobserve.js:171</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Unobserves (unregisters) a polyfilled observed object.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">emitterName</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The emitter-name to be set as the <code>emitterName</code> for the <code>datachanged</code> events</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_unobserveNative" class="method item protected">
-    <h3 class="name"><code>unobserveNative</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>emitterName</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-        <span class="flag protected">protected</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/event-objectobserve.html">event-objectobserve</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_event_extra_objectobserve.js.html#l154"><code>src&#x2F;event&#x2F;extra&#x2F;objectobserve.js:154</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Unobserves (unregisters) a native observed object.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">emitterName</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The emitter-name to be set as the <code>emitterName</code> for the <code>datachanged</code> events</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_unobserveNative" class="method item">
-    <h3 class="name"><code>unobserveNative</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>emitterName</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag chainable">chainable</span>
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/event-objectobserve.html">event-objectobserve</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_event_extra_objectobserve.js.html#l208"><code>src&#x2F;event&#x2F;extra&#x2F;objectobserve.js:208</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Unobserves (unregisters) a observed object.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">emitterName</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The emitter-name to be set as the <code>emitterName</code> for the <code>datachanged</code> events</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
             </div>
         
 
@@ -6231,7 +5236,7 @@ will catch it and process it through the dom-event cycle.</p>
             
         
         
-        <a href="../files/src_event-dom_extra_valuechange.js.html#l274"><code>src&#x2F;event-dom&#x2F;extra&#x2F;valuechange.js:274</code></a>
+        <a href="../files/src_event-dom_extra_valuechange.js.html#l265"><code>src&#x2F;event-dom&#x2F;extra&#x2F;valuechange.js:265</code></a>
         
         </p>
 

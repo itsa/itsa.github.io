@@ -121,8 +121,6 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
-                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
-            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -235,7 +233,7 @@ require(&#x27;js-ext&#x27;);
 var NAME = &#x27;[io]: &#x27;,
     GET = &#x27;GET&#x27;,
     createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
-    Event = require(event),
+    Event = require(&#x27;event&#x27;),
     async = require(&#x27;utils&#x27;).async,
     DEF_REQ_TIMEOUT = 300000, // don&#x27;t create an ever-lasting request: always quit after 5 minutes
     BODY_METHODS = createHashMap({

@@ -41,7 +41,6 @@ YUI.add("yuidoc-meta", function(Y) {
         "event-hover",
         "event-listener",
         "event-mobile",
-        "event-objectobserve",
         "extend-document",
         "extend-element",
         "extra/classes.js",
@@ -130,11 +129,6 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "event-mobile",
             "name": "event-mobile",
             "description": "Integrates mobile-events to event-dom. more about DOM-events:\nhttp://www.smashingmagazine.com/2013/11/12/an-introduction-to-dom-events/\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        {
-            "displayName": "event-objectobserve",
-            "name": "event-objectobserve",
-            "description": "Adds the `objectobserve` event, to monitor changes in objects.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "extend-document",

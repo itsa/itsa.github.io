@@ -121,8 +121,6 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
-                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
-            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -435,7 +433,9 @@ module.exports = function (window) {
             PLUGIN_ATTRS.forEach(function(attribute) {
                 var data = &#x27;_del_&#x27;+attribute;
                 if (dragNode.getData(data)) {
-                    delete dragNode._plugin.dd.model[attribute];
+                    dragNode.getPlugin(&#x27;dd&#x27;).then(function(plugin) {
+                        delete plugin.model[attribute];
+                    });
                     dragNode.removeData(data);
                 }
             });
@@ -788,7 +788,6 @@ module.exports = function (window) {
                         if (attr &amp;&amp; !foundNode.hasAttr(attribute)) {
                             foundNode.setData(&#x27;_del_&#x27;+attribute, attr);
                             foundNode.setAttr(attribute, attr);
-                            // foundNode._plugin.dd.model[attribute] = attr;
                         }
                     });
                     nodeTargetFn(e);

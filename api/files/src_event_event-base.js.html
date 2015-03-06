@@ -121,8 +121,6 @@
             
                 <li><a href="../modules/event-mobile.html">event-mobile</a></li>
             
-                <li><a href="../modules/event-objectobserve.html">event-objectobserve</a></li>
-            
                 <li><a href="../modules/extend-document.html">extend-document</a></li>
             
                 <li><a href="../modules/extend-element.html">extend-element</a></li>
@@ -1001,7 +999,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
          * &lt;/ul&gt;
          *
          * &lt;ul&gt;
-         *     &lt;li&gt;First, before-subscribers are invoked: this is the place where you might call &#x60;e.halt()&#x60;, &#x60;a.preventDefault()&#x60;, &#x60;e.preventRender()&#x60; or &#x60;e.preventFinalize()&#x60;&lt;/li&gt;
+         *     &lt;li&gt;First, before-subscribers are invoked: this is the place where you might call &#x60;e.halt()&#x60; or &#x60;a.preventDefault()&#x60;&lt;/li&gt;
          *     &lt;li&gt;Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called&lt;/li&gt;
          *     &lt;li&gt;Finally, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)&lt;/li&gt;
          * &lt;ul&gt;
@@ -1034,7 +1032,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
                 allCustomEvents = instance._ce,
                 allSubscribers = instance._subs,
                 customEventDefinition, extract, emitterName, eventName, subs, wildcard_named_subs,
-                named_wildcard_subs, wildcard_wildcard_subs, e, invokeSubs, key, subscribedSize, propDescriptor;
+                named_wildcard_subs, wildcard_wildcard_subs, e, invokeSubs, key, propDescriptor;
 
             (customEvent.indexOf(&#x27;:&#x27;) !== -1) || (customEvent = emitter._emitterName+&#x27;:&#x27;+customEvent);
             console.log(NAME, &#x27;customEvent.emit: &#x27;+customEvent);
@@ -1460,7 +1458,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
 
     Event._setEventObjProperty(&#x27;halt&#x27;, function(reason) {this.status.ok || this._unHaltable || (this.status.halted = (reason || true));})
          ._setEventObjProperty(&#x27;preventDefault&#x27;, function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPrevented = (reason || true));})
-         ._setEventObjProperty(&#x27;preventDefaultContinue&#x27;, function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPreventedContinue = (reason || true));})
+         ._setEventObjProperty(&#x27;preventDefaultContinue&#x27;, function(reason) {this.status.ok || this._unPreventable || (this.status.defaultPreventedContinue = (reason || true));});
 
     return Event;
 }));
