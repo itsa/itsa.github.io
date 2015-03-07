@@ -292,7 +292,7 @@
 /*jshint boss:true */
     if (window._ITSAmodules.ITSA) {
 /*jshint boss:false */
-        return ITSA; // ITSA was already created
+        return window._ITSAmodules.ITSA; // ITSA was already created
     }
 
     var ITSA = function (config) {
