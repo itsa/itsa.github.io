@@ -10761,7 +10761,7 @@
         },
         {
             "file": "src/event/event-listener.js",
-            "line": 156,
+            "line": 160,
             "description": "Is automaticly available for Classes.\nSubscribes to a customEvent on behalf of the class-instance and will only\nbe executed when the emitter is the instance itself.\n\nThe callback will be executed `after` the defaultFn.",
             "itemtype": "method",
             "name": "selfAfter",
@@ -10775,6 +10775,12 @@
                     "name": "callback",
                     "description": "subscriber:will be invoked when the event occurs. An `eventobject` will be passed\n       as its only argument.",
                     "type": "Function"
+                },
+                {
+                    "name": "filter",
+                    "description": "to filter the event.\n       Use a String if you want to filter DOM-events by a `selector`\n       Use a function if you want to filter by any other means. If the function returns a trully value, the\n       subscriber gets invoked. The function gets the `eventobject` as its only argument and the context is\n       the subscriber.",
+                    "type": "String|Function",
+                    "optional": true
                 },
                 {
                     "name": "prepend",
@@ -10795,7 +10801,7 @@
         },
         {
             "file": "src/event/event-listener.js",
-            "line": 177,
+            "line": 186,
             "description": "Is automaticly available for Classes.\nSubscribes to a customEvent on behalf of the class-instance and will only\nbe executed when the emitter is the instance itself.\n\nThe callback will be executed `before` the defaultFn.",
             "itemtype": "method",
             "name": "selfBefore",
@@ -10809,6 +10815,12 @@
                     "name": "callback",
                     "description": "subscriber:will be invoked when the event occurs. An `eventobject` will be passed\n       as its only argument.",
                     "type": "Function"
+                },
+                {
+                    "name": "filter",
+                    "description": "to filter the event.\n       Use a String if you want to filter DOM-events by a `selector`\n       Use a function if you want to filter by any other means. If the function returns a trully value, the\n       subscriber gets invoked. The function gets the `eventobject` as its only argument and the context is\n       the subscriber.",
+                    "type": "String|Function",
+                    "optional": true
                 },
                 {
                     "name": "prepend",
@@ -10829,7 +10841,7 @@
         },
         {
             "file": "src/event/event-listener.js",
-            "line": 198,
+            "line": 212,
             "description": "Is automaticly available for Classes.\nSubscribes to a customEvent on behalf of the class-instance and will only\nbe executed when the emitter is the instance itself.\n\nThe callback will be executed `after` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "itemtype": "method",
             "name": "selfOnceAfter",
@@ -10843,6 +10855,12 @@
                     "name": "callback",
                     "description": "subscriber:will be invoked when the event occurs. An `eventobject` will be passed\n       as its only argument.",
                     "type": "Function"
+                },
+                {
+                    "name": "filter",
+                    "description": "to filter the event.\n       Use a String if you want to filter DOM-events by a `selector`\n       Use a function if you want to filter by any other means. If the function returns a trully value, the\n       subscriber gets invoked. The function gets the `eventobject` as its only argument and the context is\n       the subscriber.",
+                    "type": "String|Function",
+                    "optional": true
                 },
                 {
                     "name": "prepend",
@@ -10863,7 +10881,7 @@
         },
         {
             "file": "src/event/event-listener.js",
-            "line": 221,
+            "line": 240,
             "description": "Is automaticly available for Classes.\nSubscribes to a customEvent on behalf of the class-instance and will only\nbe executed when the emitter is the instance itself.\n\nThe callback will be executed `before` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "itemtype": "method",
             "name": "selfOnceBefore",
@@ -10877,6 +10895,12 @@
                     "name": "callback",
                     "description": "subscriber:will be invoked when the event occurs. An `eventobject` will be passed\n       as its only argument.",
                     "type": "Function"
+                },
+                {
+                    "name": "filter",
+                    "description": "to filter the event.\n       Use a String if you want to filter DOM-events by a `selector`\n       Use a function if you want to filter by any other means. If the function returns a trully value, the\n       subscriber gets invoked. The function gets the `eventobject` as its only argument and the context is\n       the subscriber.",
+                    "type": "String|Function",
+                    "optional": true
                 },
                 {
                     "name": "prepend",
@@ -18070,9 +18094,10 @@
                 },
                 {
                     "name": "excludeItself",
-                    "description": "to exclude itsefl as a hit",
+                    "description": "to exclude itself as a hit",
                     "type": "Boolean",
-                    "optional": true
+                    "optional": true,
+                    "optdefault": "false"
                 },
                 {
                     "name": "inspectProtectedNodes",

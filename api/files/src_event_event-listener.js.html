@@ -240,7 +240,7 @@ require(&#x27;js-ext/lib/object.js&#x27;);
 
 var Event = require(&#x27;./event-base.js&#x27;),
     Classes = require(&quot;js-ext/extra/classes.js&quot;),
-    filterFn, ClassListener;
+    callbackFn, ClassListener;
 
 Event.Listener = {
     /**
@@ -364,8 +364,12 @@ Event.Listener = {
     }
 };
 
-filterFn = function(e) {
-    return e.target===this;
+callbackFn = function(callback, e) {
+    var instance = this,
+        eTarget = e.target,
+        accept;
+    accept = (eTarget===instance) || (eTarget.vnode &amp;&amp; instance.vnode &amp;&amp; instance.contains(eTarget));
+    accept &amp;&amp; callback.call(instance, e);
 };
 
 Event._CE_listener = ClassListener = {
@@ -382,12 +386,17 @@ Event._CE_listener = ClassListener = {
      *        If &#x60;emitterName&#x60; is not defined, &#x60;UI&#x60; is assumed.
      * @param callback {Function} subscriber:will be invoked when the event occurs. An &#x60;eventobject&#x60; will be passed
      *        as its only argument.
+     * @param [filter] {String|Function} to filter the event.
+     *        Use a String if you want to filter DOM-events by a &#x60;selector&#x60;
+     *        Use a function if you want to filter by any other means. If the function returns a trully value, the
+     *        subscriber gets invoked. The function gets the &#x60;eventobject&#x60; as its only argument and the context is
+     *        the subscriber.
      * @param [prepend=false] {Boolean} whether the subscriber should be the first in the list of after-subscribers.
      * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the subscriber
      * @since 0.0.1
     */
-    selfAfter: function (customEvent, callback, prepend) {
-        return Event.after(customEvent, callback, this, filterFn.bind(this), prepend);
+    selfAfter: function (customEvent, callback, filter, prepend) {
+        return Event.after(customEvent, callbackFn.bind(this, callback), this, filter, prepend);
     },
 
     /**
@@ -403,12 +412,17 @@ Event._CE_listener = ClassListener = {
      *        If &#x60;emitterName&#x60; is not defined, &#x60;UI&#x60; is assumed.
      * @param callback {Function} subscriber:will be invoked when the event occurs. An &#x60;eventobject&#x60; will be passed
      *        as its only argument.
+     * @param [filter] {String|Function} to filter the event.
+     *        Use a String if you want to filter DOM-events by a &#x60;selector&#x60;
+     *        Use a function if you want to filter by any other means. If the function returns a trully value, the
+     *        subscriber gets invoked. The function gets the &#x60;eventobject&#x60; as its only argument and the context is
+     *        the subscriber.
      * @param [prepend=false] {Boolean} whether the subscriber should be the first in the list of before-subscribers.
      * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the subscriber
      * @since 0.0.1
     */
-    selfBefore: function (customEvent, callback, prepend) {
-        return Event.before(customEvent, callback, this, filterFn.bind(this), prepend);
+    selfBefore: function (customEvent, callback, filter, prepend) {
+        return Event.before(customEvent, callbackFn.bind(this, callback), this, filter, prepend);
     },
 
     /**
@@ -426,12 +440,17 @@ Event._CE_listener = ClassListener = {
      *        If &#x60;emitterName&#x60; is not defined, &#x60;UI&#x60; is assumed.
      * @param callback {Function} subscriber:will be invoked when the event occurs. An &#x60;eventobject&#x60; will be passed
      *        as its only argument.
+     * @param [filter] {String|Function} to filter the event.
+     *        Use a String if you want to filter DOM-events by a &#x60;selector&#x60;
+     *        Use a function if you want to filter by any other means. If the function returns a trully value, the
+     *        subscriber gets invoked. The function gets the &#x60;eventobject&#x60; as its only argument and the context is
+     *        the subscriber.
      * @param [prepend=false] {Boolean} whether the subscriber should be the first in the list of after-subscribers.
      * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the subscriber
      * @since 0.0.1
     */
-    selfOnceAfter: function (customEvent, callback, prepend) {
-        return Event.onceAfter(customEvent, callback, this, filterFn.bind(this), prepend);
+    selfOnceAfter: function (customEvent, callback, filter, prepend) {
+        return Event.onceAfter(customEvent, callbackFn.bind(this, callback), this, filter, prepend);
     },
 
     /**
@@ -449,12 +468,17 @@ Event._CE_listener = ClassListener = {
      *        If &#x60;emitterName&#x60; is not defined, &#x60;UI&#x60; is assumed.
      * @param callback {Function} subscriber:will be invoked when the event occurs. An &#x60;eventobject&#x60; will be passed
      *        as its only argument.
+     * @param [filter] {String|Function} to filter the event.
+     *        Use a String if you want to filter DOM-events by a &#x60;selector&#x60;
+     *        Use a function if you want to filter by any other means. If the function returns a trully value, the
+     *        subscriber gets invoked. The function gets the &#x60;eventobject&#x60; as its only argument and the context is
+     *        the subscriber.
      * @param [prepend=false] {Boolean} whether the subscriber should be the first in the list of before-subscribers.
      * @return {Object} handler with a &#x60;detach()&#x60;-method which can be used to detach the subscriber
      * @since 0.0.1
     */
-    selfOnceBefore: function (customEvent, callback, prepend) {
-        return Event.onceBefore(customEvent, callback, this, filterFn.bind(this), prepend);
+    selfOnceBefore: function (customEvent, callback, filter, prepend) {
+        return Event.onceBefore(customEvent, callbackFn.bind(this, callback), this, filter, prepend);
     },
 
     destroy: function(notChained) {
