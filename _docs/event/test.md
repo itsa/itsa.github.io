@@ -45,6 +45,7 @@ Code-example:
 
     cont.merge(ITSA.Event.Listener);
     cont.merge(ITSA.Event._CE_listener);
+    cont.merge(ITSA.Event.Emitter('dummy'));
 
     ITSA.Event.after(
         'tap',

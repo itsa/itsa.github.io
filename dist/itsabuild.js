@@ -9143,11 +9143,10 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                 cb: callback,
                 f: filter
             };
-console.warn(item);
             // if extract[1] is undefined, a simple customEvent is going to subscribe (without :)
             // therefore: recomposite customEvent:
             extract[1] || (customEvent='UI:'+customEvent);
-
+console.warn(extract[1]);
             // if extract[1] === 'this', then a listener to its own emitterName is supposed
             if (extract[1]==='this') {
                 if (listener._emitterName) {
