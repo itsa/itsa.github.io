@@ -2636,7 +2636,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":80}],6:[function(require,module,exports){
+},{"_process":94}],6:[function(require,module,exports){
 "use strict";
 module.exports = function (window) {
     require('node-plugin')(window);
@@ -2664,7 +2664,7 @@ module.exports = function (window) {
 
     return PluginConstrain;
 };
-},{"js-ext/extra/hashmap.js":36,"node-plugin":48}],7:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":50,"node-plugin":62}],7:[function(require,module,exports){
 var css = "*:focus {\n    outline: 0;\n}\n\na[target=\"_blank\"]:focus {\n    outline: 1px solid #129fea;\n}\n\n/* because we think the padding and margin should always be part of the size,\n   we define \"box-sizing: border-box\" for all elements */\n\n* {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],8:[function(require,module,exports){
 var css = ".pure-menu.pure-menu-open {\n    z-index: 3; /* prevent graph from crossing the menuarea */\n}\n\n.pure-button.pure-button-bordered,\n.pure-button.pure-button-bordered[disabled] {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;\n}\n\n.pure-button-active,\n.pure-button:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button.pure-button-bordered.pure-button-active[disabled],\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered[disabled]:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.4) inset, 0 0 6px rgba(0,0,0, 0.2) inset;\n}\n\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.6) inset;\n}\n\n/* restore pure-button:active */\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button:active:focus,\n.pure-button.pure-button-active:focus {\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6) inset, 0 0 10px rgba(0, 0, 0, 0.2) inset;\n}\n\n.pure-button.pure-button-rounded {\n    border-radius: 0.3em;\n}\n\n.pure-button.pure-button-heavyrounded {\n    border-radius: 0.5em;\n}\n\n.pure-button.pure-button-oval {\n    border-radius: 50%;\n}\n\n.pure-button.pure-button-halfoval {\n    border-radius: 25%;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -2674,6 +2674,7 @@ var css = "/*!\nPure v0.5.0\nCopyright 2014 Yahoo! Inc. All rights reserved.\nLi
 require('./css/default.css');
 require('./css/purecss-0.5.0.css');
 require('./css/pure-finetuned.css');
+
 },{"./css/default.css":7,"./css/pure-finetuned.css":8,"./css/purecss-0.5.0.css":9}],11:[function(require,module,exports){
 var css = "[plugin-panel=\"true\"] div.message {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    padding: 0;\n    margin: 0 0 1.8em;\n}\n\n[plugin-panel=\"true\"] label[for=\"iprompt\"] {\n    margin-right: 1em;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],12:[function(require,module,exports){
@@ -2843,10 +2844,12 @@ module.exports = function (window) {
     // instantiate Dialog and make it operational:
     dialog = new Dialog();
 
+    window._ITSAmodules.Dialog = Dialog;
+
     // return the Class, so it can be subclassed:
     return Dialog;
 };
-},{"./css/dialog.css":11,"event":27,"js-ext":39,"js-ext/extra/classes.js":35,"js-ext/extra/hashmap.js":36,"messages":47,"panel":50,"polyfill":60,"utils":65}],13:[function(require,module,exports){
+},{"./css/dialog.css":11,"event":27,"js-ext":53,"js-ext/extra/classes.js":49,"js-ext/extra/hashmap.js":50,"messages":61,"panel":64,"polyfill":74,"utils":79}],13:[function(require,module,exports){
 var css = "[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],14:[function(require,module,exports){
 "use strict";
@@ -3966,7 +3969,7 @@ module.exports = function (window) {
     return DragModule;
 
 };
-},{"./css/drag-drop.css":13,"drag":16,"event-dom":17,"js-ext":39,"js-ext/extra/hashmap.js":36,"node-plugin":48,"polyfill/polyfill-base.js":60,"useragent":64,"vdom":77,"window-ext":78}],15:[function(require,module,exports){
+},{"./css/drag-drop.css":13,"drag":16,"event-dom":17,"js-ext":53,"js-ext/extra/hashmap.js":50,"node-plugin":62,"polyfill/polyfill-base.js":74,"useragent":78,"vdom":91,"window-ext":92}],15:[function(require,module,exports){
 var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -ms-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 3001 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],16:[function(require,module,exports){
 "use strict";
@@ -4628,7 +4631,7 @@ module.exports = function (window) {
 
     return DD;
 };
-},{"./css/drag.css":15,"event-dom":17,"js-ext":39,"js-ext/extra/hashmap.js":36,"node-plugin":48,"polyfill":60,"useragent":64,"vdom":77,"window-ext":78}],17:[function(require,module,exports){
+},{"./css/drag.css":15,"event-dom":17,"js-ext":53,"js-ext/extra/hashmap.js":50,"node-plugin":62,"polyfill":74,"useragent":78,"vdom":91,"window-ext":92}],17:[function(require,module,exports){
 "use strict";
 
 /**
@@ -4782,7 +4785,7 @@ module.exports = function (window) {
                 vnode = node.vnode,
                 character1 = selector && selector.substr(1),
                 match = false;
-            if (!isCustomElement || visibleContent || subscriber.o.contains(node)) {
+            if (!isCustomElement || visibleContent || context.contains(node)) {
                 if (selector==='') {
                     match = true;
                 }
@@ -5329,10 +5332,11 @@ module.exports = function (window) {
 
     _setupEvents();
 
-    // making HTMLElement to be able to emit using event-emitter:
-    (function(HTMLElementPrototype) {
-        HTMLElementPrototype.merge(Event.Emitter('UI'));
-    }(window.HTMLElement.prototype));
+    // making Element to be able to emit using event-emitter.
+    // NOT only HTMLElements --> SVGElements need to have this emitter to:
+    (function(ElementPrototype) {
+        ElementPrototype.merge(Event.Emitter('UI'));
+    }(window.Element.prototype));
 
 
     // Notify when someone subscribes to an UI:* event
@@ -5388,7 +5392,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":27,"js-ext/extra/hashmap.js":36,"js-ext/lib/array.js":41,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill/polyfill-base.js":60,"utils":65,"vdom":77}],18:[function(require,module,exports){
+},{"event":27,"js-ext/extra/hashmap.js":50,"js-ext/lib/array.js":55,"js-ext/lib/object.js":58,"js-ext/lib/string.js":60,"polyfill/polyfill-base.js":74,"utils":79,"vdom":91}],18:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5486,7 +5490,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],19:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58}],19:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5585,7 +5589,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],20:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58}],20:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5687,7 +5691,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],21:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58}],21:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5965,7 +5969,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"utils":65,"vdom":77}],22:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58,"utils":79,"vdom":91}],22:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8460,7 +8464,7 @@ module.exports = function (window) {
 
 };
 
-},{"utils":65}],24:[function(require,module,exports){
+},{"utils":79}],24:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -9146,7 +9150,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
             // if extract[1] is undefined, a simple customEvent is going to subscribe (without :)
             // therefore: recomposite customEvent:
             extract[1] || (customEvent='UI:'+customEvent);
-console.warn(extract[1]);
+
             // if extract[1] === 'this', then a listener to its own emitterName is supposed
             if (extract[1]==='this') {
                 if (listener._emitterName) {
@@ -9710,7 +9714,7 @@ console.warn(extract[1]);
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill/polyfill-base.js":60}],25:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58,"polyfill/polyfill-base.js":74}],25:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10120,7 +10124,7 @@ Classes.BaseClass.mergePrototypes(Event.Listener, true)
                  .mergePrototypes(ClassListener, true, {}, {});
 
 module.exports = Event;
-},{"./event-base.js":24,"js-ext/extra/classes.js":35,"js-ext/lib/object.js":44}],27:[function(require,module,exports){
+},{"./event-base.js":24,"js-ext/extra/classes.js":49,"js-ext/lib/object.js":58}],27:[function(require,module,exports){
 module.exports = require('./event-base.js');
 require('./event-emitter.js');
 require('./event-listener.js');
@@ -10640,7 +10644,310 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"./css/focusmanager.css":28,"event-mobile":22,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"node-plugin":48,"polyfill":60,"utils":65,"window-ext":78}],30:[function(require,module,exports){
+},{"./css/focusmanager.css":28,"event-mobile":22,"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58,"node-plugin":62,"polyfill":74,"utils":79,"window-ext":92}],30:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/alert.css');
+module.exports = function (window) {
+    window.document.defineIcon('alert', '<path class="path1" d="M512 92.774l429.102 855.226h-858.206l429.104-855.226zM512 0c-22.070 0-44.14 14.882-60.884 44.648l-437.074 871.112c-33.486 59.532-5 108.24 63.304 108.24h869.308c68.3 0 96.792-48.708 63.3-108.24h0.002l-437.074-871.112c-16.742-29.766-38.812-44.648-60.882-44.648v0z"></path><path class="path2" d="M576 832c0 35.346-28.654 64-64 64s-64-28.654-64-64c0-35.346 28.654-64 64-64s64 28.654 64 64z"></path><path class="path3" d="M512 704c-35.346 0-64-28.654-64-64v-192c0-35.346 28.654-64 64-64s64 28.654 64 64v192c0 35.346-28.654 64-64 64z"></path>');
+};
+},{"../css/alert.css":33}],31:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/error.css');
+module.exports = function (window) {
+    window.document.defineIcon('error', '<path d="M512 0c-282.77 0-512 229.23-512 512s229.23 512 512 512 512-229.23 512-512-229.23-512-512-512zM512 928c-229.75 0-416-186.25-416-416s186.25-416 416-416 416 186.25 416 416-186.25 416-416 416z"></path><path d="M672 256l-160 160-160-160-96 96 160 160-160 160 96 96 160-160 160 160 96-96-160-160 160-160z"></path>');
+};
+},{"../css/error.css":35}],32:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('polyfill/polyfill-base.js');
+require('./css/base.css');
+
+var NAME = '[icons]: ',
+    DEFAULT_SIZE = 1024,
+    createHashMap = require('js-ext/extra/hashmap.js').createMap;
+
+module.exports = function (window) {
+
+    var DOCUMENT = window.document,
+        Icons, Event, iconContainer, upgradeDOM, upgradeIconElement;
+
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
+
+/*jshint boss:true */
+    if (Icons=window._ITSAmodules.Icons) {
+/*jshint boss:false */
+        return Icons; // Dialog was already created
+    }
+
+    require('vdom')(window);
+    Event = require('event-dom')(window);
+
+    // Start with inserting the `svg-container` which holds all definitions
+    // will be inserted as a system-node:
+    iconContainer = DOCUMENT.body.getElement('>#itsa-icons-container', true) || DOCUMENT.body.addSystemElement('<svg id="itsa-icons-container"></svg>');
+
+    upgradeIconElement = function(element) {
+        // `element` is supposed to have the form: icon-`iconname`
+        var iconName = element.getTagName().substr(5).toLowerCase();
+        element.setHTML('<svg><use xlink:href="#itsa-'+iconName+'-icon"></use></svg>', true); // silently: no need to inform anyone about this system-upgrade
+        element.setClass('itsa-icon-element', null, null, true); // also silent
+    };
+
+    upgradeDOM = function() {
+        var upgrade = function(vnode) {
+            var vChildren = vnode.vChildren,
+                len = vChildren.length,
+                i, vChild;
+            for (i=0; i<len; i++) {
+                vChild = vChildren[i];
+                if (vChild.tag.substr(0, 5)==='ICON-') {
+                    upgradeIconElement(vChild.domNode);
+                }
+                else {
+                    upgrade(vChild);
+                }
+            }
+        };
+        upgrade(DOCUMENT.body.vnode);
+    };
+
+    Event.after(
+        'UI:nodeinsert',
+        function(e) {
+            upgradeIconElement(e.target);
+        },
+        function(e) {
+            return (e.target.vnode.tag.substr(0, 5)==='ICON-');
+        }
+    );
+
+    DOCUMENT.defineIcon = function(iconName, svgContent, viewBoxWidth, viewBoxHeight) {
+        var viewBoxDimension = '0 0 ',
+            iconId, currentDefinition;
+        viewBoxWidth || (viewBoxWidth = DEFAULT_SIZE);
+        viewBoxHeight || (viewBoxHeight = DEFAULT_SIZE);
+        viewBoxDimension = '0 0 '+viewBoxWidth+' '+viewBoxHeight;
+        iconId = 'itsa-'+iconName.toLowerCase()+'-icon';
+        currentDefinition = iconContainer.getElement('#'+iconId);
+        if (currentDefinition) {
+            currentDefinition.setHTML(svgContent);
+        }
+        else {
+            iconContainer.append('<symbol id="'+iconId+'" viewBox="'+viewBoxDimension+'">'+svgContent+'</symbol>');
+        }
+    };
+
+    upgradeDOM();
+
+    window._ITSAmodules.Icons = true;
+};
+},{"./css/base.css":34,"event-dom":17,"js-ext/extra/hashmap.js":50,"polyfill/polyfill-base.js":74,"vdom":91}],33:[function(require,module,exports){
+var css = "#itsa-alert-icon {\n  fill: #E3A900;\n    text-shadow: 1px 1px 1px rgba(50, 50, 50, 0.6);\n}\nicon-alert >svg {\n    text-shadow: 1px 1px 1px rgba(50, 50, 50, 0.6);\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],34:[function(require,module,exports){
+var css = "#itsa-icons-container {\n    display: none; !important;\n}\n\n.itsa-icon-element {\n    display: inline-block;\n    vertical-align: baseline;\n    padding: 0;\n    margin: 0;\n}\n\n.itsa-icon-element >svg {\n    height: 1em;\n    width: 1em;\n    vertical-align: middle;\n}\n\nbutton.itsa-icon {\n    padding: 0.5em;\n}\n\nbutton.itsa-iconleft {\n    padding-left: 0.75em;\n}\n\nbutton.itsa-iconright {\n    padding-right: 0.75em;\n}\n\nbutton.itsa-icon .itsa-icon-element >svg {\n    margin-top: -0.1em;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],35:[function(require,module,exports){
+var css = "#itsa-error-icon {\n  fill: #960500;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],36:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    window.document.defineIcon('animatedaudio', '<g transform="matrix(1 0 0 -1 0 80)"><rect width="10" height="20" rx="3"><animate attributeName="height" begin="0s" dur="4.3s" values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20" calcMode="linear" repeatCount="indefinite" /></rect><rect x="15" width="10" height="80" rx="3"><animate attributeName="height" begin="0s" dur="2s" values="80;55;33;5;75;23;73;33;12;14;60;80" calcMode="linear" repeatCount="indefinite" /></rect><rect x="30" width="10" height="50" rx="3"><animate attributeName="height" begin="0s" dur="1.4s" values="50;34;78;23;56;23;34;76;80;54;21;50" calcMode="linear" repeatCount="indefinite" /></rect><rect x="45" width="10" height="30" rx="3"><animate attributeName="height" begin="0s" dur="2s" values="30;45;13;80;56;72;45;76;34;23;67;30" calcMode="linear" repeatCount="indefinite" /></rect></g>', 55, 80);
+};
+},{}],37:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    window.document.defineIcon('animatedaudiocenter', '<rect y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.5s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.5s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="30" y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.25s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.25s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="60" width="15" height="140" rx="6"><animate attributeName="height" begin="0s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="90" y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.25s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.25s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="120" y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.5s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.5s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect>', 135, 140);
+};
+},{}],38:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    window.document.defineIcon('animatedgrid', '<circle cx="12.5" cy="12.5" r="12.5"><animate attributeName="fill-opacity" begin="0s" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="12.5" cy="52.5" r="12.5" fill-opacity=".5"><animate attributeName="fill-opacity" begin="100ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="52.5" cy="12.5" r="12.5"><animate attributeName="fill-opacity" begin="300ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="52.5" cy="52.5" r="12.5"><animate attributeName="fill-opacity" begin="600ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="92.5" cy="12.5" r="12.5"><animate attributeName="fill-opacity" begin="800ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="92.5" cy="52.5" r="12.5"><animate attributeName="fill-opacity" begin="400ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="12.5" cy="92.5" r="12.5"><animate attributeName="fill-opacity" begin="700ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="52.5" cy="92.5" r="12.5"><animate attributeName="fill-opacity" begin="500ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="92.5" cy="92.5" r="12.5"><animate attributeName="fill-opacity" begin="200ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle>', 105, 105);
+};
+
+
+},{}],39:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    window.document.defineIcon('animatedradar', '<g fill="none" fill-rule="evenodd" transform="translate(1 1)" stroke-width="2"><circle cx="22" cy="22" r="6" stroke-opacity="0"><animate attributeName="r" begin="1.5s" dur="3s" values="6;22" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-opacity" begin="1.5s" dur="3s" values="1;0" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-width" begin="1.5s" dur="3s" values="2;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="22" cy="22" r="6" stroke-opacity="0"><animate attributeName="r" begin="3s" dur="3s" values="6;22" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-opacity" begin="3s" dur="3s" values="1;0" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-width" begin="3s" dur="3s" values="2;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="22" cy="22" r="8"><animate attributeName="r" begin="0s" dur="1.5s" values="6;1;2;3;4;5;6" calcMode="linear" repeatCount="indefinite" /></circle></g>', 45, 45);
+};
+},{}],40:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    window.document.defineIcon('animatedspinnercircles', '<g fill="none" fill-rule="evenodd"><g transform="translate(2 1)" stroke="#FFF" stroke-width="1.5"><circle cx="42.601" cy="11.462" r="5" fill-opacity="1" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="1;0;0;0;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="49.063" cy="27.063" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;1;0;0;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="42.601" cy="42.663" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;1;0;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="27" cy="49.125" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;1;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="11.399" cy="42.663" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;1;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="4.938" cy="27.063" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;1;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="11.399" cy="11.462" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;0;1;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="27" cy="5" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;0;0;1" calcMode="linear" repeatCount="indefinite" /></circle></g></g>', 58, 58);
+};
+
+
+
+
+},{}],41:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    window.document.defineIcon('animatedspinneroval', '<g fill="none" fill-rule="evenodd"><g transform="translate(1 1)" stroke-width="2"><circle stroke-opacity=".5" cx="18" cy="18" r="18"/><path d="M36 18c0-9.94-8.06-18-18-18"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s" repeatCount="indefinite"/></path></g></g>', 38, 38);
+};
+
+
+
+},{}],42:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    window.document.defineIcon('animatedspinnertail', '<defs><linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a"><stop stop-color="#fff" stop-opacity="0" offset="0%"/><stop stop-color="#fff" stop-opacity=".631" offset="63.146%"/><stop stop-color="#fff" offset="100%"/></linearGradient></defs><g fill="none" fill-rule="evenodd"><g transform="translate(1 1)"><path d="M36 18c0-9.94-8.06-18-18-18" id="Oval-2" stroke="url(#a)" stroke-width="2"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.9s" repeatCount="indefinite" /></path><circle fill="#fff" cx="36" cy="18" r="1"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.9s" repeatCount="indefinite" /></circle></g></g>', 38, 38);
+};
+},{}],43:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    require('./base.js')(window);
+    require('./base-icons/error.js')(window);
+    require('./base-icons/alert.js')(window);
+    require('./extra-icons/animatedaudio.js')(window);
+    require('./extra-icons/animatedaudiocenter.js')(window);
+    require('./extra-icons/animatedgrid.js')(window);
+    require('./extra-icons/animatedradar.js')(window);
+    require('./extra-icons/animatedspinnercircles.js')(window);
+    require('./extra-icons/animatedspinneroval.js')(window);
+    require('./extra-icons/animatedspinnertail.js')(window);
+};
+},{"./base-icons/alert.js":30,"./base-icons/error.js":31,"./base.js":32,"./extra-icons/animatedaudio.js":36,"./extra-icons/animatedaudiocenter.js":37,"./extra-icons/animatedgrid.js":38,"./extra-icons/animatedradar.js":39,"./extra-icons/animatedspinnercircles.js":40,"./extra-icons/animatedspinneroval.js":41,"./extra-icons/animatedspinnertail.js":42}],44:[function(require,module,exports){
 
 "use strict";
 
@@ -10768,7 +11075,7 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"../io.js":34,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"xmldom":2}],31:[function(require,module,exports){
+},{"../io.js":48,"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58,"xmldom":2}],45:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -10895,7 +11202,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":34,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],32:[function(require,module,exports){
+},{"../io.js":48,"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58}],46:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11365,7 +11672,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":34,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill/polyfill-base.js":60}],33:[function(require,module,exports){
+},{"../io.js":48,"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58,"js-ext/lib/string.js":60,"polyfill/polyfill-base.js":74}],47:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11517,7 +11824,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":34,"js-ext":39,"js-ext/extra/hashmap.js":36}],34:[function(require,module,exports){
+},{"../io.js":48,"js-ext":53,"js-ext/extra/hashmap.js":50}],48:[function(require,module,exports){
 /**
  * Provides core IO-functionality.
  *
@@ -11841,7 +12148,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"event":27,"js-ext":39,"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":60,"utils":65}],35:[function(require,module,exports){
+},{"event":27,"js-ext":53,"js-ext/extra/hashmap.js":50,"polyfill/polyfill-base.js":74,"utils":79}],49:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -12454,7 +12761,7 @@ require('../lib/object.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/object.js":44,"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":60}],36:[function(require,module,exports){
+},{"../lib/object.js":58,"js-ext/extra/hashmap.js":50,"polyfill/polyfill-base.js":74}],50:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -12477,7 +12784,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],37:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -12589,7 +12896,7 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":41,"../lib/object.js":44,"./classes.js":35,"js-ext/extra/hashmap.js":36,"polyfill/lib/weakmap.js":58}],38:[function(require,module,exports){
+},{"../lib/array.js":55,"../lib/object.js":58,"./classes.js":49,"js-ext/extra/hashmap.js":50,"polyfill/lib/weakmap.js":72}],52:[function(require,module,exports){
 "use strict";
 
 var createHashMap = require('./hashmap.js').createMap;
@@ -12662,14 +12969,14 @@ module.exports = createHashMap({
     'with': true,
     'yield': true
 });
-},{"./hashmap.js":36}],39:[function(require,module,exports){
+},{"./hashmap.js":50}],53:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
 require('./lib/array.js');
 require('./lib/json.js');
 require('./lib/promise.js');
-},{"./lib/array.js":41,"./lib/function.js":42,"./lib/json.js":43,"./lib/object.js":44,"./lib/promise.js":45,"./lib/string.js":46}],40:[function(require,module,exports){
+},{"./lib/array.js":55,"./lib/function.js":56,"./lib/json.js":57,"./lib/object.js":58,"./lib/promise.js":59,"./lib/string.js":60}],54:[function(require,module,exports){
 "use strict";
 
 require('./lib/function.js');
@@ -12684,7 +12991,7 @@ module.exports = {
     Classes: require('./extra/classes.js'),
     LightMap: require('./extra/lightmap.js')
 };
-},{"./extra/classes.js":35,"./extra/hashmap.js":36,"./extra/lightmap.js":37,"./lib/array.js":41,"./lib/function.js":42,"./lib/json.js":43,"./lib/object.js":44,"./lib/promise.js":45,"./lib/string.js":46}],41:[function(require,module,exports){
+},{"./extra/classes.js":49,"./extra/hashmap.js":50,"./extra/lightmap.js":51,"./lib/array.js":55,"./lib/function.js":56,"./lib/json.js":57,"./lib/object.js":58,"./lib/promise.js":59,"./lib/string.js":60}],55:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -12835,7 +13142,7 @@ var cloneObj = function(obj) {
      };
 
 }(Array.prototype));
-},{"polyfill/polyfill-base.js":60}],42:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":74}],56:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -12894,7 +13201,7 @@ var NAME = '[Function]: ';
 
 }(Function.prototype));
 
-},{"polyfill/polyfill-base.js":60}],43:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":74}],57:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -12919,7 +13226,7 @@ var REVIVER = function(key, value) {
 JSON.parseWithDate = function(stringifiedObj) {
     return this.parse(stringifiedObj, REVIVER);
 };
-},{"polyfill/polyfill-base.js":60}],44:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":74}],58:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -13502,7 +13809,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":60,"utils":65}],45:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":50,"polyfill/polyfill-base.js":74,"utils":79}],59:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13812,7 +14119,7 @@ Promise.manage = function (callbackFn) {
     return promise;
 };
 
-},{"polyfill":60}],46:[function(require,module,exports){
+},{"polyfill":74}],60:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -14094,7 +14401,7 @@ Promise.manage = function (callbackFn) {
 
 }(String.prototype));
 
-},{}],47:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 (function (global){
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -14209,7 +14516,7 @@ require('polyfill');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"event":27,"js-ext":39,"js-ext/extra/hashmap.js":36,"polyfill":60,"utils":65}],48:[function(require,module,exports){
+},{"event":27,"js-ext":53,"js-ext/extra/hashmap.js":50,"polyfill":74,"utils":79}],62:[function(require,module,exports){
 "use strict";
 
 /**
@@ -14855,9 +15162,9 @@ module.exports = function (window) {
 
     window._ITSAmodules.ElementPlugin = true;
 };
-},{"event-dom":17,"js-ext/extra/classes.js":35,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/promise.js":45,"js-ext/lib/string.js":46,"polyfill":60,"utils/lib/timers.js":67,"vdom":77}],49:[function(require,module,exports){
+},{"event-dom":17,"js-ext/extra/classes.js":49,"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58,"js-ext/lib/promise.js":59,"js-ext/lib/string.js":60,"polyfill":74,"utils/lib/timers.js":81,"vdom":91}],63:[function(require,module,exports){
 var css = "[plugin-panel=\"true\"] {\n    position: absolute !important;\n    background-color: #FFF;\n    max-width: 90%;\n    min-width: 200px;\n    min-height: 75px;\n    box-shadow: inset 0 0 5px rgba(50, 50, 50, 0.30), 5px 5px 6px rgba(50, 50, 50, 0.45);\n    border: solid 1px #000;\n}\n\n[plugin-panel=\"true\"],\n[plugin-panel=\"true\"] >div {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n[plugin-panel=\"true\"] >div[is=\"header\"] {\n    vertical-align: middle;\n    background-color: rgb(0, 100, 192);\n    color: #FFF;\n    padding: 0 1.5em 0 0.7em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    vertical-align: middle;\n    line-height: 1.75em;\n    width: 100%;\n    min-height: 1.75em;\n}\n\n[plugin-panel=\"true\"] >div[is=\"content\"] {\n    padding: 1.6em 1.2em;\n    line-height: 115%;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] {\n    border-top: 1px solid #EAE6DB;\n    overflow: hidden;\n    vertical-align: middle;\n    text-align: right;\n    line-height: 1em;\n    padding: 0.5em 0.7em;\n    width: 100%;\n    min-height: 24px;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0.5em;\n}\n\n[plugin-panel=\"true\"].itsa-full-draggable {\n    cursor: default;\n}\n\n[plugin-panel=\"true\"] >button {\n    padding: 0 0.4em 0.1em;\n    position: absolute;\n    right: 0.2em;\n    top: 0.2em;\n    z-index: 1;\n}\n\nbody >div[is=\"system-node\"].itsa-modal-layer {\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 100% !important;\n    height: 100% !important;\n    -webkit-box-sizing: border-box !important;\n    -moz-box-sizing: border-box !important;\n    box-sizing: border-box !important;\n    z-index: 1000 !important;\n    background-color: #000 !important;\n    opacity: 0.2 !important;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button {\n    display: block;\n    width: 100%;\n    margin: 0 0 0.5em;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button:last-child,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button:last-child {\n    margin-bottom: 0;\n}\n\n@media only screen and (max-width : 480px) {\n    [plugin-panel=\"true\"] {\n        width: 90%;\n        box-shadow: 0 0 6px 6px rgba(50, 50, 50, 0.45);\n    }\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],50:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],64:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -14916,7 +15223,7 @@ module.exports = function (window) {
      * @since 0.0.1
      */
     insertModalLayer = function() {
-       DOCUMENT.body.addSystemElement('<div class="itsa-modal-layer itsa-no-display"></div>', null, true);
+       DOCUMENT.body.addSystemElement('<div class="itsa-modal-layer itsa-nodisplay"></div>', null, true);
     };
 
     insertModalLayer();
@@ -14982,7 +15289,7 @@ module.exports = function (window) {
         },
         showModalLayer: function(show) {
             var modalLayer = DOCUMENT.getElement('body >div[is="system-node"].itsa-modal-layer', true);
-            modalLayer.toggleClass('itsa-no-display', !show);
+            modalLayer.toggleClass('itsa-nodisplay', !show);
         }
     };
 
@@ -15154,7 +15461,7 @@ module.exports = function (window) {
                 header = '';
             }
             (header!==undefined) && headerNode.setHTML(header || '');
-            buttonCloseNode.toggleClass('itsa-no-display', !showHeaderCloseBtn);
+            buttonCloseNode.toggleClass('itsa-nodisplay', !showHeaderCloseBtn);
 
             headerNode.toggleClass('itsa-hidden', (header===undefined));
             contentNode.setHTML(content || '');
@@ -15292,7 +15599,7 @@ module.exports = function (window) {
 
     return Panel;
 };
-},{"./css/panel.css":49,"drag":16,"event-mobile":22,"focusmanager":29,"js-ext/extra/hashmap.js":36,"js-ext/extra/lightmap.js":37,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"node-plugin":48,"polyfill":60,"scrollable":63,"window-ext":78}],51:[function(require,module,exports){
+},{"./css/panel.css":63,"drag":16,"event-mobile":22,"focusmanager":29,"js-ext/extra/hashmap.js":50,"js-ext/extra/lightmap.js":51,"js-ext/lib/object.js":58,"js-ext/lib/string.js":60,"node-plugin":62,"polyfill":74,"scrollable":77,"window-ext":92}],65:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -15315,7 +15622,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],52:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 "use strict";
 
 /*
@@ -15368,7 +15675,7 @@ module.exports = function (window) {
 
     return transition;
 };
-},{"../bin/local-hashmap.js":51}],53:[function(require,module,exports){
+},{"../bin/local-hashmap.js":65}],67:[function(require,module,exports){
 "use strict";
 
 // CAUTIOUS: need a copy of hashmap --> we cannot use js-ext/extra/hashap.js for that would lead to circular references!
@@ -15413,7 +15720,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{"../bin/local-hashmap.js":51}],54:[function(require,module,exports){
+},{"../bin/local-hashmap.js":65}],68:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -15484,7 +15791,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../bin/local-hashmap.js":51}],55:[function(require,module,exports){
+},{"../bin/local-hashmap.js":65}],69:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -15508,7 +15815,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],56:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 (function (global){
 /*
  * Copyright 2012 The Polymer Authors. All rights reserved.
@@ -16094,9 +16401,9 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],57:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 require('ypromise');
-},{"ypromise":5}],58:[function(require,module,exports){
+},{"ypromise":5}],72:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/Gozala/1269991
 
@@ -16206,7 +16513,7 @@ require('ypromise');
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],59:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -16225,17 +16532,17 @@ require('ypromise');
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],60:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":55,"./lib/window.console.js":59}],61:[function(require,module,exports){
+},{"./lib/matchesselector.js":69,"./lib/window.console.js":73}],75:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/promise.js');
 require('./lib/weakmap.js');
 require('./lib/mutationobserver.js'); // needs weakmap
-},{"./lib/mutationobserver.js":56,"./lib/promise.js":57,"./lib/weakmap.js":58,"./polyfill-base.js":60}],62:[function(require,module,exports){
+},{"./lib/mutationobserver.js":70,"./lib/promise.js":71,"./lib/weakmap.js":72,"./polyfill-base.js":74}],76:[function(require,module,exports){
 var css = "[plugin-scroll=\"true\"] {\n    overflow: hidden !important;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont,\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    position: absolute;\n    display: block;\n    left: -9999px;\n    top: -9999px;\n    opacity: 0;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-vscroll-cont.itsa-visible {\n    opacity: 1;\n    width: 0.8em;\n    height: 100%;\n    right: 0;\n    top: 0;\n    left: auto;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-hscroll-cont.itsa-visible {\n    opacity: 1;\n    height: 0.8em;\n    width: 100%;\n    left: 0;\n    bottom: 0;\n    top: auto;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont span {\n    position: relative;\n    display: block;\n    width: 100%;\n    min-height: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont span {\n    position: relative;\n    display: block;\n    height: 100%;\n    min-width: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-vscroll-cont span,\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-hscroll-cont span {\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n[plugin-scroll=\"true\"] >span span.dd-dragging {\n    cursor: default;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],63:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],77:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -16453,7 +16760,7 @@ module.exports = function (window) {
 
     return Scrollable;
 };
-},{"./css/scrollable.css":62,"drag":16,"event-mobile":22,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"node-plugin":48,"polyfill":60,"useragent":64,"utils":65,"window-ext":78}],64:[function(require,module,exports){
+},{"./css/scrollable.css":76,"drag":16,"event-mobile":22,"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58,"node-plugin":62,"polyfill":74,"useragent":78,"utils":79,"window-ext":92}],78:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16494,13 +16801,13 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":60}],65:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58,"js-ext/lib/string.js":60,"polyfill":74}],79:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
     async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":66,"./lib/timers.js":67}],66:[function(require,module,exports){
+},{"./lib/idgenerator.js":80,"./lib/timers.js":81}],80:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -16558,7 +16865,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":60}],67:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":50,"polyfill/polyfill-base.js":74}],81:[function(require,module,exports){
 (function (process){
 /**
  * Collection of various utility functions.
@@ -16690,9 +16997,9 @@ module.exports.later = function (callbackFn, timeout, periodic) {
 	};
 };
 }).call(this,require('_process'))
-},{"_process":80,"polyfill/polyfill-base.js":60}],68:[function(require,module,exports){
-var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-no-display {\n    display: none; !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],69:[function(require,module,exports){
+},{"_process":94,"polyfill/polyfill-base.js":74}],82:[function(require,module,exports){
+var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-nodisplay {\n    display: none; !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],83:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16990,7 +17297,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":60,"polyfill/extra/transition.js":52,"polyfill/extra/vendorCSS.js":54}],70:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58,"js-ext/lib/string.js":60,"polyfill":74,"polyfill/extra/transition.js":66,"polyfill/extra/vendorCSS.js":68}],84:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17418,7 +17725,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":60}],71:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58,"polyfill":74}],85:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18132,7 +18439,7 @@ module.exports = function (window) {
 
 
 
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":60}],72:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58,"js-ext/lib/string.js":60,"polyfill":74}],86:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -22841,7 +23148,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":68,"./attribute-extractor.js":69,"./element-array.js":70,"./html-parser.js":73,"./node-parser.js":74,"./vdom-ns.js":75,"./vnode.js":76,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/promise.js":45,"js-ext/lib/string.js":46,"polyfill":60,"polyfill/extra/transition.js":52,"polyfill/extra/transitionend.js":53,"polyfill/extra/vendorCSS.js":54,"utils":65,"window-ext":78}],73:[function(require,module,exports){
+},{"../css/element.css":82,"./attribute-extractor.js":83,"./element-array.js":84,"./html-parser.js":87,"./node-parser.js":88,"./vdom-ns.js":89,"./vnode.js":90,"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58,"js-ext/lib/promise.js":59,"js-ext/lib/string.js":60,"polyfill":74,"polyfill/extra/transition.js":66,"polyfill/extra/transitionend.js":67,"polyfill/extra/vendorCSS.js":68,"utils":79,"window-ext":92}],87:[function(require,module,exports){
 "use strict";
 
 /**
@@ -23213,7 +23520,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":69,"./vdom-ns.js":75,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":60}],74:[function(require,module,exports){
+},{"./attribute-extractor.js":83,"./vdom-ns.js":89,"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58,"polyfill":74}],88:[function(require,module,exports){
 "use strict";
 
 /**
@@ -23354,7 +23661,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":69,"./vdom-ns.js":75,"./vnode.js":76,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":60}],75:[function(require,module,exports){
+},{"./attribute-extractor.js":83,"./vdom-ns.js":89,"./vnode.js":90,"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58,"polyfill":74}],89:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -23430,7 +23737,11 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap,
         LINK: true,
         META: true,
         PARAM: true,
-        EMBED: true
+        EMBED: true,
+        SOURCE: true,
+        TRACK: true,
+        WBR: true,
+        KEYGEN: true
     }),
 
     // Block Elements - HTML 4.01
@@ -23585,7 +23896,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":60}],76:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58,"polyfill":74}],90:[function(require,module,exports){
 "use strict";
 
 /**
@@ -24419,6 +24730,10 @@ module.exports = function (window) {
         // we will exactly define the 'UI:'-event --> Itags will have another emitterName
         MUTATION_EVENTS.each(function (mutationEvents, vnode) {
             var domNode = vnode.domNode;
+if (!domNode.emit) {
+    console.warn('OOPS');
+    console.warn(domNode);
+}
             if (mutationEvents[EV_REMOVED]) {
                 domNode.emit('UI:'+EV_REMOVED);
             }
@@ -24522,7 +24837,7 @@ module.exports = function (window) {
             while (otherVNode && (otherVNode!==instance)) {
                 otherVNode = otherVNode.vParent;
                 if (otherVNode && noProtectedSearch && (otherVNode._systemNode || (otherVNode.isItag && otherVNode.domNode.contentHidden))) {
-                    return false;
+                    return (otherVNode===instance);
                 }
             }
             return (otherVNode===instance);
@@ -26324,7 +26639,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":69,"./html-parser.js":73,"./vdom-ns.js":75,"js-ext/extra/hashmap.js":36,"js-ext/extra/lightmap.js":37,"js-ext/lib/array.js":41,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":60,"utils/lib/timers.js":67}],77:[function(require,module,exports){
+},{"./attribute-extractor.js":83,"./html-parser.js":87,"./vdom-ns.js":89,"js-ext/extra/hashmap.js":50,"js-ext/extra/lightmap.js":51,"js-ext/lib/array.js":55,"js-ext/lib/object.js":58,"js-ext/lib/string.js":60,"polyfill":74,"utils/lib/timers.js":81}],91:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -26367,13 +26682,13 @@ module.exports = function (window) {
 
     window._ITSAmodules.VDOM = true;
 };
-},{"./partials/extend-document.js":71,"./partials/extend-element.js":72,"./partials/node-parser.js":74,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"utils/lib/timers.js":67}],78:[function(require,module,exports){
+},{"./partials/extend-document.js":85,"./partials/extend-element.js":86,"./partials/node-parser.js":88,"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58,"utils/lib/timers.js":81}],92:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":79}],79:[function(require,module,exports){
+},{"./lib/sizes.js":93}],93:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -26477,7 +26792,7 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],80:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":50,"js-ext/lib/object.js":58}],94:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -26682,6 +26997,7 @@ process.chdir = function (dir) {
         dragdrop;
 
     require('vdom')(window);
+    require('icons')(window);
 
     /**
      * Reference to the `idGenerator` function in [utils](../modules/utils.html)
@@ -26748,4 +27064,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"constrain":6,"css":10,"dialog":12,"drag-drop":14,"event":27,"event-dom/extra/blurnode.js":18,"event-dom/extra/focusnode.js":19,"event-dom/extra/hover.js":20,"event-dom/extra/valuechange.js":21,"event-mobile":22,"focusmanager":29,"io/extra/io-cors-ie9.js":30,"io/extra/io-stream.js":31,"io/extra/io-transfer.js":32,"io/extra/io-xml.js":33,"js-ext/extra/hashmap.js":36,"js-ext/extra/reserved-words.js":38,"js-ext/js-ext.js":40,"messages":47,"node-plugin":48,"node-win":undefined,"panel":50,"polyfill/polyfill.js":61,"scrollable":63,"useragent":64,"utils":65,"vdom":77,"window-ext":78}]},{},[]);
+},{"constrain":6,"css":10,"dialog":12,"drag-drop":14,"event":27,"event-dom/extra/blurnode.js":18,"event-dom/extra/focusnode.js":19,"event-dom/extra/hover.js":20,"event-dom/extra/valuechange.js":21,"event-mobile":22,"focusmanager":29,"icons":43,"io/extra/io-cors-ie9.js":44,"io/extra/io-stream.js":45,"io/extra/io-transfer.js":46,"io/extra/io-xml.js":47,"js-ext/extra/hashmap.js":50,"js-ext/extra/reserved-words.js":52,"js-ext/js-ext.js":54,"messages":61,"node-plugin":62,"node-win":undefined,"panel":64,"polyfill/polyfill.js":75,"scrollable":77,"useragent":78,"utils":79,"vdom":91,"window-ext":92}]},{},[]);
