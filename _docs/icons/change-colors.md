@@ -1,16 +1,30 @@
 ---
 module: icons
 maintainer: Marco Asbreuk
-title: Simple icons
+title: Change color
 intro: "This example shows how to generate a simple icon"
 ---
 
-<i icon="error"></i>
+<style type="text/css">
+    body #itsa-alert-icon {
+        fill: #F00;
+    }
+</style>
+
+<i icon="alert"></i>
 
 <p class="spaced">Code-example:</p>
 
+```css
+<style type="text/css">
+    body #itsa-alert-icon {
+        fill: #F00;
+    }
+</style>
+```
+
 ```html
-<i is="error"></i>
+<i icon="alert"></i>
 ```
 
 ```js
@@ -24,3 +38,4 @@ intro: "This example shows how to generate a simple icon"
 <script>
     var ITSA = require('itsa');
 </script>
+

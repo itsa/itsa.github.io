@@ -5,7 +5,7 @@ title: Button with left icon
 intro: "This example shows how to generate a simple icon"
 ---
 
-<button class="pure-button pure-button-bordered itsa-iconleft"><icon-error></icon-error> There was an error</button><button class="pure-button pure-button-bordered itsa-iconleft"><icon-alert></icon-alert> Waring</button>
+<button class="pure-button pure-button-bordered itsa-iconleft"><i icon="error"></i> There was an error</button><button class="pure-button pure-button-bordered itsa-iconleft"><i icon="alert"></i> Waring</button>
 
 <p class="spaced">Code-example:</p>
 

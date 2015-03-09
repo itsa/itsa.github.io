@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/messages/messages.js - Itsa</title>
+    <title>src/icons/base-icons/plus.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -210,10 +210,11 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/messages/messages.js</h1>
+                        <h1 class="file-heading">File: src/icons/base-icons/plus.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
  *
@@ -221,130 +222,17 @@
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
+ * SVG icon by https://icomoon.io/app/#/select
  *
  * @module panel
  * @class Panel
  * @since 0.0.1
 */
 
-require(&#x27;js-ext&#x27;);
-require(&#x27;polyfill&#x27;);
-
-(function (global) {
-
-    &quot;use strict&quot;;
-
-    var NAME = &#x27;[messages]: &#x27;,
-        MESSAGE_LEVELS = {
-            1: &#x27;message&#x27;,
-            2: &#x27;warning&#x27;,
-            3: &#x27;error&#x27;
-        },
-        createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
-        later = require(&#x27;utils&#x27;).later,
-        messages, Event;
-
-    global._ITSAmodules || Object.protectedProp(global, &#x27;_ITSAmodules&#x27;, createHashMap());
-
-/*jshint boss:true */
-    if (messages=global._ITSAmodules.messages) {
-/*jshint boss:false */
-        module.exports = messages; // messages was already created
-        return;
-    }
-
-    Event = require(&#x27;event&#x27;);
-
-    messages = {
-        message: function(message, options) {
-            var messagePromise = global.Promise.manage(),
-                emitter, level, timeout, icon, stayActive;
-            message || (message=&#x27;&#x27;);
-            options || (options={});
-            emitter = options.emitter || &#x27;global&#x27;;
-            icon = options.icon;
-            level = MESSAGE_LEVELS[options.level] || MESSAGE_LEVELS[1];
-            timeout = options.timeout;
-            stayActive = options.stayActive;
-            messagePromise.merge(options);
-            stayActive &amp;&amp; messagePromise.stayActive(stayActive);
-            if (icon) {
-                message = &#x27;&lt;div class=&quot;dialog-message-icon&quot;&gt;&lt;i icon=&quot;&#x27;+icon+&#x27;&quot;&gt;&lt;/i&gt;&lt;/div&gt;&lt;div class=&quot;dialog-message&quot;&gt;&#x27;+message+&#x27;&lt;/div&gt;&#x27;;
-            }
-            messagePromise.content = message;
-            if ((typeof timeout===&#x27;number&#x27;) &amp;&amp; (timeout&gt;0)) {
-                // with nothing to notify it was timeout
-                later(messagePromise.fulfill, timeout);
-            }
-            Event.emit(options.target || global, emitter+&#x27;:&#x27;+level, {messagePromise: messagePromise});
-            return messagePromise;
-        },
-        alert: function(message, icon) {
-            return this.message(message, {
-                footer: &#x27;&lt;button class=&quot;pure-button pure-button-primary&quot;&gt;Ok&lt;/button&gt;&#x27;,
-                icon: icon
-            });
-        },
-        warn: function(message) {
-            return this.message(message, {
-                footer: &#x27;&lt;button class=&quot;pure-button pure-button-primary&quot;&gt;Ok&lt;/button&gt;&#x27;,
-                icon: &#x27;alert&#x27;,
-                level: 2
-            });
-        },
-        prompt: function(message, options) {
-            var placeholder, defaultValue, label, icon, validate;
-            options || (options={});
-            defaultValue = options.defaultValue;
-            label = options.label;
-            icon = options.icon;
-            validate = options.validate;
-            placeholder = defaultValue ? &#x27; value=&quot;&#x27;+String(defaultValue)+&#x27;&quot;&#x27; : &#x27;&#x27;;
-            if ((typeof message ===&#x27;string&#x27;) || (message!==&#x27;&#x27;)) {
-                message = &#x27;&lt;div class=&quot;dialog-prompt&quot;&gt;&#x27;+message+&#x27;&lt;/div&gt;&#x27;;
-            }
-            else {
-                message = &#x27;&#x27;;
-            }
-            label = (typeof label===&#x27;string&#x27;) ? (label=&#x27;&lt;label for=&quot;iprompt&quot;&gt;&#x27;+label+&#x27;&lt;/label&gt;&#x27;) : &#x27;&#x27;;
-            return this.message(
-                &#x27;&lt;div class=&quot;pure-form&quot;&gt;&#x27;+message+label+&#x27;&lt;input id=&quot;iprompt&quot; type=&quot;text&quot;&#x27;+placeholder+&#x27; fm-defaultitem=&quot;true&quot; fm-primaryonenter=&quot;true&quot;&gt;&lt;/div&gt;&#x27;,
-                {
-                    footer: &#x27;&lt;button is=&quot;cancel&quot; class=&quot;pure-button&quot;&gt;Cancel&lt;/button&gt;&lt;button is=&quot;ok&quot; class=&quot;pure-button pure-button-primary&quot;&gt;Ok&lt;/button&gt;&#x27;,
-                    icon: icon,
-                    validate: validate
-                }
-            ).then(function(container) {
-console.warn(container.getOuterHTML());
-                var button = container.getElement(&#x27;button&#x27;);
-                if (button.getAttr(&#x27;is&#x27;)===&#x27;ok&#x27;) {
-                    return container.getElement(&#x27;input&#x27;).getValue();
-                }
-            });
-        },
-        catchErrors: function(catchOrNot) {
-            // DO NOT use &#x60;this&#x60; --&gt; when merged, &#x60;this&#x60; will become the host
-            // while &#x60;global.onerror&#x60; refers to &#x60;messages&#x60;
-            messages._catchErrors = catchOrNot;
-        }
-    };
-
-    global.onerror = function(msg, url, line) {
-        if (messages._catchErrors) {
-            messages.message(msg, {
-                header: &#x27;Javascript-error (line &#x27;+line+&#x27;)&#x27;,
-                footer: url,
-                icon: &#x27;error&#x27;,
-                level: 3
-            });
-            return true;
-        }
-    };
-
-    module.exports = messages;
-
-}(typeof global !== &#x27;undefined&#x27; ? global : /* istanbul ignore next */ this));
-
+require(&#x27;../css/alert.css&#x27;);
+module.exports = function (window) {
+    window.document.defineIcon(&#x27;plus&#x27;, 1024, 1024, &#x27;&lt;path class=&quot;path1&quot; d=&quot;M694.857 548.571v-73.143q0-14.857-10.857-25.714t-25.714-10.857h-146.286v-146.286q0-14.857-10.857-25.714t-25.714-10.857h-73.143q-14.857 0-25.714 10.857t-10.857 25.714v146.286h-146.286q-14.857 0-25.714 10.857t-10.857 25.714v73.143q0 14.857 10.857 25.714t25.714 10.857h146.286v146.286q0 14.857 10.857 25.714t25.714 10.857h73.143q14.857 0 25.714-10.857t10.857-25.714v-146.286h146.286q14.857 0 25.714-10.857t10.857-25.714zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z&quot;&gt;&lt;/path&gt;&#x27;);
+};
     </pre>
 </div>
 

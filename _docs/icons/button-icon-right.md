@@ -5,7 +5,7 @@ title: Button with right icon
 intro: "This example shows how to generate a simple icon"
 ---
 
-<button class="pure-button pure-button-bordered itsa-iconright">There was an error <icon-error></icon-error></button><button class="pure-button pure-button-bordered itsa-iconright">There was a warning <icon-alert></icon-alert></button>
+<button class="pure-button pure-button-bordered itsa-iconright">There was an error <i icon="error"></i></button><button class="pure-button pure-button-bordered itsa-iconright">There was a warning <i icon="alert"></i></button>
 
 <p class="spaced">Code-example:</p>
 

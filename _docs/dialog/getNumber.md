@@ -1,7 +1,7 @@
 ---
 module: dialog
 maintainer: Marco Asbreuk
-title: prompt
+title: getNumber
 intro: "This example uses a prompt to retrieve the name. The returnvalue is handled by the promise and will be shown by an alert."
 ---
 
@@ -23,9 +23,9 @@ intro: "This example uses a prompt to retrieve the name. The returnvalue is hand
 <script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa'),
-        askName = ITSA.prompt('Please enter your name:', {defaultValue: 'someone', label: 'Name'});
+        askAge = ITSA.getNumber('Please enter your age:', 20, 0, 100, false, {label: 'Age'});
 
-    askName.then(function(value) {
-        ITSA.alert('Your name is: '+value);
+    askAge.then(function(value) {
+        ITSA.alert('Your age is: '+value);
     });
 </script>

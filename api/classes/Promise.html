@@ -377,7 +377,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_js-ext_lib_promise.js.html#l139"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:139</code></a>
+        <a href="../files/src_js-ext_lib_promise.js.html#l140"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:140</code></a>
         
         </p>
 
@@ -561,7 +561,7 @@ Promise.chainFns(a).then(
             
         
         
-        <a href="../files/src_js-ext_lib_promise.js.html#l23"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:23</code></a>
+        <a href="../files/src_js-ext_lib_promise.js.html#l24"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:24</code></a>
         
         </p>
 
@@ -675,7 +675,7 @@ If you need an intermediate method, you should take .thenFulfill().</p>
             
         
         
-        <a href="../files/src_js-ext_lib_promise.js.html#l75"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:75</code></a>
+        <a href="../files/src_js-ext_lib_promise.js.html#l76"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:76</code></a>
         
         </p>
 
@@ -762,6 +762,12 @@ its transformed into a resolved promise.</p>
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code class="optional">[stayActive=false]</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -797,7 +803,7 @@ its transformed into a resolved promise.</p>
             
         
         
-        <a href="../files/src_js-ext_lib_promise.js.html#l231"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:231</code></a>
+        <a href="../files/src_js-ext_lib_promise.js.html#l232"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:232</code></a>
         
         </p>
 
@@ -813,10 +819,13 @@ its transformed into a resolved promise.</p>
 promise.reject
 promise.callback
 promise.setCallback
-promise.pending</p>
+promise.pending
+promise.stayActive --&gt; force the promise not to resolve in the specified time</p>
 <p>With Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.
 You can invoke promise.<strong>callback</strong>() which will invoke the original passed-in callbackFn - if any.
 promise.<strong>fulfill</strong>() and promise.<strong>reject</strong>() are meant to resolve the promise from outside, just like deferred can do.</p>
+<p>If <code>stayActive</code> is defined, the promise will only be resolved after this specified time (ms). When <code>fulfill</code> or <code>reject</code> is
+called, it will be applied after this specified time.</p>
 
     </div>
 
@@ -838,6 +847,23 @@ promise.<strong>fulfill</strong>() and promise.<strong>reject</strong>() are mea
                     <div class="param-description">
                         <p>invoked everytime promiseinstance.callback() is called.
        You may as weel (re)set this method atny time lare by using promise.setCallback()</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[stayActive=false]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>specified time to wait before the promise really gets resolved</p>
 
                     </div>
 
@@ -941,7 +967,7 @@ setTimeout(function() {
             
         
         
-        <a href="../files/src_js-ext_lib_promise.js.html#l44"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:44</code></a>
+        <a href="../files/src_js-ext_lib_promise.js.html#l45"><code>src&#x2F;js-ext&#x2F;lib&#x2F;promise.js:45</code></a>
         
         </p>
 

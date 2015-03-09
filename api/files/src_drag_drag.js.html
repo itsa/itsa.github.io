@@ -858,6 +858,19 @@ module.exports = function (window) {
 
     };
 
+    // don&#x27;t drag when the cursor is above an input, text, or editable element:
+    Event.before(
+        &#x27;*:dd&#x27;,
+        function(e) {
+            e.preventDefault();
+        },
+        function(e) {
+            var sourceNode= e.sourceTarget,
+                tagName = sourceNode.getTagName();
+            return (tagName===&#x27;INPUT&#x27;) || (tagName===&#x27;TEXTAREA&#x27;) || (sourceNode.getAttr(&#x27;contenteditable&#x27;)===&#x27;true&#x27;);
+        }
+    );
+
     DOCUMENT.definePlugin(&#x27;dd&#x27;, null, {
         attrs: {
             draggable: &#x27;string&#x27;,

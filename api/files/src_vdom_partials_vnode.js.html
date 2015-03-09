@@ -1047,10 +1047,6 @@ module.exports = function (window) {
         // we will exactly define the &#x27;UI:&#x27;-event --&gt; Itags will have another emitterName
         MUTATION_EVENTS.each(function (mutationEvents, vnode) {
             var domNode = vnode.domNode;
-if (!domNode.emit) {
-    console.warn(&#x27;OOPS&#x27;);
-    console.warn(domNode);
-}
             if (mutationEvents[EV_REMOVED]) {
                 domNode.emit(&#x27;UI:&#x27;+EV_REMOVED);
             }

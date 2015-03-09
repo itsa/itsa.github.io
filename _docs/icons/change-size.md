@@ -1,16 +1,32 @@
 ---
 module: icons
 maintainer: Marco Asbreuk
-title: Simple icons
+title: Change size
 intro: "This example shows how to generate a simple icon"
 ---
 
-<i icon="error"></i>
+<style type="text/css">
+    i[icon="alert"] svg {
+        width: 5em;
+        height: 5em;
+    }
+</style>
+
+<i icon="alert"></i>
 
 <p class="spaced">Code-example:</p>
 
+```css
+<style type="text/css">
+    i[icon="alert"] svg {
+        width: 5em;
+        height: 5em;
+    }
+</style>
+```
+
 ```html
-<i is="error"></i>
+<i icon="alert"></i>
 ```
 
 ```js
@@ -24,3 +40,4 @@ intro: "This example shows how to generate a simple icon"
 <script>
     var ITSA = require('itsa');
 </script>
+
