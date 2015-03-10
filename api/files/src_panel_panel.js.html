@@ -272,7 +272,7 @@ module.exports = function (window) {
      * @since 0.0.1
      */
     insertModalLayer = function() {
-       DOCUMENT.body.addSystemElement(&#x27;&lt;div class=&quot;itsa-modal-layer itsa-no-display&quot;&gt;&lt;/div&gt;&#x27;, null, true);
+       DOCUMENT.body.addSystemElement(&#x27;&lt;div class=&quot;itsa-modal-layer itsa-nodisplay&quot;&gt;&lt;/div&gt;&#x27;, null, true);
     };
 
     insertModalLayer();
@@ -338,7 +338,7 @@ module.exports = function (window) {
         },
         showModalLayer: function(show) {
             var modalLayer = DOCUMENT.getElement(&#x27;body &gt;div[is=&quot;system-node&quot;].itsa-modal-layer&#x27;, true);
-            modalLayer.toggleClass(&#x27;itsa-no-display&#x27;, !show);
+            modalLayer.toggleClass(&#x27;itsa-nodisplay&#x27;, !show);
         }
     };
 
@@ -510,7 +510,7 @@ module.exports = function (window) {
                 header = &#x27;&#x27;;
             }
             (header!==undefined) &amp;&amp; headerNode.setHTML(header || &#x27;&#x27;);
-            buttonCloseNode.toggleClass(&#x27;itsa-no-display&#x27;, !showHeaderCloseBtn);
+            buttonCloseNode.toggleClass(&#x27;itsa-nodisplay&#x27;, !showHeaderCloseBtn);
 
             headerNode.toggleClass(&#x27;itsa-hidden&#x27;, (header===undefined));
             contentNode.setHTML(content || &#x27;&#x27;);

@@ -235,7 +235,7 @@ require(&#x27;./css/focusmanager.css&#x27;);
 var NAME = &#x27;[focusmanager]: &#x27;,
     async = require(&#x27;utils&#x27;).async,
     createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
-    DEFAULT_SELECTOR = &#x27;input, button, select, textarea, .focusable, [plugin-fm=&quot;true&quot;], [itag-formelement=&quot;true&quot;]&#x27;,
+    DEFAULT_SELECTOR = &#x27;input, button, select, textarea, [contenteditable=&quot;true&quot;], .focusable, [plugin-fm=&quot;true&quot;], [itag-formelement=&quot;true&quot;]&#x27;,
     // SPECIAL_KEYS needs to be a native Object --&gt; we need .some()
     SPECIAL_KEYS = {
         shift: &#x27;shiftKey&#x27;,

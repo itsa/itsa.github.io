@@ -229,7 +229,6 @@
 */
 
 require(&#x27;js-ext&#x27;);
-require(&#x27;messages&#x27;);
 require(&#x27;polyfill&#x27;);
 require(&#x27;./css/dialog.css&#x27;);
 
@@ -290,15 +289,8 @@ module.exports = function (window) {
             model.callback = function(buttonNode) {
                 var containerNode = DOCUMENT.createElement(&#x27;div&#x27;),
                     contentNode = instance.panel.getElement(&#x27;&gt;div[is=&quot;content&quot;]&#x27;),
-                    messagePromise = model.messagePromise,
-                    node;
-                // move all childNodes from contentNode inside the new DIV
-                // we need to start with position 2 --&gt; the first 2 nodes are the scroller-nodes
-/*jshint boss:true */
-                while (node=contentNode.childNodes[2]) {
-/*jshint boss:false */
-                    containerNode.appendChild(node);
-                }
+                    messagePromise = model.messagePromise;
+                containerNode = contentNode.cloneNode(true);
                 // now append a copy of the buttonNode:
                 containerNode.append(buttonNode.getOuterHTML());
                 messagePromise.fulfill(containerNode);
@@ -353,6 +345,7 @@ module.exports = function (window) {
                 model.header = null;
                 model.content = &#x27;&#x27;;
                 model.footer = null;
+                model.validate = null;
                 model.visible = false;
                 return;
             }
@@ -373,6 +366,7 @@ module.exports = function (window) {
             model.header = messagePromise.header;
             model.content = messagePromise.content;
             model.footer = messagePromise.footer;
+            model.validate = messagePromise.validate;
             model.visible = true;
         }
     });
@@ -380,7 +374,8 @@ module.exports = function (window) {
     // instantiate Dialog and make it operational:
     dialog = new Dialog();
 
-    // return the Class, so it can be subclassed:
+    window._ITSAmodules.Dialog = Dialog;
+
     return Dialog;
 };
     </pre>

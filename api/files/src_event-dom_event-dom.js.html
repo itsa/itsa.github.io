@@ -367,7 +367,7 @@ module.exports = function (window) {
                 vnode = node.vnode,
                 character1 = selector &amp;&amp; selector.substr(1),
                 match = false;
-            if (!isCustomElement || visibleContent || subscriber.o.contains(node)) {
+            if (!isCustomElement || visibleContent || context.contains(node)) {
                 if (selector===&#x27;&#x27;) {
                     match = true;
                 }
@@ -914,10 +914,11 @@ module.exports = function (window) {
 
     _setupEvents();
 
-    // making HTMLElement to be able to emit using event-emitter:
-    (function(HTMLElementPrototype) {
-        HTMLElementPrototype.merge(Event.Emitter(&#x27;UI&#x27;));
-    }(window.HTMLElement.prototype));
+    // making Element to be able to emit using event-emitter.
+    // NOT only HTMLElements --&gt; SVGElements need to have this emitter to:
+    (function(ElementPrototype) {
+        ElementPrototype.merge(Event.Emitter(&#x27;UI&#x27;));
+    }(window.Element.prototype));
 
 
     // Notify when someone subscribes to an UI:* event

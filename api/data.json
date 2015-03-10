@@ -183,6 +183,111 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/icons/base-icons/alert.js": {
+            "name": "src/icons/base-icons/alert.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/icons/base-icons/error.js": {
+            "name": "src/icons/base-icons/error.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/icons/base-icons/exclamation.js": {
+            "name": "src/icons/base-icons/exclamation.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/icons/base-icons/info.js": {
+            "name": "src/icons/base-icons/info.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/icons/base-icons/minus.js": {
+            "name": "src/icons/base-icons/minus.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/icons/base-icons/plus.js": {
+            "name": "src/icons/base-icons/plus.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/icons/base-icons/question.js": {
+            "name": "src/icons/base-icons/question.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/icons/extra-animated-icons/audio-anim.js": {
+            "name": "src/icons/extra-animated-icons/audio-anim.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/icons/extra-animated-icons/audiocenter-anim.js": {
+            "name": "src/icons/extra-animated-icons/audiocenter-anim.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/icons/extra-animated-icons/grid-anim.js": {
+            "name": "src/icons/extra-animated-icons/grid-anim.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/icons/extra-animated-icons/radar-anim.js": {
+            "name": "src/icons/extra-animated-icons/radar-anim.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/icons/extra-animated-icons/speaking-anim.js": {
+            "name": "src/icons/extra-animated-icons/speaking-anim.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/icons/extra-animated-icons/spinnercircle-anim.js": {
+            "name": "src/icons/extra-animated-icons/spinnercircle-anim.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/icons/base.js": {
+            "name": "src/icons/base.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/icons/index.js": {
+            "name": "src/icons/index.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "src/io/extra/io-assets.js": {
             "name": "src/io/extra/io-assets.js",
             "modules": {
@@ -10955,7 +11060,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 726,
+            "line": 727,
             "itemtype": "method",
             "name": "noDeepDomEvt",
             "params": [
@@ -10978,7 +11083,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 741,
+            "line": 742,
             "description": "Does the actual transportation from DOM-events into the Eventsystem. It also looks at the response of\nthe Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will be preventDefaulted.",
             "itemtype": "method",
             "name": "_domCallback",
@@ -13112,7 +13217,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 113,
+            "line": 123,
             "description": "Performs an AJAX GET request.  Shortcut for a call to [`xhr`](#method_xhr) with `method` set to  `'GET'`.\nAdditional parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `params` should be a plain object with only primitive types which are transformed into key/value pairs.",
             "itemtype": "method",
             "name": "get",
@@ -13180,7 +13285,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 157,
+            "line": 171,
             "description": "Performs an AJAX request with the GET HTTP method and expects a JSON-object.\nThe resolved Promise-callback returns an object (JSON-parsed serverresponse).\n\nAdditional request-parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: If you expect the server to response with data that consist of Date-properties, you should set `options.parseJSONDate` true.\n       Parsing takes a bit longer, but it will generate trully Date-objects.\nNote2: CORS is supported, as long as the responseserver is set up to:\n      a) has a response header which allows the clientdomain:\n         header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n      b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n         to requests with the OPTION-method\n      More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/",
             "itemtype": "method",
             "name": "read",
@@ -13261,7 +13366,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 226,
+            "line": 244,
             "description": "Sends data (object) which will be JSON-stringified before sending.\nPerforms an AJAX request with the PUT HTTP method by default.\nWhen options.allfields is `false`, it will use the POST-method: see Note2.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: The server needs to inspect the bodyparam: 'action', which always equals 'update'.\n       'body.action' is the way to distinquish 'I.IO.updateObject' from 'I.IO.insertObject'.\n       On purpose, we didn't make this distinction through a custom CONTENT-HEADER, because\n       that would lead into a more complicated CORS-setup (see Note3)\nNote2: By default this method uses the PUT-request: which is preferable is you send the WHOLE object.\n       if you send part of the fields, set `options.allfields`=false.\n       This will lead into using the POST-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote3: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote4: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "update",
@@ -13336,7 +13441,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 274,
+            "line": 292,
             "description": "Performs an AJAX request with the POST HTTP method by default.\nWhen options.allfields is `true`, it will use the PUT-method: see Note2.\nThe send data is an object which will be JSON-stringified before sending.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n'body.action' has the value 'insert'\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: The server needs to inspect the bodyparam: 'action', which always equals 'insert'.\n       'body.action' is the way to distinquish 'I.IO.insertObject' from 'I.IO.updateObject'.\n       On purpose, we didn't make this distinction through a custom CONTENT-HEADER, because\n       that would lead into a more complicated CORS-setup (see Note3)\nNote2: By default this method uses the POST-request: which is preferable if you don't know all the fields (like its unique id).\n       if you send ALL the fields, set `options.allfields`=true.\n       This will lead into using the PUT-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote3: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote4: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "insert",
@@ -13411,7 +13516,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 322,
+            "line": 340,
             "description": "Performs an AJAX request with the PUT HTTP method by default.\nWhen options.allfields is `false`, it will use the POST-method: see Note2.\nThe send data is an object which will be JSON-stringified before sending.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: By default this method uses the PUT-request: which is preferable is you send the WHOLE object.\n       if you send part of the fields, set `options.allfields`=false.\n       This will lead into using the POST-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote2: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote3: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "send",
@@ -13486,7 +13591,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 410,
+            "line": 432,
             "description": "Performs an AJAX DELETE request.  Shortcut for a call to [`xhr`](#method_xhr) with `method` set to  `'DELETE'`.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `data` should be a plain object with only primitive types which are transformed into key/value pairs.",
             "itemtype": "method",
             "name": "delete",
@@ -13572,7 +13677,7 @@
         },
         {
             "file": "src/io/extra/io-xml.js",
-            "line": 81,
+            "line": 85,
             "description": "Performs an AJAX request with the GET HTTP method and expects a JSON-object.\nThe resolved Promise-callback returns an object (JSON-parsed serverresponse).\n\nAdditional request-parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: If you expect the server to response with data that consist of Date-properties, you should set `options.parseJSONDate` true.\n       Parsing takes a bit longer, but it will generate trully Date-objects.\nNote2: CORS is supported, as long as the responseserver is set up to:\n      a) has a response header which allows the clientdomain:\n         header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n      b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n         to requests with the OPTION-method\n      More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/",
             "itemtype": "method",
             "name": "readXML",
@@ -13666,7 +13771,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 64,
+            "line": 62,
             "description": "Initializes the xhr-instance, based on the config-params.\nThis method is the standard way of doing xhr-requests without processing streams.",
             "itemtype": "method",
             "name": "_initXHR",
@@ -13758,7 +13863,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 145,
+            "line": 143,
             "description": "Adds the `headers`-object to `xhr`-headers.",
             "itemtype": "method",
             "name": "_setHeaders",
@@ -13786,7 +13891,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 175,
+            "line": 173,
             "description": "Adds 2 methods on the xhr-instance which are used by xhr when events occur:\n\nxhr.onreadystatechange()\nxhr.ontimeout()  // only XMLHttpRequest2\n\nThese events are responsible for making the Promise resolve.",
             "itemtype": "method",
             "name": "_setReadyHandle",
@@ -13814,7 +13919,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 219,
+            "line": 217,
             "description": "Stringifies an object into one string with every pair separated by `&`",
             "itemtype": "method",
             "name": "_toQueryString",
@@ -13836,7 +13941,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 240,
+            "line": 238,
             "description": "Sends a HTTP request to the server and returns a Promise with an additional .abort() method to cancel the request.\nThis method is the standard way of doing xhr-requests without processing streams.",
             "itemtype": "method",
             "name": "request",
@@ -13961,7 +14066,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 140,
+            "line": 141,
             "description": "Reference to the `idGenerator` function in [utils](../modules/utils.html)",
             "itemtype": "property",
             "name": "idGenerator",
@@ -13972,7 +14077,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 170,
+            "line": 171,
             "description": "Reference to the [IO](io.html) object",
             "itemtype": "property",
             "name": "IO",
@@ -13983,7 +14088,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 182,
+            "line": 183,
             "description": "Reference to the [UserAgent](useragent.html) object",
             "itemtype": "property",
             "name": "UA",
@@ -13994,7 +14099,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 190,
+            "line": 191,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",
@@ -14931,7 +15036,7 @@
         },
         {
             "file": "src/js-ext/lib/promise.js",
-            "line": 23,
+            "line": 24,
             "description": "Promise which can be put at the very end of a chain, even after .catch().\nWill invoke the callback function regardless whether the chain resolves or rejects.\n\nThe argument of the callback will be either its fulfilled or rejected argument, but\nit is wisely not to handle it. The results should have been handled in an earlier step\nof the chain: .finally() basicly means you want to execute code after the chain, regardless\nwhether it's resolved or rejected.\n\n**Note:** .finally() <u>does not return a Promise</u>: it should be used as the very last step of a Promisechain.\nIf you need an intermediate method, you should take .thenFulfill().",
             "itemtype": "method",
             "name": "finally",
@@ -14952,7 +15057,7 @@
         },
         {
             "file": "src/js-ext/lib/promise.js",
-            "line": 44,
+            "line": 45,
             "description": "Will always return a fulfilled Promise.\n\nTypical usage will be by making it part of a Promisechain: it makes the chain go\ninto its fulfilled phase.",
             "example": [
                 "\n\npromise1\n.then(promise2)\n.thenFulfill()\n.then(handleFulfilled, handleRejected) // handleFulfilled always gets invoked"
@@ -14977,7 +15082,7 @@
         },
         {
             "file": "src/js-ext/lib/promise.js",
-            "line": 75,
+            "line": 76,
             "description": "Returns a Promise that always fulfills. It is fulfilled when ALL items are resolved (either fulfilled\nor rejected). This is useful for waiting for the resolution of multiple\npromises, such as reading multiple files in Node.js or making multiple XHR\nrequests in the browser. Because -on the contrary of `Promise.all`- **finishAll** waits until\nall single Promises are resolved, you can handle all promises, even if some gets rejected.",
             "itemtype": "method",
             "name": "finishAll",
@@ -14999,7 +15104,7 @@
         },
         {
             "file": "src/js-ext/lib/promise.js",
-            "line": 139,
+            "line": 140,
             "description": "Returns a Promise which chains the function-calls. Like an automated Promise-chain.\nInvokes the functionreferences in a chain. You MUST supply function-references, it doesn't\nmatter wheter these functions return a Promise or not. Any returnvalues are passed through to\nthe next function.\n\n**Cautious:** you need to pass function-references, not invoke them!\nchainFns will invoke them when the time is ready. Regarding to this, there is a difference with\nusing Promise.all() where you should pass invoked Promises.\n\nIf one of the functions returns a Promise, the chain\nwill wait its execution for this function to be resolved.\n\nIf you need specific context or arguments: use Function.bind for these items.\nIf one of the items returns a rejected Promise, by default: the whole chain rejects\nand following functions in the chain will not be invoked. When `finishAll` is set `true`\nthe chain will always continue even with rejected Promises.\n\nReturning functionvalues are passed through the chain adding them as an extra argument\nto the next function in the chain (argument is added on the right)",
             "example": [
                 "\n    var a = [], p1, p2, p3;\n    p1 = function(a) {\n        return new Promise(function(resolve, reject) {\n            I.later(function() {\n                console.log('resolving promise p1: '+a);\n                resolve(a);\n            }, 1000);\n        });\n    };\n    p2 = function(b, r) {\n        var value = b+r;\n        console.log('returning p2: '+value);\n        return value;\n    };\n    p3 = function(c, r) {\n        return new Promise(function(resolve, reject) {\n            I.later(function() {\n                var value = b+r;\n                console.log('resolving promise p3: '+value);\n                resolve(value);\n            }, 1000);\n        });\n    };\n    a.push(p1.bind(undefined, 100));\n    a.push(p2.bind(undefined, 200));\n    a.push(p3.bind(undefined, 300));\n    Promise.chainFns(a).then(\n        function(r) {\n            console.log('chain resolved with '+r);\n        },\n        function(err) {\n            console.log('chain-error '+err);\n        }\n    );"
@@ -15031,8 +15136,8 @@
         },
         {
             "file": "src/js-ext/lib/promise.js",
-            "line": 231,
-            "description": "Returns a Promise with 5 additional methods:\n\npromise.fulfill\npromise.reject\npromise.callback\npromise.setCallback\npromise.pending\n\nWith Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.\nYou can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any.\npromise.**fulfill**() and promise.**reject**() are meant to resolve the promise from outside, just like deferred can do.",
+            "line": 232,
+            "description": "Returns a Promise with 5 additional methods:\n\npromise.fulfill\npromise.reject\npromise.callback\npromise.setCallback\npromise.pending\npromise.stayActive --> force the promise not to resolve in the specified time\n\nWith Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.\nYou can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any.\npromise.**fulfill**() and promise.**reject**() are meant to resolve the promise from outside, just like deferred can do.\n\nIf `stayActive` is defined, the promise will only be resolved after this specified time (ms). When `fulfill` or `reject` is\ncalled, it will be applied after this specified time.",
             "example": [
                 "\n    var promise = Promise.manage(\n        function(msg) {\n            alert(msg);\n        }\n    );\n\n    promise.then(\n        function() {\n            // promise is fulfilled, no further actions can be taken\n        }\n    );\n\n    setTimeout(function() {\n        promise.callback('hey, I\\'m still busy');\n    }, 1000);\n\n    setTimeout(function() {\n        promise.fulfill();\n    }, 2000);"
             ],
@@ -15044,6 +15149,13 @@
                     "description": "invoked everytime promiseinstance.callback() is called.\n       You may as weel (re)set this method atny time lare by using promise.setCallback()",
                     "type": "Function",
                     "optional": true
+                },
+                {
+                    "name": "stayActive",
+                    "description": "specified time to wait before the promise really gets resolved",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
                 }
             ],
             "return": {
@@ -21282,7 +21394,7 @@
         },
         {
             "file": "src/vdom/partials/vdom-ns.js",
-            "line": 135,
+            "line": 139,
             "description": "Reference to the VElement of document.body (gets its value as soon as it gets refered to)",
             "itemtype": "property",
             "name": "body",
@@ -21295,7 +21407,7 @@
         },
         {
             "file": "src/vdom/partials/vdom-ns.js",
-            "line": 153,
+            "line": 157,
             "description": "A hash with all node'ids (of all the domnodes that have an id). The value is a reference to an VElement.",
             "itemtype": "property",
             "name": "nodeids",
@@ -21308,7 +21420,7 @@
         },
         {
             "file": "src/vdom/partials/vdom-ns.js",
-            "line": 163,
+            "line": 167,
             "description": "A hash with all encountered non-void Elements",
             "itemtype": "property",
             "name": "nonVoidElements",
@@ -21321,7 +21433,7 @@
         },
         {
             "file": "src/vdom/partials/vdom-ns.js",
-            "line": 173,
+            "line": 177,
             "description": "A hash to identify what tagNames are equal to `SCRIPT` or `STYLE`.",
             "itemtype": "property",
             "name": "SCRIPT_OR_STYLE_TAG",
@@ -21334,7 +21446,7 @@
         },
         {
             "file": "src/vdom/partials/vdom-ns.js",
-            "line": 187,
+            "line": 191,
             "description": "A hash with all nodeTypes that should be captured by the vDOM.",
             "itemtype": "property",
             "name": "VALID_NODE_TYPES",
@@ -21347,7 +21459,7 @@
         },
         {
             "file": "src/vdom/partials/vdom-ns.js",
-            "line": 201,
+            "line": 205,
             "description": "A hash with all encountered void Elements",
             "itemtype": "property",
             "name": "voidElements",

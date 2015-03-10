@@ -233,6 +233,7 @@ require(&#x27;polyfill&#x27;);
 
 var NAME = &#x27;[promise-ext]: &#x27;,
     FUNCTION_EXPECTED = &#x27; expects an array of function-references&#x27;, // include leading space!
+    later = require(&#x27;utils&#x27;).later,
     PROMISE_CHAIN = &#x27;Promise.chain&#x27;;
 
 (function(PromisePrototype) {
@@ -452,10 +453,14 @@ Promise.chainFns = function (funcs, finishAll) {
  * promise.callback
  * promise.setCallback
  * promise.pending
+ * promise.stayActive --&gt; force the promise not to resolve in the specified time
  *
  * With Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.
  * You can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any.
  * promise.**fulfill**() and promise.**reject**() are meant to resolve the promise from outside, just like deferred can do.
+ *
+ * If &#x60;stayActive&#x60; is defined, the promise will only be resolved after this specified time (ms). When &#x60;fulfill&#x60; or &#x60;reject&#x60; is
+ * called, it will be applied after this specified time.
  *
  * @example
  *     var promise = Promise.manage(
@@ -481,12 +486,13 @@ Promise.chainFns = function (funcs, finishAll) {
  * @method manage
  * @param [callbackFn] {Function} invoked everytime promiseinstance.callback() is called.
  *        You may as weel (re)set this method atny time lare by using promise.setCallback()
+ * @param [stayActive=false] {Boolean} specified time to wait before the promise really gets resolved
  * @return {Promise} with three handles: fulfill, reject and callback.
  * @static
  */
-Promise.manage = function (callbackFn) {
+Promise.manage = function (callbackFn, stayActive) {
     console.log(NAME, &#x27;manage&#x27;);
-    var fulfillHandler, rejectHandler, promise, finished;
+    var fulfillHandler, rejectHandler, promise, finished, stayActivePromise, resolved;
 
     promise = new Promise(function (fulfill, reject) {
         fulfillHandler = fulfill;
@@ -494,19 +500,47 @@ Promise.manage = function (callbackFn) {
     });
 
     promise.fulfill = function (value) {
-        console.log(NAME, &#x27;manage.fulfill&#x27;);
-        finished = true;
-        fulfillHandler(value);
+        if (!resolved) {
+            console.log(NAME, &#x27;manage.fulfill&#x27;);
+            resolved = true;
+            if (stayActivePromise) {
+                stayActivePromise.then(function() {
+                    finished = true;
+                    fulfillHandler(value);
+                });
+            }
+            else {
+                finished = true;
+                fulfillHandler(value);
+            }
+        }
     };
 
     promise.reject = function (reason) {
-        console.log(NAME, &#x27;manage.reject &#x27;+((typeof reason===&#x27;string&#x27;) ? reason : reason &amp;&amp; (reason.message || reason.description)));
-        finished = true;
-        rejectHandler(reason);
+        if (!resolved) {
+            console.log(NAME, &#x27;manage.reject &#x27;+((typeof reason===&#x27;string&#x27;) ? reason : reason &amp;&amp; (reason.message || reason.description)));
+            resolved = true;
+            if (stayActivePromise) {
+                stayActivePromise.then(function() {
+                    finished = true;
+                    rejectHandler(reason);
+                });
+            }
+            else {
+                finished = true;
+                rejectHandler(reason);
+            }
+        }
     };
 
     promise.pending = function () {
         return !finished;
+    };
+
+    promise.stayActive = function (time) {
+        stayActivePromise = new Promise(function (fulfill) {
+            later(time, fulfill);
+        });
     };
 
     promise.callback = function () {
@@ -519,6 +553,8 @@ Promise.manage = function (callbackFn) {
     promise.setCallback = function (newCallbackFn) {
         callbackFn = newCallbackFn;
     };
+
+    stayActive &amp;&amp; promise.stayActive(stayActive);
 
     return promise;
 };

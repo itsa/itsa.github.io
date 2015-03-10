@@ -2636,7 +2636,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":80}],6:[function(require,module,exports){
+},{"_process":99}],6:[function(require,module,exports){
 "use strict";
 module.exports = function (window) {
     require('node-plugin')(window);
@@ -2664,18 +2664,19 @@ module.exports = function (window) {
 
     return PluginConstrain;
 };
-},{"js-ext/extra/hashmap.js":36,"node-plugin":48}],7:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"node-plugin":67}],7:[function(require,module,exports){
 var css = "*:focus {\n    outline: 0;\n}\n\na[target=\"_blank\"]:focus {\n    outline: 1px solid #129fea;\n}\n\n/* because we think the padding and margin should always be part of the size,\n   we define \"box-sizing: border-box\" for all elements */\n\n* {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],8:[function(require,module,exports){
-var css = ".pure-menu.pure-menu-open {\n    z-index: 3; /* prevent graph from crossing the menuarea */\n}\n\n.pure-button.pure-button-bordered,\n.pure-button.pure-button-bordered[disabled] {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;\n}\n\n.pure-button-active,\n.pure-button:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button.pure-button-bordered.pure-button-active[disabled],\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered[disabled]:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.4) inset, 0 0 6px rgba(0,0,0, 0.2) inset;\n}\n\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.6) inset;\n}\n\n/* restore pure-button:active */\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button:active:focus,\n.pure-button.pure-button-active:focus {\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6) inset, 0 0 10px rgba(0, 0, 0, 0.2) inset;\n}\n\n.pure-button.pure-button-rounded {\n    border-radius: 0.3em;\n}\n\n.pure-button.pure-button-heavyrounded {\n    border-radius: 0.5em;\n}\n\n.pure-button.pure-button-oval {\n    border-radius: 50%;\n}\n\n.pure-button.pure-button-halfoval {\n    border-radius: 25%;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+var css = ".pure-menu.pure-menu-open {\n    z-index: 3; /* prevent graph from crossing the menuarea */\n}\n\n.pure-button.pure-button-bordered,\n.pure-button.pure-button-bordered[disabled] {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;\n}\n\n.pure-button-active,\n.pure-button:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button.pure-button-bordered.pure-button-active[disabled],\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered[disabled]:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.4) inset, 0 0 6px rgba(0,0,0, 0.2) inset;\n}\n\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.6) inset;\n}\n\n/* restore pure-button:active */\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button:active:focus,\n.pure-button.pure-button-active:focus {\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6) inset, 0 0 10px rgba(0, 0, 0, 0.2) inset;\n}\n\n.pure-button.pure-button-rounded {\n    border-radius: 0.3em;\n}\n\n.pure-button.pure-button-heavyrounded {\n    border-radius: 0.5em;\n}\n\n.pure-button.pure-button-oval {\n    border-radius: 50%;\n}\n\n.pure-button.pure-button-halfoval {\n    border-radius: 25%;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],9:[function(require,module,exports){
 var css = "/*!\nPure v0.5.0\nCopyright 2014 Yahoo! Inc. All rights reserved.\nLicensed under the BSD License.\nhttps://github.com/yahoo/pure/blob/master/LICENSE.md\n*/\n/*!\nnormalize.css v^3.0 | MIT License | git.io/normalize\nCopyright (c) Nicolas Gallagher and Jonathan Neal\n*/\n/*! normalize.css v3.0.2 | MIT License | git.io/normalize */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS text size adjust after orientation change, without disabling\n *    user zoom.\n */\n\nhtml {\n  font-family: sans-serif; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * Improve readability when focused and also mouse hovered in all browsers.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  -moz-box-sizing: content-box;\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit; /* 1 */\n  font: inherit; /* 2 */\n  margin: 0; /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n  cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome\n *    (include `-moz` to future-proof).\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  -moz-box-sizing: content-box;\n  -webkit-box-sizing: content-box; /* 2 */\n  box-sizing: content-box;\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}\n\n/*csslint important:false*/\n\n/* ==========================================================================\n   Pure Base Extras\n   ========================================================================== */\n\n/**\n * Extra rules that Pure adds on top of Normalize.css\n */\n\n/**\n * Always hide an element when it has the `hidden` HTML attribute.\n */\n\n[hidden] {\n    display: none !important;\n}\n\n/**\n * Add this class to an image to make it fit within it's fluid parent wrapper while maintaining\n * aspect ratio.\n */\n.pure-img {\n    max-width: 100%;\n    height: auto;\n    display: block;\n}\n\n/*csslint regex-selectors:false, known-properties:false, duplicate-properties:false*/\n\n.pure-g {\n    letter-spacing: -0.31em; /* Webkit: collapse white-space between units */\n    *letter-spacing: normal; /* reset IE < 8 */\n    *word-spacing: -0.43em; /* IE < 8: collapse white-space between units */\n    text-rendering: optimizespeed; /* Webkit: fixes text-rendering: optimizeLegibility */\n\n    /*\n    Sets the font stack to fonts known to work properly with the above letter\n    and word spacings. See: https://github.com/yahoo/pure/issues/41/\n\n    The following font stack makes Pure Grids work on all known environments.\n\n    * FreeSans: Ships with many Linux distros, including Ubuntu\n\n    * Arimo: Ships with Chrome OS. Arimo has to be defined before Helvetica and\n      Arial to get picked up by the browser, even though neither is available\n      in Chrome OS.\n\n    * Droid Sans: Ships with all versions of Android.\n\n    * Helvetica, Arial, sans-serif: Common font stack on OS X and Windows.\n    */\n    font-family: FreeSans, Arimo, \"Droid Sans\", Helvetica, Arial, sans-serif;\n\n    /*\n    Use flexbox when possible to avoid `letter-spacing` side-effects.\n\n    NOTE: Firefox (as of 25) does not currently support flex-wrap, so the\n    `-moz-` prefix version is omitted.\n    */\n\n    display: -webkit-flex;\n    -webkit-flex-flow: row wrap;\n\n    /* IE10 uses display: flexbox */\n    display: -ms-flexbox;\n    -ms-flex-flow: row wrap;\n}\n\n/* Opera as of 12 on Windows needs word-spacing.\n   The \".opera-only\" selector is used to prevent actual prefocus styling\n   and is not required in markup.\n*/\n.opera-only :-o-prefocus,\n.pure-g {\n    word-spacing: -0.43em;\n}\n\n.pure-u {\n    display: inline-block;\n    *display: inline; /* IE < 8: fake inline-block */\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n/*\nResets the font family back to the OS/browser's default sans-serif font,\nthis the same font stack that Normalize.css sets for the `body`.\n*/\n.pure-g [class *= \"pure-u\"] {\n    font-family: sans-serif;\n}\n\n.pure-u-1,\n.pure-u-1-1,\n.pure-u-1-2,\n.pure-u-1-3,\n.pure-u-2-3,\n.pure-u-1-4,\n.pure-u-3-4,\n.pure-u-1-5,\n.pure-u-2-5,\n.pure-u-3-5,\n.pure-u-4-5,\n.pure-u-5-5,\n.pure-u-1-6,\n.pure-u-5-6,\n.pure-u-1-8,\n.pure-u-3-8,\n.pure-u-5-8,\n.pure-u-7-8,\n.pure-u-1-12,\n.pure-u-5-12,\n.pure-u-7-12,\n.pure-u-11-12,\n.pure-u-1-24,\n.pure-u-2-24,\n.pure-u-3-24,\n.pure-u-4-24,\n.pure-u-5-24,\n.pure-u-6-24,\n.pure-u-7-24,\n.pure-u-8-24,\n.pure-u-9-24,\n.pure-u-10-24,\n.pure-u-11-24,\n.pure-u-12-24,\n.pure-u-13-24,\n.pure-u-14-24,\n.pure-u-15-24,\n.pure-u-16-24,\n.pure-u-17-24,\n.pure-u-18-24,\n.pure-u-19-24,\n.pure-u-20-24,\n.pure-u-21-24,\n.pure-u-22-24,\n.pure-u-23-24,\n.pure-u-24-24 {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n.pure-u-1-24 {\n    width: 4.1667%;\n    *width: 4.1357%;\n}\n\n.pure-u-1-12,\n.pure-u-2-24 {\n    width: 8.3333%;\n    *width: 8.3023%;\n}\n\n.pure-u-1-8,\n.pure-u-3-24 {\n    width: 12.5000%;\n    *width: 12.4690%;\n}\n\n.pure-u-1-6,\n.pure-u-4-24 {\n    width: 16.6667%;\n    *width: 16.6357%;\n}\n\n.pure-u-1-5 {\n    width: 20%;\n    *width: 19.9690%;\n}\n\n.pure-u-5-24 {\n    width: 20.8333%;\n    *width: 20.8023%;\n}\n\n.pure-u-1-4,\n.pure-u-6-24 {\n    width: 25%;\n    *width: 24.9690%;\n}\n\n.pure-u-7-24 {\n    width: 29.1667%;\n    *width: 29.1357%;\n}\n\n.pure-u-1-3,\n.pure-u-8-24 {\n    width: 33.3333%;\n    *width: 33.3023%;\n}\n\n.pure-u-3-8,\n.pure-u-9-24 {\n    width: 37.5000%;\n    *width: 37.4690%;\n}\n\n.pure-u-2-5 {\n    width: 40%;\n    *width: 39.9690%;\n}\n\n.pure-u-5-12,\n.pure-u-10-24 {\n    width: 41.6667%;\n    *width: 41.6357%;\n}\n\n.pure-u-11-24 {\n    width: 45.8333%;\n    *width: 45.8023%;\n}\n\n.pure-u-1-2,\n.pure-u-12-24 {\n    width: 50%;\n    *width: 49.9690%;\n}\n\n.pure-u-13-24 {\n    width: 54.1667%;\n    *width: 54.1357%;\n}\n\n.pure-u-7-12,\n.pure-u-14-24 {\n    width: 58.3333%;\n    *width: 58.3023%;\n}\n\n.pure-u-3-5 {\n    width: 60%;\n    *width: 59.9690%;\n}\n\n.pure-u-5-8,\n.pure-u-15-24 {\n    width: 62.5000%;\n    *width: 62.4690%;\n}\n\n.pure-u-2-3,\n.pure-u-16-24 {\n    width: 66.6667%;\n    *width: 66.6357%;\n}\n\n.pure-u-17-24 {\n    width: 70.8333%;\n    *width: 70.8023%;\n}\n\n.pure-u-3-4,\n.pure-u-18-24 {\n    width: 75%;\n    *width: 74.9690%;\n}\n\n.pure-u-19-24 {\n    width: 79.1667%;\n    *width: 79.1357%;\n}\n\n.pure-u-4-5 {\n    width: 80%;\n    *width: 79.9690%;\n}\n\n.pure-u-5-6,\n.pure-u-20-24 {\n    width: 83.3333%;\n    *width: 83.3023%;\n}\n\n.pure-u-7-8,\n.pure-u-21-24 {\n    width: 87.5000%;\n    *width: 87.4690%;\n}\n\n.pure-u-11-12,\n.pure-u-22-24 {\n    width: 91.6667%;\n    *width: 91.6357%;\n}\n\n.pure-u-23-24 {\n    width: 95.8333%;\n    *width: 95.8023%;\n}\n\n.pure-u-1,\n.pure-u-1-1,\n.pure-u-5-5,\n.pure-u-24-24 {\n    width: 100%;\n}\n.pure-button {\n    /* Structure */\n    display: inline-block;\n    *display: inline; /*IE 6/7*/\n    zoom: 1;\n    line-height: normal;\n    white-space: nowrap;\n    vertical-align: baseline;\n    text-align: center;\n    cursor: pointer;\n    -webkit-user-drag: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n}\n\n/* Firefox: Get rid of the inner focus border */\n.pure-button::-moz-focus-inner {\n    padding: 0;\n    border: 0;\n}\n\n/*csslint outline-none:false*/\n\n.pure-button {\n    font-family: inherit;\n    font-size: 100%;\n    *font-size: 90%; /*IE 6/7 - To reduce IE's oversized button text*/\n    *overflow: visible; /*IE 6/7 - Because of IE's overly large left/right padding on buttons */\n    padding: 0.5em 1em;\n    color: #444; /* rgba not supported (IE 8) */\n    color: rgba(0, 0, 0, 0.80); /* rgba supported */\n    *color: #444; /* IE 6 & 7 */\n    border: 1px solid #999;  /*IE 6/7/8*/\n    border: none rgba(0, 0, 0, 0);  /*IE9 + everything else*/\n    background-color: #E6E6E6;\n    text-decoration: none;\n    border-radius: 2px;\n}\n\n.pure-button-hover,\n.pure-button:hover,\n.pure-button:focus {\n    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000',GradientType=0);\n    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), color-stop(40%, rgba(0,0,0, 0.05)), to(rgba(0,0,0, 0.10)));\n    background-image: -webkit-linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n    background-image: -moz-linear-gradient(top, rgba(0,0,0, 0.05) 0%, rgba(0,0,0, 0.10));\n    background-image: -o-linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n    background-image: linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));\n}\n.pure-button:focus {\n    outline: 0;\n}\n.pure-button-active,\n.pure-button:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset, 0 0 6px rgba(0,0,0, 0.20) inset;\n}\n\n.pure-button[disabled],\n.pure-button-disabled,\n.pure-button-disabled:hover,\n.pure-button-disabled:focus,\n.pure-button-disabled:active {\n    border: none;\n    background-image: none;\n    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);\n    filter: alpha(opacity=40);\n    -khtml-opacity: 0.40;\n    -moz-opacity: 0.40;\n    opacity: 0.40;\n    cursor: not-allowed;\n    box-shadow: none;\n}\n\n.pure-button-hidden {\n    display: none;\n}\n\n/* Firefox: Get rid of the inner focus border */\n.pure-button::-moz-focus-inner{\n    padding: 0;\n    border: 0;\n}\n\n.pure-button-primary,\n.pure-button-selected,\na.pure-button-primary,\na.pure-button-selected {\n    background-color: rgb(0, 120, 231);\n    color: #fff;\n}\n\n.pure-form input[type=\"text\"],\n.pure-form input[type=\"password\"],\n.pure-form input[type=\"email\"],\n.pure-form input[type=\"url\"],\n.pure-form input[type=\"date\"],\n.pure-form input[type=\"month\"],\n.pure-form input[type=\"time\"],\n.pure-form input[type=\"datetime\"],\n.pure-form input[type=\"datetime-local\"],\n.pure-form input[type=\"week\"],\n.pure-form input[type=\"number\"],\n.pure-form input[type=\"search\"],\n.pure-form input[type=\"tel\"],\n.pure-form input[type=\"color\"],\n.pure-form select,\n.pure-form textarea {\n    padding: 0.5em 0.6em;\n    display: inline-block;\n    border: 1px solid #ccc;\n    box-shadow: inset 0 1px 3px #ddd;\n    border-radius: 4px;\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type]) {\n    padding: 0.5em 0.6em;\n    display: inline-block;\n    border: 1px solid #ccc;\n    box-shadow: inset 0 1px 3px #ddd;\n    border-radius: 4px;\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n\n/* Chrome (as of v.32/34 on OS X) needs additional room for color to display. */\n/* May be able to remove this tweak as color inputs become more standardized across browsers. */\n.pure-form input[type=\"color\"] {\n    padding: 0.2em 0.5em;\n}\n\n\n.pure-form input[type=\"text\"]:focus,\n.pure-form input[type=\"password\"]:focus,\n.pure-form input[type=\"email\"]:focus,\n.pure-form input[type=\"url\"]:focus,\n.pure-form input[type=\"date\"]:focus,\n.pure-form input[type=\"month\"]:focus,\n.pure-form input[type=\"time\"]:focus,\n.pure-form input[type=\"datetime\"]:focus,\n.pure-form input[type=\"datetime-local\"]:focus,\n.pure-form input[type=\"week\"]:focus,\n.pure-form input[type=\"number\"]:focus,\n.pure-form input[type=\"search\"]:focus,\n.pure-form input[type=\"tel\"]:focus,\n.pure-form input[type=\"color\"]:focus,\n.pure-form select:focus,\n.pure-form textarea:focus {\n    outline: 0;\n    outline: thin dotted \\9; /* IE6-9 */\n    border-color: #129FEA;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type]):focus {\n    outline: 0;\n    outline: thin dotted \\9; /* IE6-9 */\n    border-color: #129FEA;\n}\n\n.pure-form input[type=\"file\"]:focus,\n.pure-form input[type=\"radio\"]:focus,\n.pure-form input[type=\"checkbox\"]:focus {\n    outline: thin dotted #333;\n    outline: 1px auto #129FEA;\n}\n.pure-form .pure-checkbox,\n.pure-form .pure-radio {\n    margin: 0.5em 0;\n    display: block;\n}\n\n.pure-form input[type=\"text\"][disabled],\n.pure-form input[type=\"password\"][disabled],\n.pure-form input[type=\"email\"][disabled],\n.pure-form input[type=\"url\"][disabled],\n.pure-form input[type=\"date\"][disabled],\n.pure-form input[type=\"month\"][disabled],\n.pure-form input[type=\"time\"][disabled],\n.pure-form input[type=\"datetime\"][disabled],\n.pure-form input[type=\"datetime-local\"][disabled],\n.pure-form input[type=\"week\"][disabled],\n.pure-form input[type=\"number\"][disabled],\n.pure-form input[type=\"search\"][disabled],\n.pure-form input[type=\"tel\"][disabled],\n.pure-form input[type=\"color\"][disabled],\n.pure-form select[disabled],\n.pure-form textarea[disabled] {\n    cursor: not-allowed;\n    background-color: #eaeded;\n    color: #cad2d3;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form input:not([type])[disabled] {\n    cursor: not-allowed;\n    background-color: #eaeded;\n    color: #cad2d3;\n}\n.pure-form input[readonly],\n.pure-form select[readonly],\n.pure-form textarea[readonly] {\n    background: #eee; /* menu hover bg color */\n    color: #777; /* menu text color */\n    border-color: #ccc;\n}\n\n.pure-form input:focus:invalid,\n.pure-form textarea:focus:invalid,\n.pure-form select:focus:invalid {\n    color: #b94a48;\n    border-color: #ee5f5b;\n}\n.pure-form input:focus:invalid:focus,\n.pure-form textarea:focus:invalid:focus,\n.pure-form select:focus:invalid:focus {\n    border-color: #e9322d;\n}\n.pure-form input[type=\"file\"]:focus:invalid:focus,\n.pure-form input[type=\"radio\"]:focus:invalid:focus,\n.pure-form input[type=\"checkbox\"]:focus:invalid:focus {\n    outline-color: #e9322d;\n}\n.pure-form select {\n    border: 1px solid #ccc;\n    background-color: white;\n}\n.pure-form select[multiple] {\n    height: auto;\n}\n.pure-form label {\n    margin: 0.5em 0 0.2em;\n}\n.pure-form fieldset {\n    margin: 0;\n    padding: 0.35em 0 0.75em;\n    border: 0;\n}\n.pure-form legend {\n    display: block;\n    width: 100%;\n    padding: 0.3em 0;\n    margin-bottom: 0.3em;\n    color: #333;\n    border-bottom: 1px solid #e5e5e5;\n}\n\n.pure-form-stacked input[type=\"text\"],\n.pure-form-stacked input[type=\"password\"],\n.pure-form-stacked input[type=\"email\"],\n.pure-form-stacked input[type=\"url\"],\n.pure-form-stacked input[type=\"date\"],\n.pure-form-stacked input[type=\"month\"],\n.pure-form-stacked input[type=\"time\"],\n.pure-form-stacked input[type=\"datetime\"],\n.pure-form-stacked input[type=\"datetime-local\"],\n.pure-form-stacked input[type=\"week\"],\n.pure-form-stacked input[type=\"number\"],\n.pure-form-stacked input[type=\"search\"],\n.pure-form-stacked input[type=\"tel\"],\n.pure-form-stacked input[type=\"color\"],\n.pure-form-stacked select,\n.pure-form-stacked label,\n.pure-form-stacked textarea {\n    display: block;\n    margin: 0.25em 0;\n}\n\n/*\nNeed to separate out the :not() selector from the rest of the CSS 2.1 selectors\nsince IE8 won't execute CSS that contains a CSS3 selector.\n*/\n.pure-form-stacked input:not([type]) {\n    display: block;\n    margin: 0.25em 0;\n}\n.pure-form-aligned input,\n.pure-form-aligned textarea,\n.pure-form-aligned select,\n/* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n.pure-form-aligned .pure-help-inline,\n.pure-form-message-inline {\n    display: inline-block;\n    *display: inline;\n    *zoom: 1;\n    vertical-align: middle;\n}\n.pure-form-aligned textarea {\n    vertical-align: top;\n}\n\n/* Aligned Forms */\n.pure-form-aligned .pure-control-group {\n    margin-bottom: 0.5em;\n}\n.pure-form-aligned .pure-control-group label {\n    text-align: right;\n    display: inline-block;\n    vertical-align: middle;\n    width: 10em;\n    margin: 0 1em 0 0;\n}\n.pure-form-aligned .pure-controls {\n    margin: 1.5em 0 0 10em;\n}\n\n/* Rounded Inputs */\n.pure-form input.pure-input-rounded,\n.pure-form .pure-input-rounded {\n    border-radius: 2em;\n    padding: 0.5em 1em;\n}\n\n/* Grouped Inputs */\n.pure-form .pure-group fieldset {\n    margin-bottom: 10px;\n}\n.pure-form .pure-group input {\n    display: block;\n    padding: 10px;\n    margin: 0;\n    border-radius: 0;\n    position: relative;\n    top: -1px;\n}\n.pure-form .pure-group input:focus {\n    z-index: 2;\n}\n.pure-form .pure-group input:first-child {\n    top: 1px;\n    border-radius: 4px 4px 0 0;\n}\n.pure-form .pure-group input:last-child {\n    top: -2px;\n    border-radius: 0 0 4px 4px;\n}\n.pure-form .pure-group button {\n    margin: 0.35em 0;\n}\n\n.pure-form .pure-input-1 {\n    width: 100%;\n}\n.pure-form .pure-input-2-3 {\n    width: 66%;\n}\n.pure-form .pure-input-1-2 {\n    width: 50%;\n}\n.pure-form .pure-input-1-3 {\n    width: 33%;\n}\n.pure-form .pure-input-1-4 {\n    width: 25%;\n}\n\n/* Inline help for forms */\n/* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n.pure-form .pure-help-inline,\n.pure-form-message-inline {\n    display: inline-block;\n    padding-left: 0.3em;\n    color: #666;\n    vertical-align: middle;\n    font-size: 0.875em;\n}\n\n/* Block help for forms */\n.pure-form-message {\n    display: block;\n    color: #666;\n    font-size: 0.875em;\n}\n\n@media only screen and (max-width : 480px) {\n    .pure-form button[type=\"submit\"] {\n        margin: 0.7em 0 0;\n    }\n\n    .pure-form input:not([type]),\n    .pure-form input[type=\"text\"],\n    .pure-form input[type=\"password\"],\n    .pure-form input[type=\"email\"],\n    .pure-form input[type=\"url\"],\n    .pure-form input[type=\"date\"],\n    .pure-form input[type=\"month\"],\n    .pure-form input[type=\"time\"],\n    .pure-form input[type=\"datetime\"],\n    .pure-form input[type=\"datetime-local\"],\n    .pure-form input[type=\"week\"],\n    .pure-form input[type=\"number\"],\n    .pure-form input[type=\"search\"],\n    .pure-form input[type=\"tel\"],\n    .pure-form input[type=\"color\"],\n    .pure-form label {\n        margin-bottom: 0.3em;\n        display: block;\n    }\n\n    .pure-group input:not([type]),\n    .pure-group input[type=\"text\"],\n    .pure-group input[type=\"password\"],\n    .pure-group input[type=\"email\"],\n    .pure-group input[type=\"url\"],\n    .pure-group input[type=\"date\"],\n    .pure-group input[type=\"month\"],\n    .pure-group input[type=\"time\"],\n    .pure-group input[type=\"datetime\"],\n    .pure-group input[type=\"datetime-local\"],\n    .pure-group input[type=\"week\"],\n    .pure-group input[type=\"number\"],\n    .pure-group input[type=\"search\"],\n    .pure-group input[type=\"tel\"],\n    .pure-group input[type=\"color\"] {\n        margin-bottom: 0;\n    }\n\n    .pure-form-aligned .pure-control-group label {\n        margin-bottom: 0.3em;\n        text-align: left;\n        display: block;\n        width: 100%;\n    }\n\n    .pure-form-aligned .pure-controls {\n        margin: 1.5em 0 0 0;\n    }\n\n    /* NOTE: pure-help-inline is deprecated. Use .pure-form-message-inline instead. */\n    .pure-form .pure-help-inline,\n    .pure-form-message-inline,\n    .pure-form-message {\n        display: block;\n        font-size: 0.75em;\n        /* Increased bottom padding to make it group with its related input element. */\n        padding: 0.2em 0 0.8em;\n    }\n}\n\n/*csslint adjoining-classes:false, outline-none:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n.pure-menu ul {\n    position: absolute;\n    visibility: hidden;\n}\n\n.pure-menu.pure-menu-open {\n    visibility: visible;\n    z-index: 2;\n    width: 100%;\n}\n\n.pure-menu ul {\n    left: -10000px;\n    list-style: none;\n    margin: 0;\n    padding: 0;\n    top: -10000px;\n    z-index: 1;\n}\n\n.pure-menu > ul { position: relative; }\n\n.pure-menu-open > ul {\n    left: 0;\n    top: 0;\n    visibility: visible;\n}\n\n.pure-menu-open > ul:focus {\n    outline: 0;\n}\n\n.pure-menu li { position: relative; }\n\n.pure-menu a,\n.pure-menu .pure-menu-heading {\n    display: block;\n    color: inherit;\n    line-height: 1.5em;\n    padding: 5px 20px;\n    text-decoration: none;\n    white-space: nowrap;\n}\n\n.pure-menu.pure-menu-horizontal > .pure-menu-heading {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    margin: 0;\n    vertical-align: middle;\n}\n.pure-menu.pure-menu-horizontal > ul {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    vertical-align: middle;\n}\n\n.pure-menu li a { padding: 5px 20px; }\n\n.pure-menu-can-have-children > .pure-menu-label:after {\n    content: '\\25B8';\n    float: right;\n    /* These specific fonts have the Unicode char we need. */\n    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'DejaVu Sans', sans-serif;\n    margin-right: -20px;\n    margin-top: -1px;\n}\n\n.pure-menu-can-have-children > .pure-menu-label {\n    padding-right: 30px;\n}\n\n.pure-menu-separator {\n    background-color: #dfdfdf;\n    display: block;\n    height: 1px;\n    font-size: 0;\n    margin: 7px 2px;\n    overflow: hidden;\n}\n\n.pure-menu-hidden {\n    display: none;\n}\n\n/* FIXED MENU */\n.pure-menu-fixed {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n}\n\n\n/* HORIZONTAL MENU CODE */\n\n/* Initial menus should be inline-block so that they are horizontal */\n.pure-menu-horizontal li {\n    display: inline-block;\n    *display: inline;\n    zoom: 1;\n    vertical-align: middle;\n}\n\n/* Submenus should still be display: block; */\n.pure-menu-horizontal li li {\n    display: block;\n}\n\n/* Content after should be down arrow */\n.pure-menu-horizontal > .pure-menu-children > .pure-menu-can-have-children > .pure-menu-label:after {\n    content: \"\\25BE\";\n}\n/*Add extra padding to elements that have the arrow so that the hover looks nice */\n.pure-menu-horizontal > .pure-menu-children > .pure-menu-can-have-children > .pure-menu-label {\n    padding-right: 30px;\n}\n\n/* Adjusting separator for vertical menus */\n.pure-menu-horizontal li.pure-menu-separator {\n    height: 50%;\n    width: 1px;\n    margin: 0 7px;\n}\n\n/* Submenus should be horizontal separator again */\n.pure-menu-horizontal li li.pure-menu-separator {\n    height: 1px;\n    width: auto;\n    margin: 7px 2px;\n}\n\n\n/*csslint adjoining-classes:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n/* MAIN MENU STYLING */\n\n.pure-menu.pure-menu-open,\n.pure-menu.pure-menu-horizontal li .pure-menu-children {\n    background: #fff; /* Old browsers */\n    border: 1px solid #b7b7b7;\n}\n\n/* remove borders for horizontal menus */\n.pure-menu.pure-menu-horizontal,\n.pure-menu.pure-menu-horizontal .pure-menu-heading {\n    border: none;\n}\n\n\n/* LINK STYLES */\n\n.pure-menu a {\n    border: 1px solid transparent;\n    border-left: none;\n    border-right: none;\n\n}\n\n.pure-menu a,\n.pure-menu .pure-menu-can-have-children > li:after {\n    color: #777;\n}\n\n.pure-menu .pure-menu-can-have-children > li:hover:after {\n    color: #fff;\n}\n\n/* Focus style for a dropdown menu-item when the parent has been opened */\n.pure-menu .pure-menu-open {\n    background: #dedede;\n}\n\n\n.pure-menu li a:hover,\n.pure-menu li a:focus {\n    background: #eee;\n}\n\n/* DISABLED STATES */\n.pure-menu li.pure-menu-disabled a:hover,\n.pure-menu li.pure-menu-disabled a:focus {\n    background: #fff;\n    color: #bfbfbf;\n}\n\n.pure-menu .pure-menu-disabled > a {\n    background-image: none;\n    border-color: transparent;\n    cursor: default;\n}\n\n.pure-menu .pure-menu-disabled > a,\n.pure-menu .pure-menu-can-have-children.pure-menu-disabled > a:after {\n    color: #bfbfbf;\n}\n\n/* HEADINGS */\n.pure-menu .pure-menu-heading {\n    color: #565d64;\n    text-transform: uppercase;\n    font-size: 90%;\n    margin-top: 0.5em;\n    border-bottom-width: 1px;\n    border-bottom-style: solid;\n    border-bottom-color: #dfdfdf;\n}\n\n/* ACTIVE MENU ITEM */\n.pure-menu .pure-menu-selected a {\n    color: #000;\n}\n\n/* FIXED MENU */\n.pure-menu.pure-menu-open.pure-menu-fixed {\n    border: none;\n    border-bottom: 1px solid #b7b7b7;\n}\n\n/*csslint box-model:false*/\n/*TODO: Remove this lint rule override after a refactor of this code.*/\n\n\n.pure-paginator {\n\n    /* `pure-g` Grid styles */\n    letter-spacing: -0.31em; /* Webkit: collapse white-space between units */\n    *letter-spacing: normal; /* reset IE < 8 */\n    *word-spacing: -0.43em; /* IE < 8: collapse white-space between units */\n    text-rendering: optimizespeed; /* Webkit: fixes text-rendering: optimizeLegibility */\n\n    /* `pure-paginator` Specific styles */\n    list-style: none;\n    margin: 0;\n    padding: 0;\n}\n.opera-only :-o-prefocus,\n.pure-paginator {\n    word-spacing: -0.43em;\n}\n\n/* `pure-u` Grid styles */\n.pure-paginator li {\n    display: inline-block;\n    *display: inline; /* IE < 8: fake inline-block */\n    zoom: 1;\n    letter-spacing: normal;\n    word-spacing: normal;\n    vertical-align: top;\n    text-rendering: auto;\n}\n\n\n.pure-paginator .pure-button {\n    border-radius: 0;\n    padding: 0.8em 1.4em;\n    vertical-align: top;\n    height: 1.1em;\n}\n.pure-paginator .pure-button:focus,\n.pure-paginator .pure-button:active {\n    outline-style: none;\n}\n.pure-paginator .prev,\n.pure-paginator .next {\n    color: #C0C1C3;\n    text-shadow: 0 -1px 0 rgba(0,0,0, 0.45);\n}\n.pure-paginator .prev {\n    border-radius: 2px 0 0 2px;\n}\n.pure-paginator .next {\n    border-radius: 0 2px 2px 0;\n}\n\n@media (max-width: 480px) {\n    .pure-menu-horizontal {\n        width: 100%;\n    }\n\n    .pure-menu-children li {\n        display: block;\n        border-bottom: 1px solid black;\n    }\n}\n\n.pure-table {\n    /* Remove spacing between table cells (from Normalize.css) */\n    border-collapse: collapse;\n    border-spacing: 0;\n    empty-cells: show;\n    border: 1px solid #cbcbcb;\n}\n\n.pure-table caption {\n    color: #000;\n    font: italic 85%/1 arial, sans-serif;\n    padding: 1em 0;\n    text-align: center;\n}\n\n.pure-table td,\n.pure-table th {\n    border-left: 1px solid #cbcbcb;/*  inner column border */\n    border-width: 0 0 0 1px;\n    font-size: inherit;\n    margin: 0;\n    overflow: visible; /*to make ths where the title is really long work*/\n    padding: 0.5em 1em; /* cell padding */\n}\n.pure-table td:first-child,\n.pure-table th:first-child {\n    border-left-width: 0;\n}\n\n.pure-table thead {\n    background: #e0e0e0;\n    color: #000;\n    text-align: left;\n    vertical-align: bottom;\n}\n\n/*\nstriping:\n   even - #fff (white)\n   odd  - #f2f2f2 (light gray)\n*/\n.pure-table td {\n    background-color: transparent;\n}\n.pure-table-odd td {\n    background-color: #f2f2f2;\n}\n\n/* nth-child selector for modern browsers */\n.pure-table-striped tr:nth-child(2n-1) td {\n    background-color: #f2f2f2;\n}\n\n/* BORDERED TABLES */\n.pure-table-bordered td {\n    border-bottom: 1px solid #cbcbcb;\n}\n.pure-table-bordered tbody > tr:last-child > td {\n    border-bottom-width: 0;\n}\n\n\n/* HORIZONTAL BORDERED TABLES */\n\n.pure-table-horizontal td,\n.pure-table-horizontal th {\n    border-width: 0 0 1px 0;\n    border-bottom: 1px solid #cbcbcb;\n}\n.pure-table-horizontal tbody > tr:last-child > td {\n    border-bottom-width: 0;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],10:[function(require,module,exports){
 require('./css/default.css');
 require('./css/purecss-0.5.0.css');
 require('./css/pure-finetuned.css');
+
 },{"./css/default.css":7,"./css/pure-finetuned.css":8,"./css/purecss-0.5.0.css":9}],11:[function(require,module,exports){
-var css = "[plugin-panel=\"true\"] div.message {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    padding: 0;\n    margin: 0 0 1.8em;\n}\n\n[plugin-panel=\"true\"] label[for=\"iprompt\"] {\n    margin-right: 1em;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+var css = "[plugin-panel=\"true\"] div.dialog-message-icon,\n[plugin-panel=\"true\"] div.dialog-message {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    padding: 0;\n    margin: 0;\n    vertical-align: top;\n    display: inline-block;\n}\n\n[plugin-panel=\"true\"] div.dialog-message-icon {\n    margin-left: -3em;\n    padding-left: 3em;\n    width: 3em;\n}\n\n[plugin-panel=\"true\"] div.dialog-message {\n    margin-left: 4.25em;\n    padding-top: 0.6em;\n}\n\n[plugin-panel=\"true\"] div.dialog-message-icon i[icon] svg {\n    width: 3em;\n    height: 3em;\n}\n\n[plugin-panel=\"true\"] div.dialog-prompt {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    padding: 0;\n    margin: 0 0 1.8em;\n}\n\n[plugin-panel=\"true\"] label[for=\"iprompt\"] {\n    margin-right: 1em;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],12:[function(require,module,exports){
 "use strict";
 /**
@@ -2692,7 +2693,6 @@ var css = "[plugin-panel=\"true\"] div.message {\n    -webkit-box-sizing: border
 */
 
 require('js-ext');
-require('messages');
 require('polyfill');
 require('./css/dialog.css');
 
@@ -2753,15 +2753,8 @@ module.exports = function (window) {
             model.callback = function(buttonNode) {
                 var containerNode = DOCUMENT.createElement('div'),
                     contentNode = instance.panel.getElement('>div[is="content"]'),
-                    messagePromise = model.messagePromise,
-                    node;
-                // move all childNodes from contentNode inside the new DIV
-                // we need to start with position 2 --> the first 2 nodes are the scroller-nodes
-/*jshint boss:true */
-                while (node=contentNode.childNodes[2]) {
-/*jshint boss:false */
-                    containerNode.appendChild(node);
-                }
+                    messagePromise = model.messagePromise;
+                containerNode = contentNode.cloneNode(true);
                 // now append a copy of the buttonNode:
                 containerNode.append(buttonNode.getOuterHTML());
                 messagePromise.fulfill(containerNode);
@@ -2816,6 +2809,7 @@ module.exports = function (window) {
                 model.header = null;
                 model.content = '';
                 model.footer = null;
+                model.validate = null;
                 model.visible = false;
                 return;
             }
@@ -2836,6 +2830,7 @@ module.exports = function (window) {
             model.header = messagePromise.header;
             model.content = messagePromise.content;
             model.footer = messagePromise.footer;
+            model.validate = messagePromise.validate;
             model.visible = true;
         }
     });
@@ -2843,10 +2838,11 @@ module.exports = function (window) {
     // instantiate Dialog and make it operational:
     dialog = new Dialog();
 
-    // return the Class, so it can be subclassed:
+    window._ITSAmodules.Dialog = Dialog;
+
     return Dialog;
 };
-},{"./css/dialog.css":11,"event":27,"js-ext":39,"js-ext/extra/classes.js":35,"js-ext/extra/hashmap.js":36,"messages":47,"panel":50,"polyfill":60,"utils":65}],13:[function(require,module,exports){
+},{"./css/dialog.css":11,"event":27,"js-ext":58,"js-ext/extra/classes.js":54,"js-ext/extra/hashmap.js":55,"panel":69,"polyfill":79,"utils":84}],13:[function(require,module,exports){
 var css = "[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],14:[function(require,module,exports){
 "use strict";
@@ -3966,7 +3962,7 @@ module.exports = function (window) {
     return DragModule;
 
 };
-},{"./css/drag-drop.css":13,"drag":16,"event-dom":17,"js-ext":39,"js-ext/extra/hashmap.js":36,"node-plugin":48,"polyfill/polyfill-base.js":60,"useragent":64,"vdom":77,"window-ext":78}],15:[function(require,module,exports){
+},{"./css/drag-drop.css":13,"drag":16,"event-dom":17,"js-ext":58,"js-ext/extra/hashmap.js":55,"node-plugin":67,"polyfill/polyfill-base.js":79,"useragent":83,"vdom":96,"window-ext":97}],15:[function(require,module,exports){
 var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -ms-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 3001 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],16:[function(require,module,exports){
 "use strict";
@@ -4613,6 +4609,19 @@ module.exports = function (window) {
 
     };
 
+    // don't drag when the cursor is above an input, text, or editable element:
+    Event.before(
+        '*:dd',
+        function(e) {
+            e.preventDefault();
+        },
+        function(e) {
+            var sourceNode= e.sourceTarget,
+                tagName = sourceNode.getTagName();
+            return (tagName==='INPUT') || (tagName==='TEXTAREA') || (sourceNode.getAttr('contenteditable')==='true');
+        }
+    );
+
     DOCUMENT.definePlugin('dd', null, {
         attrs: {
             draggable: 'string',
@@ -4628,7 +4637,7 @@ module.exports = function (window) {
 
     return DD;
 };
-},{"./css/drag.css":15,"event-dom":17,"js-ext":39,"js-ext/extra/hashmap.js":36,"node-plugin":48,"polyfill":60,"useragent":64,"vdom":77,"window-ext":78}],17:[function(require,module,exports){
+},{"./css/drag.css":15,"event-dom":17,"js-ext":58,"js-ext/extra/hashmap.js":55,"node-plugin":67,"polyfill":79,"useragent":83,"vdom":96,"window-ext":97}],17:[function(require,module,exports){
 "use strict";
 
 /**
@@ -4782,7 +4791,7 @@ module.exports = function (window) {
                 vnode = node.vnode,
                 character1 = selector && selector.substr(1),
                 match = false;
-            if (!isCustomElement || visibleContent || subscriber.o.contains(node)) {
+            if (!isCustomElement || visibleContent || context.contains(node)) {
                 if (selector==='') {
                     match = true;
                 }
@@ -5329,10 +5338,11 @@ module.exports = function (window) {
 
     _setupEvents();
 
-    // making HTMLElement to be able to emit using event-emitter:
-    (function(HTMLElementPrototype) {
-        HTMLElementPrototype.merge(Event.Emitter('UI'));
-    }(window.HTMLElement.prototype));
+    // making Element to be able to emit using event-emitter.
+    // NOT only HTMLElements --> SVGElements need to have this emitter to:
+    (function(ElementPrototype) {
+        ElementPrototype.merge(Event.Emitter('UI'));
+    }(window.Element.prototype));
 
 
     // Notify when someone subscribes to an UI:* event
@@ -5388,7 +5398,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":27,"js-ext/extra/hashmap.js":36,"js-ext/lib/array.js":41,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill/polyfill-base.js":60,"utils":65,"vdom":77}],18:[function(require,module,exports){
+},{"event":27,"js-ext/extra/hashmap.js":55,"js-ext/lib/array.js":60,"js-ext/lib/object.js":63,"js-ext/lib/string.js":65,"polyfill/polyfill-base.js":79,"utils":84,"vdom":96}],18:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5486,7 +5496,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],19:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63}],19:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5585,7 +5595,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],20:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63}],20:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5687,7 +5697,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],21:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63}],21:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5965,7 +5975,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"utils":65,"vdom":77}],22:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"utils":84,"vdom":96}],22:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8460,7 +8470,7 @@ module.exports = function (window) {
 
 };
 
-},{"utils":65}],24:[function(require,module,exports){
+},{"utils":84}],24:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -9146,7 +9156,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
             // if extract[1] is undefined, a simple customEvent is going to subscribe (without :)
             // therefore: recomposite customEvent:
             extract[1] || (customEvent='UI:'+customEvent);
-console.warn(extract[1]);
+
             // if extract[1] === 'this', then a listener to its own emitterName is supposed
             if (extract[1]==='this') {
                 if (listener._emitterName) {
@@ -9710,7 +9720,7 @@ console.warn(extract[1]);
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill/polyfill-base.js":60}],25:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"polyfill/polyfill-base.js":79}],25:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10120,7 +10130,7 @@ Classes.BaseClass.mergePrototypes(Event.Listener, true)
                  .mergePrototypes(ClassListener, true, {}, {});
 
 module.exports = Event;
-},{"./event-base.js":24,"js-ext/extra/classes.js":35,"js-ext/lib/object.js":44}],27:[function(require,module,exports){
+},{"./event-base.js":24,"js-ext/extra/classes.js":54,"js-ext/lib/object.js":63}],27:[function(require,module,exports){
 module.exports = require('./event-base.js');
 require('./event-emitter.js');
 require('./event-listener.js');
@@ -10148,7 +10158,7 @@ require('./css/focusmanager.css');
 var NAME = '[focusmanager]: ',
     async = require('utils').async,
     createHashMap = require('js-ext/extra/hashmap.js').createMap,
-    DEFAULT_SELECTOR = 'input, button, select, textarea, .focusable, [plugin-fm="true"], [itag-formelement="true"]',
+    DEFAULT_SELECTOR = 'input, button, select, textarea, [contenteditable="true"], .focusable, [plugin-fm="true"], [itag-formelement="true"]',
     // SPECIAL_KEYS needs to be a native Object --> we need .some()
     SPECIAL_KEYS = {
         shift: 'shiftKey',
@@ -10640,7 +10650,386 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"./css/focusmanager.css":28,"event-mobile":22,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"node-plugin":48,"polyfill":60,"utils":65,"window-ext":78}],30:[function(require,module,exports){
+},{"./css/focusmanager.css":28,"event-mobile":22,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"node-plugin":67,"polyfill":79,"utils":84,"window-ext":97}],30:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/alert.css');
+module.exports = function (window) {
+    window.document.defineIcon('alert', 1024, 1024, '<path class="path1" d="M1005.854 800.247l-438.286-767c-11.395-19.941-32.601-32.247-55.568-32.247s-44.173 12.306-55.567 32.247l-438.286 767c-11.319 19.809-11.238 44.144 0.213 63.876s32.539 31.877 55.354 31.877h876.572c22.814 0 43.903-12.145 55.354-31.877s11.533-44.067 0.214-63.876zM576 768h-128v-128h128v128zM576 576h-128v-256h128v256z"></path>');
+};
+},{"../css/alert.css":38}],31:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/error.css');
+module.exports = function (window) {
+    window.document.defineIcon('error', 1024, 1024, '<path class="path1" d="M512 0c-282.752 0-512 229.248-512 512s229.248 512 512 512 512-229.248 512-512-229.248-512-512-512zM765.248 674.752l-90.496 90.496-162.752-162.752-162.752 162.752-90.496-90.496 162.752-162.752-162.752-162.752 90.496-90.496 162.752 162.752 162.752-162.752 90.496 90.496-162.752 162.752 162.752 162.752z"></path>');
+};
+},{"../css/error.css":40}],32:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/alert.css');
+module.exports = function (window) {
+    window.document.defineIcon('exclamation', 1024, 1024, '<path class="path1" d="M438.857 73.143q119.429 0 220.286 58.857t159.714 159.714 58.857 220.286-58.857 220.286-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857zM512 785.714v-108.571q0-8-5.143-13.429t-12.571-5.429h-109.714q-7.429 0-13.143 5.714t-5.714 13.143v108.571q0 7.429 5.714 13.143t13.143 5.714h109.714q7.429 0 12.571-5.429t5.143-13.429zM510.857 589.143l10.286-354.857q0-6.857-5.714-10.286-5.714-4.571-13.714-4.571h-125.714q-8 0-13.714 4.571-5.714 3.429-5.714 10.286l9.714 354.857q0 5.714 5.714 10t13.714 4.286h105.714q8 0 13.429-4.286t6-10z"></path>');
+};
+},{"../css/alert.css":38}],33:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/alert.css');
+module.exports = function (window) {
+    window.document.defineIcon('info', 1024, 1024, '<path class="path1" d="M585.143 786.286v-91.429q0-8-5.143-13.143t-13.143-5.143h-54.857v-292.571q0-8-5.143-13.143t-13.143-5.143h-182.857q-8 0-13.143 5.143t-5.143 13.143v91.429q0 8 5.143 13.143t13.143 5.143h54.857v182.857h-54.857q-8 0-13.143 5.143t-5.143 13.143v91.429q0 8 5.143 13.143t13.143 5.143h256q8 0 13.143-5.143t5.143-13.143zM512 274.286v-91.429q0-8-5.143-13.143t-13.143-5.143h-109.714q-8 0-13.143 5.143t-5.143 13.143v91.429q0 8 5.143 13.143t13.143 5.143h109.714q8 0 13.143-5.143t5.143-13.143zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z"></path>');
+};
+},{"../css/alert.css":38}],34:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/alert.css');
+module.exports = function (window) {
+    window.document.defineIcon('minus', 1024, 1024, '<path class="path1" d="M694.857 548.571v-73.143q0-14.857-10.857-25.714t-25.714-10.857h-438.857q-14.857 0-25.714 10.857t-10.857 25.714v73.143q0 14.857 10.857 25.714t25.714 10.857h438.857q14.857 0 25.714-10.857t10.857-25.714zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z"></path>');
+};
+},{"../css/alert.css":38}],35:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/alert.css');
+module.exports = function (window) {
+    window.document.defineIcon('plus', 1024, 1024, '<path class="path1" d="M694.857 548.571v-73.143q0-14.857-10.857-25.714t-25.714-10.857h-146.286v-146.286q0-14.857-10.857-25.714t-25.714-10.857h-73.143q-14.857 0-25.714 10.857t-10.857 25.714v146.286h-146.286q-14.857 0-25.714 10.857t-10.857 25.714v73.143q0 14.857 10.857 25.714t25.714 10.857h146.286v146.286q0 14.857 10.857 25.714t25.714 10.857h73.143q14.857 0 25.714-10.857t10.857-25.714v-146.286h146.286q14.857 0 25.714-10.857t10.857-25.714zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z"></path>');
+};
+},{"../css/alert.css":38}],36:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/alert.css');
+module.exports = function (window) {
+    window.document.defineIcon('question', 1024, 1024, '<path class="path1" d="M512 786.286v-109.714q0-8-5.143-13.143t-13.143-5.143h-109.714q-8 0-13.143 5.143t-5.143 13.143v109.714q0 8 5.143 13.143t13.143 5.143h109.714q8 0 13.143-5.143t5.143-13.143zM658.286 402.286q0-50.286-31.714-93.143t-79.143-66.286-97.143-23.429q-138.857 0-212 121.714-8.571 13.714 4.571 24l75.429 57.143q4 3.429 10.857 3.429 9.143 0 14.286-6.857 30.286-38.857 49.143-52.571 19.429-13.714 49.143-13.714 27.429 0 48.857 14.857t21.429 33.714q0 21.714-11.429 34.857t-38.857 25.714q-36 16-66 49.429t-30 71.714v20.571q0 8 5.143 13.143t13.143 5.143h109.714q8 0 13.143-5.143t5.143-13.143q0-10.857 12.286-28.286t31.143-28.286q18.286-10.286 28-16.286t26.286-20 25.429-27.429 16-34.571 7.143-46.286zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z"></path>');
+};
+},{"../css/alert.css":38}],37:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('polyfill/polyfill-base.js');
+require('js-ext/lib/string.js');
+require('./css/base.css');
+
+var NAME = '[icons]: ',
+    createHashMap = require('js-ext/extra/hashmap.js').createMap;
+
+module.exports = function (window) {
+
+    var DOCUMENT = window.document,
+        Icons, Event, iconContainer, upgradeDOM, upgradeIconElement;
+
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
+
+/*jshint boss:true */
+    if (Icons=window._ITSAmodules.Icons) {
+/*jshint boss:false */
+        return Icons; // Dialog was already created
+    }
+
+    require('vdom')(window);
+    Event = require('event-dom')(window);
+
+    // Start with inserting the `svg-container` which holds all definitions
+    // will be inserted as a system-node:
+    iconContainer = DOCUMENT.body.getElement('>#itsa-icons-container', true) || DOCUMENT.body.addSystemElement('<svg id="itsa-icons-container"></svg>');
+
+    upgradeIconElement = function(element) {
+        // `element` is supposed to have the form: icon-`iconname`
+        var iconName = element.getAttr('icon');
+        element.empty(true, true);
+        element.addSystemElement('<svg><use xlink:href="#itsa-'+iconName+'-icon"></use></svg>'); // silent by default
+    };
+
+    upgradeDOM = function() {
+        var upgrade = function(vnode) {
+            var vChildren = vnode.vChildren,
+                len = vChildren.length,
+                i, vChild;
+            for (i=0; i<len; i++) {
+                vChild = vChildren[i];
+                if ((vChild.tag==='I') && vChild.attrs && vChild.attrs.icon) {
+                    upgradeIconElement(vChild.domNode);
+                }
+                else {
+                    upgrade(vChild);
+                }
+            }
+        };
+        upgrade(DOCUMENT.body.vnode);
+    };
+
+    Event.after(
+        ['UI:nodeinsert', 'UI:attributechange', 'UI:attributeinsert'],
+        function(e) {
+            upgradeIconElement(e.target);
+        },
+        function(e) {
+            var vnode = e.target.vnode;
+            return (vnode.tag==='I') && vnode.attrs && vnode.attrs.icon;
+        }
+    );
+
+    Event.after(
+        'UI:attributeremove',
+        function(e) {
+            var node = e.target;
+            node.empty(true, true);
+        },
+        function(e) {
+            return (e.target.vnode.tag==='I') && e.changed.contains('icon');
+        }
+    );
+
+    DOCUMENT.defineIcon = function(iconName, viewBoxWidth, viewBoxHeight, svgContent) {
+        var viewBoxDimension = '0 0 ',
+            iconId, currentDefinition;
+        viewBoxDimension = '0 0 '+viewBoxWidth+' '+viewBoxHeight;
+        iconId = 'itsa-'+iconName.toLowerCase()+'-icon';
+        currentDefinition = iconContainer.getElement('#'+iconId);
+        if (currentDefinition) {
+            currentDefinition.setHTML(svgContent);
+        }
+        else {
+            iconContainer.append('<symbol id="'+iconId+'" viewBox="'+viewBoxDimension+'">'+svgContent+'</symbol>');
+        }
+    };
+
+    upgradeDOM();
+
+    window._ITSAmodules.Icons = true;
+};
+},{"./css/base.css":39,"event-dom":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/string.js":65,"polyfill/polyfill-base.js":79,"vdom":96}],38:[function(require,module,exports){
+var css = "#itsa-alert-icon {\n    fill: #E3A900;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],39:[function(require,module,exports){
+var css = "#itsa-icons-container {\n    display: none; !important;\n}\n\ni[icon] {\n    display: inline-block;\n    vertical-align: baseline;\n    padding: 0;\n    margin: 0;\n}\n\ni[icon] >svg {\n    height: 1em;\n    width: 1em;\n    vertical-align: middle;\n}\n\nbutton.itsa-icon {\n    padding: 0.5em;\n}\n\nbutton.itsa-iconleft {\n    padding-left: 0.75em;\n}\n\nbutton.itsa-iconright {\n    padding-right: 0.75em;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],40:[function(require,module,exports){
+var css = "#itsa-error-icon {\n  fill: #960500;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],41:[function(require,module,exports){
+var css = "#itsa-radar-anim-icon g {\n  stroke: #000;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],42:[function(require,module,exports){
+var css = "#itsa-spinnercircle-anim-icon circle {\n  fill: #000;\n}\n\n#itsa-spinnercircle-anim-icon g {\n  stroke: #000;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],43:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    window.document.defineIcon('audio-anim', 55, 80, '<g transform="matrix(1 0 0 -1 0 80)"><rect width="10" height="20" rx="3"><animate attributeName="height" begin="0s" dur="4.3s" values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20" calcMode="linear" repeatCount="indefinite" /></rect><rect x="15" width="10" height="80" rx="3"><animate attributeName="height" begin="0s" dur="2s" values="80;55;33;5;75;23;73;33;12;14;60;80" calcMode="linear" repeatCount="indefinite" /></rect><rect x="30" width="10" height="50" rx="3"><animate attributeName="height" begin="0s" dur="1.4s" values="50;34;78;23;56;23;34;76;80;54;21;50" calcMode="linear" repeatCount="indefinite" /></rect><rect x="45" width="10" height="30" rx="3"><animate attributeName="height" begin="0s" dur="2s" values="30;45;13;80;56;72;45;76;34;23;67;30" calcMode="linear" repeatCount="indefinite" /></rect></g>');
+};
+},{}],44:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    window.document.defineIcon('grid-anim', 105, 105, '<circle cx="12.5" cy="12.5" r="12.5"><animate attributeName="fill-opacity" begin="0s" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="12.5" cy="52.5" r="12.5" fill-opacity=".5"><animate attributeName="fill-opacity" begin="100ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="52.5" cy="12.5" r="12.5"><animate attributeName="fill-opacity" begin="300ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="52.5" cy="52.5" r="12.5"><animate attributeName="fill-opacity" begin="600ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="92.5" cy="12.5" r="12.5"><animate attributeName="fill-opacity" begin="800ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="92.5" cy="52.5" r="12.5"><animate attributeName="fill-opacity" begin="400ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="12.5" cy="92.5" r="12.5"><animate attributeName="fill-opacity" begin="700ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="52.5" cy="92.5" r="12.5"><animate attributeName="fill-opacity" begin="500ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="92.5" cy="92.5" r="12.5"><animate attributeName="fill-opacity" begin="200ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle>');
+};
+},{}],45:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/radar-anim.css');
+module.exports = function (window) {
+    window.document.defineIcon('radar-anim', 45, 45, '<g fill="none" fill-rule="evenodd" transform="translate(1 1)" stroke-width="2"><circle cx="22" cy="22" r="6" stroke-opacity="0"><animate attributeName="r" begin="1.5s" dur="3s" values="6;22" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-opacity" begin="1.5s" dur="3s" values="1;0" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-width" begin="1.5s" dur="3s" values="2;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="22" cy="22" r="6" stroke-opacity="0"><animate attributeName="r" begin="3s" dur="3s" values="6;22" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-opacity" begin="3s" dur="3s" values="1;0" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-width" begin="3s" dur="3s" values="2;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="22" cy="22" r="8"><animate attributeName="r" begin="0s" dur="1.5s" values="6;1;2;3;4;5;6" calcMode="linear" repeatCount="indefinite" /></circle></g>');
+};
+},{"../css/radar-anim.css":41}],46:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    window.document.defineIcon('speaking-anim', 135, 140, '<rect y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.5s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.5s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="30" y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.25s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.25s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="60" width="15" height="140" rx="6"><animate attributeName="height" begin="0s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="90" y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.25s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.25s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="120" y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.5s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.5s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect>');
+};
+},{}],47:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/spinnercircle-anim.css');
+module.exports = function (window) {
+    window.document.defineIcon('spinnercircle-anim', 58, 58, '<g fill="none" fill-rule="evenodd"><g transform="translate(2 1)" stroke="#FFF" stroke-width="1.5"><circle cx="42.601" cy="11.462" r="5" fill-opacity="1" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="1;0;0;0;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="49.063" cy="27.063" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;1;0;0;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="42.601" cy="42.663" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;1;0;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="27" cy="49.125" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;1;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="11.399" cy="42.663" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;1;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="4.938" cy="27.063" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;1;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="11.399" cy="11.462" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;0;1;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="27" cy="5" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;0;0;1" calcMode="linear" repeatCount="indefinite" /></circle></g></g>');
+};
+},{"../css/spinnercircle-anim.css":42}],48:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    require('./base.js')(window);
+    require('./base-icons/error.js')(window);
+    require('./base-icons/alert.js')(window);
+    require('./base-icons/exclamation.js')(window);
+    require('./base-icons/info.js')(window);
+    require('./base-icons/minus.js')(window);
+    require('./base-icons/plus.js')(window);
+    require('./base-icons/question.js')(window);
+    require('./extra-animated-icons/audio-anim.js')(window);
+    require('./extra-animated-icons/speaking-anim.js')(window);
+    require('./extra-animated-icons/grid-anim.js')(window);
+    require('./extra-animated-icons/radar-anim.js')(window);
+    require('./extra-animated-icons/spinnercircle-anim.js')(window);
+};
+},{"./base-icons/alert.js":30,"./base-icons/error.js":31,"./base-icons/exclamation.js":32,"./base-icons/info.js":33,"./base-icons/minus.js":34,"./base-icons/plus.js":35,"./base-icons/question.js":36,"./base.js":37,"./extra-animated-icons/audio-anim.js":43,"./extra-animated-icons/grid-anim.js":44,"./extra-animated-icons/radar-anim.js":45,"./extra-animated-icons/speaking-anim.js":46,"./extra-animated-icons/spinnercircle-anim.js":47}],49:[function(require,module,exports){
 
 "use strict";
 
@@ -10768,7 +11157,7 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"../io.js":34,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"xmldom":2}],31:[function(require,module,exports){
+},{"../io.js":53,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"xmldom":2}],50:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -10895,7 +11284,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":34,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],32:[function(require,module,exports){
+},{"../io.js":53,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63}],51:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10923,6 +11312,7 @@ require('polyfill/polyfill-base.js');
 /*jshint proto:true */
 var NAME = '[io-transfer]: ',
     createHashMap = require('js-ext/extra/hashmap.js').createMap,
+    messages = require('messages'),
     PROTO_SUPPORTED = !!Object.__proto__,
     REVIVER = function(key, value) {
         return ((typeof value==='string') && value.toDate()) || value;
@@ -10949,7 +11339,16 @@ var NAME = '[io-transfer]: ',
     DELETE = 'delete',
     REGEXP_ARRAY = /^( )*\[/,
     REGEXP_OBJECT = /^( )*{/,
-    REGEXP_REMOVE_LAST_COMMA = /^(.*),( )*$/;
+    REGEXP_REMOVE_LAST_COMMA = /^(.*),( )*$/,
+    SPINNER_ICON = 'spinnercircle-anim',
+    MIN_SHOWUP = 500,
+    MESSAGES = {
+        'read': 'reading...',
+        'update': 'saving...',
+        'insert': 'saving...',
+        'send': 'sending...',
+        'delete': 'saving...'
+    };
 /*jshint proto:false */
 
 module.exports = function (window) {
@@ -11035,7 +11434,7 @@ module.exports = function (window) {
     */
     IO.get = function (url, options) {
         console.log(NAME, 'get --> '+url);
-        var ioPromise, returnPromise;
+        var ioPromise, returnPromise, message;
         options || (options={});
         options.url = url;
         options.method = 'GET';
@@ -11049,6 +11448,10 @@ module.exports = function (window) {
         );
         // set `abort` to the thennable-promise:
         returnPromise.abort = ioPromise.abort;
+        message = messages.message(MESSAGES.read, {level: 4, icon: SPINNER_ICON, stayActive: MIN_SHOWUP});
+        returnPromise.finally(function() {
+            message.fulfill();
+        });
         return returnPromise;
     };
 
@@ -11092,7 +11495,7 @@ module.exports = function (window) {
     */
     IO.read = function(url, params, options) {
         console.log(NAME, 'read  --> '+url+' params: '+JSON.stringify(params));
-        var ioPromise, returnPromise;
+        var ioPromise, returnPromise, message;
         options || (options={});
         options.headers || (options.headers={});
         options.url = url;
@@ -11117,6 +11520,10 @@ module.exports = function (window) {
         );
         // set `abort` to the thennable-promise:
         returnPromise.abort = ioPromise.abort;
+        message = messages.message(MESSAGES.read, {level: 4, icon: SPINNER_ICON, stayActive: MIN_SHOWUP});
+        returnPromise.finally(function() {
+            message.fulfill();
+        });
         return returnPromise;
     };
 
@@ -11268,7 +11675,7 @@ module.exports = function (window) {
             IO[verb] = function (url, data, options) {
                 console.log(NAME, verb+' --> '+url+' data: '+JSON.stringify(data));
                 var instance = this,
-                    allfields, useallfields, parseJSONDate, ioPromise, returnPromise;
+                    allfields, useallfields, parseJSONDate, ioPromise, returnPromise, message;
                 options || (options={});
                 allfields = options.allfields,
                 useallfields = (typeof allfields==='boolean') ? allfields : (verb!=='insert');
@@ -11300,6 +11707,10 @@ module.exports = function (window) {
                 );
                 // set `abort` to the thennable-promise:
                 returnPromise.abort = ioPromise.abort;
+                message = messages.message(MESSAGES[verb], {level: 4, icon: SPINNER_ICON, stayActive: MIN_SHOWUP});
+                returnPromise.finally(function() {
+                    message.fulfill();
+                });
                 return returnPromise;
             };
         }
@@ -11338,7 +11749,7 @@ module.exports = function (window) {
 
     IO[DELETE] = function (url, deleteKey, options) {
         console.log(NAME, 'delete --> '+url+' deleteKey: '+JSON.stringify(deleteKey));
-        var ioPromise, returnPromise;
+        var ioPromise, returnPromise, message;
         options || (options={});
         options.url = url;
         // method will be uppercased by IO.xhr
@@ -11358,6 +11769,10 @@ module.exports = function (window) {
         );
         // set `abort` to the thennable-promise:
         returnPromise.abort = ioPromise.abort;
+        message = messages.message(MESSAGES['delete'], {level: 4, icon: SPINNER_ICON, stayActive: MIN_SHOWUP});
+        returnPromise.finally(function() {
+            message.fulfill();
+        });
         return returnPromise;
     };
 
@@ -11365,7 +11780,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":34,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill/polyfill-base.js":60}],33:[function(require,module,exports){
+},{"../io.js":53,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"js-ext/lib/string.js":65,"messages":66,"polyfill/polyfill-base.js":79}],52:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11390,7 +11805,11 @@ require('js-ext');
 
 var NAME = '[io-xml]: ',
     REGEXP_XML = /(?: )*(<\?xml (?:.)*\?>)(?: )*(<(?:\w)+>)/,
-    createHashMap = require('js-ext/extra/hashmap.js').createMap;
+    messages = require('messages'),
+    createHashMap = require('js-ext/extra/hashmap.js').createMap,
+    MSG_READING = 'reading...',
+    SPINNER_ICON = 'spinnercircle-anim',
+    MIN_SHOWUP = 500;
 
 module.exports = function (window) {
 
@@ -11491,7 +11910,7 @@ module.exports = function (window) {
                 url: url,
                 data: params
             },
-            ioPromise, returnPromise;
+            ioPromise, returnPromise, message;
         options && XMLOptions.merge(options);
         ioPromise = this.request(XMLOptions);
         returnPromise = ioPromise.then(
@@ -11510,6 +11929,10 @@ module.exports = function (window) {
         );
         // set `abort` to the thennable-promise:
         returnPromise.abort = ioPromise.abort;
+        message = messages.message(MSG_READING, {level: 4, icon: SPINNER_ICON, stayActive: MIN_SHOWUP});
+        returnPromise.finally(function() {
+            message.fulfill();
+        });
         return returnPromise;
     };
 
@@ -11517,7 +11940,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":34,"js-ext":39,"js-ext/extra/hashmap.js":36}],34:[function(require,module,exports){
+},{"../io.js":53,"js-ext":58,"js-ext/extra/hashmap.js":55,"messages":66}],53:[function(require,module,exports){
 /**
  * Provides core IO-functionality.
  *
@@ -11537,8 +11960,6 @@ require('js-ext');
 var NAME = '[io]: ',
     GET = 'GET',
     createHashMap = require('js-ext/extra/hashmap.js').createMap,
-    Event = require('event'),
-    async = require('utils').async,
     DEF_REQ_TIMEOUT = 300000, // don't create an ever-lasting request: always quit after 5 minutes
     BODY_METHODS = createHashMap({
         POST: 1,
@@ -11818,15 +12239,6 @@ module.exports = function (window) {
 
             instance._initXHR(xhr, options, promise);
 
-            // to make any routine informed for the end of xhr, we emit an event
-            // to make sure they get informed after another routines have handled the response,
-            // we go async
-            promise.then(function() {
-                async(function() {
-                    Event.emit(promise, 'IO:finish');
-                });
-            });
-
             return promise;
         }
 
@@ -11841,7 +12253,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"event":27,"js-ext":39,"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":60,"utils":65}],35:[function(require,module,exports){
+},{"js-ext":58,"js-ext/extra/hashmap.js":55,"polyfill/polyfill-base.js":79}],54:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -12454,7 +12866,7 @@ require('../lib/object.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/object.js":44,"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":60}],36:[function(require,module,exports){
+},{"../lib/object.js":63,"js-ext/extra/hashmap.js":55,"polyfill/polyfill-base.js":79}],55:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -12477,7 +12889,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],37:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -12589,7 +13001,7 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":41,"../lib/object.js":44,"./classes.js":35,"js-ext/extra/hashmap.js":36,"polyfill/lib/weakmap.js":58}],38:[function(require,module,exports){
+},{"../lib/array.js":60,"../lib/object.js":63,"./classes.js":54,"js-ext/extra/hashmap.js":55,"polyfill/lib/weakmap.js":77}],57:[function(require,module,exports){
 "use strict";
 
 var createHashMap = require('./hashmap.js').createMap;
@@ -12662,14 +13074,14 @@ module.exports = createHashMap({
     'with': true,
     'yield': true
 });
-},{"./hashmap.js":36}],39:[function(require,module,exports){
+},{"./hashmap.js":55}],58:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
 require('./lib/array.js');
 require('./lib/json.js');
 require('./lib/promise.js');
-},{"./lib/array.js":41,"./lib/function.js":42,"./lib/json.js":43,"./lib/object.js":44,"./lib/promise.js":45,"./lib/string.js":46}],40:[function(require,module,exports){
+},{"./lib/array.js":60,"./lib/function.js":61,"./lib/json.js":62,"./lib/object.js":63,"./lib/promise.js":64,"./lib/string.js":65}],59:[function(require,module,exports){
 "use strict";
 
 require('./lib/function.js');
@@ -12684,7 +13096,7 @@ module.exports = {
     Classes: require('./extra/classes.js'),
     LightMap: require('./extra/lightmap.js')
 };
-},{"./extra/classes.js":35,"./extra/hashmap.js":36,"./extra/lightmap.js":37,"./lib/array.js":41,"./lib/function.js":42,"./lib/json.js":43,"./lib/object.js":44,"./lib/promise.js":45,"./lib/string.js":46}],41:[function(require,module,exports){
+},{"./extra/classes.js":54,"./extra/hashmap.js":55,"./extra/lightmap.js":56,"./lib/array.js":60,"./lib/function.js":61,"./lib/json.js":62,"./lib/object.js":63,"./lib/promise.js":64,"./lib/string.js":65}],60:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -12835,7 +13247,7 @@ var cloneObj = function(obj) {
      };
 
 }(Array.prototype));
-},{"polyfill/polyfill-base.js":60}],42:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":79}],61:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -12894,7 +13306,7 @@ var NAME = '[Function]: ';
 
 }(Function.prototype));
 
-},{"polyfill/polyfill-base.js":60}],43:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":79}],62:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -12919,7 +13331,7 @@ var REVIVER = function(key, value) {
 JSON.parseWithDate = function(stringifiedObj) {
     return this.parse(stringifiedObj, REVIVER);
 };
-},{"polyfill/polyfill-base.js":60}],44:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":79}],63:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -13502,7 +13914,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":60,"utils":65}],45:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"polyfill/polyfill-base.js":79,"utils":84}],64:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13522,6 +13934,7 @@ require('polyfill');
 
 var NAME = '[promise-ext]: ',
     FUNCTION_EXPECTED = ' expects an array of function-references', // include leading space!
+    later = require('utils').later,
     PROMISE_CHAIN = 'Promise.chain';
 
 (function(PromisePrototype) {
@@ -13741,10 +14154,14 @@ Promise.chainFns = function (funcs, finishAll) {
  * promise.callback
  * promise.setCallback
  * promise.pending
+ * promise.stayActive --> force the promise not to resolve in the specified time
  *
  * With Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.
  * You can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any.
  * promise.**fulfill**() and promise.**reject**() are meant to resolve the promise from outside, just like deferred can do.
+ *
+ * If `stayActive` is defined, the promise will only be resolved after this specified time (ms). When `fulfill` or `reject` is
+ * called, it will be applied after this specified time.
  *
  * @example
  *     var promise = Promise.manage(
@@ -13770,12 +14187,13 @@ Promise.chainFns = function (funcs, finishAll) {
  * @method manage
  * @param [callbackFn] {Function} invoked everytime promiseinstance.callback() is called.
  *        You may as weel (re)set this method atny time lare by using promise.setCallback()
+ * @param [stayActive=false] {Boolean} specified time to wait before the promise really gets resolved
  * @return {Promise} with three handles: fulfill, reject and callback.
  * @static
  */
-Promise.manage = function (callbackFn) {
+Promise.manage = function (callbackFn, stayActive) {
     console.log(NAME, 'manage');
-    var fulfillHandler, rejectHandler, promise, finished;
+    var fulfillHandler, rejectHandler, promise, finished, stayActivePromise, resolved;
 
     promise = new Promise(function (fulfill, reject) {
         fulfillHandler = fulfill;
@@ -13783,19 +14201,47 @@ Promise.manage = function (callbackFn) {
     });
 
     promise.fulfill = function (value) {
-        console.log(NAME, 'manage.fulfill');
-        finished = true;
-        fulfillHandler(value);
+        if (!resolved) {
+            console.log(NAME, 'manage.fulfill');
+            resolved = true;
+            if (stayActivePromise) {
+                stayActivePromise.then(function() {
+                    finished = true;
+                    fulfillHandler(value);
+                });
+            }
+            else {
+                finished = true;
+                fulfillHandler(value);
+            }
+        }
     };
 
     promise.reject = function (reason) {
-        console.log(NAME, 'manage.reject '+((typeof reason==='string') ? reason : reason && (reason.message || reason.description)));
-        finished = true;
-        rejectHandler(reason);
+        if (!resolved) {
+            console.log(NAME, 'manage.reject '+((typeof reason==='string') ? reason : reason && (reason.message || reason.description)));
+            resolved = true;
+            if (stayActivePromise) {
+                stayActivePromise.then(function() {
+                    finished = true;
+                    rejectHandler(reason);
+                });
+            }
+            else {
+                finished = true;
+                rejectHandler(reason);
+            }
+        }
     };
 
     promise.pending = function () {
         return !finished;
+    };
+
+    promise.stayActive = function (time) {
+        stayActivePromise = new Promise(function (fulfill) {
+            later(time, fulfill);
+        });
     };
 
     promise.callback = function () {
@@ -13809,10 +14255,12 @@ Promise.manage = function (callbackFn) {
         callbackFn = newCallbackFn;
     };
 
+    stayActive && promise.stayActive(stayActive);
+
     return promise;
 };
 
-},{"polyfill":60}],46:[function(require,module,exports){
+},{"polyfill":79,"utils":84}],65:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -14094,7 +14542,7 @@ Promise.manage = function (callbackFn) {
 
 }(String.prototype));
 
-},{}],47:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 (function (global){
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -14120,7 +14568,8 @@ require('polyfill');
         MESSAGE_LEVELS = {
             1: 'message',
             2: 'warning',
-            3: 'error'
+            3: 'error',
+            4: 'statusmessage' // message that should hold for minimum time, and/or removes by itself (IO uses these)
         },
         createHashMap = require('js-ext/extra/hashmap.js').createMap,
         later = require('utils').later,
@@ -14140,13 +14589,20 @@ require('polyfill');
     messages = {
         message: function(message, options) {
             var messagePromise = global.Promise.manage(),
-                emitter, level, timeout;
+                emitter, level, timeout, icon, stayActive;
+            message || (message='');
             options || (options={});
             emitter = options.emitter || 'global';
+            icon = options.icon;
             level = MESSAGE_LEVELS[options.level] || MESSAGE_LEVELS[1];
             timeout = options.timeout;
+            stayActive = options.stayActive;
             messagePromise.merge(options);
-            messagePromise.content = message || '';
+            stayActive && messagePromise.stayActive(stayActive);
+            if (icon) {
+                message = '<div class="dialog-message-icon"><i icon="'+icon+'"></i></div><div class="dialog-message">'+message+'</div>';
+            }
+            messagePromise.content = message;
             if ((typeof timeout==='number') && (timeout>0)) {
                 // with nothing to notify it was timeout
                 later(messagePromise.fulfill, timeout);
@@ -14154,21 +14610,29 @@ require('polyfill');
             Event.emit(options.target || global, emitter+':'+level, {messagePromise: messagePromise});
             return messagePromise;
         },
-        alert: function(message) {
+        alert: function(message, icon) {
             return this.message(message, {
-                footer: '<button class="pure-button pure-button-primary">Ok</button>'
+                footer: '<button class="pure-button pure-button-primary">Ok</button>',
+                icon: icon
             });
         },
         warn: function(message) {
             return this.message(message, {
                 footer: '<button class="pure-button pure-button-primary">Ok</button>',
+                icon: 'alert',
                 level: 2
             });
         },
-        prompt: function(message, defaultValue, label) {
-            var placeholder = defaultValue ? ' value="'+String(defaultValue)+'"' : '';
+        prompt: function(message, options) {
+            var placeholder, defaultValue, label, icon, validate;
+            options || (options={});
+            defaultValue = options.defaultValue;
+            label = options.label;
+            icon = options.icon;
+            validate = options.validate;
+            placeholder = defaultValue ? ' value="'+String(defaultValue)+'"' : '';
             if ((typeof message ==='string') || (message!=='')) {
-                message = '<div class="message">'+message+'</div>';
+                message = '<div class="dialog-prompt">'+message+'</div>';
             }
             else {
                 message = '';
@@ -14177,7 +14641,9 @@ require('polyfill');
             return this.message(
                 '<div class="pure-form">'+message+label+'<input id="iprompt" type="text"'+placeholder+' fm-defaultitem="true" fm-primaryonenter="true"></div>',
                 {
-                   footer: '<button is="cancel" class="pure-button">Cancel</button><button is="ok" class="pure-button pure-button-primary">Ok</button>'
+                    footer: '<button is="cancel" class="pure-button">Cancel</button><button is="ok" class="pure-button pure-button-primary">Ok</button>',
+                    icon: icon,
+                    validate: validate
                 }
             ).then(function(container) {
                 var button = container.getElement('button');
@@ -14198,6 +14664,7 @@ require('polyfill');
             messages.message(msg, {
                 header: 'Javascript-error (line '+line+')',
                 footer: url,
+                icon: 'error',
                 level: 3
             });
             return true;
@@ -14209,7 +14676,7 @@ require('polyfill');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"event":27,"js-ext":39,"js-ext/extra/hashmap.js":36,"polyfill":60,"utils":65}],48:[function(require,module,exports){
+},{"event":27,"js-ext":58,"js-ext/extra/hashmap.js":55,"polyfill":79,"utils":84}],67:[function(require,module,exports){
 "use strict";
 
 /**
@@ -14855,9 +15322,9 @@ module.exports = function (window) {
 
     window._ITSAmodules.ElementPlugin = true;
 };
-},{"event-dom":17,"js-ext/extra/classes.js":35,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/promise.js":45,"js-ext/lib/string.js":46,"polyfill":60,"utils/lib/timers.js":67,"vdom":77}],49:[function(require,module,exports){
+},{"event-dom":17,"js-ext/extra/classes.js":54,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"js-ext/lib/promise.js":64,"js-ext/lib/string.js":65,"polyfill":79,"utils/lib/timers.js":86,"vdom":96}],68:[function(require,module,exports){
 var css = "[plugin-panel=\"true\"] {\n    position: absolute !important;\n    background-color: #FFF;\n    max-width: 90%;\n    min-width: 200px;\n    min-height: 75px;\n    box-shadow: inset 0 0 5px rgba(50, 50, 50, 0.30), 5px 5px 6px rgba(50, 50, 50, 0.45);\n    border: solid 1px #000;\n}\n\n[plugin-panel=\"true\"],\n[plugin-panel=\"true\"] >div {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n[plugin-panel=\"true\"] >div[is=\"header\"] {\n    vertical-align: middle;\n    background-color: rgb(0, 100, 192);\n    color: #FFF;\n    padding: 0 1.5em 0 0.7em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    vertical-align: middle;\n    line-height: 1.75em;\n    width: 100%;\n    min-height: 1.75em;\n}\n\n[plugin-panel=\"true\"] >div[is=\"content\"] {\n    padding: 1.6em 1.2em;\n    line-height: 115%;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] {\n    border-top: 1px solid #EAE6DB;\n    overflow: hidden;\n    vertical-align: middle;\n    text-align: right;\n    line-height: 1em;\n    padding: 0.5em 0.7em;\n    width: 100%;\n    min-height: 24px;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0.5em;\n}\n\n[plugin-panel=\"true\"].itsa-full-draggable {\n    cursor: default;\n}\n\n[plugin-panel=\"true\"] >button {\n    padding: 0 0.4em 0.1em;\n    position: absolute;\n    right: 0.2em;\n    top: 0.2em;\n    z-index: 1;\n}\n\nbody >div[is=\"system-node\"].itsa-modal-layer {\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 100% !important;\n    height: 100% !important;\n    -webkit-box-sizing: border-box !important;\n    -moz-box-sizing: border-box !important;\n    box-sizing: border-box !important;\n    z-index: 1000 !important;\n    background-color: #000 !important;\n    opacity: 0.2 !important;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button {\n    display: block;\n    width: 100%;\n    margin: 0 0 0.5em;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button:last-child,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button:last-child {\n    margin-bottom: 0;\n}\n\n@media only screen and (max-width : 480px) {\n    [plugin-panel=\"true\"] {\n        width: 90%;\n        box-shadow: 0 0 6px 6px rgba(50, 50, 50, 0.45);\n    }\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],50:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],69:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -14916,7 +15383,7 @@ module.exports = function (window) {
      * @since 0.0.1
      */
     insertModalLayer = function() {
-       DOCUMENT.body.addSystemElement('<div class="itsa-modal-layer itsa-no-display"></div>', null, true);
+       DOCUMENT.body.addSystemElement('<div class="itsa-modal-layer itsa-nodisplay"></div>', null, true);
     };
 
     insertModalLayer();
@@ -14982,7 +15449,7 @@ module.exports = function (window) {
         },
         showModalLayer: function(show) {
             var modalLayer = DOCUMENT.getElement('body >div[is="system-node"].itsa-modal-layer', true);
-            modalLayer.toggleClass('itsa-no-display', !show);
+            modalLayer.toggleClass('itsa-nodisplay', !show);
         }
     };
 
@@ -15154,7 +15621,7 @@ module.exports = function (window) {
                 header = '';
             }
             (header!==undefined) && headerNode.setHTML(header || '');
-            buttonCloseNode.toggleClass('itsa-no-display', !showHeaderCloseBtn);
+            buttonCloseNode.toggleClass('itsa-nodisplay', !showHeaderCloseBtn);
 
             headerNode.toggleClass('itsa-hidden', (header===undefined));
             contentNode.setHTML(content || '');
@@ -15292,7 +15759,7 @@ module.exports = function (window) {
 
     return Panel;
 };
-},{"./css/panel.css":49,"drag":16,"event-mobile":22,"focusmanager":29,"js-ext/extra/hashmap.js":36,"js-ext/extra/lightmap.js":37,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"node-plugin":48,"polyfill":60,"scrollable":63,"window-ext":78}],51:[function(require,module,exports){
+},{"./css/panel.css":68,"drag":16,"event-mobile":22,"focusmanager":29,"js-ext/extra/hashmap.js":55,"js-ext/extra/lightmap.js":56,"js-ext/lib/object.js":63,"js-ext/lib/string.js":65,"node-plugin":67,"polyfill":79,"scrollable":82,"window-ext":97}],70:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -15315,7 +15782,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],52:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 "use strict";
 
 /*
@@ -15368,7 +15835,7 @@ module.exports = function (window) {
 
     return transition;
 };
-},{"../bin/local-hashmap.js":51}],53:[function(require,module,exports){
+},{"../bin/local-hashmap.js":70}],72:[function(require,module,exports){
 "use strict";
 
 // CAUTIOUS: need a copy of hashmap --> we cannot use js-ext/extra/hashap.js for that would lead to circular references!
@@ -15413,7 +15880,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{"../bin/local-hashmap.js":51}],54:[function(require,module,exports){
+},{"../bin/local-hashmap.js":70}],73:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -15484,7 +15951,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../bin/local-hashmap.js":51}],55:[function(require,module,exports){
+},{"../bin/local-hashmap.js":70}],74:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -15508,7 +15975,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],56:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 (function (global){
 /*
  * Copyright 2012 The Polymer Authors. All rights reserved.
@@ -16094,9 +16561,9 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],57:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 require('ypromise');
-},{"ypromise":5}],58:[function(require,module,exports){
+},{"ypromise":5}],77:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/Gozala/1269991
 
@@ -16206,7 +16673,7 @@ require('ypromise');
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],59:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -16225,17 +16692,17 @@ require('ypromise');
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],60:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":55,"./lib/window.console.js":59}],61:[function(require,module,exports){
+},{"./lib/matchesselector.js":74,"./lib/window.console.js":78}],80:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/promise.js');
 require('./lib/weakmap.js');
 require('./lib/mutationobserver.js'); // needs weakmap
-},{"./lib/mutationobserver.js":56,"./lib/promise.js":57,"./lib/weakmap.js":58,"./polyfill-base.js":60}],62:[function(require,module,exports){
+},{"./lib/mutationobserver.js":75,"./lib/promise.js":76,"./lib/weakmap.js":77,"./polyfill-base.js":79}],81:[function(require,module,exports){
 var css = "[plugin-scroll=\"true\"] {\n    overflow: hidden !important;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont,\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    position: absolute;\n    display: block;\n    left: -9999px;\n    top: -9999px;\n    opacity: 0;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-vscroll-cont.itsa-visible {\n    opacity: 1;\n    width: 0.8em;\n    height: 100%;\n    right: 0;\n    top: 0;\n    left: auto;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-hscroll-cont.itsa-visible {\n    opacity: 1;\n    height: 0.8em;\n    width: 100%;\n    left: 0;\n    bottom: 0;\n    top: auto;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont span {\n    position: relative;\n    display: block;\n    width: 100%;\n    min-height: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont span {\n    position: relative;\n    display: block;\n    height: 100%;\n    min-width: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-vscroll-cont span,\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-hscroll-cont span {\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n[plugin-scroll=\"true\"] >span span.dd-dragging {\n    cursor: default;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],63:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],82:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -16453,7 +16920,7 @@ module.exports = function (window) {
 
     return Scrollable;
 };
-},{"./css/scrollable.css":62,"drag":16,"event-mobile":22,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"node-plugin":48,"polyfill":60,"useragent":64,"utils":65,"window-ext":78}],64:[function(require,module,exports){
+},{"./css/scrollable.css":81,"drag":16,"event-mobile":22,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"node-plugin":67,"polyfill":79,"useragent":83,"utils":84,"window-ext":97}],83:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16494,13 +16961,13 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":60}],65:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"js-ext/lib/string.js":65,"polyfill":79}],84:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
     async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":66,"./lib/timers.js":67}],66:[function(require,module,exports){
+},{"./lib/idgenerator.js":85,"./lib/timers.js":86}],85:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -16558,7 +17025,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"js-ext/extra/hashmap.js":36,"polyfill/polyfill-base.js":60}],67:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"polyfill/polyfill-base.js":79}],86:[function(require,module,exports){
 (function (process){
 /**
  * Collection of various utility functions.
@@ -16690,9 +17157,9 @@ module.exports.later = function (callbackFn, timeout, periodic) {
 	};
 };
 }).call(this,require('_process'))
-},{"_process":80,"polyfill/polyfill-base.js":60}],68:[function(require,module,exports){
-var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-no-display {\n    display: none; !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],69:[function(require,module,exports){
+},{"_process":99,"polyfill/polyfill-base.js":79}],87:[function(require,module,exports){
+var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-nodisplay {\n    display: none; !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],88:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16990,7 +17457,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":60,"polyfill/extra/transition.js":52,"polyfill/extra/vendorCSS.js":54}],70:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"js-ext/lib/string.js":65,"polyfill":79,"polyfill/extra/transition.js":71,"polyfill/extra/vendorCSS.js":73}],89:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17418,7 +17885,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":60}],71:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"polyfill":79}],90:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18132,7 +18599,7 @@ module.exports = function (window) {
 
 
 
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":60}],72:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"js-ext/lib/string.js":65,"polyfill":79}],91:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -22841,7 +23308,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":68,"./attribute-extractor.js":69,"./element-array.js":70,"./html-parser.js":73,"./node-parser.js":74,"./vdom-ns.js":75,"./vnode.js":76,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"js-ext/lib/promise.js":45,"js-ext/lib/string.js":46,"polyfill":60,"polyfill/extra/transition.js":52,"polyfill/extra/transitionend.js":53,"polyfill/extra/vendorCSS.js":54,"utils":65,"window-ext":78}],73:[function(require,module,exports){
+},{"../css/element.css":87,"./attribute-extractor.js":88,"./element-array.js":89,"./html-parser.js":92,"./node-parser.js":93,"./vdom-ns.js":94,"./vnode.js":95,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"js-ext/lib/promise.js":64,"js-ext/lib/string.js":65,"polyfill":79,"polyfill/extra/transition.js":71,"polyfill/extra/transitionend.js":72,"polyfill/extra/vendorCSS.js":73,"utils":84,"window-ext":97}],92:[function(require,module,exports){
 "use strict";
 
 /**
@@ -23213,7 +23680,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":69,"./vdom-ns.js":75,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":60}],74:[function(require,module,exports){
+},{"./attribute-extractor.js":88,"./vdom-ns.js":94,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"polyfill":79}],93:[function(require,module,exports){
 "use strict";
 
 /**
@@ -23354,7 +23821,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":69,"./vdom-ns.js":75,"./vnode.js":76,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":60}],75:[function(require,module,exports){
+},{"./attribute-extractor.js":88,"./vdom-ns.js":94,"./vnode.js":95,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"polyfill":79}],94:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -23430,7 +23897,11 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap,
         LINK: true,
         META: true,
         PARAM: true,
-        EMBED: true
+        EMBED: true,
+        SOURCE: true,
+        TRACK: true,
+        WBR: true,
+        KEYGEN: true
     }),
 
     // Block Elements - HTML 4.01
@@ -23585,7 +24056,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"polyfill":60}],76:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"polyfill":79}],95:[function(require,module,exports){
 "use strict";
 
 /**
@@ -24522,7 +24993,7 @@ module.exports = function (window) {
             while (otherVNode && (otherVNode!==instance)) {
                 otherVNode = otherVNode.vParent;
                 if (otherVNode && noProtectedSearch && (otherVNode._systemNode || (otherVNode.isItag && otherVNode.domNode.contentHidden))) {
-                    return false;
+                    return (otherVNode===instance);
                 }
             }
             return (otherVNode===instance);
@@ -26324,7 +26795,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":69,"./html-parser.js":73,"./vdom-ns.js":75,"js-ext/extra/hashmap.js":36,"js-ext/extra/lightmap.js":37,"js-ext/lib/array.js":41,"js-ext/lib/object.js":44,"js-ext/lib/string.js":46,"polyfill":60,"utils/lib/timers.js":67}],77:[function(require,module,exports){
+},{"./attribute-extractor.js":88,"./html-parser.js":92,"./vdom-ns.js":94,"js-ext/extra/hashmap.js":55,"js-ext/extra/lightmap.js":56,"js-ext/lib/array.js":60,"js-ext/lib/object.js":63,"js-ext/lib/string.js":65,"polyfill":79,"utils/lib/timers.js":86}],96:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -26367,13 +26838,13 @@ module.exports = function (window) {
 
     window._ITSAmodules.VDOM = true;
 };
-},{"./partials/extend-document.js":71,"./partials/extend-element.js":72,"./partials/node-parser.js":74,"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44,"utils/lib/timers.js":67}],78:[function(require,module,exports){
+},{"./partials/extend-document.js":90,"./partials/extend-element.js":91,"./partials/node-parser.js":93,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"utils/lib/timers.js":86}],97:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":79}],79:[function(require,module,exports){
+},{"./lib/sizes.js":98}],98:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -26477,7 +26948,7 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/extra/hashmap.js":36,"js-ext/lib/object.js":44}],80:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63}],99:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -26682,6 +27153,7 @@ process.chdir = function (dir) {
         dragdrop;
 
     require('vdom')(window);
+    require('icons')(window);
 
     /**
      * Reference to the `idGenerator` function in [utils](../modules/utils.html)
@@ -26748,4 +27220,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"constrain":6,"css":10,"dialog":12,"drag-drop":14,"event":27,"event-dom/extra/blurnode.js":18,"event-dom/extra/focusnode.js":19,"event-dom/extra/hover.js":20,"event-dom/extra/valuechange.js":21,"event-mobile":22,"focusmanager":29,"io/extra/io-cors-ie9.js":30,"io/extra/io-stream.js":31,"io/extra/io-transfer.js":32,"io/extra/io-xml.js":33,"js-ext/extra/hashmap.js":36,"js-ext/extra/reserved-words.js":38,"js-ext/js-ext.js":40,"messages":47,"node-plugin":48,"node-win":undefined,"panel":50,"polyfill/polyfill.js":61,"scrollable":63,"useragent":64,"utils":65,"vdom":77,"window-ext":78}]},{},[]);
+},{"constrain":6,"css":10,"dialog":12,"drag-drop":14,"event":27,"event-dom/extra/blurnode.js":18,"event-dom/extra/focusnode.js":19,"event-dom/extra/hover.js":20,"event-dom/extra/valuechange.js":21,"event-mobile":22,"focusmanager":29,"icons":48,"io/extra/io-cors-ie9.js":49,"io/extra/io-stream.js":50,"io/extra/io-transfer.js":51,"io/extra/io-xml.js":52,"js-ext/extra/hashmap.js":55,"js-ext/extra/reserved-words.js":57,"js-ext/js-ext.js":59,"messages":66,"node-plugin":67,"node-win":undefined,"panel":69,"polyfill/polyfill.js":80,"scrollable":82,"useragent":83,"utils":84,"vdom":96,"window-ext":97}]},{},[]);
