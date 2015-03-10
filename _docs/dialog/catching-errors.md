@@ -23,5 +23,5 @@ intro: "This example shows how javascript-erros can be caught by dialog."
     var ITSA = require('itsa');
 
     ITSA.catchErrors(true);
-    throw new Error('An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured An error occured ');
+    throw new Error('An error occured');
 </script>

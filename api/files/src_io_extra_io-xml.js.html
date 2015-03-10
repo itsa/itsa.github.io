@@ -238,7 +238,11 @@ require(&#x27;js-ext&#x27;);
 
 var NAME = &#x27;[io-xml]: &#x27;,
     REGEXP_XML = /(?: )*(&lt;\?xml (?:.)*\?&gt;)(?: )*(&lt;(?:\w)+&gt;)/,
-    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
+    messages = require(&#x27;messages&#x27;),
+    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
+    MSG_READING = &#x27;reading...&#x27;,
+    SPINNER_ICON = &#x27;spinnercircle-anim&#x27;,
+    MIN_SHOWUP = 500;
 
 module.exports = function (window) {
 
@@ -339,7 +343,7 @@ module.exports = function (window) {
                 url: url,
                 data: params
             },
-            ioPromise, returnPromise;
+            ioPromise, returnPromise, message;
         options &amp;&amp; XMLOptions.merge(options);
         ioPromise = this.request(XMLOptions);
         returnPromise = ioPromise.then(
@@ -358,6 +362,10 @@ module.exports = function (window) {
         );
         // set &#x60;abort&#x60; to the thennable-promise:
         returnPromise.abort = ioPromise.abort;
+        message = messages.message(MSG_READING, {level: 4, icon: SPINNER_ICON, stayActive: MIN_SHOWUP});
+        returnPromise.finally(function() {
+            message.fulfill();
+        });
         return returnPromise;
     };
 

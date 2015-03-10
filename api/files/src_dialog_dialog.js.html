@@ -256,10 +256,9 @@ module.exports = function (window) {
     var DOCUMENT = window.document,
         Classes = require(&#x27;js-ext/extra/classes.js&#x27;),
         UTILS = require(&#x27;utils&#x27;),
-        messages = require(&#x27;messages&#x27;),
         later = UTILS.later,
         async = UTILS.async,
-        dialog, Dialog, Event, exportObject;
+        dialog, Dialog, Event;
 
     window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
@@ -375,41 +374,9 @@ module.exports = function (window) {
     // instantiate Dialog and make it operational:
     dialog = new Dialog();
 
-    exportObject = {
-        Dialog: Dialog,
-        getNumber: function(message, defaultValue, min, max, floated, options) {
-            options || (options = {});
-            options.defaultValue = defaultValue;
-            options.validate = function(e) {
-                var buttonNode = e.button,
-                    panelNode = buttonNode.inside(&#x27;[plugin-panel=&quot;true&quot;]&#x27;),
-                    inputNode = panelNode.getElement(&#x27;input&#x27;),
-                    value = inputNode.getValue(),
-                    validatesNumber = value.validateNumber(),
-                    numberWithinRange = true,
-                    number, validates;
-                if (validatesNumber &amp;&amp; (min || max)) {
-                    number = parseInt(value, 10);
-                    if (min) {
-                        numberWithinRange = (number&gt;=min);
-                    }
-                    if (max &amp;&amp; numberWithinRange) {
-                        numberWithinRange = (number&lt;=max);
-                    }
-                }
-                validates = validatesNumber &amp;&amp; numberWithinRange;
-                if (!validates) {
-                    inputNode.focus();
-                }
-                return validates;
-            };
-            return messages.prompt(message, options);
-        }
-    };
+    window._ITSAmodules.Dialog = Dialog;
 
-    window._ITSAmodules.Dialog = exportObject;
-
-    return exportObject;
+    return Dialog;
 };
     </pre>
 </div>
