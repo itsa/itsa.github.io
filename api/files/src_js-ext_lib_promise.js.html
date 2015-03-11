@@ -539,7 +539,7 @@ Promise.manage = function (callbackFn, stayActive) {
 
     promise.stayActive = function (time) {
         stayActivePromise = new Promise(function (fulfill) {
-            later(time, fulfill);
+            later(fulfill, time);
         });
     };
 

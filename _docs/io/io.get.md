@@ -57,7 +57,7 @@ Code-example:
     };
 
     ITSA.Event.after(
-        'click',
+        'tap',
         function() {
             ITSA.IO.get(url).then(writeResponse, errorResponse);
         },
@@ -82,7 +82,7 @@ Code-example:
     };
 
     ITSA.Event.after(
-        'click',
+        'tap',
         function() {
             ITSA.IO.get(url).then(writeResponse, errorResponse);
         },

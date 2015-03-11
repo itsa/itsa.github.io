@@ -235,12 +235,12 @@ require(&#x27;./css/dialog.css&#x27;);
 var NAME = &#x27;[dialog]: &#x27;,
     MESSAGE_LEVELS = {
         &#x27;message&#x27;: 1,
-        &#x27;warning&#x27;: 2,
+        &#x27;warn&#x27;: 2,
         &#x27;error&#x27;: 3
     },
     MESSAGE_HASHES = {
         &#x27;message&#x27;: &#x27;messages&#x27;,
-        &#x27;warning&#x27;: &#x27;warnings&#x27;,
+        &#x27;warn&#x27;: &#x27;warnings&#x27;,
         &#x27;error&#x27;: &#x27;errors&#x27;
     },
     MESSAGE_HASHES_NR = {
@@ -317,7 +317,7 @@ module.exports = function (window) {
         },
         setupListeners: function() {
             var instance = this;
-            Event.after([&#x27;*:message&#x27;, &#x27;*:warning&#x27;, &#x27;*:error&#x27;], instance.processMessage.bind(instance));
+            Event.after([&#x27;*:message&#x27;, &#x27;*:warn&#x27;, &#x27;*:error&#x27;], instance.processMessage.bind(instance));
         },
         isWaiting: function() {
             return (this.currentMessageLevel===0);

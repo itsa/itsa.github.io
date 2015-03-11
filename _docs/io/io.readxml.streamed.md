@@ -66,7 +66,7 @@ Code-example:
     };
 
     ITSA.Event.after(
-        'click',
+        'tap',
         function() {
             container.innerHTML = '';
             ITSA.IO.readXML(url, {example: 2}, {streamback: streamFn}).then(readyResponse, errorResponse);
@@ -98,7 +98,7 @@ Code-example:
     };
 
     ITSA.Event.after(
-        'click',
+        'tap',
         function() {
             container.innerHTML = '';
             ITSA.IO.readXML(url, {example: 2}, {streamback: streamFn}).then(readyResponse, errorResponse);
