@@ -426,7 +426,7 @@ module.exports = function (window) {
 /*jshint boss:true */
                 alwaysDefault = focusContainerNode._plugin.fm.model.alwaysdefault;
 /*jshint boss:false */
-                alwaysDefault &amp;&amp; (focusNode=focusContainerNode.getElement(&#x27;[fm-defaultitem=&quot;true&quot;]&#x27;));
+                alwaysDefault &amp;&amp; (focusNode=focusContainerNode.getElement(&#x27;[fm-defaultitem=&quot;true&quot;], [defaultitem=&quot;true&quot;]&#x27;)); // itags use attribute without &#x60;fm-&#x60;
                 if (!focusNode) {
                     // search for last item
                     focusNode = focusContainerNode.getElement(&#x27;[fm-lastitem=&quot;true&quot;]&#x27;);
@@ -440,7 +440,7 @@ module.exports = function (window) {
                     }
                 }
                 // still not found and alwaysDefault was falsy: try the defualt node:
-                !focusNode &amp;&amp; !alwaysDefault &amp;&amp; (focusNode=focusContainerNode.getElement(&#x27;[fm-defaultitem=&quot;true&quot;]&#x27;));
+                !focusNode &amp;&amp; !alwaysDefault &amp;&amp; (focusNode=focusContainerNode.getElement(&#x27;[fm-defaultitem=&quot;true&quot;], [defaultitem=&quot;true&quot;]&#x27;)); // itags use attribute without &#x60;fm-&#x60;
                 // still not found: try the first focussable node (which we might find inside &#x60;allFocusableNodes&#x60;:
                 !focusNode &amp;&amp; (focusNode = allFocusableNodes ? allFocusableNodes[0] : focusContainerNode.getElement(selector));
                 if (focusNode) {
@@ -640,7 +640,7 @@ module.exports = function (window) {
                 if (sourceNode.matches(selector)) {
                     // cautious: fm-selectionstart can be 0 --&gt; which would lead into a falsy value
                     selectionStart = sourceNode.getAttr(FM_SELECTION_START);
-                    (selectionStart===undefined) &amp;&amp; (selectionStart=sourceNode.getValue().length);
+                    (selectionStart===null) &amp;&amp; (selectionStart=sourceNode.getValue().length);
                     selectionEnd = Math.max(sourceNode.getAttr(FM_SELECTION_END) || selectionStart, selectionStart);
                     sourceNode.selectionEnd = selectionEnd;
                     sourceNode.selectionStart = selectionStart;

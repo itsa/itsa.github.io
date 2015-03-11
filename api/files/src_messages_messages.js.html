@@ -294,13 +294,13 @@ require(&#x27;polyfill&#x27;);
             });
         },
         prompt: function(message, options) {
-            var placeholder, defaultValue, label, icon, validate;
+            var placeholder, defaultValue, placeholder, label, icon;
             options || (options={});
             defaultValue = options.defaultValue;
             label = options.label;
             icon = options.icon;
-            validate = options.validate;
-            placeholder = defaultValue ? &#x27; value=&quot;&#x27;+String(defaultValue)+&#x27;&quot;&#x27; : &#x27;&#x27;;
+            defaultValue = defaultValue ? &#x27; value=&quot;&#x27;+defaultValue+&#x27;&quot;&#x27; : &#x27;&#x27;;
+            placeholder = placeholder ? &#x27; placeholder=&quot;&#x27;+placeholder+&#x27;&quot;&#x27; : &#x27;&#x27;;
             if ((typeof message ===&#x27;string&#x27;) || (message!==&#x27;&#x27;)) {
                 message = &#x27;&lt;div class=&quot;dialog-prompt&quot;&gt;&#x27;+message+&#x27;&lt;/div&gt;&#x27;;
             }
@@ -309,11 +309,10 @@ require(&#x27;polyfill&#x27;);
             }
             label = (typeof label===&#x27;string&#x27;) ? (label=&#x27;&lt;label for=&quot;iprompt&quot;&gt;&#x27;+label+&#x27;&lt;/label&gt;&#x27;) : &#x27;&#x27;;
             return this.message(
-                &#x27;&lt;div class=&quot;pure-form&quot;&gt;&#x27;+message+label+&#x27;&lt;input id=&quot;iprompt&quot; type=&quot;text&quot;&#x27;+placeholder+&#x27; fm-defaultitem=&quot;true&quot; fm-primaryonenter=&quot;true&quot;&gt;&lt;/div&gt;&#x27;,
+                &#x27;&lt;div class=&quot;pure-form&quot;&gt;&#x27;+message+label+&#x27;&lt;input id=&quot;iprompt&quot; type=&quot;text&quot;&#x27;+placeholder+defaultValue+&#x27; fm-defaultitem=&quot;true&quot; fm-primaryonenter=&quot;true&quot;&gt;&lt;/div&gt;&#x27;,
                 {
                     footer: &#x27;&lt;button is=&quot;cancel&quot; class=&quot;pure-button&quot;&gt;Cancel&lt;/button&gt;&lt;button is=&quot;ok&quot; class=&quot;pure-button pure-button-primary&quot;&gt;Ok&lt;/button&gt;&#x27;,
-                    icon: icon,
-                    validate: validate
+                    icon: icon
                 }
             ).then(function(container) {
                 var button = container.getElement(&#x27;button&#x27;);
