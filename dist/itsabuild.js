@@ -10349,7 +10349,7 @@ module.exports = function (window) {
 /*jshint boss:true */
                 alwaysDefault = focusContainerNode._plugin.fm.model.alwaysdefault;
 /*jshint boss:false */
-                alwaysDefault && (focusNode=focusContainerNode.getElement('[fm-defaultitem="true"]'));
+                alwaysDefault && (focusNode=focusContainerNode.getElement('[fm-defaultitem="true"], [defaultitem="true"]')); // itags use attribute without `fm-`
                 if (!focusNode) {
                     // search for last item
                     focusNode = focusContainerNode.getElement('[fm-lastitem="true"]');
@@ -10363,7 +10363,7 @@ module.exports = function (window) {
                     }
                 }
                 // still not found and alwaysDefault was falsy: try the defualt node:
-                !focusNode && !alwaysDefault && (focusNode=focusContainerNode.getElement('[fm-defaultitem="true"]'));
+                !focusNode && !alwaysDefault && (focusNode=focusContainerNode.getElement('[fm-defaultitem="true"], [defaultitem="true"]')); // itags use attribute without `fm-`
                 // still not found: try the first focussable node (which we might find inside `allFocusableNodes`:
                 !focusNode && (focusNode = allFocusableNodes ? allFocusableNodes[0] : focusContainerNode.getElement(selector));
                 if (focusNode) {
@@ -10563,7 +10563,7 @@ module.exports = function (window) {
                 if (sourceNode.matches(selector)) {
                     // cautious: fm-selectionstart can be 0 --> which would lead into a falsy value
                     selectionStart = sourceNode.getAttr(FM_SELECTION_START);
-                    (selectionStart===undefined) && (selectionStart=sourceNode.getValue().length);
+                    (selectionStart===null) && (selectionStart=sourceNode.getValue().length);
                     selectionEnd = Math.max(sourceNode.getAttr(FM_SELECTION_END) || selectionStart, selectionStart);
                     sourceNode.selectionEnd = selectionEnd;
                     sourceNode.selectionStart = selectionStart;
@@ -14624,13 +14624,13 @@ require('polyfill');
             });
         },
         prompt: function(message, options) {
-            var placeholder, defaultValue, label, icon, validate;
+            var placeholder, defaultValue, placeholder, label, icon;
             options || (options={});
             defaultValue = options.defaultValue;
             label = options.label;
             icon = options.icon;
-            validate = options.validate;
-            placeholder = defaultValue ? ' value="'+String(defaultValue)+'"' : '';
+            defaultValue = defaultValue ? ' value="'+defaultValue+'"' : '';
+            placeholder = placeholder ? ' placeholder="'+placeholder+'"' : '';
             if ((typeof message ==='string') || (message!=='')) {
                 message = '<div class="dialog-prompt">'+message+'</div>';
             }
@@ -14639,11 +14639,10 @@ require('polyfill');
             }
             label = (typeof label==='string') ? (label='<label for="iprompt">'+label+'</label>') : '';
             return this.message(
-                '<div class="pure-form">'+message+label+'<input id="iprompt" type="text"'+placeholder+' fm-defaultitem="true" fm-primaryonenter="true"></div>',
+                '<div class="pure-form">'+message+label+'<input id="iprompt" type="text"'+placeholder+defaultValue+' fm-defaultitem="true" fm-primaryonenter="true"></div>',
                 {
                     footer: '<button is="cancel" class="pure-button">Cancel</button><button is="ok" class="pure-button pure-button-primary">Ok</button>',
-                    icon: icon,
-                    validate: validate
+                    icon: icon
                 }
             ).then(function(container) {
                 var button = container.getElement('button');
