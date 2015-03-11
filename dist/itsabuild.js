@@ -2699,12 +2699,12 @@ require('./css/dialog.css');
 var NAME = '[dialog]: ',
     MESSAGE_LEVELS = {
         'message': 1,
-        'warning': 2,
+        'warn': 2,
         'error': 3
     },
     MESSAGE_HASHES = {
         'message': 'messages',
-        'warning': 'warnings',
+        'warn': 'warnings',
         'error': 'errors'
     },
     MESSAGE_HASHES_NR = {
@@ -2781,7 +2781,7 @@ module.exports = function (window) {
         },
         setupListeners: function() {
             var instance = this;
-            Event.after(['*:message', '*:warning', '*:error'], instance.processMessage.bind(instance));
+            Event.after(['*:message', '*:warn', '*:error'], instance.processMessage.bind(instance));
         },
         isWaiting: function() {
             return (this.currentMessageLevel===0);
@@ -4611,7 +4611,7 @@ module.exports = function (window) {
 
     // don't drag when the cursor is above an input, text, or editable element:
     Event.before(
-        '*:dd',
+        '*:'+DD_DRAG,
         function(e) {
             e.preventDefault();
         },
@@ -9144,7 +9144,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                 hashtable, item, notifier, customEventWildcardEventName, customEventWildcardEmitterName;
 
             if (!extract) {
-                console.error(NAME, 'subscribe-error: eventname does not match pattern');
+                console.error(NAME, 'subscribe-error: eventname '+customEvent+'does not match pattern');
                 return;
             }
 
@@ -9296,7 +9296,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
 
             extract = customEvent.match(REGEXP_CUSTOMEVENT);
             if (!extract) {
-                console.error(NAME, 'defined emit-event does not match pattern');
+                console.error(NAME, 'defined emit-event '+customEvent+' does not match pattern');
                 return;
             }
             emitterName = extract[1];
@@ -14240,7 +14240,7 @@ Promise.manage = function (callbackFn, stayActive) {
 
     promise.stayActive = function (time) {
         stayActivePromise = new Promise(function (fulfill) {
-            later(time, fulfill);
+            later(fulfill, time);
         });
     };
 
@@ -14567,7 +14567,7 @@ require('polyfill');
     var NAME = '[messages]: ',
         MESSAGE_LEVELS = {
             1: 'message',
-            2: 'warning',
+            2: 'warn',
             3: 'error',
             4: 'statusmessage' // message that should hold for minimum time, and/or removes by itself (IO uses these)
         },
