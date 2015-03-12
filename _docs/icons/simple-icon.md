@@ -10,7 +10,7 @@ intro: "This example shows how to generate a simple icon"
 <p class="spaced">Code-example:</p>
 
 ```html
-<i is="error"></i>
+<i icon="error"></i>
 ```
 
 ```js

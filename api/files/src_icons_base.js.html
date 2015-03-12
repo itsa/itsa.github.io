@@ -49,6 +49,8 @@
             
                 <li><a href="../classes/DD.html">DD</a></li>
             
+                <li><a href="../classes/Dialog.html">Dialog</a></li>
+            
                 <li><a href="../classes/document.html">document</a></li>
             
                 <li><a href="../classes/Element.html">Element</a></li>
@@ -67,9 +69,13 @@
             
                 <li><a href="../classes/HTMLElement.html">HTMLElement</a></li>
             
+                <li><a href="../classes/Icons.html">Icons</a></li>
+            
                 <li><a href="../classes/IO.html">IO</a></li>
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
+            
+                <li><a href="../classes/Messages.html">Messages</a></li>
             
                 <li><a href="../classes/Node.html">Node</a></li>
             
@@ -98,6 +104,8 @@
             <ul id="api-modules" class="apis modules">
             
                 <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
+            
+                <li><a href="../modules/dialog.html">dialog</a></li>
             
                 <li><a href="../modules/drag.html">drag</a></li>
             
@@ -131,6 +139,8 @@
             
                 <li><a href="../modules/html-parser.html">html-parser</a></li>
             
+                <li><a href="../modules/icons.html">icons</a></li>
+            
                 <li><a href="../modules/io.html">io</a></li>
             
                 <li><a href="../modules/io-assets.html">io-assets</a></li>
@@ -156,6 +166,8 @@
                 <li><a href="../modules/lib_promise.s.html">lib/promise.s</a></li>
             
                 <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
+            
+                <li><a href="../modules/messages.html">messages</a></li>
             
                 <li><a href="../modules/node-parser.html">node-parser</a></li>
             
@@ -223,8 +235,8 @@
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  *
- * @module panel
- * @class Panel
+ * @module icons
+ * @class Icons
  * @since 0.0.1
 */
 
@@ -255,6 +267,14 @@ module.exports = function (window) {
     // will be inserted as a system-node:
     iconContainer = DOCUMENT.body.getElement(&#x27;&gt;#itsa-icons-container&#x27;, true) || DOCUMENT.body.addSystemElement(&#x27;&lt;svg id=&quot;itsa-icons-container&quot;&gt;&lt;/svg&gt;&#x27;);
 
+    /**
+     * Upgrades the specified i-element into a svg-icon.
+     *
+     * @method upgradeIconElement
+     * @param element {HTMLElement}
+     * @protected
+     * @since 0.0.1
+     */
     upgradeIconElement = function(element) {
         // &#x60;element&#x60; is supposed to have the form: icon-&#x60;iconname&#x60;
         var iconName = element.getAttr(&#x27;icon&#x27;);
@@ -262,6 +282,14 @@ module.exports = function (window) {
         element.addSystemElement(&#x27;&lt;svg&gt;&lt;use xlink:href=&quot;#itsa-&#x27;+iconName+&#x27;-icon&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&#x27;); // silent by default
     };
 
+    /**
+     * Upgrades all i-elements that have an &#x60;icon&#x60;-attribute set.
+     * Will render them into svg-icons.
+     *
+     * @method upgradeDOM
+     * @protected
+     * @since 0.0.1
+     */
     upgradeDOM = function() {
         var upgrade = function(vnode) {
             var vChildren = vnode.vChildren,
@@ -302,6 +330,19 @@ module.exports = function (window) {
         }
     );
 
+    /**
+     * Defines a new svg-icon. With this icon-definition, icons can be used by usinf i-elements
+     * with the attribute: icon=&quot;iconname&quot;.
+     *
+     * @method defineIcon
+     * @for document
+     * @param iconName {String} unique iconname, which will be used with the attribute: icon=&quot;iconname&quot;
+     * @param viewBoxWidth {Number} pixels of the svg&#x27;s viewBoxWidth
+     * @param viewBoxHeight {Number} pixels of the svg&#x27;s viewBoxHeight
+     * @param svgContent {String} svg;s innercontent
+     * @chainable
+     * @since 0.0.1
+     */
     DOCUMENT.defineIcon = function(iconName, viewBoxWidth, viewBoxHeight, svgContent) {
         var viewBoxDimension = &#x27;0 0 &#x27;,
             iconId, currentDefinition;
@@ -314,6 +355,7 @@ module.exports = function (window) {
         else {
             iconContainer.append(&#x27;&lt;symbol id=&quot;&#x27;+iconId+&#x27;&quot; viewBox=&quot;&#x27;+viewBoxDimension+&#x27;&quot;&gt;&#x27;+svgContent+&#x27;&lt;/symbol&gt;&#x27;);
         }
+        return this;
     };
 
     upgradeDOM();

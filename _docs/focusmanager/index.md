@@ -52,7 +52,7 @@ The preferred way is to set the focusmanager through HTML, because you don't nee
 
 #Setting up with Plugin#
 
-A node can also be made a focusmanager by using the plugin which gets returned by the module (when required) and is available with `ITSA.Plugins.focusManager`. Additional config can be set through the second argument:
+A node can also be made a focusmanager by using the plugin which gets returned by the module (when required). Additional config can be set through the second argument:
 
 ####Example simple focusmanager by Plugin:####
 ```html
@@ -69,7 +69,7 @@ A node can also be made a focusmanager by using the plugin which gets returned b
     var ITSA = require('itsa'),
         containers = document.getAll('.pure-form');
 
-    containers.plug(ITSA.Plugins.focusManager);
+    containers.plug('fm');
 </script>
 ```
 
@@ -87,7 +87,7 @@ A node can also be made a focusmanager by using the plugin which gets returned b
     var ITSA = require('itsa'),
         containers = document.getAll('.managable-list');
 
-    containers.plug(ITSA.Plugins.focusManager, {manage: 'li'});
+    containers.plug('fm', {manage: 'li'});
 </script>
 ```
 

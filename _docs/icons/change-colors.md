@@ -2,7 +2,7 @@
 module: icons
 maintainer: Marco Asbreuk
 title: Change color
-intro: "This example shows how to generate a simple icon"
+intro: "This example shows how to generate a button with a different color"
 ---
 
 <style type="text/css">
