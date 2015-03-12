@@ -49,6 +49,8 @@
             
                 <li><a href="../classes/DD.html">DD</a></li>
             
+                <li><a href="../classes/Dialog.html">Dialog</a></li>
+            
                 <li><a href="../classes/document.html">document</a></li>
             
                 <li><a href="../classes/Element.html">Element</a></li>
@@ -67,9 +69,13 @@
             
                 <li><a href="../classes/HTMLElement.html">HTMLElement</a></li>
             
+                <li><a href="../classes/Icons.html">Icons</a></li>
+            
                 <li><a href="../classes/IO.html">IO</a></li>
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
+            
+                <li><a href="../classes/Messages.html">Messages</a></li>
             
                 <li><a href="../classes/Node.html">Node</a></li>
             
@@ -98,6 +104,8 @@
             <ul id="api-modules" class="apis modules">
             
                 <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
+            
+                <li><a href="../modules/dialog.html">dialog</a></li>
             
                 <li><a href="../modules/drag.html">drag</a></li>
             
@@ -131,6 +139,8 @@
             
                 <li><a href="../modules/html-parser.html">html-parser</a></li>
             
+                <li><a href="../modules/icons.html">icons</a></li>
+            
                 <li><a href="../modules/io.html">io</a></li>
             
                 <li><a href="../modules/io-assets.html">io-assets</a></li>
@@ -156,6 +166,8 @@
                 <li><a href="../modules/lib_promise.s.html">lib/promise.s</a></li>
             
                 <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
+            
+                <li><a href="../modules/messages.html">messages</a></li>
             
                 <li><a href="../modules/node-parser.html">node-parser</a></li>
             
@@ -222,8 +234,8 @@
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  *
- * @module panel
- * @class Panel
+ * @module messages
+ * @class Messages
  * @since 0.0.1
 */
 
@@ -257,6 +269,23 @@ require(&#x27;polyfill&#x27;);
     Event = require(&#x27;event&#x27;);
 
     messages = {
+        /**
+         * Sends a message (emits) and returns a promise. All option-properties will be merged into the promise.
+         * (even when not defined in the api)
+         *
+         * @method message
+         * @param message {String} The message to be send
+         * @param [options] {Object} The instance that is going to detach the customEvent
+         * @param [options.emitter=&#x27;global&#x27;] {String} the emitter of the message, will be used as emitterName of the customEvent.
+         * @param [options.icon] {String} an icon-name to be used (fe &quot;alert&quot;). The icon-name should be defined by the &#x60;icons&#x60;-module.
+         * @param [options.level=1] {Number} The level --&gt; 1=&#x27;message&#x27;, 2=&#x27;warn&#x27;, 3=&#x27;error&#x27;, 4=&#x27;statusmessage&#x27;.
+         * @param [options.header] {String} Can be used by a messagehandler to render the header.
+         * @param [options.footer] {String} Can be used by a messagehandler to render the footer.
+         * @param [options.timeout] {Number} When specified, the promise will be resolved after this period of time.
+         * @param [options.stayActive] {Number} When specified, the promise won&#x27;t resolved within this period of time.
+         * @return {Promise}
+         * @since 0.0.1
+        */
         message: function(message, options) {
             var messagePromise = global.Promise.manage(),
                 emitter, level, timeout, icon, stayActive;
@@ -280,12 +309,31 @@ require(&#x27;polyfill&#x27;);
             Event.emit(options.target || global, emitter+&#x27;:&#x27;+level, {messagePromise: messagePromise});
             return messagePromise;
         },
+
+        /**
+         * Sends a simple message
+         *
+         * @method alert
+         * @param message {String} The message to be send
+         * @param [icon] {String} an icon-name to be used (fe &quot;alert&quot;). The icon-name should be defined by the &#x60;icons&#x60;-module.
+         * @return {Promise}
+         * @since 0.0.1
+        */
         alert: function(message, icon) {
             return this.message(message, {
                 footer: &#x27;&lt;button class=&quot;pure-button pure-button-primary&quot;&gt;Ok&lt;/button&gt;&#x27;,
                 icon: icon
             });
         },
+
+        /**
+         * Sends a warning-message.
+         *
+         * @method warn
+         * @param message {String} The message to be send
+         * @return {Promise}
+         * @since 0.0.1
+        */
         warn: function(message) {
             return this.message(message, {
                 footer: &#x27;&lt;button class=&quot;pure-button pure-button-primary&quot;&gt;Ok&lt;/button&gt;&#x27;,
@@ -293,6 +341,25 @@ require(&#x27;polyfill&#x27;);
                 level: 2
             });
         },
+        /**
+         * Sends a prompt-message with an input-element.
+         *
+         * @method prompt
+         * @param message {String} The message to be send
+         * @param [options] {Object} The instance that is going to detach the customEvent
+         * @param [options.emitter=&#x27;global&#x27;] {String} the emitter of the message, will be used as emitterName of the customEvent.
+         * @param [options.defaultValue] {String} input&#x27;s default value.
+         * @param [options.label] {String} The label for the input-element.
+         * @param [options.placeholder] {String} The placeholder for the input-element.
+         * @param [options.icon] {String} an icon-name to be used (fe &quot;alert&quot;). The icon-name should be defined by the &#x60;icons&#x60;-module.
+         * @param [options.header] {String} Can be used by a messagehandler to render the header.
+         * @param [options.footer] {String} Can be used by a messagehandler to render the footer.
+         * @param [options.level=1] {Number} The level --&gt; 1=&#x27;message&#x27;, 2=&#x27;warn&#x27;, 3=&#x27;error&#x27;, 4=&#x27;statusmessage&#x27;.
+         * @param [options.timeout] {Number} When specified, the promise will be resolved after this period of time.
+         * @param [options.stayActive] {Number} When specified, the promise won&#x27;t resolved within this period of time.
+         * @return {Promise}
+         * @since 0.0.1
+        */
         prompt: function(message, options) {
             var placeholder, defaultValue, placeholder, label, icon;
             options || (options={});
@@ -321,6 +388,13 @@ require(&#x27;polyfill&#x27;);
                 }
             });
         },
+        /**
+         * To catch syste-errors into the message system. When set, errors won&#x27;t appear in the console.
+         *
+         * @method catchErrors
+         * @param catchOrNot {Boolean} Whether errors should be catched or not.
+         * @since 0.0.1
+        */
         catchErrors: function(catchOrNot) {
             // DO NOT use &#x60;this&#x60; --&gt; when merged, &#x60;this&#x60; will become the host
             // while &#x60;global.onerror&#x60; refers to &#x60;messages&#x60;

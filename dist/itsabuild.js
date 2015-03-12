@@ -2680,15 +2680,16 @@ var css = "[plugin-panel=\"true\"] div.dialog-message-icon,\n[plugin-panel=\"tru
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],12:[function(require,module,exports){
 "use strict";
 /**
- * Creating floating Panel-nodes which can be shown and hidden.
+ * Defines a dialog-panel to display messages.
+ * Every message that fulfills will get the dialog-content as well as the pressed button as return.
  *
  *
  * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  *
- * @module panel
- * @class Panel
+ * @module dialog
+ * @class Dialog
  * @since 0.0.1
 */
 
@@ -2735,18 +2736,74 @@ module.exports = function (window) {
     require('panel')(window);
     Event = require('event');
 
+    /**
+     * Model that is passed through to the Panel.
+     *
+     * @property model
+     * @default {
+            draggable: true
+       }
+     * @type Object
+     * @since 0.0.1
+     */
+
+    /**
+     * Internal property that tells what message-level is currently active.
+     *
+     * @property _currentMessageLevel
+     * @default 0
+     * @type Number
+     * @private
+     * @since 0.0.1
+     */
+
+    /**
+     * Internal hash all queued message with level=1 (*:message)
+     *
+     * @property messages
+     * @default []
+     * @type Array
+     * @since 0.0.1
+     */
+
+    /**
+     * Internal hash all queued message with level=2 (*:warn)
+     *
+     * @property warnings
+     * @default []
+     * @type Array
+     * @since 0.0.1
+     */
+
+    /**
+     * Internal hash all queued message with level=3 (*:error)
+     *
+     * @property errors
+     * @default []
+     * @type Array
+     * @since 0.0.1
+     */
     Dialog = Classes.createClass(function() {
         var instance = this;
         instance.model = {
             draggable: true
         };
-        instance.currentMessageLevel = 0;
+        instance._currentMessageLevel = 0;
         instance.messages = [];
         instance.warnings = [];
         instance.errors = [];
         instance.createContainer();
         instance.setupListeners();
     }, {
+
+       /**
+         * Creates a Panel-instance that will be used to display the messages.
+         * Sets instance.model as panel's model and defines model.callback
+         * which fulfills the message when a button on the dialog is pressed,
+         *
+         * @method createContainer
+         * @since 0.0.1
+         */
         createContainer: function() {
             var instance = this,
                 model = instance.model;
@@ -2763,7 +2820,15 @@ module.exports = function (window) {
             };
             instance.panel = DOCUMENT.createPanel(model);
         },
-        processMessage: function(e) {
+
+       /**
+         * Processes messages that are emitted by `messages`-module and add them in the queue.
+         *
+         * @method queueMessage
+         * @param e {Object} the eventobject
+         * @since 0.0.1
+         */
+        queueMessage: function(e) {
             var instance = this,
                 messagePromise = e.messagePromise,
                 type = e.type,
@@ -2777,15 +2842,39 @@ module.exports = function (window) {
                     instance.handleMessage(true);
                 }
             );
-            (level>instance.currentMessageLevel) && instance.handleMessage(!instance.isWaiting(), level);
+            (level>instance._currentMessageLevel) && instance.handleMessage(!instance.isWaiting(), level);
         },
+
+       /**
+         * Defines subscribers to the events: *:message, *:warn and *:error.
+         *
+         * @method setupListeners
+         * @since 0.0.1
+         */
         setupListeners: function() {
             var instance = this;
-            Event.after(['*:message', '*:warn', '*:error'], instance.processMessage.bind(instance));
+            Event.after(['*:message', '*:warn', '*:error'], instance.queueMessage.bind(instance));
         },
+
+       /**
+         * Tells whether `dialog` is waitin g for new messages and is currently iddle.
+         *
+         * @method isWaiting
+         * @return {Boolean} whether `dialog` is waitin g for new messages
+         * @since 0.0.1
+         */
         isWaiting: function() {
-            return (this.currentMessageLevel===0);
+            return (this._currentMessageLevel===0);
         },
+
+       /**
+         * Retrieves the next message from the queue and calls showMessage() if it finds one.
+         *
+         * @method handleMessage
+         * @param [delay] {Boolean} if there should be a delay between the previous dialog and the new one
+         * @param [level] {Number} to force handling a specific level
+         * @since 0.0.1
+         */
         handleMessage: function(delay, level) {
             var instance = this,
                 model = instance.model,
@@ -2805,7 +2894,7 @@ module.exports = function (window) {
             if (!level || (instance[MESSAGE_HASHES_NR[level]].length===0)) {
                 // DO NOT make messagePromise null: it sould be there as return value
                 // of the last message
-                instance.currentMessageLevel = 0;
+                instance._currentMessageLevel = 0;
                 model.header = null;
                 model.content = '';
                 model.footer = null;
@@ -2813,7 +2902,7 @@ module.exports = function (window) {
                 model.visible = false;
                 return;
             }
-            instance.currentMessageLevel = level;
+            instance._currentMessageLevel = level;
             // now process the highest message
             messagePromise = instance[MESSAGE_HASHES_NR[level]][0];
             if (delay) {
@@ -2824,6 +2913,14 @@ module.exports = function (window) {
                 async(instance.showMessage.bind(instance, messagePromise));
             }
         },
+
+       /**
+         * Shows the specified message-promise.
+         *
+         * @method showMessage
+         * @param messagePromise {Promise} the message to be shown.
+         * @since 0.0.1
+         */
         showMessage: function(messagePromise) {
             var model = this.model;
             model.messagePromise = messagePromise;
@@ -10800,8 +10897,8 @@ module.exports = function (window) {
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  *
- * @module panel
- * @class Panel
+ * @module icons
+ * @class Icons
  * @since 0.0.1
 */
 
@@ -10832,6 +10929,14 @@ module.exports = function (window) {
     // will be inserted as a system-node:
     iconContainer = DOCUMENT.body.getElement('>#itsa-icons-container', true) || DOCUMENT.body.addSystemElement('<svg id="itsa-icons-container"></svg>');
 
+    /**
+     * Upgrades the specified i-element into a svg-icon.
+     *
+     * @method upgradeIconElement
+     * @param element {HTMLElement}
+     * @protected
+     * @since 0.0.1
+     */
     upgradeIconElement = function(element) {
         // `element` is supposed to have the form: icon-`iconname`
         var iconName = element.getAttr('icon');
@@ -10839,6 +10944,14 @@ module.exports = function (window) {
         element.addSystemElement('<svg><use xlink:href="#itsa-'+iconName+'-icon"></use></svg>'); // silent by default
     };
 
+    /**
+     * Upgrades all i-elements that have an `icon`-attribute set.
+     * Will render them into svg-icons.
+     *
+     * @method upgradeDOM
+     * @protected
+     * @since 0.0.1
+     */
     upgradeDOM = function() {
         var upgrade = function(vnode) {
             var vChildren = vnode.vChildren,
@@ -10879,6 +10992,19 @@ module.exports = function (window) {
         }
     );
 
+    /**
+     * Defines a new svg-icon. With this icon-definition, icons can be used by usinf i-elements
+     * with the attribute: icon="iconname".
+     *
+     * @method defineIcon
+     * @for document
+     * @param iconName {String} unique iconname, which will be used with the attribute: icon="iconname"
+     * @param viewBoxWidth {Number} pixels of the svg's viewBoxWidth
+     * @param viewBoxHeight {Number} pixels of the svg's viewBoxHeight
+     * @param svgContent {String} svg;s innercontent
+     * @chainable
+     * @since 0.0.1
+     */
     DOCUMENT.defineIcon = function(iconName, viewBoxWidth, viewBoxHeight, svgContent) {
         var viewBoxDimension = '0 0 ',
             iconId, currentDefinition;
@@ -10891,6 +11017,7 @@ module.exports = function (window) {
         else {
             iconContainer.append('<symbol id="'+iconId+'" viewBox="'+viewBoxDimension+'">'+svgContent+'</symbol>');
         }
+        return this;
     };
 
     upgradeDOM();
@@ -14552,8 +14679,8 @@ Promise.manage = function (callbackFn, stayActive) {
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  *
- * @module panel
- * @class Panel
+ * @module messages
+ * @class Messages
  * @since 0.0.1
 */
 
@@ -14587,6 +14714,23 @@ require('polyfill');
     Event = require('event');
 
     messages = {
+        /**
+         * Sends a message (emits) and returns a promise. All option-properties will be merged into the promise.
+         * (even when not defined in the api)
+         *
+         * @method message
+         * @param message {String} The message to be send
+         * @param [options] {Object} The instance that is going to detach the customEvent
+         * @param [options.emitter='global'] {String} the emitter of the message, will be used as emitterName of the customEvent.
+         * @param [options.icon] {String} an icon-name to be used (fe "alert"). The icon-name should be defined by the `icons`-module.
+         * @param [options.level=1] {Number} The level --> 1='message', 2='warn', 3='error', 4='statusmessage'.
+         * @param [options.header] {String} Can be used by a messagehandler to render the header.
+         * @param [options.footer] {String} Can be used by a messagehandler to render the footer.
+         * @param [options.timeout] {Number} When specified, the promise will be resolved after this period of time.
+         * @param [options.stayActive] {Number} When specified, the promise won't resolved within this period of time.
+         * @return {Promise}
+         * @since 0.0.1
+        */
         message: function(message, options) {
             var messagePromise = global.Promise.manage(),
                 emitter, level, timeout, icon, stayActive;
@@ -14610,12 +14754,31 @@ require('polyfill');
             Event.emit(options.target || global, emitter+':'+level, {messagePromise: messagePromise});
             return messagePromise;
         },
+
+        /**
+         * Sends a simple message
+         *
+         * @method alert
+         * @param message {String} The message to be send
+         * @param [icon] {String} an icon-name to be used (fe "alert"). The icon-name should be defined by the `icons`-module.
+         * @return {Promise}
+         * @since 0.0.1
+        */
         alert: function(message, icon) {
             return this.message(message, {
                 footer: '<button class="pure-button pure-button-primary">Ok</button>',
                 icon: icon
             });
         },
+
+        /**
+         * Sends a warning-message.
+         *
+         * @method warn
+         * @param message {String} The message to be send
+         * @return {Promise}
+         * @since 0.0.1
+        */
         warn: function(message) {
             return this.message(message, {
                 footer: '<button class="pure-button pure-button-primary">Ok</button>',
@@ -14623,6 +14786,25 @@ require('polyfill');
                 level: 2
             });
         },
+        /**
+         * Sends a prompt-message with an input-element.
+         *
+         * @method prompt
+         * @param message {String} The message to be send
+         * @param [options] {Object} The instance that is going to detach the customEvent
+         * @param [options.emitter='global'] {String} the emitter of the message, will be used as emitterName of the customEvent.
+         * @param [options.defaultValue] {String} input's default value.
+         * @param [options.label] {String} The label for the input-element.
+         * @param [options.placeholder] {String} The placeholder for the input-element.
+         * @param [options.icon] {String} an icon-name to be used (fe "alert"). The icon-name should be defined by the `icons`-module.
+         * @param [options.header] {String} Can be used by a messagehandler to render the header.
+         * @param [options.footer] {String} Can be used by a messagehandler to render the footer.
+         * @param [options.level=1] {Number} The level --> 1='message', 2='warn', 3='error', 4='statusmessage'.
+         * @param [options.timeout] {Number} When specified, the promise will be resolved after this period of time.
+         * @param [options.stayActive] {Number} When specified, the promise won't resolved within this period of time.
+         * @return {Promise}
+         * @since 0.0.1
+        */
         prompt: function(message, options) {
             var placeholder, defaultValue, placeholder, label, icon;
             options || (options={});
@@ -14651,6 +14833,13 @@ require('polyfill');
                 }
             });
         },
+        /**
+         * To catch syste-errors into the message system. When set, errors won't appear in the console.
+         *
+         * @method catchErrors
+         * @param catchOrNot {Boolean} Whether errors should be catched or not.
+         * @since 0.0.1
+        */
         catchErrors: function(catchOrNot) {
             // DO NOT use `this` --> when merged, `this` will become the host
             // while `global.onerror` refers to `messages`
@@ -14796,7 +14985,7 @@ module.exports = function (window) {
         config || (config={});
         // read the current ns-attributes on the node, overrule them with config and set the new attributes
         attrs.each(function(value, key) {
-            attrValue = config[key] || host.getAttr(ns+key) || defaults[key];
+            attrValue = config.hasKey(key) ? config[key] : (host.getAttr(ns+key) || defaults[key]);
             attrValue = String(attrValue);
             if (attrValue) {
                 switch (value.toLowerCase()) {
@@ -15091,7 +15280,9 @@ module.exports = function (window) {
             defineWhenUndefined: function(key, value) {
                 var instance = this,
                     model = this.model;
-                model[key] || (model[key]=value);
+                if (value!==undefined) {
+                    model.hasKey(key) || (model[key]=value);
+                }
                 return instance;
             },
             /*
@@ -20553,7 +20744,7 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         ElementPrototype.hasFocusInside = function() {
-            return this.contains(DOCUMENT.activeElement, true);
+            return this.contains(DOCUMENT.activeElement, true, true);
         };
 
        /**
@@ -20704,7 +20895,7 @@ module.exports = function (window) {
             }
             else {
                 // selector should be an Element
-                return ((selector!==instance) && selector.contains(instance)) ? selector : false;
+                return ((selector!==instance) && selector.contains(instance, false, true)) ? selector : false;
             }
         };
 

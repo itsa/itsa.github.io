@@ -146,7 +146,7 @@ var Rectangle = Shape.subClass(
 );
 var Square = Rectangle.subClass(
     function (x, y, l) {
-        this;$super.$superProp('constructor', x, y);
+        this.$super.$superProp('constructor', x, y);
         this.l = l || 0;
     }, null, false
 );

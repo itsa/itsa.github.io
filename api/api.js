@@ -5,6 +5,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "BaseClass",
         "Classes",
         "DD",
+        "Dialog",
         "Element",
         "ElementArray",
         "Event",
@@ -15,6 +16,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "HTMLElement",
         "IO",
         "ITSA",
+        "Icons",
+        "Messages",
         "NS-vdom",
         "Node",
         "NodePlugin",
@@ -30,6 +33,7 @@ YUI.add("yuidoc-meta", function(Y) {
     ],
     "modules": [
         "attribute-extractor",
+        "dialog",
         "drag",
         "drag-drop",
         "element-array",
@@ -46,6 +50,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "extra/classes.js",
         "focusmanager",
         "html-parser",
+        "icons",
         "io",
         "io-assets",
         "io-cors",
@@ -59,6 +64,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "lib/object.js",
         "lib/promise.s",
         "lib/string.js",
+        "messages",
         "node-parser",
         "node-plugin",
         "node-win",
@@ -74,6 +80,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "attribute-extractor",
             "name": "attribute-extractor",
             "description": "Exports `htmlToVNodes` which transforms html-text into vnodes.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "dialog",
+            "name": "dialog",
+            "description": "Defines a dialog-panel to display messages.\nEvery message that fulfills will get the dialog-content as well as the pressed button as return.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "drag",
@@ -156,6 +167,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "description": "Exports `htmlToVNodes` which transforms html-text into vnodes.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
+            "displayName": "icons",
+            "name": "icons",
+            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
             "displayName": "io",
             "name": "io",
             "description": "Provides core IO-functionality.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
@@ -218,6 +234,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "lib/string.js",
             "name": "lib_string.js",
             "description": "Pollyfils for often used functionality for Strings\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "messages",
+            "name": "messages",
+            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "node-parser",

@@ -57,8 +57,12 @@
         },
         "src/dialog/dialog.js": {
             "name": "src/dialog/dialog.js",
-            "modules": {},
-            "classes": {},
+            "modules": {
+                "dialog": 1
+            },
+            "classes": {
+                "Dialog": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -239,13 +243,6 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/icons/extra-animated-icons/audiocenter-anim.js": {
-            "name": "src/icons/extra-animated-icons/audiocenter-anim.js",
-            "modules": {},
-            "classes": {},
-            "fors": {},
-            "namespaces": {}
-        },
         "src/icons/extra-animated-icons/grid-anim.js": {
             "name": "src/icons/extra-animated-icons/grid-anim.js",
             "modules": {},
@@ -276,9 +273,15 @@
         },
         "src/icons/base.js": {
             "name": "src/icons/base.js",
-            "modules": {},
-            "classes": {},
-            "fors": {},
+            "modules": {
+                "icons": 1
+            },
+            "classes": {
+                "Icons": 1
+            },
+            "fors": {
+                "document": 1
+            },
             "namespaces": {}
         },
         "src/icons/index.js": {
@@ -447,8 +450,12 @@
         },
         "src/messages/messages.js": {
             "name": "src/messages/messages.js",
-            "modules": {},
-            "classes": {},
+            "modules": {
+                "messages": 1
+            },
+            "classes": {
+                "Messages": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -642,18 +649,18 @@
         }
     },
     "modules": {
-        "panel": {
-            "name": "panel",
+        "dialog": {
+            "name": "dialog",
             "submodules": {},
             "classes": {
-                "Panel": 1
+                "Dialog": 1
             },
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "src/panel/panel.js",
+            "file": "src/dialog/dialog.js",
             "line": 2,
-            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "description": "Defines a dialog-panel to display messages.\nEvery message that fulfills will get the dialog-content as well as the pressed button as return.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "since": "0.0.1"
         },
         "drag": {
@@ -857,6 +864,36 @@
             "file": "src/scrollable/scrollable.js",
             "line": 7,
             "description": "<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "since": "0.0.1"
+        },
+        "panel": {
+            "name": "panel",
+            "submodules": {},
+            "classes": {
+                "Panel": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "src/panel/panel.js",
+            "line": 2,
+            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "since": "0.0.1"
+        },
+        "icons": {
+            "name": "icons",
+            "submodules": {},
+            "classes": {
+                "Icons": 1
+            },
+            "fors": {
+                "document": 1
+            },
+            "namespaces": {},
+            "tag": "module",
+            "file": "src/icons/base.js",
+            "line": 2,
+            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "since": "0.0.1"
         },
         "io": {
@@ -1099,6 +1136,20 @@
             "line": 3,
             "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
+        "messages": {
+            "name": "messages",
+            "submodules": {},
+            "classes": {
+                "Messages": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "src/messages/messages.js",
+            "line": 1,
+            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "since": "0.0.1"
+        },
         "node-plugin": {
             "name": "node-plugin",
             "submodules": {},
@@ -1171,8 +1222,8 @@
                 "vnode": 1
             },
             "classes": {
-                "ElementArray": 1,
                 "document": 1,
+                "ElementArray": 1,
                 "Element": 1,
                 "Node": 1,
                 "NS-vdom": 1,
@@ -1314,19 +1365,19 @@
         }
     },
     "classes": {
-        "Panel": {
-            "name": "Panel",
-            "shortname": "Panel",
+        "Dialog": {
+            "name": "Dialog",
+            "shortname": "Dialog",
             "classitems": [],
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "module": "panel",
+            "module": "dialog",
             "namespace": "",
-            "file": "src/panel/panel.js",
+            "file": "src/dialog/dialog.js",
             "line": 2,
-            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+            "description": "Defines a dialog-panel to display messages.\nEvery message that fulfills will get the dialog-content as well as the pressed button as return.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "DD": {
             "name": "DD",
@@ -1412,6 +1463,49 @@
             "file": "src/scrollable/scrollable.js",
             "line": 7,
             "description": "<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        "Panel": {
+            "name": "Panel",
+            "shortname": "Panel",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "panel",
+            "namespace": "",
+            "file": "src/panel/panel.js",
+            "line": 2,
+            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        "Icons": {
+            "name": "Icons",
+            "shortname": "Icons",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "icons",
+            "namespace": "",
+            "file": "src/icons/base.js",
+            "line": 2,
+            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        "document": {
+            "name": "document",
+            "shortname": "document",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "vdom",
+            "namespace": "",
+            "file": "src/vdom/partials/extend-document.js",
+            "line": 3,
+            "description": "Provides several methods that override native document-methods to work with the vdom.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "submodule": "extend-document"
         },
         "IO": {
             "name": "IO",
@@ -1559,6 +1653,20 @@
             "line": 3,
             "description": "Provides additional Promise-methods. These are extra methods which are not part of the PromiseA+ specification,\nBut are all Promise/A+ compatable.\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
+        "Messages": {
+            "name": "Messages",
+            "shortname": "Messages",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "messages",
+            "namespace": "",
+            "file": "src/messages/messages.js",
+            "line": 1,
+            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
         "NodePlugin": {
             "name": "NodePlugin",
             "shortname": "NodePlugin",
@@ -1641,21 +1749,6 @@
             "line": 3,
             "description": "Extends Array into an array with special utility-methods that can be applied upon its members.\nThe membres should be vElement's\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
-        "document": {
-            "name": "document",
-            "shortname": "document",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "vdom",
-            "submodule": "extend-document",
-            "namespace": "",
-            "file": "src/vdom/partials/extend-document.js",
-            "line": 3,
-            "description": "Provides several methods that override native document-methods to work with the vdom.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
         "Element": {
             "name": "Element",
             "shortname": "Element",
@@ -1731,19 +1824,19 @@
                 "type": "Object"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
             "line": 43,
             "description": "Registered modules.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
             "line": 49,
             "description": "Registered aliases.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1761,7 +1854,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1784,7 +1877,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1803,7 +1896,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1822,7 +1915,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1840,31 +1933,31 @@
                 "type": "Function"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
             "line": 153,
             "description": "lastIndexOf helper.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
             "line": 165,
             "description": "The relative require() itself.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
             "line": 174,
             "description": "Resolve relative to the parent.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
             "line": 193,
             "description": "Check if module is defined at `path`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1887,7 +1980,7 @@
                     "type": "Callee"
                 }
             ],
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1904,7 +1997,7 @@
                 "description": "object that can be `JSON.stringify`",
                 "type": "Object"
             },
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1922,13 +2015,13 @@
                 "type": "String"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
             "line": 364,
             "description": "### Library\n\nCreate a repository for custom type detection.\n\n```js\nvar lib = new type.Library;\n```",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1945,7 +2038,7 @@
                 "description": "type",
                 "type": "String"
             },
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1964,7 +2057,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -1987,7 +2080,7 @@
                 "type": "Boolean"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2014,7 +2107,7 @@
                 "description": "equal match",
                 "type": "Boolean"
             },
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2032,7 +2125,7 @@
                 "type": "This"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2046,7 +2139,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2060,7 +2153,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2074,7 +2167,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2082,7 +2175,7 @@
             "description": "### Language Chains\n\nThe following are provided as chainable getters to\nimprove the readability of your assertions. They\ndo not provide testing capabilities unless they\nhave been overwritten by a plugin.\n\n**Chains**\n\n- to\n- be\n- been\n- is\n- that\n- and\n- has\n- have\n- with\n- at\n- of\n- same",
             "name": "language chains",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2090,7 +2183,7 @@
             "description": "### .not\n\nNegates any of assertions following in the chain.\n\n    expect(foo).to.not.equal('bar');\n    expect(goodFn).to.not.throw(Error);\n    expect({ foo: 'baz' }).to.have.property('foo')\n      .and.not.equal('bar');",
             "name": "not",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2098,7 +2191,7 @@
             "description": "### .deep\n\nSets the `deep` flag, later used by the `equal` and\n`property` assertions.\n\n    expect(foo).to.deep.equal({ bar: 'baz' });\n    expect({ foo: { bar: { baz: 'quux' } } })\n      .to.have.deep.property('foo.bar.baz', 'quux');",
             "name": "deep",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2119,7 +2212,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2140,7 +2233,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2148,7 +2241,7 @@
             "description": "### .ok\n\nAsserts that the target is truthy.\n\n    expect('everthing').to.be.ok;\n    expect(1).to.be.ok;\n    expect(false).to.not.be.ok;\n    expect(undefined).to.not.be.ok;\n    expect(null).to.not.be.ok;",
             "name": "ok",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2156,7 +2249,7 @@
             "description": "### .true\n\nAsserts that the target is `true`.\n\n    expect(true).to.be.true;\n    expect(1).to.not.be.true;",
             "name": "true",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2164,7 +2257,7 @@
             "description": "### .false\n\nAsserts that the target is `false`.\n\n    expect(false).to.be.false;\n    expect(0).to.not.be.false;",
             "name": "false",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2172,7 +2265,7 @@
             "description": "### .null\n\nAsserts that the target is `null`.\n\n    expect(null).to.be.null;\n    expect(undefined).not.to.be.null;",
             "name": "null",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2180,7 +2273,7 @@
             "description": "### .undefined\n\nAsserts that the target is `undefined`.\n\n    expect(undefined).to.be.undefined;\n    expect(null).to.not.be.undefined;",
             "name": "undefined",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2188,7 +2281,7 @@
             "description": "### .exist\n\nAsserts that the target is neither `null` nor `undefined`.\n\n    var foo = 'hi'\n      , bar = null\n      , baz;\n\n    expect(foo).to.exist;\n    expect(bar).to.not.exist;\n    expect(baz).to.not.exist;",
             "name": "exist",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2196,7 +2289,7 @@
             "description": "### .empty\n\nAsserts that the target's length is `0`. For arrays, it checks\nthe `length` property. For objects, it gets the count of\nenumerable keys.\n\n    expect([]).to.be.empty;\n    expect('').to.be.empty;\n    expect({}).to.be.empty;",
             "name": "empty",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2205,7 +2298,7 @@
             "name": "arguments",
             "alias": "Arguments",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2226,7 +2319,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2247,7 +2340,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2268,7 +2361,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2289,7 +2382,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2310,7 +2403,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2331,7 +2424,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2356,7 +2449,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2377,7 +2470,7 @@
             ],
             "alias": "instanceOf",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2406,7 +2499,7 @@
                 "description": "value of property for chaining"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2427,7 +2520,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2448,7 +2541,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2468,7 +2561,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2488,7 +2581,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2504,7 +2597,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2536,7 +2629,7 @@
                 "description": "error for chaining (null if no error)"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2556,7 +2649,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2564,7 +2657,7 @@
             "description": "### .itself\n\nSets the `itself` flag, later used by the `respondTo` assertion.\n\n    function Foo() {}\n    Foo.bar = function() {}\n    Foo.prototype.baz = function() {}\n\n    expect(Foo).itself.to.respondTo('bar');\n    expect(Foo).itself.not.to.respondTo('baz');",
             "name": "itself",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2584,7 +2677,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2609,7 +2702,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2629,7 +2722,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2649,7 +2742,7 @@
             ],
             "name": "assert",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2679,7 +2772,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2699,7 +2792,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2719,7 +2812,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2744,7 +2837,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2769,7 +2862,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2794,7 +2887,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2819,7 +2912,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2844,7 +2937,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2869,7 +2962,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2889,7 +2982,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2909,7 +3002,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2929,7 +3022,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2949,7 +3042,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2969,7 +3062,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -2989,7 +3082,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3009,7 +3102,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3029,7 +3122,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3049,7 +3142,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3069,7 +3162,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3089,7 +3182,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3109,7 +3202,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3129,7 +3222,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3149,7 +3242,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3169,7 +3262,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3189,7 +3282,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3209,7 +3302,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3229,7 +3322,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3254,7 +3347,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3279,7 +3372,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3304,7 +3397,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3329,7 +3422,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3354,7 +3447,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3379,7 +3472,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3404,7 +3497,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3429,7 +3522,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3454,7 +3547,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3479,7 +3572,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3504,7 +3597,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3529,7 +3622,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3559,7 +3652,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3589,7 +3682,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3619,7 +3712,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3649,7 +3742,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3674,7 +3767,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3708,7 +3801,7 @@
                 "https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types"
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3741,7 +3834,7 @@
                 "https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error#Error_types"
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3771,7 +3864,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3801,7 +3894,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3826,7 +3919,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3851,7 +3944,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3881,7 +3974,7 @@
             ],
             "name": "addChainableMethod",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3906,7 +3999,7 @@
             ],
             "name": "addMethod",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3931,7 +4024,7 @@
             ],
             "name": "addProperty",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3956,7 +4049,7 @@
             ],
             "name": "flag",
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3974,7 +4067,7 @@
                     "type": "Arguments"
                 }
             ],
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -3993,7 +4086,7 @@
             },
             "name": "getEnumerableProperties",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -4013,7 +4106,7 @@
             ],
             "name": "getMessage",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -4026,7 +4119,7 @@
                     "type": "Function"
                 }
             ],
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -4050,7 +4143,7 @@
             },
             "name": "getPathValue",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -4069,7 +4162,7 @@
             },
             "name": "getProperties",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -4097,7 +4190,7 @@
                     "type": "Boolean"
                 }
             ],
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -4112,7 +4205,7 @@
             ],
             "name": "objDisplay",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -4137,7 +4230,7 @@
             ],
             "name": "overwriteMethod",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -4162,7 +4255,7 @@
             ],
             "name": "overwriteProperty",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -4192,7 +4285,7 @@
             ],
             "name": "overwriteChainableMethod",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -4210,7 +4303,7 @@
                     "type": "Arguments"
                 }
             ],
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -4235,7 +4328,7 @@
             ],
             "name": "getAllFlags",
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/chai.js",
@@ -4250,80 +4343,80 @@
             ],
             "name": "type",
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 419,
             "description": "Module exports.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 425,
             "description": "Check if `obj` is an array.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 433,
             "description": "Event emitter constructor.",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 441,
             "description": "Adds a listener.",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 465,
             "description": "Adds a volatile listener.",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 485,
             "description": "Removes a listener.",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 522,
             "description": "Removes all listeners for an event.",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 541,
             "description": "Gets all listeners for a certain event.",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 563,
             "description": "Emits an event.",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 607,
             "description": "Expose `Progress`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 613,
             "description": "Initialize a new `Progress` indicator.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4341,7 +4434,7 @@
                 "type": "Progress"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4359,7 +4452,7 @@
                 "type": "Progress"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4377,7 +4470,7 @@
                 "type": "Progress"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4394,7 +4487,7 @@
                 "description": "for chaining",
                 "type": "Progress"
             },
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4411,7 +4504,7 @@
                 "description": "for chaining",
                 "type": "Progress"
             },
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4428,20 +4521,20 @@
                 "description": "for chaining",
                 "type": "Progress"
             },
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 754,
             "description": "Expose `Context`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 760,
             "description": "Initialize a new `Context`.",
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4459,7 +4552,7 @@
                 "type": "Context"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4477,7 +4570,7 @@
                 "type": "Context"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4495,7 +4588,7 @@
                 "type": "Context"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4513,7 +4606,7 @@
                 "type": "Context"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4524,19 +4617,19 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 842,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 848,
             "description": "Expose `Hook`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4555,13 +4648,13 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 867,
             "description": "Inherit from `Runnable.prototype`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4579,253 +4672,253 @@
                 "type": "Error"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 899,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 907,
             "description": "BDD-style interface:\n\n     describe('Array', function(){\n       describe('#indexOf()', function(){\n         it('should return -1 when not present', function(){\n\n         });\n\n         it('should return the index when present', function(){\n\n         });\n       });\n     });",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 929,
             "description": "Execute before running tests.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 937,
             "description": "Execute after running tests.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 945,
             "description": "Execute before each test case.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 953,
             "description": "Execute after each test case.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 961,
             "description": "Describe a \"suite\" with the given `title`\nand callback `fn` containing nested suites\nand/or tests.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 976,
             "description": "Pending describe.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 990,
             "description": "Exclusive suite.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1000,
             "description": "Describe a specification or test-case\nwith the given `title` and callback `fn`\nacting as a thunk.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1015,
             "description": "Exclusive test-case.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1026,
             "description": "Pending test case.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1042,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1049,
             "description": "TDD-style interface:\n\n    exports.Array = {\n      '#indexOf()': {\n        'should return -1 when the value is not present': function(){\n\n        },\n\n        'should return the correct index when the value is present': function(){\n\n        }\n      }\n    };",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1117,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1125,
             "description": "QUnit-style interface:\n\n    suite('Array');\n\n    test('#length', function(){\n      var arr = [1,2,3];\n      ok(arr.length == 3);\n    });\n\n    test('#indexOf()', function(){\n      var arr = [1,2,3];\n      ok(arr.indexOf(1) == 0);\n      ok(arr.indexOf(2) == 1);\n      ok(arr.indexOf(3) == 2);\n    });\n\n    suite('String');\n\n    test('#length', function(){\n      ok('foo'.length == 3);\n    });",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1155,
             "description": "Execute before running tests.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1163,
             "description": "Execute after running tests.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1171,
             "description": "Execute before each test case.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1179,
             "description": "Execute after each test case.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1187,
             "description": "Describe a \"suite\" with the given `title`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1199,
             "description": "Exclusive test-case.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1208,
             "description": "Describe a specification or test-case\nwith the given `title` and callback `fn`\nacting as a thunk.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1221,
             "description": "Exclusive test-case.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1231,
             "description": "Pending test case.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1245,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1253,
             "description": "TDD-style interface:\n\n     suite('Array', function(){\n       suite('#indexOf()', function(){\n         suiteSetup(function(){\n\n         });\n\n         test('should return -1 when not present', function(){\n\n         });\n\n         test('should return the index when present', function(){\n\n         });\n\n         suiteTeardown(function(){\n\n         });\n       });\n     });",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1283,
             "description": "Execute before each test case.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1291,
             "description": "Execute after each test case.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1299,
             "description": "Execute before the suite.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1307,
             "description": "Execute after the suite.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1315,
             "description": "Describe a \"suite\" with the given `title`\nand callback `fn` containing nested suites\nand/or tests.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1330,
             "description": "Pending suite.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1341,
             "description": "Exclusive test-case.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1350,
             "description": "Describe a specification or test-case\nwith the given `title` and callback `fn`\nacting as a thunk.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1365,
             "description": "Exclusive test-case.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1375,
             "description": "Pending test case.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1394,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1401,
             "description": "Expose `Mocha`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1407,
             "description": "To require local UIs and reporters when running in node.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1417,
             "description": "Expose internals.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4843,7 +4936,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4857,7 +4950,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4872,7 +4965,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4886,7 +4979,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4900,7 +4993,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4914,21 +5007,21 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1557,
             "description": "Load registered files.",
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1576,
             "description": "Enable growl support.",
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4946,7 +5039,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4957,7 +5050,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4975,7 +5068,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4986,7 +5079,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -4997,7 +5090,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5015,7 +5108,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5033,7 +5126,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5051,7 +5144,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5069,7 +5162,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5087,7 +5180,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5105,7 +5198,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5116,7 +5209,7 @@
                 "type": "Mocha"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5134,13 +5227,13 @@
                 "type": "Runner"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1788,
             "description": "Helpers.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5163,7 +5256,7 @@
                 "type": "String|Number"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5181,7 +5274,7 @@
                 "type": "Number"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5199,7 +5292,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5217,61 +5310,61 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1888,
             "description": "Pluralization helper.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1902,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1911,
             "description": "Save timer references to avoid Sinon interfering (see GH-237).",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1921,
             "description": "Check if both stdio streams are associated with a tty.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1927,
             "description": "Expose `Base`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1933,
             "description": "Enable coloring by default.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1939,
             "description": "Inline diffs instead of +/-",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1945,
             "description": "Default color map.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 1971,
             "description": "Default symbol map.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5294,19 +5387,19 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2005,
             "description": "Expose term window size, with some\ndefaults for when stderr is not a tty.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2018,
             "description": "Expose some basic cursor interactions\nthat are common among reporters.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5320,7 +5413,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5334,14 +5427,14 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2174,
             "description": "Output common epilogue used by many of\nthe bundled reporters.",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5364,7 +5457,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5382,7 +5475,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5400,7 +5493,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5418,7 +5511,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5436,7 +5529,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5459,7 +5552,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5482,19 +5575,19 @@
                 "type": "Boolean"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2365,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2372,
             "description": "Expose `Doc`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5508,19 +5601,19 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2432,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2439,
             "description": "Expose `Dot`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5534,25 +5627,25 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2489,
             "description": "Inherit from `Base.prototype`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2503,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2510,
             "description": "Expose `HTMLCov`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5566,7 +5659,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5577,31 +5670,31 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2557,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2566,
             "description": "Save timer references to avoid Sinon interfering (see GH-237).",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2576,
             "description": "Expose `HTML`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2582,
             "description": "Stats template.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5615,7 +5708,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5629,7 +5722,7 @@
                     "optional": true
                 }
             ],
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5643,55 +5736,55 @@
                     "optional": true
                 }
             ],
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2755,
             "description": "Display error `msg`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2763,
             "description": "Return a DOM fragment from `html`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2782,
             "description": "Check for suites that do not have elements\nwith `classname`, and hide them.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2795,
             "description": "Unhide .hidden suites.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2806,
             "description": "Set `el` text to `str`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2818,
             "description": "Listen on `event` with callback `fn`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2856,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 2862,
             "description": "Expose `JSONCov`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5710,7 +5803,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5728,7 +5821,7 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5751,7 +5844,7 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5769,19 +5862,19 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3013,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3020,
             "description": "Expose `List`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5795,7 +5888,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5813,19 +5906,19 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3077,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3085,
             "description": "Expose `JSON`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5839,7 +5932,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5857,7 +5950,7 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5874,37 +5967,37 @@
                 "description": "",
                 "type": "Object"
             },
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3168,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3176,
             "description": "Expose `Landing`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3182,
             "description": "Airplane color.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3188,
             "description": "Airplane crash color.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3194,
             "description": "Runway color.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5918,25 +6011,25 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3259,
             "description": "Inherit from `Base.prototype`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3272,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3280,
             "description": "Expose `List`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5950,25 +6043,25 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3330,
             "description": "Inherit from `Base.prototype`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3343,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3350,
             "description": "Expose `Markdown`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -5982,19 +6075,19 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3438,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3444,
             "description": "Expose `Min`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6008,25 +6101,25 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3470,
             "description": "Inherit from `Base.prototype`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3483,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3490,
             "description": "Expose `Dot`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6040,42 +6133,42 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3542,
             "description": "Draw the nyan cat",
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3556,
             "description": "Draw the \"scoreboard\" showing the number\nof passes, failures and pending tests.",
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3581,
             "description": "Append the rainbow.",
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3598,
             "description": "Draw the rainbow.",
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3616,
             "description": "Draw the nyan cat",
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6086,7 +6179,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6100,7 +6193,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6114,7 +6207,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6125,7 +6218,7 @@
                 "type": "Array"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6143,37 +6236,37 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3730,
             "description": "Stdout helper.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3738,
             "description": "Inherit from `Base.prototype`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3751,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3759,
             "description": "Expose `Progress`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3765,
             "description": "General progress bar color.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6192,25 +6285,25 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3838,
             "description": "Inherit from `Base.prototype`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3852,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3860,
             "description": "Expose `Spec`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6224,25 +6317,25 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3929,
             "description": "Inherit from `Base.prototype`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3943,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 3951,
             "description": "Expose `TAP`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6256,7 +6349,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6274,25 +6367,25 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4020,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4028,
             "description": "Save timer references to avoid Sinon interfering (see GH-237).",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4038,
             "description": "Expose `XUnit`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6306,55 +6399,55 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4085,
             "description": "Inherit from `Base.prototype`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4095,
             "description": "Output tag for the given `test.`",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4116,
             "description": "HTML tag helper.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4134,
             "description": "Return cdata escaped CDATA `str`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4146,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4154,
             "description": "Save timer references to avoid Sinon interfering (see GH-237).",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4164,
             "description": "Object#toString().",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4170,
             "description": "Expose `Runnable`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6373,13 +6466,13 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4195,
             "description": "Inherit from `EventEmitter.prototype`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6397,7 +6490,7 @@
                 "type": "Runnable|Number"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6415,7 +6508,7 @@
                 "type": "Runnable|Number"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6433,7 +6526,7 @@
                 "type": "Runnable|Boolean"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6444,14 +6537,14 @@
                 "type": "String"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4266,
             "description": "Clear the timeout.",
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6462,21 +6555,21 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4292,
             "description": "Reset the timeout.",
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4310,
             "description": "Whitelist these globals for this test run",
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6490,32 +6583,32 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4416,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4427,
             "description": "Non-enumerable globals.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4440,
             "description": "Expose `Runner`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4446,
             "description": "Initialize a `Runner` for the given `suite`.\n\nEvents:\n\n  - `start`  execution started\n  - `end`  execution complete\n  - `suite`  (suite) test suite execution started\n  - `suite end`  (suite) all tests (and sub-suites) have finished\n  - `test`  (test) test execution started\n  - `test end`  (test) test completed\n  - `hook`  (hook) hook execution started\n  - `hook end`  (hook) hook complete\n  - `pass`  (test) test passed\n  - `fail`  (test, err) test failed\n  - `pending`  (test) test pending",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6529,13 +6622,13 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4488,
             "description": "Inherit from `EventEmitter.prototype`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6558,7 +6651,7 @@
                 "type": "Runner"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6576,7 +6669,7 @@
                 "type": "Number"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6587,7 +6680,7 @@
                 "type": "Array"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6605,14 +6698,14 @@
                 "type": "Runner"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 4572,
             "description": "Check for global variable leaks.",
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6631,7 +6724,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6650,7 +6743,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6669,7 +6762,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6693,7 +6786,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6712,7 +6805,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6731,7 +6824,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6742,7 +6835,7 @@
                 "type": "Array"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6756,7 +6849,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6775,7 +6868,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6794,7 +6887,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6808,7 +6901,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6826,7 +6919,7 @@
                 "type": "Runner"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6837,7 +6930,7 @@
                 "type": "Runner"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6860,7 +6953,7 @@
                 "type": "Array"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6871,19 +6964,19 @@
                 "type": "Array"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5091,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5101,
             "description": "Expose `Suite`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6906,7 +6999,7 @@
                 "type": "Suite"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6925,13 +7018,13 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5157,
             "description": "Inherit from `EventEmitter.prototype`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6942,7 +7035,7 @@
                 "type": "Suite"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6960,7 +7053,7 @@
                 "type": "Suite|Number"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6978,7 +7071,7 @@
                 "type": "Suite|Boolean"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -6996,7 +7089,7 @@
                 "type": "Suite|Number"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7014,7 +7107,7 @@
                 "type": "Suite|Number"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7032,7 +7125,7 @@
                 "type": "Suite"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7050,7 +7143,7 @@
                 "type": "Suite"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7068,7 +7161,7 @@
                 "type": "Suite"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7086,7 +7179,7 @@
                 "type": "Suite"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7104,7 +7197,7 @@
                 "type": "Suite"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7122,7 +7215,7 @@
                 "type": "Suite"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7133,7 +7226,7 @@
                 "type": "String"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7144,7 +7237,7 @@
                 "type": "Number"
             },
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7162,19 +7255,19 @@
                 "type": "Suite"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5445,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5451,
             "description": "Expose `Test`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7193,25 +7286,25 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5471,
             "description": "Inherit from `Runnable.prototype`.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5484,
             "description": "Module dependencies.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5493,
             "description": "Ignored directories.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7229,7 +7322,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7253,7 +7346,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7277,7 +7370,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7301,7 +7394,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7325,7 +7418,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7344,7 +7437,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7362,7 +7455,7 @@
                 "type": "Array"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7381,13 +7474,13 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5640,
             "description": "Ignored files.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7398,7 +7491,7 @@
                 "type": "Array"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7416,13 +7509,13 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5690,
             "description": "Strip the function definition from `str`,\nand re-indent for pre whitespace.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7440,7 +7533,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7458,7 +7551,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7476,7 +7569,7 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7494,7 +7587,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7508,7 +7601,7 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7526,7 +7619,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
@@ -7544,73 +7637,73 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5839,
             "description": "Save timer references to avoid Sinon interfering (see GH-237).",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5849,
             "description": "Node shims.\n\nThese are meant only to allow\nmocha.js to run untouched, not\nto allow running node code in\nthe browser.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5866,
             "description": "Remove uncaughtException listener.\nRevert to original onerror handler if previously defined.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5883,
             "description": "Implements uncaughtException listener.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5897,
             "description": "Expose mocha.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5924,
             "description": "High-performance override of Runner.immediately.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5935,
             "description": "Function to allow assertion libraries to throw errors directly into mocha.\nThis is useful when running tests in a browser because window.onerror will\nonly receive the 'message' attribute of the Error.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5947,
             "description": "Override ui to ensure that the ui functions are initialized.\nNormally this would happen in Mocha.prototype.loadFiles.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5958,
             "description": "Setup mocha with the given setting options.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5968,
             "description": "Run mocha, returning the Runner.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/mocha.js",
             "line": 5989,
             "description": "Expose the process shim.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/should.js",
@@ -7620,13 +7713,13 @@
             "author": "TJ Holowaychuk <tj@vision-media.ca> and contributors",
             "link": "https://github.com/shouldjs/should.js",
             "license": "MIT",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/should.js",
             "line": 126,
             "description": "Expose assert to should\n\nThis allows you to do things like below\nwithout require()ing the assert module.\n\n   should.equal(foo.bar, undefined);",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/should.js",
@@ -7646,7 +7739,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/should.js",
@@ -7666,7 +7759,7 @@
                 }
             ],
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/should.js",
@@ -7684,7 +7777,7 @@
                     "type": "Object"
                 }
             ],
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/should.js",
@@ -7700,7 +7793,7 @@
                 "description": "",
                 "type": "Assertion"
             },
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/should.js",
@@ -7714,40 +7807,40 @@
                 }
             ],
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/should.js",
             "line": 1381,
             "description": "Way to extend Assertion function. It uses some logic\nto define only positive assertions and itself rule with negative assertion.\n\nAll actions happen in subcontext and this method take care about negation.\nPotentially we can add some more modifiers that does not depends from state of assertion.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/should.js",
             "line": 1446,
             "description": "Expose should to external world.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/should.js",
             "line": 1452,
             "description": "Expose api via `Object#should`.",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/should.js",
             "line": 1507,
             "description": "Negation modifier.",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/should.js",
             "line": 1518,
             "description": "Any modifier - it affect on execution of sequenced assertion to do not check all, but any of",
             "api": "public",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/should.js",
@@ -7765,7 +7858,7 @@
                 "type": "Boolean"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/should.js",
@@ -7788,7 +7881,7 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/should.js",
@@ -7806,7 +7899,7 @@
                     "type": "Object"
                 }
             ],
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/mocha/should.js",
@@ -7824,19 +7917,19 @@
                     "type": "Function"
                 }
             ],
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/lib/agent.js",
             "line": 3,
             "description": "Create mappings between the names parsed from useragent (based on\nhttps://github.com/tobie/ua-parser/blob/master/regexes.yaml) to caniuse\nname equivalents.\n\nEach caniuse name can match against many names.\n\nTo add a new mapping add the UA name to the appropriate key.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/lib/agent.js",
             "line": 69,
             "description": "jQuery: isNumeric\nhttps://github.com/jquery/jquery/blob/bbdfbb4ee859fe9319b348d88120ddc2c9efbd63/src/core.js#L212",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/lib/aliases.js",
@@ -7845,19 +7938,19 @@
             "example": [
                 " The difference between map and flatMap\n> [0, 1, 2].map(function(val) {return [val + 1, val + 2]; });\n[ [ 1, 2 ], [ 2, 3 ], [ 3, 4 ] ]\n\n> flatMap([0, 1, 2], function(val) { return [val + 1, val + 2]; });\n[ 1, 2, 2, 3, 3, 4 ]"
             ],
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/lib/aliases.js",
             "line": 17,
             "description": "The AliasResolver provides the logic used for expanding and resolving\npolyfill identifiers using more than one mechanism (if required).\n\nA polyfill identifier is an object with at least a 'name' and 'flags'\nproperty, where the 'name' is the string identifying a polyfill and\n'flags' is an array containing any flags that should be applied with\nthe polyfill (and subsequently to any aliased polyfills).\n\n e.g: { name: \"modernizr:es5\", flags: [\"always\"] }",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/lib/aliases.js",
             "line": 30,
             "description": "potentially alternate string identifiers (e.g. expanded names the alias refers to)\n\nThe key point is that each is invoked in sequence with the result of\nthe previous function as an argument.",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/lib/aliases.js",
@@ -7879,7 +7972,7 @@
                 "description": "An expanded list of polyfill identifiers",
                 "type": "Array"
             },
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/lib/aliases.js",
@@ -7896,7 +7989,7 @@
                 "description": "An resolved list of resolved polyfill identifiers.",
                 "type": "Array"
             },
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/lib/aliases.js",
@@ -7909,58 +8002,58 @@
                     "type": "Function"
                 }
             ],
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 1,
             "preserve": "HTML5 Shiv 3.7.2 | @afarkas @jdalton @jon_neal @rem | MIT/GPL2 Licensed",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 6,
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 9,
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 12,
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 15,
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 18,
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 21,
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 24,
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 27,
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 30,
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -7984,7 +8077,7 @@
                 "description": "The style element.",
                 "type": "StyleSheet"
             },
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -7996,7 +8089,7 @@
                 "description": "An array of shived element node names.",
                 "type": "Array"
             },
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -8015,7 +8108,7 @@
                     "type": "Document"
                 }
             ],
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -8034,7 +8127,7 @@
                 "description": "An object of data.",
                 "type": "Object"
             },
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -8057,7 +8150,7 @@
                 "description": "The shived element.",
                 "type": "Object"
             },
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -8075,7 +8168,7 @@
                 "description": "The shived DocumentFragment.",
                 "type": "Object"
             },
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -8095,7 +8188,7 @@
                     "type": "Object"
                 }
             ],
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -8113,7 +8206,7 @@
                 "description": "The shived document.",
                 "type": "Document"
             },
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -8123,7 +8216,7 @@
             "example": [
                 "\n\n// options can be changed before the script is included\nhtml5 = { 'elements': 'mark section', 'shivCSS': false, 'shivMethods': false };"
             ],
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -8131,13 +8224,13 @@
             "description": "An array or space separated string of node names of the elements to shiv.",
             "memberof": "html5",
             "type": "Array|String",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
             "line": 267,
             "description": "current version of html5shiv",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -8145,7 +8238,7 @@
             "description": "A flag to indicate that the HTML5 style sheet should be inserted.",
             "memberof": "html5",
             "type": "Boolean",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -8153,7 +8246,7 @@
             "description": "Is equal to true if a browser supports creating unknown/HTML5 elements",
             "memberof": "html5",
             "type": "boolean",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -8161,7 +8254,7 @@
             "description": "A flag to indicate that the document's `createElement` and `createDocumentFragment`\nmethods should be overwritten.",
             "memberof": "html5",
             "type": "Boolean",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/polyfills/html5shiv/polyfill.js",
@@ -8169,12 +8262,166 @@
             "description": "A string to describe the type of `html5` object (\"default\" or \"default print\").",
             "memberof": "html5",
             "type": "String",
-            "class": "Panel"
+            "class": "Dialog"
         },
         {
             "file": "server/polyfills/helpers.js",
             "line": 1,
-            "class": "Panel"
+            "class": "Dialog"
+        },
+        {
+            "file": "src/dialog/dialog.js",
+            "line": 59,
+            "description": "Model that is passed through to the Panel.",
+            "itemtype": "property",
+            "name": "model",
+            "default": "{\n           draggable: true\n      }",
+            "type": "Object",
+            "since": "0.0.1",
+            "class": "Dialog",
+            "module": "dialog"
+        },
+        {
+            "file": "src/dialog/dialog.js",
+            "line": 70,
+            "description": "Internal property that tells what message-level is currently active.",
+            "itemtype": "property",
+            "name": "_currentMessageLevel",
+            "default": "0",
+            "type": "Number",
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Dialog",
+            "module": "dialog"
+        },
+        {
+            "file": "src/dialog/dialog.js",
+            "line": 80,
+            "description": "Internal hash all queued message with level=1 (*:message)",
+            "itemtype": "property",
+            "name": "messages",
+            "default": "[]",
+            "type": "Array",
+            "since": "0.0.1",
+            "class": "Dialog",
+            "module": "dialog"
+        },
+        {
+            "file": "src/dialog/dialog.js",
+            "line": 89,
+            "description": "Internal hash all queued message with level=2 (*:warn)",
+            "itemtype": "property",
+            "name": "warnings",
+            "default": "[]",
+            "type": "Array",
+            "since": "0.0.1",
+            "class": "Dialog",
+            "module": "dialog"
+        },
+        {
+            "file": "src/dialog/dialog.js",
+            "line": 98,
+            "description": "Internal hash all queued message with level=3 (*:error)",
+            "itemtype": "property",
+            "name": "errors",
+            "default": "[]",
+            "type": "Array",
+            "since": "0.0.1",
+            "class": "Dialog",
+            "module": "dialog"
+        },
+        {
+            "file": "src/dialog/dialog.js",
+            "line": 119,
+            "description": "Creates a Panel-instance that will be used to display the messages.\nSets instance.model as panel's model and defines model.callback\nwhich fulfills the message when a button on the dialog is pressed,",
+            "itemtype": "method",
+            "name": "createContainer",
+            "since": "0.0.1",
+            "class": "Dialog",
+            "module": "dialog"
+        },
+        {
+            "file": "src/dialog/dialog.js",
+            "line": 144,
+            "description": "Processes messages that are emitted by `messages`-module and add them in the queue.",
+            "itemtype": "method",
+            "name": "queueMessage",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "the eventobject",
+                    "type": "Object"
+                }
+            ],
+            "since": "0.0.1",
+            "class": "Dialog",
+            "module": "dialog"
+        },
+        {
+            "file": "src/dialog/dialog.js",
+            "line": 168,
+            "description": "Defines subscribers to the events: *:message, *:warn and *:error.",
+            "itemtype": "method",
+            "name": "setupListeners",
+            "since": "0.0.1",
+            "class": "Dialog",
+            "module": "dialog"
+        },
+        {
+            "file": "src/dialog/dialog.js",
+            "line": 179,
+            "description": "Tells whether `dialog` is waitin g for new messages and is currently iddle.",
+            "itemtype": "method",
+            "name": "isWaiting",
+            "return": {
+                "description": "whether `dialog` is waitin g for new messages",
+                "type": "Boolean"
+            },
+            "since": "0.0.1",
+            "class": "Dialog",
+            "module": "dialog"
+        },
+        {
+            "file": "src/dialog/dialog.js",
+            "line": 190,
+            "description": "Retrieves the next message from the queue and calls showMessage() if it finds one.",
+            "itemtype": "method",
+            "name": "handleMessage",
+            "params": [
+                {
+                    "name": "delay",
+                    "description": "if there should be a delay between the previous dialog and the new one",
+                    "type": "Boolean",
+                    "optional": true
+                },
+                {
+                    "name": "level",
+                    "description": "to force handling a specific level",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
+            "since": "0.0.1",
+            "class": "Dialog",
+            "module": "dialog"
+        },
+        {
+            "file": "src/dialog/dialog.js",
+            "line": 237,
+            "description": "Shows the specified message-promise.",
+            "itemtype": "method",
+            "name": "showMessage",
+            "params": [
+                {
+                    "name": "messagePromise",
+                    "description": "the message to be shown.",
+                    "type": "Promise"
+                }
+            ],
+            "since": "0.0.1",
+            "class": "Dialog",
+            "module": "dialog"
         },
         {
             "file": "src/drag/drag.js",
@@ -13018,6 +13265,70 @@
             "module": "focusmanager"
         },
         {
+            "file": "src/icons/base.js",
+            "line": 42,
+            "description": "Upgrades the specified i-element into a svg-icon.",
+            "itemtype": "method",
+            "name": "upgradeIconElement",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "",
+                    "type": "HTMLElement"
+                }
+            ],
+            "access": "protected",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Icons",
+            "module": "icons"
+        },
+        {
+            "file": "src/icons/base.js",
+            "line": 57,
+            "description": "Upgrades all i-elements that have an `icon`-attribute set.\nWill render them into svg-icons.",
+            "itemtype": "method",
+            "name": "upgradeDOM",
+            "access": "protected",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Icons",
+            "module": "icons"
+        },
+        {
+            "file": "src/icons/base.js",
+            "line": 105,
+            "description": "Defines a new svg-icon. With this icon-definition, icons can be used by usinf i-elements\nwith the attribute: icon=\"iconname\".",
+            "itemtype": "method",
+            "name": "defineIcon",
+            "params": [
+                {
+                    "name": "iconName",
+                    "description": "unique iconname, which will be used with the attribute: icon=\"iconname\"",
+                    "type": "String"
+                },
+                {
+                    "name": "viewBoxWidth",
+                    "description": "pixels of the svg's viewBoxWidth",
+                    "type": "Number"
+                },
+                {
+                    "name": "viewBoxHeight",
+                    "description": "pixels of the svg's viewBoxHeight",
+                    "type": "Number"
+                },
+                {
+                    "name": "svgContent",
+                    "description": "svg;s innercontent",
+                    "type": "String"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "document",
+            "module": "icons"
+        },
+        {
             "file": "src/io/extra/io-assets.js",
             "line": 40,
             "description": "Creates a `<style>` tag to load the CSS file at the given url.",
@@ -15552,6 +15863,235 @@
             "submodule": "lib/string.js"
         },
         {
+            "file": "src/messages/messages.js",
+            "line": 44,
+            "description": "Sends a message (emits) and returns a promise. All option-properties will be merged into the promise.\n(even when not defined in the api)",
+            "itemtype": "method",
+            "name": "message",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "The message to be send",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "The instance that is going to detach the customEvent",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "emitter",
+                            "description": "the emitter of the message, will be used as emitterName of the customEvent.",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "'global'"
+                        },
+                        {
+                            "name": "icon",
+                            "description": "an icon-name to be used (fe \"alert\"). The icon-name should be defined by the `icons`-module.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "level",
+                            "description": "The level --> 1='message', 2='warn', 3='error', 4='statusmessage'.",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "1"
+                        },
+                        {
+                            "name": "header",
+                            "description": "Can be used by a messagehandler to render the header.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "footer",
+                            "description": "Can be used by a messagehandler to render the footer.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "timeout",
+                            "description": "When specified, the promise will be resolved after this period of time.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "stayActive",
+                            "description": "When specified, the promise won't resolved within this period of time.",
+                            "type": "Number",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "Messages",
+            "module": "messages"
+        },
+        {
+            "file": "src/messages/messages.js",
+            "line": 85,
+            "description": "Sends a simple message",
+            "itemtype": "method",
+            "name": "alert",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "The message to be send",
+                    "type": "String"
+                },
+                {
+                    "name": "icon",
+                    "description": "an icon-name to be used (fe \"alert\"). The icon-name should be defined by the `icons`-module.",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "Messages",
+            "module": "messages"
+        },
+        {
+            "file": "src/messages/messages.js",
+            "line": 101,
+            "description": "Sends a warning-message.",
+            "itemtype": "method",
+            "name": "warn",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "The message to be send",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "Messages",
+            "module": "messages"
+        },
+        {
+            "file": "src/messages/messages.js",
+            "line": 116,
+            "description": "Sends a prompt-message with an input-element.",
+            "itemtype": "method",
+            "name": "prompt",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "The message to be send",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "The instance that is going to detach the customEvent",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "emitter",
+                            "description": "the emitter of the message, will be used as emitterName of the customEvent.",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "'global'"
+                        },
+                        {
+                            "name": "defaultValue",
+                            "description": "input's default value.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "label",
+                            "description": "The label for the input-element.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "placeholder",
+                            "description": "The placeholder for the input-element.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "icon",
+                            "description": "an icon-name to be used (fe \"alert\"). The icon-name should be defined by the `icons`-module.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "header",
+                            "description": "Can be used by a messagehandler to render the header.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "footer",
+                            "description": "Can be used by a messagehandler to render the footer.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "level",
+                            "description": "The level --> 1='message', 2='warn', 3='error', 4='statusmessage'.",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "1"
+                        },
+                        {
+                            "name": "timeout",
+                            "description": "When specified, the promise will be resolved after this period of time.",
+                            "type": "Number",
+                            "optional": true
+                        },
+                        {
+                            "name": "stayActive",
+                            "description": "When specified, the promise won't resolved within this period of time.",
+                            "type": "Number",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "Messages",
+            "module": "messages"
+        },
+        {
+            "file": "src/messages/messages.js",
+            "line": 163,
+            "description": "To catch syste-errors into the message system. When set, errors won't appear in the console.",
+            "itemtype": "method",
+            "name": "catchErrors",
+            "params": [
+                {
+                    "name": "catchOrNot",
+                    "description": "Whether errors should be catched or not.",
+                    "type": "Boolean"
+                }
+            ],
+            "since": "0.0.1",
+            "class": "Messages",
+            "module": "messages"
+        },
+        {
             "file": "src/node-plugin/node-plugin.js",
             "line": 198,
             "description": "Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.",
@@ -15714,7 +16254,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 538,
+            "line": 540,
             "description": "Creates a new Element-PluginClass.",
             "itemtype": "method",
             "name": "definePlugin",
@@ -15747,7 +16287,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 568,
+            "line": 570,
             "description": "Returns the PluginClass that belongs with the specified `plugin`-name.",
             "itemtype": "method",
             "name": "getPluginClass",
@@ -15768,7 +16308,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 582,
+            "line": 584,
             "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
             "example": [
                 "\n\n var Circle = Shape.subClass(\n     function (x, y, r) {\n         // arguments will automaticly be passed through to Shape's constructor\n         this.r = r;\n     },\n     {\n         area: function () {\n             return this.r * this.r * Math.PI;\n         }\n     }\n );"

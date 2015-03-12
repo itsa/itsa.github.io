@@ -10,13 +10,19 @@ intro: "This example shows how to switch icons. Click on the button to switch."
 <p class="spaced">Code-example:</p>
 
 ```html
-<i is="error"></i>
+<button class="pure-button pure-button-bordered itsa-icon"><i icon="question"></i></button>
 ```
 
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
+
+    ITSA.Event.after('tap', function(e) {
+        var button = e.target,
+            iconNode = button.getElement('i');
+        iconNode.setAttr('icon', (iconNode.getAttr('icon')==='question') ? 'exclamation' : 'question');
+    }, 'button');
 </script>
 ```
 
