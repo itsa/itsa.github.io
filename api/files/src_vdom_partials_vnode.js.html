@@ -2350,8 +2350,12 @@ module.exports = function (window) {
                                     }
                                     else {
                                         oldChild._setAttrs(newChild.attrs, suppressItagRender);
-                                        // next: sync the vChildNodes:
-                                        oldChild._setChildNodes(newChild.vChildNodes, suppressItagRender);
+                                        // next: sync the vChildNodes, but DO NOT do this in case of an &#x60;icon&#x60;:
+                                        // those may keep their innercontent: we don&#x27;t want to fill them empty and rerender again.
+                                        // On iconchange: the &#x60;icon&#x60;-module will rerender the innercontent by itself:
+                                        if ((oldChild.tag!==&#x27;I&#x27;) || !oldChild.attrs || !oldChild.attrs.icon) {
+                                            oldChild._setChildNodes(newChild.vChildNodes, suppressItagRender);
+                                        }
                                     }
                                     // reset ref. to the domNode, for it might have been changed by newChild:
                                     oldChild.id &amp;&amp; (nodeids[oldChild.id]=childDomNode);

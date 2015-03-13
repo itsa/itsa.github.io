@@ -4775,6 +4775,7 @@ var NAME = '[event-dom]: ',
     CLICK = 'click',
     RIGHTCLICK = 'right'+CLICK,
     CENTERCLICK = 'center'+CLICK,
+    ANCHOR_CLICK = 'anchor'+CLICK,
     EV_REMOVED = UI+NODE+REMOVE,
     EV_INSERTED = UI+NODE+INSERT,
     EV_CONTENT_CHANGE = UI+NODE+'content'+CHANGE,
@@ -5023,6 +5024,8 @@ module.exports = function (window) {
             e.tapCount = 1;
         }
 
+        (eventName===ANCHOR_CLICK) && (eventName=CLICK);
+
         customEvent = 'UI:'+eventName;
 
         subs = allSubscribers[customEvent];
@@ -5198,6 +5201,7 @@ module.exports = function (window) {
 
         // only accept tap-events, yet later on we WILL need to listen for click-events
         (eventName===CLICK) && (eventName=TAP);
+        (eventName===ANCHOR_CLICK) && (eventName=CLICK);
 
         // now transform the subscriber's filter from css-string into a filterfunction
         _selToFunc(emitterName+':'+eventName+(outsideEvent ? OUTSIDE : ''), subscriber);
@@ -14806,7 +14810,7 @@ require('polyfill');
          * @since 0.0.1
         */
         prompt: function(message, options) {
-            var placeholder, defaultValue, placeholder, label, icon;
+            var placeholder, defaultValue, label, icon;
             options || (options={});
             defaultValue = options.defaultValue;
             label = options.label;
@@ -26371,8 +26375,12 @@ module.exports = function (window) {
                                     }
                                     else {
                                         oldChild._setAttrs(newChild.attrs, suppressItagRender);
-                                        // next: sync the vChildNodes:
-                                        oldChild._setChildNodes(newChild.vChildNodes, suppressItagRender);
+                                        // next: sync the vChildNodes, but DO NOT do this in case of an `icon`:
+                                        // those may keep their innercontent: we don't want to fill them empty and rerender again.
+                                        // On iconchange: the `icon`-module will rerender the innercontent by itself:
+                                        if ((oldChild.tag!=='I') || !oldChild.attrs || !oldChild.attrs.icon) {
+                                            oldChild._setChildNodes(newChild.vChildNodes, suppressItagRender);
+                                        }
                                     }
                                     // reset ref. to the domNode, for it might have been changed by newChild:
                                     oldChild.id && (nodeids[oldChild.id]=childDomNode);
