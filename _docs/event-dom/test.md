@@ -16,29 +16,20 @@ intro: "All DOM-events are trully delegated. This means we can set up only <b>on
 
 Focus the formelements and see what element got the focus.
 
-<div id="msg-container" class="classA">
-    <button class="pure-button class1"><b class="classB">CLICK</b> ME</button>
-    <button class="pure-button class2"><b class="classC">CLICK</b> ME</button>
-    <button class="pure-button class3"><b class="classD">CLICK</b> ME</button>
-</div>
-
-<button class="pure-button class11"><b class="classE">CLICK</b> ME</button>
-<button class="pure-button class12"><b class="classF">CLICK</b> ME</button>
+<a class="pure-button class1" href="http://itsasbreuk.nl">CLICK ME</a>
 
 <script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa');
 
 
-    ITSA.Event.after('blurnode', function(e) {
-        console.info('BLURNODE');
-    }, '#msg-container');
+    ITSA.Event.before('anchorclick', function(e) {
+        // e.preventDefault();
+    }, 'a');
 
-    ITSA.Event.after('focusnode', function(e) {
-        console.info('FOCUSNODE ');
-        console.info(e.target);
-    }, '#msg-container');
+    ITSA.Event.before('tap', function(e) {
+        console.info(e.type);
+    }, 'a');
 
-document.getElement('.class1').focus();
 
 </script>

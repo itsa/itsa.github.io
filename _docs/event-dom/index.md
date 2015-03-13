@@ -145,6 +145,9 @@ Beside native DOM-events, this module enriches some events and adds some custome
 ##centerclick and rightclick##
 The native `click`- event is devided into: into: `tap`, `centerclick` and `rightclick`. This means that -when subscribed to a tap-event- the subscriber only gets invoked on a `left-mouseclick` or a true tap-event when on mobile devices. And  on systems where a mouse is present, you can listen for a `rightclick` or `centerclick`-event.
 
+##anchorclick##
+Because the *click*-event isn't available, you need another way to listen (or preventDefault) anchor-clicks. Clicks on anchor-elements are transformed into the `anchorclick`-event.
+
 ##mouseover and mouseout##
 
 ###Native DOM way###

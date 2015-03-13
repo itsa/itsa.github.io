@@ -5002,7 +5002,7 @@ module.exports = function (window) {
             (which===2) && (eventName=CENTERCLICK);
             (which===3) && (eventName=RIGHTCLICK);
         }
-        if (eventName==='tap') {
+        if ((eventName==='tap') && (!e.target.vnode || (e.target.vnode.tag!=='A'))) {
             // prevent the next click-event
             preventClick = true;
             e.clientX || (e.clientX = e.center && e.center.x);
@@ -5014,17 +5014,20 @@ module.exports = function (window) {
         }
 
         if (eventName===CLICK) {
-            eventName = 'tap';
-            e.center = {
-                x: e.clientX,
-                y: e.clientY
-            };
-            e.eventType = 4;
-            e.pointerType = 'mouse';
-            e.tapCount = 1;
+            if (e.target.vnode && (e.target.vnode.tag==='A')) {
+                eventName = ANCHOR_CLICK;
+            }
+            else {
+                eventName = 'tap';
+                e.center = {
+                    x: e.clientX,
+                    y: e.clientY
+                };
+                e.eventType = 4;
+                e.pointerType = 'mouse';
+                e.tapCount = 1;
+            }
         }
-
-        (eventName===ANCHOR_CLICK) && (eventName=CLICK);
 
         customEvent = 'UI:'+eventName;
 
@@ -5201,7 +5204,6 @@ module.exports = function (window) {
 
         // only accept tap-events, yet later on we WILL need to listen for click-events
         (eventName===CLICK) && (eventName=TAP);
-        (eventName===ANCHOR_CLICK) && (eventName=CLICK);
 
         // now transform the subscriber's filter from css-string into a filterfunction
         _selToFunc(emitterName+':'+eventName+(outsideEvent ? OUTSIDE : ''), subscriber);
@@ -5220,7 +5222,7 @@ module.exports = function (window) {
         DOMEvents[eventName] = true;
         if (outsideEvent) {
             DOMEvents[eventName+OUTSIDE] = true;
-            (eventName===TAP) && (DOMEvents[CLICK+OUTSIDE]=true);
+            ((eventName===TAP) || (eventName===ANCHOR_CLICK)) && (DOMEvents[CLICK+OUTSIDE]=true);
         }
         // one exception: windowresize should listen to the window-object
         if (eventName==='resize') {
@@ -5231,7 +5233,7 @@ module.exports = function (window) {
             // important: set the third argument `true` so we listen to the capture-phase.
             DOCUMENT.addEventListener(eventName, _evCallback, true);
             // listen for both `tap` and `click` events to happen
-            (eventName===TAP) && DOCUMENT.addEventListener(CLICK, _evCallback, true);
+            ((eventName===TAP) || (eventName===ANCHOR_CLICK)) && DOCUMENT.addEventListener(CLICK, _evCallback, true);
         }
     };
 

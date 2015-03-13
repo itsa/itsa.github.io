@@ -11307,7 +11307,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 731,
+            "line": 733,
             "itemtype": "method",
             "name": "noDeepDomEvt",
             "params": [
@@ -11330,7 +11330,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 746,
+            "line": 748,
             "description": "Does the actual transportation from DOM-events into the Eventsystem. It also looks at the response of\nthe Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will be preventDefaulted.",
             "itemtype": "method",
             "name": "_domCallback",
