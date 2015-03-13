@@ -6,7 +6,7 @@ modulesize: 1.69
 dependencies: "polyfill"
 maintainer: Marco Asbreuk
 title: Messages system
-intro: "This module is the basic module for creating messages. It is used to <b>generate</b> messages, <u>not to process them</u>. Other modules -like 'dialog' can process the messages and display them on the screen.""
+intro: "This module is the basic module for creating messages. It is used to <b>generate</b> messages, <u>not to process them</u>. Other modules -like 'dialog' can process the messages and display them on the screen."
 firstpar: get-started-onlywindow
 ---
 
@@ -59,7 +59,7 @@ Method to be used to catch system-errors and redirect them through the message-s
 ITSA.alert('I am an alert');
 ```
 
-Note: the `dialog`-module takes care of handling this message
+*Note:* the `dialog`-module takes care of handling this message
 
 
 
