@@ -388,6 +388,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/js-ext/extra/observers.js": {
+            "name": "src/js-ext/extra/observers.js",
+            "modules": {
+                "lib/object.js": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "src/js-ext/lib/array.js": {
             "name": "src/js-ext/lib/array.js",
             "modules": {
@@ -419,9 +428,7 @@
         },
         "src/js-ext/lib/object.js": {
             "name": "src/js-ext/lib/object.js",
-            "modules": {
-                "lib/object.js": 1
-            },
+            "modules": {},
             "classes": {
                 "Object": 1
             },
@@ -1020,18 +1027,18 @@
             "submodules": {
                 "extra/classes.js": 1,
                 "lib/string.js": 1,
+                "lib/object.js": 1,
                 "lib/array.js": 1,
                 "lib/function.js": 1,
-                "lib/object.js": 1,
                 "lib/promise.s": 1
             },
             "classes": {
                 "Classes": 1,
                 "BaseClass": 1,
                 "String": 1,
+                "Object": 1,
                 "Array": 1,
                 "Function": 1,
-                "Object": 1,
                 "Promise": 1
             },
             "fors": {
@@ -1076,6 +1083,21 @@
             "line": 1,
             "description": "Pollyfils for often used functionality for Strings\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
+        "lib/object.js": {
+            "name": "lib/object.js",
+            "submodules": {},
+            "classes": {
+                "Object": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "js-ext",
+            "namespace": "",
+            "file": "src/js-ext/lib/object.js",
+            "line": 128,
+            "description": "Pollyfils for often used functionality for Objects\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
         "lib/array.js": {
             "name": "lib/array.js",
             "submodules": {},
@@ -1105,21 +1127,6 @@
             "file": "src/js-ext/lib/function.js",
             "line": 1,
             "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        "lib/object.js": {
-            "name": "lib/object.js",
-            "submodules": {},
-            "classes": {
-                "Object": 1
-            },
-            "fors": {},
-            "is_submodule": 1,
-            "namespaces": {},
-            "module": "js-ext",
-            "namespace": "",
-            "file": "src/js-ext/lib/object.js",
-            "line": 162,
-            "description": "Pollyfils for often used functionality for Objects\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "lib/promise.s": {
             "name": "lib/promise.s",
@@ -1593,6 +1600,21 @@
             "line": 1,
             "description": "Pollyfils for often used functionality for Strings\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
+        "Object": {
+            "name": "Object",
+            "shortname": "Object",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "js-ext",
+            "submodule": "lib/object.js",
+            "namespace": "",
+            "file": "src/js-ext/lib/object.js",
+            "line": 128,
+            "description": "Pollyfils for often used functionality for objects"
+        },
         "Array": {
             "name": "Array",
             "shortname": "Array",
@@ -1622,21 +1644,6 @@
             "file": "src/js-ext/lib/function.js",
             "line": 1,
             "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
-        },
-        "Object": {
-            "name": "Object",
-            "shortname": "Object",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "js-ext",
-            "submodule": "lib/object.js",
-            "namespace": "",
-            "file": "src/js-ext/lib/object.js",
-            "line": 162,
-            "description": "Pollyfils for often used functionality for objects"
         },
         "Promise": {
             "name": "Promise",
@@ -14824,6 +14831,50 @@
             "submodule": "extra/classes.js"
         },
         {
+            "file": "src/js-ext/extra/observers.js",
+            "line": 78,
+            "description": "Observes changes of the instance. On any changes, the callback will be invoked.\nUses a polyfill on environments that don't support native Object.observe.\n\nThe callback comes without arguments (native Object.oserve does, but non-native doesn't)\nso, they cannot be used.",
+            "itemtype": "method",
+            "name": "observe",
+            "chainable": 1,
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "lib/object.js"
+        },
+        {
+            "file": "src/js-ext/extra/observers.js",
+            "line": 112,
+            "description": "Un-observes changes that are registered with `observe`.\nUses a polyfill on environments that don't support native Object.observe.",
+            "itemtype": "method",
+            "name": "observe",
+            "chainable": 1,
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "lib/object.js"
+        },
+        {
+            "file": "src/js-ext/extra/observers.js",
+            "line": 143,
+            "description": "Observes changes of the instance. On any changes, the callback will be invoked.\nUses a polyfill on environments that don't support native Object.observe.\n\nThe callback comes without arguments (native Object.oserve does, but non-native doesn't)\nso, they cannot be used.",
+            "itemtype": "method",
+            "name": "observe",
+            "chainable": 1,
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "lib/object.js"
+        },
+        {
+            "file": "src/js-ext/extra/observers.js",
+            "line": 179,
+            "description": "Un-observes changes that are registered with `observe`.\nUses a polyfill on environments that don't support native Object.observe.",
+            "itemtype": "method",
+            "name": "observe",
+            "chainable": 1,
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "lib/object.js"
+        },
+        {
             "file": "src/js-ext/lib/array.js",
             "line": 49,
             "description": "Checks whether an item is inside the Array.\nAlias for (array.indexOf(item) > -1)",
@@ -14970,7 +15021,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 167,
+            "line": 133,
             "description": "Loops through all properties in the object.  Equivalent to Array.forEach.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "each",
@@ -14988,7 +15039,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 193,
+            "line": 159,
             "description": "Loops through the properties in an object until the callback function returns *truish*.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe order in which the elements are visited is not predictable.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "some",
@@ -15009,7 +15060,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 221,
+            "line": 187,
             "description": "Loops through the properties in an object until the callback assembling a new object\nwith its properties set to the values returned by the callback function.\nIf the callback function returns `undefined` the property will not be copied to the new object.\nThe resulting object will have the same keys as the original, except for those where the callback\nreturned `undefined` which will have dissapeared.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "map",
@@ -15030,7 +15081,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 254,
+            "line": 220,
             "description": "Returns the keys of the object: the enumerable properties.",
             "itemtype": "method",
             "name": "keys",
@@ -15044,7 +15095,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 264,
+            "line": 230,
             "description": "Checks whether the given property is a key: an enumerable property.",
             "itemtype": "method",
             "name": "hasKey",
@@ -15065,29 +15116,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 275,
-            "description": "Observes changes of the instance. On any changes, the callback will be invoked.\nUses a polyfill on environments that don't support native Object.observe.\n\nThe callback comes without arguments (native Object.oserve does, but non-native doesn't)\nso, they cannot be used.",
-            "itemtype": "method",
-            "name": "observe",
-            "chainable": 1,
-            "class": "Object",
-            "module": "js-ext",
-            "submodule": "lib/object.js"
-        },
-        {
-            "file": "src/js-ext/lib/object.js",
-            "line": 297,
-            "description": "Un-observes changes that are registered with `observe`.\nUses a polyfill on environments that don't support native Object.observe.",
-            "itemtype": "method",
-            "name": "observe",
-            "chainable": 1,
-            "class": "Object",
-            "module": "js-ext",
-            "submodule": "lib/object.js"
-        },
-        {
-            "file": "src/js-ext/lib/object.js",
-            "line": 316,
+            "line": 241,
             "description": "Returns the number of keys of the object",
             "itemtype": "method",
             "name": "size",
@@ -15101,7 +15130,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 326,
+            "line": 251,
             "description": "Loops through the object collection the values of all its properties.\nIt is the counterpart of the [`keys`](#method_keys).",
             "itemtype": "method",
             "name": "values",
@@ -15115,7 +15144,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 346,
+            "line": 271,
             "description": "Returns true if the object has no own members",
             "itemtype": "method",
             "name": "isEmpty",
@@ -15129,7 +15158,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 359,
+            "line": 284,
             "description": "Returns a shallow copy of the object.\nIt does not clone objects within the object, it does a simple, shallow clone.\nFast, mostly useful for plain hash maps.",
             "itemtype": "method",
             "name": "shallowClone",
@@ -15152,7 +15181,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 393,
+            "line": 318,
             "description": "Compares this object with the reference-object whether they have the same value.\nNot by reference, but their content as simple types.\n\nCompares both JSON.stringify objects",
             "itemtype": "method",
             "name": "sameValue",
@@ -15173,7 +15202,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 418,
+            "line": 343,
             "description": "Returns a deep copy of the object.\nOnly handles members of primary types, Dates, Arrays and Objects.\nWill clone all the properties, also the non-enumerable.",
             "itemtype": "method",
             "name": "deepClone",
@@ -15202,7 +15231,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 457,
+            "line": 382,
             "description": "Transforms the object into an array with  'key/value' objects",
             "example": [
                 "\n{country: 'USA', Continent: 'North America'} --> [{key: 'country', value: 'USA'}, {key: 'Continent', value: 'North America'}]"
@@ -15241,7 +15270,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 482,
+            "line": 407,
             "description": "Merges into this object the properties of the given object.\nIf the second argument is true, the properties on the source object will be overwritten\nby those of the second object of the same name, otherwise, they are preserved.",
             "itemtype": "method",
             "name": "merge",
@@ -15295,7 +15324,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 533,
+            "line": 458,
             "description": "Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object",
             "itemtype": "method",
             "name": "isObject",
@@ -15310,7 +15339,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 544,
+            "line": 469,
             "description": "Creates a protected property on the object.",
             "itemtype": "method",
             "name": "protectedProp",
@@ -15321,7 +15350,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 559,
+            "line": 484,
             "description": "Returns a new object resulting of merging the properties of the given objects.\nThe copying is shallow, complex properties will reference the very same object.\nProperties in later objects do **not overwrite** properties of the same name in earlier objects.\nIf any of the objects is missing, it will be skiped.",
             "example": [
                 "\n\n var foo = function (config) {\n      config = Object.merge(config, defaultConfig);\n }"
@@ -16093,7 +16122,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 198,
+            "line": 199,
             "description": "Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.",
             "itemtype": "method",
             "name": "isPlugged",
@@ -16114,7 +16143,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 212,
+            "line": 213,
             "description": "Checks whether the plugin is ready to be used.",
             "itemtype": "method",
             "name": "pluginReady",
@@ -16135,7 +16164,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 227,
+            "line": 228,
             "description": "Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.",
             "itemtype": "method",
             "name": "plug",
@@ -16168,7 +16197,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 259,
+            "line": 260,
             "description": "Gets the plugin-instance of the specified plugin-name. Will fulfill as soon as the plugin is ready.",
             "itemtype": "method",
             "name": "getPlugin",
@@ -16189,7 +16218,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 276,
+            "line": 277,
             "description": "Unplugs a NodePlugin from the HtmlElement.",
             "itemtype": "method",
             "name": "unplug",
@@ -16207,7 +16236,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 330,
+            "line": 331,
             "description": "Binds a model to the plugin, making plugin.model equals the bound model.\nImmediately syncs the plugin with the new model-data.\n\nSyncs the new vnode's childNodes with the dom.",
             "itemtype": "method",
             "name": "bindModel",
@@ -16231,7 +16260,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 404,
+            "line": 405,
             "description": "Defines the `key`-property on element.model, but only when is hasn't been defined before.",
             "itemtype": "method",
             "name": "defineWhenUndefined",
@@ -16254,7 +16283,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 540,
+            "line": 541,
             "description": "Creates a new Element-PluginClass.",
             "itemtype": "method",
             "name": "definePlugin",
@@ -16287,7 +16316,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 570,
+            "line": 571,
             "description": "Returns the PluginClass that belongs with the specified `plugin`-name.",
             "itemtype": "method",
             "name": "getPluginClass",
@@ -16308,7 +16337,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 584,
+            "line": 585,
             "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
             "example": [
                 "\n\n var Circle = Shape.subClass(\n     function (x, y, r) {\n         // arguments will automaticly be passed through to Shape's constructor\n         this.r = r;\n     },\n     {\n         area: function () {\n             return this.r * this.r * Math.PI;\n         }\n     }\n );"
