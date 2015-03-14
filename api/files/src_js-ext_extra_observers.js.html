@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>lib/object.js - Itsa</title>
+    <title>src/js-ext/extra/observers.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -222,52 +222,220 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>lib_object.js Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: src/js-ext/extra/observers.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ *
+ * Pollyfils for often used functionality for Objects
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module js-ext
+ * @submodule lib/object.js
+ * @class Object
+ *
+*/
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/src_js-ext_lib_object.js.html#l128"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:128</code></a>
-        </div>
-    
+&quot;use strict&quot;;
 
-    
-</div>
+require(&#x27;polyfill/polyfill-base.js&#x27;);
+require(&#x27;../lib/object.js&#x27;);
+require(&#x27;../lib/array.js&#x27;);
 
+var NATIVE_OBJECT_OBSERVE = !!Object.observe,
+    later = require(&#x27;utils&#x27;).later,
+    _watchers = [],
+    POLL_OBSERVE = 100,
+    // Define configurable, writable and non-enumerable props
+    // if they don&#x27;t exist.
+    defineProperty = function (object, name, method, force) {
+        if (!force &amp;&amp; (name in object)) {
+            return;
+        }
+        Object.defineProperty(object, name, {
+            configurable: true,
+            enumerable: false,
+            writable: true,
+            value: method
+        });
+    },
+    defineProperties = function (object, map, force) {
+        var names = Object.keys(map),
+            l = names.length,
+            i = -1,
+            name;
+        while (++i &lt; l) {
+            name = names[i];
+            defineProperty(object, name, map[name], force);
+        }
+    },
+    watchObject = function(obj, callback) {
+        var watcher;
+        watcher = {
+            obj: obj,
+            cb: callback,
+            cloneObj: obj.deepClone(true),
+            timer: later(function() {
+                if (!obj.sameValue(watcher.cloneObj)) {
+                    watcher.cloneObj = obj.deepClone(true);
+                    callback();
+                }
+            }, POLL_OBSERVE, true)
+        };
+        _watchers[_watchers.length] = watcher;
+    },
 
+    unWatchObject = function(obj, callback) {
+        var currentWatcher;
+        _watchers.some(function(watcher) {
+            if ((watcher.obj===obj) &amp;&amp; (watcher.callback===callback)) {
+                currentWatcher = watcher;
+            }
+            return currentWatcher;
+        });
+        if (currentWatcher) {
+            currentWatcher.timer.cancel();
+            _watchers.remove(currentWatcher);
+        }
+    };
 
-<div class="box intro">
-    <p>Pollyfils for often used functionality for Objects
-<i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
- New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
+defineProperties(Object.prototype, {
+    /**
+     * Observes changes of the instance. On any changes, the callback will be invoked.
+     * Uses a polyfill on environments that don&#x27;t support native Object.observe.
+     *
+     * The callback comes without arguments (native Object.oserve does, but non-native doesn&#x27;t)
+     * so, they cannot be used.
+     *
+     * @method observe
+     * @chainable
+     */
+    observe: function (callback) {
+        var obj = this,
+            property;
+        if (typeof callback===&#x27;function&#x27;) {
+            if (NATIVE_OBJECT_OBSERVE) {
+                Object.observe(obj, callback);
+                // check all properties if they are an Array or Object:
+                // in those cases, we need extra observers
+                for (property in obj) {
+                    if (Object.isObject(property)) {
+                        Object.observe(property, callback);
+                    }
+                    else if (Array.isArray(property)) {
+                        Array.observe(property, callback);
+                    }
+                }
+            }
+            else {
+                watchObject(obj, callback);
+            }
+        }
+        return obj;
+    },
 
-</div>
+    /**
+     * Un-observes changes that are registered with &#x60;observe&#x60;.
+     * Uses a polyfill on environments that don&#x27;t support native Object.observe.
+     *
+     * @method observe
+     * @chainable
+     */
+    unobserve: function (callback) {
+        var obj = this,
+            property;
+        if (typeof callback===&#x27;function&#x27;) {
+            if (NATIVE_OBJECT_OBSERVE) {
+                Object.unobserve(obj, callback);
+                for (property in obj) {
+                    if (Object.isObject(property)) {
+                        Object.unobserve(property, callback);
+                    }
+                    else if (Array.isArray(property)) {
+                        Array.unobserve(property, callback);
+                    }
+                }
+            }
+            else {
+                unWatchObject(obj, callback);
+            }
+        }
+        return obj;
+    }
+});
 
+defineProperties(Array.prototype, {
+    /**
+     * Observes changes of the instance. On any changes, the callback will be invoked.
+     * Uses a polyfill on environments that don&#x27;t support native Object.observe.
+     *
+     * The callback comes without arguments (native Object.oserve does, but non-native doesn&#x27;t)
+     * so, they cannot be used.
+     *
+     * @method observe
+     * @chainable
+     */
+    observe: function (callback) {
+        var array = this,
+            item, i, len;
+        if (typeof callback===&#x27;function&#x27;) {
+            if (NATIVE_OBJECT_OBSERVE) {
+                Array.observe(array, callback);
+                // check all properties if they are an Array or Object:
+                // in those cases, we need extra observers
+                len = array.length;
+                for (i=0; i&lt;len; i++) {
+                    item = array[i];
+                    if (Object.isObject(item)) {
+                        Object.observe(item, callback);
+                    }
+                    else if (Array.isArray(item)) {
+                        Array.observe(item, callback);
+                    }
+                }
+            }
+            else {
+                watchObject(array, callback);
+            }
+        }
+        return array;
+    },
 
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
-
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="../classes/Object.html">
-                        Object
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+    /**
+     * Un-observes changes that are registered with &#x60;observe&#x60;.
+     * Uses a polyfill on environments that don&#x27;t support native Object.observe.
+     *
+     * @method observe
+     * @chainable
+     */
+    unobserve: function (callback) {
+        var array = this,
+            item, i, len;
+        if (typeof callback===&#x27;function&#x27;) {
+            if (NATIVE_OBJECT_OBSERVE) {
+                Array.unobserve(array, callback);
+                len = array.length;
+                for (i=0; i&lt;len; i++) {
+                    item = array[i];
+                    if (Object.isObject(item)) {
+                        Object.unobserve(item, callback);
+                    }
+                    else if (Array.isArray(item)) {
+                        Array.unobserve(item, callback);
+                    }
+                }
+            }
+            else {
+                unWatchObject(array, callback);
+            }
+        }
+        return array;
+    }
+});
+    </pre>
 </div>
 
                     </div>

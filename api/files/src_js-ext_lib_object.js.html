@@ -244,8 +244,6 @@
 require(&#x27;polyfill/polyfill-base.js&#x27;);
 
 var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
-    NATIVE_OBJECT_OBSERVE = !!Object.observe,
-    later = require(&#x27;utils&#x27;).later,
     TYPES = createHashMap({
        &#x27;undefined&#x27; : true,
        &#x27;number&#x27; : true,
@@ -258,8 +256,6 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
        &#x27;[object Error]&#x27; : true,
        &#x27;[object Promise]&#x27; : true
     }),
-    _watchers = [],
-    POLL_OBSERVE = 100,
     // Define configurable, writable and non-enumerable props
     // if they don&#x27;t exist.
     defineProperty = function (object, name, method, force) {
@@ -355,36 +351,6 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
             same = (value1===value2);
         }
         return same;
-    },
-
-    watchObject = function(obj, callback) {
-        var watcher;
-        watcher = {
-            obj: obj,
-            cb: callback,
-            cloneObj: obj.deepClone(true),
-            timer: later(function() {
-                if (!obj.sameValue(watcher.cloneObj)) {
-                    watcher.cloneObj = obj.deepClone(true);
-                    callback();
-                }
-            }, POLL_OBSERVE, true)
-        };
-        _watchers[_watchers.length] = watcher;
-    },
-
-    unWatchObject = function(obj, callback) {
-        var currentWatcher;
-        _watchers.some(function(watcher) {
-            if ((watcher.obj===obj) &amp;&amp; (watcher.callback===callback)) {
-                currentWatcher = watcher;
-            }
-            return currentWatcher;
-        });
-        if (currentWatcher) {
-            currentWatcher.timer.cancel();
-            _watchers.remove(currentWatcher);
-        }
     };
 
 /**
@@ -498,47 +464,6 @@ defineProperties(Object.prototype, {
      */
     hasKey: function (property) {
         return this.hasOwnProperty(property) &amp;&amp; this.propertyIsEnumerable(property);
-    },
-
-    /**
-     * Observes changes of the instance. On any changes, the callback will be invoked.
-     * Uses a polyfill on environments that don&#x27;t support native Object.observe.
-     *
-     * The callback comes without arguments (native Object.oserve does, but non-native doesn&#x27;t)
-     * so, they cannot be used.
-     *
-     * @method observe
-     * @chainable
-     */
-    observe: function (callback) {
-        if (typeof callback===&#x27;function&#x27;) {
-            if (NATIVE_OBJECT_OBSERVE) {
-                Object.observe(this, callback);
-            }
-            else {
-                watchObject(this, callback);
-            }
-        }
-        return this;
-    },
-
-    /**
-     * Un-observes changes that are registered with &#x60;observe&#x60;.
-     * Uses a polyfill on environments that don&#x27;t support native Object.observe.
-     *
-     * @method observe
-     * @chainable
-     */
-    unobserve: function (callback) {
-        if (typeof callback===&#x27;function&#x27;) {
-            if (NATIVE_OBJECT_OBSERVE) {
-                Object.unobserve(this, callback);
-            }
-            else {
-                unWatchObject(this, callback);
-            }
-        }
-        return this;
     },
 
     /**

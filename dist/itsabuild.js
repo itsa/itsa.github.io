@@ -2636,7 +2636,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":99}],6:[function(require,module,exports){
+},{"_process":100}],6:[function(require,module,exports){
 "use strict";
 module.exports = function (window) {
     require('node-plugin')(window);
@@ -2664,7 +2664,7 @@ module.exports = function (window) {
 
     return PluginConstrain;
 };
-},{"js-ext/extra/hashmap.js":55,"node-plugin":67}],7:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"node-plugin":68}],7:[function(require,module,exports){
 var css = "*:focus {\n    outline: 0;\n}\n\na[target=\"_blank\"]:focus {\n    outline: 1px solid #129fea;\n}\n\n/* because we think the padding and margin should always be part of the size,\n   we define \"box-sizing: border-box\" for all elements */\n\n* {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],8:[function(require,module,exports){
 var css = ".pure-menu.pure-menu-open {\n    z-index: 3; /* prevent graph from crossing the menuarea */\n}\n\n.pure-button.pure-button-bordered,\n.pure-button.pure-button-bordered[disabled] {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;\n}\n\n.pure-button-active,\n.pure-button:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button.pure-button-bordered.pure-button-active[disabled],\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered[disabled]:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.4) inset, 0 0 6px rgba(0,0,0, 0.2) inset;\n}\n\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.6) inset;\n}\n\n/* restore pure-button:active */\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button:active:focus,\n.pure-button.pure-button-active:focus {\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6) inset, 0 0 10px rgba(0, 0, 0, 0.2) inset;\n}\n\n.pure-button.pure-button-rounded {\n    border-radius: 0.3em;\n}\n\n.pure-button.pure-button-heavyrounded {\n    border-radius: 0.5em;\n}\n\n.pure-button.pure-button-oval {\n    border-radius: 50%;\n}\n\n.pure-button.pure-button-halfoval {\n    border-radius: 25%;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -2939,7 +2939,7 @@ module.exports = function (window) {
 
     return Dialog;
 };
-},{"./css/dialog.css":11,"event":27,"js-ext":58,"js-ext/extra/classes.js":54,"js-ext/extra/hashmap.js":55,"panel":69,"polyfill":79,"utils":84}],13:[function(require,module,exports){
+},{"./css/dialog.css":11,"event":27,"js-ext":59,"js-ext/extra/classes.js":54,"js-ext/extra/hashmap.js":55,"panel":70,"polyfill":80,"utils":85}],13:[function(require,module,exports){
 var css = "[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],14:[function(require,module,exports){
 "use strict";
@@ -4059,7 +4059,7 @@ module.exports = function (window) {
     return DragModule;
 
 };
-},{"./css/drag-drop.css":13,"drag":16,"event-dom":17,"js-ext":58,"js-ext/extra/hashmap.js":55,"node-plugin":67,"polyfill/polyfill-base.js":79,"useragent":83,"vdom":96,"window-ext":97}],15:[function(require,module,exports){
+},{"./css/drag-drop.css":13,"drag":16,"event-dom":17,"js-ext":59,"js-ext/extra/hashmap.js":55,"node-plugin":68,"polyfill/polyfill-base.js":80,"useragent":84,"vdom":97,"window-ext":98}],15:[function(require,module,exports){
 var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -ms-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 3001 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],16:[function(require,module,exports){
 "use strict";
@@ -4734,7 +4734,7 @@ module.exports = function (window) {
 
     return DD;
 };
-},{"./css/drag.css":15,"event-dom":17,"js-ext":58,"js-ext/extra/hashmap.js":55,"node-plugin":67,"polyfill":79,"useragent":83,"vdom":96,"window-ext":97}],17:[function(require,module,exports){
+},{"./css/drag.css":15,"event-dom":17,"js-ext":59,"js-ext/extra/hashmap.js":55,"node-plugin":68,"polyfill":80,"useragent":84,"vdom":97,"window-ext":98}],17:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5501,7 +5501,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":27,"js-ext/extra/hashmap.js":55,"js-ext/lib/array.js":60,"js-ext/lib/object.js":63,"js-ext/lib/string.js":65,"polyfill/polyfill-base.js":79,"utils":84,"vdom":96}],18:[function(require,module,exports){
+},{"event":27,"js-ext/extra/hashmap.js":55,"js-ext/lib/array.js":61,"js-ext/lib/object.js":64,"js-ext/lib/string.js":66,"polyfill/polyfill-base.js":80,"utils":85,"vdom":97}],18:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5599,7 +5599,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63}],19:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64}],19:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5698,7 +5698,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63}],20:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64}],20:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5800,7 +5800,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63}],21:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64}],21:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6078,7 +6078,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"utils":84,"vdom":96}],22:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"utils":85,"vdom":97}],22:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8573,7 +8573,7 @@ module.exports = function (window) {
 
 };
 
-},{"utils":84}],24:[function(require,module,exports){
+},{"utils":85}],24:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -9823,7 +9823,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"polyfill/polyfill-base.js":79}],25:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"polyfill/polyfill-base.js":80}],25:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10233,7 +10233,7 @@ Classes.BaseClass.mergePrototypes(Event.Listener, true)
                  .mergePrototypes(ClassListener, true, {}, {});
 
 module.exports = Event;
-},{"./event-base.js":24,"js-ext/extra/classes.js":54,"js-ext/lib/object.js":63}],27:[function(require,module,exports){
+},{"./event-base.js":24,"js-ext/extra/classes.js":54,"js-ext/lib/object.js":64}],27:[function(require,module,exports){
 module.exports = require('./event-base.js');
 require('./event-emitter.js');
 require('./event-listener.js');
@@ -10753,7 +10753,7 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"./css/focusmanager.css":28,"event-mobile":22,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"node-plugin":67,"polyfill":79,"utils":84,"window-ext":97}],30:[function(require,module,exports){
+},{"./css/focusmanager.css":28,"event-mobile":22,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"node-plugin":68,"polyfill":80,"utils":85,"window-ext":98}],30:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -11030,7 +11030,7 @@ module.exports = function (window) {
 
     window._ITSAmodules.Icons = true;
 };
-},{"./css/base.css":39,"event-dom":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/string.js":65,"polyfill/polyfill-base.js":79,"vdom":96}],38:[function(require,module,exports){
+},{"./css/base.css":39,"event-dom":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/string.js":66,"polyfill/polyfill-base.js":80,"vdom":97}],38:[function(require,module,exports){
 var css = "#itsa-alert-icon {\n    fill: #E3A900;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],39:[function(require,module,exports){
 var css = "#itsa-icons-container {\n    display: none; !important;\n}\n\ni[icon] {\n    display: inline-block;\n    vertical-align: baseline;\n    padding: 0;\n    margin: 0;\n}\n\ni[icon] >svg {\n    height: 1em;\n    width: 1em;\n    vertical-align: middle;\n}\n\nbutton.itsa-icon {\n    padding: 0.5em;\n}\n\nbutton.itsa-iconleft {\n    padding-left: 0.75em;\n}\n\nbutton.itsa-iconright {\n    padding-right: 0.75em;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -11290,7 +11290,7 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"../io.js":53,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"xmldom":2}],50:[function(require,module,exports){
+},{"../io.js":53,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"xmldom":2}],50:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -11417,7 +11417,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":53,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63}],51:[function(require,module,exports){
+},{"../io.js":53,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64}],51:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11913,7 +11913,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":53,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"js-ext/lib/string.js":65,"messages":66,"polyfill/polyfill-base.js":79}],52:[function(require,module,exports){
+},{"../io.js":53,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"js-ext/lib/string.js":66,"messages":67,"polyfill/polyfill-base.js":80}],52:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12073,7 +12073,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":53,"js-ext":58,"js-ext/extra/hashmap.js":55,"messages":66}],53:[function(require,module,exports){
+},{"../io.js":53,"js-ext":59,"js-ext/extra/hashmap.js":55,"messages":67}],53:[function(require,module,exports){
 /**
  * Provides core IO-functionality.
  *
@@ -12386,7 +12386,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"js-ext":58,"js-ext/extra/hashmap.js":55,"polyfill/polyfill-base.js":79}],54:[function(require,module,exports){
+},{"js-ext":59,"js-ext/extra/hashmap.js":55,"polyfill/polyfill-base.js":80}],54:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -12999,7 +12999,7 @@ require('../lib/object.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/object.js":63,"js-ext/extra/hashmap.js":55,"polyfill/polyfill-base.js":79}],55:[function(require,module,exports){
+},{"../lib/object.js":64,"js-ext/extra/hashmap.js":55,"polyfill/polyfill-base.js":80}],55:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -13134,7 +13134,217 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":60,"../lib/object.js":63,"./classes.js":54,"js-ext/extra/hashmap.js":55,"polyfill/lib/weakmap.js":77}],57:[function(require,module,exports){
+},{"../lib/array.js":61,"../lib/object.js":64,"./classes.js":54,"js-ext/extra/hashmap.js":55,"polyfill/lib/weakmap.js":78}],57:[function(require,module,exports){
+/**
+ *
+ * Pollyfils for often used functionality for Objects
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module js-ext
+ * @submodule lib/object.js
+ * @class Object
+ *
+*/
+
+"use strict";
+
+require('polyfill/polyfill-base.js');
+require('../lib/object.js');
+require('../lib/array.js');
+
+var NATIVE_OBJECT_OBSERVE = !!Object.observe,
+    later = require('utils').later,
+    _watchers = [],
+    POLL_OBSERVE = 100,
+    // Define configurable, writable and non-enumerable props
+    // if they don't exist.
+    defineProperty = function (object, name, method, force) {
+        if (!force && (name in object)) {
+            return;
+        }
+        Object.defineProperty(object, name, {
+            configurable: true,
+            enumerable: false,
+            writable: true,
+            value: method
+        });
+    },
+    defineProperties = function (object, map, force) {
+        var names = Object.keys(map),
+            l = names.length,
+            i = -1,
+            name;
+        while (++i < l) {
+            name = names[i];
+            defineProperty(object, name, map[name], force);
+        }
+    },
+    watchObject = function(obj, callback) {
+        var watcher;
+        watcher = {
+            obj: obj,
+            cb: callback,
+            cloneObj: obj.deepClone(true),
+            timer: later(function() {
+                if (!obj.sameValue(watcher.cloneObj)) {
+                    watcher.cloneObj = obj.deepClone(true);
+                    callback();
+                }
+            }, POLL_OBSERVE, true)
+        };
+        _watchers[_watchers.length] = watcher;
+    },
+
+    unWatchObject = function(obj, callback) {
+        var currentWatcher;
+        _watchers.some(function(watcher) {
+            if ((watcher.obj===obj) && (watcher.callback===callback)) {
+                currentWatcher = watcher;
+            }
+            return currentWatcher;
+        });
+        if (currentWatcher) {
+            currentWatcher.timer.cancel();
+            _watchers.remove(currentWatcher);
+        }
+    };
+
+defineProperties(Object.prototype, {
+    /**
+     * Observes changes of the instance. On any changes, the callback will be invoked.
+     * Uses a polyfill on environments that don't support native Object.observe.
+     *
+     * The callback comes without arguments (native Object.oserve does, but non-native doesn't)
+     * so, they cannot be used.
+     *
+     * @method observe
+     * @chainable
+     */
+    observe: function (callback) {
+        var obj = this,
+            property;
+        if (typeof callback==='function') {
+            if (NATIVE_OBJECT_OBSERVE) {
+                Object.observe(obj, callback);
+                // check all properties if they are an Array or Object:
+                // in those cases, we need extra observers
+                for (property in obj) {
+                    if (Object.isObject(property)) {
+                        Object.observe(property, callback);
+                    }
+                    else if (Array.isArray(property)) {
+                        Array.observe(property, callback);
+                    }
+                }
+            }
+            else {
+                watchObject(obj, callback);
+            }
+        }
+        return obj;
+    },
+
+    /**
+     * Un-observes changes that are registered with `observe`.
+     * Uses a polyfill on environments that don't support native Object.observe.
+     *
+     * @method observe
+     * @chainable
+     */
+    unobserve: function (callback) {
+        var obj = this,
+            property;
+        if (typeof callback==='function') {
+            if (NATIVE_OBJECT_OBSERVE) {
+                Object.unobserve(obj, callback);
+                for (property in obj) {
+                    if (Object.isObject(property)) {
+                        Object.unobserve(property, callback);
+                    }
+                    else if (Array.isArray(property)) {
+                        Array.unobserve(property, callback);
+                    }
+                }
+            }
+            else {
+                unWatchObject(obj, callback);
+            }
+        }
+        return obj;
+    }
+});
+
+defineProperties(Array.prototype, {
+    /**
+     * Observes changes of the instance. On any changes, the callback will be invoked.
+     * Uses a polyfill on environments that don't support native Object.observe.
+     *
+     * The callback comes without arguments (native Object.oserve does, but non-native doesn't)
+     * so, they cannot be used.
+     *
+     * @method observe
+     * @chainable
+     */
+    observe: function (callback) {
+        var array = this,
+            item, i, len;
+        if (typeof callback==='function') {
+            if (NATIVE_OBJECT_OBSERVE) {
+                Array.observe(array, callback);
+                // check all properties if they are an Array or Object:
+                // in those cases, we need extra observers
+                len = array.length;
+                for (i=0; i<len; i++) {
+                    item = array[i];
+                    if (Object.isObject(item)) {
+                        Object.observe(item, callback);
+                    }
+                    else if (Array.isArray(item)) {
+                        Array.observe(item, callback);
+                    }
+                }
+            }
+            else {
+                watchObject(array, callback);
+            }
+        }
+        return array;
+    },
+
+    /**
+     * Un-observes changes that are registered with `observe`.
+     * Uses a polyfill on environments that don't support native Object.observe.
+     *
+     * @method observe
+     * @chainable
+     */
+    unobserve: function (callback) {
+        var array = this,
+            item, i, len;
+        if (typeof callback==='function') {
+            if (NATIVE_OBJECT_OBSERVE) {
+                Array.unobserve(array, callback);
+                len = array.length;
+                for (i=0; i<len; i++) {
+                    item = array[i];
+                    if (Object.isObject(item)) {
+                        Object.unobserve(item, callback);
+                    }
+                    else if (Array.isArray(item)) {
+                        Array.unobserve(item, callback);
+                    }
+                }
+            }
+            else {
+                unWatchObject(array, callback);
+            }
+        }
+        return array;
+    }
+});
+},{"../lib/array.js":61,"../lib/object.js":64,"polyfill/polyfill-base.js":80,"utils":85}],58:[function(require,module,exports){
 "use strict";
 
 var createHashMap = require('./hashmap.js').createMap;
@@ -13207,14 +13417,14 @@ module.exports = createHashMap({
     'with': true,
     'yield': true
 });
-},{"./hashmap.js":55}],58:[function(require,module,exports){
+},{"./hashmap.js":55}],59:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
 require('./lib/array.js');
 require('./lib/json.js');
 require('./lib/promise.js');
-},{"./lib/array.js":60,"./lib/function.js":61,"./lib/json.js":62,"./lib/object.js":63,"./lib/promise.js":64,"./lib/string.js":65}],59:[function(require,module,exports){
+},{"./lib/array.js":61,"./lib/function.js":62,"./lib/json.js":63,"./lib/object.js":64,"./lib/promise.js":65,"./lib/string.js":66}],60:[function(require,module,exports){
 "use strict";
 
 require('./lib/function.js');
@@ -13223,13 +13433,15 @@ require('./lib/string.js');
 require('./lib/array.js');
 require('./lib/json.js');
 require('./lib/promise.js');
+require('./extra/observers.js');
 
 module.exports = {
     createHashMap: require('./extra/hashmap.js').createMap,
     Classes: require('./extra/classes.js'),
-    LightMap: require('./extra/lightmap.js')
+    LightMap: require('./extra/lightmap.js'),
+    reservedWords: require('./extra/reserved-words.js')
 };
-},{"./extra/classes.js":54,"./extra/hashmap.js":55,"./extra/lightmap.js":56,"./lib/array.js":60,"./lib/function.js":61,"./lib/json.js":62,"./lib/object.js":63,"./lib/promise.js":64,"./lib/string.js":65}],60:[function(require,module,exports){
+},{"./extra/classes.js":54,"./extra/hashmap.js":55,"./extra/lightmap.js":56,"./extra/observers.js":57,"./extra/reserved-words.js":58,"./lib/array.js":61,"./lib/function.js":62,"./lib/json.js":63,"./lib/object.js":64,"./lib/promise.js":65,"./lib/string.js":66}],61:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -13380,7 +13592,7 @@ var cloneObj = function(obj) {
      };
 
 }(Array.prototype));
-},{"polyfill/polyfill-base.js":79}],61:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":80}],62:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -13439,7 +13651,7 @@ var NAME = '[Function]: ';
 
 }(Function.prototype));
 
-},{"polyfill/polyfill-base.js":79}],62:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":80}],63:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -13464,7 +13676,7 @@ var REVIVER = function(key, value) {
 JSON.parseWithDate = function(stringifiedObj) {
     return this.parse(stringifiedObj, REVIVER);
 };
-},{"polyfill/polyfill-base.js":79}],63:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":80}],64:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -13483,8 +13695,6 @@ JSON.parseWithDate = function(stringifiedObj) {
 require('polyfill/polyfill-base.js');
 
 var createHashMap = require('js-ext/extra/hashmap.js').createMap,
-    NATIVE_OBJECT_OBSERVE = !!Object.observe,
-    later = require('utils').later,
     TYPES = createHashMap({
        'undefined' : true,
        'number' : true,
@@ -13497,8 +13707,6 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap,
        '[object Error]' : true,
        '[object Promise]' : true
     }),
-    _watchers = [],
-    POLL_OBSERVE = 100,
     // Define configurable, writable and non-enumerable props
     // if they don't exist.
     defineProperty = function (object, name, method, force) {
@@ -13594,36 +13802,6 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap,
             same = (value1===value2);
         }
         return same;
-    },
-
-    watchObject = function(obj, callback) {
-        var watcher;
-        watcher = {
-            obj: obj,
-            cb: callback,
-            cloneObj: obj.deepClone(true),
-            timer: later(function() {
-                if (!obj.sameValue(watcher.cloneObj)) {
-                    watcher.cloneObj = obj.deepClone(true);
-                    callback();
-                }
-            }, POLL_OBSERVE, true)
-        };
-        _watchers[_watchers.length] = watcher;
-    },
-
-    unWatchObject = function(obj, callback) {
-        var currentWatcher;
-        _watchers.some(function(watcher) {
-            if ((watcher.obj===obj) && (watcher.callback===callback)) {
-                currentWatcher = watcher;
-            }
-            return currentWatcher;
-        });
-        if (currentWatcher) {
-            currentWatcher.timer.cancel();
-            _watchers.remove(currentWatcher);
-        }
     };
 
 /**
@@ -13737,47 +13915,6 @@ defineProperties(Object.prototype, {
      */
     hasKey: function (property) {
         return this.hasOwnProperty(property) && this.propertyIsEnumerable(property);
-    },
-
-    /**
-     * Observes changes of the instance. On any changes, the callback will be invoked.
-     * Uses a polyfill on environments that don't support native Object.observe.
-     *
-     * The callback comes without arguments (native Object.oserve does, but non-native doesn't)
-     * so, they cannot be used.
-     *
-     * @method observe
-     * @chainable
-     */
-    observe: function (callback) {
-        if (typeof callback==='function') {
-            if (NATIVE_OBJECT_OBSERVE) {
-                Object.observe(this, callback);
-            }
-            else {
-                watchObject(this, callback);
-            }
-        }
-        return this;
-    },
-
-    /**
-     * Un-observes changes that are registered with `observe`.
-     * Uses a polyfill on environments that don't support native Object.observe.
-     *
-     * @method observe
-     * @chainable
-     */
-    unobserve: function (callback) {
-        if (typeof callback==='function') {
-            if (NATIVE_OBJECT_OBSERVE) {
-                Object.unobserve(this, callback);
-            }
-            else {
-                unWatchObject(this, callback);
-            }
-        }
-        return this;
     },
 
     /**
@@ -14047,7 +14184,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"js-ext/extra/hashmap.js":55,"polyfill/polyfill-base.js":79,"utils":84}],64:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"polyfill/polyfill-base.js":80}],65:[function(require,module,exports){
 "use strict";
 
 /**
@@ -14393,7 +14530,7 @@ Promise.manage = function (callbackFn, stayActive) {
     return promise;
 };
 
-},{"polyfill":79,"utils":84}],65:[function(require,module,exports){
+},{"polyfill":80,"utils":85}],66:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -14675,7 +14812,7 @@ Promise.manage = function (callbackFn, stayActive) {
 
 }(String.prototype));
 
-},{}],66:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 (function (global){
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -14870,7 +15007,7 @@ require('polyfill');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"event":27,"js-ext":58,"js-ext/extra/hashmap.js":55,"polyfill":79,"utils":84}],67:[function(require,module,exports){
+},{"event":27,"js-ext":59,"js-ext/extra/hashmap.js":55,"polyfill":80,"utils":85}],68:[function(require,module,exports){
 "use strict";
 
 /**
@@ -14889,6 +15026,7 @@ require('polyfill');
 require('js-ext/lib/object.js');
 require('js-ext/lib/string.js');
 require('js-ext/lib/promise.js');
+require('js-ext/extra/observers.js');
 require('polyfill');
 
 var createHashMap = require('js-ext/extra/hashmap.js').createMap,
@@ -15518,9 +15656,9 @@ module.exports = function (window) {
 
     window._ITSAmodules.ElementPlugin = true;
 };
-},{"event-dom":17,"js-ext/extra/classes.js":54,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"js-ext/lib/promise.js":64,"js-ext/lib/string.js":65,"polyfill":79,"utils/lib/timers.js":86,"vdom":96}],68:[function(require,module,exports){
+},{"event-dom":17,"js-ext/extra/classes.js":54,"js-ext/extra/hashmap.js":55,"js-ext/extra/observers.js":57,"js-ext/lib/object.js":64,"js-ext/lib/promise.js":65,"js-ext/lib/string.js":66,"polyfill":80,"utils/lib/timers.js":87,"vdom":97}],69:[function(require,module,exports){
 var css = "[plugin-panel=\"true\"] {\n    position: absolute !important;\n    background-color: #FFF;\n    max-width: 90%;\n    min-width: 200px;\n    min-height: 75px;\n    box-shadow: inset 0 0 5px rgba(50, 50, 50, 0.30), 5px 5px 6px rgba(50, 50, 50, 0.45);\n    border: solid 1px #000;\n}\n\n[plugin-panel=\"true\"],\n[plugin-panel=\"true\"] >div {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n[plugin-panel=\"true\"] >div[is=\"header\"] {\n    vertical-align: middle;\n    background-color: rgb(0, 100, 192);\n    color: #FFF;\n    padding: 0 1.5em 0 0.7em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    vertical-align: middle;\n    line-height: 1.75em;\n    width: 100%;\n    min-height: 1.75em;\n}\n\n[plugin-panel=\"true\"] >div[is=\"content\"] {\n    padding: 1.6em 1.2em;\n    line-height: 115%;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] {\n    border-top: 1px solid #EAE6DB;\n    overflow: hidden;\n    vertical-align: middle;\n    text-align: right;\n    line-height: 1em;\n    padding: 0.5em 0.7em;\n    width: 100%;\n    min-height: 24px;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0.5em;\n}\n\n[plugin-panel=\"true\"].itsa-full-draggable {\n    cursor: default;\n}\n\n[plugin-panel=\"true\"] >button {\n    padding: 0 0.4em 0.1em;\n    position: absolute;\n    right: 0.2em;\n    top: 0.2em;\n    z-index: 1;\n}\n\nbody >div[is=\"system-node\"].itsa-modal-layer {\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 100% !important;\n    height: 100% !important;\n    -webkit-box-sizing: border-box !important;\n    -moz-box-sizing: border-box !important;\n    box-sizing: border-box !important;\n    z-index: 1000 !important;\n    background-color: #000 !important;\n    opacity: 0.2 !important;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button {\n    display: block;\n    width: 100%;\n    margin: 0 0 0.5em;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button:last-child,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button:last-child {\n    margin-bottom: 0;\n}\n\n@media only screen and (max-width : 480px) {\n    [plugin-panel=\"true\"] {\n        width: 90%;\n        box-shadow: 0 0 6px 6px rgba(50, 50, 50, 0.45);\n    }\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],69:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],70:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -15955,7 +16093,7 @@ module.exports = function (window) {
 
     return Panel;
 };
-},{"./css/panel.css":68,"drag":16,"event-mobile":22,"focusmanager":29,"js-ext/extra/hashmap.js":55,"js-ext/extra/lightmap.js":56,"js-ext/lib/object.js":63,"js-ext/lib/string.js":65,"node-plugin":67,"polyfill":79,"scrollable":82,"window-ext":97}],70:[function(require,module,exports){
+},{"./css/panel.css":69,"drag":16,"event-mobile":22,"focusmanager":29,"js-ext/extra/hashmap.js":55,"js-ext/extra/lightmap.js":56,"js-ext/lib/object.js":64,"js-ext/lib/string.js":66,"node-plugin":68,"polyfill":80,"scrollable":83,"window-ext":98}],71:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -15978,7 +16116,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],71:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 "use strict";
 
 /*
@@ -16031,7 +16169,7 @@ module.exports = function (window) {
 
     return transition;
 };
-},{"../bin/local-hashmap.js":70}],72:[function(require,module,exports){
+},{"../bin/local-hashmap.js":71}],73:[function(require,module,exports){
 "use strict";
 
 // CAUTIOUS: need a copy of hashmap --> we cannot use js-ext/extra/hashap.js for that would lead to circular references!
@@ -16076,7 +16214,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{"../bin/local-hashmap.js":70}],73:[function(require,module,exports){
+},{"../bin/local-hashmap.js":71}],74:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -16147,7 +16285,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../bin/local-hashmap.js":70}],74:[function(require,module,exports){
+},{"../bin/local-hashmap.js":71}],75:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -16171,7 +16309,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],75:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 (function (global){
 /*
  * Copyright 2012 The Polymer Authors. All rights reserved.
@@ -16757,9 +16895,9 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],76:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 require('ypromise');
-},{"ypromise":5}],77:[function(require,module,exports){
+},{"ypromise":5}],78:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/Gozala/1269991
 
@@ -16869,7 +17007,7 @@ require('ypromise');
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],78:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -16888,17 +17026,17 @@ require('ypromise');
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],79:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":74,"./lib/window.console.js":78}],80:[function(require,module,exports){
+},{"./lib/matchesselector.js":75,"./lib/window.console.js":79}],81:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/promise.js');
 require('./lib/weakmap.js');
 require('./lib/mutationobserver.js'); // needs weakmap
-},{"./lib/mutationobserver.js":75,"./lib/promise.js":76,"./lib/weakmap.js":77,"./polyfill-base.js":79}],81:[function(require,module,exports){
+},{"./lib/mutationobserver.js":76,"./lib/promise.js":77,"./lib/weakmap.js":78,"./polyfill-base.js":80}],82:[function(require,module,exports){
 var css = "[plugin-scroll=\"true\"] {\n    overflow: hidden !important;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont,\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    position: absolute;\n    display: block;\n    left: -9999px;\n    top: -9999px;\n    opacity: 0;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-vscroll-cont.itsa-visible {\n    opacity: 1;\n    width: 0.8em;\n    height: 100%;\n    right: 0;\n    top: 0;\n    left: auto;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-hscroll-cont.itsa-visible {\n    opacity: 1;\n    height: 0.8em;\n    width: 100%;\n    left: 0;\n    bottom: 0;\n    top: auto;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont span {\n    position: relative;\n    display: block;\n    width: 100%;\n    min-height: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont span {\n    position: relative;\n    display: block;\n    height: 100%;\n    min-width: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-vscroll-cont span,\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-hscroll-cont span {\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n[plugin-scroll=\"true\"] >span span.dd-dragging {\n    cursor: default;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],82:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],83:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -17116,7 +17254,7 @@ module.exports = function (window) {
 
     return Scrollable;
 };
-},{"./css/scrollable.css":81,"drag":16,"event-mobile":22,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"node-plugin":67,"polyfill":79,"useragent":83,"utils":84,"window-ext":97}],83:[function(require,module,exports){
+},{"./css/scrollable.css":82,"drag":16,"event-mobile":22,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"node-plugin":68,"polyfill":80,"useragent":84,"utils":85,"window-ext":98}],84:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17157,13 +17295,13 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"js-ext/lib/string.js":65,"polyfill":79}],84:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"js-ext/lib/string.js":66,"polyfill":80}],85:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
     async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":85,"./lib/timers.js":86}],85:[function(require,module,exports){
+},{"./lib/idgenerator.js":86,"./lib/timers.js":87}],86:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -17221,7 +17359,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"js-ext/extra/hashmap.js":55,"polyfill/polyfill-base.js":79}],86:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"polyfill/polyfill-base.js":80}],87:[function(require,module,exports){
 (function (process){
 /**
  * Collection of various utility functions.
@@ -17353,9 +17491,9 @@ module.exports.later = function (callbackFn, timeout, periodic) {
 	};
 };
 }).call(this,require('_process'))
-},{"_process":99,"polyfill/polyfill-base.js":79}],87:[function(require,module,exports){
+},{"_process":100,"polyfill/polyfill-base.js":80}],88:[function(require,module,exports){
 var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-nodisplay {\n    display: none; !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],88:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],89:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17653,7 +17791,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"js-ext/lib/string.js":65,"polyfill":79,"polyfill/extra/transition.js":71,"polyfill/extra/vendorCSS.js":73}],89:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"js-ext/lib/string.js":66,"polyfill":80,"polyfill/extra/transition.js":72,"polyfill/extra/vendorCSS.js":74}],90:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18081,7 +18219,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"polyfill":79}],90:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"polyfill":80}],91:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18795,7 +18933,7 @@ module.exports = function (window) {
 
 
 
-},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"js-ext/lib/string.js":65,"polyfill":79}],91:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"js-ext/lib/string.js":66,"polyfill":80}],92:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -23504,7 +23642,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":87,"./attribute-extractor.js":88,"./element-array.js":89,"./html-parser.js":92,"./node-parser.js":93,"./vdom-ns.js":94,"./vnode.js":95,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"js-ext/lib/promise.js":64,"js-ext/lib/string.js":65,"polyfill":79,"polyfill/extra/transition.js":71,"polyfill/extra/transitionend.js":72,"polyfill/extra/vendorCSS.js":73,"utils":84,"window-ext":97}],92:[function(require,module,exports){
+},{"../css/element.css":88,"./attribute-extractor.js":89,"./element-array.js":90,"./html-parser.js":93,"./node-parser.js":94,"./vdom-ns.js":95,"./vnode.js":96,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"js-ext/lib/promise.js":65,"js-ext/lib/string.js":66,"polyfill":80,"polyfill/extra/transition.js":72,"polyfill/extra/transitionend.js":73,"polyfill/extra/vendorCSS.js":74,"utils":85,"window-ext":98}],93:[function(require,module,exports){
 "use strict";
 
 /**
@@ -23876,7 +24014,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":88,"./vdom-ns.js":94,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"polyfill":79}],93:[function(require,module,exports){
+},{"./attribute-extractor.js":89,"./vdom-ns.js":95,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"polyfill":80}],94:[function(require,module,exports){
 "use strict";
 
 /**
@@ -24017,7 +24155,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":88,"./vdom-ns.js":94,"./vnode.js":95,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"polyfill":79}],94:[function(require,module,exports){
+},{"./attribute-extractor.js":89,"./vdom-ns.js":95,"./vnode.js":96,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"polyfill":80}],95:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -24252,7 +24390,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"polyfill":79}],95:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"polyfill":80}],96:[function(require,module,exports){
 "use strict";
 
 /**
@@ -26995,7 +27133,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":88,"./html-parser.js":92,"./vdom-ns.js":94,"js-ext/extra/hashmap.js":55,"js-ext/extra/lightmap.js":56,"js-ext/lib/array.js":60,"js-ext/lib/object.js":63,"js-ext/lib/string.js":65,"polyfill":79,"utils/lib/timers.js":86}],96:[function(require,module,exports){
+},{"./attribute-extractor.js":89,"./html-parser.js":93,"./vdom-ns.js":95,"js-ext/extra/hashmap.js":55,"js-ext/extra/lightmap.js":56,"js-ext/lib/array.js":61,"js-ext/lib/object.js":64,"js-ext/lib/string.js":66,"polyfill":80,"utils/lib/timers.js":87}],97:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -27038,13 +27176,13 @@ module.exports = function (window) {
 
     window._ITSAmodules.VDOM = true;
 };
-},{"./partials/extend-document.js":90,"./partials/extend-element.js":91,"./partials/node-parser.js":93,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63,"utils/lib/timers.js":86}],97:[function(require,module,exports){
+},{"./partials/extend-document.js":91,"./partials/extend-element.js":92,"./partials/node-parser.js":94,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"utils/lib/timers.js":87}],98:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":98}],98:[function(require,module,exports){
+},{"./lib/sizes.js":99}],99:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -27148,7 +27286,7 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":63}],99:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64}],100:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -27420,4 +27558,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"constrain":6,"css":10,"dialog":12,"drag-drop":14,"event":27,"event-dom/extra/blurnode.js":18,"event-dom/extra/focusnode.js":19,"event-dom/extra/hover.js":20,"event-dom/extra/valuechange.js":21,"event-mobile":22,"focusmanager":29,"icons":48,"io/extra/io-cors-ie9.js":49,"io/extra/io-stream.js":50,"io/extra/io-transfer.js":51,"io/extra/io-xml.js":52,"js-ext/extra/hashmap.js":55,"js-ext/extra/reserved-words.js":57,"js-ext/js-ext.js":59,"messages":66,"node-plugin":67,"node-win":undefined,"panel":69,"polyfill/polyfill.js":80,"scrollable":82,"useragent":83,"utils":84,"vdom":96,"window-ext":97}]},{},[]);
+},{"constrain":6,"css":10,"dialog":12,"drag-drop":14,"event":27,"event-dom/extra/blurnode.js":18,"event-dom/extra/focusnode.js":19,"event-dom/extra/hover.js":20,"event-dom/extra/valuechange.js":21,"event-mobile":22,"focusmanager":29,"icons":48,"io/extra/io-cors-ie9.js":49,"io/extra/io-stream.js":50,"io/extra/io-transfer.js":51,"io/extra/io-xml.js":52,"js-ext/extra/hashmap.js":55,"js-ext/extra/reserved-words.js":58,"js-ext/js-ext.js":60,"messages":67,"node-plugin":68,"node-win":undefined,"panel":70,"polyfill/polyfill.js":81,"scrollable":83,"useragent":84,"utils":85,"vdom":97,"window-ext":98}]},{},[]);
