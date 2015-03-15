@@ -394,7 +394,10 @@
                 "lib/object.js": 1
             },
             "classes": {},
-            "fors": {},
+            "fors": {
+                "Object": 1,
+                "Array": 1
+            },
             "namespaces": {}
         },
         "src/js-ext/lib/array.js": {
@@ -1043,7 +1046,9 @@
             },
             "fors": {
                 "BaseClass": 1,
-                "Classes": 1
+                "Classes": 1,
+                "Object": 1,
+                "Array": 1
             },
             "namespaces": {},
             "file": "src/js-ext/lib/promise.js",
@@ -1089,7 +1094,10 @@
             "classes": {
                 "Object": 1
             },
-            "fors": {},
+            "fors": {
+                "Object": 1,
+                "Array": 1
+            },
             "is_submodule": 1,
             "namespaces": {},
             "module": "js-ext",
@@ -14832,8 +14840,8 @@
         },
         {
             "file": "src/js-ext/extra/observers.js",
-            "line": 78,
-            "description": "Observes changes of the instance. On any changes, the callback will be invoked.\nUses a polyfill on environments that don't support native Object.observe.\n\nThe callback comes without arguments (native Object.oserve does, but non-native doesn't)\nso, they cannot be used.",
+            "line": 119,
+            "description": "Observes changes of the instance. On any changes, the callback will be invoked.\nUses a polyfill on environments that don't support native Object.observe.\n\nThe callback comes without arguments (native Object.observe does, but non-native doesn't)\nso, they cannot be used.\n\nWill observer the complete object nested (deep).",
             "itemtype": "method",
             "name": "observe",
             "chainable": 1,
@@ -14843,10 +14851,10 @@
         },
         {
             "file": "src/js-ext/extra/observers.js",
-            "line": 112,
+            "line": 175,
             "description": "Un-observes changes that are registered with `observe`.\nUses a polyfill on environments that don't support native Object.observe.",
             "itemtype": "method",
-            "name": "observe",
+            "name": "unobserve",
             "chainable": 1,
             "class": "Object",
             "module": "js-ext",
@@ -14854,23 +14862,23 @@
         },
         {
             "file": "src/js-ext/extra/observers.js",
-            "line": 143,
-            "description": "Observes changes of the instance. On any changes, the callback will be invoked.\nUses a polyfill on environments that don't support native Object.observe.\n\nThe callback comes without arguments (native Object.oserve does, but non-native doesn't)\nso, they cannot be used.",
+            "line": 215,
+            "description": "Observes changes of the instance. On any changes, the callback will be invoked.\nUses a polyfill on environments that don't support native Array.observe.\n\nThe callback comes without arguments (native Array.observe does, but non-native doesn't)\nso, they cannot be used.\n\nWill observer the complete array nested (deep).",
             "itemtype": "method",
             "name": "observe",
             "chainable": 1,
-            "class": "Object",
+            "class": "Array",
             "module": "js-ext",
             "submodule": "lib/object.js"
         },
         {
             "file": "src/js-ext/extra/observers.js",
-            "line": 179,
-            "description": "Un-observes changes that are registered with `observe`.\nUses a polyfill on environments that don't support native Object.observe.",
+            "line": 272,
+            "description": "Un-observes changes that are registered with `observe`.\nUses a polyfill on environments that don't support native Array.observe.",
             "itemtype": "method",
-            "name": "observe",
+            "name": "unobserve",
             "chainable": 1,
-            "class": "Object",
+            "class": "Array",
             "module": "js-ext",
             "submodule": "lib/object.js"
         },
