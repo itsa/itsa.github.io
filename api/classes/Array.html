@@ -299,6 +299,13 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_observe">observe</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_remove">remove</a>
 
                                 
@@ -314,6 +321,13 @@
                         
                             <li class="index-item method">
                                 <a href="#method_shuffle">shuffle</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_unobserve">unobserve</a>
 
                                 
                                 
@@ -630,6 +644,69 @@ Only handles members of primary types, Dates, Arrays and Objects.</p>
 </div>
 
                 
+                    <div id="method_observe" class="method item">
+    <h3 class="name"><code>observe</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/lib/object.js.html">lib/object.js</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js-ext_extra_observers.js.html#l215"><code>src&#x2F;js-ext&#x2F;extra&#x2F;observers.js:215</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Observes changes of the instance. On any changes, the callback will be invoked.
+Uses a polyfill on environments that don&#39;t support native Array.observe.</p>
+<p>The callback comes without arguments (native Array.observe does, but non-native doesn&#39;t)
+so, they cannot be used.</p>
+<p>Will observer the complete array nested (deep).</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_remove" class="method item">
     <h3 class="name"><code>remove</code></h3>
 
@@ -904,6 +981,66 @@ Only handles members of primary types, Dates, Arrays and Objects.</p>
 
     <div class="description">
         <p>Shuffles the items in the Array randomly</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_unobserve" class="method item">
+    <h3 class="name"><code>unobserve</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/lib/object.js.html">lib/object.js</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js-ext_extra_observers.js.html#l272"><code>src&#x2F;js-ext&#x2F;extra&#x2F;observers.js:272</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Un-observes changes that are registered with <code>observe</code>.
+Uses a polyfill on environments that don&#39;t support native Array.observe.</p>
 
     </div>
 
