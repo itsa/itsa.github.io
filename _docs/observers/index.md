@@ -54,5 +54,5 @@ model.observe(callbackFn);
 model.dummy = 10;
 
 // stop observing:
-model.observe(callbackFn);
+model.unobserve(callbackFn);
 ```

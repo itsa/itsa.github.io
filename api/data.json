@@ -194,6 +194,13 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/icons/base-icons/cart.js": {
+            "name": "src/icons/base-icons/cart.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "src/icons/base-icons/error.js": {
             "name": "src/icons/base-icons/error.js",
             "modules": {},
@@ -224,6 +231,13 @@
         },
         "src/icons/base-icons/plus.js": {
             "name": "src/icons/base-icons/plus.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/icons/base-icons/printer.js": {
+            "name": "src/icons/base-icons/printer.js",
             "modules": {},
             "classes": {},
             "fors": {},
@@ -15384,7 +15398,7 @@
         },
         {
             "file": "src/js-ext/lib/promise.js",
-            "line": 24,
+            "line": 25,
             "description": "Promise which can be put at the very end of a chain, even after .catch().\nWill invoke the callback function regardless whether the chain resolves or rejects.\n\nThe argument of the callback will be either its fulfilled or rejected argument, but\nit is wisely not to handle it. The results should have been handled in an earlier step\nof the chain: .finally() basicly means you want to execute code after the chain, regardless\nwhether it's resolved or rejected.\n\n**Note:** .finally() <u>does not return a Promise</u>: it should be used as the very last step of a Promisechain.\nIf you need an intermediate method, you should take .thenFulfill().",
             "itemtype": "method",
             "name": "finally",
@@ -15405,7 +15419,7 @@
         },
         {
             "file": "src/js-ext/lib/promise.js",
-            "line": 45,
+            "line": 46,
             "description": "Will always return a fulfilled Promise.\n\nTypical usage will be by making it part of a Promisechain: it makes the chain go\ninto its fulfilled phase.",
             "example": [
                 "\n\npromise1\n.then(promise2)\n.thenFulfill()\n.then(handleFulfilled, handleRejected) // handleFulfilled always gets invoked"
@@ -15430,7 +15444,7 @@
         },
         {
             "file": "src/js-ext/lib/promise.js",
-            "line": 76,
+            "line": 77,
             "description": "Returns a Promise that always fulfills. It is fulfilled when ALL items are resolved (either fulfilled\nor rejected). This is useful for waiting for the resolution of multiple\npromises, such as reading multiple files in Node.js or making multiple XHR\nrequests in the browser. Because -on the contrary of `Promise.all`- **finishAll** waits until\nall single Promises are resolved, you can handle all promises, even if some gets rejected.",
             "itemtype": "method",
             "name": "finishAll",
@@ -15452,7 +15466,7 @@
         },
         {
             "file": "src/js-ext/lib/promise.js",
-            "line": 140,
+            "line": 141,
             "description": "Returns a Promise which chains the function-calls. Like an automated Promise-chain.\nInvokes the functionreferences in a chain. You MUST supply function-references, it doesn't\nmatter wheter these functions return a Promise or not. Any returnvalues are passed through to\nthe next function.\n\n**Cautious:** you need to pass function-references, not invoke them!\nchainFns will invoke them when the time is ready. Regarding to this, there is a difference with\nusing Promise.all() where you should pass invoked Promises.\n\nIf one of the functions returns a Promise, the chain\nwill wait its execution for this function to be resolved.\n\nIf you need specific context or arguments: use Function.bind for these items.\nIf one of the items returns a rejected Promise, by default: the whole chain rejects\nand following functions in the chain will not be invoked. When `finishAll` is set `true`\nthe chain will always continue even with rejected Promises.\n\nReturning functionvalues are passed through the chain adding them as an extra argument\nto the next function in the chain (argument is added on the right)",
             "example": [
                 "\n    var a = [], p1, p2, p3;\n    p1 = function(a) {\n        return new Promise(function(resolve, reject) {\n            I.later(function() {\n                console.log('resolving promise p1: '+a);\n                resolve(a);\n            }, 1000);\n        });\n    };\n    p2 = function(b, r) {\n        var value = b+r;\n        console.log('returning p2: '+value);\n        return value;\n    };\n    p3 = function(c, r) {\n        return new Promise(function(resolve, reject) {\n            I.later(function() {\n                var value = b+r;\n                console.log('resolving promise p3: '+value);\n                resolve(value);\n            }, 1000);\n        });\n    };\n    a.push(p1.bind(undefined, 100));\n    a.push(p2.bind(undefined, 200));\n    a.push(p3.bind(undefined, 300));\n    Promise.chainFns(a).then(\n        function(r) {\n            console.log('chain resolved with '+r);\n        },\n        function(err) {\n            console.log('chain-error '+err);\n        }\n    );"
@@ -15484,7 +15498,7 @@
         },
         {
             "file": "src/js-ext/lib/promise.js",
-            "line": 232,
+            "line": 233,
             "description": "Returns a Promise with 5 additional methods:\n\npromise.fulfill\npromise.reject\npromise.callback\npromise.setCallback\npromise.pending\npromise.stayActive --> force the promise not to resolve in the specified time\n\nWith Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.\nYou can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any.\npromise.**fulfill**() and promise.**reject**() are meant to resolve the promise from outside, just like deferred can do.\n\nIf `stayActive` is defined, the promise will only be resolved after this specified time (ms). When `fulfill` or `reject` is\ncalled, it will be applied after this specified time.",
             "example": [
                 "\n    var promise = Promise.manage(\n        function(msg) {\n            alert(msg);\n        }\n    );\n\n    promise.then(\n        function() {\n            // promise is fulfilled, no further actions can be taken\n        }\n    );\n\n    setTimeout(function() {\n        promise.callback('hey, I\\'m still busy');\n    }, 1000);\n\n    setTimeout(function() {\n        promise.fulfill();\n    }, 2000);"

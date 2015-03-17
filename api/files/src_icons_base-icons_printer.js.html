@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/icons/index.js - Itsa</title>
+    <title>src/icons/base-icons/printer.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -222,7 +222,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/icons/index.js</h1>
+                        <h1 class="file-heading">File: src/icons/base-icons/printer.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -234,6 +234,7 @@
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
+ * SVG icon by https://icomoon.io/app/#/select
  *
  * @module panel
  * @class Panel
@@ -241,21 +242,7 @@
 */
 
 module.exports = function (window) {
-    require(&#x27;./base.js&#x27;)(window);
-    require(&#x27;./base-icons/error.js&#x27;)(window);
-    require(&#x27;./base-icons/alert.js&#x27;)(window);
-    require(&#x27;./base-icons/exclamation.js&#x27;)(window);
-    require(&#x27;./base-icons/info.js&#x27;)(window);
-    require(&#x27;./base-icons/minus.js&#x27;)(window);
-    require(&#x27;./base-icons/plus.js&#x27;)(window);
-    require(&#x27;./base-icons/question.js&#x27;)(window);
-    require(&#x27;./base-icons/printer.js&#x27;)(window);
-    require(&#x27;./base-icons/cart.js&#x27;)(window);
-    require(&#x27;./extra-animated-icons/audio-anim.js&#x27;)(window);
-    require(&#x27;./extra-animated-icons/speaking-anim.js&#x27;)(window);
-    require(&#x27;./extra-animated-icons/grid-anim.js&#x27;)(window);
-    require(&#x27;./extra-animated-icons/radar-anim.js&#x27;)(window);
-    require(&#x27;./extra-animated-icons/spinnercircle-anim.js&#x27;)(window);
+    window.document.defineIcon(&#x27;printer&#x27;, 1024, 1024, &#x27;&lt;path class=&quot;path1&quot; d=&quot;M256 64h512v128h-512v-128z&quot;&gt;&lt;/path&gt;&lt;path class=&quot;path2&quot; d=&quot;M960 256h-896c-35.2 0-64 28.8-64 64v320c0 35.2 28.794 64 64 64h192v256h512v-256h192c35.2 0 64-28.8 64-64v-320c0-35.2-28.8-64-64-64zM128 448c-35.346 0-64-28.654-64-64s28.654-64 64-64 64 28.654 64 64-28.652 64-64 64zM704 896h-384v-320h384v320z&quot;&gt;&lt;/path&gt;&#x27;);
 };
     </pre>
 </div>

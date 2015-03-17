@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/icons/index.js - Itsa</title>
+    <title>src/icons/base-icons/cart.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -222,10 +222,11 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/icons/index.js</h1>
+                        <h1 class="file-heading">File: src/icons/base-icons/cart.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
+
 &quot;use strict&quot;;
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -234,29 +235,18 @@
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
+ * SVG icon by https://icomoon.io/app/#/select
  *
  * @module panel
  * @class Panel
  * @since 0.0.1
 */
 
+require(&#x27;../css/alert.css&#x27;);
 module.exports = function (window) {
-    require(&#x27;./base.js&#x27;)(window);
-    require(&#x27;./base-icons/error.js&#x27;)(window);
-    require(&#x27;./base-icons/alert.js&#x27;)(window);
-    require(&#x27;./base-icons/exclamation.js&#x27;)(window);
-    require(&#x27;./base-icons/info.js&#x27;)(window);
-    require(&#x27;./base-icons/minus.js&#x27;)(window);
-    require(&#x27;./base-icons/plus.js&#x27;)(window);
-    require(&#x27;./base-icons/question.js&#x27;)(window);
-    require(&#x27;./base-icons/printer.js&#x27;)(window);
-    require(&#x27;./base-icons/cart.js&#x27;)(window);
-    require(&#x27;./extra-animated-icons/audio-anim.js&#x27;)(window);
-    require(&#x27;./extra-animated-icons/speaking-anim.js&#x27;)(window);
-    require(&#x27;./extra-animated-icons/grid-anim.js&#x27;)(window);
-    require(&#x27;./extra-animated-icons/radar-anim.js&#x27;)(window);
-    require(&#x27;./extra-animated-icons/spinnercircle-anim.js&#x27;)(window);
+    window.document.defineIcon(&#x27;cart&#x27;, 1024, 1024, &#x27;&lt;path class=&quot;path1&quot; d=&quot;M384 928c0 53.019-42.981 96-96 96s-96-42.981-96-96c0-53.019 42.981-96 96-96s96 42.981 96 96z&quot;&gt;&lt;/path&gt;&lt;path class=&quot;path2&quot; d=&quot;M1024 928c0 53.019-42.981 96-96 96s-96-42.981-96-96c0-53.019 42.981-96 96-96s96 42.981 96 96z&quot;&gt;&lt;/path&gt;&lt;path class=&quot;path3&quot; d=&quot;M1024 512v-384h-768c0-35.346-28.654-64-64-64h-192v64h128l48.074 412.054c-29.294 23.458-48.074 59.5-48.074 99.946 0 70.696 57.308 128 128 128h768v-64h-768c-35.346 0-64-28.654-64-64 0-0.218 0.014-0.436 0.016-0.656l831.984-127.344z&quot;&gt;&lt;/path&gt;&#x27;);
 };
+
     </pre>
 </div>
 
