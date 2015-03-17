@@ -89,6 +89,8 @@ Once the `icons`-module is included, `window.document` gets a new method: *docum
 <i icon="minus"></i> minus
 <i icon="plus"></i> plus
 <i icon="question"></i> question
+<i icon="printer"></i> printer
+<i icon="cart"></i> cart
 <i icon="audio-anim"></i> audio-anim
 <i icon="grid-anim"></i> grid-anim
 <i icon="radar-anim"></i> radar-anim

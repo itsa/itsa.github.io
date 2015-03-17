@@ -13,23 +13,21 @@ intro: "This example shows how to observe a complex object for datachanges"
 <script src="itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa'),
-        modelData;
+        model, callback;
 
-    modelData = {
-        header: 'title',
-        footer: '<button class="pure-button">Cancel</button><button class="pure-button">Ok</button>',
-        content: 'I am a panel',
-        visible: true,
-        onTopWhenShowed: true,
-        headerCloseBtn: true,
-        draggable: true
+    model = {
+        band: 'Marillion',
+        titles: ['Script for a Jester\'s tear', 'Fugazi']
     };
 
-    document.createPanel(modelData);
+    callback = function(item) {
+        console.warn(JSON.stringify(item));
+    };
 
-    ITSA.later(function() {
-        modelData.content = 'Now I changed the content';
-    }, 2000);
+    model.observe(callback);
+
+    model.titles.push('Misplaced Childhood');
+
 </script>
 ```
 

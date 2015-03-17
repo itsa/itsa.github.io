@@ -2636,7 +2636,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":100}],6:[function(require,module,exports){
+},{"_process":102}],6:[function(require,module,exports){
 "use strict";
 module.exports = function (window) {
     require('node-plugin')(window);
@@ -2664,7 +2664,7 @@ module.exports = function (window) {
 
     return PluginConstrain;
 };
-},{"js-ext/extra/hashmap.js":55,"node-plugin":68}],7:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":57,"node-plugin":70}],7:[function(require,module,exports){
 var css = "*:focus {\n    outline: 0;\n}\n\na[target=\"_blank\"]:focus {\n    outline: 1px solid #129fea;\n}\n\n/* because we think the padding and margin should always be part of the size,\n   we define \"box-sizing: border-box\" for all elements */\n\n* {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],8:[function(require,module,exports){
 var css = ".pure-menu.pure-menu-open {\n    z-index: 3; /* prevent graph from crossing the menuarea */\n}\n\n.pure-button.pure-button-bordered,\n.pure-button.pure-button-bordered[disabled] {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;\n}\n\n.pure-button-active,\n.pure-button:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button.pure-button-bordered.pure-button-active[disabled],\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered[disabled]:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.4) inset, 0 0 6px rgba(0,0,0, 0.2) inset;\n}\n\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.6) inset;\n}\n\n/* restore pure-button:active */\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button:active:focus,\n.pure-button.pure-button-active:focus {\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6) inset, 0 0 10px rgba(0, 0, 0, 0.2) inset;\n}\n\n.pure-button.pure-button-rounded {\n    border-radius: 0.3em;\n}\n\n.pure-button.pure-button-heavyrounded {\n    border-radius: 0.5em;\n}\n\n.pure-button.pure-button-oval {\n    border-radius: 50%;\n}\n\n.pure-button.pure-button-halfoval {\n    border-radius: 25%;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -2939,7 +2939,7 @@ module.exports = function (window) {
 
     return Dialog;
 };
-},{"./css/dialog.css":11,"event":27,"js-ext":59,"js-ext/extra/classes.js":54,"js-ext/extra/hashmap.js":55,"panel":70,"polyfill":80,"utils":85}],13:[function(require,module,exports){
+},{"./css/dialog.css":11,"event":27,"js-ext":61,"js-ext/extra/classes.js":56,"js-ext/extra/hashmap.js":57,"panel":72,"polyfill":82,"utils":87}],13:[function(require,module,exports){
 var css = "[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],14:[function(require,module,exports){
 "use strict";
@@ -4059,7 +4059,7 @@ module.exports = function (window) {
     return DragModule;
 
 };
-},{"./css/drag-drop.css":13,"drag":16,"event-dom":17,"js-ext":59,"js-ext/extra/hashmap.js":55,"node-plugin":68,"polyfill/polyfill-base.js":80,"useragent":84,"vdom":97,"window-ext":98}],15:[function(require,module,exports){
+},{"./css/drag-drop.css":13,"drag":16,"event-dom":17,"js-ext":61,"js-ext/extra/hashmap.js":57,"node-plugin":70,"polyfill/polyfill-base.js":82,"useragent":86,"vdom":99,"window-ext":100}],15:[function(require,module,exports){
 var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -ms-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 3001 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],16:[function(require,module,exports){
 "use strict";
@@ -4734,7 +4734,7 @@ module.exports = function (window) {
 
     return DD;
 };
-},{"./css/drag.css":15,"event-dom":17,"js-ext":59,"js-ext/extra/hashmap.js":55,"node-plugin":68,"polyfill":80,"useragent":84,"vdom":97,"window-ext":98}],17:[function(require,module,exports){
+},{"./css/drag.css":15,"event-dom":17,"js-ext":61,"js-ext/extra/hashmap.js":57,"node-plugin":70,"polyfill":82,"useragent":86,"vdom":99,"window-ext":100}],17:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5501,7 +5501,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":27,"js-ext/extra/hashmap.js":55,"js-ext/lib/array.js":61,"js-ext/lib/object.js":64,"js-ext/lib/string.js":66,"polyfill/polyfill-base.js":80,"utils":85,"vdom":97}],18:[function(require,module,exports){
+},{"event":27,"js-ext/extra/hashmap.js":57,"js-ext/lib/array.js":63,"js-ext/lib/object.js":66,"js-ext/lib/string.js":68,"polyfill/polyfill-base.js":82,"utils":87,"vdom":99}],18:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5599,7 +5599,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64}],19:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66}],19:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5698,7 +5698,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64}],20:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66}],20:[function(require,module,exports){
 "use strict";
 
 /**
@@ -5800,7 +5800,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64}],21:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66}],21:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6078,7 +6078,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"utils":85,"vdom":97}],22:[function(require,module,exports){
+},{"../event-dom.js":17,"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66,"utils":87,"vdom":99}],22:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8573,7 +8573,7 @@ module.exports = function (window) {
 
 };
 
-},{"utils":85}],24:[function(require,module,exports){
+},{"utils":87}],24:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -9823,7 +9823,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"polyfill/polyfill-base.js":80}],25:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66,"polyfill/polyfill-base.js":82}],25:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10233,7 +10233,7 @@ Classes.BaseClass.mergePrototypes(Event.Listener, true)
                  .mergePrototypes(ClassListener, true, {}, {});
 
 module.exports = Event;
-},{"./event-base.js":24,"js-ext/extra/classes.js":54,"js-ext/lib/object.js":64}],27:[function(require,module,exports){
+},{"./event-base.js":24,"js-ext/extra/classes.js":56,"js-ext/lib/object.js":66}],27:[function(require,module,exports){
 module.exports = require('./event-base.js');
 require('./event-emitter.js');
 require('./event-listener.js');
@@ -10753,7 +10753,7 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"./css/focusmanager.css":28,"event-mobile":22,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"node-plugin":68,"polyfill":80,"utils":85,"window-ext":98}],30:[function(require,module,exports){
+},{"./css/focusmanager.css":28,"event-mobile":22,"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66,"node-plugin":70,"polyfill":82,"utils":87,"window-ext":100}],30:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -10773,7 +10773,29 @@ require('../css/alert.css');
 module.exports = function (window) {
     window.document.defineIcon('alert', 1024, 1024, '<path class="path1" d="M1005.854 800.247l-438.286-767c-11.395-19.941-32.601-32.247-55.568-32.247s-44.173 12.306-55.567 32.247l-438.286 767c-11.319 19.809-11.238 44.144 0.213 63.876s32.539 31.877 55.354 31.877h876.572c22.814 0 43.903-12.145 55.354-31.877s11.533-44.067 0.214-63.876zM576 768h-128v-128h128v128zM576 576h-128v-256h128v256z"></path>');
 };
-},{"../css/alert.css":38}],31:[function(require,module,exports){
+},{"../css/alert.css":40}],31:[function(require,module,exports){
+
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/alert.css');
+module.exports = function (window) {
+    window.document.defineIcon('cart', 1024, 1024, '<path class="path1" d="M384 928c0 53.019-42.981 96-96 96s-96-42.981-96-96c0-53.019 42.981-96 96-96s96 42.981 96 96z"></path><path class="path2" d="M1024 928c0 53.019-42.981 96-96 96s-96-42.981-96-96c0-53.019 42.981-96 96-96s96 42.981 96 96z"></path><path class="path3" d="M1024 512v-384h-768c0-35.346-28.654-64-64-64h-192v64h128l48.074 412.054c-29.294 23.458-48.074 59.5-48.074 99.946 0 70.696 57.308 128 128 128h768v-64h-768c-35.346 0-64-28.654-64-64 0-0.218 0.014-0.436 0.016-0.656l831.984-127.344z"></path>');
+};
+
+},{"../css/alert.css":40}],32:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -10793,7 +10815,7 @@ require('../css/error.css');
 module.exports = function (window) {
     window.document.defineIcon('error', 1024, 1024, '<path class="path1" d="M512 0c-282.752 0-512 229.248-512 512s229.248 512 512 512 512-229.248 512-512-229.248-512-512-512zM765.248 674.752l-90.496 90.496-162.752-162.752-162.752 162.752-90.496-90.496 162.752-162.752-162.752-162.752 90.496-90.496 162.752 162.752 162.752-162.752 90.496 90.496-162.752 162.752 162.752 162.752z"></path>');
 };
-},{"../css/error.css":40}],32:[function(require,module,exports){
+},{"../css/error.css":42}],33:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -10813,7 +10835,7 @@ require('../css/alert.css');
 module.exports = function (window) {
     window.document.defineIcon('exclamation', 1024, 1024, '<path class="path1" d="M438.857 73.143q119.429 0 220.286 58.857t159.714 159.714 58.857 220.286-58.857 220.286-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857zM512 785.714v-108.571q0-8-5.143-13.429t-12.571-5.429h-109.714q-7.429 0-13.143 5.714t-5.714 13.143v108.571q0 7.429 5.714 13.143t13.143 5.714h109.714q7.429 0 12.571-5.429t5.143-13.429zM510.857 589.143l10.286-354.857q0-6.857-5.714-10.286-5.714-4.571-13.714-4.571h-125.714q-8 0-13.714 4.571-5.714 3.429-5.714 10.286l9.714 354.857q0 5.714 5.714 10t13.714 4.286h105.714q8 0 13.429-4.286t6-10z"></path>');
 };
-},{"../css/alert.css":38}],33:[function(require,module,exports){
+},{"../css/alert.css":40}],34:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -10833,7 +10855,7 @@ require('../css/alert.css');
 module.exports = function (window) {
     window.document.defineIcon('info', 1024, 1024, '<path class="path1" d="M585.143 786.286v-91.429q0-8-5.143-13.143t-13.143-5.143h-54.857v-292.571q0-8-5.143-13.143t-13.143-5.143h-182.857q-8 0-13.143 5.143t-5.143 13.143v91.429q0 8 5.143 13.143t13.143 5.143h54.857v182.857h-54.857q-8 0-13.143 5.143t-5.143 13.143v91.429q0 8 5.143 13.143t13.143 5.143h256q8 0 13.143-5.143t5.143-13.143zM512 274.286v-91.429q0-8-5.143-13.143t-13.143-5.143h-109.714q-8 0-13.143 5.143t-5.143 13.143v91.429q0 8 5.143 13.143t13.143 5.143h109.714q8 0 13.143-5.143t5.143-13.143zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z"></path>');
 };
-},{"../css/alert.css":38}],34:[function(require,module,exports){
+},{"../css/alert.css":40}],35:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -10853,7 +10875,7 @@ require('../css/alert.css');
 module.exports = function (window) {
     window.document.defineIcon('minus', 1024, 1024, '<path class="path1" d="M694.857 548.571v-73.143q0-14.857-10.857-25.714t-25.714-10.857h-438.857q-14.857 0-25.714 10.857t-10.857 25.714v73.143q0 14.857 10.857 25.714t25.714 10.857h438.857q14.857 0 25.714-10.857t10.857-25.714zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z"></path>');
 };
-},{"../css/alert.css":38}],35:[function(require,module,exports){
+},{"../css/alert.css":40}],36:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -10873,7 +10895,26 @@ require('../css/alert.css');
 module.exports = function (window) {
     window.document.defineIcon('plus', 1024, 1024, '<path class="path1" d="M694.857 548.571v-73.143q0-14.857-10.857-25.714t-25.714-10.857h-146.286v-146.286q0-14.857-10.857-25.714t-25.714-10.857h-73.143q-14.857 0-25.714 10.857t-10.857 25.714v146.286h-146.286q-14.857 0-25.714 10.857t-10.857 25.714v73.143q0 14.857 10.857 25.714t25.714 10.857h146.286v146.286q0 14.857 10.857 25.714t25.714 10.857h73.143q14.857 0 25.714-10.857t10.857-25.714v-146.286h146.286q14.857 0 25.714-10.857t10.857-25.714zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z"></path>');
 };
-},{"../css/alert.css":38}],36:[function(require,module,exports){
+},{"../css/alert.css":40}],37:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    window.document.defineIcon('printer', 1024, 1024, '<path class="path1" d="M256 64h512v128h-512v-128z"></path><path class="path2" d="M960 256h-896c-35.2 0-64 28.8-64 64v320c0 35.2 28.794 64 64 64h192v256h512v-256h192c35.2 0 64-28.8 64-64v-320c0-35.2-28.8-64-64-64zM128 448c-35.346 0-64-28.654-64-64s28.654-64 64-64 64 28.654 64 64-28.652 64-64 64zM704 896h-384v-320h384v320z"></path>');
+};
+},{}],38:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -10893,7 +10934,7 @@ require('../css/alert.css');
 module.exports = function (window) {
     window.document.defineIcon('question', 1024, 1024, '<path class="path1" d="M512 786.286v-109.714q0-8-5.143-13.143t-13.143-5.143h-109.714q-8 0-13.143 5.143t-5.143 13.143v109.714q0 8 5.143 13.143t13.143 5.143h109.714q8 0 13.143-5.143t5.143-13.143zM658.286 402.286q0-50.286-31.714-93.143t-79.143-66.286-97.143-23.429q-138.857 0-212 121.714-8.571 13.714 4.571 24l75.429 57.143q4 3.429 10.857 3.429 9.143 0 14.286-6.857 30.286-38.857 49.143-52.571 19.429-13.714 49.143-13.714 27.429 0 48.857 14.857t21.429 33.714q0 21.714-11.429 34.857t-38.857 25.714q-36 16-66 49.429t-30 71.714v20.571q0 8 5.143 13.143t13.143 5.143h109.714q8 0 13.143-5.143t5.143-13.143q0-10.857 12.286-28.286t31.143-28.286q18.286-10.286 28-16.286t26.286-20 25.429-27.429 16-34.571 7.143-46.286zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z"></path>');
 };
-},{"../css/alert.css":38}],37:[function(require,module,exports){
+},{"../css/alert.css":40}],39:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -11030,17 +11071,17 @@ module.exports = function (window) {
 
     window._ITSAmodules.Icons = true;
 };
-},{"./css/base.css":39,"event-dom":17,"js-ext/extra/hashmap.js":55,"js-ext/lib/string.js":66,"polyfill/polyfill-base.js":80,"vdom":97}],38:[function(require,module,exports){
+},{"./css/base.css":41,"event-dom":17,"js-ext/extra/hashmap.js":57,"js-ext/lib/string.js":68,"polyfill/polyfill-base.js":82,"vdom":99}],40:[function(require,module,exports){
 var css = "#itsa-alert-icon {\n    fill: #E3A900;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],39:[function(require,module,exports){
-var css = "#itsa-icons-container {\n    display: none; !important;\n}\n\ni[icon] {\n    display: inline-block;\n    vertical-align: baseline;\n    padding: 0;\n    margin: 0;\n}\n\ni[icon] >svg {\n    height: 1em;\n    width: 1em;\n    vertical-align: middle;\n}\n\nbutton.itsa-icon {\n    padding: 0.5em;\n}\n\nbutton.itsa-iconleft {\n    padding-left: 0.75em;\n}\n\nbutton.itsa-iconright {\n    padding-right: 0.75em;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],40:[function(require,module,exports){
-var css = "#itsa-error-icon {\n  fill: #960500;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],41:[function(require,module,exports){
-var css = "#itsa-radar-anim-icon g {\n  stroke: #000;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+var css = "#itsa-icons-container {\n    display: none; !important;\n}\n\ni[icon] {\n    display: inline-block;\n    vertical-align: baseline;\n    padding: 0;\n    margin: 0;\n}\n\ni[icon] >svg {\n    height: 1em;\n    width: 1em;\n    vertical-align: middle;\n}\n\nbutton.itsa-icon {\n    padding: 0.5em;\n}\n\nbutton.itsa-iconleft {\n    padding-left: 0.75em;\n}\n\nbutton.itsa-iconright {\n    padding-right: 0.75em;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],42:[function(require,module,exports){
-var css = "#itsa-spinnercircle-anim-icon circle {\n  fill: #000;\n}\n\n#itsa-spinnercircle-anim-icon g {\n  stroke: #000;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+var css = "#itsa-error-icon {\n  fill: #960500;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],43:[function(require,module,exports){
+var css = "#itsa-radar-anim-icon g {\n  stroke: #000;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],44:[function(require,module,exports){
+var css = "#itsa-spinnercircle-anim-icon circle {\n  fill: #000;\n}\n\n#itsa-spinnercircle-anim-icon g {\n  stroke: #000;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],45:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -11058,7 +11099,7 @@ var css = "#itsa-spinnercircle-anim-icon circle {\n  fill: #000;\n}\n\n#itsa-spi
 module.exports = function (window) {
     window.document.defineIcon('audio-anim', 55, 80, '<g transform="matrix(1 0 0 -1 0 80)"><rect width="10" height="20" rx="3"><animate attributeName="height" begin="0s" dur="4.3s" values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20" calcMode="linear" repeatCount="indefinite" /></rect><rect x="15" width="10" height="80" rx="3"><animate attributeName="height" begin="0s" dur="2s" values="80;55;33;5;75;23;73;33;12;14;60;80" calcMode="linear" repeatCount="indefinite" /></rect><rect x="30" width="10" height="50" rx="3"><animate attributeName="height" begin="0s" dur="1.4s" values="50;34;78;23;56;23;34;76;80;54;21;50" calcMode="linear" repeatCount="indefinite" /></rect><rect x="45" width="10" height="30" rx="3"><animate attributeName="height" begin="0s" dur="2s" values="30;45;13;80;56;72;45;76;34;23;67;30" calcMode="linear" repeatCount="indefinite" /></rect></g>');
 };
-},{}],44:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -11076,7 +11117,7 @@ module.exports = function (window) {
 module.exports = function (window) {
     window.document.defineIcon('grid-anim', 105, 105, '<circle cx="12.5" cy="12.5" r="12.5"><animate attributeName="fill-opacity" begin="0s" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="12.5" cy="52.5" r="12.5" fill-opacity=".5"><animate attributeName="fill-opacity" begin="100ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="52.5" cy="12.5" r="12.5"><animate attributeName="fill-opacity" begin="300ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="52.5" cy="52.5" r="12.5"><animate attributeName="fill-opacity" begin="600ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="92.5" cy="12.5" r="12.5"><animate attributeName="fill-opacity" begin="800ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="92.5" cy="52.5" r="12.5"><animate attributeName="fill-opacity" begin="400ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="12.5" cy="92.5" r="12.5"><animate attributeName="fill-opacity" begin="700ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="52.5" cy="92.5" r="12.5"><animate attributeName="fill-opacity" begin="500ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="92.5" cy="92.5" r="12.5"><animate attributeName="fill-opacity" begin="200ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle>');
 };
-},{}],45:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -11095,7 +11136,7 @@ require('../css/radar-anim.css');
 module.exports = function (window) {
     window.document.defineIcon('radar-anim', 45, 45, '<g fill="none" fill-rule="evenodd" transform="translate(1 1)" stroke-width="2"><circle cx="22" cy="22" r="6" stroke-opacity="0"><animate attributeName="r" begin="1.5s" dur="3s" values="6;22" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-opacity" begin="1.5s" dur="3s" values="1;0" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-width" begin="1.5s" dur="3s" values="2;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="22" cy="22" r="6" stroke-opacity="0"><animate attributeName="r" begin="3s" dur="3s" values="6;22" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-opacity" begin="3s" dur="3s" values="1;0" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-width" begin="3s" dur="3s" values="2;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="22" cy="22" r="8"><animate attributeName="r" begin="0s" dur="1.5s" values="6;1;2;3;4;5;6" calcMode="linear" repeatCount="indefinite" /></circle></g>');
 };
-},{"../css/radar-anim.css":41}],46:[function(require,module,exports){
+},{"../css/radar-anim.css":43}],48:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -11113,7 +11154,7 @@ module.exports = function (window) {
 module.exports = function (window) {
     window.document.defineIcon('speaking-anim', 135, 140, '<rect y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.5s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.5s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="30" y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.25s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.25s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="60" width="15" height="140" rx="6"><animate attributeName="height" begin="0s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="90" y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.25s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.25s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="120" y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.5s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.5s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect>');
 };
-},{}],47:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -11132,7 +11173,7 @@ require('../css/spinnercircle-anim.css');
 module.exports = function (window) {
     window.document.defineIcon('spinnercircle-anim', 58, 58, '<g fill="none" fill-rule="evenodd"><g transform="translate(2 1)" stroke="#FFF" stroke-width="1.5"><circle cx="42.601" cy="11.462" r="5" fill-opacity="1" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="1;0;0;0;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="49.063" cy="27.063" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;1;0;0;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="42.601" cy="42.663" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;1;0;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="27" cy="49.125" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;1;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="11.399" cy="42.663" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;1;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="4.938" cy="27.063" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;1;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="11.399" cy="11.462" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;0;1;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="27" cy="5" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;0;0;1" calcMode="linear" repeatCount="indefinite" /></circle></g></g>');
 };
-},{"../css/spinnercircle-anim.css":42}],48:[function(require,module,exports){
+},{"../css/spinnercircle-anim.css":44}],50:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -11156,13 +11197,15 @@ module.exports = function (window) {
     require('./base-icons/minus.js')(window);
     require('./base-icons/plus.js')(window);
     require('./base-icons/question.js')(window);
+    require('./base-icons/printer.js')(window);
+    require('./base-icons/cart.js')(window);
     require('./extra-animated-icons/audio-anim.js')(window);
     require('./extra-animated-icons/speaking-anim.js')(window);
     require('./extra-animated-icons/grid-anim.js')(window);
     require('./extra-animated-icons/radar-anim.js')(window);
     require('./extra-animated-icons/spinnercircle-anim.js')(window);
 };
-},{"./base-icons/alert.js":30,"./base-icons/error.js":31,"./base-icons/exclamation.js":32,"./base-icons/info.js":33,"./base-icons/minus.js":34,"./base-icons/plus.js":35,"./base-icons/question.js":36,"./base.js":37,"./extra-animated-icons/audio-anim.js":43,"./extra-animated-icons/grid-anim.js":44,"./extra-animated-icons/radar-anim.js":45,"./extra-animated-icons/speaking-anim.js":46,"./extra-animated-icons/spinnercircle-anim.js":47}],49:[function(require,module,exports){
+},{"./base-icons/alert.js":30,"./base-icons/cart.js":31,"./base-icons/error.js":32,"./base-icons/exclamation.js":33,"./base-icons/info.js":34,"./base-icons/minus.js":35,"./base-icons/plus.js":36,"./base-icons/printer.js":37,"./base-icons/question.js":38,"./base.js":39,"./extra-animated-icons/audio-anim.js":45,"./extra-animated-icons/grid-anim.js":46,"./extra-animated-icons/radar-anim.js":47,"./extra-animated-icons/speaking-anim.js":48,"./extra-animated-icons/spinnercircle-anim.js":49}],51:[function(require,module,exports){
 
 "use strict";
 
@@ -11290,7 +11333,7 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"../io.js":53,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"xmldom":2}],50:[function(require,module,exports){
+},{"../io.js":55,"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66,"xmldom":2}],52:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -11417,7 +11460,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":53,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64}],51:[function(require,module,exports){
+},{"../io.js":55,"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66}],53:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11913,7 +11956,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":53,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"js-ext/lib/string.js":66,"messages":67,"polyfill/polyfill-base.js":80}],52:[function(require,module,exports){
+},{"../io.js":55,"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66,"js-ext/lib/string.js":68,"messages":69,"polyfill/polyfill-base.js":82}],54:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12073,7 +12116,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":53,"js-ext":59,"js-ext/extra/hashmap.js":55,"messages":67}],53:[function(require,module,exports){
+},{"../io.js":55,"js-ext":61,"js-ext/extra/hashmap.js":57,"messages":69}],55:[function(require,module,exports){
 /**
  * Provides core IO-functionality.
  *
@@ -12386,7 +12429,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"js-ext":59,"js-ext/extra/hashmap.js":55,"polyfill/polyfill-base.js":80}],54:[function(require,module,exports){
+},{"js-ext":61,"js-ext/extra/hashmap.js":57,"polyfill/polyfill-base.js":82}],56:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -12999,7 +13042,7 @@ require('../lib/object.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/object.js":64,"js-ext/extra/hashmap.js":55,"polyfill/polyfill-base.js":80}],55:[function(require,module,exports){
+},{"../lib/object.js":66,"js-ext/extra/hashmap.js":57,"polyfill/polyfill-base.js":82}],57:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -13022,7 +13065,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],56:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -13134,7 +13177,7 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":61,"../lib/object.js":64,"./classes.js":54,"js-ext/extra/hashmap.js":55,"polyfill/lib/weakmap.js":78}],57:[function(require,module,exports){
+},{"../lib/array.js":63,"../lib/object.js":66,"./classes.js":56,"js-ext/extra/hashmap.js":57,"polyfill/lib/weakmap.js":80}],59:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -13450,7 +13493,7 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":61,"../lib/object.js":64,"polyfill/lib/weakmap.js":78,"polyfill/polyfill-base.js":80,"utils":85}],58:[function(require,module,exports){
+},{"../lib/array.js":63,"../lib/object.js":66,"polyfill/lib/weakmap.js":80,"polyfill/polyfill-base.js":82,"utils":87}],60:[function(require,module,exports){
 "use strict";
 
 var createHashMap = require('./hashmap.js').createMap;
@@ -13523,14 +13566,14 @@ module.exports = createHashMap({
     'with': true,
     'yield': true
 });
-},{"./hashmap.js":55}],59:[function(require,module,exports){
+},{"./hashmap.js":57}],61:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
 require('./lib/array.js');
 require('./lib/json.js');
 require('./lib/promise.js');
-},{"./lib/array.js":61,"./lib/function.js":62,"./lib/json.js":63,"./lib/object.js":64,"./lib/promise.js":65,"./lib/string.js":66}],60:[function(require,module,exports){
+},{"./lib/array.js":63,"./lib/function.js":64,"./lib/json.js":65,"./lib/object.js":66,"./lib/promise.js":67,"./lib/string.js":68}],62:[function(require,module,exports){
 "use strict";
 
 require('./lib/function.js');
@@ -13547,7 +13590,7 @@ module.exports = {
     LightMap: require('./extra/lightmap.js'),
     reservedWords: require('./extra/reserved-words.js')
 };
-},{"./extra/classes.js":54,"./extra/hashmap.js":55,"./extra/lightmap.js":56,"./extra/observers.js":57,"./extra/reserved-words.js":58,"./lib/array.js":61,"./lib/function.js":62,"./lib/json.js":63,"./lib/object.js":64,"./lib/promise.js":65,"./lib/string.js":66}],61:[function(require,module,exports){
+},{"./extra/classes.js":56,"./extra/hashmap.js":57,"./extra/lightmap.js":58,"./extra/observers.js":59,"./extra/reserved-words.js":60,"./lib/array.js":63,"./lib/function.js":64,"./lib/json.js":65,"./lib/object.js":66,"./lib/promise.js":67,"./lib/string.js":68}],63:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -13698,7 +13741,7 @@ var cloneObj = function(obj) {
      };
 
 }(Array.prototype));
-},{"polyfill/polyfill-base.js":80}],62:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":82}],64:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -13757,7 +13800,7 @@ var NAME = '[Function]: ';
 
 }(Function.prototype));
 
-},{"polyfill/polyfill-base.js":80}],63:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":82}],65:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -13782,7 +13825,7 @@ var REVIVER = function(key, value) {
 JSON.parseWithDate = function(stringifiedObj) {
     return this.parse(stringifiedObj, REVIVER);
 };
-},{"polyfill/polyfill-base.js":80}],64:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":82}],66:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -14290,7 +14333,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"js-ext/extra/hashmap.js":55,"polyfill/polyfill-base.js":80}],65:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":57,"polyfill/polyfill-base.js":82}],67:[function(require,module,exports){
 "use strict";
 
 /**
@@ -14307,6 +14350,7 @@ Object.merge = function () {
 */
 
 require('polyfill');
+require('polyfill/lib/promise.js'); // need full version
 
 var NAME = '[promise-ext]: ',
     FUNCTION_EXPECTED = ' expects an array of function-references', // include leading space!
@@ -14636,7 +14680,7 @@ Promise.manage = function (callbackFn, stayActive) {
     return promise;
 };
 
-},{"polyfill":80,"utils":85}],66:[function(require,module,exports){
+},{"polyfill":82,"polyfill/lib/promise.js":79,"utils":87}],68:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -14918,7 +14962,7 @@ Promise.manage = function (callbackFn, stayActive) {
 
 }(String.prototype));
 
-},{}],67:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 (function (global){
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -15113,7 +15157,7 @@ require('polyfill');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"event":27,"js-ext":59,"js-ext/extra/hashmap.js":55,"polyfill":80,"utils":85}],68:[function(require,module,exports){
+},{"event":27,"js-ext":61,"js-ext/extra/hashmap.js":57,"polyfill":82,"utils":87}],70:[function(require,module,exports){
 "use strict";
 
 /**
@@ -15762,9 +15806,9 @@ module.exports = function (window) {
 
     window._ITSAmodules.ElementPlugin = true;
 };
-},{"event-dom":17,"js-ext/extra/classes.js":54,"js-ext/extra/hashmap.js":55,"js-ext/extra/observers.js":57,"js-ext/lib/object.js":64,"js-ext/lib/promise.js":65,"js-ext/lib/string.js":66,"polyfill":80,"utils/lib/timers.js":87,"vdom":97}],69:[function(require,module,exports){
+},{"event-dom":17,"js-ext/extra/classes.js":56,"js-ext/extra/hashmap.js":57,"js-ext/extra/observers.js":59,"js-ext/lib/object.js":66,"js-ext/lib/promise.js":67,"js-ext/lib/string.js":68,"polyfill":82,"utils/lib/timers.js":89,"vdom":99}],71:[function(require,module,exports){
 var css = "[plugin-panel=\"true\"] {\n    position: absolute !important;\n    background-color: #FFF;\n    max-width: 90%;\n    min-width: 200px;\n    min-height: 75px;\n    box-shadow: inset 0 0 5px rgba(50, 50, 50, 0.30), 5px 5px 6px rgba(50, 50, 50, 0.45);\n    border: solid 1px #000;\n}\n\n[plugin-panel=\"true\"],\n[plugin-panel=\"true\"] >div {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n[plugin-panel=\"true\"] >div[is=\"header\"] {\n    vertical-align: middle;\n    background-color: rgb(0, 100, 192);\n    color: #FFF;\n    padding: 0 1.5em 0 0.7em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    vertical-align: middle;\n    line-height: 1.75em;\n    width: 100%;\n    min-height: 1.75em;\n}\n\n[plugin-panel=\"true\"] >div[is=\"content\"] {\n    padding: 1.6em 1.2em;\n    line-height: 115%;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] {\n    border-top: 1px solid #EAE6DB;\n    overflow: hidden;\n    vertical-align: middle;\n    text-align: right;\n    line-height: 1em;\n    padding: 0.5em 0.7em;\n    width: 100%;\n    min-height: 24px;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0.5em;\n}\n\n[plugin-panel=\"true\"].itsa-full-draggable {\n    cursor: default;\n}\n\n[plugin-panel=\"true\"] >button {\n    padding: 0 0.4em 0.1em;\n    position: absolute;\n    right: 0.2em;\n    top: 0.2em;\n    z-index: 1;\n}\n\nbody >div[is=\"system-node\"].itsa-modal-layer {\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 100% !important;\n    height: 100% !important;\n    -webkit-box-sizing: border-box !important;\n    -moz-box-sizing: border-box !important;\n    box-sizing: border-box !important;\n    z-index: 1000 !important;\n    background-color: #000 !important;\n    opacity: 0.2 !important;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button {\n    display: block;\n    width: 100%;\n    margin: 0 0 0.5em;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button:last-child,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button:last-child {\n    margin-bottom: 0;\n}\n\n@media only screen and (max-width : 480px) {\n    [plugin-panel=\"true\"] {\n        width: 90%;\n        box-shadow: 0 0 6px 6px rgba(50, 50, 50, 0.45);\n    }\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],70:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],72:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -16199,7 +16243,7 @@ module.exports = function (window) {
 
     return Panel;
 };
-},{"./css/panel.css":69,"drag":16,"event-mobile":22,"focusmanager":29,"js-ext/extra/hashmap.js":55,"js-ext/extra/lightmap.js":56,"js-ext/lib/object.js":64,"js-ext/lib/string.js":66,"node-plugin":68,"polyfill":80,"scrollable":83,"window-ext":98}],71:[function(require,module,exports){
+},{"./css/panel.css":71,"drag":16,"event-mobile":22,"focusmanager":29,"js-ext/extra/hashmap.js":57,"js-ext/extra/lightmap.js":58,"js-ext/lib/object.js":66,"js-ext/lib/string.js":68,"node-plugin":70,"polyfill":82,"scrollable":85,"window-ext":100}],73:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -16222,7 +16266,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],72:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 "use strict";
 
 /*
@@ -16275,7 +16319,7 @@ module.exports = function (window) {
 
     return transition;
 };
-},{"../bin/local-hashmap.js":71}],73:[function(require,module,exports){
+},{"../bin/local-hashmap.js":73}],75:[function(require,module,exports){
 "use strict";
 
 // CAUTIOUS: need a copy of hashmap --> we cannot use js-ext/extra/hashap.js for that would lead to circular references!
@@ -16320,7 +16364,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{"../bin/local-hashmap.js":71}],74:[function(require,module,exports){
+},{"../bin/local-hashmap.js":73}],76:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -16391,7 +16435,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../bin/local-hashmap.js":71}],75:[function(require,module,exports){
+},{"../bin/local-hashmap.js":73}],77:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -16415,7 +16459,7 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],76:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 (function (global){
 /*
  * Copyright 2012 The Polymer Authors. All rights reserved.
@@ -17001,9 +17045,9 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],77:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 require('ypromise');
-},{"ypromise":5}],78:[function(require,module,exports){
+},{"ypromise":5}],80:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/Gozala/1269991
 
@@ -17113,7 +17157,7 @@ require('ypromise');
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],79:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -17132,17 +17176,17 @@ require('ypromise');
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],80:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":75,"./lib/window.console.js":79}],81:[function(require,module,exports){
+},{"./lib/matchesselector.js":77,"./lib/window.console.js":81}],83:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/promise.js');
 require('./lib/weakmap.js');
 require('./lib/mutationobserver.js'); // needs weakmap
-},{"./lib/mutationobserver.js":76,"./lib/promise.js":77,"./lib/weakmap.js":78,"./polyfill-base.js":80}],82:[function(require,module,exports){
+},{"./lib/mutationobserver.js":78,"./lib/promise.js":79,"./lib/weakmap.js":80,"./polyfill-base.js":82}],84:[function(require,module,exports){
 var css = "[plugin-scroll=\"true\"] {\n    overflow: hidden !important;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont,\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    position: absolute;\n    display: block;\n    left: -9999px;\n    top: -9999px;\n    opacity: 0;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-vscroll-cont.itsa-visible {\n    opacity: 1;\n    width: 0.8em;\n    height: 100%;\n    right: 0;\n    top: 0;\n    left: auto;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-hscroll-cont.itsa-visible {\n    opacity: 1;\n    height: 0.8em;\n    width: 100%;\n    left: 0;\n    bottom: 0;\n    top: auto;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont span {\n    position: relative;\n    display: block;\n    width: 100%;\n    min-height: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont span {\n    position: relative;\n    display: block;\n    height: 100%;\n    min-width: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-vscroll-cont span,\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-hscroll-cont span {\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n[plugin-scroll=\"true\"] >span span.dd-dragging {\n    cursor: default;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],83:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],85:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -17360,7 +17404,7 @@ module.exports = function (window) {
 
     return Scrollable;
 };
-},{"./css/scrollable.css":82,"drag":16,"event-mobile":22,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"node-plugin":68,"polyfill":80,"useragent":84,"utils":85,"window-ext":98}],84:[function(require,module,exports){
+},{"./css/scrollable.css":84,"drag":16,"event-mobile":22,"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66,"node-plugin":70,"polyfill":82,"useragent":86,"utils":87,"window-ext":100}],86:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17401,13 +17445,13 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"js-ext/lib/string.js":66,"polyfill":80}],85:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66,"js-ext/lib/string.js":68,"polyfill":82}],87:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
     async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":86,"./lib/timers.js":87}],86:[function(require,module,exports){
+},{"./lib/idgenerator.js":88,"./lib/timers.js":89}],88:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -17465,7 +17509,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"js-ext/extra/hashmap.js":55,"polyfill/polyfill-base.js":80}],87:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":57,"polyfill/polyfill-base.js":82}],89:[function(require,module,exports){
 (function (process){
 /**
  * Collection of various utility functions.
@@ -17597,9 +17641,9 @@ module.exports.later = function (callbackFn, timeout, periodic) {
 	};
 };
 }).call(this,require('_process'))
-},{"_process":100,"polyfill/polyfill-base.js":80}],88:[function(require,module,exports){
+},{"_process":102,"polyfill/polyfill-base.js":82}],90:[function(require,module,exports){
 var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-nodisplay {\n    display: none; !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],89:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],91:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17897,7 +17941,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"js-ext/lib/string.js":66,"polyfill":80,"polyfill/extra/transition.js":72,"polyfill/extra/vendorCSS.js":74}],90:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66,"js-ext/lib/string.js":68,"polyfill":82,"polyfill/extra/transition.js":74,"polyfill/extra/vendorCSS.js":76}],92:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18325,7 +18369,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"polyfill":80}],91:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66,"polyfill":82}],93:[function(require,module,exports){
 "use strict";
 
 /**
@@ -19039,7 +19083,7 @@ module.exports = function (window) {
 
 
 
-},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"js-ext/lib/string.js":66,"polyfill":80}],92:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66,"js-ext/lib/string.js":68,"polyfill":82}],94:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -23748,7 +23792,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":88,"./attribute-extractor.js":89,"./element-array.js":90,"./html-parser.js":93,"./node-parser.js":94,"./vdom-ns.js":95,"./vnode.js":96,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"js-ext/lib/promise.js":65,"js-ext/lib/string.js":66,"polyfill":80,"polyfill/extra/transition.js":72,"polyfill/extra/transitionend.js":73,"polyfill/extra/vendorCSS.js":74,"utils":85,"window-ext":98}],93:[function(require,module,exports){
+},{"../css/element.css":90,"./attribute-extractor.js":91,"./element-array.js":92,"./html-parser.js":95,"./node-parser.js":96,"./vdom-ns.js":97,"./vnode.js":98,"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66,"js-ext/lib/promise.js":67,"js-ext/lib/string.js":68,"polyfill":82,"polyfill/extra/transition.js":74,"polyfill/extra/transitionend.js":75,"polyfill/extra/vendorCSS.js":76,"utils":87,"window-ext":100}],95:[function(require,module,exports){
 "use strict";
 
 /**
@@ -23979,7 +24023,7 @@ module.exports = function (window) {
                     }
 
                     // just to be sure there won't be a `script`-tag passed inside the argument (something modern browsers never let happen):
-                    (tag==='SCRIPT') && (tag==='XSCRIPT');
+                    (tag==='SCRIPT') && (tag='XSCRIPT');
 
                     // the string-parser expects </xscript> for `script`-tags
                     if ((tag==='XSCRIPT') && allowScripts) {
@@ -24120,7 +24164,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":89,"./vdom-ns.js":95,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"polyfill":80}],94:[function(require,module,exports){
+},{"./attribute-extractor.js":91,"./vdom-ns.js":97,"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66,"polyfill":82}],96:[function(require,module,exports){
 "use strict";
 
 /**
@@ -24261,7 +24305,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":89,"./vdom-ns.js":95,"./vnode.js":96,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"polyfill":80}],95:[function(require,module,exports){
+},{"./attribute-extractor.js":91,"./vdom-ns.js":97,"./vnode.js":98,"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66,"polyfill":82}],97:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -24496,7 +24540,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"polyfill":80}],96:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66,"polyfill":82}],98:[function(require,module,exports){
 "use strict";
 
 /**
@@ -27239,7 +27283,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":89,"./html-parser.js":93,"./vdom-ns.js":95,"js-ext/extra/hashmap.js":55,"js-ext/extra/lightmap.js":56,"js-ext/lib/array.js":61,"js-ext/lib/object.js":64,"js-ext/lib/string.js":66,"polyfill":80,"utils/lib/timers.js":87}],97:[function(require,module,exports){
+},{"./attribute-extractor.js":91,"./html-parser.js":95,"./vdom-ns.js":97,"js-ext/extra/hashmap.js":57,"js-ext/extra/lightmap.js":58,"js-ext/lib/array.js":63,"js-ext/lib/object.js":66,"js-ext/lib/string.js":68,"polyfill":82,"utils/lib/timers.js":89}],99:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -27282,13 +27326,13 @@ module.exports = function (window) {
 
     window._ITSAmodules.VDOM = true;
 };
-},{"./partials/extend-document.js":91,"./partials/extend-element.js":92,"./partials/node-parser.js":94,"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64,"utils/lib/timers.js":87}],98:[function(require,module,exports){
+},{"./partials/extend-document.js":93,"./partials/extend-element.js":94,"./partials/node-parser.js":96,"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66,"utils/lib/timers.js":89}],100:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":99}],99:[function(require,module,exports){
+},{"./lib/sizes.js":101}],101:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -27392,7 +27436,7 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/extra/hashmap.js":55,"js-ext/lib/object.js":64}],100:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":57,"js-ext/lib/object.js":66}],102:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -27664,4 +27708,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"constrain":6,"css":10,"dialog":12,"drag-drop":14,"event":27,"event-dom/extra/blurnode.js":18,"event-dom/extra/focusnode.js":19,"event-dom/extra/hover.js":20,"event-dom/extra/valuechange.js":21,"event-mobile":22,"focusmanager":29,"icons":48,"io/extra/io-cors-ie9.js":49,"io/extra/io-stream.js":50,"io/extra/io-transfer.js":51,"io/extra/io-xml.js":52,"js-ext/extra/hashmap.js":55,"js-ext/extra/reserved-words.js":58,"js-ext/js-ext.js":60,"messages":67,"node-plugin":68,"node-win":undefined,"panel":70,"polyfill/polyfill.js":81,"scrollable":83,"useragent":84,"utils":85,"vdom":97,"window-ext":98}]},{},[]);
+},{"constrain":6,"css":10,"dialog":12,"drag-drop":14,"event":27,"event-dom/extra/blurnode.js":18,"event-dom/extra/focusnode.js":19,"event-dom/extra/hover.js":20,"event-dom/extra/valuechange.js":21,"event-mobile":22,"focusmanager":29,"icons":50,"io/extra/io-cors-ie9.js":51,"io/extra/io-stream.js":52,"io/extra/io-transfer.js":53,"io/extra/io-xml.js":54,"js-ext/extra/hashmap.js":57,"js-ext/extra/reserved-words.js":60,"js-ext/js-ext.js":62,"messages":69,"node-plugin":70,"node-win":undefined,"panel":72,"polyfill/polyfill.js":83,"scrollable":85,"useragent":86,"utils":87,"vdom":99,"window-ext":100}]},{},[]);
