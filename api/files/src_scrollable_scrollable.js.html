@@ -379,10 +379,13 @@ module.exports = function (window) {
                 (scrollWidth===(width+1)) &amp;&amp; (scrollWidth=width);
             }
 
-            vScrollerVisible = (scrollHeight&gt;height),
-            hScrollerVisible = (scrollWidth&gt;width),
+            vScrollerVisible = (scrollHeight&gt;height);
+            hScrollerVisible = (scrollWidth&gt;width);
             vscroller.toggleClass(&#x27;itsa-visible&#x27;, vScrollerVisible);
             hscroller.toggleClass(&#x27;itsa-visible&#x27;, hScrollerVisible);
+
+            console.info(&#x27;vScrollerVisible: &#x27;+vScrollerVisible+&#x27;  (scrollHeight:&#x27;+scrollHeight+&#x27; | height:&#x27;+height+&#x27;)&#x27;);
+            console.info(&#x27;hScrollerVisible: &#x27;+hScrollerVisible+&#x27;  (scrollWidth:&#x27;+scrollWidth+&#x27; | width:&#x27;+width+&#x27;)&#x27;);
 
             host.scrollTop = scrollTop;
             host.scrollLeft = scrollLeft;
