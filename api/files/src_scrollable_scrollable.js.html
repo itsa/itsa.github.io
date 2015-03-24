@@ -379,8 +379,8 @@ module.exports = function (window) {
                 (scrollWidth===(width+1)) &amp;&amp; (scrollWidth=width);
             }
 
-            vScrollerVisible = (scrollHeight&gt;height);
-            hScrollerVisible = (scrollWidth&gt;width);
+            vScrollerVisible = model.y &amp;&amp; (scrollHeight&gt;height);
+            hScrollerVisible = model.x &amp;&amp; (scrollWidth&gt;width);
             vscroller.toggleClass(&#x27;itsa-visible&#x27;, vScrollerVisible);
             hscroller.toggleClass(&#x27;itsa-visible&#x27;, hScrollerVisible);
 

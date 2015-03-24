@@ -13,13 +13,13 @@
 
 <body>
 
-    <p><i-button><i-label><!--First name:--></i-label></i-button></p>
+    <div id="test"></div>
 
     <script src="../../dist/itsabuild.js"></script>
     <script>
         var ITSA = require('itsa');
-        var button = document.getElement('i-button');
-        console.warn(button.getHTML(false, true));
+        var testdiv = document.getElement('#test');
+        testdiv.setHTML('<br/>');
     </script>
 
 </body>

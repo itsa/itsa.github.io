@@ -366,6 +366,12 @@
     require(&#x27;vdom&#x27;)(window);
     require(&#x27;icons&#x27;)(window);
 
+
+    ITSA.ClientStorage = require(&#x27;client-storage&#x27;);
+    ITSA.DB = require(&#x27;client-db&#x27;);
+    ITSA.localStorage = new ITSA.ClientStorage();
+
+
     /**
      * Reference to the &#x60;idGenerator&#x60; function in [utils](../modules/utils.html)
      *

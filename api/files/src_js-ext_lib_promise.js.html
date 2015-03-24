@@ -436,7 +436,7 @@ Promise.finishAll = function (items) {
  */
 Promise.chainFns = function (funcs, finishAll) {
     console.log(NAME, &#x27;chainFns&#x27;);
-    var handleFn, length, handlePromiseChain,
+    var handleFn, length, handlePromiseChain, promiseErr,
         i = 0;
     // Array.isArray assumes ES5
     Array.isArray(funcs) || (funcs=[funcs]);
@@ -449,13 +449,23 @@ Promise.chainFns = function (funcs, finishAll) {
         }
         promise = Promise.resolve(nextFn.apply(null, arguments));
         // by using &quot;promise.catch(function(){})&quot; we return a resolved Promise
-        return finishAll ? promise.thenFulfill() : promise;
+        return finishAll ?
+               promise.catch(function(err){
+                   promiseErr = err;
+                   return err;
+               }) :
+               promise;
     };
     handlePromiseChain = function() {
         // will loop until rejected, which is at destruction of the class
         return handleFn.apply(null, arguments).then((++i&lt;length) ? handlePromiseChain : undefined);
     };
-    return handlePromiseChain();
+    return handlePromiseChain().then(function(response) {
+        if (promiseErr) {
+            throw new Error(promiseErr);
+        }
+        return response;
+    });
 };
 
 /**

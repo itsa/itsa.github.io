@@ -1117,7 +1117,7 @@
             "module": "js-ext",
             "namespace": "",
             "file": "src/js-ext/lib/object.js",
-            "line": 128,
+            "line": 116,
             "description": "Pollyfils for often used functionality for Objects\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "lib/array.js": {
@@ -1634,7 +1634,7 @@
             "submodule": "lib/object.js",
             "namespace": "",
             "file": "src/js-ext/lib/object.js",
-            "line": 128,
+            "line": 116,
             "description": "Pollyfils for often used functionality for objects"
         },
         "Array": {
@@ -14406,7 +14406,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 141,
+            "line": 147,
             "description": "Reference to the `idGenerator` function in [utils](../modules/utils.html)",
             "itemtype": "property",
             "name": "idGenerator",
@@ -14417,7 +14417,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 171,
+            "line": 177,
             "description": "Reference to the [IO](io.html) object",
             "itemtype": "property",
             "name": "IO",
@@ -14428,7 +14428,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 183,
+            "line": 189,
             "description": "Reference to the [UserAgent](useragent.html) object",
             "itemtype": "property",
             "name": "UA",
@@ -14439,7 +14439,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 191,
+            "line": 197,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",
@@ -15043,7 +15043,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 133,
+            "line": 121,
             "description": "Loops through all properties in the object.  Equivalent to Array.forEach.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "each",
@@ -15061,7 +15061,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 159,
+            "line": 147,
             "description": "Loops through the properties in an object until the callback function returns *truish*.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe order in which the elements are visited is not predictable.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "some",
@@ -15082,7 +15082,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 187,
+            "line": 175,
             "description": "Loops through the properties in an object until the callback assembling a new object\nwith its properties set to the values returned by the callback function.\nIf the callback function returns `undefined` the property will not be copied to the new object.\nThe resulting object will have the same keys as the original, except for those where the callback\nreturned `undefined` which will have dissapeared.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "map",
@@ -15103,7 +15103,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 220,
+            "line": 208,
             "description": "Returns the keys of the object: the enumerable properties.",
             "itemtype": "method",
             "name": "keys",
@@ -15117,7 +15117,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 230,
+            "line": 218,
             "description": "Checks whether the given property is a key: an enumerable property.",
             "itemtype": "method",
             "name": "hasKey",
@@ -15138,7 +15138,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 241,
+            "line": 229,
             "description": "Returns the number of keys of the object",
             "itemtype": "method",
             "name": "size",
@@ -15152,7 +15152,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 251,
+            "line": 239,
             "description": "Loops through the object collection the values of all its properties.\nIt is the counterpart of the [`keys`](#method_keys).",
             "itemtype": "method",
             "name": "values",
@@ -15166,7 +15166,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 271,
+            "line": 259,
             "description": "Returns true if the object has no own members",
             "itemtype": "method",
             "name": "isEmpty",
@@ -15180,7 +15180,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 284,
+            "line": 272,
             "description": "Returns a shallow copy of the object.\nIt does not clone objects within the object, it does a simple, shallow clone.\nFast, mostly useful for plain hash maps.",
             "itemtype": "method",
             "name": "shallowClone",
@@ -15203,7 +15203,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 318,
+            "line": 306,
             "description": "Compares this object with the reference-object whether they have the same value.\nNot by reference, but their content as simple types.\n\nCompares both JSON.stringify objects",
             "itemtype": "method",
             "name": "sameValue",
@@ -15224,7 +15224,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 343,
+            "line": 331,
             "description": "Returns a deep copy of the object.\nOnly handles members of primary types, Dates, Arrays and Objects.\nWill clone all the properties, also the non-enumerable.",
             "itemtype": "method",
             "name": "deepClone",
@@ -15253,7 +15253,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 382,
+            "line": 370,
             "description": "Transforms the object into an array with  'key/value' objects",
             "example": [
                 "\n{country: 'USA', Continent: 'North America'} --> [{key: 'country', value: 'USA'}, {key: 'Continent', value: 'North America'}]"
@@ -15292,7 +15292,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 407,
+            "line": 395,
             "description": "Merges into this object the properties of the given object.\nIf the second argument is true, the properties on the source object will be overwritten\nby those of the second object of the same name, otherwise, they are preserved.",
             "itemtype": "method",
             "name": "merge",
@@ -15346,7 +15346,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 458,
+            "line": 446,
             "description": "Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object",
             "itemtype": "method",
             "name": "isObject",
@@ -15361,7 +15361,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 469,
+            "line": 457,
             "description": "Creates a protected property on the object.",
             "itemtype": "method",
             "name": "protectedProp",
@@ -15372,7 +15372,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 484,
+            "line": 472,
             "description": "Returns a new object resulting of merging the properties of the given objects.\nThe copying is shallow, complex properties will reference the very same object.\nProperties in later objects do **not overwrite** properties of the same name in earlier objects.\nIf any of the objects is missing, it will be skiped.",
             "example": [
                 "\n\n var foo = function (config) {\n      config = Object.merge(config, defaultConfig);\n }"
@@ -15498,7 +15498,7 @@
         },
         {
             "file": "src/js-ext/lib/promise.js",
-            "line": 233,
+            "line": 243,
             "description": "Returns a Promise with 5 additional methods:\n\npromise.fulfill\npromise.reject\npromise.callback\npromise.setCallback\npromise.pending\npromise.stayActive --> force the promise not to resolve in the specified time\n\nWith Promise.manage, you get a Promise which is managable from outside, not inside as Promise A+ work.\nYou can invoke promise.**callback**() which will invoke the original passed-in callbackFn - if any.\npromise.**fulfill**() and promise.**reject**() are meant to resolve the promise from outside, just like deferred can do.\n\nIf `stayActive` is defined, the promise will only be resolved after this specified time (ms). When `fulfill` or `reject` is\ncalled, it will be applied after this specified time.",
             "example": [
                 "\n    var promise = Promise.manage(\n        function(msg) {\n            alert(msg);\n        }\n    );\n\n    promise.then(\n        function() {\n            // promise is fulfilled, no further actions can be taken\n        }\n    );\n\n    setTimeout(function() {\n        promise.callback('hey, I\\'m still busy');\n    }, 1000);\n\n    setTimeout(function() {\n        promise.fulfill();\n    }, 2000);"
@@ -21935,7 +21935,7 @@
         },
         {
             "file": "src/vdom/partials/html-parser.js",
-            "line": 100,
+            "line": 101,
             "description": "Transforms html-text into a vnodes-Array.",
             "itemtype": "method",
             "name": "htmlToVNodes",
