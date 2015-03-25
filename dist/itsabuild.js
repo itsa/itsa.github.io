@@ -2654,6 +2654,7 @@ module.exports = DB;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./lib/indexeddb.js":7,"./lib/localstorage.js":8}],7:[function(require,module,exports){
 (function (global){
+// https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB
 (function (window) {
 
     "use strict";
@@ -2824,8 +2825,23 @@ module.exports = DB;
                 };
 
                 request.onupgradeneeded = function(event) {
-                    var db = event.target.result;
+                    var target = event.target,
+                        db = target.result,
+                        txn = target.transaction;
+
                     Array.isArray(tables) || (tables = [tables]);
+// TODO:
+                    // first remove any existing objectstores of previous version
+                    // that don't exists anymore:
+// currentObjectStores.forEach();
+
+                    // next: for those objectstores that present in both versions: update the indexes:
+                    // if there are unique indexes, some records might need to be removed first
+// removeDoubleRecords();
+// createUniqueIndexes();
+// createIndexes();
+
+                    // next: define new objectstores for tables that were not present in the previous version:
                     tables.forEach(function(table) {
                         // Create an objectStore for this database
                         // which means: set a `table` for the database:
@@ -2981,23 +2997,35 @@ module.exports = DB;
                 var transaction = database.transaction([table], 'readonly'),
                     objectStore = transaction.objectStore(table);
                 return new window.Promise(function(resolve, reject) {
-                    var size = 0;
-                    // openCursor can raise exceptions
+                    var count;
+                    // count can raise exceptions
                     try {
-                        objectStore.openCursor().onsuccess = function(event) {
-                            var cursor = event.target.result;
-                            if (cursor) {
-                                size++;
-                                cursor.continue();
-                            }
-                            else {
-                                resolve(size);
-                            }
+                        count = objectStore.count();
+                        count.onsuccess = function(event) {
+                            resolve(count.result);
                         };
                     }
                     catch(err) {
                         reject(err);
                     }
+
+                    // var size = 0;
+                    // // openCursor can raise exceptions
+                    // try {
+                    //     objectStore.openCursor().onsuccess = function(event) {
+                    //         var cursor = event.target.result;
+                    //         if (cursor) {
+                    //             size++;
+                    //             cursor.continue();
+                    //         }
+                    //         else {
+                    //             resolve(size);
+                    //         }
+                    //     };
+                    // }
+                    // catch(err) {
+                    //     reject(err);
+                    // }
                 });
             });
         },
@@ -3006,15 +3034,11 @@ module.exports = DB;
             return getList(db, table, 'key', prop, matches, true);
         },
         deleteDatabase: function() {
-console.warn('deleting database');
             var instance = this;
             return instance.db.then(
                 function(database) {
-console.warn('closing database');
                     database.close();
-console.warn('database closed');
                     return new window.Promise(function(resolve,reject) {
-console.warn('removeing database');
                         var req = window.indexedDB.deleteDatabase(instance.dbName);
                         req.onsuccess = resolve;
                         req.onerror = reject;
@@ -3467,7 +3491,9 @@ console.warn('removeing database');
                 if (records){
                     records.some(function(pos) {
                         var record = getItem(pos, REVIVER);
-                        matchedRecord = fn.call(context, record, pos);
+                        if (fn.call(context, record, pos)) {
+                            matchedRecord = record;
+                        }
                         return matchedRecord;
                     });
                 }
@@ -3558,7 +3584,13 @@ console.warn('removeing database');
             var wrapperFn = function(item) {
                 return fn.call(this, item.v);
             };
-            return this.db.some(TABLE_NAME, wrapperFn, context);
+            return this.db.some(TABLE_NAME, wrapperFn, context).then(
+                function(record) {
+                    if (record) {
+                        return record.v;
+                    }
+                }
+            );
         },
         clear: function() {
             return this.db.clear(TABLE_NAME);
