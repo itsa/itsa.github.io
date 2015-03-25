@@ -280,18 +280,6 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
         }
     },
 
-    _each = function (obj, fn, context) {
-        var keys = Object.keys(obj),
-            l = keys.length,
-            i = -1,
-            key;
-        while (++i &lt; l) {
-            key = keys[i];
-            fn.call(context, obj[key], key, obj);
-        }
-        return obj;
-    },
-
     cloneObj = function(obj, descriptors) {
         var copy, i, len, value;
 
@@ -372,16 +360,16 @@ defineProperties(Object.prototype, {
      * @chainable
      */
     each: function (fn, context) {
-        if (context) return _each(this, fn, context);
-        var keys = Object.keys(this),
+        var obj = this,
+            keys = Object.keys(obj),
             l = keys.length,
             i = -1,
             key;
         while (++i &lt; l) {
             key = keys[i];
-            fn(this[key], key, this);
+            fn.call(context || obj, obj[key], key, obj);
         }
-        return this;
+        return obj;
     },
 
     /**
@@ -405,7 +393,7 @@ defineProperties(Object.prototype, {
             key;
         while (++i &lt; l) {
             key = keys[i];
-            if (fn.call(context, this[key], key, this)) {
+            if (fn.call(context || this, this[key], key, this)) {
                 return true;
             }
         }
