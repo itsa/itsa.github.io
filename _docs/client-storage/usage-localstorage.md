@@ -24,7 +24,7 @@ intro: "This example shows how data can be stored using ITSA.localStorage"
                 }
             ).catch(function(err) {ITSA.warn(err);});
         }
-    ).catch(function(err) {ITSA.warn(err);});
+    ).catch(function(err) {ITSA.warn(err);})
     .finally(function() {
         // cleanup
         ITSA.localStorage.delete('president1');
@@ -48,7 +48,7 @@ intro: "This example shows how data can be stored using ITSA.localStorage"
                 }
             ).catch(function(err) {ITSA.warn(err);});
         }
-    ).catch(function(err) {ITSA.warn(err);});
+    ).catch(function(err) {ITSA.warn(err);})
     .finally(function() {
         // cleanup
         ITSA.localStorage.delete('president1');
