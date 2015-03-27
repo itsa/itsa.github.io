@@ -458,10 +458,11 @@ defineProperties(Object.prototype, {
      * Returns the number of keys of the object
      *
      * @method size
+     * @param inclNonEnumerable {Boolean} wether to include non-enumeral members
      * @return {Number} Number of items
      */
-    size: function () {
-        return Object.keys(this).length;
+    size: function (inclNonEnumerable) {
+        return inclNonEnumerable ? Object.getOwnPropertyNames(this).length : Object.keys(this).length;
     },
 
     /**
@@ -547,11 +548,11 @@ defineProperties(Object.prototype, {
             l = keys.length,
             i = -1,
             same, key;
-        same = (l===refObj.size());
+        same = (l===refObj.size(true));
         // loop through the members:
         while (same &amp;&amp; (++i &lt; l)) {
             key = keys[i];
-            same = refObj.hasKey(key) ? valuesAreTheSame(instance[key], refObj[key]) : false;
+            same = refObj.hasOwnProperty(key) ? valuesAreTheSame(instance[key], refObj[key]) : false;
         }
         return same;
     },
@@ -586,11 +587,11 @@ defineProperties(Object.prototype, {
                     m[key] = value;
                 }
                 if ((value!==null) &amp;&amp; (typeof value===&#x27;object&#x27;) &amp;&amp; ((typeof propDescriptor.get)!==&#x27;function&#x27;) &amp;&amp; ((typeof propDescriptor.set)!==&#x27;function&#x27;) ) {
-                    m[key] = cloneObj(value, true);
+                    m[key] = cloneObj(value, descriptors);
                 }
             }
             else {
-                m[key] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value);
+                m[key] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value, descriptors);
             }
         }
         return m;

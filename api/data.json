@@ -14876,7 +14876,7 @@
         },
         {
             "file": "src/js-ext/extra/observers.js",
-            "line": 215,
+            "line": 216,
             "description": "Observes changes of the instance. On any changes, the callback will be invoked.\nUses a polyfill on environments that don't support native Array.observe.\n\nThe callback comes without arguments (native Array.observe does, but non-native doesn't)\nso, they cannot be used.\n\nWill observer the complete array nested (deep).",
             "itemtype": "method",
             "name": "observe",
@@ -14887,7 +14887,7 @@
         },
         {
             "file": "src/js-ext/extra/observers.js",
-            "line": 272,
+            "line": 273,
             "description": "Un-observes changes that are registered with `observe`.\nUses a polyfill on environments that don't support native Array.observe.",
             "itemtype": "method",
             "name": "unobserve",
@@ -14898,7 +14898,7 @@
         },
         {
             "file": "src/js-ext/lib/array.js",
-            "line": 49,
+            "line": 131,
             "description": "Checks whether an item is inside the Array.\nAlias for (array.indexOf(item) > -1)",
             "itemtype": "method",
             "name": "contains",
@@ -14919,7 +14919,7 @@
         },
         {
             "file": "src/js-ext/lib/array.js",
-            "line": 61,
+            "line": 143,
             "description": "Removes an item from the array",
             "itemtype": "method",
             "name": "remove",
@@ -14944,7 +14944,7 @@
         },
         {
             "file": "src/js-ext/lib/array.js",
-            "line": 85,
+            "line": 167,
             "description": "Replaces an item in the array. If the previous item is not part of the array, the new item is appended.",
             "itemtype": "method",
             "name": "replace",
@@ -14967,7 +14967,7 @@
         },
         {
             "file": "src/js-ext/lib/array.js",
-            "line": 100,
+            "line": 182,
             "description": "Inserts an item in the array at the specified position. If index is larger than array.length, the new item(s) will be appended.",
             "itemtype": "method",
             "name": "insertAt",
@@ -14990,7 +14990,7 @@
         },
         {
             "file": "src/js-ext/lib/array.js",
-            "line": 113,
+            "line": 195,
             "description": "Shuffles the items in the Array randomly",
             "itemtype": "method",
             "name": "shuffle",
@@ -15001,13 +15001,34 @@
         },
         {
             "file": "src/js-ext/lib/array.js",
-            "line": 139,
+            "line": 221,
             "description": "Returns a deep copy of the Array.\nOnly handles members of primary types, Dates, Arrays and Objects.",
             "itemtype": "method",
             "name": "deepClone",
             "return": {
                 "description": "deep-copy of the original",
                 "type": "Array"
+            },
+            "class": "Array",
+            "module": "js-ext",
+            "submodule": "lib/array.js"
+        },
+        {
+            "file": "src/js-ext/lib/array.js",
+            "line": 232,
+            "description": "Compares this object with the reference-object whether they have the same value.\nNot by reference, but their content as simple types.\n\nCompares both JSON.stringify objects",
+            "itemtype": "method",
+            "name": "sameValue",
+            "params": [
+                {
+                    "name": "refObj",
+                    "description": "the object to compare with",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "whether both objects have the same value",
+                "type": "Boolean"
             },
             "class": "Array",
             "module": "js-ext",
@@ -15142,6 +15163,13 @@
             "description": "Returns the number of keys of the object",
             "itemtype": "method",
             "name": "size",
+            "params": [
+                {
+                    "name": "inclNonEnumerable",
+                    "description": "wether to include non-enumeral members",
+                    "type": "Boolean"
+                }
+            ],
             "return": {
                 "description": "Number of items",
                 "type": "Number"
@@ -15152,7 +15180,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 239,
+            "line": 240,
             "description": "Loops through the object collection the values of all its properties.\nIt is the counterpart of the [`keys`](#method_keys).",
             "itemtype": "method",
             "name": "values",
@@ -15166,7 +15194,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 259,
+            "line": 260,
             "description": "Returns true if the object has no own members",
             "itemtype": "method",
             "name": "isEmpty",
@@ -15180,7 +15208,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 272,
+            "line": 273,
             "description": "Returns a shallow copy of the object.\nIt does not clone objects within the object, it does a simple, shallow clone.\nFast, mostly useful for plain hash maps.",
             "itemtype": "method",
             "name": "shallowClone",
@@ -15203,7 +15231,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 306,
+            "line": 307,
             "description": "Compares this object with the reference-object whether they have the same value.\nNot by reference, but their content as simple types.\n\nCompares both JSON.stringify objects",
             "itemtype": "method",
             "name": "sameValue",
@@ -15224,7 +15252,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 331,
+            "line": 332,
             "description": "Returns a deep copy of the object.\nOnly handles members of primary types, Dates, Arrays and Objects.\nWill clone all the properties, also the non-enumerable.",
             "itemtype": "method",
             "name": "deepClone",
@@ -15253,7 +15281,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 370,
+            "line": 371,
             "description": "Transforms the object into an array with  'key/value' objects",
             "example": [
                 "\n{country: 'USA', Continent: 'North America'} --> [{key: 'country', value: 'USA'}, {key: 'Continent', value: 'North America'}]"
@@ -15292,7 +15320,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 395,
+            "line": 396,
             "description": "Merges into this object the properties of the given object.\nIf the second argument is true, the properties on the source object will be overwritten\nby those of the second object of the same name, otherwise, they are preserved.",
             "itemtype": "method",
             "name": "merge",
@@ -15346,7 +15374,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 446,
+            "line": 447,
             "description": "Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object",
             "itemtype": "method",
             "name": "isObject",
@@ -15361,7 +15389,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 457,
+            "line": 458,
             "description": "Creates a protected property on the object.",
             "itemtype": "method",
             "name": "protectedProp",
@@ -15372,7 +15400,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 472,
+            "line": 473,
             "description": "Returns a new object resulting of merging the properties of the given objects.\nThe copying is shallow, complex properties will reference the very same object.\nProperties in later objects do **not overwrite** properties of the same name in earlier objects.\nIf any of the objects is missing, it will be skiped.",
             "example": [
                 "\n\n var foo = function (config) {\n      config = Object.merge(config, defaultConfig);\n }"

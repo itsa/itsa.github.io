@@ -413,21 +413,22 @@
             if (typeof callback===&#x27;function&#x27;) {
                 if (NATIVE_OBJECT_OBSERVE) {
                     objCallbackHash = _registeredCallbacks.get(obj);
-
-                    len = objCallbackHash.length -1;
-                    for (i=len; i&gt;=0; i--) {
-                        item = objCallbackHash[i];
-                        if (item.cb===callback) {
-                            structureChangedCallback = item.cbFn;
-                            Object.unobserve(obj, structureChangedCallback);
+                    if (objCallbackHash) {
+                        len = objCallbackHash.length -1;
+                        for (i=len; i&gt;=0; i--) {
+                            item = objCallbackHash[i];
+                            if (item.cb===callback) {
+                                structureChangedCallback = item.cbFn;
+                                Object.unobserve(obj, structureChangedCallback);
+                            }
+                            objCallbackHash.splice(i, 1);
                         }
-                        objCallbackHash.splice(i, 1);
-                    }
-                    (objCallbackHash.length&gt;0) || _registeredCallbacks.delete(obj);
+                        (objCallbackHash.length&gt;0) || _registeredCallbacks.delete(obj);
 
-                    for (property in obj) {
-                        if (Object.isObject(obj[property]) || Array.isArray(obj[property])) {
-                            obj[property].unobserve(callback);
+                        for (property in obj) {
+                            if (Object.isObject(obj[property]) || Array.isArray(obj[property])) {
+                                obj[property].unobserve(callback);
+                            }
                         }
                     }
                 }
@@ -510,23 +511,24 @@
             if (typeof callback===&#x27;function&#x27;) {
                 if (NATIVE_ARRAY_OBSERVE) {
                     arrayCallbackHash = _registeredCallbacks.get(array);
-
-                    len = arrayCallbackHash.length -1;
-                    for (i=len; i&gt;=0; i--) {
-                        item = arrayCallbackHash[i];
-                        if (item.cb===callback) {
-                            structureChangedCallback = item.cbFn;
-                            Array.unobserve(array, structureChangedCallback);
+                    if (arrayCallbackHash) {
+                        len = arrayCallbackHash.length -1;
+                        for (i=len; i&gt;=0; i--) {
+                            item = arrayCallbackHash[i];
+                            if (item.cb===callback) {
+                                structureChangedCallback = item.cbFn;
+                                Array.unobserve(array, structureChangedCallback);
+                            }
+                            arrayCallbackHash.splice(i, 1);
                         }
-                        arrayCallbackHash.splice(i, 1);
-                    }
-                    (arrayCallbackHash.length&gt;0) || _registeredCallbacks.delete(array);
+                        (arrayCallbackHash.length&gt;0) || _registeredCallbacks.delete(array);
 
-                    len = array.length;
-                    for (i=0; i&lt;len; i++) {
-                        item = array[i];
-                        if (Object.isObject(item) || Array.isArray(item)) {
-                            item.unobserve(callback);
+                        len = array.length;
+                        for (i=0; i&lt;len; i++) {
+                            item = array[i];
+                            if (Object.isObject(item) || Array.isArray(item)) {
+                                item.unobserve(callback);
+                            }
                         }
                     }
                 }
