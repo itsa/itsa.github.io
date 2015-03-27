@@ -243,7 +243,70 @@
 
 require(&#x27;polyfill/polyfill-base.js&#x27;);
 
-var cloneObj = function(obj) {
+var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
+    TYPES = createHashMap({
+       &#x27;undefined&#x27; : true,
+       &#x27;number&#x27; : true,
+       &#x27;boolean&#x27; : true,
+       &#x27;string&#x27; : true,
+       &#x27;[object Function]&#x27; : true,
+       &#x27;[object RegExp]&#x27; : true,
+       &#x27;[object Array]&#x27; : true,
+       &#x27;[object Date]&#x27; : true,
+       &#x27;[object Error]&#x27; : true,
+       &#x27;[object Promise]&#x27; : true
+    }),
+    isObject, objSameValue, deepCloneObj, cloneObj, valuesAreTheSame;
+
+isObject = function (item) {
+    return !!(!TYPES[typeof item] &amp;&amp; !TYPES[({}.toString).call(item)] &amp;&amp; item);
+};
+
+objSameValue = function(obj1, obj2) {
+    var keys = Object.getOwnPropertyNames(obj1),
+        keysObj2 = Object.getOwnPropertyNames(obj2),
+        l = keys.length,
+        i = -1,
+        same, key;
+    same = (l===keysObj2.length);
+    // loop through the members:
+    while (same &amp;&amp; (++i &lt; l)) {
+        key = keys[i];
+        same = obj2.hasOwnProperty(key) ? valuesAreTheSame(obj1[key], obj2[key]) : false;
+    }
+    return same;
+};
+
+deepCloneObj = function (obj, descriptors) {
+    var m = Object.create(Object.getPrototypeOf(obj)),
+        keys = Object.getOwnPropertyNames(obj),
+        l = keys.length,
+        i = -1,
+        key, value, propDescriptor;
+    // loop through the members:
+    while (++i &lt; l) {
+        key = keys[i];
+        value = obj[key];
+        if (descriptors) {
+            propDescriptor = Object.getOwnPropertyDescriptor(obj, key);
+            if (propDescriptor.writable) {
+                Object.defineProperty(m, key, propDescriptor);
+            }
+            else {
+                m[key] = value;
+            }
+            if ((value!==null) &amp;&amp; (typeof value===&#x27;object&#x27;) &amp;&amp; ((typeof propDescriptor.get)!==&#x27;function&#x27;) &amp;&amp; ((typeof propDescriptor.set)!==&#x27;function&#x27;) ) {
+                m[key] = cloneObj(value, descriptors);
+            }
+        }
+        else {
+            m[key] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value, descriptors);
+        }
+    }
+    return m;
+};
+
+cloneObj = function(obj, descriptors) {
     var copy, i, len, value;
 
     // Handle Array
@@ -252,7 +315,7 @@ var cloneObj = function(obj) {
         len = obj.length;
         for (i=0; i&lt;len; i++) {
             value = obj[i];
-            copy[i] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value);
+            copy[i] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value, descriptors);
         }
         return copy;
     }
@@ -266,11 +329,30 @@ var cloneObj = function(obj) {
 
     // Handle Object
     else if (obj instanceof Object) {
-        copy = obj.deepClone();
+        copy = deepCloneObj(obj, descriptors);
     }
 
     return copy;
 };
+
+valuesAreTheSame = function(value1, value2) {
+    var same;
+    // complex values need to be inspected differently:
+    if (isObject(value1)) {
+        same = isObject(value2) ? objSameValue(value1, value2) : false;
+    }
+    else if (Array.isArray(value1)) {
+        same = Array.isArray(value2) ? value1.sameValue(value2) : false;
+    }
+    else if (value1 instanceof Date) {
+        same = (value2 instanceof Date) ? (value1.getTime()===value2.getTime()) : false;
+    }
+    else {
+        same = (value1===value2);
+    }
+    return same;
+};
+
 
 (function(ArrayPrototype) {
 
@@ -371,9 +453,33 @@ var cloneObj = function(obj) {
      * @method deepClone
      * @return {Array} deep-copy of the original
      */
-     ArrayPrototype.deepClone = function () {
-        return cloneObj(this);
+     ArrayPrototype.deepClone = function (descriptors) {
+        return cloneObj(this, descriptors);
      };
+
+    /**
+     * Compares this object with the reference-object whether they have the same value.
+     * Not by reference, but their content as simple types.
+     *
+     * Compares both JSON.stringify objects
+     *
+     * @method sameValue
+     * @param refObj {Object} the object to compare with
+     * @return {Boolean} whether both objects have the same value
+     */
+    ArrayPrototype.sameValue = function(refArray) {
+        var instance = this,
+            len = instance.length,
+            i = -1,
+            same;
+        same = (len===refArray.length);
+        // loop through the members:
+        while (same &amp;&amp; (++i &lt; len)) {
+            same = valuesAreTheSame(instance[i], refArray[i]);
+        }
+        return same;
+    };
+
 
 }(Array.prototype));
     </pre>

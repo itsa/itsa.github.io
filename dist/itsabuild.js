@@ -3001,7 +3001,7 @@ module.exports = DB;
                     // count can raise exceptions
                     try {
                         count = objectStore.count();
-                        count.onsuccess = function(event) {
+                        count.onsuccess = function() {
                             resolve(count.result);
                         };
                     }
@@ -3181,8 +3181,6 @@ module.exports = DB;
     removeDatabase = function(dbDef, dbName) {
         // `this` is database-instance
         var instance = this,
-            dbDef = instance.dbDef,
-            dbName = instance.dbName,
             hash = [];
         if (dbDef) {
             try {
@@ -3532,7 +3530,8 @@ module.exports = DB;
         },
 
         deleteDatabase: function() {
-            return removeDatabase.call(this);
+            var instance = this;
+            return removeDatabase.call(instance, instance.dbDef, instance.dbName);
         }
     });
 
@@ -14366,21 +14365,22 @@ var LightMap, Classes,
             if (typeof callback==='function') {
                 if (NATIVE_OBJECT_OBSERVE) {
                     objCallbackHash = _registeredCallbacks.get(obj);
-
-                    len = objCallbackHash.length -1;
-                    for (i=len; i>=0; i--) {
-                        item = objCallbackHash[i];
-                        if (item.cb===callback) {
-                            structureChangedCallback = item.cbFn;
-                            Object.unobserve(obj, structureChangedCallback);
+                    if (objCallbackHash) {
+                        len = objCallbackHash.length -1;
+                        for (i=len; i>=0; i--) {
+                            item = objCallbackHash[i];
+                            if (item.cb===callback) {
+                                structureChangedCallback = item.cbFn;
+                                Object.unobserve(obj, structureChangedCallback);
+                            }
+                            objCallbackHash.splice(i, 1);
                         }
-                        objCallbackHash.splice(i, 1);
-                    }
-                    (objCallbackHash.length>0) || _registeredCallbacks.delete(obj);
+                        (objCallbackHash.length>0) || _registeredCallbacks.delete(obj);
 
-                    for (property in obj) {
-                        if (Object.isObject(obj[property]) || Array.isArray(obj[property])) {
-                            obj[property].unobserve(callback);
+                        for (property in obj) {
+                            if (Object.isObject(obj[property]) || Array.isArray(obj[property])) {
+                                obj[property].unobserve(callback);
+                            }
                         }
                     }
                 }
@@ -14463,23 +14463,24 @@ var LightMap, Classes,
             if (typeof callback==='function') {
                 if (NATIVE_ARRAY_OBSERVE) {
                     arrayCallbackHash = _registeredCallbacks.get(array);
-
-                    len = arrayCallbackHash.length -1;
-                    for (i=len; i>=0; i--) {
-                        item = arrayCallbackHash[i];
-                        if (item.cb===callback) {
-                            structureChangedCallback = item.cbFn;
-                            Array.unobserve(array, structureChangedCallback);
+                    if (arrayCallbackHash) {
+                        len = arrayCallbackHash.length -1;
+                        for (i=len; i>=0; i--) {
+                            item = arrayCallbackHash[i];
+                            if (item.cb===callback) {
+                                structureChangedCallback = item.cbFn;
+                                Array.unobserve(array, structureChangedCallback);
+                            }
+                            arrayCallbackHash.splice(i, 1);
                         }
-                        arrayCallbackHash.splice(i, 1);
-                    }
-                    (arrayCallbackHash.length>0) || _registeredCallbacks.delete(array);
+                        (arrayCallbackHash.length>0) || _registeredCallbacks.delete(array);
 
-                    len = array.length;
-                    for (i=0; i<len; i++) {
-                        item = array[i];
-                        if (Object.isObject(item) || Array.isArray(item)) {
-                            item.unobserve(callback);
+                        len = array.length;
+                        for (i=0; i<len; i++) {
+                            item = array[i];
+                            if (Object.isObject(item) || Array.isArray(item)) {
+                                item.unobserve(callback);
+                            }
                         }
                     }
                 }
@@ -14608,7 +14609,70 @@ module.exports = {
 
 require('polyfill/polyfill-base.js');
 
-var cloneObj = function(obj) {
+var createHashMap = require('js-ext/extra/hashmap.js').createMap,
+    TYPES = createHashMap({
+       'undefined' : true,
+       'number' : true,
+       'boolean' : true,
+       'string' : true,
+       '[object Function]' : true,
+       '[object RegExp]' : true,
+       '[object Array]' : true,
+       '[object Date]' : true,
+       '[object Error]' : true,
+       '[object Promise]' : true
+    }),
+    isObject, objSameValue, deepCloneObj, cloneObj, valuesAreTheSame;
+
+isObject = function (item) {
+    return !!(!TYPES[typeof item] && !TYPES[({}.toString).call(item)] && item);
+};
+
+objSameValue = function(obj1, obj2) {
+    var keys = Object.getOwnPropertyNames(obj1),
+        keysObj2 = Object.getOwnPropertyNames(obj2),
+        l = keys.length,
+        i = -1,
+        same, key;
+    same = (l===keysObj2.length);
+    // loop through the members:
+    while (same && (++i < l)) {
+        key = keys[i];
+        same = obj2.hasOwnProperty(key) ? valuesAreTheSame(obj1[key], obj2[key]) : false;
+    }
+    return same;
+};
+
+deepCloneObj = function (obj, descriptors) {
+    var m = Object.create(Object.getPrototypeOf(obj)),
+        keys = Object.getOwnPropertyNames(obj),
+        l = keys.length,
+        i = -1,
+        key, value, propDescriptor;
+    // loop through the members:
+    while (++i < l) {
+        key = keys[i];
+        value = obj[key];
+        if (descriptors) {
+            propDescriptor = Object.getOwnPropertyDescriptor(obj, key);
+            if (propDescriptor.writable) {
+                Object.defineProperty(m, key, propDescriptor);
+            }
+            else {
+                m[key] = value;
+            }
+            if ((value!==null) && (typeof value==='object') && ((typeof propDescriptor.get)!=='function') && ((typeof propDescriptor.set)!=='function') ) {
+                m[key] = cloneObj(value, descriptors);
+            }
+        }
+        else {
+            m[key] = ((value===null) || (typeof value!=='object')) ? value : cloneObj(value, descriptors);
+        }
+    }
+    return m;
+};
+
+cloneObj = function(obj, descriptors) {
     var copy, i, len, value;
 
     // Handle Array
@@ -14617,7 +14681,7 @@ var cloneObj = function(obj) {
         len = obj.length;
         for (i=0; i<len; i++) {
             value = obj[i];
-            copy[i] = ((value===null) || (typeof value!=='object')) ? value : cloneObj(value);
+            copy[i] = ((value===null) || (typeof value!=='object')) ? value : cloneObj(value, descriptors);
         }
         return copy;
     }
@@ -14631,11 +14695,30 @@ var cloneObj = function(obj) {
 
     // Handle Object
     else if (obj instanceof Object) {
-        copy = obj.deepClone();
+        copy = deepCloneObj(obj, descriptors);
     }
 
     return copy;
 };
+
+valuesAreTheSame = function(value1, value2) {
+    var same;
+    // complex values need to be inspected differently:
+    if (isObject(value1)) {
+        same = isObject(value2) ? objSameValue(value1, value2) : false;
+    }
+    else if (Array.isArray(value1)) {
+        same = Array.isArray(value2) ? value1.sameValue(value2) : false;
+    }
+    else if (value1 instanceof Date) {
+        same = (value2 instanceof Date) ? (value1.getTime()===value2.getTime()) : false;
+    }
+    else {
+        same = (value1===value2);
+    }
+    return same;
+};
+
 
 (function(ArrayPrototype) {
 
@@ -14736,12 +14819,36 @@ var cloneObj = function(obj) {
      * @method deepClone
      * @return {Array} deep-copy of the original
      */
-     ArrayPrototype.deepClone = function () {
-        return cloneObj(this);
+     ArrayPrototype.deepClone = function (descriptors) {
+        return cloneObj(this, descriptors);
      };
 
+    /**
+     * Compares this object with the reference-object whether they have the same value.
+     * Not by reference, but their content as simple types.
+     *
+     * Compares both JSON.stringify objects
+     *
+     * @method sameValue
+     * @param refObj {Object} the object to compare with
+     * @return {Boolean} whether both objects have the same value
+     */
+    ArrayPrototype.sameValue = function(refArray) {
+        var instance = this,
+            len = instance.length,
+            i = -1,
+            same;
+        same = (len===refArray.length);
+        // loop through the members:
+        while (same && (++i < len)) {
+            same = valuesAreTheSame(instance[i], refArray[i]);
+        }
+        return same;
+    };
+
+
 }(Array.prototype));
-},{"polyfill/polyfill-base.js":86}],68:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":61,"polyfill/polyfill-base.js":86}],68:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -15058,10 +15165,11 @@ defineProperties(Object.prototype, {
      * Returns the number of keys of the object
      *
      * @method size
+     * @param inclNonEnumerable {Boolean} wether to include non-enumeral members
      * @return {Number} Number of items
      */
-    size: function () {
-        return Object.keys(this).length;
+    size: function (inclNonEnumerable) {
+        return inclNonEnumerable ? Object.getOwnPropertyNames(this).length : Object.keys(this).length;
     },
 
     /**
@@ -15147,11 +15255,11 @@ defineProperties(Object.prototype, {
             l = keys.length,
             i = -1,
             same, key;
-        same = (l===refObj.size());
+        same = (l===refObj.size(true));
         // loop through the members:
         while (same && (++i < l)) {
             key = keys[i];
-            same = refObj.hasKey(key) ? valuesAreTheSame(instance[key], refObj[key]) : false;
+            same = refObj.hasOwnProperty(key) ? valuesAreTheSame(instance[key], refObj[key]) : false;
         }
         return same;
     },
@@ -15186,11 +15294,11 @@ defineProperties(Object.prototype, {
                     m[key] = value;
                 }
                 if ((value!==null) && (typeof value==='object') && ((typeof propDescriptor.get)!=='function') && ((typeof propDescriptor.set)!=='function') ) {
-                    m[key] = cloneObj(value, true);
+                    m[key] = cloneObj(value, descriptors);
                 }
             }
             else {
-                m[key] = ((value===null) || (typeof value!=='object')) ? value : cloneObj(value);
+                m[key] = ((value===null) || (typeof value!=='object')) ? value : cloneObj(value, descriptors);
             }
         }
         return m;
