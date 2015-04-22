@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>event-listener - Itsa</title>
+    <title>src/js-ext/lib/math.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -226,65 +226,40 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>event-listener Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: src/js-ext/lib/math.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ *
+ * Extension of Math
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module js-ext
+ * @submodule lib/math.js
+ * @class Math
+ *
+ */
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/src_event_event-listener.js.html#l3"><code>src&#x2F;event&#x2F;event-listener.js:3</code></a>
-        </div>
-    
+&quot;use strict&quot;;
 
-    
-        <p>Available since 0.0.1</p>
-    
-</div>
+require(&#x27;polyfill/polyfill-base.js&#x27;);
 
-
-
-<div class="box intro">
-    <p>Extends the Event-instance by adding the object <code>Listener</code> to it.
-The returned object should be merged into any Class-instance or object you want to
-extend with the listener-methods, so the appropriate methods can be invoked on the instance.</p>
-<p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
-New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
-<p>Should be called using  the provided <code>extend</code>-method like this:</p>
-
-</div>
-
-
-    <div class="example">
-        <h4>Example:</h4>
-        <div class="example-content">
-            <pre class="code prettyprint"><code>var Event = require(&#39;event&#39;);&lt;br&gt;</code></pre>
-
-        </div>
-    </div>
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
-
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="../classes/Event.Listener.html">
-                        Event.Listener
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+/**
+ * Returns the value, while forcing it to be inbetween the specified edges.
+ *
+ * @method inbetween
+ * @param min {Number} lower-edgde
+ * @param value {Number} the original value that should be inbetween the edges
+ * @param max {Number} upper-edgde
+ * @return {Number|undefined} the value, forced to be inbetween the edges. Returns &#x60;undefined&#x60; if &#x60;max&#x60; is lower than &#x60;min&#x60;.
+ */
+Math.inbetween = function(min, value, max) {
+    return (max&gt;=min) ? this.min(max, this.max(min, value)) : undefined;
+};
+    </pre>
 </div>
 
                     </div>

@@ -59,22 +59,22 @@ Should equal a `css-selector` of a descendant that should act as a handle where 
 Which emitterName the draggable HtmlElement should have (will overrule the `UI`-emitterName). The `emitterName` will be used within the events `emittername:dd-drag` and `emittername:dd-drop`
 
 ##Using Plugins##
-When this module gets imported, it defines the node-plugin: `ITSA.Plugins.nodeDD`. Define a HtmlElement draggable or remove draggablilty-features can be done using this plugin.
+When this module gets imported, it defines the node-plugin: `dd`. Define a HtmlElement draggable or remove draggablilty-features can be done using this plugin.
 
 ###Define draggable###
 ```js
-document.getElement('#someNode').plug(ITSA.Plugins.dd);
+document.getElement('#someNode').plug('dd');
 ```
 
 ###Remove draggablity###
 ```js
-document.getElement('#someNode').unplug(ITSA.Plugins.dd);
+document.getElement('#someNode').unplug('dd');
 ```
 
 ###Define draggable with options###
 ```js
 document.getElement('#someNode').plug(
-    ITSA.Plugins.d,
+    'dd',
     {
         emitter: 'redItem',
         handle: 'h1'

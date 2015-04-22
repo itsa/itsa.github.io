@@ -75,6 +75,8 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
+                <li><a href="../classes/Math.html">Math</a></li>
+            
                 <li><a href="../classes/Messages.html">Messages</a></li>
             
                 <li><a href="../classes/Node.html">Node</a></li>
@@ -160,6 +162,8 @@
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
+            
+                <li><a href="../modules/lib_math.js.html">lib/math.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -290,7 +294,8 @@ var NAME = &#x27;[drag]: &#x27;,
     TRUE = &#x27;true&#x27;,
     NO_OVERFLOW = &#x27;itsa-no-overflow&#x27;,
     DD_MINUSDRAGGABLE = DD_MINUS+DRAGGABLE,
-    PLUGIN_ATTRS = [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTER, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE];
+    DIRECTION_ATTR = DD_MINUS+&#x27;direction&#x27;,
+    PLUGIN_ATTRS = [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTER, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE, DIRECTION_ATTR];
 
 require(&#x27;polyfill&#x27;);
 require(&#x27;js-ext&#x27;);
@@ -411,9 +416,12 @@ module.exports = function (window) {
                     ddProps.constrain.x = ddProps.constrain.xOrig - constrainNode.scrollLeft;
                     ddProps.constrain.y = ddProps.constrain.yOrig - constrainNode.scrollTop;
                 }
-
-                x = ddProps.x+e.xMouse+(winConstrained ? ddProps.winScrollLeft : window.getScrollLeft())-e.xMouseOrigin;
-                y = ddProps.y+e.yMouse+(winConstrained ? ddProps.winScrollTop : window.getScrollTop())-e.yMouseOrigin;
+                if (ddProps.xMovable) {
+                    x = ddProps.x+e.xMouse+(winConstrained ? ddProps.winScrollLeft : window.getScrollLeft())-e.xMouseOrigin;
+                }
+                if (ddProps.yMovable) {
+                    y = ddProps.y+e.yMouse+(winConstrained ? ddProps.winScrollTop : window.getScrollTop())-e.yMouseOrigin;
+                }
 
                 dragNode.setXY(x, y, ddProps.constrain, true);
 
@@ -508,6 +516,7 @@ module.exports = function (window) {
             var instance = this,
                 dragNode = e.target,
                 constrain = dragNode.getAttr(CONSTRAIN_ATTR),
+                direction = dragNode.getAttr(DIRECTION_ATTR).toLowerCase(),
                 ddProps = instance.ddProps,
                 emitterName = e.emitter,
                 moveEv, x, y, byExactId, match, constrainNode, winConstrained, winScrollLeft, winScrollTop,
@@ -515,6 +524,8 @@ module.exports = function (window) {
 
             // define ddProps --&gt; internal object with data about the draggable instance
             ddProps.dragNode = dragNode;
+            ddProps.xMovable = (direction===&#x27;xy&#x27;) || (direction===&#x27;x&#x27;);
+            ddProps.yMovable = (direction===&#x27;xy&#x27;) || (direction===&#x27;y&#x27;);
             ddProps.x = x = dragNode.left;
             ddProps.y = y = dragNode.top;
             ddProps.inlineLeft = dragNode.getInlineStyle(LEFT);
@@ -887,10 +898,12 @@ module.exports = function (window) {
         attrs: {
             draggable: &#x27;string&#x27;,
             handle: &#x27;string&#x27;,
+            direction: &#x27;string&#x27;,
             emitter: &#x27;string&#x27;
         },
         defaults: {
-            draggable: &#x27;true&#x27;
+            draggable: &#x27;true&#x27;,
+            direction: &#x27;xy&#x27;
         }
     });
 

@@ -75,6 +75,8 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
+                <li><a href="../classes/Math.html">Math</a></li>
+            
                 <li><a href="../classes/Messages.html">Messages</a></li>
             
                 <li><a href="../classes/Node.html">Node</a></li>
@@ -160,6 +162,8 @@
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
+            
+                <li><a href="../modules/lib_math.js.html">lib/math.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -2373,6 +2377,34 @@ module.exports = function (window) {
          * @return {Boolean}
          * @since 0.0.1
          */
+        ElementPrototype.isEmpty = function(inspectSystemNodes) {
+            var vnode = this.vnode,
+                vChildNodes = vnode.vChildNodes,
+                i, len;
+            if (!inspectSystemNodes) {
+                if (vnode.isItag &amp;&amp; vnode.domNode.contentHidden) {
+                    return true;
+                }
+                // else:
+                len = vChildNodes.length;
+                for (i=0; i&lt;len; i++) {
+                    if (!vChildNodes[i]._systemNode) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            // else:
+            return (vChildNodes.length===0);
+        };
+
+        /**
+         * Whether the element is an Itag-element
+         *
+         * @method isItag
+         * @return {Boolean}
+         * @since 0.0.1
+         */
         ElementPrototype.isItag = function() {
             return this.vnode.isItag;
         };
@@ -2964,6 +2996,9 @@ module.exports = function (window) {
             cssProperties = getVendorCSS(cssProperties);
             len = cssProperties.length;
             vnodeStyles = vnode.styles;
+            if (!vnodeStyles) {
+                return;
+            }
             for (i=0; i&lt;len; i++) {
                 item = cssProperties[i];
                 if (typeof item===&#x27;string&#x27;) {
@@ -4290,6 +4325,22 @@ module.exports = function (window) {
         Object.defineProperties(ElementPrototype, {
 
            /**
+            * Gets the bottom y-position (in the DOCUMENT) of the element in pixels.
+            * DOCUMENT-related: regardless of the window&#x27;s scroll-position.
+            *
+            * @property bottom
+            * @since 0.0.1
+            */
+            bottom: {
+                get: function() {
+                    return this.top + this.height;
+                },
+                set: function(pixelsBottom) {
+                    this.top = pixelsBottom - this.height;
+                }
+            },
+
+           /**
             * Gets or set the height of the element in pixels. Included are padding and border, not any margins.
             * By setting the argument &#x60;overflow&#x60; you get the total height, included the invisible overflow.
             *
@@ -4328,7 +4379,23 @@ module.exports = function (window) {
                     return Math.round(this.getBoundingClientRect().left + window.getScrollLeft());
                 },
                 set: function(pixelsLeft) {
-                    return this.setXY(pixelsLeft, null, null, true);
+                    this.setXY(pixelsLeft, null, null, true);
+                }
+            },
+
+           /**
+            * Gets the right-position (in the DOCUMENT) of the element in pixels.
+            * DOCUMENT-related: regardless of the window&#x27;s scroll-position.
+            *
+            * @property right
+            * @since 0.0.1
+            */
+            right: {
+                get: function() {
+                    return this.left + this.width;
+                },
+                set: function(pixelsRight) {
+                    this.left = pixelsRight - this.width;
                 }
             },
 
@@ -4344,7 +4411,7 @@ module.exports = function (window) {
                     return Math.round(this.getBoundingClientRect().top + window.getScrollTop());
                 },
                 set: function(pixelsTop) {
-                    return this.setXY(null, pixelsTop, null, true);
+                    this.setXY(null, pixelsTop, null, true);
                 }
             },
 
