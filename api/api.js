@@ -17,6 +17,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "IO",
         "ITSA",
         "Icons",
+        "Math",
         "Messages",
         "NS-vdom",
         "Node",
@@ -61,6 +62,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "js-ext",
         "lib/array.js",
         "lib/function.js",
+        "lib/math.js",
         "lib/object.js",
         "lib/promise.s",
         "lib/string.js",
@@ -219,6 +221,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "lib/function.js",
             "name": "lib_function.js",
             "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "lib/math.js",
+            "name": "lib_math.js",
+            "description": "Extension of Math\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "lib/object.js",

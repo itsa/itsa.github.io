@@ -75,6 +75,8 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
+                <li><a href="../classes/Math.html">Math</a></li>
+            
                 <li><a href="../classes/Messages.html">Messages</a></li>
             
                 <li><a href="../classes/Node.html">Node</a></li>
@@ -160,6 +162,8 @@
                 <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
             
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
+            
+                <li><a href="../modules/lib_math.js.html">lib/math.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
             
@@ -471,6 +475,7 @@ module.exports = function (window) {
          */
         showMessage: function(messagePromise) {
             var model = this.model;
+            window.scrollTo(0, 0);
             model.messagePromise = messagePromise;
             model.header = messagePromise.header;
             model.content = messagePromise.content;
