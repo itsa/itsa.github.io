@@ -398,11 +398,12 @@ module.exports = function (window) {
      */
     modelToAttrs = function(plugin) {
         console.log(NAME+&#x27;modelToAttrs&#x27;);
-        var attrs = plugin.attrs,
+        var attrs = plugin.attrs.shallowClone(),
             model = plugin.model,
             domElement = plugin.host,
             ns = plugin.$ns,
             newAttrs = [];
+        attrs.merge(plugin.defaults);
         attrs.each(function(value, key) {
             model[key] &amp;&amp; (model[key]!==&#x27;undefined&#x27;) &amp;&amp; (newAttrs[newAttrs.length] = {name: ns+&#x27;-&#x27;+fromCamelCase(key), value: model[key]});
         });
@@ -529,6 +530,7 @@ module.exports = function (window) {
             instance.host = hostElement;
             instance.model = {};
             attrsToModel(instance, config);
+            instance.model.merge(instance.defaults);
             hostElement.setAttr(&#x27;plugin-&#x27;+instance.$ns, &#x27;true&#x27;, true);
             if (model) {
                 instance.bindModel(model, true);
