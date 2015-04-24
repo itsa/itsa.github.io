@@ -67,7 +67,7 @@ Click on the buttons to make the users speak or be silent.
     user2 = new User('Barack Obama');
 
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         var user = (e.target.getId()==='btn1') ? user1 : user2;
         if (user.isSpeaking) {
             ITSA.Event.emit(user, 'user:besilent');
@@ -109,7 +109,7 @@ Click on the buttons to make the users speak or be silent.
     user1 = new User('Bill Clinton');
     user2 = new User('Barack Obama');
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         var user = (e.target.getId()==='btn1') ? user1 : user2;
         if (user.isSpeaking) {
             user.emit('besilent');

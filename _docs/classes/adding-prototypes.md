@@ -78,15 +78,15 @@ Click on the buttons to make the users speak or be silent.
         }
     });
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         master.printValues();
     }, '#btnMaster');
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         sub.printValues();
     }, '#btnSub');
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         subsub.printValues();
     }, '#btnSubSub');
 
@@ -129,15 +129,15 @@ Click on the buttons to make the users speak or be silent.
         }
     });
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         master.printValues();
     }, '#btnMaster');
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         sub.printValues();
     }, '#btnSub');
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         subsub.printValues();
     }, '#btnSubSub');
 
