@@ -119,7 +119,7 @@ Click on the button to intitiate transition:
         );
     };
 
-    ITSA.Event.after('click', transform, '#btntransform');
+    ITSA.Event.after('tap', transform, '#btntransform');
 
 </script>
 ```
@@ -153,6 +153,6 @@ Click on the button to intitiate transition:
         );
     };
 
-    ITSA.Event.after('click', transform, '#btntransform');
+    ITSA.Event.after('tap', transform, '#btntransform');
 
 </script>
