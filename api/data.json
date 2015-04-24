@@ -16246,7 +16246,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 199,
+            "line": 200,
             "description": "Checks whether the plugin is plugged in at the HtmlElement. Checks whether all its attributes are set.",
             "itemtype": "method",
             "name": "isPlugged",
@@ -16267,7 +16267,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 213,
+            "line": 214,
             "description": "Checks whether the plugin is ready to be used.",
             "itemtype": "method",
             "name": "pluginReady",
@@ -16288,7 +16288,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 228,
+            "line": 229,
             "description": "Plugs in the plugin on the HtmlElement, and gives is special behaviour by setting the appropriate attributes.",
             "itemtype": "method",
             "name": "plug",
@@ -16321,7 +16321,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 260,
+            "line": 261,
             "description": "Gets the plugin-instance of the specified plugin-name. Will fulfill as soon as the plugin is ready.",
             "itemtype": "method",
             "name": "getPlugin",
@@ -16342,7 +16342,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 277,
+            "line": 278,
             "description": "Unplugs a NodePlugin from the HtmlElement.",
             "itemtype": "method",
             "name": "unplug",
@@ -16360,7 +16360,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 331,
+            "line": 333,
             "description": "Binds a model to the plugin, making plugin.model equals the bound model.\nImmediately syncs the plugin with the new model-data.\n\nSyncs the new vnode's childNodes with the dom.",
             "itemtype": "method",
             "name": "bindModel",
@@ -16384,7 +16384,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 405,
+            "line": 407,
             "description": "Defines the `key`-property on element.model, but only when is hasn't been defined before.",
             "itemtype": "method",
             "name": "defineWhenUndefined",
@@ -16407,7 +16407,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 541,
+            "line": 543,
             "description": "Creates a new Element-PluginClass.",
             "itemtype": "method",
             "name": "definePlugin",
@@ -16440,7 +16440,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 571,
+            "line": 573,
             "description": "Returns the PluginClass that belongs with the specified `plugin`-name.",
             "itemtype": "method",
             "name": "getPluginClass",
@@ -16461,7 +16461,7 @@
         },
         {
             "file": "src/node-plugin/node-plugin.js",
-            "line": 585,
+            "line": 587,
             "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
             "example": [
                 "\n\n var Circle = Shape.subClass(\n     function (x, y, r) {\n         // arguments will automaticly be passed through to Shape's constructor\n         this.r = r;\n     },\n     {\n         area: function () {\n             return this.r * this.r * Math.PI;\n         }\n     }\n );"
