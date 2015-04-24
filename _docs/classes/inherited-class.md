@@ -87,15 +87,15 @@ Click on the buttons to make the users speak or be silent.
     sub = new SubClass(10, 20);
     subsub = new SubSubClass(100, 200, 300);
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         master.printValues();
     }, '#btnMaster');
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         sub.printValues();
     }, '#btnSub');
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         subsub.printValues();
     }, '#btnSubSub');
 
@@ -147,15 +147,15 @@ Click on the buttons to make the users speak or be silent.
     sub = new SubClass(10, 20);
     subsub = new SubSubClass(100, 200, 300);
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         master.printValues();
     }, '#btnMaster');
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         sub.printValues();
     }, '#btnSub');
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         subsub.printValues();
     }, '#btnSubSub');
 

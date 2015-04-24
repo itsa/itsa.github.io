@@ -63,7 +63,7 @@ Click on the buttons to make the users speak or be silent.
         }
     }, true);
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         container.setHTML(master.getValues());
     }, '#btnMaster');
 </script>
@@ -100,7 +100,7 @@ Click on the buttons to make the users speak or be silent.
         }
     }, true);
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         container.setHTML(master.getValues('yes!'));
     }, '#btnMaster');
 

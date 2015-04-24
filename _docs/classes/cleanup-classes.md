@@ -109,7 +109,7 @@ Click on the buttons to make the users speak or be silent.
 
     containerInstance = new ChildContainer();
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         // Invoke `destroy` on the instance will execute `invoke`
         // on both ChildContainer and MasterContainer
         containerInstance.destroy();
@@ -152,7 +152,7 @@ Click on the buttons to make the users speak or be silent.
 
     containerInstance = new ChildContainer();
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         // Invoke `destroy` on the instance will execute `invoke`
         // on both ChildContainer and MasterContainer
         containerInstance.destroy();

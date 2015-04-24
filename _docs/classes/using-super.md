@@ -83,7 +83,7 @@ Click on the buttons to make the users speak or be silent.
 
     d = new D(10, 20);
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         container.setHTML(d.getInfo());
     }, '#btn');
 
@@ -135,7 +135,7 @@ Click on the buttons to make the users speak or be silent.
 
     d = new D(10, 20);
 
-    ITSA.Event.after('click', function(e) {
+    ITSA.Event.after('tap', function(e) {
         container.setHTML(d.getInfo());
     }, '#btn');
 
