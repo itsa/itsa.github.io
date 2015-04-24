@@ -132,10 +132,10 @@ Click on the button to toggle the className:
     transitionButtons = document.getAll('[data-transition="true"]');
     resetClasses(true);
 
-    ITSA.Event.after('click', doSwitch, '#buttonswitch');
-    ITSA.Event.after('click', actionCancel, '#buttoncancel');
-    ITSA.Event.after('click', actionFreeze, '#buttonfreeze');
-    ITSA.Event.after('click', actionFinish, '#buttonfinish');
+    ITSA.Event.after('tap', doSwitch, '#buttonswitch');
+    ITSA.Event.after('tap', actionCancel, '#buttoncancel');
+    ITSA.Event.after('tap', actionFreeze, '#buttonfreeze');
+    ITSA.Event.after('tap', actionFinish, '#buttonfinish');
 
 </script>
 ```
@@ -193,9 +193,9 @@ Click on the button to toggle the className:
     transitionButtons = document.getAll('[data-transition="true"]');
     resetClasses(true);
 
-    ITSA.Event.after('click', doSwitch, '#buttonswitch');
-    ITSA.Event.after('click', actionCancel, '#buttoncancel');
-    ITSA.Event.after('click', actionFreeze, '#buttonfreeze');
-    ITSA.Event.after('click', actionFinish, '#buttonfinish');
+    ITSA.Event.after('tap', doSwitch, '#buttonswitch');
+    ITSA.Event.after('tap', actionCancel, '#buttoncancel');
+    ITSA.Event.after('tap', actionFreeze, '#buttonfreeze');
+    ITSA.Event.after('tap', actionFinish, '#buttonfinish');
 
 </script>
