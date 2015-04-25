@@ -15,6 +15,10 @@ firstpar: get-started
 
 #The Basics#
 
+
+To start with: always favour Favor object composition over class inheritance: [read more here by Eric Elliott](https://medium.com/javascript-scene/common-misconceptions-about-inheritance-in-javascript-d5d9bab29b0a). Should you choose to use Classes, than read on: this is ITSA's implication of Classes:
+
+
 ####Native way to create Classes####
 To create a class in JavaScript, you would use code like this:
 
