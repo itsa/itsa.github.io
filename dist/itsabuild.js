@@ -5156,9 +5156,9 @@ module.exports = function (window) {
     require('window-ext')(window);
 
     noScrollOnDrag = function(e) {
-        if (isDragging || e.sourceTarget.matches(PLUGINTRUE) || e.sourceTarget.inside(PLUGINTRUE)) {
+        // if (isDragging || e.sourceTarget.matches(PLUGINTRUE) || e.sourceTarget.inside(PLUGINTRUE)) {
             e.preventDefault();
-        }
+        // }
     };
 
     DD = {
