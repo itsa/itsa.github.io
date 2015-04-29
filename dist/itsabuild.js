@@ -5664,7 +5664,7 @@ module.exports = function (window) {
             // scrollPreventListener = Event.before('touchmove', function(e) {e.preventDefault();});
 
             if (mobileEvents) {
-                Event.before([PANSTART, PANMOVE], function(e) {
+                Event.before(PAN, function(e) {
                     e.preventDefaultContinue();
                 }, function(e) {
                     return e.target.matches('['+DD_MINUSDRAGGABLE+']') || e.target.inside('['+DD_MINUSDRAGGABLE+']');
