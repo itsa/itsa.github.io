@@ -279,6 +279,8 @@ var NAME = &#x27;[event-dom]: &#x27;,
     EV_ATTRIBUTE_INSERTED = UI+ATTRIBUTE+INSERT,
     mutationEventsDefined = false,
     NO_DEEP_SEARCH = {},
+    ANCHOR_OFFSET = 2, // px
+    startX, startY,
 
     /*
      * Internal hash containing all DOM-events that are listened for (at &#x60;document&#x60;).
@@ -487,8 +489,9 @@ module.exports = function (window) {
         console.log(NAME, &#x27;_evCallback&#x27;);
         var allSubscribers = Event._subs,
             eType = e.type,
+            eTarget = e.target,
             eventobject, subs, wildcard_named_subs, named_wildcard_subs, wildcard_wildcard_subs, subsOutside,
-            subscribers, eventobjectOutside, wildcard_named_subsOutside, customEvent, eventName, which, eTarget;
+            subscribers, eventobjectOutside, wildcard_named_subsOutside, customEvent, eventName, which;
 
         eventName = eType;
         // first: a &#x60;click&#x60; event might be needed to transformed into &#x60;rightclick&#x60;:
@@ -508,31 +511,20 @@ module.exports = function (window) {
             return;
         }
 
-if (Event._working &amp;&amp; (eventName===&#x27;mousedown&#x27;)) {
-e.clientX || (e.clientX = e.center &amp;&amp; e.center.x);
-e.clientY || (e.clientY = e.center &amp;&amp; e.center.y);
-    var node = DOCUMENT.getElement(&#x27;#a-info&#x27;);
-    node.append(&#x27;MOUSEDOWN: &#x27;+e.clientX+&#x27;, &#x27;+e.clientY+&#x27;&lt;br&gt;&#x27;);
-}
-
-if (Event._working &amp;&amp; (eventName===&#x27;panstart&#x27;)) {
-e.clientX || (e.clientX = e.center &amp;&amp; e.center.x);
-e.clientY || (e.clientY = e.center &amp;&amp; e.center.y);
-    var node = DOCUMENT.getElement(&#x27;#a-info&#x27;);
-    node.append(&#x27;PANSTART: &#x27;+e.clientX+&#x27;, &#x27;+e.clientY+&#x27;&lt;br&gt;&#x27;);
-}
+        if ((eventName===&#x27;mousedown&#x27;) &amp;&amp; ((eTarget.vnode &amp;&amp; (e.target.vnode.tag===&#x27;A&#x27;)) || eTarget.inside(&#x27;a&#x27;))) {
+            // backup position in case of inside anchor
+            startX = e.clientX || (e.center &amp;&amp; e.center.x);
+            startY = e.clientY || (e.center &amp;&amp; e.center.y);
+        }
 
         if (eventName===CLICK) {
-            eTarget = e.target;
             if ((eTarget.vnode &amp;&amp; (e.target.vnode.tag===&#x27;A&#x27;)) || eTarget.inside(&#x27;a&#x27;)) {
                 eventName = ANCHOR_CLICK;
                 e.clientX || (e.clientX = e.center &amp;&amp; e.center.x);
                 e.clientY || (e.clientY = e.center &amp;&amp; e.center.y);
                 // ALSO: determine the offset between the latest mousedown and the current mouseposition
                 // if there is an offset, then the user is scrolling and doesn&#x27;t want to follow the link!
-                if (Event._working) {
-    var node = DOCUMENT.getElement(&#x27;#a-info&#x27;);
-    node.append(&#x27;ANCHOR-CLICK: &#x27;+e.clientX+&#x27;, &#x27;+e.clientY+&#x27;&lt;br&gt;&#x27;);
+                if ((Math.abs(startX-e.clientX)&gt;=ANCHOR_OFFSET) || (Math.abs(startY-e.clientY)&gt;=ANCHOR_OFFSET)) {
                     e.preventDefault();
                     return;
                 }

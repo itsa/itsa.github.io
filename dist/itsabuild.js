@@ -5794,6 +5794,8 @@ var NAME = '[event-dom]: ',
     EV_ATTRIBUTE_INSERTED = UI+ATTRIBUTE+INSERT,
     mutationEventsDefined = false,
     NO_DEEP_SEARCH = {},
+    ANCHOR_OFFSET = 2, // px
+    startX, startY,
 
     /*
      * Internal hash containing all DOM-events that are listened for (at `document`).
@@ -6002,8 +6004,9 @@ module.exports = function (window) {
         console.log(NAME, '_evCallback');
         var allSubscribers = Event._subs,
             eType = e.type,
+            eTarget = e.target,
             eventobject, subs, wildcard_named_subs, named_wildcard_subs, wildcard_wildcard_subs, subsOutside,
-            subscribers, eventobjectOutside, wildcard_named_subsOutside, customEvent, eventName, which, eTarget;
+            subscribers, eventobjectOutside, wildcard_named_subsOutside, customEvent, eventName, which;
 
         eventName = eType;
         // first: a `click` event might be needed to transformed into `rightclick`:
@@ -6023,31 +6026,20 @@ module.exports = function (window) {
             return;
         }
 
-if (Event._working && (eventName==='mousedown')) {
-e.clientX || (e.clientX = e.center && e.center.x);
-e.clientY || (e.clientY = e.center && e.center.y);
-    var node = DOCUMENT.getElement('#a-info');
-    node.append('MOUSEDOWN: '+e.clientX+', '+e.clientY+'<br>');
-}
-
-if (Event._working && (eventName==='panstart')) {
-e.clientX || (e.clientX = e.center && e.center.x);
-e.clientY || (e.clientY = e.center && e.center.y);
-    var node = DOCUMENT.getElement('#a-info');
-    node.append('PANSTART: '+e.clientX+', '+e.clientY+'<br>');
-}
+        if ((eventName==='mousedown') && ((eTarget.vnode && (e.target.vnode.tag==='A')) || eTarget.inside('a'))) {
+            // backup position in case of inside anchor
+            startX = e.clientX || (e.center && e.center.x);
+            startY = e.clientY || (e.center && e.center.y);
+        }
 
         if (eventName===CLICK) {
-            eTarget = e.target;
             if ((eTarget.vnode && (e.target.vnode.tag==='A')) || eTarget.inside('a')) {
                 eventName = ANCHOR_CLICK;
                 e.clientX || (e.clientX = e.center && e.center.x);
                 e.clientY || (e.clientY = e.center && e.center.y);
                 // ALSO: determine the offset between the latest mousedown and the current mouseposition
                 // if there is an offset, then the user is scrolling and doesn't want to follow the link!
-                if (Event._working) {
-    var node = DOCUMENT.getElement('#a-info');
-    node.append('ANCHOR-CLICK: '+e.clientX+', '+e.clientY+'<br>');
+                if ((Math.abs(startX-e.clientX)>=ANCHOR_OFFSET) || (Math.abs(startY-e.clientY)>=ANCHOR_OFFSET)) {
                     e.preventDefault();
                     return;
                 }
@@ -15036,10 +15028,12 @@ require('polyfill/polyfill-base.js');
  * @param min {Number} lower-edgde
  * @param value {Number} the original value that should be inbetween the edges
  * @param max {Number} upper-edgde
+ * @param [absoluteValue] {boolean} whether `value` should be treaded as an absolute value
  * @return {Number|undefined} the value, forced to be inbetween the edges. Returns `undefined` if `max` is lower than `min`.
  */
-Math.inbetween = function(min, value, max) {
-    return (max>=min) ? this.min(max, this.max(min, value)) : undefined;
+Math.inbetween = function(min, value, max, absoluteValue) {
+    var val = absoluteValue ? Math.abs(value) : value;
+    return (max>=min) ? this.min(max, this.max(min, val)) : undefined;
 };
 },{"polyfill/polyfill-base.js":87}],71:[function(require,module,exports){
 /**

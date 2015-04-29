@@ -254,10 +254,12 @@ require(&#x27;polyfill/polyfill-base.js&#x27;);
  * @param min {Number} lower-edgde
  * @param value {Number} the original value that should be inbetween the edges
  * @param max {Number} upper-edgde
+ * @param [absoluteValue] {boolean} whether &#x60;value&#x60; should be treaded as an absolute value
  * @return {Number|undefined} the value, forced to be inbetween the edges. Returns &#x60;undefined&#x60; if &#x60;max&#x60; is lower than &#x60;min&#x60;.
  */
-Math.inbetween = function(min, value, max) {
-    return (max&gt;=min) ? this.min(max, this.max(min, value)) : undefined;
+Math.inbetween = function(min, value, max, absoluteValue) {
+    var val = absoluteValue ? Math.abs(value) : value;
+    return (max&gt;=min) ? this.min(max, this.max(min, val)) : undefined;
 };
     </pre>
 </div>
