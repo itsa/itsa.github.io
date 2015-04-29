@@ -8,14 +8,14 @@ intro: "Anchor links on mobile devices are problematic, because the user might w
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo scelerisque arcu, vel ultrices lacus lobortis eget. Cras et mattis lacus, sed porta lorem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut quam sit amet urna venenatis blandit quis nec nibh. Phasellus orci nunc, pulvinar in nisl a, mollis aliquam ex. Nulla molestie nibh augue, at aliquam sem rhoncus nec. Donec lobortis nunc quis felis condimentum ullamcorper.
 
 <div style="background-color=#DDD; padding: 1em;" plugin-dd="true">
-<a href="http://itsasbreuk.nl">DRAG</a> ME
+DRAG ME <a href="http://itsasbreuk.nl">DRAG ME <b>DRAG ME</b> DRAG ME</a> DRAG ME
 </div>
 
 <br>
 
 Cras vestibulum fermentum dolor, sit amet ultrices lacus. Proin sollicitudin at neque in feugiat. Ut tincidunt, orci ut maximus eleifend, arcu leo cursus odio, non tincidunt magna turpis quis libero. Suspendisse tincidunt consectetur tincidunt. Nam porttitor elit justo, a facilisis quam dictum ac. Fusce dictum dolor nec elit molestie, dignissim dignissim ligula pulvinar. Vestibulum in tincidunt justo. Praesent egestas aliquam libero id lacinia. Vestibulum sed neque leo. Vivamus ut egestas lorem.
 
-<a href="http://itsasbreuk.nl">CLICK ME</a>
+<a href="http://itsasbreuk.nl">CLICK ME <b>CLICK ME</b> CLICK ME</a>
 
 <div id="a-info"></div>
 
