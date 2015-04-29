@@ -5316,7 +5316,8 @@ module.exports = function (window) {
             Event.defineEvent(customEvent).defaultFn(instance._defFnDrag.bind(instance));
             DOCUMENT.getAll('.'+DD_MASTER_CLASS).removeClass(DD_MASTER_CLASS);
             // prevent default behaviour on scrolling: otherwise mobile devices will scroll instead of drag:
-            scrollPreventListener = Event.before('touchmove', function(e) {e.preventDefault();});
+            scrollPreventListener = Event.before(['touchstart', 'touchmove'], function(e) {e.preventDefault();});
+            // scrollPreventListener = Event.before('touchmove', function(e) {e.preventDefault();});
             instance._initializeDrag(e);
         },
 
