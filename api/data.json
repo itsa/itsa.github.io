@@ -8896,7 +8896,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 620,
+            "line": 618,
             "description": "Initializes dragdrop. Needs to be invoked, otherwise DD won't run.",
             "itemtype": "method",
             "name": "init",
@@ -8917,7 +8917,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 644,
+            "line": 642,
             "description": "Creates a notifier to response after each `Drag` event is set up, or teared down.\nYou can use this to hook in into the drag-eventcycle: the `drop`-module uses it this way.",
             "static": 1,
             "itemtype": "method",
