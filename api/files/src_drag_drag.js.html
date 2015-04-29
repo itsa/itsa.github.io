@@ -833,7 +833,9 @@ module.exports = function (window) {
             if (mobileEvents) {
                 Event.before([PANSTART, PANMOVE], function(e) {
                     e.preventDefaultContinue();
-                }, &#x27;[&#x27;+DD_MINUSDRAGGABLE+&#x27;]&#x27;);
+                }, function(e) {
+                    return e.target.matches(&#x27;[&#x27;+DD_MINUSDRAGGABLE+&#x27;]&#x27;) || e.target.inside(&#x27;[&#x27;+DD_MINUSDRAGGABLE+&#x27;]&#x27;);
+                });
             }
 
             Event.after(mobileEvents ? PANSTART : MOUSEDOWN, function(e) {
