@@ -315,11 +315,17 @@ module.exports = function (window) {
         bodyNode = DOCUMENT.body,
         supportHammer = !!Event.Hammer,
         mobileEvents = supportHammer &amp;&amp; isMobile,
-        DD;
+        DD, noScrollOnDrag, isDragging;
 
     require(&#x27;vdom&#x27;)(window);
     require(&#x27;node-plugin&#x27;)(window);
     require(&#x27;window-ext&#x27;)(window);
+
+    noScrollOnDrag = function(e) {
+        if (isDragging) {
+            e.preventDefault();
+        }
+    };
 
     DD = {
         /**
@@ -522,6 +528,7 @@ module.exports = function (window) {
                 moveEv, x, y, byExactId, match, constrainNode, winConstrained, winScrollLeft, winScrollTop,
                 xOrig, yOrig;
 
+            isDragging = true;
             // define ddProps --&gt; internal object with data about the draggable instance
             ddProps.dragNode = dragNode;
             ddProps.xMovable = (direction===&#x27;xy&#x27;) || (direction===&#x27;x&#x27;);
@@ -658,6 +665,7 @@ module.exports = function (window) {
                 */
                 Event.emit(dragNode, emitterName+&#x27;:&#x27;+DD_DROP, e);
                 e.dd.fulfill();
+                isDragging = false;
             });
 
             dragNode.setXY(ddProps.xMouseLast, ddProps.yMouseLast, ddProps.constrain, true);
@@ -831,9 +839,8 @@ module.exports = function (window) {
             // scrollPreventListener = Event.before(&#x27;touchmove&#x27;, function(e) {e.preventDefault();});
 
             if (mobileEvents) {
-                Event.before(PAN, function(e) {
-                    e.preventDefault();
-                }, &#x27;body&#x27;);
+                DOCUMENT.addEventListener(&#x27;touchstart&#x27;, noScrollOnDrag);
+                DOCUMENT.addEventListener(&#x27;touchmove&#x27;, noScrollOnDrag);
             }
 
             Event.after(mobileEvents ? PANSTART : MOUSEDOWN, function(e) {
