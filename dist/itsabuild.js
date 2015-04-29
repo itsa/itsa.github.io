@@ -5660,7 +5660,7 @@ module.exports = function (window) {
             }, '['+DD_MINUSDRAGGABLE+']');
 
             // prevent default behaviour on scrolling: otherwise mobile devices will scroll instead of drag:
-            scrollPreventListener = Event.before('panstart', function(e) {e.preventDefaultContinue();});
+            // scrollPreventListener = Event.before('panstart', function(e) {e.preventDefaultContinue();});
             // scrollPreventListener = Event.before('touchmove', function(e) {e.preventDefault();});
 
             if (mobileEvents) {
