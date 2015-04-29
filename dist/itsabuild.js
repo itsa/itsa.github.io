@@ -6003,7 +6003,7 @@ module.exports = function (window) {
         var allSubscribers = Event._subs,
             eType = e.type,
             eventobject, subs, wildcard_named_subs, named_wildcard_subs, wildcard_wildcard_subs, subsOutside,
-            subscribers, eventobjectOutside, wildcard_named_subsOutside, customEvent, eventName, which;
+            subscribers, eventobjectOutside, wildcard_named_subsOutside, customEvent, eventName, which, eTarget;
 
         eventName = eType;
         // first: a `click` event might be needed to transformed into `rightclick`:
@@ -6038,7 +6038,8 @@ e.clientY || (e.clientY = e.center && e.center.y);
 }
 
         if (eventName===CLICK) {
-            if (e.target.vnode && (e.target.vnode.tag==='A')) {
+            eTarget = e.target;
+            if ((eTarget.vnode && (e.target.vnode.tag==='A')) || eTarget.inside('a')) {
                 eventName = ANCHOR_CLICK;
                 e.clientX || (e.clientX = e.center && e.center.x);
                 e.clientY || (e.clientY = e.center && e.center.y);

@@ -11389,7 +11389,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 736,
+            "line": 737,
             "description": "Gets one Element, specified by the css-selector. Either when alreasy available, or when it gets inserted in the dom.\nTo retrieve a single element by id,\nyou need to prepend the id-name with a `#`. When multiple Element's match, the first is returned.\n\nReturns a Promise with the Element as variable.",
             "itemtype": "method",
             "name": "getElementOnAvailable",
@@ -11418,7 +11418,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 798,
+            "line": 799,
             "itemtype": "method",
             "name": "noDeepDomEvt",
             "params": [
@@ -11441,7 +11441,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 813,
+            "line": 814,
             "description": "Does the actual transportation from DOM-events into the Eventsystem. It also looks at the response of\nthe Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will be preventDefaulted.",
             "itemtype": "method",
             "name": "_domCallback",
