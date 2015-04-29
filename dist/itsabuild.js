@@ -5665,10 +5665,8 @@ module.exports = function (window) {
 
             if (mobileEvents) {
                 Event.before(PAN, function(e) {
-                    e.preventDefaultContinue();
-                }, function(e) {
-                    return e.target.matches('['+DD_MINUSDRAGGABLE+']') || e.target.inside('['+DD_MINUSDRAGGABLE+']');
-                });
+                    e.preventDefault();
+                }, 'body');
             }
 
             Event.after(mobileEvents ? PANSTART : MOUSEDOWN, function(e) {
