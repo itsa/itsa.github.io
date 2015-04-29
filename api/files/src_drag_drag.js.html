@@ -323,9 +323,9 @@ module.exports = function (window) {
     require(&#x27;window-ext&#x27;)(window);
 
     noScrollOnDrag = function(e) {
-        // if (isDragging || e.sourceTarget.matches(PLUGINTRUE) || e.sourceTarget.inside(PLUGINTRUE)) {
+        if (isDragging || e.sourceTarget.matches(PLUGINTRUE) || e.sourceTarget.inside(PLUGINTRUE)) {
             e.preventDefault();
-        // }
+        }
     };
 
     DD = {
@@ -868,11 +868,6 @@ module.exports = function (window) {
             var instance = this;
             if (!instance._inited) {
                 instance._setupMouseEv(); // engine behind the dragdrop-eventcycle
-                if (mobileEvents) {
-                    Event.before([&#x27;touchstart&#x27;, &#x27;touchmove&#x27;], function(ev) {
-                        (instance.ddProps.size()&gt;0) &amp;&amp; ev.preventDefault();
-                    });
-                }
                 Event.defineEvent(&#x27;UI:&#x27;+DD_DROP)
                      .defaultFn(instance._defFnDrop.rbind(instance));
             }
