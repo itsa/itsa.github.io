@@ -5128,6 +5128,7 @@ var NAME = '[drag]: ',
     NO_OVERFLOW = 'itsa-no-overflow',
     DD_MINUSDRAGGABLE = DD_MINUS+DRAGGABLE,
     DIRECTION_ATTR = DD_MINUS+'direction',
+    PLUGINTRUE = '[plugin-dd="true"]',
     PLUGIN_ATTRS = [DD_MINUS+DROPZONE, CONSTRAIN_ATTR, DD_EMITTER, DD_HANDLE, DD_EFFECT_ALLOWED, DD_DROPZONE_MOVABLE, DIRECTION_ATTR];
 
 require('polyfill');
@@ -5155,7 +5156,7 @@ module.exports = function (window) {
     require('window-ext')(window);
 
     noScrollOnDrag = function(e) {
-        if (isDragging) {
+        if (isDragging || e.sourceTarget.matches(PLUGINTRUE) || e.sourceTarget.inside(PLUGINTRUE)) {
             e.preventDefault();
         }
     };
@@ -5760,7 +5761,7 @@ module.exports = function (window) {
             e.preventDefault();
         },
         function(e) {
-            return e.target.matches('[plugin-dd="true"]') || e.target.inside('[plugin-dd="true"]');
+            return e.target.matches(PLUGINTRUE) || e.target.inside(PLUGINTRUE);
         }
     );
 
