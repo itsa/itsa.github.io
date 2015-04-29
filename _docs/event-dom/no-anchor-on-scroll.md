@@ -38,7 +38,6 @@ Nulla facilisi. Aliquam nec ante accumsan, viverra ligula at, commodo tellus. Mo
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
-    ITSA.Event._working = true;
 
 ITSA.Event.before('dragstart', function (e) {
     e.preventDefault();
