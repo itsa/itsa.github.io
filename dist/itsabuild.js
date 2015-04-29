@@ -5038,6 +5038,7 @@ module.exports = function (window) {
         attrs: {
             draggable: 'string',
             handle: 'string',
+            direction: 'string',
             emitter: 'string',
             'effect-allowed': 'string',
             'dropzone-movable': 'string',
@@ -6022,9 +6023,33 @@ module.exports = function (window) {
             return;
         }
 
+if (Event._working && (eventName==='mousedown')) {
+e.clientX || (e.clientX = e.center && e.center.x);
+e.clientY || (e.clientY = e.center && e.center.y);
+    var node = DOCUMENT.getElement('#a-info');
+    node.append('MOUSEDOWN: '+e.clientX+', '+e.clientY+'<br>');
+}
+
+if (Event._working && (eventName==='panstart')) {
+e.clientX || (e.clientX = e.center && e.center.x);
+e.clientY || (e.clientY = e.center && e.center.y);
+    var node = DOCUMENT.getElement('#a-info');
+    node.append('PANSTART: '+e.clientX+', '+e.clientY+'<br>');
+}
+
         if (eventName===CLICK) {
             if (e.target.vnode && (e.target.vnode.tag==='A')) {
                 eventName = ANCHOR_CLICK;
+                e.clientX || (e.clientX = e.center && e.center.x);
+                e.clientY || (e.clientY = e.center && e.center.y);
+                // ALSO: determine the offset between the latest mousedown and the current mouseposition
+                // if there is an offset, then the user is scrolling and doesn't want to follow the link!
+                if (Event._working) {
+    var node = DOCUMENT.getElement('#a-info');
+    node.append('ANCHOR-CLICK: '+e.clientX+', '+e.clientY+'<br>');
+                    e.preventDefault();
+                    return;
+                }
             }
             else {
                 eventName = 'tap';
@@ -6454,8 +6479,49 @@ module.exports = function (window) {
     // NOT only HTMLElements --> SVGElements need to have this emitter to:
     (function(ElementPrototype) {
         ElementPrototype.merge(Event.Emitter('UI'));
+
+       /**
+        * Gets one Element, specified by the css-selector. Either when alreasy available, or when it gets inserted in the dom.
+        * To retrieve a single element by id,
+        * you need to prepend the id-name with a `#`. When multiple Element's match, the first is returned.
+        *
+        * Returns a Promise with the Element as variable.
+        *
+        * @method getElementOnAvailable
+        * @for Element
+        * @param cssSelector {String} css-selector to match
+        * @param [inspectProtectedNodes=false] {Boolean} no deepsearch in protected Nodes or iTags --> by default, these elements should be hidden
+        * @return {Promise} with the Element that was search for as variable.
+        * @since 0.0.1
+        */
+        ElementPrototype.getElementOnAvailable = function(cssSelector, inspectProtectedNodes) {
+            var instance = this;
+            // node not currently in the dom --> setup a listener:
+            return new window.Promise(function(resolve) {
+                var node, listener;
+                node = instance.getElement(cssSelector, inspectProtectedNodes);
+                if (node) {
+                    resolve(node);
+                }
+                else {
+                    listener = Event.after('nodeinsert', function() {
+                        // because it could be that `inspectProtectedNodes` prevents the node from return as a truthy value,
+                        // we need to check again if the new node matches:
+                        var newnode = instance.getElement(cssSelector, inspectProtectedNodes);
+                        if (newnode) {
+                            resolve(newnode);
+                            listener.detach();
+                        }
+                    }, cssSelector);
+                }
+            });
+        };
+
     }(window.Element.prototype));
 
+    DOCUMENT.getElementOnAvailable = function(cssSelector, inspectProtectedNodes) {
+        return DOCUMENT.documentElement.getElementOnAvailable(cssSelector, inspectProtectedNodes);
+    };
 
     // Notify when someone subscribes to an UI:* event
     // if so: then we might need to define a customEvent for it:
@@ -19633,40 +19699,6 @@ module.exports = function (window) {
     };
 
     /**
-     * Returns the an Array with all itag-Elements
-     *
-     * @method getItags
-     * @return {Array}
-     *
-     */
-    DOCUMENT.getItags = function() {
-        var instance = this,
-            findChildren;
-        // i-tag elements can only exists when the window.ITAGS are defined (by itags.core)
-        if (!window.ITAGS) {
-            return [];
-        }
-        if (instance._itagList) {
-            return instance._itagList;
-        }
-        // when not returned: it would be the first time --> we setup the current list
-        // the quickest way is by going through the vdom and inspect the tagNames ourselves:
-        findChildren = function(vnode) {
-            var vChildren = vnode.vChildren,
-                len = vChildren.length,
-                i, vChild;
-            for (i=0; i<len; i++) {
-                vChild = vChildren[i];
-                vChild.isItag && (DOCUMENT._itagList[DOCUMENT._itagList.length]=vChild.domNode);
-                findChildren(vChild);
-            }
-        };
-        Object.protectedProp(instance, '_itagList', []);
-        findChildren(instance.getElement('body').vnode);
-        return instance._itagList;
-    };
-
-    /**
      * Returns the first Element that matches the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,
      * they need to be separated by a `comma`.
      *
@@ -20279,7 +20311,6 @@ module.exports = function (window) {
         domNodeToVNode = require('./node-parser.js')(window),
         htmlToVNodes = require('./html-parser.js')(window),
         vNodeProto = require('./vnode.js')(window),
-        NS = require('./vdom-ns.js')(window),
         RUNNING_ON_NODE = (typeof global !== 'undefined') && (global.window!==window),
         TRANSITION = 'transition',
         TRANSFORM = 'transform',
@@ -20299,7 +20330,6 @@ module.exports = function (window) {
         async = UTILS.async,
         idGenerator = UTILS.idGenerator,
         DOCUMENT = window.document,
-        nodeids = NS.nodeids,
         arrayIndexOf = Array.prototype.indexOf,
         POSITION = 'position',
         ITSA_ = 'itsa-',
@@ -21812,7 +21842,7 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         ElementPrototype.getElement = function(cssSelector, inspectProtectedNodes) {
-            return ((cssSelector[0]==='#') && (cssSelector.indexOf(' ')===-1)) ? this.getElementById(cssSelector.substr(1), inspectProtectedNodes) : this.querySelector(cssSelector, inspectProtectedNodes);
+            return this.querySelector(cssSelector, inspectProtectedNodes);
         };
 
         /**
@@ -21825,12 +21855,7 @@ module.exports = function (window) {
          *
          */
         ElementPrototype.getElementById = function(id, inspectProtectedNodes) {
-            var element = nodeids[id];
-            if (element && !this.contains(element, true, inspectProtectedNodes)) {
-                // outside itself
-                return null;
-            }
-            return element || null;
+            return this.getElement('#'+id, inspectProtectedNodes);
         };
 
         /**
@@ -25008,7 +25033,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":95,"./attribute-extractor.js":96,"./element-array.js":97,"./html-parser.js":100,"./node-parser.js":101,"./vdom-ns.js":102,"./vnode.js":103,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/promise.js":72,"js-ext/lib/string.js":73,"polyfill":87,"polyfill/extra/transition.js":79,"polyfill/extra/transitionend.js":80,"polyfill/extra/vendorCSS.js":81,"utils":92,"window-ext":105}],100:[function(require,module,exports){
+},{"../css/element.css":95,"./attribute-extractor.js":96,"./element-array.js":97,"./html-parser.js":100,"./node-parser.js":101,"./vnode.js":103,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/promise.js":72,"js-ext/lib/string.js":73,"polyfill":87,"polyfill/extra/transition.js":79,"polyfill/extra/transitionend.js":80,"polyfill/extra/vendorCSS.js":81,"utils":92,"window-ext":105}],100:[function(require,module,exports){
 "use strict";
 
 /**
@@ -25515,7 +25540,6 @@ module.exports = function (window) {
                 // vnode.text = (nodeType===3) ? escapeEntities(domNode.nodeValue) : domNode.nodeValue;
             }
             // store vnode's id:
-            vnode.storeId();
             return vnode;
         };
 
@@ -25680,16 +25704,6 @@ module.exports = function (window) {
     });
 
     /**
-     * A hash with all node'ids (of all the domnodes that have an id). The value is a reference to an VElement.
-     *
-     * @property nodeids
-     * @default {}
-     * @type Object
-     * @since 0.0.1
-     */
-    NS.nodeids || (NS.nodeids=createHashMap());
-
-    /**
      * A hash with all encountered non-void Elements
      *
      * @property nonVoidElements
@@ -25801,7 +25815,6 @@ module.exports = function (window) {
         MUTATION_EVENTS = new LightMap(),
         BATCH_WILL_RUN = false,
         xmlNS = NS.xmlNS,
-        nodeids = NS.nodeids,
         htmlToVNodes = require('./html-parser.js')(window),
         timers = require('utils/lib/timers.js'),
         async = timers.async,
@@ -26926,7 +26939,6 @@ module.exports = function (window) {
                     (attributeName===CLASS) && (instance.classNames={});
                     // in case of ID attributeName --> special treatment
                     if ((attributeName===ID) && (instance.id)) {
-                        delete nodeids[instance.id];
                         delete instance.id;
                     }
                 }
@@ -26957,9 +26969,7 @@ module.exports = function (window) {
                         instance.classNames = extractClass.classNames;
                     }
                     else if (attributeName===ID) {
-                        instance.id && (instance.id!==attributeValue) && (delete nodeids[instance.id]);
                         instance.id = attributeValue;
-                        nodeids[attributeValue] = domNode;
                     }
                 }
             }
@@ -26995,35 +27005,7 @@ module.exports = function (window) {
             return instance;
         },
 
-       /**
-        * Syncs the vnode's nodeid (if available) inside `NS-vdom.nodeids`.
-        *
-        * Does NOT sync with the dom. Can be invoked multiple times without issues.
-        *
-        * @method storeId
-        * @chainable
-        * @since 0.0.1
-        */
-        storeId: function() {
-            // store node/vnode inside WeakMap:
-            var instance = this;
-            instance.id ? (nodeids[instance.id]=instance.domNode) : (delete nodeids[instance.id]);
-            return instance;
-        },
-
         //---- private ------------------------------------------------------------------
-
-        _addToTaglist: function() {
-            var instance = this,
-                itagList;
-            if (instance.isItag) {
-                itagList = DOCUMENT.getItags(); // also reads the dom if the list isn't build yet
-                instance._data || Object.protectedProp(instance, '_data', {});
-                if (!instance._data.ce_destroyed && !itagList.contains(instance.domNode)) {
-                    itagList.push(instance.domNode);
-                }
-            }
-        },
 
         /**
          * Adds a vnode to the end of the list of vChildNodes.
@@ -27058,7 +27040,6 @@ module.exports = function (window) {
                     (size===instance.vChildNodes.length) || (domNode=instance.vChildNodes[instance.vChildNodes.length-1].domNode);
                 }
                 if (VNode.nodeType===1) {
-                    VNode._addToTaglist();
                     VNode._emit(EV_INSERTED);
                 }
                 return domNode;
@@ -27144,7 +27125,6 @@ module.exports = function (window) {
        /**
         * Destroys the vnode and all its vnode-vChildNodes.
         * Removes it from its vParent.vChildNodes list,
-        * also removes its definitions inside `NS-vdom.nodeids`.
         *
         * Does NOT sync with the dom.
         *
@@ -27201,8 +27181,6 @@ module.exports = function (window) {
                     instance._vChildren = null;
                     // explicitely set instance.domNode._vnode and instance.domNode to null in order to prevent problems with the GC (we break the circular reference)
                     delete instance.domNode._vnode;
-                    // if valid id, then _remove the DOMnodeRef from internal hash
-                    instance.id && delete nodeids[instance.id];
                 }, silent ? 0 : DESTROY_DELAY);
 
                 instance._deleteFromParent();
@@ -27367,7 +27345,6 @@ module.exports = function (window) {
                     instance.domNode._insertBefore(domNode, refVNode.domNode);
                     (newVNode.nodeType===3) && instance._normalize();
                     if (newVNode.nodeType===1) {
-                        newVNode._addToTaglist();
                         newVNode._emit(EV_INSERTED);
                     }
                     return domNode;
@@ -27506,7 +27483,6 @@ module.exports = function (window) {
                 // in case of CLASS attribute --> special treatment
                 (attributeName===CLASS) && (instance.classNames={});
                 if (attributeName===ID) {
-                    delete nodeids[instance.id];
                     delete instance.id;
                 }
                 instance._emit(EV_ATTRIBUTE_REMOVED, attributeName);
@@ -27637,9 +27613,7 @@ module.exports = function (window) {
                     instance.classNames = extractClass.classNames;
                 }
                 else if (attributeName===ID) {
-                    instance.id && (delete nodeids[instance.id]);
                     instance.id = value;
-                    nodeids[value] = domNode;
                 }
 
                 instance._emit(prevVal ? EV_ATTRIBUTE_CHANGED : EV_ATTRIBUTE_INSERTED, attributeName, value, prevVal);
@@ -27681,7 +27655,6 @@ module.exports = function (window) {
             }
             instance._noSync();
             attrs = instance.attrs;
-            attrs.id && (delete nodeids[attrs.id]);
 
             if (Object.isObject(newAttrs)) {
                 attrsObj = newAttrs;
@@ -27819,7 +27792,6 @@ module.exports = function (window) {
                                     // new tag --> completely replace
                                     bkpAttrs = newChild.attrs;
                                     bkpChildNodes = newChild.vChildNodes;
-                                    oldChild.attrs.id && (delete nodeids[oldChild.attrs.id]);
     /*jshint proto:true */
                                     oldChild.isItag && oldChild.domNode.destroyUI && oldChild.domNode.destroyUI(PROTO_SUPPORTED ? null : newChild.__proto__.constructor);
     /*jshint proto:false */
@@ -27829,9 +27801,7 @@ module.exports = function (window) {
                                     newChild.vParent = instance;
                                     newChild._setAttrs(bkpAttrs, suppressItagRender);
                                     newChild._setChildNodes(bkpChildNodes, suppressItagRender);
-                                    newChild.id && (nodeids[newChild.id]=newChild.domNode);
                                     oldChild._replaceAtParent(newChild);
-                                    newChild._addToTaglist();
                                     newChild._emit(EV_INSERTED);
                                 }
                                 else {
@@ -27887,7 +27857,6 @@ module.exports = function (window) {
                                         }
                                     }
                                     // reset ref. to the domNode, for it might have been changed by newChild:
-                                    oldChild.id && (nodeids[oldChild.id]=childDomNode);
                                     newVChildNodes[i] = oldChild;
                                 }
                             }
@@ -27895,7 +27864,6 @@ module.exports = function (window) {
                         case 2: // oldNodeType==Element, newNodeType==TextNode
                                 // case2 and case3 should be treated the same
                         case 3: // oldNodeType==Element, newNodeType==Comment
-                            oldChild.attrs.id && (delete nodeids[oldChild.attrs.id]);
                             newChild.domNode.nodeValue = unescapeEntities(newChild.text);
                             _tryReplaceChild(domNode, newChild.domNode, childDomNode);
                             newChild.vParent = instance;
@@ -27912,11 +27880,9 @@ module.exports = function (window) {
                             _tryReplaceChild(domNode, newChild.domNode, childDomNode);
                             newChild._setAttrs(bkpAttrs, suppressItagRender);
                             newChild._setChildNodes(bkpChildNodes, suppressItagRender);
-                            newChild.id && (nodeids[newChild.id]=newChild.domNode);
                             // oldChild.isVoid = newChild.isVoid;
                             // delete oldChild.text;
                             instance._emit(EV_CONTENT_CHANGE);
-                            newChild._addToTaglist();
                             newChild._emit(EV_INSERTED);
                             break;
                         case 5: // oldNodeType==TextNode, newNodeType==TextNode
@@ -27998,7 +27964,6 @@ module.exports = function (window) {
                             domNode._appendChild(newChild.domNode);
                             newChild._setAttrs(bkpAttrs, suppressItagRender);
                             newChild._setChildNodes(bkpChildNodes, suppressItagRender);
-                            newChild._addToTaglist();
                             newChild._emit(EV_INSERTED);
                         }
                         break;
@@ -28012,7 +27977,6 @@ module.exports = function (window) {
                         domNode._appendChild(newChild.domNode);
                         instance._emit(EV_CONTENT_CHANGE);
                 }
-                newChild.storeId();
             }
             instance.vChildNodes = newVChildNodes;
             needNormalize && instance._normalize();
@@ -28175,7 +28139,6 @@ module.exports = function (window) {
             set: function(v) {
                 var instance = this,
                     vParent = instance.vParent,
-                    id = instance.attrs.id,
                     vnode, vnodes, bkpAttrs, bkpChildNodes, i, len, vChildNodes, isLastChildNode, index, refDomNode;
                 if ((instance.nodeType!==1) || !vParent) {
                     return;
@@ -28195,7 +28158,6 @@ module.exports = function (window) {
                             // new tag --> completely replace
                             bkpAttrs = vnode.attrs;
                             bkpChildNodes = vnode.vChildNodes;
-                            id && (delete nodeids[id]);
                             vnode.attrs = {}; // reset to force defined by `_setAttrs`
                             vnode.vChildNodes = []; // reset , to force defined by `_setAttrs`
                             _tryReplaceChild(vParent.domNode, vnode.domNode, instance.domNode);
@@ -28203,9 +28165,7 @@ module.exports = function (window) {
                             vnode._setChildNodes(bkpChildNodes);
                             // vnode.attrs = bkpAttrs;
                             // vnode.vChildNodes = bkpChildNodes;
-                            vnode.id && (nodeids[vnode.id]=vnode.domNode);
                             instance._replaceAtParent(vnode);
-                            vnode._addToTaglist();
                             vnode._emit(EV_INSERTED);
                         }
                         else {
@@ -28214,11 +28174,9 @@ module.exports = function (window) {
                         }
                     }
                     else {
-                        id && (delete nodeids[id]);
                         vnode.domNode.nodeValue = unescapeEntities(vnode.text);
                         _tryReplaceChild(vParent.domNode, vnode.domNode, instance.domNode);
                         instance._replaceAtParent(vnode);
-                            vnode._addToTaglist();
                         vnode._emit(EV_INSERTED);
                     }
                 }
@@ -28231,7 +28189,6 @@ module.exports = function (window) {
                             vnode.attrs = {}; // reset, to force defined by `_setAttrs`
                             vnode.vChildNodes = []; // reset to current state, to force defined by `_setAttrs`
                             isLastChildNode ? vParent.domNode._appendChild(vnode.domNode) : vParent.domNode._insertBefore(vnode.domNode, refDomNode);
-                            vnode._addToTaglist();
                             vnode._emit(EV_INSERTED);
                             vnode._setAttrs(bkpAttrs);
                             vnode._setChildNodes(bkpChildNodes);
@@ -28240,7 +28197,6 @@ module.exports = function (window) {
                             vnode.domNode.nodeValue = unescapeEntities(vnode.text);
                             isLastChildNode ? vParent.domNode._appendChild(vnode.domNode) : vParent.domNode._appendChild(vnode.domNode, refDomNode);
                     }
-                    vnode.storeId();
                     vnode._moveToParent(vParent, index+i);
                 }
             }
