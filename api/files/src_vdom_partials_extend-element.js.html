@@ -271,7 +271,6 @@ module.exports = function (window) {
         domNodeToVNode = require(&#x27;./node-parser.js&#x27;)(window),
         htmlToVNodes = require(&#x27;./html-parser.js&#x27;)(window),
         vNodeProto = require(&#x27;./vnode.js&#x27;)(window),
-        NS = require(&#x27;./vdom-ns.js&#x27;)(window),
         RUNNING_ON_NODE = (typeof global !== &#x27;undefined&#x27;) &amp;&amp; (global.window!==window),
         TRANSITION = &#x27;transition&#x27;,
         TRANSFORM = &#x27;transform&#x27;,
@@ -291,7 +290,6 @@ module.exports = function (window) {
         async = UTILS.async,
         idGenerator = UTILS.idGenerator,
         DOCUMENT = window.document,
-        nodeids = NS.nodeids,
         arrayIndexOf = Array.prototype.indexOf,
         POSITION = &#x27;position&#x27;,
         ITSA_ = &#x27;itsa-&#x27;,
@@ -1804,7 +1802,7 @@ module.exports = function (window) {
         * @since 0.0.1
         */
         ElementPrototype.getElement = function(cssSelector, inspectProtectedNodes) {
-            return ((cssSelector[0]===&#x27;#&#x27;) &amp;&amp; (cssSelector.indexOf(&#x27; &#x27;)===-1)) ? this.getElementById(cssSelector.substr(1), inspectProtectedNodes) : this.querySelector(cssSelector, inspectProtectedNodes);
+            return this.querySelector(cssSelector, inspectProtectedNodes);
         };
 
         /**
@@ -1817,12 +1815,7 @@ module.exports = function (window) {
          *
          */
         ElementPrototype.getElementById = function(id, inspectProtectedNodes) {
-            var element = nodeids[id];
-            if (element &amp;&amp; !this.contains(element, true, inspectProtectedNodes)) {
-                // outside itself
-                return null;
-            }
-            return element || null;
+            return this.getElement(&#x27;#&#x27;+id, inspectProtectedNodes);
         };
 
         /**

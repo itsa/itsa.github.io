@@ -508,9 +508,33 @@ module.exports = function (window) {
             return;
         }
 
+if (Event._working &amp;&amp; (eventName===&#x27;mousedown&#x27;)) {
+e.clientX || (e.clientX = e.center &amp;&amp; e.center.x);
+e.clientY || (e.clientY = e.center &amp;&amp; e.center.y);
+    var node = DOCUMENT.getElement(&#x27;#a-info&#x27;);
+    node.append(&#x27;MOUSEDOWN: &#x27;+e.clientX+&#x27;, &#x27;+e.clientY+&#x27;&lt;br&gt;&#x27;);
+}
+
+if (Event._working &amp;&amp; (eventName===&#x27;panstart&#x27;)) {
+e.clientX || (e.clientX = e.center &amp;&amp; e.center.x);
+e.clientY || (e.clientY = e.center &amp;&amp; e.center.y);
+    var node = DOCUMENT.getElement(&#x27;#a-info&#x27;);
+    node.append(&#x27;PANSTART: &#x27;+e.clientX+&#x27;, &#x27;+e.clientY+&#x27;&lt;br&gt;&#x27;);
+}
+
         if (eventName===CLICK) {
             if (e.target.vnode &amp;&amp; (e.target.vnode.tag===&#x27;A&#x27;)) {
                 eventName = ANCHOR_CLICK;
+                e.clientX || (e.clientX = e.center &amp;&amp; e.center.x);
+                e.clientY || (e.clientY = e.center &amp;&amp; e.center.y);
+                // ALSO: determine the offset between the latest mousedown and the current mouseposition
+                // if there is an offset, then the user is scrolling and doesn&#x27;t want to follow the link!
+                if (Event._working) {
+    var node = DOCUMENT.getElement(&#x27;#a-info&#x27;);
+    node.append(&#x27;ANCHOR-CLICK: &#x27;+e.clientX+&#x27;, &#x27;+e.clientY+&#x27;&lt;br&gt;&#x27;);
+                    e.preventDefault();
+                    return;
+                }
             }
             else {
                 eventName = &#x27;tap&#x27;;
@@ -940,8 +964,49 @@ module.exports = function (window) {
     // NOT only HTMLElements --&gt; SVGElements need to have this emitter to:
     (function(ElementPrototype) {
         ElementPrototype.merge(Event.Emitter(&#x27;UI&#x27;));
+
+       /**
+        * Gets one Element, specified by the css-selector. Either when alreasy available, or when it gets inserted in the dom.
+        * To retrieve a single element by id,
+        * you need to prepend the id-name with a &#x60;#&#x60;. When multiple Element&#x27;s match, the first is returned.
+        *
+        * Returns a Promise with the Element as variable.
+        *
+        * @method getElementOnAvailable
+        * @for Element
+        * @param cssSelector {String} css-selector to match
+        * @param [inspectProtectedNodes=false] {Boolean} no deepsearch in protected Nodes or iTags --&gt; by default, these elements should be hidden
+        * @return {Promise} with the Element that was search for as variable.
+        * @since 0.0.1
+        */
+        ElementPrototype.getElementOnAvailable = function(cssSelector, inspectProtectedNodes) {
+            var instance = this;
+            // node not currently in the dom --&gt; setup a listener:
+            return new window.Promise(function(resolve) {
+                var node, listener;
+                node = instance.getElement(cssSelector, inspectProtectedNodes);
+                if (node) {
+                    resolve(node);
+                }
+                else {
+                    listener = Event.after(&#x27;nodeinsert&#x27;, function() {
+                        // because it could be that &#x60;inspectProtectedNodes&#x60; prevents the node from return as a truthy value,
+                        // we need to check again if the new node matches:
+                        var newnode = instance.getElement(cssSelector, inspectProtectedNodes);
+                        if (newnode) {
+                            resolve(newnode);
+                            listener.detach();
+                        }
+                    }, cssSelector);
+                }
+            });
+        };
+
     }(window.Element.prototype));
 
+    DOCUMENT.getElementOnAvailable = function(cssSelector, inspectProtectedNodes) {
+        return DOCUMENT.documentElement.getElementOnAvailable(cssSelector, inspectProtectedNodes);
+    };
 
     // Notify when someone subscribes to an UI:* event
     // if so: then we might need to define a customEvent for it:

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Panel - Itsa</title>
+    <title>src/router/router.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -226,69 +226,73 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>Panel Class</h1>
-<div class="box meta">
-    
+                        <h1 class="file-heading">File: src/router/router.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/src_router_router.js.html#l2"><code>src&#x2F;router&#x2F;router.js:2</code></a>
-        </div>
-    
-
-    
-        
-            Module: <a href="../modules/panel.html">panel</a>
-        
-    
-
-    
-</div>
-
-
-
-<div class="box intro">
-    <p>Creating floating Panel-nodes which can be shown and hidden.</p>
-<p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
-New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
-
-</div>
+require(&#x27;js-ext&#x27;);
+require(&#x27;polyfill&#x27;);
 
 
+var NAME = &#x27;[router]: &#x27;,
+    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
 
-<div id="classdocs" class="tabview">
-    <ul class="api-class-tabs">
-        <li class="api-class-tab index"><a href="#index">Index</a></li>
+module.exports = function (window) {
 
-        
-        
-        
-        
-    </ul>
+    var DOCUMENT = window.document,
+        LightMap = require(&#x27;js-ext/extra/lightmap.js&#x27;),
+        Router, IO;
 
-    <div>
-        <div id="index" class="api-class-tabpanel index">
-            <h2 class="off-left">Item Index</h2>
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
-            
+/*jshint boss:true */
+    if (Router=window._ITSAmodules.Router) {
+/*jshint boss:false */
+        return Router; // Panel was already created
+    }
 
-            
+    IO = require(&#x27;io/extra/io-transfer.js&#x27;)(window);
+    Router = {
+        load: function(uri) {
+            this.serverSupportsRouter().then(
+                function(support) {
+                    if (!support) {
+                        throw new Error(&#x27;no support&#x27;);
+                    }
+                    IO.get(uri).then(
+                        function(pagedata) {
+                            DOCUMENT.documentElement.setOuterHTML(pagedata);
+                        }
+                    ).catch(function(err) {
+                        console.warn(err);
+                    });
+                }
+            ).catch(function() {
+                window.location.href = uri;
+            });
+        },
+        serverSupportsRouter: function() {
+            return window.Promise.resolve(true);
+        }
+    };
 
-            
-
-            
-        </div>
-
-        
-
-        
-
-        
-
-        
-    </div>
+    return Router;
+};
+    </pre>
 </div>
 
                     </div>
