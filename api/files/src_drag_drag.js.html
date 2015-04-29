@@ -315,7 +315,7 @@ module.exports = function (window) {
         bodyNode = DOCUMENT.body,
         supportHammer = !!Event.Hammer,
         mobileEvents = supportHammer &amp;&amp; isMobile,
-        DD;
+        DD, scrollPreventListener;
 
     require(&#x27;vdom&#x27;)(window);
     require(&#x27;node-plugin&#x27;)(window);
@@ -482,6 +482,8 @@ module.exports = function (window) {
             console.log(NAME, &#x27;_defFnStart: default function UI:dd-start. Defining customEvent &#x27;+customEvent);
             Event.defineEvent(customEvent).defaultFn(instance._defFnDrag.bind(instance));
             DOCUMENT.getAll(&#x27;.&#x27;+DD_MASTER_CLASS).removeClass(DD_MASTER_CLASS);
+            // prevent default behaviour on scrolling: otherwise mobile devices will scroll instead of drag:
+            scrollPreventListener = Event.before(&#x27;scroll&#x27;, function(e) {e.preventDefault();});
             instance._initializeDrag(e);
         },
 
@@ -658,6 +660,7 @@ module.exports = function (window) {
                 */
                 Event.emit(dragNode, emitterName+&#x27;:&#x27;+DD_DROP, e);
                 e.dd.fulfill();
+                scrollPreventListener &amp;&amp; scrollPreventListener.detach();
             });
 
             dragNode.setXY(ddProps.xMouseLast, ddProps.yMouseLast, ddProps.constrain, true);
@@ -893,6 +896,17 @@ module.exports = function (window) {
             return (tagName===&#x27;INPUT&#x27;) || (tagName===&#x27;TEXTAREA&#x27;) || (sourceNode.getAttr(&#x27;contenteditable&#x27;)===&#x27;true&#x27;);
         }
     );
+
+    // don&#x27;t drag any native drag-drop items when they are part of dd, because they prevent they corrupt dragging:
+    Event.before(&#x27;dragstart&#x27;,
+        function (e) {
+            e.preventDefault();
+        },
+        function(e) {
+            return e.target.matches(&#x27;[plugin-dd=&quot;true&quot;]&#x27;) || e.target.inside(&#x27;[plugin-dd=&quot;true&quot;]&#x27;);
+        }
+    );
+
 
     DOCUMENT.definePlugin(&#x27;dd&#x27;, null, {
         attrs: {
