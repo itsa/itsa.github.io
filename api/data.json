@@ -8917,7 +8917,7 @@
         },
         {
             "file": "src/drag/drag.js",
-            "line": 650,
+            "line": 645,
             "description": "Creates a notifier to response after each `Drag` event is set up, or teared down.\nYou can use this to hook in into the drag-eventcycle: the `drop`-module uses it this way.",
             "static": 1,
             "itemtype": "method",
