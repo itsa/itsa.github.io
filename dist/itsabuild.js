@@ -5148,7 +5148,7 @@ module.exports = function (window) {
         bodyNode = DOCUMENT.body,
         supportHammer = !!Event.Hammer,
         mobileEvents = supportHammer && isMobile,
-        DD, scrollPreventListener;
+        DD;
 
     require('vdom')(window);
     require('node-plugin')(window);
@@ -5315,9 +5315,6 @@ module.exports = function (window) {
             console.log(NAME, '_defFnStart: default function UI:dd-start. Defining customEvent '+customEvent);
             Event.defineEvent(customEvent).defaultFn(instance._defFnDrag.bind(instance));
             DOCUMENT.getAll('.'+DD_MASTER_CLASS).removeClass(DD_MASTER_CLASS);
-            // prevent default behaviour on scrolling: otherwise mobile devices will scroll instead of drag:
-            scrollPreventListener = Event.before('panmove', function(e) {e.preventDefaultContinue();});
-            // scrollPreventListener = Event.before('touchmove', function(e) {e.preventDefault();});
             instance._initializeDrag(e);
         },
 
@@ -5494,7 +5491,6 @@ module.exports = function (window) {
                 */
                 Event.emit(dragNode, emitterName+':'+DD_DROP, e);
                 e.dd.fulfill();
-                scrollPreventListener && scrollPreventListener.detach();
             });
 
             dragNode.setXY(ddProps.xMouseLast, ddProps.yMouseLast, ddProps.constrain, true);
@@ -5653,6 +5649,26 @@ module.exports = function (window) {
                     nodeTargetFn(e);
                 }
             };
+
+            Event.after(mobileEvents ? PANSTART : MOUSEDOWN, function(e) {
+                var draggableAttr = e.target.getAttr(DD_MINUSDRAGGABLE);
+                if (typeof e.center==='object') {
+                    e.clientX = e.center.x;
+                    e.clientY = e.center.y;
+                }
+                (draggableAttr===TRUE) ? nodeTargetFn(e) : delegatedTargetFn(e, draggableAttr);
+            }, '['+DD_MINUSDRAGGABLE+']');
+
+            // prevent default behaviour on scrolling: otherwise mobile devices will scroll instead of drag:
+            scrollPreventListener = Event.before('panstart', function(e) {e.preventDefaultContinue();});
+            // scrollPreventListener = Event.before('touchmove', function(e) {e.preventDefault();});
+
+            if (mobileEvents) {
+                Event.before(PANSTART, function(e) {
+                    e.preventDefaultContinue();
+                }, '['+DD_MINUSDRAGGABLE+']');
+            }
+
             Event.after(mobileEvents ? PANSTART : MOUSEDOWN, function(e) {
                 var draggableAttr = e.target.getAttr(DD_MINUSDRAGGABLE);
                 if (typeof e.center==='object') {
