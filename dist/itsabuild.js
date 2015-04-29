@@ -5148,7 +5148,7 @@ module.exports = function (window) {
         bodyNode = DOCUMENT.body,
         supportHammer = !!Event.Hammer,
         mobileEvents = supportHammer && isMobile,
-        DD;
+        DD, scrollPreventListener;
 
     require('vdom')(window);
     require('node-plugin')(window);
@@ -5315,6 +5315,8 @@ module.exports = function (window) {
             console.log(NAME, '_defFnStart: default function UI:dd-start. Defining customEvent '+customEvent);
             Event.defineEvent(customEvent).defaultFn(instance._defFnDrag.bind(instance));
             DOCUMENT.getAll('.'+DD_MASTER_CLASS).removeClass(DD_MASTER_CLASS);
+            // prevent default behaviour on scrolling: otherwise mobile devices will scroll instead of drag:
+            scrollPreventListener = Event.before('scroll', function(e) {e.preventDefault();});
             instance._initializeDrag(e);
         },
 
@@ -5491,6 +5493,7 @@ module.exports = function (window) {
                 */
                 Event.emit(dragNode, emitterName+':'+DD_DROP, e);
                 e.dd.fulfill();
+                scrollPreventListener && scrollPreventListener.detach();
             });
 
             dragNode.setXY(ddProps.xMouseLast, ddProps.yMouseLast, ddProps.constrain, true);
@@ -5726,6 +5729,17 @@ module.exports = function (window) {
             return (tagName==='INPUT') || (tagName==='TEXTAREA') || (sourceNode.getAttr('contenteditable')==='true');
         }
     );
+
+    // don't drag any native drag-drop items when they are part of dd, because they prevent they corrupt dragging:
+    Event.before('dragstart',
+        function (e) {
+            e.preventDefault();
+        },
+        function(e) {
+            return e.target.matches('[plugin-dd="true"]') || e.target.inside('[plugin-dd="true"]');
+        }
+    );
+
 
     DOCUMENT.definePlugin('dd', null, {
         attrs: {
