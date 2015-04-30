@@ -5156,9 +5156,13 @@ module.exports = function (window) {
     require('window-ext')(window);
 
     noScrollOnDrag = function(e) {
-        if (isDragging || e.sourceTarget.matches(PLUGINTRUE) || e.sourceTarget.inside(PLUGINTRUE)) {
-            e.preventDefault();
-        }
+var node = DOCUMENT.getElement('#a-info');
+if (node) {
+    node.append('preventing '+e.type+' for tag '+e.target.getTagName()+'<br>');
+        // if (isDragging || e.sourceTarget.matches(PLUGINTRUE) || e.sourceTarget.inside(PLUGINTRUE)) {
+            // e.preventDefault();
+        // }
+}
     };
 
     DD = {
