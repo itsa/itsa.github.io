@@ -17,8 +17,6 @@ Cras vestibulum fermentum dolor, sit amet ultrices lacus. Proin sollicitudin at 
 
 <a href="http://itsasbreuk.nl">CLICK ME <b>CLICK ME</b> CLICK ME</a>
 
-<div id="a-info"></div>
-
 Mauris finibus lacus in orci vehicula faucibus. Pellentesque porttitor, odio quis vulputate pharetra, purus nisi bibendum justo, vel scelerisque ligula nisl vel tortor. Vivamus gravida eros sit amet risus tristique semper. Fusce vulputate ultricies auctor. Pellentesque convallis urna et facilisis varius. Nam in dolor lectus. Nunc consectetur urna sed nibh tincidunt, vitae scelerisque massa maximus. Pellentesque eget quam velit. Aenean cursus lectus ac dolor congue fringilla. Phasellus et est id velit feugiat ornare. Curabitur ac mauris sit amet leo sagittis gravida a vitae dui. Vestibulum congue, felis vel scelerisque fermentum, ex orci tristique sem, vel aliquet ante mauris molestie ante. In hac habitasse platea dictumst. Sed consectetur vestibulum tellus, vitae tincidunt arcu porta sit amet. Donec ipsum sapien, aliquet vitae risus nec, placerat accumsan nisi. Nam dictum et justo a suscipit.
 
 Mauris sed nisi sit amet massa mattis sodales. Nullam hendrerit, ante vitae pellentesque finibus, velit dui ultrices tortor, ut porta augue risus rutrum mauris. Nam lacinia vel lacus et bibendum. Sed fringilla non magna at volutpat. Morbi sed libero malesuada, rhoncus erat vitae, maximus purus. Nunc lobortis interdum libero id tempor. Donec ac interdum nibh.

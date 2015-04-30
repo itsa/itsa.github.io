@@ -323,12 +323,9 @@ module.exports = function (window) {
     require(&#x27;window-ext&#x27;)(window);
 
     noScrollOnDrag = function(e) {
-var node = DOCUMENT.getElement(&#x27;#a-info&#x27;);
-if (node) {
         if (e.target.matches(PLUGINTRUE) || e.target.inside(PLUGINTRUE)) {
             e.preventDefault();
         }
-}
     };
 
     DD = {
