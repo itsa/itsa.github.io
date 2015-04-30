@@ -323,9 +323,13 @@ module.exports = function (window) {
     require(&#x27;window-ext&#x27;)(window);
 
     noScrollOnDrag = function(e) {
-        if (isDragging || e.sourceTarget.matches(PLUGINTRUE) || e.sourceTarget.inside(PLUGINTRUE)) {
-            e.preventDefault();
-        }
+var node = DOCUMENT.getElement(&#x27;#a-info&#x27;);
+if (node) {
+    node.append(&#x27;preventing &#x27;+e.type+&#x27; for tag &#x27;+e.target.getTagName()+&#x27;&lt;br&gt;&#x27;);
+        // if (isDragging || e.sourceTarget.matches(PLUGINTRUE) || e.sourceTarget.inside(PLUGINTRUE)) {
+            // e.preventDefault();
+        // }
+}
     };
 
     DD = {
