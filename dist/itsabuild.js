@@ -5156,12 +5156,9 @@ module.exports = function (window) {
     require('window-ext')(window);
 
     noScrollOnDrag = function(e) {
-var node = DOCUMENT.getElement('#a-info');
-if (node) {
         if (e.target.matches(PLUGINTRUE) || e.target.inside(PLUGINTRUE)) {
             e.preventDefault();
         }
-}
     };
 
     DD = {
