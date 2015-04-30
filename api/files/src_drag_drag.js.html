@@ -316,7 +316,7 @@ module.exports = function (window) {
         bodyNode = DOCUMENT.body,
         supportHammer = !!Event.Hammer,
         mobileEvents = supportHammer &amp;&amp; isMobile,
-        DD, noScrollOnDrag, isDragging;
+        DD, noScrollOnDrag;
 
     require(&#x27;vdom&#x27;)(window);
     require(&#x27;node-plugin&#x27;)(window);
@@ -325,10 +325,9 @@ module.exports = function (window) {
     noScrollOnDrag = function(e) {
 var node = DOCUMENT.getElement(&#x27;#a-info&#x27;);
 if (node) {
-    node.append(&#x27;preventing &#x27;+e.type+&#x27; for tag &#x27;+e.target.getTagName()+&#x27;&lt;br&gt;&#x27;);
-        // if (isDragging || e.sourceTarget.matches(PLUGINTRUE) || e.sourceTarget.inside(PLUGINTRUE)) {
-            // e.preventDefault();
-        // }
+        if (e.target.matches(PLUGINTRUE) || e.target.inside(PLUGINTRUE)) {
+            e.preventDefault();
+        }
 }
     };
 
@@ -533,7 +532,6 @@ if (node) {
                 moveEv, x, y, byExactId, match, constrainNode, winConstrained, winScrollLeft, winScrollTop,
                 xOrig, yOrig;
 
-            isDragging = true;
             // define ddProps --&gt; internal object with data about the draggable instance
             ddProps.dragNode = dragNode;
             ddProps.xMovable = (direction===&#x27;xy&#x27;) || (direction===&#x27;x&#x27;);
@@ -670,7 +668,6 @@ if (node) {
                 */
                 Event.emit(dragNode, emitterName+&#x27;:&#x27;+DD_DROP, e);
                 e.dd.fulfill();
-                isDragging = false;
             });
 
             dragNode.setXY(ddProps.xMouseLast, ddProps.yMouseLast, ddProps.constrain, true);

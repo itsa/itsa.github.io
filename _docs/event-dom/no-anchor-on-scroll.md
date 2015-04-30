@@ -38,11 +38,4 @@ Nulla facilisi. Aliquam nec ante accumsan, viverra ligula at, commodo tellus. Mo
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
     var ITSA = require('itsa');
-    noScrollOnDrag = function(e) {
-        var node = DOCUMENT.getElement('#a-info');
-        if (node) {
-            node.append(e.type+' for tag '+e.target.getTagName()+'<br>');
-        }
-    };
-    ITSA.Event.before(['touchstart', 'touchmove', 'panstart', 'pandown', 'panmove', 'swipedown'], noScrollOnDrag);
 </script>
