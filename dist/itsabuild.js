@@ -5421,7 +5421,7 @@ module.exports = function (window) {
                     e2.clientX = e2.center.x;
                     e2.clientY = e2.center.y;
                 }
-                if (!e2.clientX) {
+                if (instance.ddProps.isEmpty() || !e2.clientX) {
                     return;
                 }
                 // move the object
