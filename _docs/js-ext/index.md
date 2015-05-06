@@ -235,6 +235,12 @@ Math gets extended with the following new methods:
 ###inbetween###
 Returns the value, while forcing it to be inbetween the specified edges.
 
+###floorToZero###
+Floors a value in the direction to zero.
+
+###ceilFromZero###
+Ceils a value from zero up.
+
 
 ##Promise extentions##
 
