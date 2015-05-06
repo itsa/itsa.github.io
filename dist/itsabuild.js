@@ -4944,7 +4944,6 @@ module.exports = function (window) {
                 // Drag.init() will only run once
                 $superInit.call(instance);
                 instance._setupKeyEv();
-
                 instance.notify(function(e, ddProps) {
                     var dropzones, sourceNode,
                         dragNode = ddProps.dragNode,
@@ -5674,16 +5673,6 @@ module.exports = function (window) {
                 DOCUMENT.addEventListener('touchstart', noScrollOnDrag);
                 DOCUMENT.addEventListener('touchmove', noScrollOnDrag);
             }
-
-            Event.after(mobileEvents ? PANSTART : MOUSEDOWN, function(e) {
-                var draggableAttr = e.target.getAttr(DD_MINUSDRAGGABLE);
-                if (typeof e.center==='object') {
-                    e.clientX = e.center.x;
-                    e.clientY = e.center.y;
-                }
-                (draggableAttr===TRUE) ? nodeTargetFn(e) : delegatedTargetFn(e, draggableAttr);
-            }, '['+DD_MINUSDRAGGABLE+']');
-
         },
 
        /**
@@ -15067,6 +15056,32 @@ Math.inbetween = function(min, value, max, absoluteValue) {
     var val = absoluteValue ? Math.abs(value) : value;
     return (max>=min) ? this.min(max, this.max(min, val)) : undefined;
 };
+
+/**
+ * Floors a value in the direction to zero. Native Math.floor does this for positive values,
+ * but negative values are floored more into the negative (Math.floor(-2.3) === -3).
+ * This method floores into the direction of zero: (Math.floorToZero(-2.3) === -2)
+ *
+ * @method floorToZero
+ * @param value {Number} the original value that should be inbetween the edges
+ * @return {Number} the floored value
+ */
+Math.floorToZero = function(value) {
+    return (value>=0) ? Math.floor(value) : Math.ceil(value);
+};
+
+/**
+ * Ceils a value from zero up. Native Math.ceil does this for positive values,
+ * but negative values are ceiled more into the less negative (Math.ceil(-2.3) === -2).
+ * This method ceiles up from zero: (Math.ceilFromZero(-2.3) === -3)
+ *
+ * @method ceilFromZero
+ * @param value {Number} the original value that should be inbetween the edges
+ * @return {Number} the floored value
+ */
+Math.ceilFromZero = function(value) {
+    return (value>=0) ? Math.ceil(value) : Math.floor(value);
+};
 },{"polyfill/polyfill-base.js":87}],71:[function(require,module,exports){
 /**
  *
@@ -24148,7 +24163,6 @@ module.exports = function (window) {
         *        <ul>
         *            <li>cancel() {Promise}</li>
         *            <li>freeze() {Promise}</li>
-        *            <li>unfreeze()</li>
         *            <li>finish() {Promise}</li>
         *        </ul>
         *        These handles resolve with the `elapsed-time` as first argument of the callbackFn
