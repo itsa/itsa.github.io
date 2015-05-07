@@ -5592,6 +5592,10 @@ module.exports = function (window) {
                 e._noResetSourceTarget = true;
                 // add `dd`-Promise to the eventobject --> this Promise will be resolved once the pointer has released.
                 e.dd = Promise.manage();
+                e.dd.catch(function(err) {
+                    console.info(NAME+'dd rejected: '+err);
+                });
+
                 // define e.setOnDrag --> users
                 e.setOnDrag = function(callbackFn) {
                     e.dd.setCallback(callbackFn);
