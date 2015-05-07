@@ -1304,7 +1304,7 @@ module.exports = function (window) {
                     }
                 },
                 updatePlugins = function(srcVNode, targetVNode) {
-                    targetVNode.attrs &amp;&amp; targetVNode.attrs.each(function(value, key) {
+                    targetVNode &amp;&amp; targetVNode.attrs &amp;&amp; targetVNode.attrs.each(function(value, key) {
                         var pluginName;
                         if (key.substr(0, 7)===&#x27;plugin-&#x27;) {
                             pluginName = key.substr(7);

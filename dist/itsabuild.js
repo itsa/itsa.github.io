@@ -21390,7 +21390,7 @@ module.exports = function (window) {
                     }
                 },
                 updatePlugins = function(srcVNode, targetVNode) {
-                    targetVNode.attrs && targetVNode.attrs.each(function(value, key) {
+                    targetVNode && targetVNode.attrs && targetVNode.attrs.each(function(value, key) {
                         var pluginName;
                         if (key.substr(0, 7)==='plugin-') {
                             pluginName = key.substr(7);
