@@ -760,6 +760,10 @@ module.exports = function (window) {
                 e._noResetSourceTarget = true;
                 // add &#x60;dd&#x60;-Promise to the eventobject --&gt; this Promise will be resolved once the pointer has released.
                 e.dd = Promise.manage();
+                e.dd.catch(function(err) {
+                    console.info(NAME+&#x27;dd rejected: &#x27;+err);
+                });
+
                 // define e.setOnDrag --&gt; users
                 e.setOnDrag = function(callbackFn) {
                     e.dd.setCallback(callbackFn);
