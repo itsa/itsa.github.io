@@ -289,6 +289,9 @@ All DOM-events receive an event object that extends the eventobject created by E
 </tbody></table>
 
 
+#Known issues#
+When using a filterfunction at a `before-subscriber`, no additional properties can be set at the eventobject. This is only the case with beforesubscribers: aftersubscribers can do so. Also, you *can* manupilate the eventobject in the before-subscriber (only filterfunctions suffer this behaviour). This behaviour is different from custome-events, which always allow setting properties at this stage.
+
 #Compatability#
 
 * All modern browsers and IE9+.
