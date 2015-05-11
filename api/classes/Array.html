@@ -504,7 +504,7 @@ Alias for (array.indexOf(item) &gt; -1)</p>
             
         
         
-        <a href="../files/src_js-ext_lib_array.js.html#l221"><code>src&#x2F;js-ext&#x2F;lib&#x2F;array.js:221</code></a>
+        <a href="../files/src_js-ext_lib_array.js.html#l232"><code>src&#x2F;js-ext&#x2F;lib&#x2F;array.js:232</code></a>
         
         </p>
 
@@ -561,6 +561,12 @@ Only handles members of primary types, Dates, Arrays and Objects.</p>
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code class="optional">[duplicate=false]</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -603,7 +609,8 @@ Only handles members of primary types, Dates, Arrays and Objects.</p>
     </div>
 
     <div class="description">
-        <p>Inserts an item in the array at the specified position. If index is larger than array.length, the new item(s) will be appended.</p>
+        <p>Inserts an item in the array at the specified position. If index is larger than array.length, the new item(s) will be appended.
+If the item already exists, it will be moved to its new position, unless <code>duplicate</code> is set true</p>
 
     </div>
 
@@ -639,6 +646,23 @@ Only handles members of primary types, Dates, Arrays and Objects.</p>
 
                     <div class="param-description">
                         <p>the position where to add the item(s). When larger than Array.length, the item(s) will be appended.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[duplicate=false]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>if an item should be duplicated when already in the array</p>
 
                     </div>
 
@@ -992,7 +1016,7 @@ so, they cannot be used.</p>
             
         
         
-        <a href="../files/src_js-ext_lib_array.js.html#l232"><code>src&#x2F;js-ext&#x2F;lib&#x2F;array.js:232</code></a>
+        <a href="../files/src_js-ext_lib_array.js.html#l243"><code>src&#x2F;js-ext&#x2F;lib&#x2F;array.js:243</code></a>
         
         </p>
 
@@ -1089,7 +1113,7 @@ Not by reference, but their content as simple types.</p>
             
         
         
-        <a href="../files/src_js-ext_lib_array.js.html#l195"><code>src&#x2F;js-ext&#x2F;lib&#x2F;array.js:195</code></a>
+        <a href="../files/src_js-ext_lib_array.js.html#l206"><code>src&#x2F;js-ext&#x2F;lib&#x2F;array.js:206</code></a>
         
         </p>
 

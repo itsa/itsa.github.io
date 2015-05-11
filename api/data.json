@@ -15050,7 +15050,7 @@
         {
             "file": "src/js-ext/lib/array.js",
             "line": 182,
-            "description": "Inserts an item in the array at the specified position. If index is larger than array.length, the new item(s) will be appended.",
+            "description": "Inserts an item in the array at the specified position. If index is larger than array.length, the new item(s) will be appended.\nIf the item already exists, it will be moved to its new position, unless `duplicate` is set true",
             "itemtype": "method",
             "name": "insertAt",
             "params": [
@@ -15063,6 +15063,13 @@
                     "name": "index",
                     "description": "the position where to add the item(s). When larger than Array.length, the item(s) will be appended.",
                     "type": "Number"
+                },
+                {
+                    "name": "duplicate",
+                    "description": "if an item should be duplicated when already in the array",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
                 }
             ],
             "chainable": 1,
@@ -15072,7 +15079,7 @@
         },
         {
             "file": "src/js-ext/lib/array.js",
-            "line": 195,
+            "line": 206,
             "description": "Shuffles the items in the Array randomly",
             "itemtype": "method",
             "name": "shuffle",
@@ -15083,7 +15090,7 @@
         },
         {
             "file": "src/js-ext/lib/array.js",
-            "line": 221,
+            "line": 232,
             "description": "Returns a deep copy of the Array.\nOnly handles members of primary types, Dates, Arrays and Objects.",
             "itemtype": "method",
             "name": "deepClone",
@@ -15097,7 +15104,7 @@
         },
         {
             "file": "src/js-ext/lib/array.js",
-            "line": 232,
+            "line": 243,
             "description": "Compares this object with the reference-object whether they have the same value.\nNot by reference, but their content as simple types.\n\nCompares both JSON.stringify objects",
             "itemtype": "method",
             "name": "sameValue",

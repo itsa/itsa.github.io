@@ -5060,7 +5060,7 @@ module.exports = function (window) {
 
 };
 },{"./css/drag-drop.css":17,"drag":20,"event-dom":21,"js-ext":65,"js-ext/extra/hashmap.js":61,"node-plugin":75,"polyfill/polyfill-base.js":87,"useragent":91,"vdom":104,"window-ext":105}],19:[function(require,module,exports){
-var css = "[dd-draggable] {\n    -moz-user-select: none;\n    -ms-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 3001 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+var css = "[dd-draggable] {\n    -webkit-user-drag: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 3001 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],20:[function(require,module,exports){
 "use strict";
 
@@ -14826,9 +14826,9 @@ valuesAreTheSame = function(value1, value2) {
      * @param item {Any} the item to seek
      * @return {Boolean} whether the item is part of the Array
      */
-    Array.contains || (ArrayPrototype.contains=function(item) {
+    ArrayPrototype.contains = function(item) {
         return (this.indexOf(item) > -1);
-    });
+    };
 
     /**
      * Removes an item from the array
@@ -14839,7 +14839,7 @@ valuesAreTheSame = function(value1, value2) {
      *        You need to set `arrayItem=true` in those cases. Otherwise, all single items from `item` are removed separately.
      * @chainable
      */
-    Array.remove || (ArrayPrototype.remove=function(item, arrayItem) {
+    ArrayPrototype.remove = function(item, arrayItem) {
         var instance = this,
             removeItem = function(oneItem) {
                 var index = instance.indexOf(oneItem);
@@ -14852,7 +14852,7 @@ valuesAreTheSame = function(value1, value2) {
             removeItem(item);
         }
         return instance;
-    });
+    };
 
     /**
      * Replaces an item in the array. If the previous item is not part of the array, the new item is appended.
@@ -14862,25 +14862,36 @@ valuesAreTheSame = function(value1, value2) {
      * @param newItem {any} the item to be added
      * @chainable
      */
-    Array.replace || (ArrayPrototype.replace=function(prevItem, newItem) {
+    ArrayPrototype.replace = function(prevItem, newItem) {
         var instance = this,
             index = instance.indexOf(prevItem);
         (index!==-1) ? instance.splice(index, 1, newItem) : instance.push(newItem);
         return instance;
-    });
+    };
 
     /**
      * Inserts an item in the array at the specified position. If index is larger than array.length, the new item(s) will be appended.
+     * If the item already exists, it will be moved to its new position, unless `duplicate` is set true
      *
      * @method insertAt
      * @param item {any|Array} the item to be replaced, may be an Array of items
      * @param index {Number} the position where to add the item(s). When larger than Array.length, the item(s) will be appended.
+     * @param [duplicate=false] {boolean} if an item should be duplicated when already in the array
      * @chainable
      */
-    Array.insertAt || (ArrayPrototype.insertAt=function(item, index) {
-        this.splice(index, 0, item);
-        return this;
-    });
+    ArrayPrototype.insertAt = function(item, index, duplicate) {
+        var instance = this,
+            prevIndex;
+        if (!duplicate) {
+            prevIndex = instance.indexOf(item);
+            if (prevIndex===index) {
+                return instance;
+            }
+            (prevIndex > -1) && instance.splice(prevIndex, 1);
+        }
+        instance.splice(index, 0, item);
+        return instance;
+    };
 
     /**
      * Shuffles the items in the Array randomly
@@ -14888,7 +14899,7 @@ valuesAreTheSame = function(value1, value2) {
      * @method shuffle
      * @chainable
      */
-    Array.shuffle || (ArrayPrototype.shuffle=function() {
+    ArrayPrototype.shuffle = function() {
         var instance = this,
             counter = instance.length,
             temp, index;
@@ -14906,7 +14917,7 @@ valuesAreTheSame = function(value1, value2) {
             instance[index] = temp;
         }
         return instance;
-    });
+    };
 
     /**
      * Returns a deep copy of the Array.

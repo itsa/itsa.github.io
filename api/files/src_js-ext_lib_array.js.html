@@ -368,9 +368,9 @@ valuesAreTheSame = function(value1, value2) {
      * @param item {Any} the item to seek
      * @return {Boolean} whether the item is part of the Array
      */
-    Array.contains || (ArrayPrototype.contains=function(item) {
+    ArrayPrototype.contains = function(item) {
         return (this.indexOf(item) &gt; -1);
-    });
+    };
 
     /**
      * Removes an item from the array
@@ -381,7 +381,7 @@ valuesAreTheSame = function(value1, value2) {
      *        You need to set &#x60;arrayItem=true&#x60; in those cases. Otherwise, all single items from &#x60;item&#x60; are removed separately.
      * @chainable
      */
-    Array.remove || (ArrayPrototype.remove=function(item, arrayItem) {
+    ArrayPrototype.remove = function(item, arrayItem) {
         var instance = this,
             removeItem = function(oneItem) {
                 var index = instance.indexOf(oneItem);
@@ -394,7 +394,7 @@ valuesAreTheSame = function(value1, value2) {
             removeItem(item);
         }
         return instance;
-    });
+    };
 
     /**
      * Replaces an item in the array. If the previous item is not part of the array, the new item is appended.
@@ -404,25 +404,36 @@ valuesAreTheSame = function(value1, value2) {
      * @param newItem {any} the item to be added
      * @chainable
      */
-    Array.replace || (ArrayPrototype.replace=function(prevItem, newItem) {
+    ArrayPrototype.replace = function(prevItem, newItem) {
         var instance = this,
             index = instance.indexOf(prevItem);
         (index!==-1) ? instance.splice(index, 1, newItem) : instance.push(newItem);
         return instance;
-    });
+    };
 
     /**
      * Inserts an item in the array at the specified position. If index is larger than array.length, the new item(s) will be appended.
+     * If the item already exists, it will be moved to its new position, unless &#x60;duplicate&#x60; is set true
      *
      * @method insertAt
      * @param item {any|Array} the item to be replaced, may be an Array of items
      * @param index {Number} the position where to add the item(s). When larger than Array.length, the item(s) will be appended.
+     * @param [duplicate=false] {boolean} if an item should be duplicated when already in the array
      * @chainable
      */
-    Array.insertAt || (ArrayPrototype.insertAt=function(item, index) {
-        this.splice(index, 0, item);
-        return this;
-    });
+    ArrayPrototype.insertAt = function(item, index, duplicate) {
+        var instance = this,
+            prevIndex;
+        if (!duplicate) {
+            prevIndex = instance.indexOf(item);
+            if (prevIndex===index) {
+                return instance;
+            }
+            (prevIndex &gt; -1) &amp;&amp; instance.splice(prevIndex, 1);
+        }
+        instance.splice(index, 0, item);
+        return instance;
+    };
 
     /**
      * Shuffles the items in the Array randomly
@@ -430,7 +441,7 @@ valuesAreTheSame = function(value1, value2) {
      * @method shuffle
      * @chainable
      */
-    Array.shuffle || (ArrayPrototype.shuffle=function() {
+    ArrayPrototype.shuffle = function() {
         var instance = this,
             counter = instance.length,
             temp, index;
@@ -448,7 +459,7 @@ valuesAreTheSame = function(value1, value2) {
             instance[index] = temp;
         }
         return instance;
-    });
+    };
 
     /**
      * Returns a deep copy of the Array.
