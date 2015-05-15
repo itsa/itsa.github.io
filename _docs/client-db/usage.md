@@ -44,7 +44,7 @@ intro: "This example uses a prompt to retrieve the name. The returnvalue is hand
 </script>
 ```
 
-<script src="../../dist/itsabuild-min.js"></script>
+<script src="../../dist/itsabuild.js"></script>
 <script>
     var ITSA = require('itsa'),
         databaseName = 'my_database',
