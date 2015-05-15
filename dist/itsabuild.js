@@ -28542,9 +28542,8 @@ console.warn('VDOM');
     }
 
     var DOCUMENT = window.document;
-console.warn(' going to setup VDOM '+DOCUMENT.doctype.name);
 
-    if (DOCUMENT.doctype.name==='html') {
+    if (DOCUMENT.doctype.name.toLowerCase()==='html') {
         require('./partials/extend-element.js')(window);
         require('./partials/extend-document.js')(window);
         // now parsing and virtualize the complete DOM:
