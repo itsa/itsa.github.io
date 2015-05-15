@@ -615,6 +615,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
         */
         notifyDetach: function(customEvent, callback, context, once) {
             console.log(NAME, &#x27;notifyDetach&#x27;);
+console.warn(&#x27;notifyDetach&#x27;);
             var i, len, ce;
             Array.isArray(customEvent) || (customEvent=[customEvent]);
             len = customEvent.length;

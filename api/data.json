@@ -1057,7 +1057,7 @@
             "namespaces": {},
             "tag": "module",
             "file": "src/itsa.build/itsa.build.js",
-            "line": 20,
+            "line": 21,
             "description": "The ITSA module is an aggregator for all the individual modules that the library uses.\nThe developer is free to use it as it is or tailor it to contain whatever modules\nhe/she might need in the global namespace.\n\nThe modules themselves work quite well independent of this module and can be used\nseparately without the need of them being integrated under one globa namespace.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "js-ext": {
@@ -1618,7 +1618,7 @@
             "module": "itsa.build",
             "namespace": "",
             "file": "src/itsa.build/itsa.build.js",
-            "line": 20,
+            "line": 21,
             "description": "The ITSA class provides the core functionality for the ITSA library\nand is the root namespace for all the additional modules.\n\nThe ITSA class cannot be instantiated.\nInstead, the ITSA function takes a configuration object to allow for tailoring of the library.\nThe ITSA function returns itself to allow for further chaining.\n\nCalling the ITSA function is optional. If the default configuration is acceptable,\nthe ITSA class can be used directly.\n\nThe ITSA name is usually used only once in an application, when configuring it\nand when calling the [`ready`](#method_ready) or [`require`](#method_require) methods.\nThe callback to these two methods provide a reference to ITSA itself as their argument.\nThese methods allow the developer to rename ITSA to a shorter name, usually `P`,\nfor use within the local scope.\n\n ITSA( config )\n     .require('dialog', 'event', ...)\n     .then(function (P) {\n         // P is an alias of ITSA\n     });\n\n // If the default configuration is acceptable, you can simply do:\n ITSA.require('dialog', 'event', ...)\n     .then(function (P) {\n         // P is an alias of ITSA\n     });\n\n // If extra modules are to be loaded later, you can simply do:\n ITSA( config ).ready\n     .then(function (P) {\n         // P is an alias of ITSA\n     });\n\n // And if no configuration is needed:\n ITSA.ready\n     .then(function (P) {\n         // P is an alias of ITSA\n     });",
             "static": 1,
             "params": [
@@ -10403,7 +10403,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 400,
+            "line": 401,
             "description": "Subscribes to a customEvent. The callback will be executed `after` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
             "itemtype": "method",
@@ -10449,7 +10449,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 444,
+            "line": 445,
             "description": "Subscribes to a customEvent. The callback will be executed `before` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
             "itemtype": "method",
@@ -10495,7 +10495,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 488,
+            "line": 489,
             "description": "Removes all event-definitions of an emitter, specified by its `emitterName`.\nWhen `emitterName` is not set, ALL event-definitions will be removed.",
             "static": 1,
             "itemtype": "method",
@@ -10514,7 +10514,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 518,
+            "line": 519,
             "description": "Removes the event-definition of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -10532,7 +10532,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 531,
+            "line": 532,
             "description": "unNotifies (unsubscribes) the notifier of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -10550,7 +10550,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 544,
+            "line": 545,
             "description": "unNotifies (unsubscribes) the detach-notifier of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -10568,7 +10568,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 561,
+            "line": 562,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:tap'</li>\n    <li>'tap' --> alias for 'UI:tap'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -10620,7 +10620,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 633,
+            "line": 634,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:tap'</li>\n    <li>'tap' --> alias for 'UI:tap'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -10672,7 +10672,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 754,
+            "line": 755,
             "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()` or `a.preventDefault()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Finally, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n<ul>",
             "static": 1,
             "itemtype": "method",
@@ -10730,7 +10730,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 902,
+            "line": 903,
             "description": "Does the actual invocation of a subscriber.",
             "itemtype": "method",
             "name": "_invokeSubs",
@@ -10772,7 +10772,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 952,
+            "line": 953,
             "description": "Removes a subscriber from the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`.",
             "static": 1,
             "itemtype": "method",
@@ -10808,7 +10808,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1017,
+            "line": 1018,
             "description": "Removes subscribers from the multiple customevents. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:tap'</li>\n    <li>'tap' --> alias for 'UI:tap'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -10833,7 +10833,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1072,
+            "line": 1073,
             "description": "Adds a property to the default eventobject's prototype which passes through all eventcycles.\nGoes through Object.defineProperty with configurable, enumerable and writable\nall set to false.",
             "itemtype": "method",
             "name": "_setEventObjProperty",
@@ -10858,7 +10858,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1092,
+            "line": 1093,
             "description": "Objecthash containing all defined custom-events\nwhich has a structure like this:\n\n_ce = {\n    'UI:tap': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...}\n    },\n    'redmodel:save': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...}\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -10872,7 +10872,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1122,
+            "line": 1123,
             "description": "Objecthash containing all defined before and after subscribers\nwhich has a structure like this (`b` represents `before` and `a` represents `after`)\nEvery item that gets in the array consist by itself of 3 properties:\n                                                         subscriberitem = {\n                                                             o: listener,\n                                                             cb: callbackFn(e),\n                                                             f: filter\n                                                         };\n\n_subs = {\n    'UI:tap': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    '*:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    'redmodel:save': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -10886,7 +10886,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1173,
+            "line": 1174,
             "description": "Object that acts as the prototype of the eventobject.\nTo add more methods, you can use `_setEventObjProperty`",
             "itemtype": "property",
             "name": "_defaultEventObj",
@@ -10900,7 +10900,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1188,
+            "line": 1189,
             "description": "Objecthash containing all detach-notifiers, keyed by customEvent name.\nThis list is maintained by `notifyDetach` and `unNotifyDetach`\n\n_detachNotifiers = {\n    'UI:tap': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_detachNotifiers",
@@ -10914,7 +10914,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1215,
+            "line": 1216,
             "description": "Objecthash containing all notifiers, keyed by customEvent name.\nThis list is maintained by `notify` and `unNotify`\n\n_notifiers = {\n    'UI:tap': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_notifiers",
@@ -14443,7 +14443,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 86,
+            "line": 87,
             "description": "Global configuration properties for the ITSA object.\nIt can only be set on initialization via the [`ITSA`](#docs-main) function.\n\nThe config is set at a default-configutation",
             "itemtype": "property",
             "name": "_config",
@@ -14455,7 +14455,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 101,
+            "line": 102,
             "description": "Reference to `Classes` in [js-ext/extra/classes.js](../modules/js-ext.html)",
             "itemtype": "property",
             "name": "Classes",
@@ -14466,7 +14466,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 109,
+            "line": 110,
             "description": "Reference to the `LightMap`-Class in [js-ext/extra/lightmap.js](../modules/js-ext.html)",
             "itemtype": "property",
             "name": "LightMap",
@@ -14477,7 +14477,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 117,
+            "line": 118,
             "description": "Reference to the `createHashMap` function in [js-ext/extra/hashmap.js](../modules/js-ext.html)",
             "itemtype": "property",
             "name": "createHashMap",
@@ -14488,7 +14488,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 147,
+            "line": 148,
             "description": "Reference to the `idGenerator` function in [utils](../modules/utils.html)",
             "itemtype": "property",
             "name": "idGenerator",
@@ -14499,7 +14499,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 177,
+            "line": 178,
             "description": "Reference to the [IO](io.html) object",
             "itemtype": "property",
             "name": "IO",
@@ -14510,7 +14510,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 189,
+            "line": 190,
             "description": "Reference to the [UserAgent](useragent.html) object",
             "itemtype": "property",
             "name": "UA",
@@ -14521,7 +14521,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 197,
+            "line": 198,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",
@@ -17827,7 +17827,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 98,
+            "line": 99,
             "description": "Returns the Element matching the specified id.",
             "itemtype": "method",
             "name": "getElementById",
@@ -17848,7 +17848,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 110,
+            "line": 111,
             "description": "Returns the first Element that matches the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,\nthey need to be separated by a `comma`.",
             "itemtype": "method",
             "name": "querySelector",
@@ -17876,7 +17876,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 127,
+            "line": 128,
             "description": "Returns an ElementArray of all Elements that match the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,\nthey need to be separated by a `comma`.\n\nquerySelectorAll is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.",
             "itemtype": "method",
             "name": "querySelectorAll",
@@ -17904,7 +17904,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 145,
+            "line": 146,
             "description": "Replaces the Element with a new Element.",
             "itemtype": "method",
             "name": "replace",
@@ -17929,7 +17929,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 158,
+            "line": 159,
             "description": "Tests if an Element would be selected by the specified cssSelector.\nAlias for `matchesSelector()`",
             "itemtype": "method",
             "name": "test",
@@ -17956,7 +17956,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 176,
+            "line": 177,
             "description": "Returns the currently focused element, that is, the element that will get keystroke events if the user types any.",
             "itemtype": "property",
             "name": "activeElement",
@@ -17968,7 +17968,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 184,
+            "line": 185,
             "description": "Returns an HTMLCollection with Elements of all of the `anchors` in the document that have a `name` specified (a[name]).\nFor reasons of backwards compatibility, the returned set of anchors only contains those anchors created with the `name` attribute.\n\n`anchors` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "anchors",
@@ -17980,7 +17980,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 195,
+            "line": 196,
             "description": "Returns an HTMLCollection with Elements of all of the `applets` in the document.\n\n`applets` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "applets",
@@ -17992,7 +17992,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 205,
+            "line": 206,
             "description": "Returns the `body` or `frameset` Element of the current document, or null if no such element exists.",
             "itemtype": "property",
             "name": "body",
@@ -18004,7 +18004,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 213,
+            "line": 214,
             "description": "Returns the `script`-Element whose script is currently being processed.",
             "itemtype": "property",
             "name": "currentScript",
@@ -18016,7 +18016,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 222,
+            "line": 223,
             "description": "Returns the root-element (===`html`-Element) of the current document",
             "itemtype": "property",
             "name": "documentElement",
@@ -18028,7 +18028,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 230,
+            "line": 231,
             "description": "Returns an HTMLCollection with Elements of all of the `embed`-elements in the document.\n\n`embeds` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "embeds",
@@ -18040,7 +18040,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 240,
+            "line": 241,
             "description": "Returns the firstChild element (===`html`-Element) of the current document",
             "itemtype": "property",
             "name": "firstChild",
@@ -18052,7 +18052,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 248,
+            "line": 249,
             "description": "Returns an HTMLCollection with Elements of all of the `form`-elements in the document.\n\n`forms` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "forms",
@@ -18064,7 +18064,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 258,
+            "line": 259,
             "description": "Returns an HTMLCollection with Elements of all of the images in the document.\n\n`images` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "images",
@@ -18076,7 +18076,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 268,
+            "line": 269,
             "description": "Returns the lastChild element (===`html`-Element) of the current document",
             "itemtype": "property",
             "name": "lastChild",
@@ -18088,7 +18088,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 276,
+            "line": 277,
             "description": "Returns an HTMLCollection with Elements of all of the  of all `area`-Elements and `a`-Elements in a document with a value for the href attribute.\n\n`links` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "links",
@@ -18100,7 +18100,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 286,
+            "line": 287,
             "description": "Returns an HTMLCollection with Elements of all of the plugins (`object`- or `embed`-elements) in the document.\n\n`plugins` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "plugins",
@@ -18112,7 +18112,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 296,
+            "line": 297,
             "description": "Returns an HTMLCollection with Elements of all of the script-elements in the document.\n\n`scripts` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "scripts",
@@ -18124,7 +18124,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 306,
+            "line": 307,
             "description": "Returns an HTMLCollection with Elements of all of the style-elements in the document.\n\n`styleSheets` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "styleSheets",
@@ -18136,7 +18136,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 316,
+            "line": 317,
             "description": "Gets or sets the `title` of the document. That is, the `title`-Element within the `head`-Element",
             "itemtype": "property",
             "name": "title",
@@ -18147,7 +18147,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 326,
+            "line": 327,
             "description": "\"online\" event is fired on the <body> of each page when the browser switches between online and offline mode.\nThe event is non-cancellable (you can't prevent the user from coming online, or going offline).",
             "itemtype": "event",
             "name": "online",
@@ -18157,7 +18157,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 333,
+            "line": 334,
             "description": "\"offline\" event is fired on the <body> of each page when the browser switches between online and offline mode.\nThe event is non-cancellable (you can't prevent the user from coming online, or going offline).",
             "itemtype": "event",
             "name": "offline",
@@ -18167,7 +18167,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 342,
+            "line": 343,
             "description": "Adopts a node from an external document. The node and its subtree is removed from the document it's in (if any),\nand its ownerDocument is changed to the current document. The node can then be inserted into the current document.",
             "itemtype": "method",
             "name": "adoptNode",
@@ -18188,7 +18188,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 352,
+            "line": 353,
             "description": "Adds a HtmlElement or DocumentFragment to the end of the `html`-element",
             "itemtype": "method",
             "name": "appendChild",
@@ -18209,7 +18209,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 360,
+            "line": 361,
             "description": "Creates a new attribute-node, and returns it.",
             "itemtype": "method",
             "name": "createAttribute",
@@ -18230,7 +18230,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 368,
+            "line": 369,
             "description": "Creates a new Comment-node, and returns it.",
             "itemtype": "method",
             "name": "createComment",
@@ -18251,7 +18251,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 376,
+            "line": 377,
             "description": "Creates a new HtmlElement, and returns it.\n\nDon't use qualified names (like \"html:a\") with this method.",
             "itemtype": "method",
             "name": "createElement",
@@ -18272,7 +18272,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 387,
+            "line": 388,
             "description": "Returns a new NodeIterator object.\n\nThe NodeIterator is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.",
             "itemtype": "method",
             "name": "createNodeIterator",
@@ -18305,7 +18305,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 405,
+            "line": 406,
             "description": "Returns a new Range object. See https://developer.mozilla.org/en-US/docs/Web/API/Range",
             "itemtype": "method",
             "name": "createRange",
@@ -18319,7 +18319,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 412,
+            "line": 413,
             "description": "Creates a new Text-node, and returns it.",
             "itemtype": "method",
             "name": "createTextNode",
@@ -18340,7 +18340,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 420,
+            "line": 421,
             "description": "Returns the Element from the document whose `elementFromPoint`-method is being called which is the topmost\ndom-Element which lies under the given point. To get a Element, specify the point via coordinates, in CSS pixels,\nrelative to the upper-left-most point in the window or frame containing the document.",
             "itemtype": "method",
             "name": "elementFromPoint",
@@ -18366,7 +18366,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 431,
+            "line": 432,
             "description": "Enables the style sheets matching the specified name in the current style sheet set,\nand disables all other style sheets (except those without a title, which are always enabled).",
             "itemtype": "method",
             "name": "enableStyleSheetsForSet",
@@ -18383,7 +18383,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 441,
+            "line": 442,
             "description": "Returns an ElementArray of all Elements that match their classes with the supplied `classNames` argument.\nTo match multiple different classes, separate them with a `comma`.\n\ngetElementsByClassName is life presentation of the dom. The returned ElementArray gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByClassName",
@@ -18404,7 +18404,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 455,
+            "line": 456,
             "description": "Returns an ElementArray of all Elements that match their `name`-attribute with the supplied `name` argument.\n\ngetElementsByName is life presentation of the dom. The returned ElementArray gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByName",
@@ -18425,7 +18425,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 467,
+            "line": 468,
             "description": "Returns an ElementArray of all Elements that match their `name`-attribute with the supplied `name` argument.\n\ngetElementsByTagName is life presentation of the dom. The returned ElementArray gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByTagName",
@@ -18446,7 +18446,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 479,
+            "line": 480,
             "description": "Returns a selection object representing the range of text selected by the user.\n\nIs also available on the `window`-object.",
             "itemtype": "method",
             "name": "getSelection",
@@ -18460,7 +18460,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 488,
+            "line": 489,
             "description": "Returns a Boolean value indicating whether the document or any element inside the document has focus.",
             "itemtype": "method",
             "name": "hasFocus",
@@ -18474,7 +18474,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 495,
+            "line": 496,
             "description": "Creates a copy of a node from an external document that can be inserted into the current document.",
             "itemtype": "method",
             "name": "importNode",
@@ -18500,7 +18500,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 505,
+            "line": 506,
             "description": "Inserts `newElement` before `referenceElement`.",
             "itemtype": "method",
             "name": "insertBefore",
@@ -18526,7 +18526,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 514,
+            "line": 515,
             "description": "Removes a child node from the DOM.",
             "itemtype": "method",
             "name": "removeChild",
@@ -18547,7 +18547,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 522,
+            "line": 523,
             "description": "Replaces one child-element of its parent element with a new child-element.",
             "itemtype": "method",
             "name": "replaceChild",
@@ -18573,7 +18573,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 533,
+            "line": 534,
             "description": "Returns the character encoding of the current document.",
             "itemtype": "property",
             "name": "characterSet",
@@ -18584,7 +18584,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 540,
+            "line": 541,
             "description": "Indicates whether the document is rendered in Quirks mode or Standards mode. Its value is either:\n<ul>\n    <li>`BackCompat` if the document is in quirks mode</li>\n    <li>`CSS1Compat` if the document is in no-quirks (also known as `standards`) mode or limited-quirks (also known as `almost standards`) mode.</li>\n</ul>",
             "itemtype": "property",
             "name": "compatMode",
@@ -18595,7 +18595,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 551,
+            "line": 552,
             "description": "Returns the MIME type that the document is being rendered as.  This may come from HTTP headers or other sources of MIME information,\nand might be affected by automatic type conversions performed by either the browser or extensions.",
             "itemtype": "property",
             "name": "contentType",
@@ -18606,7 +18606,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 559,
+            "line": 560,
             "description": "Returns the Document Type Declaration (DTD) associated with current document. The returned object implements the DocumentType interface.\nUse DOMImplementation.createDocumentType() to create a DocumentType.",
             "itemtype": "property",
             "name": "doctype",
@@ -18617,7 +18617,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 567,
+            "line": 568,
             "description": "Returns string URI of the HTML document. Same as `document.URL`.\n\nNote: HTML documents have a document.URL property which returns the same value. Unlike URL, documentURI is available on all types of documents.",
             "itemtype": "property",
             "name": "documentURI",
@@ -18629,7 +18629,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 577,
+            "line": 578,
             "description": "Controls whether the entire document is editable. Its value should be either \"off\" or \"on\".",
             "itemtype": "property",
             "name": "designMode",
@@ -18641,7 +18641,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 585,
+            "line": 586,
             "description": "Gets the domain portion of the origin of the current document.\n\nSetter will fail, because the same origin policy needs to persist.",
             "itemtype": "property",
             "name": "domain",
@@ -18653,7 +18653,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 595,
+            "line": 596,
             "description": "Returns a DOMImplementation object associated with the current document.",
             "itemtype": "property",
             "name": "implementation",
@@ -18665,7 +18665,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 603,
+            "line": 604,
             "description": "Returns a string containing the date and time on which the current document was last modified.\nIf you want a Date-object, you need to transform lastModified into a Date object: `modifyDate = new Date(document.lastModified);`",
             "itemtype": "property",
             "name": "lastModified",
@@ -18677,7 +18677,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 612,
+            "line": 613,
             "description": "Returns the last enabled style sheet set; this property's value changes whenever the document.selectedStyleSheetSet property is changed.",
             "itemtype": "property",
             "name": "lastStyleSheetSet",
@@ -18689,7 +18689,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 620,
+            "line": 621,
             "description": "returns a Location object, which contains information about the URL of the document and provides methods for changing that URL and loading another URL.\n\nThough Document.location is a read-only Location object, you can also assign a DOMString to it. This means that you can work with document.location\nas if it were a string in most cases: document.location = 'http://www.example.com' is a synonym of document.location.href = 'http://www.example.com'.\n\nTo retrieve just the URL as a string, the read-only document.URL property can also be used.\n\nSee more about the `Location` object: https://developer.mozilla.org/en-US/docs/Web/API/Location",
             "itemtype": "property",
             "name": "location",
@@ -18701,7 +18701,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 635,
+            "line": 636,
             "description": "Returns the preferred style sheet set as set by the page author. This is determined from the order of style sheet declarations and the Default-Style HTTP header.",
             "itemtype": "property",
             "name": "preferredStyleSheetSet",
@@ -18712,7 +18712,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 642,
+            "line": 643,
             "description": "Returns \"loading\" while the document is loading, \"interactive\" once it is finished parsing but still loading sub-resources,\nand \"complete\" once it has loaded.",
             "itemtype": "property",
             "name": "readyState",
@@ -18724,7 +18724,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 651,
+            "line": 652,
             "description": "Returns the URI of the page that linked to this page.",
             "itemtype": "property",
             "name": "referrer",
@@ -18736,7 +18736,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 659,
+            "line": 660,
             "description": "Indicates the name of the style sheet set that's currently in use. See more about Stylesheets: https://developer.mozilla.org/en-US/docs/Web/API/Stylesheet\nSetting the value of this property is equivalent to calling document.enableStyleSheetsForSet() with the value of currentStyleSheetSet,\nthen setting the value of lastStyleSheetSet to that value as well.",
             "itemtype": "property",
             "name": "selectedStyleSheetSet",
@@ -18747,7 +18747,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 668,
+            "line": 669,
             "description": "Returns string URL of the HTML document. Same as `document.documentURI`\n\nNote: HTML documents have a document.URL property which returns the same value. Unlike URL, documentURI is available on all types of documents.",
             "itemtype": "property",
             "name": "URL",

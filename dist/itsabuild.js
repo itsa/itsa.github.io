@@ -40,9 +40,9 @@ module.exports.byUrl = function(url) {
 },{}],2:[function(require,module,exports){
 function DOMParser(options){
 	this.options = options ||{locator:{}};
-
+	
 }
-DOMParser.prototype.parseFromString = function(source,mimeType){
+DOMParser.prototype.parseFromString = function(source,mimeType){	
 	var options = this.options;
 	var sax =  new XMLReader();
 	var domBuilder = options.domBuilder || new DOMHandler();//contentHandler and LexicalHandler
@@ -53,7 +53,7 @@ DOMParser.prototype.parseFromString = function(source,mimeType){
 	if(locator){
 		domBuilder.setDocumentLocator(locator)
 	}
-
+	
 	sax.errorHandler = buildErrorHandler(errorHandler,domBuilder,locator);
 	sax.domBuilder = options.domBuilder || domBuilder;
 	if(/\/x?html?$/.test(mimeType)){
@@ -104,8 +104,8 @@ function buildErrorHandler(errorImpl,domBuilder,locator){
 /**
  * +ContentHandler+ErrorHandler
  * +LexicalHandler+EntityResolver2
- * -DeclHandler-DTDHandler
- *
+ * -DeclHandler-DTDHandler 
+ * 
  * DefaultHandler:EntityResolver, DTDHandler, ContentHandler, ErrorHandler
  * DefaultHandler2:DefaultHandler,LexicalHandler, DeclHandler, EntityResolver2
  * @link http://www.saxproject.org/apidoc/org/xml/sax/helpers/DefaultHandler.html
@@ -120,7 +120,7 @@ function position(locator,node){
 /**
  * @see org.xml.sax.ContentHandler#startDocument
  * @link http://www.saxproject.org/apidoc/org/xml/sax/ContentHandler.html
- */
+ */ 
 DOMHandler.prototype = {
 	startDocument : function() {
     	this.document = new DOMImplementation().createDocument(null, null, null);
@@ -134,7 +134,7 @@ DOMHandler.prototype = {
 	    var len = attrs.length;
 	    appendElement(this, el);
 	    this.currentElement = el;
-
+	    
 		this.locator && position(this.locator,el)
 	    for (var i = 0 ; i < len; i++) {
 	        var namespaceURI = attrs.getURI(i);
@@ -195,7 +195,7 @@ DOMHandler.prototype = {
 	    this.locator && position(this.locator,comm)
 	    appendElement(this, comm);
 	},
-
+	
 	startCDATA:function() {
 	    //used in characters() methods
 	    this.cdata = true;
@@ -203,7 +203,7 @@ DOMHandler.prototype = {
 	endCDATA:function() {
 	    this.cdata = false;
 	},
-
+	
 	startDTD:function(name, publicId, systemId) {
 		var impl = this.document.implementation;
 	    if (impl && impl.createDocumentType) {
@@ -395,14 +395,14 @@ NodeList.prototype = {
 	 * The number of nodes in the list. The range of valid child node indices is 0 to length-1 inclusive.
 	 * @standard level1
 	 */
-	length:0,
+	length:0, 
 	/**
 	 * Returns the indexth item in the collection. If index is greater than or equal to the number of nodes in the list, this returns null.
 	 * @standard level1
-	 * @param index  unsigned long
+	 * @param index  unsigned long 
 	 *   Index into the collection.
 	 * @return Node
-	 * 	The node at the indexth position in the NodeList, or null if that is not a valid index.
+	 * 	The node at the indexth position in the NodeList, or null if that is not a valid index. 
 	 */
 	item: function(index) {
 		return this[index] || null;
@@ -430,10 +430,10 @@ LiveNodeList.prototype.item = function(i){
 
 _extends(LiveNodeList,NodeList);
 /**
- *
+ * 
  * Objects implementing the NamedNodeMap interface are used to represent collections of nodes that can be accessed by name. Note that NamedNodeMap does not inherit from NodeList; NamedNodeMaps are not maintained in any particular order. Objects contained in an object implementing NamedNodeMap may also be accessed by an ordinal index, but this is simply to allow convenient enumeration of the contents of a NamedNodeMap, and does not imply that the DOM specifies an order to these Nodes.
  * NamedNodeMap objects in the DOM are live.
- * used for attributes or DocumentType entities
+ * used for attributes or DocumentType entities 
  */
 function NamedNodeMap() {
 };
@@ -519,10 +519,10 @@ NamedNodeMap.prototype = {
 		var attr = this.getNamedItem(key);
 		_removeNamedNode(this._ownerElement,this,attr);
 		return attr;
-
-
+		
+		
 	},// raises: NOT_FOUND_ERR,NO_MODIFICATION_ALLOWED_ERR
-
+	
 	//for level2
 	removeNamedItemNS:function(namespaceURI,localName){
 		var attr = this.getNamedItemNS(namespaceURI,localName);
@@ -585,7 +585,7 @@ DOMImplementation.prototype = {
 		node.systemId = systemId;
 		// Introduced in DOM Level 2:
 		//readonly attribute DOMString        internalSubset;
-
+		
 		//TODO:..
 		//  readonly attribute NamedNodeMap     entities;
 		//  readonly attribute NamedNodeMap     notations;
@@ -615,10 +615,10 @@ Node.prototype = {
 	prefix : null,
 	localName : null,
 	// Modified in DOM Level 2:
-	insertBefore:function(newChild, refChild){//raises
+	insertBefore:function(newChild, refChild){//raises 
 		return _insertBefore(this,newChild,refChild);
 	},
-	replaceChild:function(newChild, oldChild){//raises
+	replaceChild:function(newChild, oldChild){//raises 
 		this.insertBefore(newChild,oldChild);
 		if(oldChild){
 			this.removeChild(oldChild);
@@ -767,7 +767,7 @@ function _onUpdateChild(doc,el,newChild){
 /**
  * attributes;
  * children;
- *
+ * 
  * writeable properties:
  * nodeValue,Attr:value,CharacterData:data
  * prefix
@@ -809,8 +809,8 @@ function _insertBefore(parentNode,newChild,nextChild){
 
 	newFirst.previousSibling = pre;
 	newLast.nextSibling = nextChild;
-
-
+	
+	
 	if(pre){
 		pre.nextSibling = newFirst;
 	}else{
@@ -859,8 +859,8 @@ Document.prototype = {
 	doctype :  null,
 	documentElement :  null,
 	_inc : 1,
-
-	insertBefore :  function(newChild, refChild){//raises
+	
+	insertBefore :  function(newChild, refChild){//raises 
 		if(newChild.nodeType == DOCUMENT_FRAGMENT_NODE){
 			var child = newChild.firstChild;
 			while(child){
@@ -873,7 +873,7 @@ Document.prototype = {
 		if(this.documentElement == null && newChild.nodeType == 1){
 			this.documentElement = newChild;
 		}
-
+		
 		return _insertBefore(this,newChild,refChild),(newChild.ownerDocument = this),newChild;
 	},
 	removeChild :  function(oldChild){
@@ -899,7 +899,7 @@ Document.prototype = {
 		})
 		return rtv;
 	},
-
+	
 	//document factory method:
 	createElement :	function(tagName){
 		var node = new Element();
@@ -1023,7 +1023,7 @@ Element.prototype = {
 		var attr = this.getAttributeNode(name)
 		attr && this.removeAttributeNode(attr);
 	},
-
+	
 	//four real opeartion method
 	appendChild:function(newChild){
 		if(newChild.nodeType === DOCUMENT_FRAGMENT_NODE){
@@ -1046,7 +1046,7 @@ Element.prototype = {
 		var old = this.getAttributeNodeNS(namespaceURI, localName);
 		old && this.removeAttributeNode(old);
 	},
-
+	
 	hasAttributeNS : function(namespaceURI, localName){
 		return this.getAttributeNodeNS(namespaceURI, localName)!=null;
 	},
@@ -1062,7 +1062,7 @@ Element.prototype = {
 	getAttributeNodeNS : function(namespaceURI, localName){
 		return this.attributes.getNamedItemNS(namespaceURI, localName);
 	},
-
+	
 	getElementsByTagName : function(tagName){
 		return new LiveNodeList(this,function(base){
 			var ls = [];
@@ -1111,7 +1111,7 @@ CharacterData.prototype = {
 	},
 	insertData: function(offset,text) {
 		this.replaceData(offset,0,text);
-
+	
 	},
 	appendChild:function(newChild){
 		//if(!(newChild instanceof CharacterData)){
@@ -1403,7 +1403,7 @@ try{
 				}
 			}
 		})
-
+		
 		function getTextContent(node){
 			switch(node.nodeType){
 			case 1:
@@ -2329,7 +2329,7 @@ http://yuilibrary.com/license/
                 reject(new TypeError('Promise.race expects an array of values or promises'));
                 return;
             }
-
+            
             // just go through the list and resolve and reject at the first change
             // This abuses the fact that calling resolve/reject multiple times
             // doesn't change the state of the returned promise
@@ -5848,7 +5848,7 @@ module.exports = function (window) {
     var DOCUMENT = window.document,
         _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor, _setupEvents, _setupMutationListener, _teardownMutationListener,
         _setupDomListener, _teardownDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc, MUTATION_EVENTS, preventClick;
-
+console.warn('event-dom --> will load vdom');
     require('vdom')(window);
 
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
@@ -10053,6 +10053,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
         */
         notifyDetach: function(customEvent, callback, context, once) {
             console.log(NAME, 'notifyDetach');
+console.warn('notifyDetach');
             var i, len, ce;
             Array.isArray(customEvent) || (customEvent=[customEvent]);
             len = customEvent.length;
@@ -19749,7 +19750,7 @@ module.exports = function (window) {
      * @return {Element|null} the Element that was search for
      * @since 0.0.1
      */
-console.warn('getElement');
+console.warn('document.getElement');
     DOCUMENT.getElement = function(cssSelector, insideItags) {
         return ((cssSelector[0]==='#') && (cssSelector.indexOf(' ')===-1)) ? this.getElementById(cssSelector.substr(1)) : this.querySelector(cssSelector, insideItags);
     };
@@ -28755,6 +28756,7 @@ process.chdir = function (dir) {
  * @module itsa.build
  *
 */
+console.warn('itsa.build');
 (function (window) {
 
     "use strict";
