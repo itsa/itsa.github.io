@@ -28540,9 +28540,9 @@ console.warn('VDOM');
     if (window._ITSAmodules.VDOM) {
         return window._ITSAmodules.VDOM; // VDOM was already created
     }
-console.warn(' going to setup VDOM');
 
     var DOCUMENT = window.document;
+console.warn(' going to setup VDOM '+DOCUMENT.doctype.name);
 
     if (DOCUMENT.doctype.name==='html') {
         require('./partials/extend-element.js')(window);
