@@ -18843,7 +18843,7 @@ _asynchronizer = (typeof setImmediate !== 'undefined') ? function (fn) {setImmed
  * called before the callback function, the callback function won't be called.
 **/
 _async = function (callbackFn, invokeAfterFn) {
-	console.log(NAME, 'async');
+	// console.log(NAME, 'async');
 	var canceled;
 
 	invokeAfterFn = (typeof invokeAfterFn === 'boolean') ? invokeAfterFn : true;
@@ -18897,7 +18897,7 @@ module.exports.async = _async;
  * @return {object} a timer object. Call the cancel() method on this object to stop the timer.
 */
 module.exports.later = function (callbackFn, timeout, periodic) {
-	console.log(NAME, 'later --> timeout: '+timeout+'ms | periodic: '+periodic);
+	// console.log(NAME, 'later --> timeout: '+timeout+'ms | periodic: '+periodic);
 	var canceled = false;
 	if (!timeout) {
 		return _async(callbackFn);
@@ -28565,10 +28565,6 @@ module.exports = function (window) {
 "use strict";
 
 module.exports = function (window) {
-
-window.console.log = function() {};
-window.console.info = function() {};
-
     require('./lib/sizes.js')(window);
 };
 },{"./lib/sizes.js":106}],106:[function(require,module,exports){
