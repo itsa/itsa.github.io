@@ -276,7 +276,7 @@ _asynchronizer = (typeof setImmediate !== &#x27;undefined&#x27;) ? function (fn)
  * called before the callback function, the callback function won&#x27;t be called.
 **/
 _async = function (callbackFn, invokeAfterFn) {
-    console.log(NAME, &#x27;async&#x27;);
+    // console.log(NAME, &#x27;async&#x27;);
     var canceled;
 
     invokeAfterFn = (typeof invokeAfterFn === &#x27;boolean&#x27;) ? invokeAfterFn : true;
@@ -330,7 +330,7 @@ module.exports.async = _async;
  * @return {object} a timer object. Call the cancel() method on this object to stop the timer.
 */
 module.exports.later = function (callbackFn, timeout, periodic) {
-    console.log(NAME, &#x27;later --&gt; timeout: &#x27;+timeout+&#x27;ms | periodic: &#x27;+periodic);
+    // console.log(NAME, &#x27;later --&gt; timeout: &#x27;+timeout+&#x27;ms | periodic: &#x27;+periodic);
     var canceled = false;
     if (!timeout) {
         return _async(callbackFn);

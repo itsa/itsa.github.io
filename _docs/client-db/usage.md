@@ -74,7 +74,8 @@ intro: "This example uses a prompt to retrieve the name. The returnvalue is hand
     ).catch(function(err) {ITSA.warn(err);})
     .finally(function() {
         // cleanup
-        db.deleteDatabase();
-    });
+        return db.deleteDatabase();
+    })
+    .catch(function(err) {ITSA.warn(err);})
 
 </script>

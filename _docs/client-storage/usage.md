@@ -55,7 +55,8 @@ intro: "This example shows how data can be stored using ClientStorage"
     ).catch(function(err) {ITSA.warn(err);})
     .finally(function() {
         // cleanup
-        db.deleteStorage();
-    });
+        return db.deleteStorage();
+    })
+    .catch(function(err) {ITSA.warn(err);})
 
 </script>
