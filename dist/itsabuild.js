@@ -18704,7 +18704,10 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
 module.exports = function (window) {
 
     var UserAgent,
-        navigator = window.navigator;
+        navigator = window.navigator,
+        useragent = navigator.userAgent,
+        ieTest = useragent.match(/MSIE (\d+)\./),
+        isMobile, isSafari, isIE, ieVersion;
 
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
@@ -18714,9 +18717,16 @@ module.exports = function (window) {
         return UserAgent; // UserAgent was already created
     }
 
+    isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+    isSafari = useragent.contains('AppleWebKit');
+    isIE = !!ieTest;
+    ieVersion = isIE && ieTest[1];
+
     window._ITSAmodules.UserAgent = UserAgent = {
-        isMobile: ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0),
-        isSafari: navigator.userAgent.contains('AppleWebKit')
+        isMobile: isMobile,
+        isSafari: isSafari,
+        isIE: isIE,
+        ieVersion: ieVersion
     };
 
     return UserAgent;

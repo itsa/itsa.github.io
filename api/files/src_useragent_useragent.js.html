@@ -253,7 +253,10 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
 module.exports = function (window) {
 
     var UserAgent,
-        navigator = window.navigator;
+        navigator = window.navigator,
+        useragent = navigator.userAgent,
+        ieTest = useragent.match(/MSIE (\d+)\./),
+        isMobile, isSafari, isIE, ieVersion;
 
     window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
@@ -263,9 +266,16 @@ module.exports = function (window) {
         return UserAgent; // UserAgent was already created
     }
 
+    isMobile = (&#x27;ontouchstart&#x27; in window) || (navigator.maxTouchPoints &gt; 0) || (navigator.msMaxTouchPoints &gt; 0);
+    isSafari = useragent.contains(&#x27;AppleWebKit&#x27;);
+    isIE = !!ieTest;
+    ieVersion = isIE &amp;&amp; ieTest[1];
+
     window._ITSAmodules.UserAgent = UserAgent = {
-        isMobile: (&#x27;ontouchstart&#x27; in window) || (navigator.maxTouchPoints &gt; 0) || (navigator.msMaxTouchPoints &gt; 0),
-        isSafari: navigator.userAgent.contains(&#x27;AppleWebKit&#x27;)
+        isMobile: isMobile,
+        isSafari: isSafari,
+        isIE: isIE,
+        ieVersion: ieVersion
     };
 
     return UserAgent;
