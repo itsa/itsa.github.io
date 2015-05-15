@@ -310,12 +310,14 @@ module.exports = function (window) {
         _setupDomListener, _teardownDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc, MUTATION_EVENTS, preventClick;
 console.warn(&#x27;event-dom --&gt; will load vdom&#x27;);
     require(&#x27;vdom&#x27;)(window);
+console.warn(&#x27;event-dom --&gt; has loaded vdom&#x27;);
 
     window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
     if (window._ITSAmodules.EventDom) {
         return Event; // Event was already extended
     }
+console.warn(&#x27;event-dom --&gt; going to setup&#x27;);
 
     MUTATION_EVENTS = [EV_REMOVED, EV_INSERTED, EV_CONTENT_CHANGE, EV_ATTRIBUTE_REMOVED, , EV_ATTRIBUTE_CHANGED, EV_ATTRIBUTE_INSERTED];
 

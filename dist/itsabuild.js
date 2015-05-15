@@ -5850,12 +5850,14 @@ module.exports = function (window) {
         _setupDomListener, _teardownDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc, MUTATION_EVENTS, preventClick;
 console.warn('event-dom --> will load vdom');
     require('vdom')(window);
+console.warn('event-dom --> has loaded vdom');
 
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.EventDom) {
         return Event; // Event was already extended
     }
+console.warn('event-dom --> going to setup');
 
     MUTATION_EVENTS = [EV_REMOVED, EV_INSERTED, EV_CONTENT_CHANGE, EV_ATTRIBUTE_REMOVED, , EV_ATTRIBUTE_CHANGED, EV_ATTRIBUTE_INSERTED];
 
@@ -19681,11 +19683,13 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
 
 module.exports = function (window) {
 
+console.warn('DOCUMENT');
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.ExtendDocument) {
         return; // ExtendDocument was already created
     }
+console.warn(' going to setup DOCUMENT');
 
     // prevent double definition:
     window._ITSAmodules.ExtendDocument = true;
@@ -28530,12 +28534,13 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap,
     later = require('utils/lib/timers.js').later;
 
 module.exports = function (window) {
-
+console.warn('VDOM');
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.VDOM) {
         return window._ITSAmodules.VDOM; // VDOM was already created
     }
+console.warn(' going to setup VDOM');
 
     var DOCUMENT = window.document;
 
