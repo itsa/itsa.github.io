@@ -254,13 +254,11 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
 
 module.exports = function (window) {
 
-console.warn(&#x27;DOCUMENT&#x27;);
     window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
     if (window._ITSAmodules.ExtendDocument) {
         return; // ExtendDocument was already created
     }
-console.warn(&#x27; going to setup DOCUMENT&#x27;);
 
     // prevent double definition:
     window._ITSAmodules.ExtendDocument = true;
@@ -325,7 +323,6 @@ console.warn(&#x27; going to setup DOCUMENT&#x27;);
      * @return {Element|null} the Element that was search for
      * @since 0.0.1
      */
-console.warn(&#x27;document.getElement&#x27;);
     DOCUMENT.getElement = function(cssSelector, insideItags) {
         return ((cssSelector[0]===&#x27;#&#x27;) &amp;&amp; (cssSelector.indexOf(&#x27; &#x27;)===-1)) ? this.getElementById(cssSelector.substr(1)) : this.querySelector(cssSelector, insideItags);
     };

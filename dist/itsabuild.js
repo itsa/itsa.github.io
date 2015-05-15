@@ -5848,16 +5848,14 @@ module.exports = function (window) {
     var DOCUMENT = window.document,
         _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor, _setupEvents, _setupMutationListener, _teardownMutationListener,
         _setupDomListener, _teardownDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc, MUTATION_EVENTS, preventClick;
-console.warn('event-dom --> will load vdom');
+
     require('vdom')(window);
-console.warn('event-dom --> has loaded vdom');
 
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.EventDom) {
         return Event; // Event was already extended
     }
-console.warn('event-dom --> going to setup');
 
     MUTATION_EVENTS = [EV_REMOVED, EV_INSERTED, EV_CONTENT_CHANGE, EV_ATTRIBUTE_REMOVED, , EV_ATTRIBUTE_CHANGED, EV_ATTRIBUTE_INSERTED];
 
@@ -10055,7 +10053,6 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
         */
         notifyDetach: function(customEvent, callback, context, once) {
             console.log(NAME, 'notifyDetach');
-console.warn('notifyDetach');
             var i, len, ce;
             Array.isArray(customEvent) || (customEvent=[customEvent]);
             len = customEvent.length;
@@ -19683,13 +19680,11 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
 
 module.exports = function (window) {
 
-console.warn('DOCUMENT');
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.ExtendDocument) {
         return; // ExtendDocument was already created
     }
-console.warn(' going to setup DOCUMENT');
 
     // prevent double definition:
     window._ITSAmodules.ExtendDocument = true;
@@ -19754,7 +19749,6 @@ console.warn(' going to setup DOCUMENT');
      * @return {Element|null} the Element that was search for
      * @since 0.0.1
      */
-console.warn('document.getElement');
     DOCUMENT.getElement = function(cssSelector, insideItags) {
         return ((cssSelector[0]==='#') && (cssSelector.indexOf(' ')===-1)) ? this.getElementById(cssSelector.substr(1)) : this.querySelector(cssSelector, insideItags);
     };
@@ -28534,7 +28528,6 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap,
     later = require('utils/lib/timers.js').later;
 
 module.exports = function (window) {
-console.warn('VDOM');
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
     if (window._ITSAmodules.VDOM) {
@@ -28760,7 +28753,6 @@ process.chdir = function (dir) {
  * @module itsa.build
  *
 */
-console.warn('itsa.build');
 (function (window) {
 
     "use strict";
