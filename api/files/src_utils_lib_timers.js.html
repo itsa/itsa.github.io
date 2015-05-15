@@ -276,13 +276,12 @@ _asynchronizer = (typeof setImmediate !== &#x27;undefined&#x27;) ? function (fn)
  * called before the callback function, the callback function won&#x27;t be called.
 **/
 _async = function (callbackFn, invokeAfterFn) {
-    // console.log(NAME, &#x27;async&#x27;);
+    console.log(NAME, &#x27;async&#x27;);
     var canceled;
 
     invokeAfterFn = (typeof invokeAfterFn === &#x27;boolean&#x27;) ? invokeAfterFn : true;
     (typeof callbackFn===&#x27;function&#x27;) &amp;&amp; _asynchronizer(function () {
         if (!canceled) {
-            console.log(NAME, &#x27;async is running its callbakcFn&#x27;);
             callbackFn();
         }
     });
@@ -330,7 +329,7 @@ module.exports.async = _async;
  * @return {object} a timer object. Call the cancel() method on this object to stop the timer.
 */
 module.exports.later = function (callbackFn, timeout, periodic) {
-    // console.log(NAME, &#x27;later --&gt; timeout: &#x27;+timeout+&#x27;ms | periodic: &#x27;+periodic);
+    console.log(NAME, &#x27;later --&gt; timeout: &#x27;+timeout+&#x27;ms | periodic: &#x27;+periodic);
     var canceled = false;
     if (!timeout) {
         return _async(callbackFn);
@@ -339,7 +338,6 @@ module.exports.later = function (callbackFn, timeout, periodic) {
             // nodejs may execute a callback, so in order to preserve
             // the cancel() === no more runny-run, we have to build in an extra conditional
             if (!canceled) {
-                console.log(NAME, &#x27;later is running its callbackFn&#x27;);
                 callbackFn();
                 // we are NOT using setInterval, because that leads to problems when the callback
                 // lasts longer than the interval. Instead, we use the interval as inbetween-phase

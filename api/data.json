@@ -17123,7 +17123,7 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 65,
+            "line": 64,
             "description": "Invokes the callbackFn once in the next turn of the JavaScript event loop. If the function\nrequires a specific execution context or arguments, wrap it with Function.bind.\n\nI.async returns an object with a cancel method.  If the cancel method is\ncalled before the callback function, the callback function won't be called.",
             "itemtype": "method",
             "name": "async",
@@ -17150,7 +17150,7 @@
         },
         {
             "file": "src/utils/lib/timers.js",
-            "line": 80,
+            "line": 79,
             "description": "Invokes the callbackFn after a timeout (asynchronous). If the function\nrequires a specific execution context or arguments, wrap it with Function.bind.\n\nTo invoke the callback function periodic, set 'periodic' either 'true', or specify a second timeout.\nIf number, then periodic is considered 'true' but with a perdiod defined by 'periodic',\nwhich means: the first timer executes after 'timeout' and next timers after 'period'.\n\nI.later returns an object with a cancel method.  If the cancel() method is\ncalled before the callback function, the callback function won't be called.",
             "itemtype": "method",
             "name": "later",
