@@ -28565,6 +28565,10 @@ module.exports = function (window) {
 "use strict";
 
 module.exports = function (window) {
+
+window.console.log = function() {};
+window.console.info = function() {};
+
     require('./lib/sizes.js')(window);
 };
 },{"./lib/sizes.js":106}],106:[function(require,module,exports){
