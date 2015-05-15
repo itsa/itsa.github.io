@@ -11389,7 +11389,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 729,
+            "line": 731,
             "description": "Gets one Element, specified by the css-selector. Either when alreasy available, or when it gets inserted in the dom.\nTo retrieve a single element by id,\nyou need to prepend the id-name with a `#`. When multiple Element's match, the first is returned.\n\nReturns a Promise with the Element as variable.",
             "itemtype": "method",
             "name": "getElementOnAvailable",
@@ -11418,7 +11418,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 791,
+            "line": 793,
             "itemtype": "method",
             "name": "noDeepDomEvt",
             "params": [
@@ -11441,7 +11441,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 806,
+            "line": 808,
             "description": "Does the actual transportation from DOM-events into the Eventsystem. It also looks at the response of\nthe Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will be preventDefaulted.",
             "itemtype": "method",
             "name": "_domCallback",
@@ -17700,7 +17700,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 36,
+            "line": 38,
             "description": "Returns a newly created TreeWalker object.\n\nThe TreeWalker is life presentation of the dom. It gets updated when the dom changes.",
             "itemtype": "method",
             "name": "createTreeWalker",
@@ -17733,7 +17733,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 57,
+            "line": 59,
             "description": "Indicating whether an Element is inside the DOM.",
             "itemtype": "method",
             "name": "contains",
@@ -17769,7 +17769,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 71,
+            "line": 73,
             "description": "Gets an ElementArray of Elements, specified by the css-selector.",
             "itemtype": "method",
             "name": "getAll",
@@ -17798,7 +17798,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 84,
+            "line": 86,
             "description": "Gets one Element, specified by the css-selector. To retrieve a single element by id,\nyou need to prepend the id-name with a `#`. When multiple Element's match, the first is returned.",
             "itemtype": "method",
             "name": "getElement",
@@ -17827,7 +17827,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 99,
+            "line": 101,
             "description": "Returns the Element matching the specified id.",
             "itemtype": "method",
             "name": "getElementById",
@@ -17848,7 +17848,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 111,
+            "line": 113,
             "description": "Returns the first Element that matches the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,\nthey need to be separated by a `comma`.",
             "itemtype": "method",
             "name": "querySelector",
@@ -17876,7 +17876,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 128,
+            "line": 130,
             "description": "Returns an ElementArray of all Elements that match the CSS-selectors. You can pass one, or multiple CSS-selectors. When passed multiple,\nthey need to be separated by a `comma`.\n\nquerySelectorAll is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.",
             "itemtype": "method",
             "name": "querySelectorAll",
@@ -17904,7 +17904,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 146,
+            "line": 148,
             "description": "Replaces the Element with a new Element.",
             "itemtype": "method",
             "name": "replace",
@@ -17929,7 +17929,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 159,
+            "line": 161,
             "description": "Tests if an Element would be selected by the specified cssSelector.\nAlias for `matchesSelector()`",
             "itemtype": "method",
             "name": "test",
@@ -17956,7 +17956,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 177,
+            "line": 179,
             "description": "Returns the currently focused element, that is, the element that will get keystroke events if the user types any.",
             "itemtype": "property",
             "name": "activeElement",
@@ -17968,7 +17968,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 185,
+            "line": 187,
             "description": "Returns an HTMLCollection with Elements of all of the `anchors` in the document that have a `name` specified (a[name]).\nFor reasons of backwards compatibility, the returned set of anchors only contains those anchors created with the `name` attribute.\n\n`anchors` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "anchors",
@@ -17980,7 +17980,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 196,
+            "line": 198,
             "description": "Returns an HTMLCollection with Elements of all of the `applets` in the document.\n\n`applets` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "applets",
@@ -17992,7 +17992,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 206,
+            "line": 208,
             "description": "Returns the `body` or `frameset` Element of the current document, or null if no such element exists.",
             "itemtype": "property",
             "name": "body",
@@ -18004,7 +18004,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 214,
+            "line": 216,
             "description": "Returns the `script`-Element whose script is currently being processed.",
             "itemtype": "property",
             "name": "currentScript",
@@ -18016,7 +18016,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 223,
+            "line": 225,
             "description": "Returns the root-element (===`html`-Element) of the current document",
             "itemtype": "property",
             "name": "documentElement",
@@ -18028,7 +18028,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 231,
+            "line": 233,
             "description": "Returns an HTMLCollection with Elements of all of the `embed`-elements in the document.\n\n`embeds` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "embeds",
@@ -18040,7 +18040,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 241,
+            "line": 243,
             "description": "Returns the firstChild element (===`html`-Element) of the current document",
             "itemtype": "property",
             "name": "firstChild",
@@ -18052,7 +18052,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 249,
+            "line": 251,
             "description": "Returns an HTMLCollection with Elements of all of the `form`-elements in the document.\n\n`forms` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "forms",
@@ -18064,7 +18064,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 259,
+            "line": 261,
             "description": "Returns an HTMLCollection with Elements of all of the images in the document.\n\n`images` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "images",
@@ -18076,7 +18076,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 269,
+            "line": 271,
             "description": "Returns the lastChild element (===`html`-Element) of the current document",
             "itemtype": "property",
             "name": "lastChild",
@@ -18088,7 +18088,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 277,
+            "line": 279,
             "description": "Returns an HTMLCollection with Elements of all of the  of all `area`-Elements and `a`-Elements in a document with a value for the href attribute.\n\n`links` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "links",
@@ -18100,7 +18100,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 287,
+            "line": 289,
             "description": "Returns an HTMLCollection with Elements of all of the plugins (`object`- or `embed`-elements) in the document.\n\n`plugins` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "plugins",
@@ -18112,7 +18112,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 297,
+            "line": 299,
             "description": "Returns an HTMLCollection with Elements of all of the script-elements in the document.\n\n`scripts` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "scripts",
@@ -18124,7 +18124,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 307,
+            "line": 309,
             "description": "Returns an HTMLCollection with Elements of all of the style-elements in the document.\n\n`styleSheets` is a life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.",
             "itemtype": "property",
             "name": "styleSheets",
@@ -18136,7 +18136,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 317,
+            "line": 319,
             "description": "Gets or sets the `title` of the document. That is, the `title`-Element within the `head`-Element",
             "itemtype": "property",
             "name": "title",
@@ -18147,7 +18147,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 327,
+            "line": 329,
             "description": "\"online\" event is fired on the <body> of each page when the browser switches between online and offline mode.\nThe event is non-cancellable (you can't prevent the user from coming online, or going offline).",
             "itemtype": "event",
             "name": "online",
@@ -18157,7 +18157,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 334,
+            "line": 336,
             "description": "\"offline\" event is fired on the <body> of each page when the browser switches between online and offline mode.\nThe event is non-cancellable (you can't prevent the user from coming online, or going offline).",
             "itemtype": "event",
             "name": "offline",
@@ -18167,7 +18167,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 343,
+            "line": 345,
             "description": "Adopts a node from an external document. The node and its subtree is removed from the document it's in (if any),\nand its ownerDocument is changed to the current document. The node can then be inserted into the current document.",
             "itemtype": "method",
             "name": "adoptNode",
@@ -18188,7 +18188,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 353,
+            "line": 355,
             "description": "Adds a HtmlElement or DocumentFragment to the end of the `html`-element",
             "itemtype": "method",
             "name": "appendChild",
@@ -18209,7 +18209,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 361,
+            "line": 363,
             "description": "Creates a new attribute-node, and returns it.",
             "itemtype": "method",
             "name": "createAttribute",
@@ -18230,7 +18230,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 369,
+            "line": 371,
             "description": "Creates a new Comment-node, and returns it.",
             "itemtype": "method",
             "name": "createComment",
@@ -18251,7 +18251,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 377,
+            "line": 379,
             "description": "Creates a new HtmlElement, and returns it.\n\nDon't use qualified names (like \"html:a\") with this method.",
             "itemtype": "method",
             "name": "createElement",
@@ -18272,7 +18272,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 388,
+            "line": 390,
             "description": "Returns a new NodeIterator object.\n\nThe NodeIterator is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.",
             "itemtype": "method",
             "name": "createNodeIterator",
@@ -18305,7 +18305,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 406,
+            "line": 408,
             "description": "Returns a new Range object. See https://developer.mozilla.org/en-US/docs/Web/API/Range",
             "itemtype": "method",
             "name": "createRange",
@@ -18319,7 +18319,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 413,
+            "line": 415,
             "description": "Creates a new Text-node, and returns it.",
             "itemtype": "method",
             "name": "createTextNode",
@@ -18340,7 +18340,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 421,
+            "line": 423,
             "description": "Returns the Element from the document whose `elementFromPoint`-method is being called which is the topmost\ndom-Element which lies under the given point. To get a Element, specify the point via coordinates, in CSS pixels,\nrelative to the upper-left-most point in the window or frame containing the document.",
             "itemtype": "method",
             "name": "elementFromPoint",
@@ -18366,7 +18366,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 432,
+            "line": 434,
             "description": "Enables the style sheets matching the specified name in the current style sheet set,\nand disables all other style sheets (except those without a title, which are always enabled).",
             "itemtype": "method",
             "name": "enableStyleSheetsForSet",
@@ -18383,7 +18383,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 442,
+            "line": 444,
             "description": "Returns an ElementArray of all Elements that match their classes with the supplied `classNames` argument.\nTo match multiple different classes, separate them with a `comma`.\n\ngetElementsByClassName is life presentation of the dom. The returned ElementArray gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByClassName",
@@ -18404,7 +18404,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 456,
+            "line": 458,
             "description": "Returns an ElementArray of all Elements that match their `name`-attribute with the supplied `name` argument.\n\ngetElementsByName is life presentation of the dom. The returned ElementArray gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByName",
@@ -18425,7 +18425,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 468,
+            "line": 470,
             "description": "Returns an ElementArray of all Elements that match their `name`-attribute with the supplied `name` argument.\n\ngetElementsByTagName is life presentation of the dom. The returned ElementArray gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByTagName",
@@ -18446,7 +18446,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 480,
+            "line": 482,
             "description": "Returns a selection object representing the range of text selected by the user.\n\nIs also available on the `window`-object.",
             "itemtype": "method",
             "name": "getSelection",
@@ -18460,7 +18460,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 489,
+            "line": 491,
             "description": "Returns a Boolean value indicating whether the document or any element inside the document has focus.",
             "itemtype": "method",
             "name": "hasFocus",
@@ -18474,7 +18474,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 496,
+            "line": 498,
             "description": "Creates a copy of a node from an external document that can be inserted into the current document.",
             "itemtype": "method",
             "name": "importNode",
@@ -18500,7 +18500,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 506,
+            "line": 508,
             "description": "Inserts `newElement` before `referenceElement`.",
             "itemtype": "method",
             "name": "insertBefore",
@@ -18526,7 +18526,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 515,
+            "line": 517,
             "description": "Removes a child node from the DOM.",
             "itemtype": "method",
             "name": "removeChild",
@@ -18547,7 +18547,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 523,
+            "line": 525,
             "description": "Replaces one child-element of its parent element with a new child-element.",
             "itemtype": "method",
             "name": "replaceChild",
@@ -18573,7 +18573,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 534,
+            "line": 536,
             "description": "Returns the character encoding of the current document.",
             "itemtype": "property",
             "name": "characterSet",
@@ -18584,7 +18584,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 541,
+            "line": 543,
             "description": "Indicates whether the document is rendered in Quirks mode or Standards mode. Its value is either:\n<ul>\n    <li>`BackCompat` if the document is in quirks mode</li>\n    <li>`CSS1Compat` if the document is in no-quirks (also known as `standards`) mode or limited-quirks (also known as `almost standards`) mode.</li>\n</ul>",
             "itemtype": "property",
             "name": "compatMode",
@@ -18595,7 +18595,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 552,
+            "line": 554,
             "description": "Returns the MIME type that the document is being rendered as.  This may come from HTTP headers or other sources of MIME information,\nand might be affected by automatic type conversions performed by either the browser or extensions.",
             "itemtype": "property",
             "name": "contentType",
@@ -18606,7 +18606,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 560,
+            "line": 562,
             "description": "Returns the Document Type Declaration (DTD) associated with current document. The returned object implements the DocumentType interface.\nUse DOMImplementation.createDocumentType() to create a DocumentType.",
             "itemtype": "property",
             "name": "doctype",
@@ -18617,7 +18617,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 568,
+            "line": 570,
             "description": "Returns string URI of the HTML document. Same as `document.URL`.\n\nNote: HTML documents have a document.URL property which returns the same value. Unlike URL, documentURI is available on all types of documents.",
             "itemtype": "property",
             "name": "documentURI",
@@ -18629,7 +18629,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 578,
+            "line": 580,
             "description": "Controls whether the entire document is editable. Its value should be either \"off\" or \"on\".",
             "itemtype": "property",
             "name": "designMode",
@@ -18641,7 +18641,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 586,
+            "line": 588,
             "description": "Gets the domain portion of the origin of the current document.\n\nSetter will fail, because the same origin policy needs to persist.",
             "itemtype": "property",
             "name": "domain",
@@ -18653,7 +18653,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 596,
+            "line": 598,
             "description": "Returns a DOMImplementation object associated with the current document.",
             "itemtype": "property",
             "name": "implementation",
@@ -18665,7 +18665,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 604,
+            "line": 606,
             "description": "Returns a string containing the date and time on which the current document was last modified.\nIf you want a Date-object, you need to transform lastModified into a Date object: `modifyDate = new Date(document.lastModified);`",
             "itemtype": "property",
             "name": "lastModified",
@@ -18677,7 +18677,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 613,
+            "line": 615,
             "description": "Returns the last enabled style sheet set; this property's value changes whenever the document.selectedStyleSheetSet property is changed.",
             "itemtype": "property",
             "name": "lastStyleSheetSet",
@@ -18689,7 +18689,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 621,
+            "line": 623,
             "description": "returns a Location object, which contains information about the URL of the document and provides methods for changing that URL and loading another URL.\n\nThough Document.location is a read-only Location object, you can also assign a DOMString to it. This means that you can work with document.location\nas if it were a string in most cases: document.location = 'http://www.example.com' is a synonym of document.location.href = 'http://www.example.com'.\n\nTo retrieve just the URL as a string, the read-only document.URL property can also be used.\n\nSee more about the `Location` object: https://developer.mozilla.org/en-US/docs/Web/API/Location",
             "itemtype": "property",
             "name": "location",
@@ -18701,7 +18701,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 636,
+            "line": 638,
             "description": "Returns the preferred style sheet set as set by the page author. This is determined from the order of style sheet declarations and the Default-Style HTTP header.",
             "itemtype": "property",
             "name": "preferredStyleSheetSet",
@@ -18712,7 +18712,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 643,
+            "line": 645,
             "description": "Returns \"loading\" while the document is loading, \"interactive\" once it is finished parsing but still loading sub-resources,\nand \"complete\" once it has loaded.",
             "itemtype": "property",
             "name": "readyState",
@@ -18724,7 +18724,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 652,
+            "line": 654,
             "description": "Returns the URI of the page that linked to this page.",
             "itemtype": "property",
             "name": "referrer",
@@ -18736,7 +18736,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 660,
+            "line": 662,
             "description": "Indicates the name of the style sheet set that's currently in use. See more about Stylesheets: https://developer.mozilla.org/en-US/docs/Web/API/Stylesheet\nSetting the value of this property is equivalent to calling document.enableStyleSheetsForSet() with the value of currentStyleSheetSet,\nthen setting the value of lastStyleSheetSet to that value as well.",
             "itemtype": "property",
             "name": "selectedStyleSheetSet",
@@ -18747,7 +18747,7 @@
         },
         {
             "file": "src/vdom/partials/extend-document.js",
-            "line": 669,
+            "line": 671,
             "description": "Returns string URL of the HTML document. Same as `document.documentURI`\n\nNote: HTML documents have a document.URL property which returns the same value. Unlike URL, documentURI is available on all types of documents.",
             "itemtype": "property",
             "name": "URL",
