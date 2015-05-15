@@ -308,7 +308,7 @@ module.exports = function (window) {
     var DOCUMENT = window.document,
         _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor, _setupEvents, _setupMutationListener, _teardownMutationListener,
         _setupDomListener, _teardownDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc, MUTATION_EVENTS, preventClick;
-
+console.warn(&#x27;event-dom --&gt; will load vdom&#x27;);
     require(&#x27;vdom&#x27;)(window);
 
     window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
