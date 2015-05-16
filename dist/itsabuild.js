@@ -14754,15 +14754,15 @@ deepCloneObj = function (obj, descriptors) {
             if (propDescriptor.writable) {
                 Object.defineProperty(m, key, propDescriptor);
             }
+            if ((Object.isObject(value) || Array.isArray(value)) && ((typeof propDescriptor.get)!=='function') && ((typeof propDescriptor.set)!=='function') ) {
+                m[key] = cloneObj(value, descriptors);
+            }
             else {
                 m[key] = value;
             }
-            if ((value!==null) && (typeof value==='object') && ((typeof propDescriptor.get)!=='function') && ((typeof propDescriptor.set)!=='function') ) {
-                m[key] = cloneObj(value, descriptors);
-            }
         }
         else {
-            m[key] = ((value===null) || (typeof value!=='object')) ? value : cloneObj(value, descriptors);
+            m[key] = (Object.isObject(value) || Array.isArray(value)) ? cloneObj(value, descriptors) : value;
         }
     }
     return m;
@@ -14777,7 +14777,7 @@ cloneObj = function(obj, descriptors) {
         len = obj.length;
         for (i=0; i<len; i++) {
             value = obj[i];
-            copy[i] = ((value===null) || (typeof value!=='object')) ? value : cloneObj(value, descriptors);
+            copy[i] = (Object.isObject(value) || Array.isArray(value)) ? cloneObj(value, descriptors) : value;
         }
         return copy;
     }
@@ -15114,6 +15114,7 @@ Math.ceilFromZero = function(value) {
 "use strict";
 
 require('polyfill/polyfill-base.js');
+require('polyfill/lib/promise.js'); // need promises
 
 var createHashMap = require('js-ext/extra/hashmap.js').createMap,
     TYPES = createHashMap({
@@ -15126,7 +15127,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap,
        '[object Array]' : true,
        '[object Date]' : true,
        '[object Error]' : true,
-       '[object Promise]' : true
+       '[object Promise]' : true // DOES NOT WORK in all browsers
     }),
     // Define configurable, writable and non-enumerable props
     // if they don't exist.
@@ -15161,7 +15162,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap,
             len = obj.length;
             for (i=0; i<len; i++) {
                 value = obj[i];
-                copy[i] = ((value===null) || (typeof value!=='object')) ? value : cloneObj(value, descriptors);
+                copy[i] = (Object.isObject(value) || Array.isArray(value)) ? cloneObj(value, descriptors) : value;
             }
             return copy;
         }
@@ -15455,15 +15456,15 @@ defineProperties(Object.prototype, {
                 if (propDescriptor.writable) {
                     Object.defineProperty(m, key, propDescriptor);
                 }
+                if ((Object.isObject(value) || Array.isArray(value)) && ((typeof propDescriptor.get)!=='function') && ((typeof propDescriptor.set)!=='function')) {
+                    m[key] = cloneObj(value, descriptors);
+                }
                 else {
                     m[key] = value;
                 }
-                if ((value!==null) && (typeof value==='object') && ((typeof propDescriptor.get)!=='function') && ((typeof propDescriptor.set)!=='function') ) {
-                    m[key] = cloneObj(value, descriptors);
-                }
             }
             else {
-                m[key] = ((value===null) || (typeof value!=='object')) ? value : cloneObj(value, descriptors);
+                m[key] = (Object.isObject(value) || Array.isArray(value)) ? cloneObj(value, descriptors) : value;
             }
         }
         return m;
@@ -15552,7 +15553,8 @@ defineProperties(Object.prototype, {
 * @return {Boolean} true if the object is empty
 */
 Object.isObject = function (item) {
-   return !!(!TYPES[typeof item] && !TYPES[({}.toString).call(item)] && item);
+   // cautious: some browsers detect Promises as [object Object] --> we always need to check instance of :(
+   return !!(!TYPES[typeof item] && !TYPES[({}.toString).call(item)] && item && (!(item instanceof Promise)));
 };
 
 /**
@@ -15594,7 +15596,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"js-ext/extra/hashmap.js":61,"polyfill/polyfill-base.js":87}],72:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":61,"polyfill/lib/promise.js":84,"polyfill/polyfill-base.js":87}],72:[function(require,module,exports){
 "use strict";
 
 /**
@@ -15610,8 +15612,8 @@ Object.merge = function () {
  * @class Promise
 */
 
-require('polyfill');
-require('polyfill/lib/promise.js'); // need full version
+require('polyfill/polyfill-base.js');
+require('polyfill/lib/promise.js'); // need promises
 
 var NAME = '[promise-ext]: ',
     FUNCTION_EXPECTED = ' expects an array of function-references', // include leading space!
@@ -15951,7 +15953,7 @@ Promise.manage = function (callbackFn, stayActive) {
     return promise;
 };
 
-},{"polyfill":87,"polyfill/lib/promise.js":84,"utils":92}],73:[function(require,module,exports){
+},{"polyfill/lib/promise.js":84,"polyfill/polyfill-base.js":87,"utils":92}],73:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -24554,6 +24556,7 @@ module.exports = function (window) {
     }(window.Element.prototype));
 
     setupObserver = function() {
+
         // configuration of the observer:
         var observerConfig = {
                 attributes: true,

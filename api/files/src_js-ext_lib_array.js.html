@@ -296,15 +296,15 @@ deepCloneObj = function (obj, descriptors) {
             if (propDescriptor.writable) {
                 Object.defineProperty(m, key, propDescriptor);
             }
+            if ((Object.isObject(value) || Array.isArray(value)) &amp;&amp; ((typeof propDescriptor.get)!==&#x27;function&#x27;) &amp;&amp; ((typeof propDescriptor.set)!==&#x27;function&#x27;) ) {
+                m[key] = cloneObj(value, descriptors);
+            }
             else {
                 m[key] = value;
             }
-            if ((value!==null) &amp;&amp; (typeof value===&#x27;object&#x27;) &amp;&amp; ((typeof propDescriptor.get)!==&#x27;function&#x27;) &amp;&amp; ((typeof propDescriptor.set)!==&#x27;function&#x27;) ) {
-                m[key] = cloneObj(value, descriptors);
-            }
         }
         else {
-            m[key] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value, descriptors);
+            m[key] = (Object.isObject(value) || Array.isArray(value)) ? cloneObj(value, descriptors) : value;
         }
     }
     return m;
@@ -319,7 +319,7 @@ cloneObj = function(obj, descriptors) {
         len = obj.length;
         for (i=0; i&lt;len; i++) {
             value = obj[i];
-            copy[i] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value, descriptors);
+            copy[i] = (Object.isObject(value) || Array.isArray(value)) ? cloneObj(value, descriptors) : value;
         }
         return copy;
     }
