@@ -271,6 +271,7 @@ module.exports = function (window) {
         return Panel; // Panel was already created
     }
 
+    require(&#x27;vdom&#x27;)(window);
     require(&#x27;window-ext&#x27;)(window);
     require(&#x27;node-plugin&#x27;)(window);
     require(&#x27;focusmanager&#x27;)(window);
