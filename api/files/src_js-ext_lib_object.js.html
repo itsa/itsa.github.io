@@ -246,6 +246,7 @@
 &quot;use strict&quot;;
 
 require(&#x27;polyfill/polyfill-base.js&#x27;);
+require(&#x27;polyfill/lib/promise.js&#x27;); // need promises
 
 var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
     TYPES = createHashMap({
@@ -258,7 +259,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
        &#x27;[object Array]&#x27; : true,
        &#x27;[object Date]&#x27; : true,
        &#x27;[object Error]&#x27; : true,
-       &#x27;[object Promise]&#x27; : true
+       &#x27;[object Promise]&#x27; : true // DOES NOT WORK in all browsers
     }),
     // Define configurable, writable and non-enumerable props
     // if they don&#x27;t exist.
@@ -293,7 +294,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
             len = obj.length;
             for (i=0; i&lt;len; i++) {
                 value = obj[i];
-                copy[i] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value, descriptors);
+                copy[i] = (Object.isObject(value) || Array.isArray(value)) ? cloneObj(value, descriptors) : value;
             }
             return copy;
         }
@@ -587,15 +588,15 @@ defineProperties(Object.prototype, {
                 if (propDescriptor.writable) {
                     Object.defineProperty(m, key, propDescriptor);
                 }
+                if ((Object.isObject(value) || Array.isArray(value)) &amp;&amp; ((typeof propDescriptor.get)!==&#x27;function&#x27;) &amp;&amp; ((typeof propDescriptor.set)!==&#x27;function&#x27;)) {
+                    m[key] = cloneObj(value, descriptors);
+                }
                 else {
                     m[key] = value;
                 }
-                if ((value!==null) &amp;&amp; (typeof value===&#x27;object&#x27;) &amp;&amp; ((typeof propDescriptor.get)!==&#x27;function&#x27;) &amp;&amp; ((typeof propDescriptor.set)!==&#x27;function&#x27;) ) {
-                    m[key] = cloneObj(value, descriptors);
-                }
             }
             else {
-                m[key] = ((value===null) || (typeof value!==&#x27;object&#x27;)) ? value : cloneObj(value, descriptors);
+                m[key] = (Object.isObject(value) || Array.isArray(value)) ? cloneObj(value, descriptors) : value;
             }
         }
         return m;
@@ -684,7 +685,8 @@ defineProperties(Object.prototype, {
 * @return {Boolean} true if the object is empty
 */
 Object.isObject = function (item) {
-   return !!(!TYPES[typeof item] &amp;&amp; !TYPES[({}.toString).call(item)] &amp;&amp; item);
+   // cautious: some browsers detect Promises as [object Object] --&gt; we always need to check instance of :(
+   return !!(!TYPES[typeof item] &amp;&amp; !TYPES[({}.toString).call(item)] &amp;&amp; item &amp;&amp; (!(item instanceof Promise)));
 };
 
 /**

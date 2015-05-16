@@ -245,8 +245,8 @@
  * @class Promise
 */
 
-require(&#x27;polyfill&#x27;);
-require(&#x27;polyfill/lib/promise.js&#x27;); // need full version
+require(&#x27;polyfill/polyfill-base.js&#x27;);
+require(&#x27;polyfill/lib/promise.js&#x27;); // need promises
 
 var NAME = &#x27;[promise-ext]: &#x27;,
     FUNCTION_EXPECTED = &#x27; expects an array of function-references&#x27;, // include leading space!
