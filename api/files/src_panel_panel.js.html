@@ -261,7 +261,7 @@ module.exports = function (window) {
 
     var DOCUMENT = window.document,
         LightMap = require(&#x27;js-ext/extra/lightmap.js&#x27;),
-        Panel, Event, setupEvents, DD, stackManager, insertModalLayer;
+        Panel, Event, setupEvents, DD, stackManager, insertModalLayer, useragent;
 
     window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
@@ -278,6 +278,7 @@ module.exports = function (window) {
     require(&#x27;scrollable&#x27;)(window);
 
     Event = require(&#x27;event-mobile&#x27;)(window);
+    useragent = require(&#x27;useragent&#x27;)(window);
     DD = require(&#x27;drag&#x27;)(window);
     DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
 
@@ -517,7 +518,7 @@ module.exports = function (window) {
                 isMobileWidth = (window.getWidth()&lt;=480),
                 buttonCloseNode = host.getElement(&#x27;&gt;button&#x27;),
                 showHeaderCloseBtn = model.headerCloseBtn,
-                zIndex, isOnTop;
+                zIndex, isOnTop, left, top;
             (header===&#x27;undefined&#x27;) &amp;&amp; (header=undefined);
             (footer===&#x27;undefined&#x27;) &amp;&amp; (footer=undefined);
             if (!footer || !footer.contains(&#x27;button&#x27;)) {
@@ -559,7 +560,20 @@ module.exports = function (window) {
             instance.setPanelWidth(isMobileWidth);
 
             if (model.center &amp;&amp; (!model.draggable || ((instance._previousVisible!==true) &amp;&amp; model.visible))) {
-                instance.centerPanel();
+                left = Math.round((window.getWidth()-host.width)/2);
+                top = Math.round((window.getHeight()-host.height)/2);
+                host.setInlineStyles([
+                    {property: &#x27;left&#x27;, value: left+&#x27;px&#x27;},
+                    {property: &#x27;top&#x27;, value: top+&#x27;px&#x27;}
+                ]);
+                // store new coordinates in model:
+
+                // TODO: figure out why IE does throws an error when model.left and model.top are set here...
+                // for now, we set the value on non-ie browsers:
+                if (!useragent.isIE) {
+                    model.left = left;
+                    model.top = top;
+                }
             }
             else if (!model.center &amp;&amp; !host.hasClass(&#x27;dd-dragging&#x27;)) {
                 host.setInlineStyles([
@@ -584,7 +598,7 @@ module.exports = function (window) {
                 Event.emit(host, &#x27;panel:&#x27;+ (model.visible ? &#x27;shown&#x27; : &#x27;hidden&#x27;), {plugin: instance, model: model});
                 instance._previousVisible = model.visible;
             }
-            if (isOnTop &amp;&amp; model.modal) {
+            if (isOnTop &amp;&amp; model.modal &amp;&amp; !host.hasFocus(true)) {
                 host.focus();
             }
         },
@@ -600,10 +614,6 @@ module.exports = function (window) {
                 model = instance.model;
             model.left = Math.round((window.getWidth()-host.width)/2);
             model.top = Math.round((window.getHeight()-host.height)/2);
-            host.setInlineStyles([
-                {property: &#x27;left&#x27;, value: model.left+&#x27;px&#x27;},
-                {property: &#x27;top&#x27;, value: model.top+&#x27;px&#x27;}
-            ]);
         },
         /*
          * Sets the style &#x60;maxWidth&#x60; and the attribute &#x60;expand-buttons&#x60;. These need to be set after width-changes of either the panel or the screen.
