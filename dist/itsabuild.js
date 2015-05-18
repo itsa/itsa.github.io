@@ -2636,7 +2636,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":107}],6:[function(require,module,exports){
+},{"_process":106}],6:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3712,7 +3712,7 @@ var NAME = '[dialog]: ',
         2: 'warnings',
         3: 'errors'
     },
-    FOLLOWUP_DELAY = 200,
+    FOLLOWUP_DELAY = 150,
     createHashMap = require('js-ext/extra/hashmap.js').createMap;
 
 module.exports = function (window) {
@@ -3939,7 +3939,7 @@ module.exports = function (window) {
 
     return Dialog;
 };
-},{"./css/dialog.css":15,"event":31,"js-ext":65,"js-ext/extra/classes.js":60,"js-ext/extra/hashmap.js":61,"panel":77,"polyfill":87,"utils":92}],17:[function(require,module,exports){
+},{"./css/dialog.css":15,"event":31,"js-ext":65,"js-ext/extra/classes.js":60,"js-ext/extra/hashmap.js":61,"panel":77,"polyfill":86,"utils":91}],17:[function(require,module,exports){
 var css = "[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],18:[function(require,module,exports){
 "use strict";
@@ -5059,7 +5059,7 @@ module.exports = function (window) {
     return DragModule;
 
 };
-},{"./css/drag-drop.css":17,"drag":20,"event-dom":21,"js-ext":65,"js-ext/extra/hashmap.js":61,"node-plugin":75,"polyfill/polyfill-base.js":87,"useragent":91,"vdom":104,"window-ext":105}],19:[function(require,module,exports){
+},{"./css/drag-drop.css":17,"drag":20,"event-dom":21,"js-ext":65,"js-ext/extra/hashmap.js":61,"node-plugin":75,"polyfill/polyfill-base.js":86,"useragent":90,"vdom":103,"window-ext":104}],19:[function(require,module,exports){
 var css = "[dd-draggable] {\n    -webkit-user-drag: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 3001 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],20:[function(require,module,exports){
 "use strict";
@@ -5769,7 +5769,7 @@ module.exports = function (window) {
 
     return DD;
 };
-},{"./css/drag.css":19,"event-dom":21,"js-ext":65,"js-ext/extra/hashmap.js":61,"node-plugin":75,"polyfill":87,"useragent":91,"vdom":104,"window-ext":105}],21:[function(require,module,exports){
+},{"./css/drag.css":19,"event-dom":21,"js-ext":65,"js-ext/extra/hashmap.js":61,"node-plugin":75,"polyfill":86,"useragent":90,"vdom":103,"window-ext":104}],21:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6594,7 +6594,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":31,"js-ext/extra/hashmap.js":61,"js-ext/lib/array.js":67,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"polyfill/polyfill-base.js":87,"utils":92,"vdom":104}],22:[function(require,module,exports){
+},{"event":31,"js-ext/extra/hashmap.js":61,"js-ext/lib/array.js":67,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"polyfill/polyfill-base.js":86,"utils":91,"vdom":103}],22:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7171,7 +7171,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":21,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"utils":92,"vdom":104}],26:[function(require,module,exports){
+},{"../event-dom.js":21,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"utils":91,"vdom":103}],26:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9666,7 +9666,7 @@ module.exports = function (window) {
 
 };
 
-},{"utils":92}],28:[function(require,module,exports){
+},{"utils":91}],28:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -10916,7 +10916,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"polyfill/polyfill-base.js":87}],29:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"polyfill/polyfill-base.js":86}],29:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11846,7 +11846,7 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"./css/focusmanager.css":32,"event-mobile":26,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"node-plugin":75,"polyfill":87,"utils":92,"window-ext":105}],34:[function(require,module,exports){
+},{"./css/focusmanager.css":32,"event-mobile":26,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"node-plugin":75,"polyfill":86,"utils":91,"window-ext":104}],34:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -12164,7 +12164,7 @@ module.exports = function (window) {
 
     window._ITSAmodules.Icons = true;
 };
-},{"./css/base.css":45,"event-dom":21,"js-ext/extra/hashmap.js":61,"js-ext/lib/string.js":73,"polyfill/polyfill-base.js":87,"vdom":104}],44:[function(require,module,exports){
+},{"./css/base.css":45,"event-dom":21,"js-ext/extra/hashmap.js":61,"js-ext/lib/string.js":73,"polyfill/polyfill-base.js":86,"vdom":103}],44:[function(require,module,exports){
 var css = "#itsa-alert-icon {\n    fill: #E3A900;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],45:[function(require,module,exports){
 var css = "#itsa-icons-container {\n    display: none; !important;\n}\n\ni[icon] {\n    display: inline-block;\n    vertical-align: baseline;\n    padding: 0;\n    margin: 0;\n}\n\ni[icon] >svg {\n    height: 1em;\n    width: 1em;\n    vertical-align: middle;\n}\n\nbutton.itsa-icon {\n    padding: 0.5em;\n}\n\nbutton.itsa-iconleft {\n    padding-left: 0.75em;\n}\n\nbutton.itsa-iconright {\n    padding-right: 0.75em;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -13049,7 +13049,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":59,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"messages":74,"polyfill/polyfill-base.js":87}],58:[function(require,module,exports){
+},{"../io.js":59,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"messages":74,"polyfill/polyfill-base.js":86}],58:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13522,7 +13522,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"js-ext":65,"js-ext/extra/hashmap.js":61,"polyfill/polyfill-base.js":87}],60:[function(require,module,exports){
+},{"js-ext":65,"js-ext/extra/hashmap.js":61,"polyfill/polyfill-base.js":86}],60:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -14135,7 +14135,7 @@ require('../lib/object.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/object.js":71,"js-ext/extra/hashmap.js":61,"polyfill/polyfill-base.js":87}],61:[function(require,module,exports){
+},{"../lib/object.js":71,"js-ext/extra/hashmap.js":61,"polyfill/polyfill-base.js":86}],61:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -14270,7 +14270,7 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":67,"../lib/object.js":71,"./classes.js":60,"js-ext/extra/hashmap.js":61,"polyfill/lib/weakmap.js":85}],63:[function(require,module,exports){
+},{"../lib/array.js":67,"../lib/object.js":71,"./classes.js":60,"js-ext/extra/hashmap.js":61,"polyfill/lib/weakmap.js":84}],63:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -14588,7 +14588,7 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":67,"../lib/object.js":71,"polyfill/lib/weakmap.js":85,"polyfill/polyfill-base.js":87,"utils":92}],64:[function(require,module,exports){
+},{"../lib/array.js":67,"../lib/object.js":71,"polyfill/lib/weakmap.js":84,"polyfill/polyfill-base.js":86,"utils":91}],64:[function(require,module,exports){
 "use strict";
 
 var createHashMap = require('./hashmap.js').createMap;
@@ -14955,7 +14955,7 @@ valuesAreTheSame = function(value1, value2) {
 
 
 }(Array.prototype));
-},{"js-ext/extra/hashmap.js":61,"polyfill/polyfill-base.js":87}],68:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":61,"polyfill/polyfill-base.js":86}],68:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -15014,7 +15014,7 @@ var NAME = '[Function]: ';
 
 }(Function.prototype));
 
-},{"polyfill/polyfill-base.js":87}],69:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":86}],69:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -15039,7 +15039,7 @@ var REVIVER = function(key, value) {
 JSON.parseWithDate = function(stringifiedObj) {
     return this.parse(stringifiedObj, REVIVER);
 };
-},{"polyfill/polyfill-base.js":87}],70:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":86}],70:[function(require,module,exports){
 /**
  *
  * Extension of Math
@@ -15097,7 +15097,7 @@ Math.floorToZero = function(value) {
 Math.ceilFromZero = function(value) {
     return (value>=0) ? Math.ceil(value) : Math.floor(value);
 };
-},{"polyfill/polyfill-base.js":87}],71:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":86}],71:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -15596,7 +15596,7 @@ Object.merge = function () {
     });
     return m;
 };
-},{"js-ext/extra/hashmap.js":61,"polyfill/lib/promise.js":84,"polyfill/polyfill-base.js":87}],72:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":61,"polyfill/lib/promise.js":83,"polyfill/polyfill-base.js":86}],72:[function(require,module,exports){
 "use strict";
 
 /**
@@ -15953,7 +15953,7 @@ Promise.manage = function (callbackFn, stayActive) {
     return promise;
 };
 
-},{"polyfill/lib/promise.js":84,"polyfill/polyfill-base.js":87,"utils":92}],73:[function(require,module,exports){
+},{"polyfill/lib/promise.js":83,"polyfill/polyfill-base.js":86,"utils":91}],73:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -16431,7 +16431,7 @@ require('polyfill/lib/promise.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"event":31,"js-ext":65,"js-ext/extra/hashmap.js":61,"polyfill":87,"polyfill/lib/promise.js":84,"utils":92}],75:[function(require,module,exports){
+},{"event":31,"js-ext":65,"js-ext/extra/hashmap.js":61,"polyfill":86,"polyfill/lib/promise.js":83,"utils":91}],75:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16738,7 +16738,9 @@ module.exports = function (window) {
                 instance.bindModel(model, true);
             }
             else if (hostElement.getAttr(instance.$ns+'-ready')==='true') {
-                instance._observer = syncPlugin.bind(instance);
+                instance._observer = function() {
+                    syncPlugin.call(instance);
+                };
                 instance.model.observe(instance._observer);
             }
             modelToAttrs(instance);
@@ -16787,7 +16789,9 @@ module.exports = function (window) {
                     mergeCurrent && (model.merge(instance.model, {full: true}));
                     instance.model = model;
                     if (host.getAttr(instance.$ns+'-ready')==='true') {
-                        instance._observer = syncPlugin.bind(instance);
+                        instance._observer = function() {
+                            syncPlugin.call(instance);
+                        };
                         instance.model.observe(instance._observer);
                         syncPlugin.call(instance);
                     }
@@ -16807,7 +16811,9 @@ module.exports = function (window) {
                     host = instance.host;
 
                 if (!instance._observer) {
-                    instance._observer = syncPlugin.bind(instance);
+                    instance._observer = function() {
+                        syncPlugin.call(instance);
+                    };
                     instance.model.observe(instance._observer);
                 }
                 (host.getAttr(ns+'-ready')==='true') || instance.render();
@@ -17082,7 +17088,7 @@ module.exports = function (window) {
 
     window._ITSAmodules.ElementPlugin = true;
 };
-},{"event-dom":21,"js-ext/extra/classes.js":60,"js-ext/extra/hashmap.js":61,"js-ext/extra/observers.js":63,"js-ext/lib/object.js":71,"js-ext/lib/promise.js":72,"js-ext/lib/string.js":73,"polyfill":87,"utils/lib/timers.js":94,"vdom":104}],76:[function(require,module,exports){
+},{"event-dom":21,"js-ext/extra/classes.js":60,"js-ext/extra/hashmap.js":61,"js-ext/extra/observers.js":63,"js-ext/lib/object.js":71,"js-ext/lib/promise.js":72,"js-ext/lib/string.js":73,"polyfill":86,"utils/lib/timers.js":93,"vdom":103}],76:[function(require,module,exports){
 var css = "[plugin-panel=\"true\"] {\n    position: absolute !important;\n    background-color: #FFF;\n    max-width: 90%;\n    min-width: 200px;\n    min-height: 75px;\n    box-shadow: inset 0 0 5px rgba(50, 50, 50, 0.30), 5px 5px 6px rgba(50, 50, 50, 0.45);\n    border: solid 1px #000;\n}\n\n[plugin-panel=\"true\"],\n[plugin-panel=\"true\"] >div {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n[plugin-panel=\"true\"] >div[is=\"header\"] {\n    vertical-align: middle;\n    background-color: rgb(0, 100, 192);\n    color: #FFF;\n    padding: 0 1.5em 0 0.7em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    vertical-align: middle;\n    line-height: 1.75em;\n    /* don't set the width to 100% --> IE messes things up */\n    /*width: 100%;*/\n    min-height: 1.75em;\n}\n\n[plugin-panel=\"true\"] >div[is=\"content\"] {\n    padding: 1.6em 1.2em;\n    line-height: 115%;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] {\n    border-top: 1px solid #EAE6DB;\n    overflow: hidden;\n    vertical-align: middle;\n    text-align: right;\n    line-height: 1em;\n    padding: 0.5em 0.7em;\n    /* don't set the width to 100% --> IE messes things up */\n    /*width: 100%;*/\n    min-height: 24px;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0.5em;\n}\n\n[plugin-panel=\"true\"].itsa-full-draggable {\n    cursor: default;\n}\n\n[plugin-panel=\"true\"] >button {\n    padding: 0 0.4em 0.1em;\n    position: absolute;\n    right: 0.2em;\n    top: 0.2em;\n    z-index: 1;\n}\n\nbody >div[is=\"system-node\"].itsa-modal-layer {\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 100% !important;\n    height: 100% !important;\n    -webkit-box-sizing: border-box !important;\n    -moz-box-sizing: border-box !important;\n    box-sizing: border-box !important;\n    z-index: 1000 !important;\n    background-color: #000 !important;\n    opacity: 0.2 !important;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button {\n    display: block;\n    width: 100%;\n    margin: 0 0 0.5em;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button:last-child,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button:last-child {\n    margin-bottom: 0;\n}\n\n@media only screen and (max-width : 480px) {\n    [plugin-panel=\"true\"] {\n        width: 90%;\n        box-shadow: 0 0 6px 6px rgba(50, 50, 50, 0.45);\n    }\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],77:[function(require,module,exports){
 "use strict";
@@ -17530,7 +17536,7 @@ module.exports = function (window) {
 
     return Panel;
 };
-},{"./css/panel.css":76,"drag":20,"event-mobile":26,"focusmanager":33,"js-ext/extra/hashmap.js":61,"js-ext/extra/lightmap.js":62,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"node-plugin":75,"polyfill":87,"scrollable":90,"useragent":91,"vdom":104,"window-ext":105}],78:[function(require,module,exports){
+},{"./css/panel.css":76,"drag":20,"event-mobile":26,"focusmanager":33,"js-ext/extra/hashmap.js":61,"js-ext/extra/lightmap.js":62,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"node-plugin":75,"polyfill":86,"scrollable":89,"useragent":90,"vdom":103,"window-ext":104}],78:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -17747,610 +17753,8 @@ module.exports = function (window) {
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],83:[function(require,module,exports){
-(function (global){
-/*
- * Copyright 2012 The Polymer Authors. All rights reserved.
- * Use of this source code is goverened by a BSD-style
- * license that can be found in the LICENSE file.
- */
-
-(function(global) {
-  "use strict";
-
-
-    var navigator = global.navigator,
-        useragent = navigator && navigator.userAgent,
-        ieTest = useragent && useragent.match(/MSIE (\d+)\./),
-        isIE = !!ieTest,
-        ieVersion = isIE && parseFloat(ieTest[1]),
-        ie11 = (ieVersion===11);
-
-    /*!
-     * Shim for MutationObserver interface
-     * Author: Graeme Yeates (github.com/megawac)
-     * Repository: https://github.com/megawac/MutationObserver.js
-     * License: WTFPL V2, 2004 (wtfpl.net).
-     * Though credit and staring the repo will make me feel pretty, you can modify and redistribute as you please.
-     * Attempts to follow spec (http:// www.w3.org/TR/dom/#mutation-observers) as closely as possible for native javascript
-     * See https://github.com/WebKit/webkit/blob/master/Source/WebCore/dom/MutationObserver.cpp for current webkit source c++ implementation
-     */
-
-    /**
-     * prefix bugs:
-        - https://bugs.webkit.org/show_bug.cgi?id=85161
-        - https://bugzilla.mozilla.org/show_bug.cgi?id=749920
-     * Don't use WebKitMutationObserver as Safari (6.0.5-6.1) use a buggy implementation
-    */
-
-    // We also need the shim for IE11 --> see:
-    // https://connect.microsoft.com/IE/feedback/details/817132/ie-11-childnodes-are-missing-from-mutationobserver-mutations-removednodes-after-setting-innerhtml
-
-    if (!global.MutationObserver || ie11) {
-        global.MutationObserver = (function() {
-            /**
-             * @param {function(Array.<MutationRecord>, MutationObserver)} listener
-             * @constructor
-             */
-            function MutationObserver(listener) {
-                /**
-                 * @type {Array.<Object>}
-                 * @private
-                 */
-                this._watched = [];
-                /** @private */
-                this._listener = listener;
-            }
-
-            /**
-             * Start a recursive timeout function to check all items being observed for mutations
-             * @type {MutationObserver} observer
-             * @private
-             */
-            function startMutationChecker(observer) {
-                (function check() {
-                    var mutations = observer.takeRecords();
-
-                    if (mutations.length) { // fire away
-                        // calling the listener with context is not spec but currently consistent with FF and WebKit
-                        observer._listener(mutations, observer);
-                    }
-                    /** @private */
-                    observer._timeout = setTimeout(check, MutationObserver._period);
-                })();
-            }
-
-            /**
-             * Period to check for mutations (~32 times/sec)
-             * @type {number}
-             * @expose
-             */
-            MutationObserver._period = 30 /*ms+runtime*/ ;
-
-            /**
-             * Exposed API
-             * @expose
-             * @final
-             */
-            MutationObserver.prototype = {
-                /**
-                 * see http:// dom.spec.whatwg.org/#dom-mutationobserver-observe
-                 * not going to throw here but going to follow the current spec config sets
-                 * @param {Node|null} $target
-                 * @param {Object|null} config : MutationObserverInit configuration dictionary
-                 * @expose
-                 * @return undefined
-                 */
-                observe: function($target, config) {
-                    /**
-                     * Using slightly different names so closure can go ham
-                     * @type {!Object} : A custom mutation config
-                     */
-                    var settings = {
-                        attr: !! (config.attributes || config.attributeFilter || config.attributeOldValue),
-
-                        // some browsers are strict in their implementation that config.subtree and childList must be set together. We don't care - spec doesn't specify
-                        kids: !! config.childList,
-                        descendents: !! config.subtree,
-                        charData: !! (config.characterData || config.characterDataOldValue)
-                    };
-
-                    var watched = this._watched;
-
-                    // remove already observed target element from pool
-                    for (var i = 0; i < watched.length; i++) {
-                        if (watched[i].tar === $target) watched.splice(i, 1);
-                    }
-
-                    if (config.attributeFilter) {
-                        /**
-                         * converts to a {key: true} dict for faster lookup
-                         * @type {Object.<String,Boolean>}
-                         */
-                        settings.afilter = reduce(config.attributeFilter, function(a, b) {
-                            a[b] = true;
-                            return a;
-                        }, {});
-                    }
-
-                    watched.push({
-                        tar: $target,
-                        fn: createMutationSearcher($target, settings)
-                    });
-
-                    // reconnect if not connected
-                    if (!this._timeout) {
-                        startMutationChecker(this);
-                    }
-                },
-
-                /**
-                 * Finds mutations since last check and empties the "record queue" i.e. mutations will only be found once
-                 * @expose
-                 * @return {Array.<MutationRecord>}
-                 */
-                takeRecords: function() {
-                    var mutations = [];
-                    var watched = this._watched;
-
-                    for (var i = 0; i < watched.length; i++) {
-                        watched[i].fn(mutations);
-                    }
-
-                    return mutations;
-                },
-
-                /**
-                 * @expose
-                 * @return undefined
-                 */
-                disconnect: function() {
-                    this._watched = []; // clear the stuff being observed
-                    clearTimeout(this._timeout); // ready for garbage collection
-                    /** @private */
-                    this._timeout = null;
-                }
-            };
-
-            /**
-             * Simple MutationRecord pseudoclass. No longer exposing as its not fully compliant
-             * @param {Object} data
-             * @return {Object} a MutationRecord
-             */
-            function MutationRecord(data) {
-                var settings = { // technically these should be on proto so hasOwnProperty will return false for non explicitly props
-                    type: null,
-                    target: null,
-                    addedNodes: [],
-                    removedNodes: [],
-                    previousSibling: null,
-                    nextSibling: null,
-                    attributeName: null,
-                    attributeNamespace: null,
-                    oldValue: null
-                };
-                for (var prop in data) {
-                    if (has(settings, prop) && data[prop] !== undefined) settings[prop] = data[prop];
-                }
-                return settings;
-            }
-
-            /**
-             * Creates a func to find all the mutations
-             *
-             * @param {Node} $target
-             * @param {!Object} config : A custom mutation config
-             */
-            function createMutationSearcher($target, config) {
-                /** type {Elestuct} */
-                var $oldstate = clone($target, config); // create the cloned datastructure
-
-                /**
-                 * consumes array of mutations we can push to
-                 *
-                 * @param {Array.<MutationRecord>} mutations
-                 */
-                return function(mutations) {
-                    var olen = mutations.length, dirty;
-
-                    // Alright we check base level changes in attributes... easy
-                    if (config.attr && $oldstate.attr) {
-                        findAttributeMutations(mutations, $target, $oldstate.attr, config.afilter);
-                    }
-
-                    // check childlist or subtree for mutations
-                    if (config.kids || config.descendents) {
-                        dirty = searchSubtree(mutations, $target, $oldstate, config);
-                    }
-
-                    // reclone data structure if theres changes
-                    if (dirty || mutations.length !== olen) {
-                        /** type {Elestuct} */
-                        $oldstate = clone($target, config);
-                    }
-                };
-            }
-
-            /* attributes + attributeFilter helpers */
-
-            /**
-             * fast helper to check to see if attributes object of an element has changed
-             * doesnt handle the textnode case
-             *
-             * @param {Array.<MutationRecord>} mutations
-             * @param {Node} $target
-             * @param {Object.<string, string>} $oldstate : Custom attribute clone data structure from clone
-             * @param {Object} filter
-             */
-            function findAttributeMutations(mutations, $target, $oldstate, filter) {
-                var checked = {};
-                var attributes = $target.attributes;
-                var attr;
-                var name;
-                var i = attributes.length;
-                while (i--) {
-                    attr = attributes[i];
-                    name = attr.name;
-                    if (!filter || has(filter, name)) {
-                        if (attr.value !== $oldstate[name]) {
-                            // The pushing is redundant but gzips very nicely
-                            mutations.push(new MutationRecord({
-                                type: "attributes",
-                                target: $target,
-                                attributeName: name,
-                                oldValue: $oldstate[name],
-                                attributeNamespace: attr.namespaceURI // in ie<8 it incorrectly will return undefined
-                            }));
-                        }
-                        checked[name] = true;
-                    }
-                }
-                for (name in $oldstate) {
-                    if (!(checked[name])) {
-                        mutations.push(new MutationRecord({
-                            target: $target,
-                            type: "attributes",
-                            attributeName: name,
-                            oldValue: $oldstate[name]
-                        }));
-                    }
-                }
-            }
-
-            /**
-             * searchSubtree: array of mutations so far, element, element clone, bool
-             * synchronous dfs comparision of two nodes
-             * This function is applied to any observed element with childList or subtree specified
-             * Sorry this is kind of confusing as shit, tried to comment it a bit...
-             * codereview.stackexchange.com/questions/38351 discussion of an earlier version of this func
-             *
-             * @param {Array} mutations
-             * @param {Node} $target
-             * @param {!Object} $oldstate : A custom cloned node from clone()
-             * @param {!Object} config : A custom mutation config
-             */
-            function searchSubtree(mutations, $target, $oldstate, config) {
-                // Track if the tree is dirty and has to be recomputed (#14).
-                var dirty;
-                /*
-                 * Helper to identify node rearrangment and stuff...
-                 * There is no gaurentee that the same node will be identified for both added and removed nodes
-                 * if the positions have been shuffled.
-                 * conflicts array will be emptied by end of operation
-                 */
-                function resolveConflicts(conflicts, node, $kids, $oldkids, numAddedNodes) {
-                    // the distance between the first conflicting node and the last
-                    var distance = conflicts.length - 1;
-                    // prevents same conflict being resolved twice consider when two nodes switch places.
-                    // only one should be given a mutation event (note -~ is used as a math.ceil shorthand)
-                    var counter = -~((distance - numAddedNodes) / 2);
-                    var $cur;
-                    var oldstruct;
-                    var conflict;
-                    while ((conflict = conflicts.pop())) {
-                        $cur = $kids[conflict.i];
-                        oldstruct = $oldkids[conflict.j];
-
-                        // attempt to determine if there was node rearrangement... won't gaurentee all matches
-                        // also handles case where added/removed nodes cause nodes to be identified as conflicts
-                        if (config.kids && counter && Math.abs(conflict.i - conflict.j) >= distance) {
-                            mutations.push(new MutationRecord({
-                                type: "childList",
-                                target: node,
-                                addedNodes: [$cur],
-                                removedNodes: [$cur],
-                                // haha don't rely on this please
-                                nextSibling: $cur.nextSibling,
-                                previousSibling: $cur.previousSibling
-                            }));
-                            counter--; // found conflict
-                        }
-
-                        // Alright we found the resorted nodes now check for other types of mutations
-                        if (config.attr && oldstruct.attr) findAttributeMutations(mutations, $cur, oldstruct.attr, config.afilter);
-                        if (config.charData && $cur.nodeType === 3 && $cur.nodeValue !== oldstruct.charData) {
-                            mutations.push(new MutationRecord({
-                                type: "characterData",
-                                target: $cur
-                            }));
-                        }
-                        // now look @ subtree
-                        if (config.descendents) findMutations($cur, oldstruct);
-                    }
-                }
-
-                /**
-                 * Main worker. Finds and adds mutations if there are any
-                 * @param {Node} node
-                 * @param {!Object} old : A cloned data structure using internal clone
-                 */
-                function findMutations(node, old) {
-                    var $kids = node.childNodes;
-                    var $oldkids = old.kids;
-                    var klen = $kids.length;
-                    // $oldkids will be undefined for text and comment nodes
-                    var olen = $oldkids ? $oldkids.length : 0;
-                    // if (!olen && !klen) return; // both empty; clearly no changes
-
-                    // we delay the intialization of these for marginal performance in the expected case (actually quite signficant on large subtrees when these would be otherwise unused)
-                    // map of checked element of ids to prevent registering the same conflict twice
-                    var map;
-                    // array of potential conflicts (ie nodes that may have been re arranged)
-                    var conflicts;
-                    var id; // element id from getElementId helper
-                    var idx; // index of a moved or inserted element
-
-                    var oldstruct;
-                    // current and old nodes
-                    var $cur;
-                    var $old;
-                    // track the number of added nodes so we can resolve conflicts more accurately
-                    var numAddedNodes = 0;
-
-                    // iterate over both old and current child nodes at the same time
-                    var i = 0, j = 0;
-                    // while there is still anything left in $kids or $oldkids (same as i < $kids.length || j < $oldkids.length;)
-                    while( i < klen || j < olen ) {
-                        // current and old nodes at the indexs
-                        $cur = $kids[i];
-                        oldstruct = $oldkids[j];
-                        $old = oldstruct && oldstruct.node;
-
-                        if ($cur === $old) { // expected case - optimized for this case
-                            // check attributes as specified by config
-                            if (config.attr && oldstruct.attr) /* oldstruct.attr instead of textnode check */findAttributeMutations(mutations, $cur, oldstruct.attr, config.afilter);
-                            // check character data if node is a comment or textNode and it's being observed
-                            if (config.charData && oldstruct.charData !== undefined && $cur.nodeValue !== oldstruct.charData) {
-                                mutations.push(new MutationRecord({
-                                    type: "characterData",
-                                    target: $cur
-                                }));
-                            }
-
-                            // resolve conflicts; it will be undefined if there are no conflicts - otherwise an array
-                            if (conflicts) resolveConflicts(conflicts, node, $kids, $oldkids, numAddedNodes);
-
-                            // recurse on next level of children. Avoids the recursive call when there are no children left to iterate
-                            if (config.descendents && ($cur.childNodes.length || oldstruct.kids && oldstruct.kids.length)) findMutations($cur, oldstruct);
-
-                            i++;
-                            j++;
-                        } else { // (uncommon case) lookahead until they are the same again or the end of children
-                            dirty = true;
-                            if (!map) { // delayed initalization (big perf benefit)
-                                map = {};
-                                conflicts = [];
-                            }
-                            if ($cur) {
-                                // check id is in the location map otherwise do a indexOf search
-                                if (!(map[id = getElementId($cur)])) { // to prevent double checking
-                                    // mark id as found
-                                    map[id] = true;
-                                    // custom indexOf using comparitor checking oldkids[i].node === $cur
-                                    if ((idx = indexOfCustomNode($oldkids, $cur, j)) === -1) {
-                                        if (config.kids) {
-                                            mutations.push(new MutationRecord({
-                                                type: "childList",
-                                                target: node,
-                                                addedNodes: [$cur], // $cur is a new node
-                                                nextSibling: $cur.nextSibling,
-                                                previousSibling: $cur.previousSibling
-                                            }));
-                                            numAddedNodes++;
-                                        }
-                                    } else {
-                                        conflicts.push({ // add conflict
-                                            i: i,
-                                            j: idx
-                                        });
-                                    }
-                                }
-                                i++;
-                            }
-
-                            if ($old &&
-                               // special case: the changes may have been resolved: i and j appear congurent so we can continue using the expected case
-                               $old !== $kids[i]
-                            ) {
-                                if (!(map[id = getElementId($old)])) {
-                                    map[id] = true;
-                                    if ((idx = indexOf($kids, $old, i)) === -1) {
-                                        if (config.kids) {
-                                            mutations.push(new MutationRecord({
-                                                type: "childList",
-                                                target: old.node,
-                                                removedNodes: [$old],
-                                                nextSibling: $oldkids[j + 1], // praise no indexoutofbounds exception
-                                                previousSibling: $oldkids[j - 1]
-                                            }));
-                                            numAddedNodes--;
-                                        }
-                                    } else {
-                                        conflicts.push({
-                                            i: idx,
-                                            j: j
-                                        });
-                                    }
-                                }
-                                j++;
-                            }
-                        }// end uncommon case
-                    }// end loop
-
-                    // resolve any remaining conflicts
-                    if (conflicts) resolveConflicts(conflicts, node, $kids, $oldkids, numAddedNodes);
-                }
-                findMutations($target, $oldstate);
-                return dirty;
-            }
-
-            /**
-             * Utility
-             * Cones a element into a custom data structure designed for comparision. https://gist.github.com/megawac/8201012
-             *
-             * @param {Node} $target
-             * @param {!Object} config : A custom mutation config
-             * @return {!Object} : Cloned data structure
-             */
-            function clone($target, config) {
-                var recurse = true; // set true so childList we'll always check the first level
-                return (function copy($target) {
-                    var elestruct = {
-                        /** @type {Node} */
-                        node: $target
-                    };
-
-                    // Store current character data of target text or comment node if the config requests
-                    // those properties to be observed.
-                    if (config.charData && ($target.nodeType === 3 || $target.nodeType === 8)) {
-                        elestruct.charData = $target.nodeValue;
-                    }
-                    // its either a element, comment, doc frag or document node
-                    else {
-                        // Add attr only if subtree is specified or top level and avoid if
-                        // attributes is a document object (#13).
-                        if (config.attr && recurse && $target.nodeType === 1) {
-                            /**
-                             * clone live attribute list to an object structure {name: val}
-                             * @type {Object.<string, string>}
-                             */
-                            elestruct.attr = reduce($target.attributes, function(memo, attr) {
-                                if (!config.afilter || config.afilter[attr.name]) {
-                                    memo[attr.name] = attr.value;
-                                }
-                                return memo;
-                            }, {});
-                        }
-
-                        // whether we should iterate the children of $target node
-                        if (recurse && ((config.kids || config.charData) || (config.attr && config.descendents)) ) {
-                            /** @type {Array.<!Object>} : Array of custom clone */
-                            elestruct.kids = map($target.childNodes, copy);
-                        }
-
-                        recurse = config.descendents;
-                    }
-                    return elestruct;
-                })($target);
-            }
-
-            /**
-             * indexOf an element in a collection of custom nodes
-             *
-             * @param {NodeList} set
-             * @param {!Object} $node : A custom cloned node
-             * @param {number} idx : index to start the loop
-             * @return {number}
-             */
-            function indexOfCustomNode(set, $node, idx) {
-                return indexOf(set, $node, idx, jsCompiler_renameProperty("node"));
-            }
-
-            // using a non id (eg outerHTML or nodeValue) is extremely naive and will run into issues with nodes that may appear the same like <li></li>
-            var counter = 1; // don't use 0 as id (falsy)
-            /** @const */
-            var expando = "mo_id";
-
-            /**
-             * Attempt to uniquely id an element for hashing. We could optimize this for legacy browsers but it hopefully wont be called enough to be a concern
-             *
-             * @param {Node} $ele
-             * @return {(string|number)}
-             */
-            function getElementId($ele) {
-                try {
-                    return $ele.id || ($ele[expando] = $ele[expando] || counter++);
-                } catch (o_O) { // ie <8 will throw if you set an unknown property on a text node
-                    try {
-                        return $ele.nodeValue; // naive
-                    } catch (shitie) { // when text node is removed: https://gist.github.com/megawac/8355978 :(
-                        return counter++;
-                    }
-                }
-            }
-
-            /**
-             * **map** Apply a mapping function to each item of a set
-             * @param {Array|NodeList} set
-             * @param {Function} iterator
-             */
-            function map(set, iterator) {
-                var results = [];
-                for (var index = 0; index < set.length; index++) {
-                    results[index] = iterator(set[index], index, set);
-                }
-                return results;
-            }
-
-            /**
-             * **Reduce** builds up a single result from a list of values
-             * @param {Array|NodeList|NamedNodeMap} set
-             * @param {Function} iterator
-             * @param {*} [memo] Initial value of the memo.
-             */
-            function reduce(set, iterator, memo) {
-                for (var index = 0; index < set.length; index++) {
-                    memo = iterator(memo, set[index], index, set);
-                }
-                return memo;
-            }
-
-            /**
-             * **indexOf** find index of item in collection.
-             * @param {Array|NodeList} set
-             * @param {Object} item
-             * @param {number} idx
-             * @param {string} [prop] Property on set item to compare to item
-             */
-            function indexOf(set, item, idx, prop) {
-                for (/*idx = ~~idx*/; idx < set.length; idx++) {// start idx is always given as this is internal
-                    if ((prop ? set[idx][prop] : set[idx]) === item) return idx;
-                }
-                return -1;
-            }
-
-            /**
-             * @param {Object} obj
-             * @param {(string|number)} prop
-             * @return {boolean}
-             */
-            function has(obj, prop) {
-                return obj[prop] !== undefined; // will be nicely inlined by gcc
-            }
-
-            // GCC hack see http:// stackoverflow.com/a/23202438/1517919
-            function jsCompiler_renameProperty(a) {
-                return a;
-            }
-
-            return MutationObserver;
-        })();
-    }
-
-}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],84:[function(require,module,exports){
 require('ypromise');
-},{"ypromise":5}],85:[function(require,module,exports){
+},{"ypromise":5}],84:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/Gozala/1269991
 
@@ -18460,7 +17864,7 @@ require('ypromise');
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],86:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -18479,17 +17883,16 @@ require('ypromise');
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],87:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":82,"./lib/window.console.js":86}],88:[function(require,module,exports){
+},{"./lib/matchesselector.js":82,"./lib/window.console.js":85}],87:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/promise.js');
 require('./lib/weakmap.js');
-require('./lib/mutationobserver.js'); // needs weakmap
-},{"./lib/mutationobserver.js":83,"./lib/promise.js":84,"./lib/weakmap.js":85,"./polyfill-base.js":87}],89:[function(require,module,exports){
+},{"./lib/promise.js":83,"./lib/weakmap.js":84,"./polyfill-base.js":86}],88:[function(require,module,exports){
 var css = "[plugin-scroll=\"true\"] {\n    overflow: hidden !important;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont,\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    position: absolute;\n    /*display: block;*/\n    left: -9999px;\n    top: -9999px;\n    opacity: 0;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-vscroll-cont.itsa-visible {\n    opacity: 1;\n    width: 0.8em;\n    height: 100%;\n    right: 0;\n    top: 0;\n    left: auto;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-hscroll-cont.itsa-visible {\n    opacity: 1;\n    height: 0.8em;\n    width: 100%;\n    left: 0;\n    bottom: 0;\n    top: auto;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont span {\n    position: relative;\n    /*display: block;*/\n    width: 100%;\n    min-height: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont span {\n    position: relative;\n    /*display: block;*/\n    height: 100%;\n    min-width: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-vscroll-cont span,\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-hscroll-cont span {\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n[plugin-scroll=\"true\"] >span span.dd-dragging {\n    cursor: default;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],90:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],89:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -18710,7 +18113,7 @@ module.exports = function (window) {
 
     return Scrollable;
 };
-},{"./css/scrollable.css":89,"drag":20,"event-mobile":26,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"node-plugin":75,"polyfill":87,"useragent":91,"utils":92,"window-ext":105}],91:[function(require,module,exports){
+},{"./css/scrollable.css":88,"drag":20,"event-mobile":26,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"node-plugin":75,"polyfill":86,"useragent":90,"utils":91,"window-ext":104}],90:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18761,13 +18164,13 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"polyfill":87}],92:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"polyfill":86}],91:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
     async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":93,"./lib/timers.js":94}],93:[function(require,module,exports){
+},{"./lib/idgenerator.js":92,"./lib/timers.js":93}],92:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -18825,7 +18228,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"js-ext/extra/hashmap.js":61,"polyfill/polyfill-base.js":87}],94:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":61,"polyfill/polyfill-base.js":86}],93:[function(require,module,exports){
 (function (process){
 /**
  * Collection of various utility functions.
@@ -18955,9 +18358,9 @@ module.exports.later = function (callbackFn, timeout, periodic) {
 	};
 };
 }).call(this,require('_process'))
-},{"_process":107,"polyfill/polyfill-base.js":87}],95:[function(require,module,exports){
+},{"_process":106,"polyfill/polyfill-base.js":86}],94:[function(require,module,exports){
 var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-nodisplay {\n    display: none; !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],96:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],95:[function(require,module,exports){
 "use strict";
 
 /**
@@ -19255,7 +18658,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"polyfill":87,"polyfill/extra/transition.js":79,"polyfill/extra/vendorCSS.js":81}],97:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"polyfill":86,"polyfill/extra/transition.js":79,"polyfill/extra/vendorCSS.js":81}],96:[function(require,module,exports){
 "use strict";
 
 /**
@@ -19683,7 +19086,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"polyfill":87}],98:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"polyfill":86}],97:[function(require,module,exports){
 "use strict";
 
 /**
@@ -20363,7 +19766,7 @@ module.exports = function (window) {
 
 
 
-},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"polyfill":87}],99:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"polyfill":86}],98:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -20387,7 +19790,6 @@ require('js-ext/lib/object.js');
 require('js-ext/lib/string.js');
 require('js-ext/lib/promise.js');
 require('polyfill');
-require('polyfill/lib/mutationobserver.js');
 
 var createHashMap = require('js-ext/extra/hashmap.js').createMap;
 
@@ -21225,6 +20627,10 @@ module.exports = function (window) {
     CSS_PROPS_TO_CALCULATE[generateVendorCSSProp(TRANSFORM+'-origin')] = true;
     CSS_PROPS_TO_CALCULATE[generateVendorCSSProp('perspective')] = true;
 
+    // backup native _contains --> mutationobserver needs it
+    // cautious: IE has this property ONLY on HTMLElement (not on Element)
+    window.HTMLElement.prototype._contains = window.HTMLElement.prototype.contains;
+
     (function(ElementPrototype) {
 
         /**
@@ -21456,16 +20862,18 @@ module.exports = function (window) {
                     });
                 },
                 cloneDeepData = function(srcVNode, targetVNode) {
-                    var srcVChildren = srcVNode.vChildren,
-                        targetVChildren = targetVNode.vChildren,
-                        len = srcVChildren.length,
-                        i, childSrcVNode, childTargetVNode;
-                    for (i=0; i<len; i++) {
-                        childSrcVNode = srcVChildren[i];
-                        childTargetVNode = targetVChildren[i];
-                        cloneData(childSrcVNode, childTargetVNode);
-                        updatePlugins(childSrcVNode, childTargetVNode);
-                        childSrcVNode.hasVChildren() && cloneDeepData(childSrcVNode, childTargetVNode);
+                    var srcVChildren, targetVChildren, len, i, childSrcVNode, childTargetVNode;
+                    if (srcVNode && targetVNode) {
+                        srcVChildren = srcVNode.vChildren;
+                        targetVChildren = targetVNode.vChildren;
+                        len = srcVChildren.length;
+                        for (i=0; i<len; i++) {
+                            childSrcVNode = srcVChildren[i];
+                            childTargetVNode = targetVChildren[i];
+                            cloneData(childSrcVNode, childTargetVNode);
+                            updatePlugins(childSrcVNode, childTargetVNode);
+                            childSrcVNode.hasVChildren() && cloneDeepData(childSrcVNode, childTargetVNode);
+                        }
                     }
                 },
                 i, len, PluginClass, pluginDef;
@@ -21571,7 +20979,6 @@ module.exports = function (window) {
             }
         };
 
-        ElementPrototype._contains = ElementPrototype.contains; // backup native _contains --> mutationobserver needs it
         /**
          * Indicating whether this Element contains OR equals otherElement. If you need only to be sure the other Element lies inside,
          * but not equals itself, set `excludeItself` true.
@@ -24585,8 +23992,8 @@ module.exports = function (window) {
             };
         (new window.MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
-
-                var node = mutation.target,
+                var isPolyfill = this.isPolyfill, // IE polyfill which happens by interval --> therefor only to be used to remove nodes
+                    node = mutation.target,
                     vnode = node.vnode,
                     type = mutation.type,
                     attribute = mutation.attributeName,
@@ -24595,16 +24002,17 @@ module.exports = function (window) {
                     i, len, childDomNode, childVNode, index, vchildnode;
                 if (vnode && !vnode._nosync) {
                     if (type==='attributes') {
-                        vnode.reloadAttr(attribute);
+                        isPolyfill || vnode.reloadAttr(attribute);
                     }
                     else if (type==='characterData') {
-                        vnode.text = node.nodeValue;
+                        isPolyfill || (vnode.text=node.nodeValue);
                     }
                     else {
                         // remove the childNodes that are no longer there,
                         // but ONLY when they are not in the dom --> nodes might get
                         // replaced inside other nodes, which leads into 'remove'-observer,
                         // yet we still need them
+                        if (!isPolyfill) {
                         len = removedChildNodes.length;
                         for (i=len-1; i>=0; i--) {
                             childDomNode = removedChildNodes[i];
@@ -24612,36 +24020,19 @@ module.exports = function (window) {
                             // need to cheack with native `_contains` --> the vdom its `contains` won't work for it isn't updated yet:
                             childVNode && !DOCUMENT.documentElement._contains(childDomNode) && childVNode._destroy();
                         }
-                       // add the new childNodes:
-                        len = addedChildNodes.length;
-                        for (i=0; i<len; i++) {
-                            childDomNode = addedChildNodes[i];
-                            // find its index in the true DOM:
-                            index = node.childNodes.indexOf(childDomNode);
-                            // create the vnode:
-                            vchildnode = domNodeToVNode(childDomNode);
-//======================================================================================================
-// TODO: remove this block of code: we shouldn;t be needing it
-// that is: when the alert never rises (which I expect it doesn't)
-
-
-// prevent double definitions (for whatever reason):
-// check if there is a vChild with the same domNode and remove it:
-var vChildNodes = vnode.vChildNodes;
-var len2 = vChildNodes ? vChildNodes.length : 0;
-var j;
-for (j=0; j<len2; j++) {
-    var checkChildVNode = vChildNodes[j];
-    if (checkChildVNode.domNode===node) {
-        checkChildVNode._destroy();
-        alert('double deleted');
-        break;
-    }
-}
-// END OF removable block
-//======================================================================================================
-                            // add the vnode:
-                            vchildnode._moveToParent(vnode, index);
+                        }
+                        if (!isPolyfill) {
+                            // add the new childNodes:
+                            len = addedChildNodes.length;
+                            for (i=0; i<len; i++) {
+                                childDomNode = addedChildNodes[i];
+                                // find its index in the true DOM:
+                                index = node.childNodes.indexOf(childDomNode);
+                                // create the vnode:
+                                vchildnode = domNodeToVNode(childDomNode);
+                                // add the vnode:
+                                vchildnode._moveToParent(vnode, index);
+                            }
                         }
                     }
                 }
@@ -24649,7 +24040,12 @@ for (j=0; j<len2; j++) {
         })).observe(DOCUMENT, observerConfig);
     };
 
-    setupObserver();
+    // only if mutationobserver exists natively, we use it
+    // 'setupObserver' is only needed to register domchanges that are not done through the library
+    // any IE-polyfill will fail, because IE9 has a bug to register childnodes for the first time
+    // and polyfills that use polling will interfer wrongly with the library's MVC (plugins and itags)
+    // So.... IE9 and IE10 are doomed again. But not when dom-manipulation is done by this library.
+    window.MutationObserver && setupObserver();
 
 };
 
@@ -25129,7 +24525,7 @@ for (j=0; j<len2; j++) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":95,"./attribute-extractor.js":96,"./element-array.js":97,"./html-parser.js":100,"./node-parser.js":101,"./vnode.js":103,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/promise.js":72,"js-ext/lib/string.js":73,"polyfill":87,"polyfill/extra/transition.js":79,"polyfill/extra/transitionend.js":80,"polyfill/extra/vendorCSS.js":81,"polyfill/lib/mutationobserver.js":83,"utils":92,"window-ext":105}],100:[function(require,module,exports){
+},{"../css/element.css":94,"./attribute-extractor.js":95,"./element-array.js":96,"./html-parser.js":99,"./node-parser.js":100,"./vnode.js":102,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/promise.js":72,"js-ext/lib/string.js":73,"polyfill":86,"polyfill/extra/transition.js":79,"polyfill/extra/transitionend.js":80,"polyfill/extra/vendorCSS.js":81,"utils":91,"window-ext":104}],99:[function(require,module,exports){
 "use strict";
 
 /**
@@ -25502,7 +24898,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":96,"./vdom-ns.js":102,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"polyfill":87}],101:[function(require,module,exports){
+},{"./attribute-extractor.js":95,"./vdom-ns.js":101,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"polyfill":86}],100:[function(require,module,exports){
 "use strict";
 
 /**
@@ -25642,7 +25038,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":96,"./vdom-ns.js":102,"./vnode.js":103,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"polyfill":87}],102:[function(require,module,exports){
+},{"./attribute-extractor.js":95,"./vdom-ns.js":101,"./vnode.js":102,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"polyfill":86}],101:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -25867,7 +25263,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"polyfill":87}],103:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"polyfill":86}],102:[function(require,module,exports){
 "use strict";
 
 /**
@@ -28549,7 +27945,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":96,"./html-parser.js":100,"./vdom-ns.js":102,"js-ext/extra/hashmap.js":61,"js-ext/extra/lightmap.js":62,"js-ext/lib/array.js":67,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"polyfill":87,"utils/lib/timers.js":94}],104:[function(require,module,exports){
+},{"./attribute-extractor.js":95,"./html-parser.js":99,"./vdom-ns.js":101,"js-ext/extra/hashmap.js":61,"js-ext/extra/lightmap.js":62,"js-ext/lib/array.js":67,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"polyfill":86,"utils/lib/timers.js":93}],103:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -28591,13 +27987,13 @@ module.exports = function (window) {
 
     window._ITSAmodules.VDOM = true;
 };
-},{"./partials/extend-document.js":98,"./partials/extend-element.js":99,"./partials/node-parser.js":101,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"utils/lib/timers.js":94}],105:[function(require,module,exports){
+},{"./partials/extend-document.js":97,"./partials/extend-element.js":98,"./partials/node-parser.js":100,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"utils/lib/timers.js":93}],104:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":106}],106:[function(require,module,exports){
+},{"./lib/sizes.js":105}],105:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -28701,7 +28097,7 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71}],107:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71}],106:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -28979,4 +28375,4 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"client-db":6,"client-storage":9,"constrain":10,"css":14,"dialog":16,"drag-drop":18,"event":31,"event-dom/extra/blurnode.js":22,"event-dom/extra/focusnode.js":23,"event-dom/extra/hover.js":24,"event-dom/extra/valuechange.js":25,"event-mobile":26,"focusmanager":33,"icons":54,"io/extra/io-cors-ie9.js":55,"io/extra/io-stream.js":56,"io/extra/io-transfer.js":57,"io/extra/io-xml.js":58,"js-ext/extra/hashmap.js":61,"js-ext/extra/reserved-words.js":64,"js-ext/js-ext.js":66,"messages":74,"node-plugin":75,"node-win":undefined,"panel":77,"polyfill/polyfill.js":88,"scrollable":90,"useragent":91,"utils":92,"vdom":104,"window-ext":105}]},{},[]);
+},{"client-db":6,"client-storage":9,"constrain":10,"css":14,"dialog":16,"drag-drop":18,"event":31,"event-dom/extra/blurnode.js":22,"event-dom/extra/focusnode.js":23,"event-dom/extra/hover.js":24,"event-dom/extra/valuechange.js":25,"event-mobile":26,"focusmanager":33,"icons":54,"io/extra/io-cors-ie9.js":55,"io/extra/io-stream.js":56,"io/extra/io-transfer.js":57,"io/extra/io-xml.js":58,"js-ext/extra/hashmap.js":61,"js-ext/extra/reserved-words.js":64,"js-ext/js-ext.js":66,"messages":74,"node-plugin":75,"node-win":undefined,"panel":77,"polyfill/polyfill.js":87,"scrollable":89,"useragent":90,"utils":91,"vdom":103,"window-ext":104}]},{},[]);
