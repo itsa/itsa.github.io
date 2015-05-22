@@ -15059,7 +15059,7 @@ JSON.parseWithDate = function(stringifiedObj) {
  * @return {Number|undefined} the value, forced to be inbetween the edges. Returns `undefined` if `max` is lower than `min`.
  */
 JSON.stringifyEscaped = function(obj) {
-    return this.stringify(obj).replace(REGEXP_REPLACE_ADD, "$1\'");
+    return this.stringify(obj).replace(REGEXP_REPLACE_ADD, "$1\\'");
 };
 
 /**
