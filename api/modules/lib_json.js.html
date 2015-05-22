@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/io/extra/io-assets.js - Itsa</title>
+    <title>lib/json.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -230,88 +230,52 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/io/extra/io-assets.js</h1>
+                        <h1>lib_json.js Module</h1>
+<div class="box clearfix meta">
+    
 
-<div class="file">
-    <pre class="code prettyprint linenums">
-&quot;use strict&quot;;
+    
 
-/**
- * Extends io by adding the method &#x60;readXML&#x60; to it.
- * Should be called using  the provided &#x60;mergeInto&#x60;-method like this:
- *
- * @example
- * var IO = require(&quot;io&quot;);
- * var IOassets = require(&quot;io-assets&quot;);
- * IOassets.mergeInto(IO);
- *
- *
- * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * @module io
- * @submodule io-assets
- * @class IO
- * @since 0.0.1
-*/
+    
+        <div class="foundat">
+            Defined in: <a href="../files/src_js-ext_lib_json.js.html#l1"><code>src&#x2F;js-ext&#x2F;lib&#x2F;json.js:1</code></a>
+        </div>
+    
 
-// var NAME = &#x27;[io-assets]: &#x27;;
+    
+</div>
 
-require(&#x27;js-ext/lib/object.js&#x27;);
 
-var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
 
-module.exports = function (window) {
+<div class="box intro">
+    <p>Pollyfils for often used functionality for Arrays
+<i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
+ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 
-    var IO = require(&#x27;../io.js&#x27;)(window);
+</div>
 
-    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
-    if (window._ITSAmodules.IO_Assets) {
-        return IO; // IO_Assets was already created
-    }
 
-    window._ITSAmodules.IO_Assets = IO;
+<div class="yui3-g">
+    <div class="yui3-u-1-2">
+        
+            <p>This module provides the following classes:</p>
 
-    /**
-     * Creates a &#x60;&lt;style&gt;&#x60; tag to load the CSS file at the given url.
-     *
-     * @method getCSS
-     * @param url {String} URL of the style sheet  to load
-     * @param [options] {Object}
-     *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
-     *    @param [options.headers] {Object} HTTP request headers.
-     *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
-     * @return {Promise} Promise holding the request. Has an additional .abort() method to cancel the request.
-     * &lt;ul&gt;
-     *     &lt;li&gt;on success: xhr {XMLHttpRequest1|XMLHttpRequest2} xhr-response&lt;/li&gt;
-     *     &lt;li&gt;on failure: reason {Error}&lt;/li&gt;
-     * &lt;/ul&gt;
-    */
-    IO.getCSS = function(/* url, options */) {
-    };
+            <ul class="module-classes">
+            
+                <li class="module-class">
+                    <a href="../classes/JSON.html">
+                        JSON
+                    </a>
+                </li>
+            
+            </ul>
+        
+    </div>
 
-    /**
-     * Creates a &#x60;&lt;script&gt;&#x60; tag to load the script at the given url.
-     *
-     * @method getJS
-     * @param url {String} URL of the style sheet  to load
-     * @param [options] {Object}
-     *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
-     *    @param [options.headers] {Object} HTTP request headers.
-     *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
-     * @return {Promise} Promise holding the request. Has an additional .abort() method to cancel the request.
-     * &lt;ul&gt;
-     *     &lt;li&gt;on success: xhr {XMLHttpRequest1|XMLHttpRequest2} xhr-response&lt;/li&gt;
-     *     &lt;li&gt;on failure: reason {Error}&lt;/li&gt;
-     * &lt;/ul&gt;
-    */
-    IO.getJS = function(/* url, options */) {
-    };
-
-    return IO;
-};
-    </pre>
+    <div class="yui3-u-1-2">
+        
+    </div>
 </div>
 
                     </div>

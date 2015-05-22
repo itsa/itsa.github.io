@@ -242,6 +242,18 @@ Floors a value in the direction to zero.
 Ceils a value from zero up.
 
 
+##JSON extentions##
+
+###parseWithDate###
+Parses a stringified object and creates true `Date` properties.
+
+###stringifyEscaped###
+Stringifies an object while escaping the ' character. To be used together with parseEscaped.
+
+###parseEscaped###
+Parses anything that was stringified using 'stringifyEscaped'.
+
+
 ##Promise extentions##
 
 ###Promise.chainFns###

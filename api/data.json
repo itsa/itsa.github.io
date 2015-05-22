@@ -420,7 +420,9 @@
             "modules": {
                 "lib/array.js": 1
             },
-            "classes": {},
+            "classes": {
+                "Array": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -437,9 +439,11 @@
         },
         "src/js-ext/lib/json.js": {
             "name": "src/js-ext/lib/json.js",
-            "modules": {},
+            "modules": {
+                "lib/json.js": 1
+            },
             "classes": {
-                "Array": 1
+                "JSON": 1
             },
             "fors": {},
             "namespaces": {}
@@ -1062,6 +1066,7 @@
                 "lib/object.js": 1,
                 "lib/array.js": 1,
                 "lib/function.js": 1,
+                "lib/json.js": 1,
                 "lib/math.js": 1,
                 "lib/promise.s": 1
             },
@@ -1072,6 +1077,7 @@
                 "Object": 1,
                 "Array": 1,
                 "Function": 1,
+                "JSON": 1,
                 "Math": 1,
                 "Promise": 1
             },
@@ -1148,7 +1154,7 @@
             "namespaces": {},
             "module": "js-ext",
             "namespace": "",
-            "file": "src/js-ext/lib/json.js",
+            "file": "src/js-ext/lib/array.js",
             "line": 1,
             "description": "Pollyfils for often used functionality for Arrays\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
@@ -1166,6 +1172,21 @@
             "file": "src/js-ext/lib/function.js",
             "line": 1,
             "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        "lib/json.js": {
+            "name": "lib/json.js",
+            "submodules": {},
+            "classes": {
+                "JSON": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "js-ext",
+            "namespace": "",
+            "file": "src/js-ext/lib/json.js",
+            "line": 1,
+            "description": "Pollyfils for often used functionality for Arrays\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "lib/math.js": {
             "name": "lib/math.js",
@@ -1697,7 +1718,7 @@
             "module": "js-ext",
             "submodule": "lib/array.js",
             "namespace": "",
-            "file": "src/js-ext/lib/json.js",
+            "file": "src/js-ext/lib/array.js",
             "line": 1,
             "description": "Pollyfils for often used functionality for Arrays\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
@@ -1715,6 +1736,21 @@
             "file": "src/js-ext/lib/function.js",
             "line": 1,
             "description": "Pollyfils for often used functionality for Functions\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        "JSON": {
+            "name": "JSON",
+            "shortname": "JSON",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "js-ext",
+            "submodule": "lib/json.js",
+            "namespace": "",
+            "file": "src/js-ext/lib/json.js",
+            "line": 1,
+            "description": "Pollyfils for often used functionality for Arrays\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "Math": {
             "name": "Math",
@@ -15146,6 +15182,76 @@
             "class": "Function",
             "module": "js-ext",
             "submodule": "lib/function.js"
+        },
+        {
+            "file": "src/js-ext/lib/json.js",
+            "line": 25,
+            "description": "Parses a stringified object and creates true `Date` properties.",
+            "itemtype": "method",
+            "name": "parseWithDate",
+            "params": [
+                {
+                    "name": "stringifiedObj",
+                    "description": "lower-edgde",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "the value, forced to be inbetween the edges. Returns `undefined` if `max` is lower than `min`.",
+                "type": "Number|undefined"
+            },
+            "class": "JSON",
+            "module": "js-ext",
+            "submodule": "lib/json.js"
+        },
+        {
+            "file": "src/js-ext/lib/json.js",
+            "line": 36,
+            "description": "Stringifies an object while escaping the ' character. This is needed for storage into a string-object and encapsulate inside a document\nto be parsed at the client by using `parseEscaped`",
+            "itemtype": "method",
+            "name": "stringifyEscaped",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "lower-edgde",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "the value, forced to be inbetween the edges. Returns `undefined` if `max` is lower than `min`.",
+                "type": "Number|undefined"
+            },
+            "class": "JSON",
+            "module": "js-ext",
+            "submodule": "lib/json.js"
+        },
+        {
+            "file": "src/js-ext/lib/json.js",
+            "line": 48,
+            "description": "Parses anything that was stringified using 'stringifyEscaped'.",
+            "itemtype": "method",
+            "name": "parseEscaped",
+            "params": [
+                {
+                    "name": "stringifiedObj",
+                    "description": "The string that needs to be parsed into an object",
+                    "type": "String"
+                },
+                {
+                    "name": "withDate",
+                    "description": "whether parsing should generate true Date-objects",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "the created object. Will throw an error when parsing fails.",
+                "type": "Object"
+            },
+            "class": "JSON",
+            "module": "js-ext",
+            "submodule": "lib/json.js"
         },
         {
             "file": "src/js-ext/lib/math.js",
