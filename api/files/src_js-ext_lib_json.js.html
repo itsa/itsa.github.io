@@ -75,6 +75,8 @@
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
+                <li><a href="../classes/JSON.html">JSON</a></li>
+            
                 <li><a href="../classes/Math.html">Math</a></li>
             
                 <li><a href="../classes/Messages.html">Messages</a></li>
@@ -163,6 +165,8 @@
             
                 <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
             
+                <li><a href="../modules/lib_json.js.html">lib/json.js</a></li>
+            
                 <li><a href="../modules/lib_math.js.html">lib/math.js</a></li>
             
                 <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
@@ -238,8 +242,8 @@
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  * @module js-ext
- * @submodule lib/array.js
- * @class Array
+ * @submodule lib/json.js
+ * @class JSON
  *
  */
 
@@ -247,12 +251,46 @@
 
 require(&#x27;polyfill/polyfill-base.js&#x27;);
 
-var REVIVER = function(key, value) {
-    return ((typeof value===&#x27;string&#x27;) &amp;&amp; value.toDate()) || value;
-};
 
+var REGEXP_REPLACE_ADD = /([\\\\]*)&#x27;/g,
+    REGEXP_REPLACE_REMOVE = /([\\\\]*)[\\\\]&#x27;/g,
+    REVIVER = function(key, value) {
+     return ((typeof value===&#x27;string&#x27;) &amp;&amp; value.toDate()) || value;
+    };
+
+/**
+ * Parses a stringified object and creates true &#x60;Date&#x60; properties.
+ *
+ * @method parseWithDate
+ * @param stringifiedObj {Number} lower-edgde
+ * @return {Number|undefined} the value, forced to be inbetween the edges. Returns &#x60;undefined&#x60; if &#x60;max&#x60; is lower than &#x60;min&#x60;.
+ */
 JSON.parseWithDate = function(stringifiedObj) {
     return this.parse(stringifiedObj, REVIVER);
+};
+
+/**
+ * Stringifies an object while escaping the &#x27; character. This is needed for storage into a string-object and encapsulate inside a document
+ * to be parsed at the client by using &#x60;parseEscaped&#x60;
+ *
+ * @method stringifyEscaped
+ * @param obj {Number} lower-edgde
+ * @return {Number|undefined} the value, forced to be inbetween the edges. Returns &#x60;undefined&#x60; if &#x60;max&#x60; is lower than &#x60;min&#x60;.
+ */
+JSON.stringifyEscaped = function(obj) {
+    return this.stringify(obj).replace(REGEXP_REPLACE_ADD, &quot;$1\&#x27;&quot;);
+};
+
+/**
+ * Parses anything that was stringified using &#x27;stringifyEscaped&#x27;.
+ *
+ * @method parseEscaped
+ * @param stringifiedObj {String} The string that needs to be parsed into an object
+ * @param [withDate=false] {Boolean} whether parsing should generate true Date-objects
+ * @return {Object} the created object. Will throw an error when parsing fails.
+ */
+JSON.parseEscaped = function(stringifiedObj, withDate) {
+    return this.parse(stringifiedObj.replace(REGEXP_REPLACE_REMOVE, &quot;$1&#x27;&quot;), withDate ? REVIVER : null);
 };
     </pre>
 </div>
