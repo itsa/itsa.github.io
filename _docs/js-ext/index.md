@@ -247,11 +247,8 @@ Ceils a value from zero up.
 ###parseWithDate###
 Parses a stringified object and creates true `Date` properties.
 
-###stringifyEscaped###
-Stringifies an object while escaping the ' character. To be used together with parseEscaped.
-
-###parseEscaped###
-Parses anything that was stringified using 'stringifyEscaped'.
+###stringToDates###
+Transforms `String`-properties into true Date-objects in case they match the Date-syntax.
 
 
 ##Promise extentions##
