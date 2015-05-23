@@ -286,21 +286,16 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_parseEscaped">parseEscaped</a>
+                                <a href="#method_isObject">isObject</a>
 
+                                
+                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
                                 <a href="#method_parseWithDate">parseWithDate</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_stringifyEscaped">stringifyEscaped</a>
 
                                 
                                 
@@ -322,8 +317,8 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_parseEscaped" class="method item">
-    <h3 class="name"><code>parseEscaped</code></h3>
+                    <div id="method_isObject" class="method item">
+    <h3 class="name"><code>isObject</code></h3>
 
     
         <div class="args">
@@ -331,13 +326,13 @@
             
                 <li class="arg">
                     
-                        <code>stringifiedObj</code>
+                        <code>item</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code class="optional">[withDate=false]</code>
+                        <code>clone</code>
                     
                 </li>
             
@@ -347,7 +342,7 @@
 
     
         <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
         </span>
     
 
@@ -357,6 +352,8 @@
 
     
 
+    
+        <span class="flag static">static</span>
     
 
     
@@ -374,7 +371,7 @@
             
         
         
-        <a href="../files/src_js-ext_lib_json.js.html#l48"><code>src&#x2F;js-ext&#x2F;lib&#x2F;json.js:48</code></a>
+        <a href="../files/src_js-ext_lib_json.js.html#l68"><code>src&#x2F;js-ext&#x2F;lib&#x2F;json.js:68</code></a>
         
         </p>
 
@@ -385,7 +382,8 @@
     </div>
 
     <div class="description">
-        <p>Parses anything that was stringified using &#39;stringifyEscaped&#39;.</p>
+        <p>Transforms <code>String</code>-properties into true Date-objects in case they match the Date-syntax.
+To be used whenever you have parsed a JSON.stringified object without a Date-reviver.</p>
 
     </div>
 
@@ -397,14 +395,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">stringifiedObj</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                        <code class="param-name">item</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The string that needs to be parsed into an object</p>
+                        <p>the JSON-parsed object which the date-string fields should be transformed into Dates.</p>
 
                     </div>
 
@@ -413,15 +411,15 @@
             
                 <li class="param">
                     
-                        <code class="param-name optional">[withDate=false]</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                        <code class="param-name">clone</code>
+                        <span class="type">Boolean=false</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>whether parsing should generate true Date-objects</p>
+                        <p>whether to clone <code>item</code> and leave it unspoiled. Cloning means a performancehit,
+better leave it <code>false</code>, which will lead into changing <code>item</code> which in fact will equal the returnvalue.</p>
 
                     </div>
 
@@ -439,9 +437,9 @@
             <div class="returns-description">
                 
                     
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>:
                     
-                    <p>the created object. Will throw an error when parsing fails.</p>
+                    <p>the transormed item</p>
 
                 
             </div>
@@ -498,7 +496,7 @@
             
         
         
-        <a href="../files/src_js-ext_lib_json.js.html#l25"><code>src&#x2F;js-ext&#x2F;lib&#x2F;json.js:25</code></a>
+        <a href="../files/src_js-ext_lib_json.js.html#l57"><code>src&#x2F;js-ext&#x2F;lib&#x2F;json.js:57</code></a>
         
         </p>
 
@@ -522,114 +520,6 @@
                 <li class="param">
                     
                         <code class="param-name">stringifiedObj</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>lower-edgde</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a> | Undefined</span>:
-                    
-                    <p>the value, forced to be inbetween the edges. Returns <code>undefined</code> if <code>max</code> is lower than <code>min</code>.</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_stringifyEscaped" class="method item">
-    <h3 class="name"><code>stringifyEscaped</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>obj</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a> | Undefined</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_js-ext_lib_json.js.html#l36"><code>src&#x2F;js-ext&#x2F;lib&#x2F;json.js:36</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Stringifies an object while escaping the &#39; character. This is needed for storage into a string-object and encapsulate inside a document
-to be parsed at the client by using <code>parseEscaped</code></p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">obj</code>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
                     
 

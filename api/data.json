@@ -15185,7 +15185,7 @@
         },
         {
             "file": "src/js-ext/lib/json.js",
-            "line": 25,
+            "line": 57,
             "description": "Parses a stringified object and creates true `Date` properties.",
             "itemtype": "method",
             "name": "parseWithDate",
@@ -15206,48 +15206,26 @@
         },
         {
             "file": "src/js-ext/lib/json.js",
-            "line": 36,
-            "description": "Stringifies an object while escaping the ' character. This is needed for storage into a string-object and encapsulate inside a document\nto be parsed at the client by using `parseEscaped`",
+            "line": 68,
+            "description": "Transforms `String`-properties into true Date-objects in case they match the Date-syntax.\nTo be used whenever you have parsed a JSON.stringified object without a Date-reviver.",
             "itemtype": "method",
-            "name": "stringifyEscaped",
+            "name": "isObject",
             "params": [
                 {
-                    "name": "obj",
-                    "description": "lower-edgde",
-                    "type": "Number"
-                }
-            ],
-            "return": {
-                "description": "the value, forced to be inbetween the edges. Returns `undefined` if `max` is lower than `min`.",
-                "type": "Number|undefined"
-            },
-            "class": "JSON",
-            "module": "js-ext",
-            "submodule": "lib/json.js"
-        },
-        {
-            "file": "src/js-ext/lib/json.js",
-            "line": 48,
-            "description": "Parses anything that was stringified using 'stringifyEscaped'.",
-            "itemtype": "method",
-            "name": "parseEscaped",
-            "params": [
-                {
-                    "name": "stringifiedObj",
-                    "description": "The string that needs to be parsed into an object",
-                    "type": "String"
+                    "name": "item",
+                    "description": "the JSON-parsed object which the date-string fields should be transformed into Dates.",
+                    "type": "Object|Array"
                 },
                 {
-                    "name": "withDate",
-                    "description": "whether parsing should generate true Date-objects",
-                    "type": "Boolean",
-                    "optional": true,
-                    "optdefault": "false"
+                    "name": "clone",
+                    "description": "whether to clone `item` and leave it unspoiled. Cloning means a performancehit,\nbetter leave it `false`, which will lead into changing `item` which in fact will equal the returnvalue.",
+                    "type": "Boolean=false"
                 }
             ],
+            "static": 1,
             "return": {
-                "description": "the created object. Will throw an error when parsing fails.",
-                "type": "Object"
+                "description": "the transormed item",
+                "type": "Object|Array"
             },
             "class": "JSON",
             "module": "js-ext",

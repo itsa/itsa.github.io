@@ -15031,13 +15031,45 @@ var NAME = '[Function]: ';
 "use strict";
 
 require('polyfill/polyfill-base.js');
+require('./object.js');
 
 
-var REGEXP_REPLACE_ADD = /([\\\\]*)'/g,
-    REGEXP_REPLACE_REMOVE = /([\\\\]*)[\\\\]'/g,
-    REVIVER = function(key, value) {
+var REVIVER = function(key, value) {
      return ((typeof value==='string') && value.toDate()) || value;
-    };
+    },
+    objectStringToDates, arrayStringToDates;
+
+objectStringToDates = function(obj) {
+    var date;
+    obj.each(function(value, key) {
+        if (typeof value==='string') {
+            (date=value.toDate()) && (obj[key]=date);
+        }
+        else if (Object.isObject(value)) {
+            objectStringToDates(value);
+        }
+        else if (Array.isArray(value)) {
+            arrayStringToDates(value);
+        }
+    });
+};
+
+arrayStringToDates = function(array) {
+    var i, len, arrayItem, date;
+    len = array.length;
+    for (i=0; i<len; i++) {
+        arrayItem = array[i];
+        if (typeof arrayItem==='string') {
+            (date=arrayItem.toDate()) && (array[i]=date);
+        }
+        else if (Object.isObject(arrayItem)) {
+            objectStringToDates(arrayItem);
+        }
+        else if (Array.isArray(arrayItem)) {
+            arrayStringToDates(arrayItem);
+        }
+    }
+};
 
 /**
  * Parses a stringified object and creates true `Date` properties.
@@ -15051,29 +15083,27 @@ JSON.parseWithDate = function(stringifiedObj) {
 };
 
 /**
- * Stringifies an object while escaping the ' character. This is needed for storage into a string-object and encapsulate inside a document
- * to be parsed at the client by using `parseEscaped`
- *
- * @method stringifyEscaped
- * @param obj {Number} lower-edgde
- * @return {Number|undefined} the value, forced to be inbetween the edges. Returns `undefined` if `max` is lower than `min`.
- */
-JSON.stringifyEscaped = function(obj) {
-    return this.stringify(obj).replace(REGEXP_REPLACE_ADD, "$1\\'");
+* Transforms `String`-properties into true Date-objects in case they match the Date-syntax.
+* To be used whenever you have parsed a JSON.stringified object without a Date-reviver.
+*
+* @method isObject
+* @param item {Object|Array} the JSON-parsed object which the date-string fields should be transformed into Dates.
+* @param clone {Boolean=false} whether to clone `item` and leave it unspoiled. Cloning means a performancehit,
+* better leave it `false`, which will lead into changing `item` which in fact will equal the returnvalue.
+* @static
+* @return {Object|Array} the transormed item
+*/
+JSON.stringToDates = function (item, clone) {
+    var newItem = clone ? item.deepClone() : item;
+    if (Object.isObject(newItem)) {
+        objectStringToDates(newItem);
+    }
+    else if (Array.isArray(newItem)) {
+        arrayStringToDates(newItem);
+    }
+    return newItem;
 };
-
-/**
- * Parses anything that was stringified using 'stringifyEscaped'.
- *
- * @method parseEscaped
- * @param stringifiedObj {String} The string that needs to be parsed into an object
- * @param [withDate=false] {Boolean} whether parsing should generate true Date-objects
- * @return {Object} the created object. Will throw an error when parsing fails.
- */
-JSON.parseEscaped = function(stringifiedObj, withDate) {
-    return this.parse(stringifiedObj.replace(REGEXP_REPLACE_REMOVE, "$1'"), withDate ? REVIVER : null);
-};
-},{"polyfill/polyfill-base.js":86}],70:[function(require,module,exports){
+},{"./object.js":71,"polyfill/polyfill-base.js":86}],70:[function(require,module,exports){
 /**
  *
  * Extension of Math
