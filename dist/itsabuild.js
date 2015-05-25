@@ -22925,9 +22925,6 @@ module.exports = function (window) {
             var instance = this,
                 prevSuppress = DOCUMENT._suppressMutationEvents || false,
                 vnode = instance.vnode;
-            if (value===undefined) {
-                return;
-            }
             (value==='') && (value=null);
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             ((value!==null) && (value!==undefined)) ? vnode._setAttr(attributeName, value) : vnode._removeAttr(attributeName);
