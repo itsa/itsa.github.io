@@ -314,12 +314,12 @@ deepCloneObj = function (obj, descriptors) {
     return m;
 };
 
-cloneObj = function(obj, descriptors) {
+cloneObj = function(obj, descriptors, target) {
     var copy, i, len, value;
 
     // Handle Array
     if (obj instanceof Array) {
-        copy = [];
+        copy = target || [];
         len = obj.length;
         for (i=0; i&lt;len; i++) {
             value = obj[i];
@@ -499,6 +499,41 @@ valuesAreTheSame = function(value1, value2) {
         return same;
     };
 
+    /**
+     * Sets the items of &#x60;array&#x60; to the instance. This will refill the array, while remaining the instance.
+     * This way, external references to the array-instance remain valid.
+     *
+     * @method defineData
+     * @param array {Array} the Array that holds the new items.
+     * @param [clone=false] {Boolean} whether the items should be cloned
+     * @chainable
+     */
+    ArrayPrototype.defineData = function(array, clone) {
+        var thisArray = this,
+            len, i;
+        thisArray.empty();
+        if (clone) {
+            cloneObj(array, true, thisArray);
+        }
+        else {
+            len = array.length;
+            for (i=0; i&lt;len; i++) {
+                thisArray[i] = array[i];
+            }
+        }
+        return thisArray;
+    },
+
+    /**
+     * Empties the Array by setting its length to zero.
+     *
+     * @method empty
+     * @chainable
+     */
+    ArrayPrototype.empty = function() {
+        this.length = 0;
+        return this;
+    };
 
 }(Array.prototype));
     </pre>

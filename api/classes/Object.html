@@ -238,7 +238,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_js-ext_lib_object.js.html#l117"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:117</code></a>
+            Defined in: <a href="../files/src_js-ext_lib_object.js.html#l148"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:148</code></a>
         </div>
     
 
@@ -291,7 +291,21 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_defineData">defineData</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_each">each</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_empty">empty</a>
 
                                 
                                 
@@ -338,11 +352,20 @@
                                 <a href="#method_merge">merge</a>
 
                                 
+                                    <span class="flag static">static</span>
+                                
                                 
                             </li>
                         
                             <li class="index-item method">
                                 <a href="#method_merge">merge</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_newProto">newProto</a>
 
                                 
                                     <span class="flag static">static</span>
@@ -483,7 +506,7 @@
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l333"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:333</code></a>
+        <a href="../files/src_js-ext_lib_object.js.html#l364"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:364</code></a>
         
         </p>
 
@@ -564,6 +587,121 @@ Will clone all the properties, also the non-enumerable.</p>
 </div>
 
                 
+                    <div id="method_defineData" class="method item">
+    <h3 class="name"><code>defineData</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>obj</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[clone=false]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js-ext_lib_object.js.html#l452"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:452</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Sets the properties of <code>obj</code> to the instance. This will redefine the object, while remaining the instance.
+This way, external references to the object-instance remain valid.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">obj</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the Object that holds the new properties.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[clone=false]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>whether the properties should be cloned</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_each" class="method item">
     <h3 class="name"><code>each</code></h3>
 
@@ -608,7 +746,7 @@ Will clone all the properties, also the non-enumerable.</p>
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l122"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:122</code></a>
+        <a href="../files/src_js-ext_lib_object.js.html#l153"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:153</code></a>
         
         </p>
 
@@ -653,6 +791,63 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
             </ul>
         </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_empty" class="method item">
+    <h3 class="name"><code>empty</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js-ext_lib_object.js.html#l473"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:473</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Empties the Object by deleting all its own properties (also non-enumerable).</p>
+
+    </div>
+
     
 
     
@@ -707,7 +902,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l219"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:219</code></a>
+        <a href="../files/src_js-ext_lib_object.js.html#l250"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:250</code></a>
         
         </p>
 
@@ -804,7 +999,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l261"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:261</code></a>
+        <a href="../files/src_js-ext_lib_object.js.html#l292"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:292</code></a>
         
         </p>
 
@@ -879,7 +1074,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l448"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:448</code></a>
+        <a href="../files/src_js-ext_lib_object.js.html#l492"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:492</code></a>
         
         </p>
 
@@ -952,7 +1147,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l209"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:209</code></a>
+        <a href="../files/src_js-ext_lib_object.js.html#l240"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:240</code></a>
         
         </p>
 
@@ -1035,7 +1230,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l176"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:176</code></a>
+        <a href="../files/src_js-ext_lib_object.js.html#l207"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:207</code></a>
         
         </p>
 
@@ -1119,6 +1314,131 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
                     
                 </li>
             
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_js-ext_lib_object.js.html#l504"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:504</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Returns a new object resulting of merging the properties of the given objects.
+The copying is shallow, complex properties will reference the very same object.
+Properties in later objects do <strong>not overwrite</strong> properties of the same name in earlier objects.
+If any of the objects is missing, it will be skiped.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">obj</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+                        <span class="flag multiple" title="This argument may occur one or more times.">multiple</span>
+                    
+
+                    <div class="param-description">
+                        <p>Objects whose properties are to be merged</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                    
+                    <p>new object with the properties merged in.</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <p> var foo = function (config) {
+      config = Object.merge(config, defaultConfig);
+ }</p>
+
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="method_merge" class="method item">
+    <h3 class="name"><code>merge</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>obj</code>
+                    
+                </li>
+            
                 <li class="arg">
                     
                         <code class="optional">[options]</code>
@@ -1156,7 +1476,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l397"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:397</code></a>
+        <a href="../files/src_js-ext_lib_object.js.html#l403"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:403</code></a>
         
         </p>
 
@@ -1286,8 +1606,8 @@ by those of the second object of the same name, otherwise, they are preserved.</
 </div>
 
                 
-                    <div id="method_merge" class="method item">
-    <h3 class="name"><code>merge</code></h3>
+                    <div id="method_newProto" class="method item">
+    <h3 class="name"><code>newProto</code></h3>
 
     
         <div class="args">
@@ -1296,6 +1616,18 @@ by those of the second object of the same name, otherwise, they are preserved.</
                 <li class="arg">
                     
                         <code>obj</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>proto</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[clone=false]</code>
                     
                 </li>
             
@@ -1334,7 +1666,7 @@ by those of the second object of the same name, otherwise, they are preserved.</
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l475"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:475</code></a>
+        <a href="../files/src_js-ext_lib_object.js.html#l529"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:529</code></a>
         
         </p>
 
@@ -1345,10 +1677,7 @@ by those of the second object of the same name, otherwise, they are preserved.</
     </div>
 
     <div class="description">
-        <p>Returns a new object resulting of merging the properties of the given objects.
-The copying is shallow, complex properties will reference the very same object.
-Properties in later objects do <strong>not overwrite</strong> properties of the same name in earlier objects.
-If any of the objects is missing, it will be skiped.</p>
+        <p>Returns a new object with the prototype specified by <code>proto</code>.</p>
 
     </div>
 
@@ -1365,11 +1694,42 @@ If any of the objects is missing, it will be skiped.</p>
                     
 
                     
-                        <span class="flag multiple" title="This argument may occur one or more times.">multiple</span>
+
+                    <div class="param-description">
+                        <p>source Object</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">proto</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
                     
 
                     <div class="param-description">
-                        <p>Objects whose properties are to be merged</p>
+                        <p>Object that should serve as prototype</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[clone=false]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>whether the sourceobject should be deep-cloned. When false, the properties will be merged.</p>
 
                     </div>
 
@@ -1389,24 +1749,13 @@ If any of the objects is missing, it will be skiped.</p>
                     
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
                     
-                    <p>new object with the properties merged in.</p>
+                    <p>new object with the prototype specified.</p>
 
                 
             </div>
         </div>
     
 
-    
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <p> var foo = function (config) {
-      config = Object.merge(config, defaultConfig);
- }</p>
-
-            </div>
-        </div>
     
 </div>
 
@@ -1506,7 +1855,7 @@ so, they cannot be used.</p>
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l460"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:460</code></a>
+        <a href="../files/src_js-ext_lib_object.js.html#l544"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:544</code></a>
         
         </p>
 
@@ -1575,7 +1924,7 @@ so, they cannot be used.</p>
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l308"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:308</code></a>
+        <a href="../files/src_js-ext_lib_object.js.html#l339"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:339</code></a>
         
         </p>
 
@@ -1684,7 +2033,7 @@ Not by reference, but their content as simple types.</p>
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l274"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:274</code></a>
+        <a href="../files/src_js-ext_lib_object.js.html#l305"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:305</code></a>
         
         </p>
 
@@ -1794,7 +2143,7 @@ Fast, mostly useful for plain hash maps.</p>
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l230"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:230</code></a>
+        <a href="../files/src_js-ext_lib_object.js.html#l261"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:261</code></a>
         
         </p>
 
@@ -1901,7 +2250,7 @@ Fast, mostly useful for plain hash maps.</p>
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l148"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:148</code></a>
+        <a href="../files/src_js-ext_lib_object.js.html#l179"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:179</code></a>
         
         </p>
 
@@ -2015,7 +2364,7 @@ The context to run the callback in can be overriden, otherwise it is undefined.<
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l372"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:372</code></a>
+        <a href="../files/src_js-ext_lib_object.js.html#l378"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:378</code></a>
         
         </p>
 
@@ -2213,7 +2562,7 @@ Uses a polyfill on environments that don&#39;t support native Object.observe.</p
             
         
         
-        <a href="../files/src_js-ext_lib_object.js.html#l241"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:241</code></a>
+        <a href="../files/src_js-ext_lib_object.js.html#l272"><code>src&#x2F;js-ext&#x2F;lib&#x2F;object.js:272</code></a>
         
         </p>
 
