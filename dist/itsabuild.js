@@ -14768,12 +14768,12 @@ deepCloneObj = function (obj, descriptors) {
     return m;
 };
 
-cloneObj = function(obj, descriptors) {
+cloneObj = function(obj, descriptors, target) {
     var copy, i, len, value;
 
     // Handle Array
     if (obj instanceof Array) {
-        copy = [];
+        copy = target || [];
         len = obj.length;
         for (i=0; i<len; i++) {
             value = obj[i];
@@ -14953,6 +14953,41 @@ valuesAreTheSame = function(value1, value2) {
         return same;
     };
 
+    /**
+     * Sets the items of `array` to the instance. This will refill the array, while remaining the instance.
+     * This way, external references to the array-instance remain valid.
+     *
+     * @method defineData
+     * @param array {Array} the Array that holds the new items.
+     * @param [clone=false] {Boolean} whether the items should be cloned
+     * @chainable
+     */
+    ArrayPrototype.defineData = function(array, clone) {
+        var thisArray = this,
+            len, i;
+        thisArray.empty();
+        if (clone) {
+            cloneObj(array, true, thisArray);
+        }
+        else {
+            len = array.length;
+            for (i=0; i<len; i++) {
+                thisArray[i] = array[i];
+            }
+        }
+        return thisArray;
+    },
+
+    /**
+     * Empties the Array by setting its length to zero.
+     *
+     * @method empty
+     * @chainable
+     */
+    ArrayPrototype.empty = function() {
+        this.length = 0;
+        return this;
+    };
 
 }(Array.prototype));
 },{"js-ext/extra/hashmap.js":61,"polyfill/polyfill-base.js":86}],68:[function(require,module,exports){
@@ -15206,6 +15241,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap,
             value: method
         });
     },
+
     defineProperties = function (object, map, force) {
         var names = Object.keys(map),
             l = names.length,
@@ -15276,7 +15312,37 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap,
             same = (value1===value2);
         }
         return same;
+    },
+
+    deepCloneObj = function (source, target, descriptors, proto) {
+        var m = target || Object.create(proto || Object.getPrototypeOf(source)),
+            keys = Object.getOwnPropertyNames(source),
+            l = keys.length,
+            i = -1,
+            key, value, propDescriptor;
+        // loop through the members:
+        while (++i < l) {
+            key = keys[i];
+            value = source[key];
+            if (descriptors) {
+                propDescriptor = Object.getOwnPropertyDescriptor(source, key);
+                if (propDescriptor.writable) {
+                    Object.defineProperty(m, key, propDescriptor);
+                }
+                if ((Object.isObject(value) || Array.isArray(value)) && ((typeof propDescriptor.get)!=='function') && ((typeof propDescriptor.set)!=='function')) {
+                    m[key] = cloneObj(value, descriptors);
+                }
+                else {
+                    m[key] = value;
+                }
+            }
+            else {
+                m[key] = (Object.isObject(value) || Array.isArray(value)) ? cloneObj(value, descriptors) : value;
+            }
+        }
+        return m;
     };
+
 
 /**
  * Pollyfils for often used functionality for objects
@@ -15505,34 +15571,9 @@ defineProperties(Object.prototype, {
      * @return {Object} deep-copy of the original
      */
     deepClone: function (descriptors, proto) {
-        var instance = this,
-            m = Object.create(proto || Object.getPrototypeOf(instance)),
-            keys = Object.getOwnPropertyNames(instance),
-            l = keys.length,
-            i = -1,
-            key, value, propDescriptor;
-        // loop through the members:
-        while (++i < l) {
-            key = keys[i];
-            value = instance[key];
-            if (descriptors) {
-                propDescriptor = Object.getOwnPropertyDescriptor(instance, key);
-                if (propDescriptor.writable) {
-                    Object.defineProperty(m, key, propDescriptor);
-                }
-                if ((Object.isObject(value) || Array.isArray(value)) && ((typeof propDescriptor.get)!=='function') && ((typeof propDescriptor.set)!=='function')) {
-                    m[key] = cloneObj(value, descriptors);
-                }
-                else {
-                    m[key] = value;
-                }
-            }
-            else {
-                m[key] = (Object.isObject(value) || Array.isArray(value)) ? cloneObj(value, descriptors) : value;
-            }
-        }
-        return m;
+        return deepCloneObj(this, null, descriptors, proto);
     },
+
     /**
      * Transforms the object into an array with  'key/value' objects
      *
@@ -15605,6 +15646,44 @@ defineProperties(Object.prototype, {
             }
         }
         return instance;
+    },
+
+    /**
+     * Sets the properties of `obj` to the instance. This will redefine the object, while remaining the instance.
+     * This way, external references to the object-instance remain valid.
+     *
+     * @method defineData
+     * @param obj {Object} the Object that holds the new properties.
+     * @param [clone=false] {Boolean} whether the properties should be cloned
+     * @chainable
+     */
+    defineData: function(obj, clone) {
+        var thisObj = this;
+        thisObj.empty();
+        if (clone) {
+            deepCloneObj(obj, thisObj, true);
+        }
+        else {
+            thisObj.merge(obj);
+        }
+        return thisObj;
+    },
+
+    /**
+     * Empties the Object by deleting all its own properties (also non-enumerable).
+     *
+     * @method empty
+     * @chainable
+     */
+    empty: function() {
+        var thisObj = this,
+            props = Object.getOwnPropertyNames(thisObj),
+            len = props.length,
+            i;
+        for (i=0; i<len; i++) {
+            delete thisObj[props[i]];
+        }
+        return thisObj;
     }
 
 });
@@ -15619,21 +15698,6 @@ defineProperties(Object.prototype, {
 Object.isObject = function (item) {
    // cautious: some browsers detect Promises as [object Object] --> we always need to check instance of :(
    return !!(!TYPES[typeof item] && !TYPES[({}.toString).call(item)] && item && (!(item instanceof Promise)));
-};
-
-/**
- * Creates a protected property on the object.
- *
- * @method protectedProp
- * @static
- */
-Object.protectedProp = function(obj, property, value) {
-    Object.defineProperty(obj, property, {
-        configurable: false,
-        enumerable: false,
-        writable: false,
-        value: value
-    });
 };
 
 /**
@@ -15653,12 +15717,42 @@ Object.protectedProp = function(obj, property, value) {
  * @param obj* {Object} Objects whose properties are to be merged
  * @return {Object} new object with the properties merged in.
  */
-Object.merge = function () {
+Object.merge = function() {
     var m = {};
     Array.prototype.forEach.call(arguments, function (obj) {
         if (obj) m.merge(obj);
     });
     return m;
+};
+
+/**
+ * Returns a new object with the prototype specified by `proto`.
+ *
+ *
+ * @method newProto
+ * @static
+ * @param obj {Object} source Object
+ * @param proto {Object} Object that should serve as prototype
+ * @param [clone=false] {Boolean} whether the sourceobject should be deep-cloned. When false, the properties will be merged.
+ * @return {Object} new object with the prototype specified.
+ */
+Object.newProto = function(obj, proto, clone) {
+    return clone ? obj.deepClone(true, proto) : Object.create(proto).merge(obj);
+};
+
+/**
+ * Creates a protected property on the object.
+ *
+ * @method protectedProp
+ * @static
+ */
+Object.protectedProp = function(obj, property, value) {
+    Object.defineProperty(obj, property, {
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: value
+    });
 };
 },{"js-ext/extra/hashmap.js":61,"polyfill/lib/promise.js":83,"polyfill/polyfill-base.js":86}],72:[function(require,module,exports){
 "use strict";

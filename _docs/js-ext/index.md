@@ -139,6 +139,14 @@ console.log(a);
 Compares this object with the reference-object whether they have the same value. Not by reference, but their content as simple types.
 
 
+###defineData###
+Sets the properties of `obj` to the instance. This will redefine the object, while remaining the instance.
+
+
+###empty###
+Empties the Object by deleting all its own properties (also non-enumerable).
+
+
 ### Object.merge
 
 _(static method)_
@@ -165,6 +173,24 @@ Returns true when an object passed. Will return false for Array, Functions, RegE
     var a = {};
     isObj = Object.isObject(a);
 ```
+
+
+### Object.newProto
+
+_(static method)_
+
+Returns a new object with the prototype specified by `proto`.
+
+```js
+    var a = {
+        b: 10;
+    };
+    var proto = {
+        c: 20;
+    };
+    newObj = Object.newProto(a, proto);
+```
+
 
 ##String extensions##
 
@@ -226,6 +252,13 @@ Returns a deep copy of the Array. Only handles members of primary types, Dates, 
 
 ###shuffle###
 Shuffles the items in the Array randomly.
+
+###defineData###
+Sets the items of `array` to the instance. This will refill the array, while remaining the instance.
+
+
+###empty###
+Empties the Array by setting its length to zero.
 
 
 ##Math extensions##

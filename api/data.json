@@ -1140,7 +1140,7 @@
             "module": "js-ext",
             "namespace": "",
             "file": "src/js-ext/lib/object.js",
-            "line": 117,
+            "line": 148,
             "description": "Pollyfils for often used functionality for Objects\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "lib/array.js": {
@@ -1704,7 +1704,7 @@
             "submodule": "lib/object.js",
             "namespace": "",
             "file": "src/js-ext/lib/object.js",
-            "line": 117,
+            "line": 148,
             "description": "Pollyfils for often used functionality for objects"
         },
         "Array": {
@@ -15156,6 +15156,42 @@
             "submodule": "lib/array.js"
         },
         {
+            "file": "src/js-ext/lib/array.js",
+            "line": 266,
+            "description": "Sets the items of `array` to the instance. This will refill the array, while remaining the instance.\nThis way, external references to the array-instance remain valid.",
+            "itemtype": "method",
+            "name": "defineData",
+            "params": [
+                {
+                    "name": "array",
+                    "description": "the Array that holds the new items.",
+                    "type": "Array"
+                },
+                {
+                    "name": "clone",
+                    "description": "whether the items should be cloned",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "chainable": 1,
+            "class": "Array",
+            "module": "js-ext",
+            "submodule": "lib/array.js"
+        },
+        {
+            "file": "src/js-ext/lib/array.js",
+            "line": 291,
+            "description": "Empties the Array by setting its length to zero.",
+            "itemtype": "method",
+            "name": "empty",
+            "chainable": 1,
+            "class": "Array",
+            "module": "js-ext",
+            "submodule": "lib/array.js"
+        },
+        {
             "file": "src/js-ext/lib/function.js",
             "line": 21,
             "description": "Sets the context of which the function will be execute. in the\nsupplied object's context, optionally adding any additional\nsupplied parameters to the end of the arguments the function\nis executed with.",
@@ -15312,7 +15348,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 122,
+            "line": 153,
             "description": "Loops through all properties in the object.  Equivalent to Array.forEach.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "each",
@@ -15330,7 +15366,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 148,
+            "line": 179,
             "description": "Loops through the properties in an object until the callback function returns *truish*.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe order in which the elements are visited is not predictable.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "some",
@@ -15351,7 +15387,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 176,
+            "line": 207,
             "description": "Loops through the properties in an object until the callback assembling a new object\nwith its properties set to the values returned by the callback function.\nIf the callback function returns `undefined` the property will not be copied to the new object.\nThe resulting object will have the same keys as the original, except for those where the callback\nreturned `undefined` which will have dissapeared.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "map",
@@ -15372,7 +15408,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 209,
+            "line": 240,
             "description": "Returns the keys of the object: the enumerable properties.",
             "itemtype": "method",
             "name": "keys",
@@ -15386,7 +15422,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 219,
+            "line": 250,
             "description": "Checks whether the given property is a key: an enumerable property.",
             "itemtype": "method",
             "name": "hasKey",
@@ -15407,7 +15443,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 230,
+            "line": 261,
             "description": "Returns the number of keys of the object",
             "itemtype": "method",
             "name": "size",
@@ -15428,7 +15464,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 241,
+            "line": 272,
             "description": "Loops through the object collection the values of all its properties.\nIt is the counterpart of the [`keys`](#method_keys).",
             "itemtype": "method",
             "name": "values",
@@ -15442,7 +15478,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 261,
+            "line": 292,
             "description": "Returns true if the object has no own members",
             "itemtype": "method",
             "name": "isEmpty",
@@ -15456,7 +15492,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 274,
+            "line": 305,
             "description": "Returns a shallow copy of the object.\nIt does not clone objects within the object, it does a simple, shallow clone.\nFast, mostly useful for plain hash maps.",
             "itemtype": "method",
             "name": "shallowClone",
@@ -15479,7 +15515,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 308,
+            "line": 339,
             "description": "Compares this object with the reference-object whether they have the same value.\nNot by reference, but their content as simple types.\n\nCompares both JSON.stringify objects",
             "itemtype": "method",
             "name": "sameValue",
@@ -15500,7 +15536,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 333,
+            "line": 364,
             "description": "Returns a deep copy of the object.\nOnly handles members of primary types, Dates, Arrays and Objects.\nWill clone all the properties, also the non-enumerable.",
             "itemtype": "method",
             "name": "deepClone",
@@ -15529,7 +15565,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 372,
+            "line": 378,
             "description": "Transforms the object into an array with  'key/value' objects",
             "example": [
                 "\n{country: 'USA', Continent: 'North America'} --> [{key: 'country', value: 'USA'}, {key: 'Continent', value: 'North America'}]"
@@ -15568,7 +15604,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 397,
+            "line": 403,
             "description": "Merges into this object the properties of the given object.\nIf the second argument is true, the properties on the source object will be overwritten\nby those of the second object of the same name, otherwise, they are preserved.",
             "itemtype": "method",
             "name": "merge",
@@ -15622,7 +15658,43 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 448,
+            "line": 452,
+            "description": "Sets the properties of `obj` to the instance. This will redefine the object, while remaining the instance.\nThis way, external references to the object-instance remain valid.",
+            "itemtype": "method",
+            "name": "defineData",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "the Object that holds the new properties.",
+                    "type": "Object"
+                },
+                {
+                    "name": "clone",
+                    "description": "whether the properties should be cloned",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "chainable": 1,
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "lib/object.js"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 473,
+            "description": "Empties the Object by deleting all its own properties (also non-enumerable).",
+            "itemtype": "method",
+            "name": "empty",
+            "chainable": 1,
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "lib/object.js"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 492,
             "description": "Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object",
             "itemtype": "method",
             "name": "isObject",
@@ -15637,18 +15709,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 460,
-            "description": "Creates a protected property on the object.",
-            "itemtype": "method",
-            "name": "protectedProp",
-            "static": 1,
-            "class": "Object",
-            "module": "js-ext",
-            "submodule": "lib/object.js"
-        },
-        {
-            "file": "src/js-ext/lib/object.js",
-            "line": 475,
+            "line": 504,
             "description": "Returns a new object resulting of merging the properties of the given objects.\nThe copying is shallow, complex properties will reference the very same object.\nProperties in later objects do **not overwrite** properties of the same name in earlier objects.\nIf any of the objects is missing, it will be skiped.",
             "example": [
                 "\n\n var foo = function (config) {\n      config = Object.merge(config, defaultConfig);\n }"
@@ -15668,6 +15729,51 @@
                 "description": "new object with the properties merged in.",
                 "type": "Object"
             },
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "lib/object.js"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 529,
+            "description": "Returns a new object with the prototype specified by `proto`.",
+            "itemtype": "method",
+            "name": "newProto",
+            "static": 1,
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "source Object",
+                    "type": "Object"
+                },
+                {
+                    "name": "proto",
+                    "description": "Object that should serve as prototype",
+                    "type": "Object"
+                },
+                {
+                    "name": "clone",
+                    "description": "whether the sourceobject should be deep-cloned. When false, the properties will be merged.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "new object with the prototype specified.",
+                "type": "Object"
+            },
+            "class": "Object",
+            "module": "js-ext",
+            "submodule": "lib/object.js"
+        },
+        {
+            "file": "src/js-ext/lib/object.js",
+            "line": 544,
+            "description": "Creates a protected property on the object.",
+            "itemtype": "method",
+            "name": "protectedProp",
+            "static": 1,
             "class": "Object",
             "module": "js-ext",
             "submodule": "lib/object.js"
