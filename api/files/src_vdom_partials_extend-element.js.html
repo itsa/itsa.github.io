@@ -302,6 +302,7 @@ module.exports = function (window) {
         BORDERBOX = ITSA_+&#x27;borderbox&#x27;,
         NO_TRANS = ITSA_+&#x27;notrans&#x27;,
         NO_TRANS2 = NO_TRANS+&#x27;2&#x27;, // needed to prevent removal of NO_TRANS when still needed &#x60;notrans&#x60;
+        ITSA_NODISPLAY = ITSA_+&#x27;nodisplay&#x27;,
         INVISIBLE = ITSA_+&#x27;invisible&#x27;,
         INVISIBLE_RELATIVE = INVISIBLE+&#x27;-relative&#x27;,
         INVISIBLE_UNFOCUSABLE = INVISIBLE+&#x27;-unfocusable&#x27;,
@@ -1231,11 +1232,14 @@ module.exports = function (window) {
             var instance = this,
                 vnode = instance.vnode,
                 prevSuppress = DOCUMENT._suppressMutationEvents || false,
-                i, len, item, createdElement, vnodes, vRefElement, _scripts, scriptcontent,
+                i, len, item, createdElement, vnodes, vRefElement, _scripts, scriptcontent, hasDisplayNode,
             doAppend = function(oneItem) {
                 escape &amp;&amp; (oneItem.nodeType===1) &amp;&amp; (oneItem=DOCUMENT.createTextNode(oneItem.getOuterHTML()));
                 createdElement = refElement ? vnode._insertBefore(oneItem.vnode, refElement.vnode) : vnode._appendChild(oneItem.vnode);
             };
+            // for optimum performance, we &quot;disply: block&quot; the parent node, so that repainting the dom only happens once (when displayed again)
+            hasDisplayNode = instance.hasClass(ITSA_NODISPLAY);
+            hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
             silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(true);
             vnode._noSync()._normalizable(false);
             if (refElement &amp;&amp; (vnode.vChildNodes.indexOf(refElement.vnode)!==-1)) {
@@ -1276,6 +1280,7 @@ module.exports = function (window) {
             }
             vnode._normalizable(true)._normalize();
             silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(prevSuppress);
+            hasDisplayNode || instance.removeClass(ITSA_NODISPLAY);
             return createdElement;
         };
 
@@ -2527,13 +2532,16 @@ module.exports = function (window) {
             var instance = this,
                 vnode = instance.vnode,
                 prevSuppress = DOCUMENT._suppressMutationEvents || false,
-                i, len, item, createdElement, vnodes, vChildNodes, _scripts, scriptcontent,
+                i, len, item, createdElement, vnodes, vChildNodes, _scripts, scriptcontent, hasDisplayNode,
             doPrepend = function(oneItem) {
                 escape &amp;&amp; (oneItem.nodeType===1) &amp;&amp; (oneItem=DOCUMENT.createTextNode(oneItem.getOuterHTML()));
                 createdElement = refElement ? vnode._insertBefore(oneItem.vnode, refElement.vnode) : vnode._appendChild(oneItem.vnode);
                 // CAUTIOUS: when using TextNodes, they might get merged (vnode._normalize does this), which leads into disappearance of refElement:
                 refElement = createdElement;
             };
+            // for optimum performance, we &quot;disply: block&quot; the parent node, so that repainting the dom only happens once (when displayed again)
+            hasDisplayNode = instance.hasClass(ITSA_NODISPLAY);
+            hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
             silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(true);
             vnode._noSync()._normalizable(false);
             if (!refElement) {
@@ -2581,6 +2589,7 @@ module.exports = function (window) {
             }
             vnode._normalizable(true)._normalize();
             silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(prevSuppress);
+            hasDisplayNode || instance.removeClass(ITSA_NODISPLAY);
             return createdElement;
         };
 
@@ -3458,10 +3467,15 @@ module.exports = function (window) {
          */
         ElementPrototype.setHTML = function(val, silent, allowScripts) {
             var instance = this,
-                prevSuppress = DOCUMENT._suppressMutationEvents || false;
+                prevSuppress = DOCUMENT._suppressMutationEvents || false,
+                hasDisplayNode;
+            // for optimum performance, we &quot;disply: block&quot; the parent node, so that repainting the dom only happens once (when displayed again)
+            hasDisplayNode = instance.hasClass(ITSA_NODISPLAY);
+            hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
             silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(true);
             instance.vnode.setHTML(val, null, allowScripts);
             silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(prevSuppress);
+            hasDisplayNode || instance.removeClass(ITSA_NODISPLAY);
             return instance;
         };
 
@@ -3766,10 +3780,15 @@ module.exports = function (window) {
          */
         ElementPrototype.setOuterHTML = function(val, silent) {
             var instance = this,
-                prevSuppress = DOCUMENT._suppressMutationEvents || false;
+                prevSuppress = DOCUMENT._suppressMutationEvents || false,
+                hasDisplayNode;
+            // for optimum performance, we &quot;disply: block&quot; the parent node, so that repainting the dom only happens once (when displayed again)
+            hasDisplayNode = instance.hasClass(ITSA_NODISPLAY);
+            hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
             silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(true);
             instance.vnode.outerHTML = val;
             silent &amp;&amp; DOCUMENT.suppressMutationEvents &amp;&amp; DOCUMENT.suppressMutationEvents(prevSuppress);
+            hasDisplayNode || instance.removeClass(ITSA_NODISPLAY);
             return instance;
         };
 
