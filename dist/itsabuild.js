@@ -18517,7 +18517,7 @@ module.exports.later = function (callbackFn, timeout, periodic) {
 };
 }).call(this,require('_process'))
 },{"_process":106,"polyfill/polyfill-base.js":86}],94:[function(require,module,exports){
-var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-nodisplay {\n    display: none; !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-nodisplay {\n    display: none !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],95:[function(require,module,exports){
 "use strict";
 
@@ -19994,6 +19994,7 @@ module.exports = function (window) {
         BORDERBOX = ITSA_+'borderbox',
         NO_TRANS = ITSA_+'notrans',
         NO_TRANS2 = NO_TRANS+'2', // needed to prevent removal of NO_TRANS when still needed `notrans`
+        ITSA_NODISPLAY = ITSA_+'nodisplay',
         INVISIBLE = ITSA_+'invisible',
         INVISIBLE_RELATIVE = INVISIBLE+'-relative',
         INVISIBLE_UNFOCUSABLE = INVISIBLE+'-unfocusable',
@@ -20923,11 +20924,14 @@ module.exports = function (window) {
             var instance = this,
                 vnode = instance.vnode,
                 prevSuppress = DOCUMENT._suppressMutationEvents || false,
-                i, len, item, createdElement, vnodes, vRefElement, _scripts, scriptcontent,
+                i, len, item, createdElement, vnodes, vRefElement, _scripts, scriptcontent, hasDisplayNode,
             doAppend = function(oneItem) {
                 escape && (oneItem.nodeType===1) && (oneItem=DOCUMENT.createTextNode(oneItem.getOuterHTML()));
                 createdElement = refElement ? vnode._insertBefore(oneItem.vnode, refElement.vnode) : vnode._appendChild(oneItem.vnode);
             };
+            // for optimum performance, we "disply: block" the parent node, so that repainting the dom only happens once (when displayed again)
+            hasDisplayNode = instance.hasClass(ITSA_NODISPLAY);
+            hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             vnode._noSync()._normalizable(false);
             if (refElement && (vnode.vChildNodes.indexOf(refElement.vnode)!==-1)) {
@@ -20968,6 +20972,7 @@ module.exports = function (window) {
             }
             vnode._normalizable(true)._normalize();
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(prevSuppress);
+            hasDisplayNode || instance.removeClass(ITSA_NODISPLAY);
             return createdElement;
         };
 
@@ -22219,13 +22224,16 @@ module.exports = function (window) {
             var instance = this,
                 vnode = instance.vnode,
                 prevSuppress = DOCUMENT._suppressMutationEvents || false,
-                i, len, item, createdElement, vnodes, vChildNodes, _scripts, scriptcontent,
+                i, len, item, createdElement, vnodes, vChildNodes, _scripts, scriptcontent, hasDisplayNode,
             doPrepend = function(oneItem) {
                 escape && (oneItem.nodeType===1) && (oneItem=DOCUMENT.createTextNode(oneItem.getOuterHTML()));
                 createdElement = refElement ? vnode._insertBefore(oneItem.vnode, refElement.vnode) : vnode._appendChild(oneItem.vnode);
                 // CAUTIOUS: when using TextNodes, they might get merged (vnode._normalize does this), which leads into disappearance of refElement:
                 refElement = createdElement;
             };
+            // for optimum performance, we "disply: block" the parent node, so that repainting the dom only happens once (when displayed again)
+            hasDisplayNode = instance.hasClass(ITSA_NODISPLAY);
+            hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             vnode._noSync()._normalizable(false);
             if (!refElement) {
@@ -22273,6 +22281,7 @@ module.exports = function (window) {
             }
             vnode._normalizable(true)._normalize();
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(prevSuppress);
+            hasDisplayNode || instance.removeClass(ITSA_NODISPLAY);
             return createdElement;
         };
 
@@ -23150,10 +23159,15 @@ module.exports = function (window) {
          */
         ElementPrototype.setHTML = function(val, silent, allowScripts) {
             var instance = this,
-                prevSuppress = DOCUMENT._suppressMutationEvents || false;
+                prevSuppress = DOCUMENT._suppressMutationEvents || false,
+                hasDisplayNode;
+            // for optimum performance, we "disply: block" the parent node, so that repainting the dom only happens once (when displayed again)
+            hasDisplayNode = instance.hasClass(ITSA_NODISPLAY);
+            hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             instance.vnode.setHTML(val, null, allowScripts);
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(prevSuppress);
+            hasDisplayNode || instance.removeClass(ITSA_NODISPLAY);
             return instance;
         };
 
@@ -23458,10 +23472,15 @@ module.exports = function (window) {
          */
         ElementPrototype.setOuterHTML = function(val, silent) {
             var instance = this,
-                prevSuppress = DOCUMENT._suppressMutationEvents || false;
+                prevSuppress = DOCUMENT._suppressMutationEvents || false,
+                hasDisplayNode;
+            // for optimum performance, we "disply: block" the parent node, so that repainting the dom only happens once (when displayed again)
+            hasDisplayNode = instance.hasClass(ITSA_NODISPLAY);
+            hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             instance.vnode.outerHTML = val;
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(prevSuppress);
+            hasDisplayNode || instance.removeClass(ITSA_NODISPLAY);
             return instance;
         };
 
