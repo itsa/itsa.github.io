@@ -23166,15 +23166,13 @@ module.exports = function (window) {
          */
         ElementPrototype.setHTML = function(val, silent, allowScripts) {
             var instance = this,
-                prevSuppress = DOCUMENT._suppressMutationEvents || false,
-                hasDisplayNode;
-            // for optimum performance, we "disply: block" the parent node, so that repainting the dom only happens once (when displayed again)
-            hasDisplayNode = instance.hasClass(ITSA_NODISPLAY);
-            hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
+                prevSuppress = DOCUMENT._suppressMutationEvents || false;
+            // DO NOT use "display: block" the parent node (as with append/prepend), for itags mostly re-setHTML without changes
+            // that would lead to more delay when we want
+            // hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             instance.vnode.setHTML(val, null, allowScripts);
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(prevSuppress);
-            hasDisplayNode || instance.removeClass(ITSA_NODISPLAY);
             return instance;
         };
 
@@ -23479,15 +23477,10 @@ module.exports = function (window) {
          */
         ElementPrototype.setOuterHTML = function(val, silent) {
             var instance = this,
-                prevSuppress = DOCUMENT._suppressMutationEvents || false,
-                hasDisplayNode;
-            // for optimum performance, we "disply: block" the parent node, so that repainting the dom only happens once (when displayed again)
-            hasDisplayNode = instance.hasClass(ITSA_NODISPLAY);
-            hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
+                prevSuppress = DOCUMENT._suppressMutationEvents || false;
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             instance.vnode.outerHTML = val;
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(prevSuppress);
-            hasDisplayNode || instance.removeClass(ITSA_NODISPLAY);
             return instance;
         };
 
