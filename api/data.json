@@ -14719,7 +14719,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 247,
+            "line": 254,
             "description": "Removes the specified prototypes from the Class.",
             "itemtype": "method",
             "name": "removePrototypes",
@@ -14737,7 +14737,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 266,
+            "line": 273,
             "description": "Redefines the constructor fo the Class",
             "itemtype": "method",
             "name": "setConstructor",
@@ -14769,7 +14769,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 288,
+            "line": 295,
             "description": "Returns a newly created class inheriting from this class\nusing the given `constructor` with the\nprototypes listed in `prototypes` merged in.\n\n\nThe newly created class has the `$$super` static property\navailable to access all of is ancestor's instance methods.\n\nFurther methods can be added via the [mergePrototypes](#method_mergePrototypes).",
             "example": [
                 "\n\n var Circle = Shape.subClass(\n     function (x, y, r) {\n         // arguments will automaticly be passed through to Shape's constructor\n         this.r = r;\n     },\n     {\n         area: function () {\n             return this.r * this.r * Math.PI;\n         }\n     }\n );"
@@ -14806,7 +14806,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 391,
+            "line": 398,
             "description": "Base properties for every Class",
             "itemtype": "property",
             "name": "BASE_MEMBERS",
@@ -14820,7 +14820,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 401,
+            "line": 408,
             "description": "Transformed from `destroy` --> when `destroy` gets invoked, the instance will invoke `_destroy` through the whole chain.\nDefaults to `NOOP`, so that it can be always be invoked.",
             "itemtype": "method",
             "name": "_destroy",
@@ -14834,7 +14834,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 412,
+            "line": 419,
             "description": "Transformed from `destroy` --> when `destroy` gets invoked, the instance will invoke `_destroy` through the whole chain.\nDefaults to `NOOP`, so that it can be always be invoked.",
             "itemtype": "method",
             "name": "afterInit",
@@ -14848,7 +14848,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 423,
+            "line": 430,
             "description": "Calls `_destroy` on through the class-chain on every level (bottom-up).\n_destroy gets defined when the itag defines `destroy` --> transformation under the hood.",
             "itemtype": "method",
             "name": "destroy",
@@ -14869,7 +14869,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 453,
+            "line": 460,
             "description": "Returns the instance, yet sets an internal flag to a higher Class (1 level up)",
             "itemtype": "property",
             "name": "$super",
@@ -14881,7 +14881,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 471,
+            "line": 478,
             "description": "Calculated value of the specified member at the parent-Class.",
             "itemtype": "method",
             "name": "$superProp",
@@ -14896,7 +14896,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 510,
+            "line": 517,
             "description": "Invokes the original method (from inside where $orig is invoked).\nAny arguments will be passed through to the original method.",
             "itemtype": "method",
             "name": "$orig",
@@ -14911,7 +14911,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 570,
+            "line": 577,
             "description": "Creates the base Class: the highest Class in the hierarchy of all Classes.\nWill get extra properties merge into its prototype, which leads into the formation of `BaseClass`.",
             "itemtype": "method",
             "name": "createBaseClass",
@@ -14928,7 +14928,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 585,
+            "line": 592,
             "description": "The base BaseClass: the highest Class in the hierarchy of all Classes.",
             "itemtype": "property",
             "name": "BaseClass",
@@ -14940,7 +14940,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 597,
+            "line": 604,
             "description": "Returns a base class with the given constructor and prototype methods",
             "itemtype": "method",
             "name": "createClass",

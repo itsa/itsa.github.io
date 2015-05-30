@@ -13733,11 +13733,18 @@ require('../lib/object.js');
         /*jshint +W083 */
                                     // this.$own = prot;
                                     // this.$origMethods = instance.$$orig[finalMethodName];
-                                    var context = this,
-                                        classCarierBkp = context.__classCarier__,
-                                        methodClassCarierBkp = context.__methodClassCarier__,
-                                        origPropBkp = context.__origProp__,
-                                        returnValue;
+                                    var context, classCarierBkp, methodClassCarierBkp, origPropBkp, returnValue;
+                                    // in some specific situations, this method is called without context.
+                                    // can't figure out why (it happens when itable changes some of its its item-values)
+                                    // probably reasson is that itable.model.items is not the same as itable.getData('_items')
+                                    // anyway: to prevent errors here, we must return when there is no context:
+                                    context = this;
+                                    if (!context) {
+                                        return;
+                                    }
+                                    classCarierBkp = context.__classCarier__;
+                                    methodClassCarierBkp = context.__methodClassCarier__;
+                                    origPropBkp = context.__origProp__;
 
                                     context.__methodClassCarier__ = instance;
 
