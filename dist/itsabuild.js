@@ -20937,8 +20937,6 @@ module.exports = function (window) {
                 createdElement = refElement ? vnode._insertBefore(oneItem.vnode, refElement.vnode) : vnode._appendChild(oneItem.vnode);
             };
             // for optimum performance, we "disply: block" the parent node, so that repainting the dom only happens once (when displayed again)
-            hasDisplayNode = instance.hasClass(ITSA_NODISPLAY);
-            hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             vnode._noSync()._normalizable(false);
             if (refElement && (vnode.vChildNodes.indexOf(refElement.vnode)!==-1)) {
@@ -20947,6 +20945,8 @@ module.exports = function (window) {
             }
             (typeof content===STRING) && (content=htmlToVFragments(content, vnode.ns, allowScripts));
             if (content.isFragment) {
+                hasDisplayNode = instance.hasClass(ITSA_NODISPLAY);
+                hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
                 vnodes = content.vnodes;
                 len = vnodes.length;
                 for (i=0; i<len; i++) {
@@ -20966,20 +20966,25 @@ module.exports = function (window) {
                 }
                 // in case a style-tag was added, we need to cleanup double definitions:
                 content._cleanupStyle && vnode._cleanupStyle();
+                vnode._normalizable(true)._normalize();
+                hasDisplayNode || instance.removeClass(ITSA_NODISPLAY);
             }
             else if (Array.isArray(content)) {
+                hasDisplayNode = instance.hasClass(ITSA_NODISPLAY);
+                hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
                 len = content.length;
                 for (i=0; i<len; i++) {
                     item = content[i];
                     doAppend(item);
                 }
+                vnode._normalizable(true)._normalize();
+                hasDisplayNode || instance.removeClass(ITSA_NODISPLAY);
             }
             else {
                 doAppend(content);
+                vnode._normalizable(true)._normalize();
             }
-            vnode._normalizable(true)._normalize();
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(prevSuppress);
-            hasDisplayNode || instance.removeClass(ITSA_NODISPLAY);
             return createdElement;
         };
 
@@ -22239,8 +22244,6 @@ module.exports = function (window) {
                 refElement = createdElement;
             };
             // for optimum performance, we "disply: block" the parent node, so that repainting the dom only happens once (when displayed again)
-            hasDisplayNode = instance.hasClass(ITSA_NODISPLAY);
-            hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(true);
             vnode._noSync()._normalizable(false);
             if (!refElement) {
@@ -22254,6 +22257,8 @@ module.exports = function (window) {
             }
             (typeof content===STRING) && (content=htmlToVFragments(content, vnode.ns, allowScripts));
             if (content.isFragment) {
+                hasDisplayNode = instance.hasClass(ITSA_NODISPLAY);
+                hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
                 vnodes = content.vnodes;
                 len = vnodes.length;
                 // to manage TextNodes which might get merged, we loop downwards:
@@ -22274,21 +22279,26 @@ module.exports = function (window) {
                 }
                 // in case a style-tag was added, we need to cleanup double definitions:
                 content._cleanupStyle && vnode._cleanupStyle();
+                vnode._normalizable(true)._normalize();
+                hasDisplayNode || instance.removeClass(ITSA_NODISPLAY);
             }
             else if (Array.isArray(content)) {
+                hasDisplayNode = instance.hasClass(ITSA_NODISPLAY);
+                hasDisplayNode || instance.setClass(ITSA_NODISPLAY);
                 len = content.length;
                 // to manage TextNodes which might get merged, we loop downwards:
                 for (i=len-1; i>=0; i--) {
                     item = content[i];
                     doPrepend(item);
                 }
+                vnode._normalizable(true)._normalize();
+                hasDisplayNode || instance.removeClass(ITSA_NODISPLAY);
             }
             else {
                 doPrepend(content);
+                vnode._normalizable(true)._normalize();
             }
-            vnode._normalizable(true)._normalize();
             silent && DOCUMENT.suppressMutationEvents && DOCUMENT.suppressMutationEvents(prevSuppress);
-            hasDisplayNode || instance.removeClass(ITSA_NODISPLAY);
             return createdElement;
         };
 
