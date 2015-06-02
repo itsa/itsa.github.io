@@ -229,8 +229,10 @@ These <u>do work</u>, but they update their vnode's asynchronously. So, if you q
 ####properties:####
 ###left###
 ###top###
-###width###
 ###height###
+###width###
+###innerHeight###
+###innerWidth###
 
 ####methods:####
 ###setXY###
