@@ -40,11 +40,10 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-    var container = document.getElementById('container');
+    var container = document.getElement('#container');
 
     var showMsg = function(e) {
-        container.innerHTML = e.target.value;
+        container.setHTML(e.target.value);
     };
 
     ITSA.Event.after('keypress', showMsg, '#example');
@@ -53,11 +52,10 @@ Code-example:
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-    var container = document.getElementById('container');
+    var container = document.getElement('#container');
 
     var showMsg = function(e) {
-        container.innerHTML = e.target.value;
+        container.setHTML(e.target.value);
     };
 
     ITSA.Event.after('keypress', showMsg, '#example');

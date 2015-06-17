@@ -95,6 +95,8 @@
             
                 <li><a href="../classes/String.html">String</a></li>
             
+                <li><a href="../classes/SVGElement.html">SVGElement</a></li>
+            
                 <li><a href="../classes/USERAGENT.html">USERAGENT</a></li>
             
                 <li><a href="../classes/Utils.html">Utils</a></li>
@@ -4378,9 +4380,7 @@ module.exports = function (window) {
             */
             height: {
                 get: function() {
-                    // also: not all browsers support the property &#x27;offsetHeight&#x27; of the svg-element
-                    // therefore the backup to getStyle(&#x27;height&#x27;);
-                    return this.offsetHeight || parseInt(this.getStyle(&#x27;height&#x27;), 10) || 0;
+                    return this.offsetHeight;
                 },
                 set: function(val) {
                     var instance = this,
@@ -4401,7 +4401,7 @@ module.exports = function (window) {
             *
             * Values are numbers without unity.
             *
-            * @property innerWidth
+            * @property innerHeight
             * @type {Number}
             * @since 0.0.1
             */
@@ -4508,9 +4508,7 @@ module.exports = function (window) {
             */
             width: {
                 get: function() {
-                    // also: not all browsers support the property &#x27;offsetWidth&#x27; of the svg-element
-                    // therefore the backup to getStyle(&#x27;width&#x27;);
-                    return this.offsetWidth || parseInt(this.getStyle(&#x27;width&#x27;), 10) || 0;
+                    return this.offsetWidth;
                 },
                 set: function(val) {
                     var instance = this,
@@ -4526,6 +4524,123 @@ module.exports = function (window) {
         });
 
     }(window.Element.prototype));
+
+
+    // Modify SVGElement:
+    (function(SVGlementPrototype) {
+
+        Object.defineProperties(SVGlementPrototype, {
+
+           /**
+            * Gets or set the height of the element in pixels. Included are padding and border, not any margins.
+            *
+            * The getter is calculating through &#x60;offsetHeight&#x60;, the setter will set inline css-style for the height.
+            *
+            * Values are numbers without unity.
+            *
+            * @property svgHeight
+            * @for SVGElement
+            * @type {Number}
+            * @since 0.0.1
+            */
+            svgHeight: {
+                get: function() {
+                    return parseInt(this.getStyle(&#x27;height&#x27;), 10) || 0;
+                },
+                set: function(val) {
+                    var instance = this,
+                        dif;
+                    instance.setClass(INVISIBLE);
+                    instance.setInlineStyle(HEIGHT, val + PX);
+                    dif = (instance.svgHeight-val);
+                    (dif!==0) &amp;&amp; (instance.setInlineStyle(HEIGHT, (val - dif) + PX));
+                    instance.removeClass(INVISIBLE);
+                }
+            },
+
+           /**
+            * Gets or set the innerHeight of the element in pixels. Excluded the borders.
+            * Included are padding.
+            *
+            * The getter is calculating through &#x60;offsetHeight&#x60;, the setter will set inline css-style for the height.
+            *
+            * Values are numbers without unity.
+            *
+            * @property innerHeight
+            * @type {Number}
+            * @since 0.0.1
+            */
+            innerHeight: {
+                get: function() {
+                    var instance = this,
+                        borderTop = parseInt(instance.getStyle(&#x27;border-top-width&#x27;), 10) || 0,
+                        borderBottom = parseInt(instance.getStyle(&#x27;border-bottom-width&#x27;), 10) || 0;
+                    return instance.svgHeight - borderTop - borderBottom;
+                },
+                set: function(val) {
+                    var instance = this,
+                        borderTop = parseInt(instance.getStyle(&#x27;border-top-width&#x27;), 10) || 0,
+                        borderBottom = parseInt(instance.getStyle(&#x27;border-bottom-width&#x27;), 10) || 0;
+                    instance.svgHeight = val + borderTop + borderBottom;
+                }
+            },
+
+           /**
+            * Gets or set the innerHeight of the element in pixels. Excluded the borders.
+            * Included are padding.
+            *
+            * The getter is calculating through &#x60;offsetHeight&#x60;, the setter will set inline css-style for the height.
+            *
+            * Values are numbers without unity.
+            *
+            * @property innerWidth
+            * @type {Number}
+            * @since 0.0.1
+            */
+            innerWidth: {
+                get: function() {
+                    var instance = this,
+                        borderLeft = parseInt(instance.getStyle(&#x27;border-left-width&#x27;), 10) || 0,
+                        borderRight = parseInt(instance.getStyle(&#x27;border-right-width&#x27;), 10) || 0;
+                    return instance.svgWidth - borderLeft - borderRight;
+                },
+                set: function(val) {
+                    var instance = this,
+                        borderLeft = parseInt(instance.getStyle(&#x27;border-left-width&#x27;), 10) || 0,
+                        borderRight = parseInt(instance.getStyle(&#x27;border-right-width&#x27;), 10) || 0;
+                    instance.svgWidth = val + borderLeft + borderRight;
+                }
+            },
+
+           /**
+            * Gets or set the width of the element in pixels. Included are padding and border, not any margins.
+            *
+            * The getter is calculating through &#x60;offsetHeight&#x60;, the setter will set inline css-style for the width.
+            *
+            * Values are numbers without unity.
+            *
+            * @property svgWidth
+            * @type {Number}
+            * @since 0.0.1
+            */
+            svgWidth: {
+                get: function() {
+                    return parseInt(this.getStyle(&#x27;width&#x27;), 10) || 0;
+                },
+                set: function(val) {
+                    var instance = this,
+                        dif;
+                    instance.setClass(INVISIBLE);
+                    instance.setInlineStyle(WIDTH, val + PX);
+                    dif = (instance.svgWidth-val);
+                    (dif!==0) &amp;&amp; (instance.setInlineStyle(WIDTH, (val - dif) + PX));
+                    instance.removeClass(INVISIBLE);
+                }
+            }
+
+        });
+
+    }(window.SVGElement.prototype));
 
     setupObserver = function() {
         // configuration of the observer:

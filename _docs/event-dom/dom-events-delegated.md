@@ -23,7 +23,10 @@ intro: "All DOM-events are subscribed using delegation. Even if you are listenin
 
 Click on the `Add-button` to add some extra buttons. Click on those extra buttons to show a pop-up.
 
-<div id="addbtn-container"></div>
+<div id="addbtn-container">
+    <button id="addbtn" class="pure-button pure-button-primary pure-button-bordered">Add button</button>
+</div>
+
 <div id="container"></div>
 
 
@@ -31,7 +34,10 @@ Code-example:
 
 ```html
 <body>
-    <div id="addbtn-container"></div>
+    <div id="addbtn-container">
+        <button id="addbtn" class="pure-button pure-button-primary pure-button-bordered">Add button</button>
+    </div>
+
     <div id="container"></div>
 </body>
 ```
@@ -39,67 +45,41 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     var count, container, addNewButton, showButtonText;
 
     count = 0;
-    container = document.getElementById('container');
+    container = document.getElement('#container');
 
     addNewButton = function(e) {
-        var button = document.createElement('button');
-        count++;
-        button.className = 'pure-button pure-button-primary pure-button-bordered';
-        button.innerHTML = 'Click me '+count;
-        container.appendChild(button);
+        container.append('<button class="pure-button pure-button-primary pure-button-bordered">Click me '+(++count)+'</button>');
     };
 
     showButtonText = function(e) {
-        alert(e.target.innerHTML);
+        alert(e.target.getHTML());
     };
 
     ITSA.Event.after('tap', addNewButton, '#addbtn');
     ITSA.Event.after('tap', showButtonText, '#container button');
-
-    setTimeout(function() {
-        var button = document.createElement('button');
-        button.id = 'addbtn';
-        button.className = 'pure-button pure-button-primary pure-button-bordered';
-        button.innerHTML = 'Add button';
-        document.getElementById('addbtn-container').appendChild(button);
-    }, 500);
 
 </script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     var count, container, addNewButton, showButtonText;
 
     count = 0;
-    container = document.getElementById('container');
+    container = document.getElement('#container');
 
     addNewButton = function(e) {
-        var button = document.createElement('button');
-        count++;
-        button.className = 'pure-button pure-button-primary pure-button-bordered';
-        button.innerHTML = 'Click me '+count;
-        container.appendChild(button);
+        container.append('<button class="pure-button pure-button-primary pure-button-bordered">Click me '+(++count)+'</button>');
     };
 
     showButtonText = function(e) {
-        alert(e.target.innerHTML);
+        alert(e.target.getHTML());
     };
 
     ITSA.Event.after('tap', addNewButton, '#addbtn');
     ITSA.Event.after('tap', showButtonText, '#container button');
-
-    setTimeout(function() {
-        var button = document.createElement('button');
-        button.id = 'addbtn';
-        button.className = 'pure-button pure-button-primary pure-button-bordered';
-        button.innerHTML = 'Add button';
-        document.getElementById('addbtn-container').appendChild(button);
-    }, 500);
 
 </script>

@@ -157,8 +157,7 @@ Flip the card by clicking on it. <span class="status"></span>
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        card = document.getElement('#card'),
+    var card = document.getElement('#card'),
         statusNode = document.getElement('span.status'),
         DURATION = 2, // sec
         front = true,
@@ -196,8 +195,7 @@ Flip the card by clicking on it. <span class="status"></span>
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        card = document.getElement('#card'),
+    var card = document.getElement('#card'),
         statusNode = document.getElement('span.status'),
         DURATION = 2, // sec
         front = true,

@@ -24,7 +24,6 @@ intro: "This example appends content to a diV-container"
 
 Click on the button to initiate the request.
 
-<div id="test">hmm</div>
 <div id="container">
     <button id="button-get" class="pure-button pure-button-primary pure-button-bordered">Click me to add data</button>
 </div>
@@ -44,37 +43,27 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container = document.getElement('#target-container'),
+    var container = document.getElement('#target-container'),
         addContent;
 
-    addContent = function(data) {
+    addContent = function(e) {
         container.append('<br>Some <i>new data</i>');
     };
 
-    ITSA.Event.after(
-        'tap',
-        addContent,
-        '#button-get'
-    );
+    ITSA.Event.after('tap', addContent, '#button-get');
+
 </script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container = document.getElement('#target-container'),
+    var container = document.getElement('#target-container'),
         addContent;
 
-document.getElement('#test').setHTML('<div>I am inner</div>');
-
-    addContent = function(data) {
+    addContent = function(e) {
         container.append('<br>Some <i>new data</i>');
     };
 
-    ITSA.Event.after(
-        'tap',
-        addContent,
-        '#button-get'
-    );
+    ITSA.Event.after('tap', addContent, '#button-get');
+
 </script>

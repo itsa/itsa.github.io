@@ -110,12 +110,6 @@ intro: "This example shows how multiple focusmanagers can be setup. The setup is
 
 ```js
 <script src="itsabuild-min.js"></script>
-<script>
-    var ITSA = require('itsa');
-</script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
-<script>
-    var ITSA = require('itsa');
-</script>

@@ -95,6 +95,8 @@
             
                 <li><a href="../classes/String.html">String</a></li>
             
+                <li><a href="../classes/SVGElement.html">SVGElement</a></li>
+            
                 <li><a href="../classes/USERAGENT.html">USERAGENT</a></li>
             
                 <li><a href="../classes/Utils.html">Utils</a></li>
@@ -335,7 +337,7 @@ module.exports.async = _async;
 module.exports.later = function (callbackFn, timeout, periodic) {
     console.log(NAME, &#x27;later --&gt; timeout: &#x27;+timeout+&#x27;ms | periodic: &#x27;+periodic);
     var canceled = false;
-    if (!timeout) {
+    if (typeof timeout!==&#x27;number&#x27;) {
         return _async(callbackFn);
     }
     var wrapper = function() {

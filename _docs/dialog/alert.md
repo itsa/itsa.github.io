@@ -11,13 +11,11 @@ intro: "This examples shows a simple alert. The returnvalue (promise) is not use
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     ITSA.alert('I am an alert');
 </script>
 ```
 
 <script src="../../dist/itsabuild.js"></script>
 <script>
-    var ITSA = require('itsa');
     ITSA.alert('I am an alert');
 </script>

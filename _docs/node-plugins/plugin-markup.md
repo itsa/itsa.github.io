@@ -35,12 +35,6 @@ Drag the rectangle. The Node is made draggable its html.
 
 ```js
 <script src="itsabuild-min.js"></script>
-<script>
-    var ITSA = require('itsa');
-</script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
-<script>
-    var ITSA = require('itsa');
-</script>

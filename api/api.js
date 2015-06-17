@@ -26,6 +26,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Object",
         "Panel",
         "Promise",
+        "SVGElement",
         "String",
         "USERAGENT",
         "Utils",
