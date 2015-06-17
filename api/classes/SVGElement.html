@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/router/router.js - Itsa</title>
+    <title>SVGElement - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -232,73 +232,305 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/router/router.js</h1>
+                        <h1>SVGElement Class</h1>
+<div class="box meta">
+    
 
-<div class="file">
-    <pre class="code prettyprint linenums">
-&quot;use strict&quot;;
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- *
- * @module panel
- * @class Panel
- * @since 0.0.1
-*/
+    
 
-require(&#x27;js-ext&#x27;);
-require(&#x27;polyfill&#x27;);
+    
+
+    
+        
+            Module: <a href="../modules/extend-element.html">extend-element</a><br>
+            Parent Module: <a href="../modules/vdom.html">vdom</a>
+        
+    
+
+    
+</div>
 
 
-var NAME = &#x27;[router]: &#x27;,
-    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
 
-module.exports = function (window) {
+<div class="box intro">
+    
+</div>
 
-    var DOCUMENT = window.document,
-        LightMap = require(&#x27;js-ext/extra/lightmap.js&#x27;),
-        Router, IO;
 
-    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
-/*jshint boss:true */
-    if (Router=window._ITSAmodules.Router) {
-/*jshint boss:false */
-        return Router; // Panel was already created
-    }
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
 
-    IO = require(&#x27;io/extra/io-transfer.js&#x27;)(window);
-    Router = {
-        load: function(uri) {
-            this.serverSupportsRouter().then(
-                function(support) {
-                    if (!support) {
-                        throw new Error(&#x27;no support&#x27;);
-                    }
-                    IO.get(uri).then(
-                        function(pagedata) {
-                            DOCUMENT.documentElement.setOuterHTML(pagedata);
-                        }
-                    ).catch(function(err) {
-                        console.warn(err);
-                    });
-                }
-            ).catch(function() {
-                window.location.href = uri;
-            });
-        },
-        serverSupportsRouter: function() {
-            return window.Promise.resolve(true);
-        }
-    };
+        
+        
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+        
+        
+        
+    </ul>
 
-    return Router;
-};
-    </pre>
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+            
+
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                        
+                            <li class="index-item property">
+                                <a href="#property_innerHeight">innerHeight</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_innerWidth">innerWidth</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_svgHeight">svgHeight</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_svgWidth">svgWidth</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+
+            
+        </div>
+
+        
+
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_innerHeight" class="property item">
+    <h3 class="name"><code>innerHeight</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4323"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4323</code></a>
+        
+        </p>
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Gets or set the innerHeight of the element in pixels. Excluded the borders.
+Included are padding.</p>
+<p>The getter is calculating through <code>offsetHeight</code>, the setter will set inline css-style for the height.</p>
+<p>Values are numbers without unity.</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_innerWidth" class="property item">
+    <h3 class="name"><code>innerWidth</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4350"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4350</code></a>
+        
+        </p>
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Gets or set the innerHeight of the element in pixels. Excluded the borders.
+Included are padding.</p>
+<p>The getter is calculating through <code>offsetHeight</code>, the setter will set inline css-style for the height.</p>
+<p>Values are numbers without unity.</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_svgHeight" class="property item">
+    <h3 class="name"><code>svgHeight</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4296"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4296</code></a>
+        
+        </p>
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Gets or set the height of the element in pixels. Included are padding and border, not any margins.</p>
+<p>The getter is calculating through <code>offsetHeight</code>, the setter will set inline css-style for the height.</p>
+<p>Values are numbers without unity.</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_svgWidth" class="property item">
+    <h3 class="name"><code>svgWidth</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4377"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4377</code></a>
+        
+        </p>
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Gets or set the width of the element in pixels. Included are padding and border, not any margins.</p>
+<p>The getter is calculating through <code>offsetHeight</code>, the setter will set inline css-style for the width.</p>
+<p>Values are numbers without unity.</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+
+        
+    </div>
 </div>
 
                     </div>

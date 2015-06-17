@@ -13,8 +13,7 @@ var ITSA = require('itsa'){% if page.itsaclassname %},
 
 {% highlight js %}
 <script>
-    var ITSA = require('itsa'){% if page.itsaclassname %},
-        {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }}{% endif %};{% if page.extracodefirstpar %}
+    {% if page.itsaclassname %}var {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }}{% endif %};{% if page.extracodefirstpar %}
     {{ page.extracodefirstpar }}{% endif %}
 </script>
 {% endhighlight %}

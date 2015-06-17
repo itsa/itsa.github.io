@@ -216,6 +216,12 @@ These <u>do work</u>, but they update their vnode's asynchronously. So, if you q
 ###isItag###
 
 
+##SVGElement's data##
+
+###svgHeight###
+###svgWidth###
+
+
 ##Storing private data##
 
 ####methods:####
