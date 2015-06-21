@@ -2638,23 +2638,59 @@ http://yuilibrary.com/license/
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"_process":106}],6:[function(require,module,exports){
 (function (global){
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module client-db
+ * @class DB
+ * @since 0.0.1
+*/
+
 "use strict";
 
 var supportsIndexedDB = !!global.indexedDB,
     DB = supportsIndexedDB ? require('./lib/indexeddb.js') : require('./lib/localstorage.js');
 
 DB.mergePrototypes({
+   /**
+     * Default function for the `*:dd-drag`-event
+     *
+     * @method _initializeDrag
+     * @param e {Object} eventobject
+     * @private
+     * @since 0.0.1
+     */
     read: function(/* table, key, matches */) {
         return this.readOneByKey.apply(this, arguments);
     }
 });
 
 module.exports = DB;
-
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./lib/indexeddb.js":7,"./lib/localstorage.js":8}],7:[function(require,module,exports){
 (function (global){
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module client-db
+ * @submodule indexeddb
+ * @class IndexedDB
+ * @since 0.0.1
+*/
+
+// More info:
 // https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB
+
 (function (window) {
 
     "use strict";
@@ -2663,6 +2699,19 @@ module.exports = DB;
         Classes = require('js-ext/js-ext.js').Classes, // we also have Promises now
         IndexedDB, getList, getRecordByIndex, saveRecord;
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method getList
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @protected
+         * @since 0.0.1
+         */
         getList = function(db, table, cursorProp, prop, matches, deleteMatch) {
             return db.then(function(database) {
                 var transaction = database.transaction([table], deleteMatch ? 'readwrite' : 'readonly'),
@@ -2699,6 +2748,17 @@ module.exports = DB;
             });
         };
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method getRecordByIndex
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @protected
+         * @since 0.0.1
+         */
         getRecordByIndex = function(db, table, key, match) {
             return db.then(function(database) {
                 var transaction = database.transaction([table], 'readonly'),
@@ -2724,6 +2784,18 @@ module.exports = DB;
             });
         };
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method saveRecord
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @protected
+         * @since 0.0.1
+         */
         saveRecord = function(database, table, record, overwriteUnique, uniqueIndexes) {
             var dbInstance = this,
                 saveWaitHash = dbInstance.saveWaitHash,
@@ -2861,6 +2933,15 @@ module.exports = DB;
             });
         }
     }, {
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method save
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         save: function(table, records, overwriteUnique) {
             var instance = this;
             return instance.db.then(function(database) {
@@ -2874,6 +2955,15 @@ module.exports = DB;
             });
         },
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method readOneByKey
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         readOneByKey: function(table, key, matches) {
             var instance = this,
                 db = instance.db,
@@ -2892,14 +2982,39 @@ module.exports = DB;
         },
 
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method readMany
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         readMany: function(table, prop, matches) {
             return getList(this.db, table, 'value', prop, matches);
         },
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method readAll
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         readAll: function(table) {
             return getList(this.db, table, 'value');
         },
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method each
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         each: function(table, fn, context) {
             return this.db.then(function(database) {
                 var transaction = database.transaction([table], 'readonly'),
@@ -2927,6 +3042,15 @@ module.exports = DB;
                 });
             });
         },
+                /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method some
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         some: function(table, fn, context) {
             return this.db.then(function(database) {
                 var transaction = database.transaction([table], 'readonly'),
@@ -2960,6 +3084,13 @@ module.exports = DB;
                 });
             });
         },
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method clear
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         clear: function(table) {
             return this.db.then(function(database) {
                 var transaction = database.transaction([table], 'readwrite'),
@@ -2975,6 +3106,15 @@ module.exports = DB;
                 });
             });
         },
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method has
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         has: function(table, prop, matches) {
             return this.readOneByKey(table, prop, matches).then(
                 function(record) {
@@ -2985,6 +3125,14 @@ module.exports = DB;
                 }
             );
         },
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method contains
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         contains: function(table, obj) {
             return this.some(table, function(item) {
                 return item.sameValue(obj);
@@ -2992,6 +3140,13 @@ module.exports = DB;
                 return !!record;
             });
         },
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method size
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         size: function(table) {
             return this.db.then(function(database) {
                 var transaction = database.transaction([table], 'readonly'),
@@ -3029,10 +3184,25 @@ module.exports = DB;
                 });
             });
         },
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method delete
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         'delete': function(table, prop, matches) {
             var db = this.db;
             return getList(db, table, 'key', prop, matches, true);
         },
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method deleteDatabase
+         * @since 0.0.1
+         */
         deleteDatabase: function() {
             var instance = this;
             return instance.db.then(
@@ -3055,6 +3225,20 @@ module.exports = DB;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"js-ext/js-ext.js":66}],8:[function(require,module,exports){
 (function (global){
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module client-db
+ * @submodule localstorage
+ * @class LocalStorage
+ * @since 0.0.1
+*/
+
 (function (window) {
 
     "use strict";
@@ -3071,6 +3255,14 @@ module.exports = DB;
         LocalStorage, getItem, setItem, getTableDef, removeTableItem, defineDatabase, removeDatabase, initializePositions,
         getDatabaseDef, readTableItems, readTableItem, clearTable, positionsInitialized, getNextFreePos;
 
+    /**
+     * Default function for the `*:dd-drag`-event
+     *
+     * @method getItem
+     * @param e {Object} eventobject
+     * @protected
+     * @since 0.0.1
+     */
     getItem = function(key, reviver) {
         var value = localStorage.getItem(key),
             obj;
@@ -3086,6 +3278,14 @@ module.exports = DB;
         return obj;
     };
 
+    /**
+     * Default function for the `*:dd-drag`-event
+     *
+     * @method setItem
+     * @param e {Object} eventobject
+     * @protected
+     * @since 0.0.1
+     */
     setItem = function(key, value) {
         try {
             value = JSON.stringify(value);
@@ -3098,6 +3298,14 @@ module.exports = DB;
         return true;
     };
 
+    /**
+     * Default function for the `*:dd-drag`-event
+     *
+     * @method getTableDef
+     * @param e {Object} eventobject
+     * @protected
+     * @since 0.0.1
+     */
     getTableDef = function(dbDef, table) {
         var found;
         dbDef.t.some(function(tableDef) {
@@ -3109,6 +3317,14 @@ module.exports = DB;
         return found;
     };
 
+    /**
+     * Default function for the `*:dd-drag`-event
+     *
+     * @method removeTableItem
+     * @param e {Object} eventobject
+     * @protected
+     * @since 0.0.1
+     */
     removeTableItem = function(dbDef, dbName, table, pos) {
         var record = getItem(pos, REVIVER),
             tableDefItemsRef, tableDefItems, tableDef;
@@ -3142,6 +3358,14 @@ module.exports = DB;
 
     //============================================================
 
+    /**
+     * Default function for the `*:dd-drag`-event
+     *
+     * @method defineDatabase
+     * @param e {Object} eventobject
+     * @protected
+     * @since 0.0.1
+     */
     defineDatabase = function(dbName, version, tables) {
         var dbDefs = getItem('$$dbDefs') || [],
             dbDef, tabledefs;
@@ -3178,6 +3402,14 @@ module.exports = DB;
         return dbDef;
     };
 
+    /**
+     * Default function for the `*:dd-drag`-event
+     *
+     * @method removeDatabase
+     * @param e {Object} eventobject
+     * @protected
+     * @since 0.0.1
+     */
     removeDatabase = function(dbDef, dbName) {
         // `this` is database-instance
         var instance = this,
@@ -3201,6 +3433,14 @@ module.exports = DB;
         });
     };
 
+    /**
+     * Default function for the `*:dd-drag`-event
+     *
+     * @method clearTable
+     * @param e {Object} eventobject
+     * @protected
+     * @since 0.0.1
+     */
     clearTable = function(table) {
         // `this` is database-instance
         var instance = this,
@@ -3223,11 +3463,27 @@ module.exports = DB;
         });
     };
 
+    /**
+     * Default function for the `*:dd-drag`-event
+     *
+     * @method getDatabaseDef
+     * @param e {Object} eventobject
+     * @protected
+     * @since 0.0.1
+     */
     getDatabaseDef = function(db, version, tables) {
         DEFS_CACHE[db+'@'+version] || (DEFS_CACHE[db+'@'+version]=defineDatabase(db, version, tables));
         return DEFS_CACHE[db+'@'+version];
     };
 
+    /**
+     * Default function for the `*:dd-drag`-event
+     *
+     * @method getNextFreePos
+     * @param e {Object} eventobject
+     * @protected
+     * @since 0.0.1
+     */
     getNextFreePos = function() {
         var freePos;
         positionsInitialized || initializePositions();
@@ -3241,6 +3497,14 @@ module.exports = DB;
         return (freePos!==undefined) ? freePos : positions.length;
     };
 
+    /**
+     * Default function for the `*:dd-drag`-event
+     *
+     * @method initializePositions
+     * @param e {Object} eventobject
+     * @protected
+     * @since 0.0.1
+     */
     initializePositions = function() {
         var dbDefs = getItem('$$dbDefs') || [];
         if (dbDefs) {
@@ -3259,6 +3523,14 @@ module.exports = DB;
         positionsInitialized = true;
     };
 
+    /**
+     * Default function for the `*:dd-drag`-event
+     *
+     * @method readTableItems
+     * @param e {Object} eventobject
+     * @protected
+     * @since 0.0.1
+     */
     readTableItems = function(dbDef, dbName, table, prop, matches, reviver, deleteMatch) {
         var returnValue, tableDefItemsRef, records;
         if (!dbDef) {
@@ -3286,6 +3558,14 @@ module.exports = DB;
         return window.Promise.resolve(returnValue);
     };
 
+    /**
+     * Default function for the `*:dd-drag`-event
+     *
+     * @method readTableItem
+     * @param e {Object} eventobject
+     * @protected
+     * @since 0.0.1
+     */
     readTableItem = function(dbDef, dbName, table, key, matches, reviver) {
         var tableDefItemsRef, record;
         if (!dbDef) {
@@ -3328,6 +3608,13 @@ module.exports = DB;
             instance.uniqueIndexes = !!uniqueIndexes;
         }
     }, {
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method save
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         save: function(table, records, overwriteUnique) {
             var instance = this,
                 dbDef = instance.dbDef,
@@ -3439,18 +3726,46 @@ module.exports = DB;
             );
         },
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method readOneByKey
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         readOneByKey: function(table, key, matches) {
             return readTableItem(this.dbDef, this.dbName, table, key, matches, REVIVER);
         },
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method readMany
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         readMany: function(table, prop, matches) {
             return readTableItems(this.dbDef, this.dbName, table, prop, matches, REVIVER);
         },
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method readAll
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         readAll: function(table) {
             return readTableItems(this.dbDef, this.dbName, table);
         },
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method each
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         each: function(table, fn, context) {
             var instance = this,
                 dbDef = instance.dbDef,
@@ -3475,6 +3790,13 @@ module.exports = DB;
             }
         },
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method some
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         some: function(table, fn, context) {
             var instance = this,
                 dbDef = instance.dbDef,
@@ -3502,16 +3824,37 @@ module.exports = DB;
             }
         },
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method clear
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         clear: function(table) {
             return clearTable.call(this, table);
         },
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method has
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         has: function(table, prop, matches) {
             return readTableItem(this.dbDef, this.dbName, table, prop, matches).then(function(record) {
                 return !!record;
             });
         },
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method contains
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         contains: function(table, obj) {
             return this.some(table, function(item) {
                 return item.sameValue(obj);
@@ -3520,15 +3863,36 @@ module.exports = DB;
             });
         },
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method size
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         size: function(table) {
             var items = getItem('#'+this.dbName+'#'+table) || [];
             return window.Promise.resolve(items.length);
         },
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method delete
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         'delete': function(table, prop, matches) {
             return readTableItems(this.dbDef, this.dbName, table, prop, matches, REVIVER, true);
         },
 
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method deleteDatabase
+         * @param e {Object} eventobject
+         * @since 0.0.1
+         */
         deleteDatabase: function() {
             var instance = this;
             return removeDatabase.call(instance, instance.dbDef, instance.dbName);
@@ -3541,6 +3905,19 @@ module.exports = DB;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"js-ext/js-ext.js":66}],9:[function(require,module,exports){
 (function (global){
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module client-storage
+ * @class Storage
+ * @since 0.0.1
+*/
+
 (function (window) {
 
     "use strict";
@@ -3573,12 +3950,28 @@ module.exports = DB;
         ((typeof namespace==='string') && (namespace.length>0)) || (namespace=EMPTY_NS);
         this.db = new DB(namespace, 1, TABLE_DEF);
     }, {
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method each
+         * @param fn {Function} eventobject
+         * @param context {Object} eventobject
+         * @since 0.0.1
+         */
         each: function(fn, context) {
             var wrapperFn = function(item) {
                 return fn.call(this, item.v);
             };
             return this.db.each(TABLE_NAME, wrapperFn, context);
         },
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method some
+         * @param fn {Function} eventobject
+         * @param context {Object} eventobject
+         * @since 0.0.1
+         */
         some: function(fn, context) {
             var wrapperFn = function(item) {
                 return fn.call(this, item.v);
@@ -3591,12 +3984,32 @@ module.exports = DB;
                 }
             );
         },
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method clear
+         * @since 0.0.1
+         */
         clear: function() {
             return this.db.clear(TABLE_NAME);
         },
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method has
+         * @param key {String} eventobject
+         * @since 0.0.1
+         */
         has: function(key) {
             return this.db.has(TABLE_NAME, KEY_NAME, key);
         },
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method contains
+         * @param obj {Object} eventobject
+         * @since 0.0.1
+         */
         contains: function(obj) {
             return this.some(function(item) {
                 return item.sameValue(obj);
@@ -3604,6 +4017,13 @@ module.exports = DB;
                 return !!record;
             });
         },
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method get
+         * @param key {String} eventobject
+         * @since 0.0.1
+         */
         get: function(key) {
             return this.db.read(TABLE_NAME, KEY_NAME, key).then(
                 function(returnObject) {
@@ -3613,18 +4033,45 @@ module.exports = DB;
                 }
             );
         },
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method set
+         * @param key {String} eventobject
+         * @param obj {Object} eventobject
+         * @since 0.0.1
+         */
         set: function(key, obj) {
             var saveObject = {};
             saveObject[KEY_NAME] = key;
             saveObject[VALUE_NAME] = obj;
             return this.db.save(TABLE_NAME, saveObject, true);
         },
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method size
+         * @since 0.0.1
+         */
         size: function() {
             return this.db.size(TABLE_NAME);
         },
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method delete
+         * @param key {String} eventobject
+         * @since 0.0.1
+         */
         'delete': function(key) {
             return this.db['delete'](TABLE_NAME, KEY_NAME, key);
         },
+        /**
+         * Default function for the `*:dd-drag`-event
+         *
+         * @method deleteStorage
+         * @since 0.0.1
+         */
         deleteStorage: function() {
             return this.db.deleteDatabase();
         }
@@ -3636,6 +4083,19 @@ module.exports = DB;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"client-db":6,"js-ext/extra/classes.js":60,"js-ext/extra/hashmap.js":61}],10:[function(require,module,exports){
+/**
+ * Plugin making moveable elements to constrain within
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module constrain
+ * @class Constrain
+ * @since 0.0.1
+*/
+
 "use strict";
 module.exports = function (window) {
     require('node-plugin')(window);
@@ -18058,23 +18518,24 @@ require('./lib/weakmap.js');
 },{"./lib/promise.js":83,"./lib/weakmap.js":84,"./polyfill-base.js":86}],88:[function(require,module,exports){
 var css = "[plugin-scroll=\"true\"] {\n    overflow: hidden !important;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont,\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    position: absolute;\n    /*display: block;*/\n    left: -9999px;\n    top: -9999px;\n    opacity: 0;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-vscroll-cont.itsa-visible {\n    opacity: 1;\n    width: 0.8em;\n    height: 100%;\n    right: 0;\n    top: 0;\n    left: auto;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-hscroll-cont.itsa-visible {\n    opacity: 1;\n    height: 0.8em;\n    width: 100%;\n    left: 0;\n    bottom: 0;\n    top: auto;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont span {\n    position: relative;\n    /*display: block;*/\n    width: 100%;\n    min-height: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont span {\n    position: relative;\n    /*display: block;*/\n    height: 100%;\n    min-width: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-vscroll-cont span,\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-hscroll-cont span {\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n[plugin-scroll=\"true\"] >span span.dd-dragging {\n    cursor: default;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],89:[function(require,module,exports){
-"use strict";
-
-require('js-ext/lib/object.js');
-require('polyfill');
-require('./css/scrollable.css');
-
 /**
- *
+ * Plugin to create scrollable divs
  *
  *
  * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
- * @module focusmanager
- * @class FocusManager
+ *
+ * @module scrollable
+ * @class Scrollable
  * @since 0.0.1
 */
+
+"use strict";
+
+require('js-ext/lib/object.js');
+require('polyfill');
+require('./css/scrollable.css');
 
 var NAME = '[scrollable]: ',
     POSITION = 'position',
@@ -28370,6 +28831,19 @@ module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
 },{"./lib/sizes.js":105}],105:[function(require,module,exports){
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module window-ext
+ * @class window
+ * @since 0.0.1
+*/
+
 "use strict";
 
 require('js-ext/lib/object.js');
