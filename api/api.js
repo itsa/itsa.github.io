@@ -4,6 +4,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "Array",
         "BaseClass",
         "Classes",
+        "Constrain",
+        "DB",
         "DD",
         "Dialog",
         "Element",
@@ -17,7 +19,9 @@ YUI.add("yuidoc-meta", function(Y) {
         "IO",
         "ITSA",
         "Icons",
+        "IndexedDB",
         "JSON",
+        "LocalStorage",
         "Math",
         "Messages",
         "NS-vdom",
@@ -27,6 +31,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "Panel",
         "Promise",
         "SVGElement",
+        "Scrollable",
+        "Storage",
         "String",
         "USERAGENT",
         "Utils",
@@ -36,6 +42,9 @@ YUI.add("yuidoc-meta", function(Y) {
     ],
     "modules": [
         "attribute-extractor",
+        "client-db",
+        "client-storage",
+        "constrain",
         "dialog",
         "drag",
         "drag-drop",
@@ -54,6 +63,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "focusmanager",
         "html-parser",
         "icons",
+        "indexeddb",
         "io",
         "io-assets",
         "io-cors",
@@ -69,22 +79,40 @@ YUI.add("yuidoc-meta", function(Y) {
         "lib/object.js",
         "lib/promise.s",
         "lib/string.js",
+        "localstorage",
         "messages",
         "node-parser",
         "node-plugin",
         "node-win",
         "panel",
+        "scrollable",
         "useragent",
         "utils",
         "vdom",
         "vdom-ns",
-        "vnode"
+        "vnode",
+        "window-ext"
     ],
     "allModules": [
         {
             "displayName": "attribute-extractor",
             "name": "attribute-extractor",
             "description": "Exports `htmlToVNodes` which transforms html-text into vnodes.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "client-db",
+            "name": "client-db",
+            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "client-storage",
+            "name": "client-storage",
+            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "constrain",
+            "name": "constrain",
+            "description": "Plugin making moveable elements to constrain within\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "dialog",
@@ -177,6 +205,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
+            "displayName": "indexeddb",
+            "name": "indexeddb",
+            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
             "displayName": "io",
             "name": "io",
             "description": "Provides core IO-functionality.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
@@ -251,6 +284,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "description": "Pollyfils for often used functionality for Strings\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
+            "displayName": "localstorage",
+            "name": "localstorage",
+            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
             "displayName": "messages",
             "name": "messages",
             "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
@@ -276,6 +314,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
+            "displayName": "scrollable",
+            "name": "scrollable",
+            "description": "Plugin to create scrollable divs\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
             "displayName": "useragent",
             "name": "useragent",
             "description": "<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
@@ -298,6 +341,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "vnode",
             "name": "vnode",
             "description": "Delivers the `vnode` prototype object, which is a virtualisation of an `Element` inside the Dom.\nThese Elements work smoothless with the vdom (see ...).\n\nvnodes are much quicker to access and walk through than native dom-nodes. However, this is a module you don't need\nby itself: `Element`-types use these features under the hood.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n<br>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "window-ext",
+            "name": "window-ext",
+            "description": "Creating floating Panel-nodes which can be shown and hidden.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         }
     ]
 } };

@@ -47,6 +47,10 @@
             
                 <li><a href="../classes/Classes.html">Classes</a></li>
             
+                <li><a href="../classes/Constrain.html">Constrain</a></li>
+            
+                <li><a href="../classes/DB.html">DB</a></li>
+            
                 <li><a href="../classes/DD.html">DD</a></li>
             
                 <li><a href="../classes/Dialog.html">Dialog</a></li>
@@ -71,11 +75,15 @@
             
                 <li><a href="../classes/Icons.html">Icons</a></li>
             
+                <li><a href="../classes/IndexedDB.html">IndexedDB</a></li>
+            
                 <li><a href="../classes/IO.html">IO</a></li>
             
                 <li><a href="../classes/ITSA.html">ITSA</a></li>
             
                 <li><a href="../classes/JSON.html">JSON</a></li>
+            
+                <li><a href="../classes/LocalStorage.html">LocalStorage</a></li>
             
                 <li><a href="../classes/Math.html">Math</a></li>
             
@@ -92,6 +100,10 @@
                 <li><a href="../classes/Panel.html">Panel</a></li>
             
                 <li><a href="../classes/Promise.html">Promise</a></li>
+            
+                <li><a href="../classes/Scrollable.html">Scrollable</a></li>
+            
+                <li><a href="../classes/Storage.html">Storage</a></li>
             
                 <li><a href="../classes/String.html">String</a></li>
             
@@ -110,6 +122,12 @@
             <ul id="api-modules" class="apis modules">
             
                 <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
+            
+                <li><a href="../modules/client-db.html">client-db</a></li>
+            
+                <li><a href="../modules/client-storage.html">client-storage</a></li>
+            
+                <li><a href="../modules/constrain.html">constrain</a></li>
             
                 <li><a href="../modules/dialog.html">dialog</a></li>
             
@@ -147,6 +165,8 @@
             
                 <li><a href="../modules/icons.html">icons</a></li>
             
+                <li><a href="../modules/indexeddb.html">indexeddb</a></li>
+            
                 <li><a href="../modules/io.html">io</a></li>
             
                 <li><a href="../modules/io-assets.html">io-assets</a></li>
@@ -177,6 +197,8 @@
             
                 <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
             
+                <li><a href="../modules/localstorage.html">localstorage</a></li>
+            
                 <li><a href="../modules/messages.html">messages</a></li>
             
                 <li><a href="../modules/node-parser.html">node-parser</a></li>
@@ -187,6 +209,8 @@
             
                 <li><a href="../modules/panel.html">panel</a></li>
             
+                <li><a href="../modules/scrollable.html">scrollable</a></li>
+            
                 <li><a href="../modules/useragent.html">useragent</a></li>
             
                 <li><a href="../modules/utils.html">utils</a></li>
@@ -196,6 +220,8 @@
                 <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
             
                 <li><a href="../modules/vnode.html">vnode</a></li>
+            
+                <li><a href="../modules/window-ext.html">window-ext</a></li>
             
             </ul>
         </div>
@@ -240,13 +266,13 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_node-win_node-win.js.html#l3"><code>src&#x2F;node-win&#x2F;node-win.js:3</code></a>
+            Defined in: <a href="../files/src_window-ext_lib_sizes.js.html#l1"><code>src&#x2F;window-ext&#x2F;lib&#x2F;sizes.js:1</code></a>
         </div>
     
 
     
         
-            Module: <a href="../modules/node-win.html">node-win</a>
+            Module: <a href="../modules/window-ext.html">window-ext</a>
         
     
 
@@ -256,7 +282,7 @@
 
 
 <div class="box intro">
-    <p>Emulation of browser <code>window</code> and <code>dom</code>. Just enough to make ITSA work.</p>
+    <p>Creating floating Panel-nodes which can be shown and hidden.</p>
 <p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
 New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 
@@ -269,6 +295,8 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
         <li class="api-class-tab index"><a href="#index">Index</a></li>
 
         
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
         
         
         
@@ -279,6 +307,42 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             <h2 class="off-left">Item Index</h2>
 
             
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                        
+                            <li class="index-item method">
+                                <a href="#method_getHeight">getHeight</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getScrollLeft">getScrollLeft</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getScrollTop">getScrollTop</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getWidth">getWidth</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
 
             
 
@@ -287,6 +351,312 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         </div>
 
+        
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_getHeight" class="method item">
+    <h3 class="name"><code>getHeight</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_window-ext_lib_sizes.js.html#l105"><code>src&#x2F;window-ext&#x2F;lib&#x2F;sizes.js:105</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Gets the height of the window.</p>
+
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>:
+                    
+                    <p>width in pixels</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_getScrollLeft" class="method item">
+    <h3 class="name"><code>getScrollLeft</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_window-ext_lib_sizes.js.html#l75"><code>src&#x2F;window-ext&#x2F;lib&#x2F;sizes.js:75</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Gets the left-scroll offset of the window.</p>
+
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>:
+                    
+                    <p>left-offset in pixels</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_getScrollTop" class="method item">
+    <h3 class="name"><code>getScrollTop</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_window-ext_lib_sizes.js.html#l85"><code>src&#x2F;window-ext&#x2F;lib&#x2F;sizes.js:85</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Gets the top-scroll offset of the window.</p>
+
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>:
+                    
+                    <p>top-offset in pixels</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_getWidth" class="method item">
+    <h3 class="name"><code>getWidth</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_window-ext_lib_sizes.js.html#l95"><code>src&#x2F;window-ext&#x2F;lib&#x2F;sizes.js:95</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Gets the width of the window.</p>
+
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>:
+                    
+                    <p>width in pixels</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+            </div>
         
 
         
