@@ -8655,43 +8655,47 @@
         {
             "file": "src/client-db/lib/indexeddb.js",
             "line": 26,
-            "description": "Default function for the `*:dd-drag`-event",
+            "description": "Gets a list (Array) of records",
             "itemtype": "method",
             "name": "getList",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "db",
+                    "description": "",
+                    "type": "Promise"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "cursorProp",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "prop",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "matches",
+                    "description": "",
+                    "type": "Array|any"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "deleteMatch",
+                    "description": "",
+                    "type": "Boolean"
                 }
             ],
             "access": "protected",
             "tagname": "",
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an Array with Objects (records)",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "IndexedDB",
             "module": "client-db",
@@ -8699,34 +8703,38 @@
         },
         {
             "file": "src/client-db/lib/indexeddb.js",
-            "line": 75,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 76,
+            "description": "Gets a record",
             "itemtype": "method",
             "name": "getRecordByIndex",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "db",
+                    "description": "",
+                    "type": "Promise"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "key",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "match",
+                    "description": "",
+                    "type": "Any"
                 }
             ],
             "access": "protected",
             "tagname": "",
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an Object (record)",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "IndexedDB",
             "module": "client-db",
@@ -8734,39 +8742,43 @@
         },
         {
             "file": "src/client-db/lib/indexeddb.js",
-            "line": 111,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 113,
+            "description": "Saves a record. Returns an empty promise when finished.",
             "itemtype": "method",
             "name": "saveRecord",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
+                    "name": "database",
+                    "description": "",
+                    "type": "IndexedDB"
+                },
+                {
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "record",
+                    "description": "",
                     "type": "Object"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "overwriteUnique",
+                    "description": "",
+                    "type": "Boolean"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
-                },
-                {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
-                },
-                {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "uniqueIndexes",
+                    "description": "",
+                    "type": "Array"
                 }
             ],
             "access": "protected",
             "tagname": "",
+            "return": {
+                "description": "Returnvalue is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "IndexedDB",
             "module": "client-db",
@@ -8774,27 +8786,31 @@
         },
         {
             "file": "src/client-db/lib/indexeddb.js",
-            "line": 260,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 263,
+            "description": "Saves a record. Returns an undefined promise when ready.",
             "itemtype": "method",
             "name": "save",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "records",
+                    "description": "",
+                    "type": "Array|Object"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "overwriteUnique",
+                    "description": "",
+                    "type": "Boolean"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "IndexedDB",
             "module": "client-db",
@@ -8802,27 +8818,31 @@
         },
         {
             "file": "src/client-db/lib/indexeddb.js",
-            "line": 282,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 286,
+            "description": "Reads one record, specified by its `key`.",
             "itemtype": "method",
             "name": "readOneByKey",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "key",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "matches",
+                    "description": "",
+                    "type": "Array|any"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an Object (record)",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "IndexedDB",
             "module": "client-db",
@@ -8830,27 +8850,31 @@
         },
         {
             "file": "src/client-db/lib/indexeddb.js",
-            "line": 309,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 314,
+            "description": "Reads multiple records, specified by `matches`.",
             "itemtype": "method",
             "name": "readMany",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "prop",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "matches",
+                    "description": "",
+                    "type": "Array|any"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an Array with Objects (records)",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "IndexedDB",
             "module": "client-db",
@@ -8858,17 +8882,21 @@
         },
         {
             "file": "src/client-db/lib/indexeddb.js",
-            "line": 322,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 328,
+            "description": "Retrieves all records of the table",
             "itemtype": "method",
             "name": "readAll",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an Array with all Objects (records) within the table",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "IndexedDB",
             "module": "client-db",
@@ -8876,27 +8904,31 @@
         },
         {
             "file": "src/client-db/lib/indexeddb.js",
-            "line": 333,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 340,
+            "description": "Performs a function to all the records of the table",
             "itemtype": "method",
             "name": "each",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "fn",
+                    "description": "",
+                    "type": "Function"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
+                    "name": "context",
+                    "description": "",
                     "type": "Object"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "IndexedDB",
             "module": "client-db",
@@ -8904,27 +8936,31 @@
         },
         {
             "file": "src/client-db/lib/indexeddb.js",
-            "line": 369,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 377,
+            "description": "Performs a function to some the records of the table.\nIf the invoked function returns a trutthy value, the loop ends.",
             "itemtype": "method",
             "name": "some",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "fn",
+                    "description": "",
+                    "type": "Function"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
+                    "name": "context",
+                    "description": "",
                     "type": "Object"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "IndexedDB",
             "module": "client-db",
@@ -8932,17 +8968,21 @@
         },
         {
             "file": "src/client-db/lib/indexeddb.js",
-            "line": 411,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 421,
+            "description": "Empties the table.",
             "itemtype": "method",
             "name": "clear",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "IndexedDB",
             "module": "client-db",
@@ -8950,27 +8990,31 @@
         },
         {
             "file": "src/client-db/lib/indexeddb.js",
-            "line": 433,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 444,
+            "description": "Checks whether a table has a matched record, defined by the `matches` the `prop`",
             "itemtype": "method",
             "name": "has",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "prop",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "matches",
+                    "description": "",
+                    "type": "Array|any"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is a boolean specifying whether the table has a matched record",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "IndexedDB",
             "module": "client-db",
@@ -8978,22 +9022,26 @@
         },
         {
             "file": "src/client-db/lib/indexeddb.js",
-            "line": 452,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 464,
+            "description": "Checks whether a table has a containes a specified record, not by reference, by by checking its property-values",
             "itemtype": "method",
             "name": "contains",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
+                    "name": "obj",
+                    "description": "",
                     "type": "Object"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is a boolean specifying whether the table has a matched record",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "IndexedDB",
             "module": "client-db",
@@ -9001,17 +9049,21 @@
         },
         {
             "file": "src/client-db/lib/indexeddb.js",
-            "line": 467,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 480,
+            "description": "Gets the number of records in the table",
             "itemtype": "method",
             "name": "size",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is a number",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "IndexedDB",
             "module": "client-db",
@@ -9019,27 +9071,31 @@
         },
         {
             "file": "src/client-db/lib/indexeddb.js",
-            "line": 511,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 525,
+            "description": "Deletes all records of the table that have a match, defined by the `matches` the `prop`",
             "itemtype": "method",
             "name": "delete",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "prop",
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "matches",
+                    "description": "",
+                    "type": "Array|any"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an Array with all records that have been deleted",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "IndexedDB",
             "module": "client-db",
@@ -9047,10 +9103,14 @@
         },
         {
             "file": "src/client-db/lib/indexeddb.js",
-            "line": 524,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 539,
+            "description": "Deletes a database from the client",
             "itemtype": "method",
             "name": "deleteDatabase",
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "IndexedDB",
             "module": "client-db",
@@ -9059,14 +9119,18 @@
         {
             "file": "src/client-db/lib/localstorage.js",
             "line": 31,
-            "description": "Default function for the `*:dd-drag`-event",
             "itemtype": "method",
             "name": "getItem",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "key",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "reviver",
+                    "description": "",
+                    "type": "Function"
                 }
             ],
             "access": "protected",
@@ -9078,15 +9142,19 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 54,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 55,
             "itemtype": "method",
             "name": "setItem",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "key",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "Any"
                 }
             ],
             "access": "protected",
@@ -9098,15 +9166,19 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 74,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 76,
             "itemtype": "method",
             "name": "getTableDef",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
+                    "name": "dbDef",
+                    "description": "",
                     "type": "Object"
+                },
+                {
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 }
             ],
             "access": "protected",
@@ -9118,15 +9190,29 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 93,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 96,
             "itemtype": "method",
             "name": "removeTableItem",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
+                    "name": "dbDef",
+                    "description": "",
                     "type": "Object"
+                },
+                {
+                    "name": "dbName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "table",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "pos",
+                    "description": "",
+                    "type": "String"
                 }
             ],
             "access": "protected",
@@ -9138,15 +9224,24 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 134,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 140,
             "itemtype": "method",
             "name": "defineDatabase",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "dbName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "version",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "tables",
+                    "description": "",
+                    "type": "Array"
                 }
             ],
             "access": "protected",
@@ -9158,15 +9253,19 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 178,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 186,
             "itemtype": "method",
             "name": "removeDatabase",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
+                    "name": "dbDef",
+                    "description": "",
                     "type": "Object"
+                },
+                {
+                    "name": "dbName",
+                    "description": "",
+                    "type": "String"
                 }
             ],
             "access": "protected",
@@ -9178,15 +9277,14 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 209,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 218,
             "itemtype": "method",
             "name": "clearTable",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 }
             ],
             "access": "protected",
@@ -9198,15 +9296,24 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 239,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 248,
             "itemtype": "method",
             "name": "getDatabaseDef",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
+                    "name": "db",
+                    "description": "",
                     "type": "Object"
+                },
+                {
+                    "name": "version",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "tables",
+                    "description": "",
+                    "type": "Array"
                 }
             ],
             "access": "protected",
@@ -9218,17 +9325,9 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 252,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 263,
             "itemtype": "method",
             "name": "getNextFreePos",
-            "params": [
-                {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
-                }
-            ],
             "access": "protected",
             "tagname": "",
             "since": "0.0.1",
@@ -9238,17 +9337,9 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 273,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 283,
             "itemtype": "method",
             "name": "initializePositions",
-            "params": [
-                {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
-                }
-            ],
             "access": "protected",
             "tagname": "",
             "since": "0.0.1",
@@ -9258,15 +9349,44 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 299,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 308,
             "itemtype": "method",
             "name": "readTableItems",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
+                    "name": "dbDef",
+                    "description": "",
                     "type": "Object"
+                },
+                {
+                    "name": "dbName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "prop",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "matches",
+                    "description": "",
+                    "type": "Array|Any"
+                },
+                {
+                    "name": "reviver",
+                    "description": "",
+                    "type": "Function"
+                },
+                {
+                    "name": "deleteMatch",
+                    "description": "",
+                    "type": "Boolean"
                 }
             ],
             "access": "protected",
@@ -9278,15 +9398,39 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 334,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 349,
             "itemtype": "method",
             "name": "readTableItem",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
+                    "name": "dbDef",
+                    "description": "",
                     "type": "Object"
+                },
+                {
+                    "name": "dbName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "key",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "matches",
+                    "description": "",
+                    "type": "Array|any"
+                },
+                {
+                    "name": "reviver",
+                    "description": "",
+                    "type": "Functiom"
                 }
             ],
             "access": "protected",
@@ -9298,17 +9442,31 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 384,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 404,
+            "description": "Saves a record. Returns an undefined promise when ready.",
             "itemtype": "method",
             "name": "save",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "records",
+                    "description": "",
+                    "type": "Array|Object"
+                },
+                {
+                    "name": "overwriteUnique",
+                    "description": "",
+                    "type": "Boolean"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "LocalStorage",
             "module": "client-db",
@@ -9316,17 +9474,31 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 502,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 525,
+            "description": "Reads one record, specified by its `key`.",
             "itemtype": "method",
             "name": "readOneByKey",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "key",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "matches",
+                    "description": "",
+                    "type": "Array|any"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an Object (record)",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "LocalStorage",
             "module": "client-db",
@@ -9334,17 +9506,31 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 513,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 539,
+            "description": "Reads multiple records, specified by `matches`.",
             "itemtype": "method",
             "name": "readMany",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "prop",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "matches",
+                    "description": "",
+                    "type": "Array|any"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an Array with Objects (records)",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "LocalStorage",
             "module": "client-db",
@@ -9352,17 +9538,21 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 524,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 553,
+            "description": "Retrieves all records of the table",
             "itemtype": "method",
             "name": "readAll",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an Array with all Objects (records) within the table",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "LocalStorage",
             "module": "client-db",
@@ -9370,17 +9560,31 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 535,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 565,
+            "description": "Performs a function to all the records of the table",
             "itemtype": "method",
             "name": "each",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "fn",
+                    "description": "",
+                    "type": "Function"
+                },
+                {
+                    "name": "context",
+                    "description": "",
                     "type": "Object"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "LocalStorage",
             "module": "client-db",
@@ -9388,17 +9592,31 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 566,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 599,
+            "description": "Performs a function to some the records of the table.\nIf the invoked function returns a trutthy value, the loop ends.",
             "itemtype": "method",
             "name": "some",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "fn",
+                    "description": "",
+                    "type": "Function"
+                },
+                {
+                    "name": "context",
+                    "description": "",
                     "type": "Object"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "LocalStorage",
             "module": "client-db",
@@ -9406,17 +9624,21 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 600,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 637,
+            "description": "Empties the table.",
             "itemtype": "method",
             "name": "clear",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "LocalStorage",
             "module": "client-db",
@@ -9424,17 +9646,31 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 611,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 649,
+            "description": "Checks whether a table has a matched record, defined by the `matches` the `prop`",
             "itemtype": "method",
             "name": "has",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "prop",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "matches",
+                    "description": "",
+                    "type": "Array|any"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is a boolean specifying whether the table has a matched record",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "LocalStorage",
             "module": "client-db",
@@ -9442,17 +9678,26 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 624,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 665,
+            "description": "Checks whether a table has a containes a specified record, not by reference, by by checking its property-values",
             "itemtype": "method",
             "name": "contains",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "obj",
+                    "description": "",
                     "type": "Object"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is a boolean specifying whether the table has a matched record",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "LocalStorage",
             "module": "client-db",
@@ -9460,17 +9705,21 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 639,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 682,
+            "description": "Gets the number of records in the table",
             "itemtype": "method",
             "name": "size",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is a number",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "LocalStorage",
             "module": "client-db",
@@ -9478,17 +9727,31 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 651,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 695,
+            "description": "Deletes all records of the table that have a match, defined by the `matches` the `prop`",
             "itemtype": "method",
             "name": "delete",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "prop",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "matches",
+                    "description": "",
+                    "type": "Array|any"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an Array with all records that have been deleted",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "LocalStorage",
             "module": "client-db",
@@ -9496,17 +9759,14 @@
         },
         {
             "file": "src/client-db/lib/localstorage.js",
-            "line": 662,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 709,
+            "description": "Deletes a database from the client",
             "itemtype": "method",
             "name": "deleteDatabase",
-            "params": [
-                {
-                    "name": "e",
-                    "description": "eventobject",
-                    "type": "Object"
-                }
-            ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "LocalStorage",
             "module": "client-db",
@@ -9515,18 +9775,350 @@
         {
             "file": "src/client-db/db.js",
             "line": 20,
-            "description": "Default function for the `*:dd-drag`-event",
+            "description": "Reads one record, specified by its `key`.",
             "itemtype": "method",
-            "name": "_initializeDrag",
+            "name": "read",
             "params": [
                 {
-                    "name": "e",
-                    "description": "eventobject",
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "key",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "matches",
+                    "description": "",
+                    "type": "Array|any"
+                }
+            ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an Object (record)",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "DB",
+            "module": "client-db"
+        },
+        {
+            "file": "src/client-db/db.js",
+            "line": 34,
+            "description": "Saves a record. Returns an undefined promise when ready.",
+            "itemtype": "method",
+            "name": "save",
+            "params": [
+                {
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "records",
+                    "description": "",
+                    "type": "Array|Object"
+                },
+                {
+                    "name": "overwriteUnique",
+                    "description": "",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "DB",
+            "module": "client-db"
+        },
+        {
+            "file": "src/client-db/db.js",
+            "line": 45,
+            "description": "Reads one record, specified by its `key`.",
+            "itemtype": "method",
+            "name": "readOneByKey",
+            "params": [
+                {
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "key",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "matches",
+                    "description": "",
+                    "type": "Array|any"
+                }
+            ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an Object (record)",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "DB",
+            "module": "client-db"
+        },
+        {
+            "file": "src/client-db/db.js",
+            "line": 56,
+            "description": "Reads multiple records, specified by `matches`.",
+            "itemtype": "method",
+            "name": "readMany",
+            "params": [
+                {
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "prop",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "matches",
+                    "description": "",
+                    "type": "Array|any"
+                }
+            ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an Array with Objects (records)",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "DB",
+            "module": "client-db"
+        },
+        {
+            "file": "src/client-db/db.js",
+            "line": 67,
+            "description": "Retrieves all records of the table",
+            "itemtype": "method",
+            "name": "readAll",
+            "params": [
+                {
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an Array with all Objects (records) within the table",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "DB",
+            "module": "client-db"
+        },
+        {
+            "file": "src/client-db/db.js",
+            "line": 76,
+            "description": "Performs a function to all the records of the table",
+            "itemtype": "method",
+            "name": "each",
+            "params": [
+                {
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "fn",
+                    "description": "",
+                    "type": "Function"
+                },
+                {
+                    "name": "context",
+                    "description": "",
                     "type": "Object"
                 }
             ],
-            "access": "private",
-            "tagname": "",
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "DB",
+            "module": "client-db"
+        },
+        {
+            "file": "src/client-db/db.js",
+            "line": 87,
+            "description": "Performs a function to some the records of the table.\nIf the invoked function returns a trutthy value, the loop ends.",
+            "itemtype": "method",
+            "name": "some",
+            "params": [
+                {
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "fn",
+                    "description": "",
+                    "type": "Function"
+                },
+                {
+                    "name": "context",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "DB",
+            "module": "client-db"
+        },
+        {
+            "file": "src/client-db/db.js",
+            "line": 99,
+            "description": "Empties the table.",
+            "itemtype": "method",
+            "name": "clear",
+            "params": [
+                {
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "DB",
+            "module": "client-db"
+        },
+        {
+            "file": "src/client-db/db.js",
+            "line": 108,
+            "description": "Checks whether a table has a matched record, defined by the `matches` the `prop`",
+            "itemtype": "method",
+            "name": "has",
+            "params": [
+                {
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "prop",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "matches",
+                    "description": "",
+                    "type": "Array|any"
+                }
+            ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is a boolean specifying whether the table has a matched record",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "DB",
+            "module": "client-db"
+        },
+        {
+            "file": "src/client-db/db.js",
+            "line": 119,
+            "description": "Checks whether a table has a containes a specified record, not by reference, by by checking its property-values",
+            "itemtype": "method",
+            "name": "contains",
+            "params": [
+                {
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "obj",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is a boolean specifying whether the table has a matched record",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "DB",
+            "module": "client-db"
+        },
+        {
+            "file": "src/client-db/db.js",
+            "line": 129,
+            "description": "Gets the number of records in the table",
+            "itemtype": "method",
+            "name": "size",
+            "params": [
+                {
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is a number",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "DB",
+            "module": "client-db"
+        },
+        {
+            "file": "src/client-db/db.js",
+            "line": 138,
+            "description": "Deletes all records of the table that have a match, defined by the `matches` the `prop`",
+            "itemtype": "method",
+            "name": "delete",
+            "params": [
+                {
+                    "name": "table",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "prop",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "matches",
+                    "description": "",
+                    "type": "Array|any"
+                }
+            ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an Array with all records that have been deleted",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "DB",
+            "module": "client-db"
+        },
+        {
+            "file": "src/client-db/db.js",
+            "line": 149,
+            "description": "Deletes a database from the client",
+            "itemtype": "method",
+            "name": "deleteDatabase",
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "DB",
             "module": "client-db"
@@ -9534,163 +10126,203 @@
         {
             "file": "src/client-storage/storage.js",
             "line": 46,
-            "description": "Default function for the `*:dd-drag`-event",
+            "description": "Performs a function to all the records of the storage",
             "itemtype": "method",
             "name": "each",
             "params": [
                 {
                     "name": "fn",
-                    "description": "eventobject",
+                    "description": "",
                     "type": "Function"
                 },
                 {
                     "name": "context",
-                    "description": "eventobject",
+                    "description": "",
                     "type": "Object"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "Storage",
             "module": "client-storage"
         },
         {
             "file": "src/client-storage/storage.js",
-            "line": 60,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 61,
+            "description": "Performs a function to some the records of the storage.\nIf the invoked function returns a trutthy value, the loop ends.",
             "itemtype": "method",
             "name": "some",
             "params": [
                 {
                     "name": "fn",
-                    "description": "eventobject",
+                    "description": "",
                     "type": "Function"
                 },
                 {
                     "name": "context",
-                    "description": "eventobject",
+                    "description": "",
                     "type": "Object"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "Storage",
             "module": "client-storage"
         },
         {
             "file": "src/client-storage/storage.js",
-            "line": 80,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 83,
+            "description": "Empties the table.",
             "itemtype": "method",
             "name": "clear",
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "Storage",
             "module": "client-storage"
         },
         {
             "file": "src/client-storage/storage.js",
-            "line": 89,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 93,
+            "description": "Checks whether a table has a matched record, specified by `key`",
             "itemtype": "method",
             "name": "has",
             "params": [
                 {
                     "name": "key",
-                    "description": "eventobject",
+                    "description": "",
                     "type": "String"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is a boolean specifying whether the table has a matched record",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "Storage",
             "module": "client-storage"
         },
         {
             "file": "src/client-storage/storage.js",
-            "line": 99,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 104,
+            "description": "Checks whether a table has a containes a specified record, not by reference, by by checking its property-values",
             "itemtype": "method",
             "name": "contains",
             "params": [
                 {
                     "name": "obj",
-                    "description": "eventobject",
+                    "description": "",
                     "type": "Object"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is a boolean specifying whether the table has a matched record",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "Storage",
             "module": "client-storage"
         },
         {
             "file": "src/client-storage/storage.js",
-            "line": 113,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 119,
+            "description": "Reads one record, specified by its `key`.",
             "itemtype": "method",
             "name": "get",
             "params": [
                 {
                     "name": "key",
-                    "description": "eventobject",
+                    "description": "",
                     "type": "String"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an Object (record)",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "Storage",
             "module": "client-storage"
         },
         {
             "file": "src/client-storage/storage.js",
-            "line": 129,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 136,
+            "description": "Saves a record. Returns an undefined promise when ready.",
             "itemtype": "method",
             "name": "set",
             "params": [
                 {
                     "name": "key",
-                    "description": "eventobject",
+                    "description": "",
                     "type": "String"
                 },
                 {
                     "name": "obj",
-                    "description": "eventobject",
+                    "description": "",
                     "type": "Object"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "Storage",
             "module": "client-storage"
         },
         {
             "file": "src/client-storage/storage.js",
-            "line": 143,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 151,
+            "description": "Gets the number of records",
             "itemtype": "method",
             "name": "size",
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is a number",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "Storage",
             "module": "client-storage"
         },
         {
             "file": "src/client-storage/storage.js",
-            "line": 152,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 161,
+            "description": "Deletes a from the the storgae, specified by `key`",
             "itemtype": "method",
             "name": "delete",
             "params": [
                 {
                     "name": "key",
-                    "description": "eventobject",
+                    "description": "",
                     "type": "String"
                 }
             ],
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is an AObject of record that has been deleted",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "Storage",
             "module": "client-storage"
         },
         {
             "file": "src/client-storage/storage.js",
-            "line": 162,
-            "description": "Default function for the `*:dd-drag`-event",
+            "line": 172,
+            "description": "Deletes a storage from the client",
             "itemtype": "method",
             "name": "deleteStorage",
+            "return": {
+                "description": "Returnvalue of the fulfilled promise is undefined",
+                "type": "Promise"
+            },
             "since": "0.0.1",
             "class": "Storage",
             "module": "client-storage"

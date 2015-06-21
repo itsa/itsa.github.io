@@ -2658,16 +2658,142 @@ var supportsIndexedDB = !!global.indexedDB,
 
 DB.mergePrototypes({
    /**
-     * Default function for the `*:dd-drag`-event
+     * Reads one record, specified by its `key`.
      *
-     * @method _initializeDrag
-     * @param e {Object} eventobject
-     * @private
+     * @method read
+     * @param table {String}
+     * @param key {String}
+     * @param matches {Array|any}
+     * @return {Promise} Returnvalue of the fulfilled promise is an Object (record)
      * @since 0.0.1
      */
     read: function(/* table, key, matches */) {
         return this.readOneByKey.apply(this, arguments);
     }
+
+    /**
+     * Saves a record. Returns an undefined promise when ready.
+     *
+     * @method save
+     * @param table {String}
+     * @param records {Array|Object}
+     * @param overwriteUnique {Boolean}
+     * @return {Promise} Returnvalue of the fulfilled promise is undefined
+     * @since 0.0.1
+     */
+
+    /**
+     * Reads one record, specified by its `key`.
+     *
+     * @method readOneByKey
+     * @param table {String}
+     * @param key {String}
+     * @param matches {Array|any}
+     * @return {Promise} Returnvalue of the fulfilled promise is an Object (record)
+     * @since 0.0.1
+     */
+
+    /**
+     * Reads multiple records, specified by `matches`.
+     *
+     * @method readMany
+     * @param table {String}
+     * @param prop {String}
+     * @param matches {Array|any}
+     * @return {Promise} Returnvalue of the fulfilled promise is an Array with Objects (records)
+     * @since 0.0.1
+     */
+
+    /**
+     * Retrieves all records of the table
+     *
+     * @method readAll
+     * @param table {String}
+     * @return {Promise} Returnvalue of the fulfilled promise is an Array with all Objects (records) within the table
+     * @since 0.0.1
+     */
+
+    /**
+     * Performs a function to all the records of the table
+     *
+     * @method each
+     * @param table {String}
+     * @param fn {Function}
+     * @param context {Object}
+     * @return {Promise} Returnvalue of the fulfilled promise is undefined
+     * @since 0.0.1
+     */
+
+    /**
+     * Performs a function to some the records of the table.
+     * If the invoked function returns a trutthy value, the loop ends.
+     *
+     * @method some
+     * @param table {String}
+     * @param fn {Function}
+     * @param context {Object}
+     * @return {Promise} Returnvalue of the fulfilled promise is undefined
+     * @since 0.0.1
+     */
+
+    /**
+     * Empties the table.
+     *
+     * @method clear
+     * @param table {String}
+     * @return {Promise} Returnvalue of the fulfilled promise is undefined
+     * @since 0.0.1
+     */
+
+    /**
+     * Checks whether a table has a matched record, defined by the `matches` the `prop`
+     *
+     * @method has
+     * @param table {String}
+     * @param prop {String}
+     * @param matches {Array|any}
+     * @return {Promise} Returnvalue of the fulfilled promise is a boolean specifying whether the table has a matched record
+     * @since 0.0.1
+     */
+
+    /**
+     * Checks whether a table has a containes a specified record, not by reference, by by checking its property-values
+     *
+     * @method contains
+     * @param table {String}
+     * @param obj {Object}
+     * @return {Promise} Returnvalue of the fulfilled promise is a boolean specifying whether the table has a matched record
+     * @since 0.0.1
+     */
+
+    /**
+     * Gets the number of records in the table
+     *
+     * @method size
+     * @param table {String}
+     * @return {Promise} Returnvalue of the fulfilled promise is a number
+     * @since 0.0.1
+     */
+
+    /**
+     * Deletes all records of the table that have a match, defined by the `matches` the `prop`
+     *
+     * @method delete
+     * @param table {String}
+     * @param prop {String}
+     * @param matches {Array|any}
+     * @return {Promise} Returnvalue of the fulfilled promise is an Array with all records that have been deleted
+     * @since 0.0.1
+     */
+
+    /**
+     * Deletes a database from the client
+     *
+     * @method deleteDatabase
+     * @return {Promise} Returnvalue of the fulfilled promise is undefined
+     * @since 0.0.1
+     */
+
 });
 
 module.exports = DB;
@@ -2700,16 +2826,17 @@ module.exports = DB;
         IndexedDB, getList, getRecordByIndex, saveRecord;
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Gets a list (Array) of records
          *
          * @method getList
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
+         * @param db {Promise}
+         * @param table {String}
+         * @param cursorProp {String}
+         * @param prop {String}
+         * @param matches {Array|any}
+         * @param deleteMatch {Boolean}
          * @protected
+         * @return {Promise} Returnvalue of the fulfilled promise is an Array with Objects (records)
          * @since 0.0.1
          */
         getList = function(db, table, cursorProp, prop, matches, deleteMatch) {
@@ -2749,14 +2876,15 @@ module.exports = DB;
         };
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Gets a record
          *
          * @method getRecordByIndex
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
+         * @param db {Promise}
+         * @param table {String}
+         * @param key {String}
+         * @param match {Any}
          * @protected
+         * @return {Promise} Returnvalue of the fulfilled promise is an Object (record)
          * @since 0.0.1
          */
         getRecordByIndex = function(db, table, key, match) {
@@ -2785,15 +2913,16 @@ module.exports = DB;
         };
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Saves a record. Returns an empty promise when finished.
          *
          * @method saveRecord
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
+         * @param database {IndexedDB}
+         * @param table {String}
+         * @param record {Object}
+         * @param overwriteUnique {Boolean}
+         * @param uniqueIndexes {Array}
          * @protected
+         * @return {Promise} Returnvalue is undefined
          * @since 0.0.1
          */
         saveRecord = function(database, table, record, overwriteUnique, uniqueIndexes) {
@@ -2934,12 +3063,13 @@ module.exports = DB;
         }
     }, {
         /**
-         * Default function for the `*:dd-drag`-event
+         * Saves a record. Returns an undefined promise when ready.
          *
          * @method save
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @param records {Array|Object}
+         * @param overwriteUnique {Boolean}
+         * @return {Promise} Returnvalue of the fulfilled promise is undefined
          * @since 0.0.1
          */
         save: function(table, records, overwriteUnique) {
@@ -2956,12 +3086,13 @@ module.exports = DB;
         },
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Reads one record, specified by its `key`.
          *
          * @method readOneByKey
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @param key {String}
+         * @param matches {Array|any}
+         * @return {Promise} Returnvalue of the fulfilled promise is an Object (record)
          * @since 0.0.1
          */
         readOneByKey: function(table, key, matches) {
@@ -2983,12 +3114,13 @@ module.exports = DB;
 
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Reads multiple records, specified by `matches`.
          *
          * @method readMany
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @param prop {String}
+         * @param matches {Array|any}
+         * @return {Promise} Returnvalue of the fulfilled promise is an Array with Objects (records)
          * @since 0.0.1
          */
         readMany: function(table, prop, matches) {
@@ -2996,10 +3128,11 @@ module.exports = DB;
         },
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Retrieves all records of the table
          *
          * @method readAll
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @return {Promise} Returnvalue of the fulfilled promise is an Array with all Objects (records) within the table
          * @since 0.0.1
          */
         readAll: function(table) {
@@ -3007,12 +3140,13 @@ module.exports = DB;
         },
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Performs a function to all the records of the table
          *
          * @method each
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @param fn {Function}
+         * @param context {Object}
+         * @return {Promise} Returnvalue of the fulfilled promise is undefined
          * @since 0.0.1
          */
         each: function(table, fn, context) {
@@ -3042,13 +3176,15 @@ module.exports = DB;
                 });
             });
         },
-                /**
-         * Default function for the `*:dd-drag`-event
+        /**
+         * Performs a function to some the records of the table.
+         * If the invoked function returns a trutthy value, the loop ends.
          *
          * @method some
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @param fn {Function}
+         * @param context {Object}
+         * @return {Promise} Returnvalue of the fulfilled promise is undefined
          * @since 0.0.1
          */
         some: function(table, fn, context) {
@@ -3085,10 +3221,11 @@ module.exports = DB;
             });
         },
         /**
-         * Default function for the `*:dd-drag`-event
+         * Empties the table.
          *
          * @method clear
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @return {Promise} Returnvalue of the fulfilled promise is undefined
          * @since 0.0.1
          */
         clear: function(table) {
@@ -3107,12 +3244,13 @@ module.exports = DB;
             });
         },
         /**
-         * Default function for the `*:dd-drag`-event
+         * Checks whether a table has a matched record, defined by the `matches` the `prop`
          *
          * @method has
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @param prop {String}
+         * @param matches {Array|any}
+         * @return {Promise} Returnvalue of the fulfilled promise is a boolean specifying whether the table has a matched record
          * @since 0.0.1
          */
         has: function(table, prop, matches) {
@@ -3126,11 +3264,12 @@ module.exports = DB;
             );
         },
         /**
-         * Default function for the `*:dd-drag`-event
+         * Checks whether a table has a containes a specified record, not by reference, by by checking its property-values
          *
          * @method contains
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @param obj {Object}
+         * @return {Promise} Returnvalue of the fulfilled promise is a boolean specifying whether the table has a matched record
          * @since 0.0.1
          */
         contains: function(table, obj) {
@@ -3141,10 +3280,11 @@ module.exports = DB;
             });
         },
         /**
-         * Default function for the `*:dd-drag`-event
+         * Gets the number of records in the table
          *
          * @method size
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @return {Promise} Returnvalue of the fulfilled promise is a number
          * @since 0.0.1
          */
         size: function(table) {
@@ -3185,12 +3325,13 @@ module.exports = DB;
             });
         },
         /**
-         * Default function for the `*:dd-drag`-event
+         * Deletes all records of the table that have a match, defined by the `matches` the `prop`
          *
          * @method delete
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @param prop {String}
+         * @param matches {Array|any}
+         * @return {Promise} Returnvalue of the fulfilled promise is an Array with all records that have been deleted
          * @since 0.0.1
          */
         'delete': function(table, prop, matches) {
@@ -3198,9 +3339,10 @@ module.exports = DB;
             return getList(db, table, 'key', prop, matches, true);
         },
         /**
-         * Default function for the `*:dd-drag`-event
+         * Deletes a database from the client
          *
          * @method deleteDatabase
+         * @return {Promise} Returnvalue of the fulfilled promise is undefined
          * @since 0.0.1
          */
         deleteDatabase: function() {
@@ -3256,10 +3398,11 @@ module.exports = DB;
         getDatabaseDef, readTableItems, readTableItem, clearTable, positionsInitialized, getNextFreePos;
 
     /**
-     * Default function for the `*:dd-drag`-event
+     *
      *
      * @method getItem
-     * @param e {Object} eventobject
+     * @param key {String}
+     * @param reviver {Function}
      * @protected
      * @since 0.0.1
      */
@@ -3279,10 +3422,11 @@ module.exports = DB;
     };
 
     /**
-     * Default function for the `*:dd-drag`-event
+     *
      *
      * @method setItem
-     * @param e {Object} eventobject
+     * @param key {String}
+     * @param value {Any}
      * @protected
      * @since 0.0.1
      */
@@ -3299,10 +3443,11 @@ module.exports = DB;
     };
 
     /**
-     * Default function for the `*:dd-drag`-event
+     *
      *
      * @method getTableDef
-     * @param e {Object} eventobject
+     * @param dbDef {Object}
+     * @param table {String}
      * @protected
      * @since 0.0.1
      */
@@ -3318,10 +3463,13 @@ module.exports = DB;
     };
 
     /**
-     * Default function for the `*:dd-drag`-event
+     *
      *
      * @method removeTableItem
-     * @param e {Object} eventobject
+     * @param dbDef {Object}
+     * @param dbName {String}
+     * @param table {Object}
+     * @param pos {String}
      * @protected
      * @since 0.0.1
      */
@@ -3359,10 +3507,12 @@ module.exports = DB;
     //============================================================
 
     /**
-     * Default function for the `*:dd-drag`-event
+     *
      *
      * @method defineDatabase
-     * @param e {Object} eventobject
+     * @param dbName {String}
+     * @param version {Number}
+     * @param tables {Array}
      * @protected
      * @since 0.0.1
      */
@@ -3403,10 +3553,11 @@ module.exports = DB;
     };
 
     /**
-     * Default function for the `*:dd-drag`-event
+     *
      *
      * @method removeDatabase
-     * @param e {Object} eventobject
+     * @param dbDef {Object}
+     * @param dbName {String}
      * @protected
      * @since 0.0.1
      */
@@ -3434,10 +3585,10 @@ module.exports = DB;
     };
 
     /**
-     * Default function for the `*:dd-drag`-event
+     *
      *
      * @method clearTable
-     * @param e {Object} eventobject
+     * @param table {String}
      * @protected
      * @since 0.0.1
      */
@@ -3464,10 +3615,12 @@ module.exports = DB;
     };
 
     /**
-     * Default function for the `*:dd-drag`-event
+     *
      *
      * @method getDatabaseDef
-     * @param e {Object} eventobject
+     * @param db {Object}
+     * @param version {Number}
+     * @param tables {Array}
      * @protected
      * @since 0.0.1
      */
@@ -3477,10 +3630,9 @@ module.exports = DB;
     };
 
     /**
-     * Default function for the `*:dd-drag`-event
+     *
      *
      * @method getNextFreePos
-     * @param e {Object} eventobject
      * @protected
      * @since 0.0.1
      */
@@ -3498,10 +3650,9 @@ module.exports = DB;
     };
 
     /**
-     * Default function for the `*:dd-drag`-event
+     *
      *
      * @method initializePositions
-     * @param e {Object} eventobject
      * @protected
      * @since 0.0.1
      */
@@ -3524,10 +3675,16 @@ module.exports = DB;
     };
 
     /**
-     * Default function for the `*:dd-drag`-event
+     *
      *
      * @method readTableItems
-     * @param e {Object} eventobject
+     * @param dbDef {Object}
+     * @param dbName {String}
+     * @param table {String}
+     * @param prop {String}
+     * @param matches {Array|Any}
+     * @param reviver {Function}
+     * @param deleteMatch {Boolean}
      * @protected
      * @since 0.0.1
      */
@@ -3559,10 +3716,15 @@ module.exports = DB;
     };
 
     /**
-     * Default function for the `*:dd-drag`-event
+     *
      *
      * @method readTableItem
-     * @param e {Object} eventobject
+     * @param dbDef {Object}
+     * @param dbName {String}
+     * @param table {String}
+     * @param key {String}
+     * @param matches {Array|any}
+     * @param reviver {Functiom}
      * @protected
      * @since 0.0.1
      */
@@ -3609,10 +3771,13 @@ module.exports = DB;
         }
     }, {
         /**
-         * Default function for the `*:dd-drag`-event
+         * Saves a record. Returns an undefined promise when ready.
          *
          * @method save
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @param records {Array|Object}
+         * @param overwriteUnique {Boolean}
+         * @return {Promise} Returnvalue of the fulfilled promise is undefined
          * @since 0.0.1
          */
         save: function(table, records, overwriteUnique) {
@@ -3727,10 +3892,13 @@ module.exports = DB;
         },
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Reads one record, specified by its `key`.
          *
          * @method readOneByKey
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @param key {String}
+         * @param matches {Array|any}
+         * @return {Promise} Returnvalue of the fulfilled promise is an Object (record)
          * @since 0.0.1
          */
         readOneByKey: function(table, key, matches) {
@@ -3738,10 +3906,13 @@ module.exports = DB;
         },
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Reads multiple records, specified by `matches`.
          *
          * @method readMany
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @param prop {String}
+         * @param matches {Array|any}
+         * @return {Promise} Returnvalue of the fulfilled promise is an Array with Objects (records)
          * @since 0.0.1
          */
         readMany: function(table, prop, matches) {
@@ -3749,10 +3920,11 @@ module.exports = DB;
         },
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Retrieves all records of the table
          *
          * @method readAll
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @return {Promise} Returnvalue of the fulfilled promise is an Array with all Objects (records) within the table
          * @since 0.0.1
          */
         readAll: function(table) {
@@ -3760,10 +3932,13 @@ module.exports = DB;
         },
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Performs a function to all the records of the table
          *
          * @method each
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @param fn {Function}
+         * @param context {Object}
+         * @return {Promise} Returnvalue of the fulfilled promise is undefined
          * @since 0.0.1
          */
         each: function(table, fn, context) {
@@ -3791,10 +3966,14 @@ module.exports = DB;
         },
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Performs a function to some the records of the table.
+         * If the invoked function returns a trutthy value, the loop ends.
          *
          * @method some
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @param fn {Function}
+         * @param context {Object}
+         * @return {Promise} Returnvalue of the fulfilled promise is undefined
          * @since 0.0.1
          */
         some: function(table, fn, context) {
@@ -3825,10 +4004,11 @@ module.exports = DB;
         },
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Empties the table.
          *
          * @method clear
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @return {Promise} Returnvalue of the fulfilled promise is undefined
          * @since 0.0.1
          */
         clear: function(table) {
@@ -3836,10 +4016,13 @@ module.exports = DB;
         },
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Checks whether a table has a matched record, defined by the `matches` the `prop`
          *
          * @method has
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @param prop {String}
+         * @param matches {Array|any}
+         * @return {Promise} Returnvalue of the fulfilled promise is a boolean specifying whether the table has a matched record
          * @since 0.0.1
          */
         has: function(table, prop, matches) {
@@ -3849,10 +4032,12 @@ module.exports = DB;
         },
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Checks whether a table has a containes a specified record, not by reference, by by checking its property-values
          *
          * @method contains
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @param obj {Object}
+         * @return {Promise} Returnvalue of the fulfilled promise is a boolean specifying whether the table has a matched record
          * @since 0.0.1
          */
         contains: function(table, obj) {
@@ -3864,10 +4049,11 @@ module.exports = DB;
         },
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Gets the number of records in the table
          *
          * @method size
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @return {Promise} Returnvalue of the fulfilled promise is a number
          * @since 0.0.1
          */
         size: function(table) {
@@ -3876,10 +4062,13 @@ module.exports = DB;
         },
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Deletes all records of the table that have a match, defined by the `matches` the `prop`
          *
          * @method delete
-         * @param e {Object} eventobject
+         * @param table {String}
+         * @param prop {String}
+         * @param matches {Array|any}
+         * @return {Promise} Returnvalue of the fulfilled promise is an Array with all records that have been deleted
          * @since 0.0.1
          */
         'delete': function(table, prop, matches) {
@@ -3887,10 +4076,10 @@ module.exports = DB;
         },
 
         /**
-         * Default function for the `*:dd-drag`-event
+         * Deletes a database from the client
          *
          * @method deleteDatabase
-         * @param e {Object} eventobject
+         * @return {Promise} Returnvalue of the fulfilled promise is undefined
          * @since 0.0.1
          */
         deleteDatabase: function() {
@@ -3951,11 +4140,12 @@ module.exports = DB;
         this.db = new DB(namespace, 1, TABLE_DEF);
     }, {
         /**
-         * Default function for the `*:dd-drag`-event
+         * Performs a function to all the records of the storage
          *
          * @method each
-         * @param fn {Function} eventobject
-         * @param context {Object} eventobject
+         * @param fn {Function}
+         * @param context {Object}
+         * @return {Promise} Returnvalue of the fulfilled promise is undefined
          * @since 0.0.1
          */
         each: function(fn, context) {
@@ -3965,11 +4155,13 @@ module.exports = DB;
             return this.db.each(TABLE_NAME, wrapperFn, context);
         },
         /**
-         * Default function for the `*:dd-drag`-event
+         * Performs a function to some the records of the storage.
+         * If the invoked function returns a trutthy value, the loop ends.
          *
          * @method some
-         * @param fn {Function} eventobject
-         * @param context {Object} eventobject
+         * @param fn {Function}
+         * @param context {Object}
+         * @return {Promise} Returnvalue of the fulfilled promise is undefined
          * @since 0.0.1
          */
         some: function(fn, context) {
@@ -3985,29 +4177,32 @@ module.exports = DB;
             );
         },
         /**
-         * Default function for the `*:dd-drag`-event
+         * Empties the table.
          *
          * @method clear
+         * @return {Promise} Returnvalue of the fulfilled promise is undefined
          * @since 0.0.1
          */
         clear: function() {
             return this.db.clear(TABLE_NAME);
         },
         /**
-         * Default function for the `*:dd-drag`-event
+         * Checks whether a table has a matched record, specified by `key`
          *
          * @method has
-         * @param key {String} eventobject
+         * @param key {String}
+         * @return {Promise} Returnvalue of the fulfilled promise is a boolean specifying whether the table has a matched record
          * @since 0.0.1
          */
         has: function(key) {
             return this.db.has(TABLE_NAME, KEY_NAME, key);
         },
         /**
-         * Default function for the `*:dd-drag`-event
+         * Checks whether a table has a containes a specified record, not by reference, by by checking its property-values
          *
          * @method contains
-         * @param obj {Object} eventobject
+         * @param obj {Object}
+         * @return {Promise} Returnvalue of the fulfilled promise is a boolean specifying whether the table has a matched record
          * @since 0.0.1
          */
         contains: function(obj) {
@@ -4018,10 +4213,11 @@ module.exports = DB;
             });
         },
         /**
-         * Default function for the `*:dd-drag`-event
+         * Reads one record, specified by its `key`.
          *
          * @method get
-         * @param key {String} eventobject
+         * @param key {String}
+         * @return {Promise} Returnvalue of the fulfilled promise is an Object (record)
          * @since 0.0.1
          */
         get: function(key) {
@@ -4034,11 +4230,12 @@ module.exports = DB;
             );
         },
         /**
-         * Default function for the `*:dd-drag`-event
+         * Saves a record. Returns an undefined promise when ready.
          *
          * @method set
-         * @param key {String} eventobject
-         * @param obj {Object} eventobject
+         * @param key {String}
+         * @param obj {Object}
+         * @return {Promise} Returnvalue of the fulfilled promise is undefined
          * @since 0.0.1
          */
         set: function(key, obj) {
@@ -4048,28 +4245,31 @@ module.exports = DB;
             return this.db.save(TABLE_NAME, saveObject, true);
         },
         /**
-         * Default function for the `*:dd-drag`-event
+         * Gets the number of records
          *
          * @method size
+         * @return {Promise} Returnvalue of the fulfilled promise is a number
          * @since 0.0.1
          */
         size: function() {
             return this.db.size(TABLE_NAME);
         },
         /**
-         * Default function for the `*:dd-drag`-event
+         * Deletes a from the the storgae, specified by `key`
          *
          * @method delete
-         * @param key {String} eventobject
+         * @param key {String}
+         * @return {Promise} Returnvalue of the fulfilled promise is an AObject of record that has been deleted
          * @since 0.0.1
          */
         'delete': function(key) {
             return this.db['delete'](TABLE_NAME, KEY_NAME, key);
         },
         /**
-         * Default function for the `*:dd-drag`-event
+         * Deletes a storage from the client
          *
          * @method deleteStorage
+         * @return {Promise} Returnvalue of the fulfilled promise is undefined
          * @since 0.0.1
          */
         deleteStorage: function() {
