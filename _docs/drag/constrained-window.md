@@ -38,15 +38,11 @@ Drag the 2 rectangles: they will be constrained inside the window. The first is 
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     document.getElement('#without').plug('constrain');
 </script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     document.getElement('#without').plug('constrain');
 </script>

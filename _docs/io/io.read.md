@@ -43,8 +43,7 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        url = 'http://servercors.itsa.io/example',
+    var url = 'http://servercors.itsa.io/example',
         container = document.getElementById('target-container'),
         writeResponse, writeResponse;
 
@@ -75,8 +74,7 @@ Code-example:
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        url = 'http://servercors.itsa.io/example',
+    var url = 'http://servercors.itsa.io/example',
         container = document.getElementById('target-container'),
         writeResponse, writeResponse;
 

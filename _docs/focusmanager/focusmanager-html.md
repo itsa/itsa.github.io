@@ -72,13 +72,11 @@ intro: "This example shows how to set up a simple focusmanagers with plain HTML.
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     document.getElement('.container').focus();
 </script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     document.getElement('.container').focus();
 </script>

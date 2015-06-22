@@ -15,12 +15,6 @@ intro: "This example shows how to generate a simple icon"
 
 ```js
 <script src="itsabuild-min.js"></script>
-<script>
-    var ITSA = require('itsa');
-</script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
-<script>
-    var ITSA = require('itsa');
-</script>

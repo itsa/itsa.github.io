@@ -119,8 +119,6 @@ Drag the items to the dropzones. The `movable or copyable` items will be copyabl
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     ITSA.Event.before('mousedown', function(e) {
         var ctrlPressed = e.ctrlKey || e.metaKey;
         if (!ctrlPressed) {
@@ -146,8 +144,6 @@ Drag the items to the dropzones. The `movable or copyable` items will be copyabl
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     ITSA.Event.before('mousedown', function(e) {
         var ctrlPressed = e.ctrlKey || e.metaKey;
         if (!ctrlPressed) {

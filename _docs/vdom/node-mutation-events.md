@@ -90,8 +90,7 @@ Add or change Nodes by using the buttons:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container = document.getElement('#container'),
+    var container = document.getElement('#container'),
         msgContainer = document.getElement('#msg-container'),
         treeContainer = document.getElement('#tree-container'),
         insertNode, removeNode, changeAttribute, showMessage;
@@ -169,8 +168,7 @@ Add or change Nodes by using the buttons:
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container = document.getElement('#container'),
+    var container = document.getElement('#container'),
         msgContainer = document.getElement('#msg-container'),
         treeContainer = document.getElement('#tree-container'),
         insertNode, removeNode, changeAttribute, showMessage;

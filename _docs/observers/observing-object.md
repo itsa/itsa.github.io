@@ -12,8 +12,7 @@ intro: "This example shows how to observe a complex object for datachanges"
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        model, callback;
+    var model, callback;
 
     model = {
         band: 'Marillion',
@@ -33,8 +32,7 @@ intro: "This example shows how to observe a complex object for datachanges"
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        model, callback;
+    var model, callback;
 
     model = {
         band: 'Marillion',

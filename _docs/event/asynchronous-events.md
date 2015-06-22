@@ -34,8 +34,7 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        Member = ITSA.Classes.createClass(),
+    var Member = ITSA.Classes.createClass(),
         url = 'http://servercors.itsa.io/example/delay',
         member;
 
@@ -73,10 +72,9 @@ var memberproto = {}.merge(ITSA.Event.Listener).merge(ITSA.Event.Emitter('Person
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        Member = ITSA.Classes.createClass(),
+    var Member = ITSA.Classes.createClass(),
         url = 'http://servercors.itsa.io/example/delay',
         member;
 

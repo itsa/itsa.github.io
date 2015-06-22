@@ -85,8 +85,6 @@ Drag the items to the dropzones. The items can be copied by pressing the `Ctrl`-
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     document.getElement('#without').plug('dd', {'effect-allowed': 'all', dropzone: '.drop-container'});
     document.getElement('#dropzone-without').plug('dz');
 
@@ -103,8 +101,6 @@ Drag the items to the dropzones. The items can be copied by pressing the `Ctrl`-
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     document.getElement('#without').plug('dd', {'effect-allowed': 'all', dropzone: '.drop-container'});
     document.getElement('#dropzone-without').plug('dz');
 

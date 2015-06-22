@@ -35,7 +35,6 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     ITSA.Event.after(
         '*:save',
         function(e) {
@@ -67,7 +66,6 @@ Code-example:
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     ITSA.Event.after(
         '*:save',
         function(e) {

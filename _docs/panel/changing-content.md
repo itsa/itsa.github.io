@@ -11,8 +11,7 @@ intro: "This example shows how changing model.content leads to an updated Panel.
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        modelData;
+    var modelData;
 
     modelData = {
         header: 'title',
@@ -34,8 +33,7 @@ intro: "This example shows how changing model.content leads to an updated Panel.
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        modelData;
+    var modelData;
 
     modelData = {
         header: 'title',

@@ -11,8 +11,7 @@ intro: "This example show how to setup a simple panel in its most basic way: by 
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        modelData;
+    var modelData;
 
     modelData = {
         content: 'I am a panel'
@@ -24,8 +23,7 @@ intro: "This example show how to setup a simple panel in its most basic way: by 
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        modelData;
+    var modelData;
 
     modelData = {
         content: 'I am a panel'

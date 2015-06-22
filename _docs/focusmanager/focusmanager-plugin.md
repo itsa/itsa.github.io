@@ -94,8 +94,7 @@ intro: "This example shows how to set up a simple focusmanagers with the plugin 
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container = document.getElement('.container');
+    var container = document.getElement('.container');
 
     container.plug(ITSA.Plugins.focusManager, {manage: 'button, input, .area'});
     document.getElement('.container').focus();
@@ -104,8 +103,7 @@ intro: "This example shows how to set up a simple focusmanagers with the plugin 
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container = document.getElement('.container');
+    var container = document.getElement('.container');
 
     container.plug('fm', {manage: 'button, input, .area'});
     document.getElement('.container').focus();

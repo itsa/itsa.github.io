@@ -34,8 +34,7 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container, dataHasChangedCallback, changeData, datamodel, cleanup, observeMsg;
+    var container, dataHasChangedCallback, changeData, datamodel, cleanup, observeMsg;
 
     container = document.getElement('#container');
     observeMsg = (Object.observe ? 'supports' : 'does not support');
@@ -72,8 +71,7 @@ Code-example:
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container, dataHasChangedCallback, changeData, datamodel, cleanup, observeMsg;
+    var container, dataHasChangedCallback, changeData, datamodel, cleanup, observeMsg;
 
     container = document.getElement('#container');
     observeMsg = (Object.observe ? 'supports' : 'does not support');

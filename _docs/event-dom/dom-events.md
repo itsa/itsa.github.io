@@ -30,8 +30,6 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     var showMsg = function(e) {
         alert('Button was clicked');
         console.log(e);
@@ -41,10 +39,8 @@ Code-example:
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     var showMsg = function(e) {
         alert('Button was clicked');
         console.log(e);

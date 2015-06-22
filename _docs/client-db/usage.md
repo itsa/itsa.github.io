@@ -11,8 +11,7 @@ intro: "This example uses a prompt to retrieve the name. The returnvalue is hand
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        databaseName = 'my_database',
+    var databaseName = 'my_database',
         version = 1,
         tables = [
             {
@@ -44,10 +43,9 @@ intro: "This example uses a prompt to retrieve the name. The returnvalue is hand
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        databaseName = 'my_database',
+    var databaseName = 'my_database',
         version = 1,
         tables = [
             {

@@ -15,12 +15,6 @@ intro: "This example shows how to generate a button with a button at the right"
 
 ```js
 <script src="itsabuild-min.js"></script>
-<script>
-    var ITSA = require('itsa');
-</script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
-<script>
-    var ITSA = require('itsa');
-</script>

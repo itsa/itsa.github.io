@@ -155,13 +155,11 @@ intro: "This example shows how the focusmanager works when nested."
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     document.getElement('.container').focus();
 </script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     document.getElement('.container').focus();
 </script>

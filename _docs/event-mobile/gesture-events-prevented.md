@@ -20,7 +20,6 @@ Code-example:
 ```js
 <script src="itsabuild.js"></script>
 <script>
-    var ITSA = require('itsa');
     var afterTap = function(e) {
         // the alert will never pop-up
         alert('Button #buttongo is tapped');
@@ -36,7 +35,6 @@ Code-example:
 
 <script src="../../dist/itsabuild.js"></script>
 <script>
-    var ITSA = require('itsa');
     var afterTap = function(e) {
         // the alert will never pop-up
         alert('Button #buttongo is tapped');

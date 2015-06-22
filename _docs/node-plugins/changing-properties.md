@@ -47,8 +47,7 @@ Click on the button to change the draggable's constrain.
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        dragnode = document.getElement('#dragnode'),
+    var dragnode = document.getElement('#dragnode'),
         constrained = true;
 
     ITSA.Event.after('tap', function() {
@@ -64,8 +63,7 @@ Click on the button to change the draggable's constrain.
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        dragnode = document.getElement('#dragnode'),
+    var dragnode = document.getElement('#dragnode'),
         constrained = true;
 
     ITSA.Event.after('tap', function() {

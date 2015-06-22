@@ -19,7 +19,6 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     // first create prototype-object and merge ITSA.Event.Emitter to the prototype:
     var profileproto = ITSA.Event.Emitter('PersonalProfile'),
         profiles = [],
@@ -52,7 +51,6 @@ Code-example:
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     // first create prototype-object and merge ITSA.Event.Emitter to the prototype:
     var profileproto = ITSA.Event.Emitter('PersonalProfile'),
         profiles = [],

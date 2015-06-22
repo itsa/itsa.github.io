@@ -46,8 +46,7 @@ Click on the buttons to make the users speak or be silent.
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container = document.getElement('#cont'),
+    var container = document.getElement('#cont'),
         User, user1, user2;
 
     User = ITSA.Classes.createClass(
@@ -85,10 +84,9 @@ Click on the buttons to make the users speak or be silent.
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        circleContainer = document.getElement('#circlecont'),
+    var circleContainer = document.getElement('#circlecont'),
         container = document.getElement('#cont'),
         Circle, circle;
 

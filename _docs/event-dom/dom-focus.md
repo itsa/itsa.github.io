@@ -94,7 +94,6 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     var blurContainer, focusContainer, showMsgBlur, showMsgFocus;
 
     blurContainer = document.getElementById('msg-blur');
@@ -119,7 +118,6 @@ Code-example:
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     var blurContainer, focusContainer, showMsgBlur, showMsgFocus;
 
     blurContainer = document.getElementById('msg-blur');

@@ -11,8 +11,7 @@ intro: "This example shows how to setup a panel with more configuration, by pass
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        modelData;
+    var modelData;
 
     modelData = {
         header: 'title',
@@ -30,8 +29,7 @@ intro: "This example shows how to setup a panel with more configuration, by pass
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        modelData;
+    var modelData;
 
     modelData = {
         header: 'title',

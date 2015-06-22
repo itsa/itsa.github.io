@@ -34,6 +34,3 @@ Mauris sed nisi sit amet massa mattis sodales. Nullam hendrerit, ante vitae pell
 Nulla facilisi. Aliquam nec ante accumsan, viverra ligula at, commodo tellus. Morbi posuere molestie felis, quis pharetra risus pretium eget. Vestibulum eleifend rhoncus diam a dignissim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vehicula tellus felis, in pellentesque ipsum cursus nec. Cras porttitor quam nec tincidunt luctus. Integer condimentum, magna maximus posuere sagittis, massa ex placerat eros, nec iaculis metus ipsum in nibh. Sed a mi quis erat mattis consequat at id nisi. Sed dictum iaculis nisi eget ornare. Vivamus sed rhoncus nulla, at faucibus elit. Mauris iaculis condimentum dolor at sagittis.
 
 <script src="../../dist/itsabuild-min.js"></script>
-<script>
-    var ITSA = require('itsa');
-</script>

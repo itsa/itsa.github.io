@@ -13,7 +13,6 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     // create Class "Members" and merge ITSA.Event.Listener to the prototype:
     var Members = ITSA.Classes.createClass(null, ITSA.Event.Listener),
         myMembers = new Members();
@@ -33,7 +32,6 @@ Code-example:
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     // create Class "Members" and merge ITSA.Event.Listener to the prototype:
     var Members = ITSA.Classes.createClass(null, ITSA.Event.Listener),
         myMembers = new Members();

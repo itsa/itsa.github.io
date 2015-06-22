@@ -26,6 +26,9 @@ h1.moduleheader {
     margin: 2em 0 0;
     font-size: 1.2em;
 }
+.body-content.module p.spaced {
+    margin-top: 25px;
+}
 .module-description {
     background-color: #666;
     color: #FFF;

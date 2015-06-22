@@ -20,7 +20,6 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     var Profile = ITSA.Classes.createClass(null, ITSA.Event.Emitter('PersonalProfile')),
         myProfile = new Profile();
 
@@ -38,7 +37,6 @@ Code-example:
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     var Profile = ITSA.Classes.createClass(null, ITSA.Event.Emitter('PersonalProfile')),
         myProfile = new Profile();
 
