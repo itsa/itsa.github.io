@@ -50,8 +50,7 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container = document.getElement('.container'),
+    var container = document.getElement('.container'),
         move1, move2;
 
     move1 = function() {
@@ -71,8 +70,7 @@ Code-example:
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container = document.getElement('.container'),
+    var container = document.getElement('.container'),
         move1, move2;
 
     move1 = function() {

@@ -95,8 +95,6 @@ Drag the items to the dropzones..
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     document.getElement('#without').plug('dd', {emitter: 'red'});
     document.getElement('#without-emitter').plug('dd');
     document.getElement('#dropzone-without').plug('dz', {dropzone: 'true emitter=red'});
@@ -111,8 +109,6 @@ Drag the items to the dropzones..
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     document.getElement('#without').plug('dd', {emitter: 'red'});
     document.getElement('#without-emitter').plug('dd');
     document.getElement('#dropzone-without').plug('dz', {dropzone: 'true emitter=red'});

@@ -57,15 +57,11 @@ Drag the 2 rectangles. The first is constrained using html, the second is set up
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     document.getElement('#without').plug('dd', {handle: 'h1'});
 </script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     document.getElement('#without').plug('dd', {handle: 'h1'});
 </script>

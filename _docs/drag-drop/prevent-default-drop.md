@@ -92,8 +92,7 @@ Drag the items to the dropzones.
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        returnItem, absorbItem;
+    var returnItem, absorbItem;
 
     returnItem = function(e) {
         e.preventDefault();
@@ -132,10 +131,9 @@ Drag the items to the dropzones.
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        returnItem, absorbItem;
+    var returnItem, absorbItem;
 
     returnItem = function(e) {
         e.preventDefault();

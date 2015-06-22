@@ -81,8 +81,7 @@ Click on the button to toggle the className:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container = document.getElement('.container'),
+    var container = document.getElement('.container'),
         promise, doSwitch, actionCancel, actionFreeze, actionFinish,
         switchButton, transitionButtons, resetClasses;
 
@@ -142,8 +141,7 @@ Click on the button to toggle the className:
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container = document.getElement('.container'),
+    var container = document.getElement('.container'),
         promise, doSwitch, actionCancel, actionFreeze, actionFinish,
         switchButton, transitionButtons, resetClasses;
 

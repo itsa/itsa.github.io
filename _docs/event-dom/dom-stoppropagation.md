@@ -55,7 +55,6 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     var container = document.getElementById('container'),
         addText = function(text) {
             var div = document.createElement('div');
@@ -124,7 +123,6 @@ Code-example:
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     var container = document.getElementById('container'),
         addText = function(text) {
             var div = document.createElement('div');

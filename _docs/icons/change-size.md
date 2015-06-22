@@ -31,13 +31,6 @@ intro: "This example shows how to generate a button with a different size"
 
 ```js
 <script src="itsabuild-min.js"></script>
-<script>
-    var ITSA = require('itsa');
-</script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
-<script>
-    var ITSA = require('itsa');
-</script>
-

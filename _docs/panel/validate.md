@@ -11,8 +11,7 @@ intro: "This example shows how to use validation. Note that the panel only gets 
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        modelData, validateFn;
+    var modelData, validateFn;
 
     validateFn = function(e) {
         return (e.button.getHTML()==='Ok');
@@ -33,8 +32,7 @@ intro: "This example shows how to use validation. Note that the panel only gets 
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        modelData, validateFn;
+    var modelData, validateFn;
 
     validateFn = function(e) {
         return (e.button.getHTML()==='Ok');

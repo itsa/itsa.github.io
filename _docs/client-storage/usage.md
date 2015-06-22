@@ -11,8 +11,7 @@ intro: "This example shows how data can be stored using ClientStorage"
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        storage = new ITSA.ClientStorage('my_storage'),
+    var storage = new ITSA.ClientStorage('my_storage'),
         savePromise;
 
     savePromise = storage.set('president1', {name: 'Barack', lastName: 'Obama', 'birth': 1961})
@@ -37,8 +36,7 @@ intro: "This example shows how data can be stored using ClientStorage"
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        storage = new ITSA.ClientStorage('my_storage'),
+    var storage = new ITSA.ClientStorage('my_storage'),
         savePromise;
 
     savePromise = storage.set('president1', {name: 'Barack', lastName: 'Obama', 'birth': 1961})

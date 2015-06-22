@@ -75,8 +75,7 @@ Click on the button to intitiate transition:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container = document.getElement('.container'),
+    var container = document.getElement('.container'),
         button = document.getElement('#btntransform'),
         setClasses, removeClasses, transform;
 
@@ -129,8 +128,7 @@ Click on the button to intitiate transition:
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        container = document.getElement('.container'),
+    var container = document.getElement('.container'),
         button = document.getElement('#btntransform'),
         setClasses, removeClasses, transform;
 

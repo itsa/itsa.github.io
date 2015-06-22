@@ -106,12 +106,6 @@ Drag the items, they are all draggable and can be moved or copied into any dropz
 
 ```js
 <script src="itsabuild-min.js"></script>
-<script>
-    var ITSA = require('itsa');
-</script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
-<script>
-    var ITSA = require('itsa');
-</script>
+<script src="../../dist/itsabuild-min.js"></script>

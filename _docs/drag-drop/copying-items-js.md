@@ -87,8 +87,6 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     document.getAll('.container').forEach(
         function(node) {
             var effect,
@@ -130,8 +128,6 @@ Drag the items to the dropzones. The `movable and optional copyable` item will b
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     document.getAll('.container').forEach(
         function(node) {
             var effect,

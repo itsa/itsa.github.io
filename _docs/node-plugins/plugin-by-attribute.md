@@ -36,13 +36,11 @@ Drag the rectangle. The Node is made draggable by defining the attribute *plugin
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     document.getElement('.container').setAttr('plugin-dd', 'true');
 </script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     document.getElement('.container').setAttr('plugin-dd', 'true');
 </script>

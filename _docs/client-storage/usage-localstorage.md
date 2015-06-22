@@ -11,9 +11,7 @@ intro: "This example shows how data can be stored using ITSA.localStorage"
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
-    savePromise = ITSA.localStorage.set('president1', {name: 'Barack', lastName: 'Obama', 'birth': 1961})
+    var savePromise = ITSA.localStorage.set('president1', {name: 'Barack', lastName: 'Obama', 'birth': 1961});
 
     // wait for saving to be finished before reading it
     savePromise.then(
@@ -35,9 +33,7 @@ intro: "This example shows how data can be stored using ITSA.localStorage"
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
-    savePromise = ITSA.localStorage.set('president1', {name: 'Barack', lastName: 'Obama', 'birth': 1961})
+    var savePromise = ITSA.localStorage.set('president1', {name: 'Barack', lastName: 'Obama', 'birth': 1961});
 
     // wait for saving to be finished before reading it
     savePromise.then(

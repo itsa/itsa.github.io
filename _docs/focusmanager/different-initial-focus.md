@@ -71,13 +71,11 @@ intro: "This example shows how mark an element to be the first focusable item, w
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     document.getElement('.container').focus();
 </script>
 ```
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     document.getElement('.container').focus();
 </script>

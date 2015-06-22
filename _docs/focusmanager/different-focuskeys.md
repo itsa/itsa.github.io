@@ -71,13 +71,11 @@ intro: "This example shows how to setup a focusmanager that navigates with diffe
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     document.getElement('.container').focus();
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     document.getElement('.container').focus();
 </script>

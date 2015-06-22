@@ -69,7 +69,6 @@ Clik on the button to toggle the className:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     var container = document.getElement('.container');
 
     var action = function(e) {
@@ -89,9 +88,8 @@ Clik on the button to toggle the className:
 </script>
 ```
 
-<script src="../../dist/itsabuild.js"></script>
+<script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     var container = document.getElement('.container');
 
     var action = function(e) {

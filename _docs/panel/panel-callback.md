@@ -21,8 +21,7 @@ intro: "This example show how you can setup a callback to inspect what button wa
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        cb;
+    var cb;
     cb = function(buttonNode) {
         document.getElement('#cont').setText(buttonNode.getHTML());
     };
@@ -42,8 +41,7 @@ intro: "This example show how you can setup a callback to inspect what button wa
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        cb;
+    var cb;
     cb = function(buttonNode) {
         document.getElement('#cont').setText(buttonNode.getHTML());
     };

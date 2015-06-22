@@ -16,8 +16,6 @@ intro: "This example shows how to switch icons. Click on the button to switch."
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     ITSA.Event.after('tap', function(e) {
         var button = e.target,
             iconNode = button.getElement('i');
@@ -28,8 +26,6 @@ intro: "This example shows how to switch icons. Click on the button to switch."
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     ITSA.Event.after('tap', function(e) {
         var button = e.target,
             iconNode = button.getElement('i');

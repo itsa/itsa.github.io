@@ -87,8 +87,6 @@ Drag the items to the dropzones. Use the Ctrl/Cmd button to select multiple item
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     ITSA.Event.before('mousedown', function(e) {
         var ctrlPressed = e.ctrlKey || e.metaKey;
         if (!ctrlPressed) {
@@ -109,8 +107,6 @@ Drag the items to the dropzones. Use the Ctrl/Cmd button to select multiple item
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     ITSA.Event.before('mousedown', function(e) {
         var ctrlPressed = e.ctrlKey || e.metaKey;
         if (!ctrlPressed) {

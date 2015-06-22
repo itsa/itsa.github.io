@@ -19,8 +19,6 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     // instead of loading the data (as explained in the example-source)
     // we simulate this by just creating the array.
     // so we don't need to maintain a server running for this example
@@ -52,8 +50,6 @@ Code-example:
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
-
     // instead of loading the data (as explained in the example-source)
     // we simulate this by just creating the array.
     // so we don't need to maintain a server running for this example

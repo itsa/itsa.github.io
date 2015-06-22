@@ -29,7 +29,6 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     var showMsgSingle = function(e) {
         alert('Button was single tapped');
     };
@@ -50,7 +49,6 @@ Code-example:
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     var showMsgSingle = function(e) {
         alert('Button was single tapped');
     };

@@ -81,8 +81,7 @@ Drag the item and watch for the events.
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        monitorContStart = document.getElement('.monitor-container.spaced'),
+    var monitorContStart = document.getElement('.monitor-container.spaced'),
         monitorContOver = document.getElement('.monitor-container:not(.spaced)');
 
     ITSA.Event.after('dd', function(e) {
@@ -133,8 +132,7 @@ Drag the item and watch for the events.
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa'),
-        monitorContStart = document.getElement('.monitor-container.spaced'),
+    var monitorContStart = document.getElement('.monitor-container.spaced'),
         monitorContOver = document.getElement('.monitor-container:not(.spaced)');
 
     ITSA.Event.after('dd', function(e) {

@@ -39,7 +39,6 @@ Code-example:
 ```js
 <script src="itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     var count, container, addNewButton, showButtonText;
 
     count = 0;
@@ -72,7 +71,6 @@ Code-example:
 
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
-    var ITSA = require('itsa');
     var count, container, addNewButton, showButtonText;
 
     count = 0;
