@@ -16404,7 +16404,7 @@ Object.merge = function() {
  * @return {Object} new object with the prototype specified.
  */
 Object.newProto = function(obj, proto, clone) {
-    return clone ? obj.deepClone(true, proto) : Object.create(proto).merge(obj);
+    return clone ? obj.deepClone(true, proto) : Object.create(proto).merge(obj, {force: true});
 };
 
 /**
