@@ -27,11 +27,11 @@ Also, this module takes care of marking all elements up the tree of the focussed
 
 #Setting up with HTML#
 
-The preferred way is to set the focusmanager through HTML, because you don't need client-side rendering. Making a container a focusmanager is done with the attribute `fm-manager`, which can be set `"true"`, or a selector-specification:
+The preferred way is to set the focusmanager through HTML, because you don't need client-side rendering. Making a container a focusmanager is done with the attribute `plugin-fm`, which can be set `"true"`, or a selector-specification:
 
 ####Example simple focusmanager:####
 ```html
-<div class="pure-form" fm-manage="true">
+<div class="pure-form" plugin-fm="true">
     <input type="text" />
     <input type="text" />
     <button class="pure-button">Cancel</button>
@@ -41,7 +41,7 @@ The preferred way is to set the focusmanager through HTML, because you don't nee
 
 ####Example focusmanager with different selector:####
 ```html
-<ul fm-manage="li">
+<ul plugin-fm="true" fm-manage="li">
     <li>first item</li>
     <li>second item</li>
     <li>third item</li>
@@ -103,7 +103,7 @@ However -in those cases- you need a way to get inside and outside the nested man
 
 ####Example nested focusmanager####
 ```html
-<form fm-manage="true">
+<form plugin-fm="true">
     <input id="name" type="text" value="first"/>
     <input id="pw" type="password" value="second"/>
     <div fm-manage="true">
@@ -166,7 +166,7 @@ Can be set `"true"`. Only applyable for `input`-elements of the type `text` or `
 
 ####Example element-options####
 ```html
-<form class="pure-form" fm-manage="true">
+<form class="pure-form" plugin-fm="true">
     <input type="text" placeholder="username" fm-defaultitem="true" />
     <input type="password"  placeholder="password" fm-primaryonenter="true"/>
     <button class="pure-button pure-button-primary" type="submit">OK</button>
