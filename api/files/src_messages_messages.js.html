@@ -364,6 +364,25 @@ require(&#x27;polyfill/lib/promise.js&#x27;);
         },
 
         /**
+         * Sends a simple confirmation
+         *
+         * @method confirm
+         * @param message {String} The message to be send
+         * @param [icon] {String} an icon-name to be used (fe &quot;alert&quot;). The icon-name should be defined by the &#x60;icons&#x60;-module.
+         * @return {Promise}
+         * @since 0.0.1
+        */
+        confirm: function(message, icon) {
+            return this.message(message, {
+                footer: &#x27;&lt;button is=&quot;no&quot; class=&quot;pure-button&quot;&gt;No&lt;/button&gt;&lt;button is=&quot;yes&quot; class=&quot;pure-button pure-button-primary&quot;&gt;Yes&lt;/button&gt;&#x27;,
+                icon: icon
+            }).then(function(container) {
+                var button = container.getElement(&#x27;button&#x27;);
+                return (button.getAttr(&#x27;is&#x27;)===&#x27;yes&#x27;);
+            }, function(err) {alert(err);});
+        },
+
+        /**
          * Sends a warning-message.
          *
          * @method warn
