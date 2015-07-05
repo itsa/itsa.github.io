@@ -18342,6 +18342,33 @@
         {
             "file": "src/messages/messages.js",
             "line": 102,
+            "description": "Sends a simple confirmation",
+            "itemtype": "method",
+            "name": "confirm",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "The message to be send",
+                    "type": "String"
+                },
+                {
+                    "name": "icon",
+                    "description": "an icon-name to be used (fe \"alert\"). The icon-name should be defined by the `icons`-module.",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Promise"
+            },
+            "since": "0.0.1",
+            "class": "Messages",
+            "module": "messages"
+        },
+        {
+            "file": "src/messages/messages.js",
+            "line": 121,
             "description": "Sends a warning-message.",
             "itemtype": "method",
             "name": "warn",
@@ -18362,7 +18389,7 @@
         },
         {
             "file": "src/messages/messages.js",
-            "line": 117,
+            "line": 136,
             "description": "Sends a prompt-message with an input-element.",
             "itemtype": "method",
             "name": "prompt",
@@ -18453,7 +18480,7 @@
         },
         {
             "file": "src/messages/messages.js",
-            "line": 164,
+            "line": 183,
             "description": "To catch syste-errors into the message system. When set, errors won't appear in the console.",
             "itemtype": "method",
             "name": "catchErrors",
