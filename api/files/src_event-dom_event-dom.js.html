@@ -300,6 +300,8 @@ var NAME = &#x27;[event-dom]: &#x27;,
     ATTRIBUTE = &#x27;attribute&#x27;,
     TAP = &#x27;tap&#x27;,
     CLICK = &#x27;click&#x27;,
+    MOUSEDOWN = &#x27;mousedown&#x27;,
+    PANSTART = &#x27;panstart&#x27;,
     RIGHTCLICK = &#x27;right&#x27;+CLICK,
     CENTERCLICK = &#x27;center&#x27;+CLICK,
     ANCHOR_CLICK = &#x27;anchor&#x27;+CLICK,
@@ -338,6 +340,7 @@ var NAME = &#x27;[event-dom]: &#x27;,
 
 module.exports = function (window) {
     var DOCUMENT = window.document,
+        isMobile = require(&#x27;useragent&#x27;)(window).isMobile,
         _domSelToFunc, _evCallback, _findCurrentTargets, _preProcessor, _setupEvents, _setupMutationListener, _teardownMutationListener,
         _setupDomListener, _teardownDomListener, SORT, _sortFunc, _sortFuncReversed, _getSubscribers, _selToFunc, MUTATION_EVENTS, preventClick;
 
@@ -522,6 +525,8 @@ module.exports = function (window) {
         var allSubscribers = Event._subs,
             eType = e.type,
             eTarget = e.target,
+            supportHammer = !!Event.Hammer,
+            mobileEvents = supportHammer &amp;&amp; isMobile,
             eventobject, subs, wildcard_named_subs, named_wildcard_subs, wildcard_wildcard_subs, subsOutside,
             subscribers, eventobjectOutside, wildcard_named_subsOutside, customEvent, eventName, which;
 
@@ -532,7 +537,7 @@ module.exports = function (window) {
             (which===2) &amp;&amp; (eventName=CENTERCLICK);
             (which===3) &amp;&amp; (eventName=RIGHTCLICK);
         }
-        if ((eventName===&#x27;tap&#x27;) &amp;&amp; (!e.target.vnode || (e.target.vnode.tag!==&#x27;A&#x27;))) {
+        if ((eventName===TAP) &amp;&amp; (!eTarget.vnode || (eTarget.vnode.tag!==&#x27;A&#x27;))) {
             // prevent the next click-event
             preventClick = true;
             e.clientX || (e.clientX = e.center &amp;&amp; e.center.x);
@@ -543,33 +548,32 @@ module.exports = function (window) {
             return;
         }
 
-        if ((eventName===&#x27;mousedown&#x27;) &amp;&amp; ((eTarget.vnode &amp;&amp; (e.target.vnode.tag===&#x27;A&#x27;)) || eTarget.inside(&#x27;a&#x27;))) {
+        if ((eventName===(mobileEvents ? PANSTART : MOUSEDOWN)) &amp;&amp; ((eTarget.vnode &amp;&amp; (eTarget.vnode.tag===&#x27;A&#x27;)) || eTarget.inside(&#x27;a&#x27;))) {
             // backup position in case of inside anchor
             startX = e.clientX || (e.center &amp;&amp; e.center.x);
             startY = e.clientY || (e.center &amp;&amp; e.center.y);
         }
 
         if (eventName===CLICK) {
-            if ((eTarget.vnode &amp;&amp; (e.target.vnode.tag===&#x27;A&#x27;)) || eTarget.inside(&#x27;a&#x27;)) {
-                eventName = ANCHOR_CLICK;
-                e.clientX || (e.clientX = e.center &amp;&amp; e.center.x);
-                e.clientY || (e.clientY = e.center &amp;&amp; e.center.y);
-                // ALSO: determine the offset between the latest mousedown and the current mouseposition
-                // if there is an offset, then the user is scrolling and doesn&#x27;t want to follow the link!
-                if ((Math.abs(startX-e.clientX)&gt;=ANCHOR_OFFSET) || (Math.abs(startY-e.clientY)&gt;=ANCHOR_OFFSET)) {
-                    e.preventDefault();
-                    return;
-                }
-            }
-            else {
-                eventName = &#x27;tap&#x27;;
-                e.center = {
-                    x: e.clientX,
-                    y: e.clientY
-                };
-                e.eventType = 4;
-                e.pointerType = &#x27;mouse&#x27;;
-                e.tapCount = 1;
+            eventName = TAP;
+            e.center = {
+                x: e.clientX,
+                y: e.clientY
+            };
+            e.eventType = 4;
+            e.pointerType = &#x27;mouse&#x27;;
+            e.tapCount = 1;
+        }
+
+        if ((eventName===TAP) &amp;&amp; ((eTarget.vnode &amp;&amp; (eTarget.vnode.tag===&#x27;A&#x27;)) || eTarget.inside(&#x27;a&#x27;))) {
+            eventName = ANCHOR_CLICK;
+            e.clientX || (e.clientX = e.center &amp;&amp; e.center.x);
+            e.clientY || (e.clientY = e.center &amp;&amp; e.center.y);
+            // ALSO: determine the offset between the latest mousedown and the current mouseposition
+            // if there is an offset, then the user is scrolling and doesn&#x27;t want to follow the link!
+            if ((Math.abs(startX-e.clientX)&gt;=ANCHOR_OFFSET) || (Math.abs(startY-e.clientY)&gt;=ANCHOR_OFFSET)) {
+                e.preventDefault();
+                return;
             }
         }
 
@@ -785,7 +789,7 @@ module.exports = function (window) {
         var lastFocussed;
 
         // make sure disabled buttons don&#x27;t work:
-        Event.before([&#x27;tap&#x27;, &#x27;press&#x27;], function(e) {
+        Event.before([TAP, &#x27;press&#x27;], function(e) {
             e.preventDefault();
         }, &#x27;.pure-button-disabled, button[disabled]&#x27;);
 
@@ -806,7 +810,7 @@ module.exports = function (window) {
         // make sure that a focussed button which recieves an keypress also fires the &#x60;tap&#x60;-event
         // note: the &#x60;click&#x60;-event will always be fired by the browser
         Event.after(
-            &#x27;tap&#x27;,
+            TAP,
             function(e) {
                 var buttonNode = e.target;
                 if (e._buttonPressed) {
