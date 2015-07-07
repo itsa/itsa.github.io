@@ -555,25 +555,26 @@ module.exports = function (window) {
         }
 
         if (eventName===CLICK) {
-            eventName = TAP;
-            e.center = {
-                x: e.clientX,
-                y: e.clientY
-            };
-            e.eventType = 4;
-            e.pointerType = &#x27;mouse&#x27;;
-            e.tapCount = 1;
-        }
-
-        if ((eventName===TAP) &amp;&amp; ((eTarget.vnode &amp;&amp; (eTarget.vnode.tag===&#x27;A&#x27;)) || eTarget.inside(&#x27;a&#x27;))) {
-            eventName = ANCHOR_CLICK;
-            e.clientX || (e.clientX = e.center &amp;&amp; e.center.x);
-            e.clientY || (e.clientY = e.center &amp;&amp; e.center.y);
-            // ALSO: determine the offset between the latest mousedown and the current mouseposition
-            // if there is an offset, then the user is scrolling and doesn&#x27;t want to follow the link!
-            if ((Math.abs(startX-e.clientX)&gt;=ANCHOR_OFFSET) || (Math.abs(startY-e.clientY)&gt;=ANCHOR_OFFSET)) {
-                e.preventDefault();
-                return;
+            if ((eTarget.vnode &amp;&amp; (e.target.vnode.tag===&#x27;A&#x27;)) || eTarget.inside(&#x27;a&#x27;)) {
+                eventName = ANCHOR_CLICK;
+                e.clientX || (e.clientX = e.center &amp;&amp; e.center.x);
+                e.clientY || (e.clientY = e.center &amp;&amp; e.center.y);
+                // ALSO: determine the offset between the latest mousedown and the current mouseposition
+                // if there is an offset, then the user is scrolling and doesn&#x27;t want to follow the link!
+                if ((Math.abs(startX-e.clientX)&gt;=ANCHOR_OFFSET) || (Math.abs(startY-e.clientY)&gt;=ANCHOR_OFFSET)) {
+                    e.preventDefault();
+                    return;
+                }
+            }
+            else {
+                eventName = TAP;
+                e.center = {
+                    x: e.clientX,
+                    y: e.clientY
+                };
+                e.eventType = 4;
+                e.pointerType = &#x27;mouse&#x27;;
+                e.tapCount = 1;
             }
         }
 
