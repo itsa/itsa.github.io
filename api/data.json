@@ -17070,6 +17070,15 @@
             "description": "Returns a deep copy of the Array.\nOnly handles members of primary types, Dates, Arrays and Objects.",
             "itemtype": "method",
             "name": "deepClone",
+            "params": [
+                {
+                    "name": "descriptors",
+                    "description": "whether to use the descriptors when cloning",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
             "return": {
                 "description": "deep-copy of the original",
                 "type": "Array"
@@ -17080,7 +17089,7 @@
         },
         {
             "file": "src/js-ext/lib/array.js",
-            "line": 243,
+            "line": 244,
             "description": "Compares this object with the reference-object whether they have the same value.\nNot by reference, but their content as simple types.\n\nCompares both JSON.stringify objects",
             "itemtype": "method",
             "name": "sameValue",
@@ -17101,7 +17110,7 @@
         },
         {
             "file": "src/js-ext/lib/array.js",
-            "line": 266,
+            "line": 267,
             "description": "Sets the items of `array` to the instance. This will refill the array, while remaining the instance.\nThis way, external references to the array-instance remain valid.",
             "itemtype": "method",
             "name": "defineData",
@@ -17126,7 +17135,46 @@
         },
         {
             "file": "src/js-ext/lib/array.js",
-            "line": 291,
+            "line": 292,
+            "description": "Merges `array` into this array (appended by default).",
+            "itemtype": "method",
+            "name": "merge",
+            "params": [
+                {
+                    "name": "array",
+                    "description": "the Array to be merged",
+                    "type": "Array"
+                },
+                {
+                    "name": "prepend",
+                    "description": "whether the items prepended",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                },
+                {
+                    "name": "clone",
+                    "description": "whether the items should be cloned",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                },
+                {
+                    "name": "descriptors",
+                    "description": "whether to use the descriptors when cloning",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "chainable": 1,
+            "class": "Array",
+            "module": "js-ext",
+            "submodule": "lib/array.js"
+        },
+        {
+            "file": "src/js-ext/lib/array.js",
+            "line": 320,
             "description": "Empties the Array by setting its length to zero.",
             "itemtype": "method",
             "name": "empty",
