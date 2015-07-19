@@ -15596,6 +15596,7 @@ valuesAreTheSame = function(value1, value2) {
      * Only handles members of primary types, Dates, Arrays and Objects.
      *
      * @method deepClone
+     * @param [descriptors=false] {Boolean} whether to use the descriptors when cloning
      * @return {Array} deep-copy of the original
      */
      ArrayPrototype.deepClone = function (descriptors) {
@@ -15649,6 +15650,34 @@ valuesAreTheSame = function(value1, value2) {
         }
         return thisArray;
     },
+
+    /**
+     * Merges `array` into this array (appended by default).
+     *
+     * @method merge
+     * @param array {Array} the Array to be merged
+     * @param [prepend=false] {Boolean} whether the items prepended
+     * @param [clone=false] {Boolean} whether the items should be cloned
+     * @param [descriptors=false] {Boolean} whether to use the descriptors when cloning
+     * @chainable
+     */
+    ArrayPrototype.merge = function(array, prepend, clone, descriptors) {
+        var instance = this,
+            mergeArray = clone ? array.deepClone(descriptors) : array;
+        if (prepend) {
+            mergeArray.reduceRight(function(coll, item) {
+                coll.unshift(item);
+                return coll;
+            }, instance);
+        }
+        else {
+            mergeArray.reduce(function(coll, item) {
+                coll[coll.length] = item;
+                return coll;
+            }, instance);
+        }
+        return instance;
+    };
 
     /**
      * Empties the Array by setting its length to zero.

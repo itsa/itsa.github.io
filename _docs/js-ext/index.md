@@ -142,6 +142,8 @@ Compares this object with the reference-object whether they have the same value.
 ###defineData###
 Sets the properties of `obj` to the instance. This will redefine the object, while remaining the instance.
 
+###merge###
+Merges `array` into this array (appended by default).
 
 ###empty###
 Empties the Object by deleting all its own properties (also non-enumerable).
