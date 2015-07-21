@@ -17138,7 +17138,7 @@
             "line": 292,
             "description": "Merges `array` into this array (appended by default).",
             "itemtype": "method",
-            "name": "merge",
+            "name": "concatMerge",
             "params": [
                 {
                     "name": "array",

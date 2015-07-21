@@ -15654,14 +15654,14 @@ valuesAreTheSame = function(value1, value2) {
     /**
      * Merges `array` into this array (appended by default).
      *
-     * @method merge
+     * @method concatMerge
      * @param array {Array} the Array to be merged
      * @param [prepend=false] {Boolean} whether the items prepended
      * @param [clone=false] {Boolean} whether the items should be cloned
      * @param [descriptors=false] {Boolean} whether to use the descriptors when cloning
      * @chainable
      */
-    ArrayPrototype.merge = function(array, prepend, clone, descriptors) {
+    ArrayPrototype.concatMerge = function(array, prepend, clone, descriptors) {
         var instance = this,
             mergeArray = clone ? array.deepClone(descriptors) : array;
         if (prepend) {

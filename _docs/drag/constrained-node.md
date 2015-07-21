@@ -50,7 +50,7 @@ Drag the 2 rectangles: they will be constrained to their container. The first is
 </script>
 ```
 
-<script src="../../dist/itsabuild-min.js"></script>
+<script src="../../dist/itsabuild.js"></script>
 <script>
     document.getElement('#without').plug('constrain', {selector: '.base-container'});
 </script>
