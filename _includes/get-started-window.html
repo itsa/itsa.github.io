@@ -22,7 +22,7 @@ var window = require('node-win'),
 
 {% highlight js %}
 <script>
-    {% if page.itsaclassname %}var {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }}{% endif %};{% if page.extracodefirstpar %}
+    {% if page.itsaclassname %}var {{ page.itsaclassname }} = ITSA.{{ page.itsaclassname }};{% endif %}{% if page.extracodefirstpar %}
     {{ page.extracodefirstpar }}{% endif %}
 </script>
 {% endhighlight %}
