@@ -17,7 +17,7 @@ firstpar: get-started-onlywindow
 
 By nature, fileuploads using XMLHttpRequest2 is hard to set up. This module provides the `Uploader`-class which makes this process extremely easy and extremely fast. The most difficult part would probably be setting up the server. The **[io-filetransfer](../io/index.html#io-filetransfer)**-module has more information about the technical details and server-setup.
 
-In most cases, you need only 1, which can be reused, even when a previous upload is still busy. In rare cases, you might need multiple instances.
+In most cases, you need only one uploader-instance, which can be reused, even when a previous upload is still busy. In rare cases, you might need multiple instances.
 
 For convenience, HTMLInputElement is extended with the `sendFiles`-method, which returns a promise with an `abort()`-method.
 
