@@ -120,6 +120,8 @@ When subscribed to the `uploader:send`-event, `e.returnValue` will hold the `io-
 ####Example managing the serverresponse:####
 ```js
 ITSA.Event.after('uploader:send', function(e) {
+    // at this point, the upload has JUST started
+    // file-uploading is busy and can be examinded with e.returnValue:
     var ioPromise = e.returnValue;
     ioPromise.then(
         function(serverResponse) {
@@ -141,6 +143,8 @@ ITSA.Event.after('uploader:send', function(e) {
 ####Example aborting the io-request:####
 ```js
 ITSA.Event.after('uploader:send', function(e) {
+    // at this point, the upload has JUST started
+    // file-uploading is busy and can be examinded with e.returnValue:
     var ioPromise = e.returnValue;
     // on whatever moment, you can abort the request
     // by invoke: ioPromise.abort();
