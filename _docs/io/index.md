@@ -527,6 +527,9 @@ routes = [
                     .then(function() {
                         return fsp.move(fullTempFilename, destinationFile);
                     })
+                    .then(function() {
+                        reply({status: 'ready'});
+                    })
                     .catch(function(err) {
                         console.log(err);
                     });
@@ -573,6 +576,9 @@ routes = [
                     })
                     .then(function() {
                         return fsp.move(fullTempFilename, destinationFile);
+                    })
+                    .then(function() {
+                        reply({status: 'ready'}).header("access-control-allow-origin", "yourcrossdomain.com");
                     })
                     .catch(function(err) {
                         console.log(err);
