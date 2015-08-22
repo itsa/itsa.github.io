@@ -7,7 +7,7 @@ modulesizecombined: 16.42
 dependencies: "polyfill, js-ext, vdom, io, event, utils"
 maintainer: Marco Asbreuk
 title: Uploader
-intro: "Uploader for easy sending files to a server. The file(s) are send in chuncks. Combined with SPDY, or HTTP2, you get ultrafast file-uploads."
+intro: "Uploader for easy sending files to a server. The file(s) are send in chuncks (parallel). Combined with SPDY, or HTTP2, you get ultrafast file-uploads."
 firstpar: get-started-onlywindow
 ---
 

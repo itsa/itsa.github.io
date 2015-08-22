@@ -378,7 +378,7 @@ dependencies: <b>io, js-ext, messages</b>
 </p>
 The **io-filetransfer**-module is meant to upload `blob's` or `files`. It adds one method to io: io.**sendBlob**(). When fulfilled, the callback returns a json-object. On error, the promise gets rejected.
 
-The file(s) are send in chuncks. Combined with `SPDY`, or `HTTP2`, you get *ultrafast* file-uploads.
+The file(s) are send in chuncks (parallel). Combined with `SPDY`, or `HTTP2`, you get *ultrafast* file-uploads.
 
 `IO.sendBlob` returns a promise with the `abort()`-method. This method can be used to abort the transmission. All chuncks will then be aborted.
 
