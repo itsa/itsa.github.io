@@ -71,7 +71,11 @@
             
                 <li><a href="../classes/Function.html">Function</a></li>
             
+                <li><a href="../classes/HTMLButtonElement.html">HTMLButtonElement</a></li>
+            
                 <li><a href="../classes/HTMLElement.html">HTMLElement</a></li>
+            
+                <li><a href="../classes/HTMLInputElement.html">HTMLInputElement</a></li>
             
                 <li><a href="../classes/Icons.html">Icons</a></li>
             
@@ -108,6 +112,8 @@
                 <li><a href="../classes/String.html">String</a></li>
             
                 <li><a href="../classes/SVGElement.html">SVGElement</a></li>
+            
+                <li><a href="../classes/Uploader.html">Uploader</a></li>
             
                 <li><a href="../classes/USERAGENT.html">USERAGENT</a></li>
             
@@ -173,6 +179,8 @@
             
                 <li><a href="../modules/io-cors.html">io-cors</a></li>
             
+                <li><a href="../modules/io-filetransfer.html">io-filetransfer</a></li>
+            
                 <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
             
                 <li><a href="../modules/io-transfer.html">io-transfer</a></li>
@@ -210,6 +218,8 @@
                 <li><a href="../modules/panel.html">panel</a></li>
             
                 <li><a href="../modules/scrollable.html">scrollable</a></li>
+            
+                <li><a href="../modules/uploader.html">uploader</a></li>
             
                 <li><a href="../modules/useragent.html">useragent</a></li>
             
@@ -551,7 +561,8 @@ Promise.chainFns = function (funcs, finishAll) {
  */
 Promise.manage = function (callbackFn, stayActive) {
     console.log(NAME, &#x27;manage&#x27;);
-    var fulfillHandler, rejectHandler, promise, finished, stayActivePromise, resolved;
+    var fulfillHandler, rejectHandler, promise, finished, stayActivePromise,
+        resolved, isFulfilled, isRejected;
 
     promise = new Promise(function (fulfill, reject) {
         fulfillHandler = fulfill;
@@ -596,6 +607,14 @@ Promise.manage = function (callbackFn, stayActive) {
         return !finished;
     };
 
+    promise.isFulfilled = function () {
+        return !!isFulfilled;
+    };
+
+    promise.isRejected = function () {
+        return !!isRejected;
+    };
+
     promise.stayActive = function (time) {
         stayActivePromise = new Promise(function (fulfill) {
             later(fulfill, time);
@@ -614,6 +633,15 @@ Promise.manage = function (callbackFn, stayActive) {
     };
 
     stayActive &amp;&amp; promise.stayActive(stayActive);
+
+    promise.then(
+        function() {
+            isFulfilled = true;
+        },
+        function() {
+            isRejected = true;
+        }
+    );
 
     return promise;
 };

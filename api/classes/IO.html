@@ -71,7 +71,11 @@
             
                 <li><a href="../classes/Function.html">Function</a></li>
             
+                <li><a href="../classes/HTMLButtonElement.html">HTMLButtonElement</a></li>
+            
                 <li><a href="../classes/HTMLElement.html">HTMLElement</a></li>
+            
+                <li><a href="../classes/HTMLInputElement.html">HTMLInputElement</a></li>
             
                 <li><a href="../classes/Icons.html">Icons</a></li>
             
@@ -108,6 +112,8 @@
                 <li><a href="../classes/String.html">String</a></li>
             
                 <li><a href="../classes/SVGElement.html">SVGElement</a></li>
+            
+                <li><a href="../classes/Uploader.html">Uploader</a></li>
             
                 <li><a href="../classes/USERAGENT.html">USERAGENT</a></li>
             
@@ -173,6 +179,8 @@
             
                 <li><a href="../modules/io-cors.html">io-cors</a></li>
             
+                <li><a href="../modules/io-filetransfer.html">io-filetransfer</a></li>
+            
                 <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
             
                 <li><a href="../modules/io-transfer.html">io-transfer</a></li>
@@ -210,6 +218,8 @@
                 <li><a href="../modules/panel.html">panel</a></li>
             
                 <li><a href="../modules/scrollable.html">scrollable</a></li>
+            
+                <li><a href="../modules/uploader.html">uploader</a></li>
             
                 <li><a href="../modules/useragent.html">useragent</a></li>
             
@@ -284,8 +294,6 @@
 
 <div class="box intro">
     <p>Provides core IO-functionality.</p>
-<p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
-New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 
 </div>
 
@@ -314,6 +322,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                     <ul class="index-list methods">
                         
                             <li class="index-item method private">
+                                <a href="#method__getClientId">_getClientId</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
                                 <a href="#method__initXHR">_initXHR</a>
 
                                 
@@ -335,14 +350,14 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                             </li>
                         
                             <li class="index-item method private">
-                                <a href="#method__setHeaders">_setHeaders</a>
+                                <a href="#method__setReadyHandle">_setReadyHandle</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method private">
-                                <a href="#method__setReadyHandle">_setReadyHandle</a>
+                                <a href="#method__setStreamHeader">_setStreamHeader</a>
 
                                 
                                 
@@ -426,6 +441,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_sendBlob">sendBlob</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_update">update</a>
 
                                 
@@ -446,6 +468,120 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method__getClientId" class="method item private">
+    <h3 class="name"><code>_getClientId</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>url</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Promise.html" class="crosslink">Promise</a></span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/io-filetransfer.html">io-filetransfer</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_io_extra_io-filetransfer.js.html#l102"><code>src&#x2F;io&#x2F;extra&#x2F;io-filetransfer.js:102</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Is send to the server and expects an unique id which can be used for its file-transactions.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">url</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>URL of the resource server</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Promise.html" class="crosslink">Promise</a></span>:
+                    
+                    <p>on success:
+Unique clientId
+on failure an Error object
+reason {Error}</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
 
                 
                     <div id="method__initXHR" class="method item private">
@@ -518,7 +654,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_io_io.js.html#l62"><code>src&#x2F;io&#x2F;io.js:62</code></a>
+        <a href="../files/src_io_io.js.html#l65"><code>src&#x2F;io&#x2F;io.js:65</code></a>
         
         </p>
 
@@ -798,7 +934,7 @@ This method is the standard way of doing xhr-requests without processing streams
         
             
                 
-                    <p>Provided by the <a href="../modules/io.html">io</a> module.</p>
+                    <p>Provided by the <a href="../modules/io-jsonp.html">io-jsonp</a> module.</p>
                 
                 <p>
                 
@@ -807,7 +943,7 @@ This method is the standard way of doing xhr-requests without processing streams
             
         
         
-        <a href="../files/src_io_extra_io-stream.js.html#l70"><code>src&#x2F;io&#x2F;extra&#x2F;io-stream.js:70</code></a>
+        <a href="../files/src_io_extra_io-stream.js.html#l86"><code>src&#x2F;io&#x2F;extra&#x2F;io-stream.js:86</code></a>
         
         </p>
 
@@ -931,144 +1067,7 @@ xhr.onerror()  // only XMLHttpRequest2</p>
             
         
         
-        <a href="../files/src_io_extra_io-stream.js.html#l102"><code>src&#x2F;io&#x2F;extra&#x2F;io-stream.js:102</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Adds a <code>headers</code> X-Stream=true in case of a streaming request.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">xhr</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>containing the xhr-instance</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">headers</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>containing all headers</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">method</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the request-method used</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method__setHeaders" class="method item private">
-    <h3 class="name"><code>_setHeaders</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>xhr</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>headers</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>method</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                    <p>Provided by the <a href="../modules/io.html">io</a> module.</p>
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_io_io.js.html#l143"><code>src&#x2F;io&#x2F;io.js:143</code></a>
+        <a href="../files/src_io_io.js.html#l156"><code>src&#x2F;io&#x2F;io.js:156</code></a>
         
         </p>
 
@@ -1205,7 +1204,7 @@ xhr.onerror()  // only XMLHttpRequest2</p>
             
         
         
-        <a href="../files/src_io_io.js.html#l173"><code>src&#x2F;io&#x2F;io.js:173</code></a>
+        <a href="../files/src_io_io.js.html#l186"><code>src&#x2F;io&#x2F;io.js:186</code></a>
         
         </p>
 
@@ -1287,6 +1286,143 @@ xhr.ontimeout()  // only XMLHttpRequest2</p>
 </div>
 
                 
+                    <div id="method__setStreamHeader" class="method item private">
+    <h3 class="name"><code>_setStreamHeader</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>xhr</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>headers</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>method</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/io-jsonp.html">io-jsonp</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_io_extra_io-stream.js.html#l118"><code>src&#x2F;io&#x2F;extra&#x2F;io-stream.js:118</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Adds a <code>headers</code> X-Stream=true in case of a streaming request.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">xhr</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>containing the xhr-instance</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">headers</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>containing all headers</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">method</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the request-method used</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method__toQueryString" class="method item private">
     <h3 class="name"><code>_toQueryString</code></h3>
 
@@ -1337,7 +1473,7 @@ xhr.ontimeout()  // only XMLHttpRequest2</p>
             
         
         
-        <a href="../files/src_io_io.js.html#l217"><code>src&#x2F;io&#x2F;io.js:217</code></a>
+        <a href="../files/src_io_io.js.html#l237"><code>src&#x2F;io&#x2F;io.js:237</code></a>
         
         </p>
 
@@ -1458,7 +1594,7 @@ xhr.ontimeout()  // only XMLHttpRequest2</p>
             
         
         
-        <a href="../files/src_io_extra_io-transfer.js.html#l432"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:432</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l433"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:433</code></a>
         
         </p>
 
@@ -1745,7 +1881,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_extra_io-transfer.js.html#l123"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:123</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l120"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:120</code></a>
         
         </p>
 
@@ -1895,6 +2031,21 @@ It will be rejected if a timeout occurs (see <code>options.timeout</code>), or i
                                 
                             </li>
                             
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[preventCache=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>whether to prevent caching --&gt; a timestamp is added by parameter _ts</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
                         </ul>
                     
                 </li>
@@ -1980,7 +2131,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_extra_io-assets.js.html#l40"><code>src&#x2F;io&#x2F;extra&#x2F;io-assets.js:40</code></a>
+        <a href="../files/src_io_extra_io-assets.js.html#l38"><code>src&#x2F;io&#x2F;extra&#x2F;io-assets.js:38</code></a>
         
         </p>
 
@@ -2163,7 +2314,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_extra_io-assets.js.html#l58"><code>src&#x2F;io&#x2F;extra&#x2F;io-assets.js:58</code></a>
+        <a href="../files/src_io_extra_io-assets.js.html#l56"><code>src&#x2F;io&#x2F;extra&#x2F;io-assets.js:56</code></a>
         
         </p>
 
@@ -2352,7 +2503,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_extra_io-transfer.js.html#l292"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:292</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l293"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:293</code></a>
         
         </p>
 
@@ -2627,7 +2778,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_extra_io-transfer.js.html#l171"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:171</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l172"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:172</code></a>
         
         </p>
 
@@ -2903,7 +3054,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_extra_io-jsonp.js.html#l41"><code>src&#x2F;io&#x2F;extra&#x2F;io-jsonp.js:41</code></a>
+        <a href="../files/src_io_extra_io-jsonp.js.html#l36"><code>src&#x2F;io&#x2F;extra&#x2F;io-jsonp.js:36</code></a>
         
         </p>
 
@@ -3090,7 +3241,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_extra_io-xml.js.html#l85"><code>src&#x2F;io&#x2F;extra&#x2F;io-xml.js:85</code></a>
+        <a href="../files/src_io_extra_io-xml.js.html#l82"><code>src&#x2F;io&#x2F;extra&#x2F;io-xml.js:82</code></a>
         
         </p>
 
@@ -3388,7 +3539,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_io.js.html#l238"><code>src&#x2F;io&#x2F;io.js:238</code></a>
+        <a href="../files/src_io_io.js.html#l258"><code>src&#x2F;io&#x2F;io.js:258</code></a>
         
         </p>
 
@@ -3652,7 +3803,7 @@ This method is the standard way of doing xhr-requests without processing streams
             
         
         
-        <a href="../files/src_io_extra_io-transfer.js.html#l340"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:340</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l341"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:341</code></a>
         
         </p>
 
@@ -3865,6 +4016,285 @@ reason {Error}</p>
 </div>
 
                 
+                    <div id="method_sendBlob" class="method item">
+    <h3 class="name"><code>sendBlob</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>url</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>blob</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[params]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[options]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Promise.html" class="crosslink">Promise</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                    <p>Provided by the <a href="../modules/io-filetransfer.html">io-filetransfer</a> module.</p>
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_io_extra_io-filetransfer.js.html#l138"><code>src&#x2F;io&#x2F;extra&#x2F;io-filetransfer.js:138</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Sends a <code>blob</code> by using an AJAX PUT request.
+Additional parameters can be through the <code>params</code> argument.</p>
+<p>The Promise gets fulfilled if the server responses with <code>STATUS-CODE</code> in the 200-range (excluded 204).
+It will be rejected if a timeout occurs (see <code>options.timeout</code>), or if <code>xhr.abort()</code> gets invoked.</p>
+<p>Note: <code>params</code> should be a plain object with only primitive types which are transformed into key/value pairs.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">url</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>URL of the resource server</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">blob</code>
+                        <span class="type">Blob</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>blob (data) representing the file to be send. Typically <code>HTMLInputElement.files[0]</code></p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[params]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>additional parameters. NOTE: this object will be <code>stringified</code> set a HEADER: <code>x-data</code> on the request!
+       should be a plain object with only primitive types which are transformed into key/value pairs.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[options]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[sync=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>By default, all requests are sent asynchronously. To send synchronous requests, set to true.</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[headers]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>HTTP request headers.</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[timeout=300000]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>to timeout the request, leading into a rejected Promise. Defaults to 5 minutes</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[progressfn]</code>
+                                    <span class="type"><a href="../classes/Function.html" class="crosslink">Function</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>callbackfunction in case you want to process upload-status.
+          Function has 3 parameters: total, loaded and target (io-promise)</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[withCredentials=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Whether or not to send credentials on the request.</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[parseJSONDate=false]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>Whether the server returns JSON-stringified data which has Date-objects.</p>
+
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Promise.html" class="crosslink">Promise</a></span>:
+                    
+                    <p>on success:
+Object any received data
+on failure an Error object
+reason {Error}</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_update" class="method item">
     <h3 class="name"><code>update</code></h3>
 
@@ -3925,7 +4355,7 @@ reason {Error}</p>
             
         
         
-        <a href="../files/src_io_extra_io-transfer.js.html#l244"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:244</code></a>
+        <a href="../files/src_io_extra_io-transfer.js.html#l245"><code>src&#x2F;io&#x2F;extra&#x2F;io-transfer.js:245</code></a>
         
         </p>
 

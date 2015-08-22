@@ -71,7 +71,11 @@
             
                 <li><a href="../classes/Function.html">Function</a></li>
             
+                <li><a href="../classes/HTMLButtonElement.html">HTMLButtonElement</a></li>
+            
                 <li><a href="../classes/HTMLElement.html">HTMLElement</a></li>
+            
+                <li><a href="../classes/HTMLInputElement.html">HTMLInputElement</a></li>
             
                 <li><a href="../classes/Icons.html">Icons</a></li>
             
@@ -108,6 +112,8 @@
                 <li><a href="../classes/String.html">String</a></li>
             
                 <li><a href="../classes/SVGElement.html">SVGElement</a></li>
+            
+                <li><a href="../classes/Uploader.html">Uploader</a></li>
             
                 <li><a href="../classes/USERAGENT.html">USERAGENT</a></li>
             
@@ -173,6 +179,8 @@
             
                 <li><a href="../modules/io-cors.html">io-cors</a></li>
             
+                <li><a href="../modules/io-filetransfer.html">io-filetransfer</a></li>
+            
                 <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
             
                 <li><a href="../modules/io-transfer.html">io-transfer</a></li>
@@ -210,6 +218,8 @@
                 <li><a href="../modules/panel.html">panel</a></li>
             
                 <li><a href="../modules/scrollable.html">scrollable</a></li>
+            
+                <li><a href="../modules/uploader.html">uploader</a></li>
             
                 <li><a href="../modules/useragent.html">useragent</a></li>
             
@@ -265,6 +275,8 @@
 /**
  * Provides core IO-functionality.
  *
+ * @example
+ * var IO = require(&quot;io&quot;)(window);
  *
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
@@ -288,10 +300,11 @@ var NAME = &#x27;[io]: &#x27;,
     }),
     CONTENT_TYPE = &#x27;Content-Type&#x27;,
     MIME_JSON = &#x27;application/json&#x27;,
+    MIME_BLOB = &#x27;application/octet-stream&#x27;,
     DEF_CONTENT_TYPE_POST = &#x27;application/x-www-form-urlencoded; charset=UTF-8&#x27;,
     ERROR_NO_XHR = &#x27;no valid xhr transport-mechanism available&#x27;,
     REQUEST_TIMEOUT = &#x27;Request-timeout&#x27;,
-    UNKNOW_ERROR = &#x27;Unknown response-error&#x27;,
+    UNKNOW_ERROR = &#x27;Network error&#x27;,
     XHR_ERROR = &#x27;XHR Error&#x27;,
     ABORTED = &#x27;Request aborted&#x27;,
     NO_XHR = &#x27;No valid xhr found on this browser&#x27;;
@@ -299,7 +312,7 @@ var NAME = &#x27;[io]: &#x27;,
 module.exports = function (window) {
 
     var ENCODE_URI_COMPONENT = encodeURIComponent,
-        IO;
+        IO, xhrTest;
 
     // to prevent multiple IO instances
     // (which might happen: http://nodejs.org/docs/latest/api/modules.html#modules_module_caching_caveats)
@@ -353,7 +366,8 @@ module.exports = function (window) {
                 headers = options.headers || {}, // all request will get some headers
                 async = !options.sync,
                 data = options.data,
-                reject = promise.reject;
+                reject = promise.reject,
+                sendPayload;
             // xhr will be null in case of a CORS-request when no CORS is possible
             if (!xhr) {
                 console.error(NAME, &#x27;_initXHR fails: &#x27;+ERROR_NO_XHR);
@@ -364,14 +378,13 @@ module.exports = function (window) {
 
             // method-name should be in uppercase:
             method = method.toUpperCase();
-
             // in case of BODY-method: eliminate any data behind querystring:
             // else: append data-object behind querystring
             if (BODY_METHODS[method]) {
                 url = url.split(&#x27;?&#x27;); // now url is an array
                 url = url[0]; // now url is a String again
             }
-            else if (data) {
+            else if (data &amp;&amp; (headers[CONTENT_TYPE]!==MIME_BLOB)) {
                 url += ((url.indexOf(&#x27;?&#x27;) &gt; 0) ? &#x27;&amp;&#x27; : &#x27;?&#x27;) + instance._toQueryString(data);
             }
 
@@ -387,8 +400,18 @@ module.exports = function (window) {
                 }
             );
 
+            if (BODY_METHODS[method] &amp;&amp; data) {
+                if (headers[CONTENT_TYPE]===MIME_BLOB) {
+                    if (!xhr._isXDR) {
+                        sendPayload = data;
+                    }
+                }
+                else {
+                    sendPayload = ((headers[CONTENT_TYPE]===MIME_JSON) || xhr._isXDR) ? JSON.stringify(data) : instance._toQueryString(data);
+                }
+            }
             // send the request:
-            xhr.send((BODY_METHODS[method] &amp;&amp; data) ? (((headers[CONTENT_TYPE]===MIME_JSON) || xhr._isXDR) ? JSON.stringify(data) : instance._toQueryString(data)) : null);
+            xhr.send(sendPayload);
 
             console.log(NAME, &#x27;xhr send to &#x27;+url+&#x27; with method &#x27;+method);
 
@@ -464,11 +487,18 @@ module.exports = function (window) {
                         if (xhr._isStream &amp;&amp; !xhr._gotstreamed) {
                             xhr.onprogress(xhr.responseText);
                         }
+                        if (xhr._fileProgress &amp;&amp; !xhr._gotstreamed) {
+                            xhr.onprogress({
+                                lengthComputable: true,
+                                loaded: 1,
+                                total: 1
+                            });
+                        }
                         promise.fulfill(xhr);
                     }
                     else {
                         console.warn(NAME, &#x27;xhr.onreadystatechange will reject xhr-instance: &#x27;+xhr.statusText);
-                        promise.reject(new Error(xhr.statusText || UNKNOW_ERROR+&#x27; &#x27;+xhr.status));
+                        promise.reject(new Error(xhr.statusText || (UNKNOW_ERROR)));
                     }
                 }
             };
@@ -526,11 +556,11 @@ module.exports = function (window) {
             var instance = this,
                 props = {},
                 xhr, promise;
-            options || (options={});
+            options = Object.isObject(options) ? options.deepClone() : {};
             promise = Promise.manage(options.streamback);
 
             xhr = new window.XMLHttpRequest();
-            props._isXHR2 = (&#x27;withCredentials&#x27; in xhr) || (window.navigator.userAgent===&#x27;fake&#x27;);
+            props._isXHR2 = IO.xhr2support;
             // it could be other modules like io-cors or io-stream have subscribed
             // xhr might be changed, also private properties might be extended
             instance._xhrList.each(
@@ -569,6 +599,10 @@ module.exports = function (window) {
         IO._setReadyHandle,
         IO._setHeaders
     ];
+
+    // search for XHR2 support:
+    xhrTest = new window.XMLHttpRequest();
+    IO.supportXHR2 = (&#x27;withCredentials&#x27; in xhrTest) || (window.navigator.userAgent===&#x27;fake&#x27;);
 
     window._ITSAmodules.IO = IO;
 

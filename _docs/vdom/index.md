@@ -180,6 +180,7 @@ These <u>do work</u>, but they update their vnode's asynchronously. So, if you q
 ###setInlineTransition###
 ###setId###
 ###setClass###
+###toggleAttr###
 ###toggleClass###
 ###replaceClass###
 ###removeAttr###
@@ -214,6 +215,12 @@ These <u>do work</u>, but they update their vnode's asynchronously. So, if you q
 ###hasFocusInside###
 ###hasFocusInside###
 ###isItag###
+
+
+##HTMLInputElement##
+
+###showFileSelect###
+###resetFileSelect###
 
 
 ##SVGElement's data##

@@ -20,15 +20,15 @@ var IO = require('io')(window);
 or
 
 ```js
-var IO = require('io/io-stream.js')(window);
+var IO = require('io/extra/io-stream.js')(window);
 ```
 or
 
 ```js
-var IO = require('io/io-transfer.js')(window);
+var IO = require('io/extra/io-transfer.js')(window);
 
-require('io/io-stream.js')(window); // extending IO
-require('io/io-cors-ie9.js')(window); // extending IO
+require('io/extra/io-stream.js')(window); // extending IO
+require('io/extra/io-cors-ie9.js')(window); // extending IO
 ```
 
 ##Initiate request##
@@ -80,7 +80,7 @@ When using io inside NodeJS, the same-origin policy is not relevant: in NodeJS y
 
 #io-transfer#
 <p class="module-intro">
-custom require: <b>var IO = require('io/io-transfer.js')(window);</b><br>
+custom require: <b>var IO = require('io/extra/io-transfer.js')(window);</b><br>
 size-min gzipped: 4.67 + 2.16 = <b>6.83 kb</b><br>
 dependencies: <b>io, polyfill</b>
 </p>
@@ -369,9 +369,237 @@ app.listen(8080);
 
 **Note 2:** when using `io-cors` you must be aware that <u>IE<10 will not send custom HTTP-headers</u>.
 
+
+#io-filetransfer#
+<p class="module-intro">
+custom require: <b>var IO = require('io/extra/io-filetransfer.js')(window);</b><br>
+size-min gzipped: 8.11 + 4.78 = <b>12.89 kb</b><br>
+dependencies: <b>io, js-ext, messages</b>
+</p>
+The **io-filetransfer**-module is meant to upload `blob's` or `files`. It adds one method to io: io.**sendBlob**(). When fulfilled, the callback returns a json-object. On error, the promise gets rejected.
+
+The file(s) are send in chuncks. Combined with `SPDY`, or `HTTP2`, you get *ultrafast* file-uploads.
+
+`IO.sendBlob` returns a promise with the `abort()`-method. This method can be used to abort the transmission. All chuncks will then be aborted.
+
+####io.sendBlob()####
+```js
+var inputElement = document.getElement('input'), // type="file"
+    firstFile = inputElement.files[0],
+    ioPromise = IO.sendBlob('http://somedomain.com/processfile', firstFile, {id: 'myfile'}, {progressfn: progressfn}),
+    progressfn;
+
+progressfn = function(e) {
+    var percent = Math.round(100*(e.loaded/e.total));
+    console.info(percent+'% loaded');
+};
+
+ioPromise.then(
+    function(JSONresponse) {
+        // File succesfully uploaded
+        // JSONresponse holds the serverresponse as an object
+    },
+    function(err) {
+        // Error during file uploading
+        // Also occurs on network-errors
+        console.warn(err);
+    }
+);
+
+// call ioPromise.abort() to abort the transmission (if needed)
+```
+<u>Characteristics:</u>
+* request-method: **PUT**
+* request Content-Type: **application/octet-stream**
+* request-headers: X-ClientId, X-TransId, X-Partial, X-Total-size
+* request-headers last chunk: X-ClientId, X-TransId, X-Partial, X-Total-size, X-Filename
+* response-data: **object**
+* response-data any but last chunk: **{status: "BUSY"}**
+* response Content-Type: **application/json**
+
+
+##Technical details##
+Every blob-transfer and every chunk needs to be identified. This is automaticly done in the following way:
+
+**Request:**
+
+* Every client identified with an unique `X-ClientId`-header. This id will be automaticly retrieved by a preflight GET-request, at the time of the very first blob-transfer.
+* Every blob-transfer is identified with a `X-TransferId`-header.
+* Every blob-transfer is separated into chunks. Every chunk is identified with a `X-Partial` and `X-Total-size` header: the latter representing the size of all chunks.
+* The final chunk has a header named `X-Filename` which equals either the filename, or 'blob'
+
+**Response:**
+
+* To get the unique `X-ClientId`-header, a preflight GET-request is made, returning a `String` with the unique ClientId.
+* When sending the blob, Only the final response (when the file is rebuild on the server), has a json-object with any data. All other chunks have an object that looks like: {status: "BUSY"}
+
+
+##Setting up the server##
+
+The server needs to response 2 different requests: preflight request, asking the unique ClientId, and the PUT-request of all blob-chunks.
+
+###Response of ClientId###
+The response of the `ClientId` should be made in a way that it is unique to the server. Once the cient has this id (see it as a session-id, thought it is not stored as a cookie), it can upload blobs or files on behalf if this Id. This way the server can distinguish blobs with the same `X-TransId` (coming from different clients). The server-`route` should be exactly the same as where the blob is going to be uploaded, only it is a `GET`-request.
+
+<u>Characteristics:</u>
+* request-method: **GET**
+* response-data: **ClientId**
+* response Content-Type: **text/xml**
+
+###Response of Blob/file###
+Each chunk is send to the server with its own unique headers: `X-ClientId`, `X-TransId`, `X-Partial` and `X-Total-size`. The server should combine all chunks into one final file. The final chunk has a header named `X-Filename`: this is the moment that the server has both the filename, as well as the total number of chunks (the `X-Partial~ of this request). This last chunk is likely to arive the server before the second last chunk, so the server needs to monitor the number of chunks that arive for this `X-ClientId`+`X-TransId` combination. If all chunks have arived, the final file should be build and the server should response with any arbitrary `json-object` data. The intermediate chunk-requests should be returned with json-data: {"status": "BUSY"}
+
+**Intermediate chunk-response:**
+
+<u>Characteristics:</u>
+* request-method: **PUT**
+* response-data: **{status: "BUSY"}**
+* response Content-Type: **application/json**
+
+*Response once the final blob has been generated:* (not necessary the response of the last chunk-request)
+
+<u>Characteristics:</u>
+* request-method: **PUT**
+* response-data: **any**
+* response Content-Type: **application/json**
+
+###Using CORS###
+When using CORS, the server needs to be prepared in a special way (extra routes, additional headers):
+
+* The above mentioned `GET` and `PUT` response, should come with: `header("access-control-allow-origin", "yourcrossdomain.com")` or `header("access-control-allow-origin", "*")`
+* You should have an `OPTIONS` route defined, that defines permission for CORS. See example below:
+
+####Route for OPTIONS request in Hapijs:####
+```js
+{
+    method: 'OPTIONS',
+    path: '/procesblob',
+    handler: function (request, reply) {
+        var requestHeaders = request.headers['access-control-request-headers'];
+        reply().header("access-control-allow-origin", "*") // or reply().header("access-control-allow-origin", "yourcrossdomain.com")
+               .header("access-control-allow-methods", "PUT,GET")
+               .header("access-control-allow-headers", requestHeaders)
+               .header("access-control-max-age", "1728000")
+               .header("content-length", "0");
+    }
+}
+```
+
+###Example serverside code###
+Setting up the server can be a tricky thing. We have made a `commonjs`-module for usage with `nodejs/hapijs`. **[This module can be found here](https://github.com/itsa-server/file-upload-handler)**. Note that this module will remove the file that has been created (in the tmp-dir) after the final response has been sent. So you must move the file to its final destination and return a promise, otherwise the created file is gone.
+
+The code to use is, would be:
+
+####Exampleroutes for Hapijs same domain:####
+```js
+var tmpDir = '/var/www/vhosts/somedomain/tmp/',
+    destinationDir = '/var/www/vhosts/somedomain/httpdocs/images/',
+    maxSize = 100*1024*1024, // 100Mb
+    uploadHandler = require('file-upload-handler')(tmpDir, maxSize),
+    maxFileSizeForThisRoute = 5*1024*1024, // 5Mb
+    fsp = require('fs-promise'),
+    routes;
+
+require('fs-extra');
+
+routes = [
+    {
+        method: 'GET',
+        path: '/procesblob',
+        handler: function (request, reply) {
+            generateClientId(request, reply);
+        }
+    },
+
+    {
+        method: 'PUT',
+        path: '/procesblob',
+        handler: function (request, reply) {
+            // max fileupload for this route is overruled into 5MB
+            recieveFile(request, reply, maxFileSizeForThisRoute, function(fullTempFilename, originalFilename) {
+                if (originalFilename) {
+                    destinationFile = destinationDir+originalFilename;
+                    return fsp.exists(destinationFile).then(function(exists) {
+                        if (exists) {
+                            return fsp.unlink(destinationFile);
+                        }
+                    })
+                    .then(function() {
+                        return fsp.move(fullTempFilename, destinationFile);
+                    })
+                    .catch(function(err) {
+                        console.log(err);
+                    });
+                }
+            });
+        }
+    }
+];
+```
+
+####Exampleroutes for Hapijs using CORS:####
+```js
+var tmpDir = '/var/www/vhosts/somedomain/tmp/',
+    destinationDir = '/var/www/vhosts/somedomain/httpdocs/images/',
+    maxSize = 100*1024*1024, // 100Mb
+    uploadHandler = require('file-upload-handler')(tmpDir, maxSize),
+    maxFileSizeForThisRoute = 5*1024*1024, // 5Mb
+    fsp = require('fs-promise'),
+    routes;
+
+require('fs-extra');
+
+routes = [
+    {
+        method: 'GET',
+        path: '/procesblob',
+        handler: function (request, reply) {
+            generateClientId(request, reply, 'yourcrossdomain.com');
+        }
+    },
+
+    {
+        method: 'PUT',
+        path: '/procesblob',
+        handler: function (request, reply) {
+            // max fileupload for this route is overruled into 5MB
+            recieveFile(request, reply, maxFileSizeForThisRoute, function(fullTempFilename, originalFilename) {
+                if (originalFilename) {
+                    destinationFile = destinationDir+originalFilename;
+                    return fsp.exists(destinationFile).then(function(exists) {
+                        if (exists) {
+                            return fsp.unlink(destinationFile);
+                        }
+                    })
+                    .then(function() {
+                        return fsp.move(fullTempFilename, destinationFile);
+                    })
+                    .catch(function(err) {
+                        console.log(err);
+                    });
+                }
+            }, 'yourcrossdomain.com');
+        }
+    },
+    {
+        method: 'OPTIONS',
+        path: '/procesblob',
+        handler: function (request, reply) {
+            var requestHeaders = request.headers['access-control-request-headers'];
+            reply().header("access-control-allow-origin", "yourcrossdomain.com")
+                   .header("access-control-allow-methods", "PUT,GET")
+                   .header("access-control-allow-headers", requestHeaders)
+                   .header("access-control-max-age", "1728000")
+                   .header("content-length", "0");
+        }
+    }
+];
+```
+
+
 #io-xml#
 <p class="module-intro">
-custom require: <b>var IO = require('io/io-xml.js')(window);</b><br>
+custom require: <b>var IO = require('io/extra/io-xml.js')(window);</b><br>
 size-min gzipped: 4.67 + 0.44 = <b>5.11 kb</b><br>
 dependencies: <b>io</b>
 </p>
@@ -396,7 +624,7 @@ _work in progress_
 
 #io-stream#
 <p class="module-intro">
-custom require: <b>var IO = require('io/io-stream.js')(window);</b><br>
+custom require: <b>var IO = require('io/extra/io-stream.js')(window);</b><br>
 size-min gzipped: 4.67 + 0.23 = <b>4.90 kb</b><br>
 dependencies: <b>io</b>
 </p>
@@ -503,7 +731,7 @@ In order to make `IO.readXML()` process the data in its streamback, the server m
 
 #io-cors-ie9#
 <p class="module-intro">
-custom require: <b>var IO = require('io/io-cors-ie9.js')(window);</b><br>
+custom require: <b>var IO = require('io/extra/io-cors-ie9.js')(window);</b><br>
 size-min gzipped: 4.67 + 8.32 = <b>12.99 kb</b><br>
 dependencies: <b>io, xmldom (npm)</b>
 </p>
@@ -559,7 +787,7 @@ The server-response should have set the header `Access-Control-Allow-Origin`. Th
 app.get('*', function (req, res) {
     // use: res.set('access-control-allow-origin', '*'); to allow all sites
     res.set('access-control-allow-origin', 'http://www.some-site.com');
-    res.set('cache-controll', 'no-cahce');
+    res.set('cache-controll', 'no-cache');
     res.send('some content');
 });
 ```
@@ -646,11 +874,12 @@ app.post('*', function (req, res) {
 
 ###Supported browsers###
 * All modern browsers and IE10+ (XMLHttpRequest2)
-* IE8 and IE9 (XDomainRequest)
+* IE8 and IE9 (XDomainRequest), *except for io-filetransfer*
 
 ###Not supported browsers###
 * Opera mini
 * IE7-
+* IE9- related to io-filetransfer
 
 ##Alternatives to CORS##
 

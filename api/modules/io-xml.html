@@ -71,7 +71,11 @@
             
                 <li><a href="../classes/Function.html">Function</a></li>
             
+                <li><a href="../classes/HTMLButtonElement.html">HTMLButtonElement</a></li>
+            
                 <li><a href="../classes/HTMLElement.html">HTMLElement</a></li>
+            
+                <li><a href="../classes/HTMLInputElement.html">HTMLInputElement</a></li>
             
                 <li><a href="../classes/Icons.html">Icons</a></li>
             
@@ -108,6 +112,8 @@
                 <li><a href="../classes/String.html">String</a></li>
             
                 <li><a href="../classes/SVGElement.html">SVGElement</a></li>
+            
+                <li><a href="../classes/Uploader.html">Uploader</a></li>
             
                 <li><a href="../classes/USERAGENT.html">USERAGENT</a></li>
             
@@ -173,6 +179,8 @@
             
                 <li><a href="../modules/io-cors.html">io-cors</a></li>
             
+                <li><a href="../modules/io-filetransfer.html">io-filetransfer</a></li>
+            
                 <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
             
                 <li><a href="../modules/io-transfer.html">io-transfer</a></li>
@@ -210,6 +218,8 @@
                 <li><a href="../modules/panel.html">panel</a></li>
             
                 <li><a href="../modules/scrollable.html">scrollable</a></li>
+            
+                <li><a href="../modules/uploader.html">uploader</a></li>
             
                 <li><a href="../modules/useragent.html">useragent</a></li>
             
@@ -278,8 +288,7 @@
 
 
 <div class="box intro">
-    <p>Extends io by adding the method <code>readXML</code> to it.
-Should be called using  the provided <code>mergeInto</code>-method like this:</p>
+    <p>Extends io by adding the method <code>readXML</code> to it.</p>
 
 </div>
 
@@ -287,9 +296,7 @@ Should be called using  the provided <code>mergeInto</code>-method like this:</p
     <div class="example">
         <h4>Example:</h4>
         <div class="example-content">
-            <p>var IO = require(&quot;io&quot;);
-var IOxml = require(&quot;io-xml&quot;);
-IOxml.mergeInto(IO);</p>
+            <p>var IO = require(&quot;io/extra/io-xml.js&quot;)(window);</p>
 <p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
 New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 

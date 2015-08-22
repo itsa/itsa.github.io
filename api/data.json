@@ -383,6 +383,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/io/extra/io-filetransfer.js": {
+            "name": "src/io/extra/io-filetransfer.js",
+            "modules": {
+                "io-filetransfer": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "src/io/extra/io-jsonp.js": {
             "name": "src/io/extra/io-jsonp.js",
             "modules": {
@@ -623,6 +632,19 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/uploader/uploader.js": {
+            "name": "src/uploader/uploader.js",
+            "modules": {
+                "uploader": 1
+            },
+            "classes": {
+                "Uploader": 1
+            },
+            "fors": {
+                "HTMLInputElement": 1
+            },
+            "namespaces": {}
+        },
         "src/useragent/useragent.js": {
             "name": "src/useragent/useragent.js",
             "modules": {
@@ -694,6 +716,8 @@
             "fors": {
                 "Node": 1,
                 "Element": 1,
+                "HTMLButtonElement": 1,
+                "HTMLInputElement": 1,
                 "SVGElement": 1,
                 "document": 1
             },
@@ -1085,6 +1109,7 @@
             "submodules": {
                 "io-assets": 1,
                 "io-cors": 1,
+                "io-filetransfer": 1,
                 "io-jsonp": 1,
                 "io-transfer": 1,
                 "io-xml": 1
@@ -1097,7 +1122,10 @@
             "tag": "module",
             "file": "src/io/io.js",
             "line": 1,
-            "description": "Provides core IO-functionality.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+            "description": "Provides core IO-functionality.",
+            "example": [
+                "\nvar IO = require(\"io\")(window);\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+            ]
         },
         "io-assets": {
             "name": "io-assets",
@@ -1110,9 +1138,9 @@
             "namespace": "",
             "file": "src/io/extra/io-assets.js",
             "line": 3,
-            "description": "Extends io by adding the method `readXML` to it.\nShould be called using  the provided `mergeInto`-method like this:",
+            "description": "Extends io by adding the method `getCSS` and `getJS` to it.\n(under construction)",
             "example": [
-                "\nvar IO = require(\"io\");\nvar IOassets = require(\"io-assets\");\nIOassets.mergeInto(IO);\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+                "\nvar IO = require(\"io/extra/io-assets.js\")(window);\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
             ],
             "since": "0.0.1"
         },
@@ -1127,9 +1155,26 @@
             "namespace": "",
             "file": "src/io/extra/io-cors-ie9.js",
             "line": 4,
-            "description": "Extends io by adding the method `readXML` to it.\nShould be called using  the provided `mergeInto`-method like this:",
+            "description": "Extends io by enabling `CORS` through XDR on IE<10.",
             "example": [
-                "\nvar IO = require(\"io\");\nvar IOcors = require(\"io-cors\");\nIOcors.mergeInto(IO);\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+                "\nvar IO = require(\"io/extra/io-cors.js\")(window);\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+            ],
+            "since": "0.0.1"
+        },
+        "io-filetransfer": {
+            "name": "io-filetransfer",
+            "submodules": {},
+            "classes": {},
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {},
+            "module": "io",
+            "namespace": "",
+            "file": "src/io/extra/io-filetransfer.js",
+            "line": 3,
+            "description": "Extends io by adding the method `sendBlob` to it.",
+            "example": [
+                "\nvar IO = require(\"io/extra/io-filetransfer.js\")(window);\n\n\n<i>Copyright (c) 2015 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
             ],
             "since": "0.0.1"
         },
@@ -1144,9 +1189,9 @@
             "namespace": "",
             "file": "src/io/extra/io-jsonp.js",
             "line": 3,
-            "description": "Extends io by adding the method `readXML` to it.\nShould be called using  the provided `mergeInto`-method like this:",
+            "description": "Extends io by adding the method `readObjectJSONP` to it.\n(under construction)",
             "example": [
-                "\nvar IO = require(\"io\");\nvar IOjsonp = require(\"io-jsonp\");\nIOjsonp.mergeInto(IO);\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+                "\nvar IO = require(\"io/extra/io-jsonp.js\")(window);\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
             ],
             "since": "0.0.1"
         },
@@ -1161,9 +1206,9 @@
             "namespace": "",
             "file": "src/io/extra/io-transfer.js",
             "line": 3,
-            "description": "Extends io by adding the method `readXML` to it.\nShould be called using  the provided `mergeInto`-method like this:",
+            "description": "Extends io by adding the methods `get`, `read`, `update`, `insert`, `send` and `delete` to it.",
             "example": [
-                "\nvar IO = require(\"io\");\nvar IOtransfer = require(\"io-transfer\");\nIOtransfer.mergeInto(IO);\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+                "\nvar IO = require(\"io/extra/io-transfer.js\")(window);\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
             ],
             "since": "0.0.1"
         },
@@ -1180,9 +1225,9 @@
             "namespace": "",
             "file": "src/io/io.js",
             "line": 1,
-            "description": "Extends io by adding the method `readXML` to it.\nShould be called using  the provided `mergeInto`-method like this:",
+            "description": "Extends io by adding the method `readXML` to it.",
             "example": [
-                "\nvar IO = require(\"io\");\nvar IOxml = require(\"io-xml\");\nIOxml.mergeInto(IO);\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+                "\nvar IO = require(\"io/extra/io-xml.js\")(window);\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
             ],
             "since": "0.0.1"
         },
@@ -1281,7 +1326,7 @@
             "module": "js-ext",
             "namespace": "",
             "file": "src/js-ext/lib/object.js",
-            "line": 148,
+            "line": 149,
             "description": "Pollyfils for often used functionality for Objects\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\n New BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         "lib/array.js": {
@@ -1416,6 +1461,22 @@
             "description": "Plugin to create scrollable divs\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
             "since": "0.0.1"
         },
+        "uploader": {
+            "name": "uploader",
+            "submodules": {},
+            "classes": {
+                "Uploader": 1,
+                "HTMLInputElement": 1
+            },
+            "fors": {
+                "HTMLInputElement": 1
+            },
+            "namespaces": {},
+            "tag": "module",
+            "file": "src/uploader/uploader.js",
+            "line": 2,
+            "description": "Provides core Upload-functionality.\nAlso defines` HTMLInputElement.prototype.sendFiles`.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
         "useragent": {
             "name": "useragent",
             "submodules": {},
@@ -1461,6 +1522,7 @@
                 "document": 1,
                 "ElementArray": 1,
                 "Node": 1,
+                "HTMLButtonElement": 1,
                 "SVGElement": 1,
                 "NS-vdom": 1,
                 "vnode": 1
@@ -1468,6 +1530,8 @@
             "fors": {
                 "Node": 1,
                 "Element": 1,
+                "HTMLButtonElement": 1,
+                "HTMLInputElement": 1,
                 "SVGElement": 1,
                 "document": 1
             },
@@ -1527,11 +1591,14 @@
             "classes": {
                 "Element": 1,
                 "Node": 1,
+                "HTMLButtonElement": 1,
                 "SVGElement": 1
             },
             "fors": {
                 "Node": 1,
                 "Element": 1,
+                "HTMLButtonElement": 1,
+                "HTMLInputElement": 1,
                 "SVGElement": 1,
                 "document": 1
             },
@@ -1862,9 +1929,9 @@
             "namespace": "",
             "file": "src/io/io.js",
             "line": 1,
-            "description": "Provides core IO-functionality.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "description": "Provides core IO-functionality.",
             "example": [
-                "\nvar IO = require(\"io\");\nvar IOxml = require(\"io-xml\");\nIOxml.mergeInto(IO);\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+                "\nvar IO = require(\"io\")(window);\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
             ]
         },
         "ITSA": {
@@ -1947,7 +2014,7 @@
             "submodule": "lib/object.js",
             "namespace": "",
             "file": "src/js-ext/lib/object.js",
-            "line": 148,
+            "line": 149,
             "description": "Pollyfils for often used functionality for objects"
         },
         "Array": {
@@ -2092,6 +2159,31 @@
             "line": 1,
             "description": "Plugin to create scrollable divs\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
+        "Uploader": {
+            "name": "Uploader",
+            "shortname": "Uploader",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "uploader",
+            "namespace": "",
+            "file": "src/uploader/uploader.js",
+            "line": 2,
+            "description": "Provides core Upload-functionality.\nAlso defines` HTMLInputElement.prototype.sendFiles`.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        "HTMLInputElement": {
+            "name": "HTMLInputElement",
+            "shortname": "HTMLInputElement",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "uploader",
+            "namespace": ""
+        },
         "USERAGENT": {
             "name": "USERAGENT",
             "shortname": "USERAGENT",
@@ -2138,6 +2230,18 @@
         "Node": {
             "name": "Node",
             "shortname": "Node",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "vdom",
+            "submodule": "extend-element",
+            "namespace": ""
+        },
+        "HTMLButtonElement": {
+            "name": "HTMLButtonElement",
+            "shortname": "HTMLButtonElement",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -15417,7 +15521,7 @@
         },
         {
             "file": "src/io/extra/io-assets.js",
-            "line": 40,
+            "line": 38,
             "description": "Creates a `<style>` tag to load the CSS file at the given url.",
             "itemtype": "method",
             "name": "getCSS",
@@ -15466,7 +15570,7 @@
         },
         {
             "file": "src/io/extra/io-assets.js",
-            "line": 58,
+            "line": 56,
             "description": "Creates a `<script>` tag to load the script at the given url.",
             "itemtype": "method",
             "name": "getJS",
@@ -15514,8 +15618,111 @@
             "submodule": "io-assets"
         },
         {
+            "file": "src/io/extra/io-filetransfer.js",
+            "line": 102,
+            "description": "Is send to the server and expects an unique id which can be used for its file-transactions.",
+            "itemtype": "method",
+            "name": "_getClientId",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "URL of the resource server",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "on success:\nUnique clientId\non failure an Error object\nreason {Error}",
+                "type": "Promise"
+            },
+            "class": "IO",
+            "module": "io",
+            "submodule": "io-filetransfer"
+        },
+        {
+            "file": "src/io/extra/io-filetransfer.js",
+            "line": 138,
+            "description": "Sends a `blob` by using an AJAX PUT request.\nAdditional parameters can be through the `params` argument.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `params` should be a plain object with only primitive types which are transformed into key/value pairs.",
+            "itemtype": "method",
+            "name": "sendBlob",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "URL of the resource server",
+                    "type": "String"
+                },
+                {
+                    "name": "blob",
+                    "description": "blob (data) representing the file to be send. Typically `HTMLInputElement.files[0]`",
+                    "type": "Blob"
+                },
+                {
+                    "name": "params",
+                    "description": "additional parameters. NOTE: this object will be `stringified` set a HEADER: `x-data` on the request!\n       should be a plain object with only primitive types which are transformed into key/value pairs.",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "sync",
+                            "description": "By default, all requests are sent asynchronously. To send synchronous requests, set to true.",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "headers",
+                            "description": "HTTP request headers.",
+                            "type": "Object",
+                            "optional": true
+                        },
+                        {
+                            "name": "timeout",
+                            "description": "to timeout the request, leading into a rejected Promise. Defaults to 5 minutes",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "300000"
+                        },
+                        {
+                            "name": "progressfn",
+                            "description": "callbackfunction in case you want to process upload-status.\n          Function has 3 parameters: total, loaded and target (io-promise)",
+                            "type": "Function",
+                            "optional": true
+                        },
+                        {
+                            "name": "withCredentials",
+                            "description": "Whether or not to send credentials on the request.",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "parseJSONDate",
+                            "description": "Whether the server returns JSON-stringified data which has Date-objects.",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "on success:\nObject any received data\non failure an Error object\nreason {Error}",
+                "type": "Promise"
+            },
+            "class": "IO",
+            "module": "io",
+            "submodule": "io-filetransfer"
+        },
+        {
             "file": "src/io/extra/io-jsonp.js",
-            "line": 41,
+            "line": 36,
             "description": "Creates a `<style>` tag to load the CSS file at the given url.",
             "itemtype": "method",
             "name": "readObjectJSONP",
@@ -15564,7 +15771,7 @@
         },
         {
             "file": "src/io/extra/io-stream.js",
-            "line": 70,
+            "line": 86,
             "description": "Adds 2 methods on the xhr-instance which are used by xhr when events occur:\n\nxhr.onload()\nxhr.onerror()  // only XMLHttpRequest2\n\nThese events are only added in case of XDR",
             "itemtype": "method",
             "name": "_readyHandleXDR",
@@ -15583,14 +15790,15 @@
             "access": "private",
             "tagname": "",
             "class": "IO",
-            "module": "io"
+            "module": "io",
+            "submodule": "io-jsonp"
         },
         {
             "file": "src/io/extra/io-stream.js",
-            "line": 102,
+            "line": 118,
             "description": "Adds a `headers` X-Stream=true in case of a streaming request.",
             "itemtype": "method",
-            "name": "_setHeaders",
+            "name": "_setStreamHeader",
             "params": [
                 {
                     "name": "xhr",
@@ -15611,11 +15819,12 @@
             "access": "private",
             "tagname": "",
             "class": "IO",
-            "module": "io"
+            "module": "io",
+            "submodule": "io-jsonp"
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 123,
+            "line": 120,
             "description": "Performs an AJAX GET request.  Shortcut for a call to [`xhr`](#method_xhr) with `method` set to  `'GET'`.\nAdditional parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `params` should be a plain object with only primitive types which are transformed into key/value pairs.",
             "itemtype": "method",
             "name": "get",
@@ -15669,6 +15878,13 @@
                             "type": "Boolean",
                             "optional": true,
                             "optdefault": "false"
+                        },
+                        {
+                            "name": "preventCache",
+                            "description": "whether to prevent caching --> a timestamp is added by parameter _ts",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
                         }
                     ]
                 }
@@ -15683,7 +15899,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 171,
+            "line": 172,
             "description": "Performs an AJAX request with the GET HTTP method and expects a JSON-object.\nThe resolved Promise-callback returns an object (JSON-parsed serverresponse).\n\nAdditional request-parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: If you expect the server to response with data that consist of Date-properties, you should set `options.parseJSONDate` true.\n       Parsing takes a bit longer, but it will generate trully Date-objects.\nNote2: CORS is supported, as long as the responseserver is set up to:\n      a) has a response header which allows the clientdomain:\n         header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n      b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n         to requests with the OPTION-method\n      More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/",
             "itemtype": "method",
             "name": "read",
@@ -15764,7 +15980,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 244,
+            "line": 245,
             "description": "Sends data (object) which will be JSON-stringified before sending.\nPerforms an AJAX request with the PUT HTTP method by default.\nWhen options.allfields is `false`, it will use the POST-method: see Note2.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: The server needs to inspect the bodyparam: 'action', which always equals 'update'.\n       'body.action' is the way to distinquish 'I.IO.updateObject' from 'I.IO.insertObject'.\n       On purpose, we didn't make this distinction through a custom CONTENT-HEADER, because\n       that would lead into a more complicated CORS-setup (see Note3)\nNote2: By default this method uses the PUT-request: which is preferable is you send the WHOLE object.\n       if you send part of the fields, set `options.allfields`=false.\n       This will lead into using the POST-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote3: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote4: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "update",
@@ -15839,7 +16055,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 292,
+            "line": 293,
             "description": "Performs an AJAX request with the POST HTTP method by default.\nWhen options.allfields is `true`, it will use the PUT-method: see Note2.\nThe send data is an object which will be JSON-stringified before sending.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n'body.action' has the value 'insert'\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: The server needs to inspect the bodyparam: 'action', which always equals 'insert'.\n       'body.action' is the way to distinquish 'I.IO.insertObject' from 'I.IO.updateObject'.\n       On purpose, we didn't make this distinction through a custom CONTENT-HEADER, because\n       that would lead into a more complicated CORS-setup (see Note3)\nNote2: By default this method uses the POST-request: which is preferable if you don't know all the fields (like its unique id).\n       if you send ALL the fields, set `options.allfields`=true.\n       This will lead into using the PUT-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote3: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote4: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "insert",
@@ -15914,7 +16130,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 340,
+            "line": 341,
             "description": "Performs an AJAX request with the PUT HTTP method by default.\nWhen options.allfields is `false`, it will use the POST-method: see Note2.\nThe send data is an object which will be JSON-stringified before sending.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: By default this method uses the PUT-request: which is preferable is you send the WHOLE object.\n       if you send part of the fields, set `options.allfields`=false.\n       This will lead into using the POST-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote2: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote3: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "send",
@@ -15989,7 +16205,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 432,
+            "line": 433,
             "description": "Performs an AJAX DELETE request.  Shortcut for a call to [`xhr`](#method_xhr) with `method` set to  `'DELETE'`.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `data` should be a plain object with only primitive types which are transformed into key/value pairs.",
             "itemtype": "method",
             "name": "delete",
@@ -16075,7 +16291,7 @@
         },
         {
             "file": "src/io/extra/io-xml.js",
-            "line": 85,
+            "line": 82,
             "description": "Performs an AJAX request with the GET HTTP method and expects a JSON-object.\nThe resolved Promise-callback returns an object (JSON-parsed serverresponse).\n\nAdditional request-parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: If you expect the server to response with data that consist of Date-properties, you should set `options.parseJSONDate` true.\n       Parsing takes a bit longer, but it will generate trully Date-objects.\nNote2: CORS is supported, as long as the responseserver is set up to:\n      a) has a response header which allows the clientdomain:\n         header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n      b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n         to requests with the OPTION-method\n      More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/",
             "itemtype": "method",
             "name": "readXML",
@@ -16169,7 +16385,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 62,
+            "line": 65,
             "description": "Initializes the xhr-instance, based on the config-params.\nThis method is the standard way of doing xhr-requests without processing streams.",
             "itemtype": "method",
             "name": "_initXHR",
@@ -16261,7 +16477,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 143,
+            "line": 156,
             "description": "Adds the `headers`-object to `xhr`-headers.",
             "itemtype": "method",
             "name": "_setHeaders",
@@ -16289,7 +16505,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 173,
+            "line": 186,
             "description": "Adds 2 methods on the xhr-instance which are used by xhr when events occur:\n\nxhr.onreadystatechange()\nxhr.ontimeout()  // only XMLHttpRequest2\n\nThese events are responsible for making the Promise resolve.",
             "itemtype": "method",
             "name": "_setReadyHandle",
@@ -16317,7 +16533,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 217,
+            "line": 237,
             "description": "Stringifies an object into one string with every pair separated by `&`",
             "itemtype": "method",
             "name": "_toQueryString",
@@ -16339,7 +16555,7 @@
         },
         {
             "file": "src/io/io.js",
-            "line": 238,
+            "line": 258,
             "description": "Sends a HTTP request to the server and returns a Promise with an additional .abort() method to cancel the request.\nThis method is the standard way of doing xhr-requests without processing streams.",
             "itemtype": "method",
             "name": "request",
@@ -16486,7 +16702,18 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 189,
+            "line": 190,
+            "description": "Reference to the [Uploader](uploader.html) object",
+            "itemtype": "property",
+            "name": "Uploader",
+            "type": "Object",
+            "static": 1,
+            "class": "ITSA",
+            "module": "itsa.build"
+        },
+        {
+            "file": "src/itsa.build/itsa.build.js",
+            "line": 198,
             "description": "Reference to the [UserAgent](useragent.html) object",
             "itemtype": "property",
             "name": "UA",
@@ -16497,7 +16724,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 197,
+            "line": 206,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",
@@ -16813,7 +17040,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 460,
+            "line": 461,
             "description": "Returns the instance, yet sets an internal flag to a higher Class (1 level up)",
             "itemtype": "property",
             "name": "$super",
@@ -16825,7 +17052,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 478,
+            "line": 479,
             "description": "Calculated value of the specified member at the parent-Class.",
             "itemtype": "method",
             "name": "$superProp",
@@ -16840,7 +17067,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 517,
+            "line": 518,
             "description": "Invokes the original method (from inside where $orig is invoked).\nAny arguments will be passed through to the original method.",
             "itemtype": "method",
             "name": "$orig",
@@ -16855,7 +17082,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 577,
+            "line": 578,
             "description": "Creates the base Class: the highest Class in the hierarchy of all Classes.\nWill get extra properties merge into its prototype, which leads into the formation of `BaseClass`.",
             "itemtype": "method",
             "name": "createBaseClass",
@@ -16872,7 +17099,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 592,
+            "line": 593,
             "description": "The base BaseClass: the highest Class in the hierarchy of all Classes.",
             "itemtype": "property",
             "name": "BaseClass",
@@ -16884,7 +17111,7 @@
         },
         {
             "file": "src/js-ext/extra/classes.js",
-            "line": 604,
+            "line": 605,
             "description": "Returns a base class with the given constructor and prototype methods",
             "itemtype": "method",
             "name": "createClass",
@@ -17340,7 +17567,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 153,
+            "line": 154,
             "description": "Loops through all properties in the object.  Equivalent to Array.forEach.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "each",
@@ -17358,7 +17585,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 179,
+            "line": 180,
             "description": "Loops through the properties in an object until the callback function returns *truish*.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe order in which the elements are visited is not predictable.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "some",
@@ -17379,7 +17606,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 207,
+            "line": 208,
             "description": "Loops through the properties in an object until the callback assembling a new object\nwith its properties set to the values returned by the callback function.\nIf the callback function returns `undefined` the property will not be copied to the new object.\nThe resulting object will have the same keys as the original, except for those where the callback\nreturned `undefined` which will have dissapeared.\nThe callback is provided with the value of the property, the name of the property\nand a reference to the whole object itself.\nThe context to run the callback in can be overriden, otherwise it is undefined.",
             "itemtype": "method",
             "name": "map",
@@ -17400,7 +17627,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 240,
+            "line": 241,
             "description": "Returns the keys of the object: the enumerable properties.",
             "itemtype": "method",
             "name": "keys",
@@ -17414,7 +17641,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 250,
+            "line": 251,
             "description": "Checks whether the given property is a key: an enumerable property.",
             "itemtype": "method",
             "name": "hasKey",
@@ -17435,7 +17662,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 261,
+            "line": 262,
             "description": "Returns the number of keys of the object",
             "itemtype": "method",
             "name": "size",
@@ -17456,7 +17683,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 272,
+            "line": 273,
             "description": "Loops through the object collection the values of all its properties.\nIt is the counterpart of the [`keys`](#method_keys).",
             "itemtype": "method",
             "name": "values",
@@ -17470,7 +17697,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 292,
+            "line": 293,
             "description": "Returns true if the object has no own members",
             "itemtype": "method",
             "name": "isEmpty",
@@ -17484,7 +17711,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 305,
+            "line": 306,
             "description": "Returns a shallow copy of the object.\nIt does not clone objects within the object, it does a simple, shallow clone.\nFast, mostly useful for plain hash maps.",
             "itemtype": "method",
             "name": "shallowClone",
@@ -17507,7 +17734,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 339,
+            "line": 340,
             "description": "Compares this object with the reference-object whether they have the same value.\nNot by reference, but their content as simple types.\n\nCompares both JSON.stringify objects",
             "itemtype": "method",
             "name": "sameValue",
@@ -17528,7 +17755,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 364,
+            "line": 365,
             "description": "Returns a deep copy of the object.\nOnly handles members of primary types, Dates, Arrays and Objects.\nWill clone all the properties, also the non-enumerable.",
             "itemtype": "method",
             "name": "deepClone",
@@ -17557,7 +17784,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 378,
+            "line": 379,
             "description": "Transforms the object into an array with  'key/value' objects",
             "example": [
                 "\n{country: 'USA', Continent: 'North America'} --> [{key: 'country', value: 'USA'}, {key: 'Continent', value: 'North America'}]"
@@ -17596,7 +17823,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 403,
+            "line": 404,
             "description": "Merges into this object the properties of the given object.\nIf the second argument is true, the properties on the source object will be overwritten\nby those of the second object of the same name, otherwise, they are preserved.",
             "itemtype": "method",
             "name": "merge",
@@ -17650,7 +17877,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 452,
+            "line": 453,
             "description": "Sets the properties of `obj` to the instance. This will redefine the object, while remaining the instance.\nThis way, external references to the object-instance remain valid.",
             "itemtype": "method",
             "name": "defineData",
@@ -17675,7 +17902,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 473,
+            "line": 474,
             "description": "Empties the Object by deleting all its own properties (also non-enumerable).",
             "itemtype": "method",
             "name": "empty",
@@ -17686,7 +17913,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 492,
+            "line": 493,
             "description": "Returns true if the item is an object, but no Array, Function, RegExp, Date or Error object",
             "itemtype": "method",
             "name": "isObject",
@@ -17701,7 +17928,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 504,
+            "line": 505,
             "description": "Returns a new object resulting of merging the properties of the given objects.\nThe copying is shallow, complex properties will reference the very same object.\nProperties in later objects do **not overwrite** properties of the same name in earlier objects.\nIf any of the objects is missing, it will be skiped.",
             "example": [
                 "\n\n var foo = function (config) {\n      config = Object.merge(config, defaultConfig);\n }"
@@ -17727,7 +17954,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 529,
+            "line": 530,
             "description": "Returns a new object with the prototype specified by `proto`.",
             "itemtype": "method",
             "name": "newProto",
@@ -17761,7 +17988,7 @@
         },
         {
             "file": "src/js-ext/lib/object.js",
-            "line": 544,
+            "line": 545,
             "description": "Creates a protected property on the object.",
             "itemtype": "method",
             "name": "protectedProp",
@@ -19066,6 +19293,418 @@
             "description": "Implementation of harmony `WeakMaps`, in ES5. This implementation will\nwork only with keys that have configurable `valueOf` property (which is\na default for all non-frozen objects).\nhttp://wiki.ecmascript.org/doku.php?id=harmony:weak_maps",
             "class": "Panel",
             "module": "panel"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 45,
+            "description": "Hidden `input-node` of the type `file` that is being used to transfer the files.",
+            "itemtype": "property",
+            "name": "_inputNode",
+            "type": "DOMNode",
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 54,
+            "description": "Private Array with objects of this structure: {name: xxx, size: xxx}.\nHolds the file-info of all files that have been send by the last transfer.\nCan be used by the method: getLastSent()",
+            "itemtype": "property",
+            "name": "_lastfiles",
+            "type": "Array",
+            "default": "[]",
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 79,
+            "description": "Fired internally whenever the selected files are changed.\nIts defaultFn will start sending the files (if the selection is triggered with `autoSend=true`)",
+            "itemtype": "event",
+            "name": "uploader:fileschanged",
+            "since": "0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 92,
+            "description": "Clears the default transition-values that are being used for the values of `url`, params` and `options`.",
+            "itemtype": "method",
+            "name": "clearDefaults",
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 107,
+            "description": "Returns the number of files that are currently selected.",
+            "itemtype": "method",
+            "name": "count",
+            "return": {
+                "description": "Number of files currently selected",
+                "type": "Number"
+            },
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 118,
+            "description": "Destroys the fileselector: removes all eventlisteners and removes its protected `input`-domNode.",
+            "itemtype": "method",
+            "name": "destroy",
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 128,
+            "description": "Returns the protected `input`-domNode whichis being used by this uploader-instance.",
+            "itemtype": "method",
+            "name": "getDomNode",
+            "return": {
+                "description": "protected `input`-domNode",
+                "type": "DOMNode"
+            },
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 139,
+            "description": "Returns the currently selected files. This is an `Array-like` object, not a true Array.",
+            "itemtype": "method",
+            "name": "getFiles",
+            "return": {
+                "description": "protected `input`-domNode",
+                "type": "Array-like"
+            },
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 150,
+            "description": "Returns the last send-files.\nThis is handy to know, because after transmission, getFiles() will return empty.\nThis is an true Array with objects of this structure: {name: xxx, size: xxx}",
+            "itemtype": "method",
+            "name": "getLastSent",
+            "return": {
+                "description": "The last sent files",
+                "type": "Array"
+            },
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 163,
+            "description": "Whether there are currently files selected.",
+            "itemtype": "method",
+            "name": "hasFiles",
+            "return": {
+                "description": "Number of selected files",
+                "type": "Number"
+            },
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 174,
+            "description": "Pops-up the browser's fileselect, by emitting the 'uploader:selectfiles'-event.\nThe fileselector allows you to send only 1 file at a time.\nIf `payload.autoSend` is set, the files will automaticly be send after selection.\nYou also can set other properties at the payload --> these will be available at the listeners.",
+            "itemtype": "method",
+            "name": "selectFile",
+            "params": [
+                {
+                    "name": "payload",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "autoSend",
+                            "description": "",
+                            "type": "Boolean",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 189,
+            "description": "Fired to start selecting the files.\nIts defaultFn will pop-up the file-selector.",
+            "itemtype": "event",
+            "name": "uploader:selectfiles",
+            "since": "0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 200,
+            "description": "Pops-up the browser's fileselect, by emitting the 'uploader:selectfiles'-event.\nThe fileselector allows you to send multiple files at a time.\nIf `payload.autoSend` is set, the files will automaticly be send after selection.\nYou also can set other properties at the payload --> these will be available at the listeners.",
+            "itemtype": "method",
+            "name": "pluginDOM",
+            "params": [
+                {
+                    "name": "payload",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "autoSend",
+                            "description": "",
+                            "type": "Boolean",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 220,
+            "description": "Send the selected files, by emitting the 'uploader:send'-event.\nIf `payload.url`, `payload.url` or `payload.url` is set, then these will overrule the default\nvalues (the way they were set at initiation, or by using `setDefaults`).\nYou also can set other properties at the payload --> these will be available at the listeners.",
+            "itemtype": "method",
+            "name": "pluginDOM",
+            "params": [
+                {
+                    "name": "payload",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "url",
+                            "description": "",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "params",
+                            "description": "",
+                            "type": "Object",
+                            "optional": true
+                        },
+                        {
+                            "name": "options",
+                            "description": "",
+                            "type": "Object",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 236,
+            "description": "Fired to start uploading through io.\nIts defaultFn will invoke `sendFiles` of the input-node.",
+            "itemtype": "event",
+            "name": "uploader:send",
+            "since": "0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 247,
+            "description": "Sets the default transition-values that are being used for the values of `url`, params` and `options`.\nThese values might have been set during initialization, if so, any values passed will be overrule the previous.",
+            "itemtype": "method",
+            "name": "setDefaults",
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 263,
+            "description": "Default function for the `uploader:selectfiles`-event",
+            "itemtype": "method",
+            "name": "_defFnSelectFiles",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "multiple",
+                            "description": "whether to support multiple selected files",
+                            "type": "Boolean",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 283,
+            "description": "Default function for the `uploader:send`-event",
+            "itemtype": "method",
+            "name": "_defFnSend",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "eventobject",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "url",
+                            "description": "overrules the default `url`",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "params",
+                            "description": "overrules the default `params`",
+                            "type": "Object",
+                            "optional": true
+                        },
+                        {
+                            "name": "options",
+                            "description": "overrules the default `options`",
+                            "type": "Object",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 320,
+            "description": "Stores the files that are sent into an internal hash, which can be read by `getLastSent()`.",
+            "itemtype": "method",
+            "name": "_storeLastSent",
+            "access": "private",
+            "tagname": "",
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 349,
+            "description": "Sends the input's files by using an AJAX PUT request.\nAdditional parameters can be through the `params` argument.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `params` should be a plain object with only primitive types which are transformed into key/value pairs.",
+            "itemtype": "method",
+            "name": "sendFiles",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "URL of the resource server",
+                    "type": "String"
+                },
+                {
+                    "name": "params",
+                    "description": "additional parameters. NOTE: these will be set as HEADERS like `x-data-parameter` on the request!\n       should be a plain object with only primitive types which are transformed into key/value pairs.",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "sync",
+                            "description": "By default, all requests are sent asynchronously. To send synchronous requests, set to true.",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "headers",
+                            "description": "HTTP request headers.",
+                            "type": "Object",
+                            "optional": true
+                        },
+                        {
+                            "name": "timeout",
+                            "description": "to timeout the request, leading into a rejected Promise. Defaults to 5 minutes",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "300000"
+                        },
+                        {
+                            "name": "progressfn",
+                            "description": "callbackfunction in case you want to process upload-status.\n          Function has 3 parameters: total, loaded and target (io-promise)",
+                            "type": "Function",
+                            "optional": true
+                        },
+                        {
+                            "name": "withCredentials",
+                            "description": "Whether or not to send credentials on the request.",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "parseJSONDate",
+                            "description": "Whether the server returns JSON-stringified data which has Date-objects.",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "emptyFiles",
+                            "description": "Whether the empty the inputElement after transmitting has completed",
+                            "type": "Boolean",
+                            "optional": true,
+                            "optdefault": "true"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "on success:\nObject any received data\non failure an Error object\nreason {Error}\nThe returned promise has an `abort`-method to cancel all transfers.",
+                "type": "Promise"
+            },
+            "class": "HTMLInputElement",
+            "module": "uploader"
         },
         {
             "file": "src/utils/lib/idgenerator.js",
@@ -23414,6 +24053,42 @@
         {
             "file": "src/vdom/partials/extend-element.js",
             "line": 4070,
+            "description": "Toggles the attribute on the Element with the specified value (giving it the value, or removes the attribute)",
+            "itemtype": "method",
+            "name": "toggleAttr",
+            "params": [
+                {
+                    "name": "attributeName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "the value that belongs to `key`",
+                    "type": "Any"
+                },
+                {
+                    "name": "forceState",
+                    "description": "to force toggling into this specific state",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "silent",
+                    "description": "prevent node-mutation events by the Event-module to emit",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "chainable": 1,
+            "since": "0.0.1",
+            "class": "Element",
+            "module": "vdom",
+            "submodule": "extend-element"
+        },
+        {
+            "file": "src/vdom/partials/extend-element.js",
+            "line": 4092,
             "description": "Toggles the className of the Element.",
             "itemtype": "method",
             "name": "toggleClass",
@@ -23458,7 +24133,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4116,
+            "line": 4138,
             "description": "Gets the bottom y-position (in the DOCUMENT) of the element in pixels.\nDOCUMENT-related: regardless of the window's scroll-position.",
             "itemtype": "property",
             "name": "bottom",
@@ -23469,7 +24144,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4132,
+            "line": 4154,
             "description": "Gets or set the height of the element in pixels. Included are padding and border, not any margins.\n\nThe getter is calculating through `offsetHeight`, the setter will set inline css-style for the height.\n\nValues are numbers without unity.",
             "itemtype": "property",
             "name": "height",
@@ -23481,7 +24156,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4158,
+            "line": 4180,
             "description": "Gets or set the innerHeight of the element in pixels. Excluded the borders.\nIncluded are padding.\n\nThe getter is calculating through `offsetHeight`, the setter will set inline css-style for the height.\n\nValues are numbers without unity.",
             "itemtype": "property",
             "name": "innerHeight",
@@ -23493,7 +24168,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4185,
+            "line": 4207,
             "description": "Gets or set the innerHeight of the element in pixels. Excluded the borders.\nIncluded are padding.\n\nThe getter is calculating through `offsetHeight`, the setter will set inline css-style for the height.\n\nValues are numbers without unity.",
             "itemtype": "property",
             "name": "innerWidth",
@@ -23505,7 +24180,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4212,
+            "line": 4234,
             "description": "Gets the x-position (in the DOCUMENT) of the element in pixels.\nDOCUMENT-related: regardless of the window's scroll-position.",
             "itemtype": "property",
             "name": "left",
@@ -23516,7 +24191,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4228,
+            "line": 4250,
             "description": "Gets the right-position (in the DOCUMENT) of the element in pixels.\nDOCUMENT-related: regardless of the window's scroll-position.",
             "itemtype": "property",
             "name": "right",
@@ -23527,7 +24202,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4244,
+            "line": 4266,
             "description": "Gets the y-position (in the DOCUMENT) of the element in pixels.\nDOCUMENT-related: regardless of the window's scroll-position.",
             "itemtype": "property",
             "name": "top",
@@ -23538,7 +24213,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4260,
+            "line": 4282,
             "description": "Gets or set the width of the element in pixels. Included are padding and border, not any margins.\n\nThe getter is calculating through `offsetHeight`, the setter will set inline css-style for the width.\n\nValues are numbers without unity.",
             "itemtype": "property",
             "name": "width",
@@ -23550,7 +24225,70 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4296,
+            "line": 4314,
+            "description": "Disables the button",
+            "itemtype": "method",
+            "name": "disable",
+            "chainable": 1,
+            "class": "HTMLButtonElement",
+            "module": "vdom",
+            "submodule": "extend-element"
+        },
+        {
+            "file": "src/vdom/partials/extend-element.js",
+            "line": 4327,
+            "description": "Enables the button",
+            "itemtype": "method",
+            "name": "enable",
+            "chainable": 1,
+            "class": "HTMLButtonElement",
+            "module": "vdom",
+            "submodule": "extend-element"
+        },
+        {
+            "file": "src/vdom/partials/extend-element.js",
+            "line": 4339,
+            "description": "Toggles the `disabled`-state of the button",
+            "itemtype": "method",
+            "name": "toggle",
+            "params": [
+                {
+                    "name": "forcedState",
+                    "description": "to force a specific state",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "chainable": 1,
+            "class": "HTMLButtonElement",
+            "module": "vdom",
+            "submodule": "extend-element"
+        },
+        {
+            "file": "src/vdom/partials/extend-element.js",
+            "line": 4355,
+            "description": "Shows the pop-up of an `input` element of the type `file`.",
+            "itemtype": "method",
+            "name": "showFileSelect",
+            "chainable": 1,
+            "class": "HTMLInputElement",
+            "module": "vdom",
+            "submodule": "extend-element"
+        },
+        {
+            "file": "src/vdom/partials/extend-element.js",
+            "line": 4369,
+            "description": "Hides the pop-up and empties the files-list of an `input` element of the type `file`.",
+            "itemtype": "method",
+            "name": "resetFileSelect",
+            "chainable": 1,
+            "class": "HTMLInputElement",
+            "module": "vdom",
+            "submodule": "extend-element"
+        },
+        {
+            "file": "src/vdom/partials/extend-element.js",
+            "line": 4394,
             "description": "Gets or set the height of the element in pixels. Included are padding and border, not any margins.\n\nThe getter is calculating through `offsetHeight`, the setter will set inline css-style for the height.\n\nValues are numbers without unity.",
             "itemtype": "property",
             "name": "svgHeight",
@@ -23562,7 +24300,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4323,
+            "line": 4421,
             "description": "Gets or set the innerHeight of the element in pixels. Excluded the borders.\nIncluded are padding.\n\nThe getter is calculating through `offsetHeight`, the setter will set inline css-style for the height.\n\nValues are numbers without unity.",
             "itemtype": "property",
             "name": "innerHeight",
@@ -23574,7 +24312,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4350,
+            "line": 4448,
             "description": "Gets or set the innerHeight of the element in pixels. Excluded the borders.\nIncluded are padding.\n\nThe getter is calculating through `offsetHeight`, the setter will set inline css-style for the height.\n\nValues are numbers without unity.",
             "itemtype": "property",
             "name": "innerWidth",
@@ -23586,7 +24324,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4377,
+            "line": 4475,
             "description": "Gets or set the width of the element in pixels. Included are padding and border, not any margins.\n\nThe getter is calculating through `offsetHeight`, the setter will set inline css-style for the width.\n\nValues are numbers without unity.",
             "itemtype": "property",
             "name": "svgWidth",
@@ -23598,7 +24336,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4469,
+            "line": 4567,
             "description": "Activates MutationObserver: only needed when manipulating dom-elements by other means than through\nthis framework. It causes the vdom to be correctly being updated.\n\nOnly works for modern browsers and >IE10",
             "itemtype": "method",
             "name": "setupMutationObserver",
@@ -23609,7 +24347,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4492,
+            "line": 4590,
             "description": "Returns the specified attribute of the specified element, as an Attr node.",
             "itemtype": "method",
             "name": "getAttributeNode",
@@ -23623,7 +24361,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4499,
+            "line": 4597,
             "description": "Returns a text rectangle object that encloses a group of text rectangles. The returned value is\na TextRectangle object which is the union of the rectangles returned by getClientRects() for the element,\ni.e., the CSS border-boxes associated with the element.\n\nThe returned value is a TextRectangle object, which contains read-only left, top, right and bottom properties\ndescribing the border-box in pixels. top and left are relative to the top-left of the viewport.",
             "itemtype": "method",
             "name": "getBoundingClientRect",
@@ -23637,7 +24375,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4511,
+            "line": 4609,
             "description": "Returns a collection of rectangles that indicate the bounding rectangles for each box in a client.\n\nThe returned value is a collection of ClientRect objects, one for each CSS border box associated with the element.\nEach ClientRect object contains read-only left, top, right and bottom properties describing the border box, in pixels,\nwith the top-left relative to the top-left of the viewport. For tables with captions,\nthe caption is included even though it's outside the border box of the table.",
             "itemtype": "method",
             "name": "getClientRects",
@@ -23651,7 +24389,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4523,
+            "line": 4621,
             "description": "Returns a new NodeIterator object with this Element as root.\n\nThe NodeIterator is a snapshot of the dom at the time this method was called. It is not updated when changes of the dom are made afterwards.",
             "itemtype": "method",
             "name": "createNodeIterator",
@@ -23680,7 +24418,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4541,
+            "line": 4639,
             "description": "Returns an HTMLCollection of all Elements within this Element, that match their classes with the supplied `classNames` argument.\nTo match multiple different classes, separate them with a `comma`.\n\ngetElementsByClassName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByClassName",
@@ -23701,7 +24439,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4554,
+            "line": 4652,
             "description": "Returns an HTMLCollection of all Elements within this Element, that match their `name`-attribute with the supplied `name` argument.\n\ngetElementsByName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByName",
@@ -23722,7 +24460,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4567,
+            "line": 4665,
             "description": "Returns an HTMLCollection of all Elements within this Element, that match their `name`-attribute with the supplied `name` argument.\n\ngetElementsByTagName is life presentation of the dom. The returned HTMLCollection gets updated when the dom changes.\n\nNOTE: it is highly recomended to use `document.getAll` because that method takes advantage of the vdom.",
             "itemtype": "method",
             "name": "getElementsByTagName",
@@ -23743,7 +24481,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4579,
+            "line": 4677,
             "description": "Parses the specified text as HTML and inserts the resulting nodes into the DOM tree at a specified position.",
             "itemtype": "method",
             "name": "insertAdjacentHTML",
@@ -23765,7 +24503,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4593,
+            "line": 4691,
             "description": "Removes the attribute specified by an attributeNode from the Element.",
             "itemtype": "method",
             "name": "removeAttributeNode",
@@ -23783,7 +24521,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4601,
+            "line": 4699,
             "description": "Scrolls the element into view.",
             "itemtype": "method",
             "name": "scrollIntoView",
@@ -23793,7 +24531,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4607,
+            "line": 4705,
             "description": "Sets the attribute on the Element specified by `attributeNode`",
             "itemtype": "method",
             "name": "setAttributeNode",
@@ -23810,7 +24548,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4616,
+            "line": 4714,
             "description": "Fired when a static `script` element  finishes executing its script. Does not fire if the element is added dynamically, eg with appendChild().",
             "itemtype": "event",
             "name": "afterscriptexecute",
@@ -23820,7 +24558,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4623,
+            "line": 4721,
             "description": "Fired when the code in a `script` element declared in an HTML document is about to start executing. Does not fire if the element is added dynamically, eg with appendChild().",
             "itemtype": "event",
             "name": "beforescriptexecute",
@@ -23830,7 +24568,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4631,
+            "line": 4729,
             "description": "sets or returns an accesskey for an element. An accesskey specifies a shortcut key to activate/focus an element.\nNote: The way of accessing the shortcut key is varying in different browsers: http://www.w3schools.com/jsref/prop_html_accesskey.asp",
             "itemtype": "property",
             "name": "accessKey",
@@ -23841,7 +24579,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4640,
+            "line": 4738,
             "description": "Returns a live collection of all attribute nodes registered to the specified node.\nIt is a NamedNodeMap, not an Array, so it has no Array methods and the Attr nodes' indexes may differ among browsers.\nTo be more specific, attributes is a key/value pair of strings that represents any information regarding that attribute.\n\nPrefer to use `getAttrs()` which is much quicker, but doesn't return a life-list.",
             "itemtype": "property",
             "name": "attributes",
@@ -23852,7 +24590,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4651,
+            "line": 4749,
             "description": "The absolute base URL of a node.",
             "itemtype": "property",
             "name": "baseURI",
@@ -23864,7 +24602,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4659,
+            "line": 4757,
             "description": "Returns the number of children (child Elements)",
             "itemtype": "property",
             "name": "childElementCount",
@@ -23876,7 +24614,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4667,
+            "line": 4765,
             "description": "Returns a live collection of childNodes of the given element, either Element, TextNode or CommentNode",
             "itemtype": "property",
             "name": "childNodes",
@@ -23888,7 +24626,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4675,
+            "line": 4773,
             "description": "Returns a live collection of child Element's of the given element.",
             "itemtype": "property",
             "name": "children",
@@ -23900,7 +24638,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4683,
+            "line": 4781,
             "description": "Gets and sets the value of the class attribute of the specified element.",
             "itemtype": "property",
             "name": "className",
@@ -23911,7 +24649,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4690,
+            "line": 4788,
             "description": "Returns the inner height of an element in pixels, including padding but not the horizontal scrollbar height, border, or margin.",
             "itemtype": "property",
             "name": "clientHeight",
@@ -23923,7 +24661,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4698,
+            "line": 4796,
             "description": "The width of the left border of an element in pixels. It includes the width of the vertical scrollbar if the text direction of the element is right–to–left\nand if there is an overflow causing a left vertical scrollbar to be rendered. clientLeft does not include the left margin or the left padding.",
             "itemtype": "property",
             "name": "clientLeft",
@@ -23935,7 +24673,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4707,
+            "line": 4805,
             "description": "The width of the top border of an element in pixels. It does not include the top margin or padding.",
             "itemtype": "property",
             "name": "clientTop",
@@ -23947,7 +24685,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4715,
+            "line": 4813,
             "description": "Returns the inner width of an element in pixels, including padding but not the vertical scrollbar height, border, or margin.",
             "itemtype": "property",
             "name": "clientWidth",
@@ -23959,7 +24697,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4723,
+            "line": 4821,
             "description": "Reference to the first childNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nBetter work with Elements only:  use `firstElementChild` instead, which returns the first Element-child.",
             "itemtype": "property",
             "name": "firstChild",
@@ -23972,7 +24710,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4734,
+            "line": 4832,
             "description": "Reference to the first Element-child, which is an Element (nodeType===1).",
             "itemtype": "property",
             "name": "firstElementChild",
@@ -23984,7 +24722,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4742,
+            "line": 4840,
             "description": "Gets or sets the element's attribute `href`. Only applies for the `a`-element.",
             "itemtype": "property",
             "name": "href",
@@ -23995,7 +24733,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4749,
+            "line": 4847,
             "description": "Gets or sets the element's identifier (attribute id).",
             "itemtype": "property",
             "name": "id",
@@ -24006,7 +24744,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4756,
+            "line": 4854,
             "description": "Reference to the last childNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nBetter use `lastElementChild` instead, which returns the last Element-child.",
             "itemtype": "property",
             "name": "lastChild",
@@ -24019,7 +24757,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4767,
+            "line": 4865,
             "description": "Reference to the last Element-child, where the related dom-node is an Element (nodeType===1).",
             "itemtype": "property",
             "name": "lastElementChild",
@@ -24031,7 +24769,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4775,
+            "line": 4873,
             "description": "Gets or sets the `name` property of a Element; it only applies to the following elements:\n`a`, `applet`, `button`, `form`, `frame`, `iframe`, `img`, `input`, `map`, `meta`, `object`, `param`, `select`, and `textarea`.",
             "itemtype": "property",
             "name": "name",
@@ -24042,7 +24780,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4783,
+            "line": 4881,
             "description": "Returns the Element immediately following the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs an Element (nodeType===1).",
             "itemtype": "property",
             "name": "nextElementSibling",
@@ -24054,7 +24792,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4792,
+            "line": 4890,
             "description": "Returns the Element immediately following the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nDo not use this, but use `lastElementChild` instead, which returns the next Element-child.",
             "itemtype": "property",
             "name": "nextElementSibling",
@@ -24067,7 +24805,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4804,
+            "line": 4902,
             "description": "Elements tag-name",
             "itemtype": "property",
             "name": "nodeName",
@@ -24079,7 +24817,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4812,
+            "line": 4910,
             "description": "Elements nodetype: 1==Element, 3==TextNode, 8===CommentNode",
             "itemtype": "property",
             "name": "nodeType",
@@ -24091,7 +24829,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4820,
+            "line": 4918,
             "description": "Value/text for non-Element Nodes",
             "itemtype": "property",
             "name": "nodeValue",
@@ -24103,7 +24841,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4828,
+            "line": 4926,
             "description": "The exact width of the Element on the screen.\nIncluded borders and padding (no margin).\n\nReturns a number without unity.\n\nBetter use `width` --> it's an alias, but has a setter as well",
             "itemtype": "property",
             "name": "offsetWidth",
@@ -24116,7 +24854,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4842,
+            "line": 4940,
             "description": "The exact height of the Element on the screen.\nIncluded borders and padding (no margin).\n\nReturns a number without unity.\n\nBetter use `height` --> it's an alias, but has a setter as well",
             "itemtype": "property",
             "name": "offsetHeight",
@@ -24128,7 +24866,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4855,
+            "line": 4953,
             "description": "Returns the Element's parent Element.\n\nSame as `parentNode`",
             "itemtype": "property",
             "name": "parentElement",
@@ -24139,7 +24877,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4864,
+            "line": 4962,
             "description": "Returns the Element's parent Element.\n\nSame as `parentElement`",
             "itemtype": "property",
             "name": "parentNode",
@@ -24150,7 +24888,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4873,
+            "line": 4971,
             "description": "Returns the Element immediately preceding the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs an Element (nodeType===1).",
             "itemtype": "property",
             "name": "previousElementSibling",
@@ -24162,7 +24900,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4882,
+            "line": 4980,
             "description": "Returns the Element immediately preceding the specified one in its parent's childNodes list, or null if the specified node is the last node in that list.\nIs either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).\n\nDo not use this, but use `previousElementSibling` instead, which returns the previous Element-child.",
             "itemtype": "property",
             "name": "previousSibling",
@@ -24175,7 +24913,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4895,
+            "line": 4993,
             "description": "A measurement of the height of an element's content, including content not visible on the screen due to overflow.\nThe scrollHeight value is equal to the minimum clientHeight the element would require in order to fit all the content in the viewpoint\nwithout using a vertical scrollbar. It includes the element padding but not its margin.\n\nReturns a number without unity.",
             "itemtype": "property",
             "name": "scrollHeight",
@@ -24187,7 +24925,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4907,
+            "line": 5005,
             "description": "Gets or sets the number of pixels that an element's content is scrolled to the left.",
             "itemtype": "property",
             "name": "scrollLeft",
@@ -24198,7 +24936,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4914,
+            "line": 5012,
             "description": "Gets or sets the number of pixels that the content of an element is scrolled upward. An element's scrollTop is a measurement\nof the distance of an element's top to its topmost visible content. When an element content does not generate a vertical scrollbar,\nthen its scrollTop value defaults to 0.",
             "itemtype": "property",
             "name": "scrollTop",
@@ -24209,7 +24947,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4923,
+            "line": 5021,
             "description": "Returns either the width in pixels of the content of an element or the width of the element itself, whichever is greater.\nIf the element is wider than its content area (for example, if there are scroll bars for scrolling through the content),\nthe scrollWidth is larger than the clientWidth.\n\nReturns a number without unity.",
             "itemtype": "property",
             "name": "scrollWidth",
@@ -24221,7 +24959,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4935,
+            "line": 5033,
             "description": "Gets or sets the element's attribute `type`. Only applies for the `script`, `img` and `style`-elements.",
             "itemtype": "property",
             "name": "src",
@@ -24232,7 +24970,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4942,
+            "line": 5040,
             "description": "Gets or sets the element's attribute `style`.",
             "itemtype": "property",
             "name": "style",
@@ -24243,7 +24981,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4949,
+            "line": 5047,
             "description": "Gets or sets the element's attribute `type`. Only applies for the `input`-element.",
             "itemtype": "property",
             "name": "type",
@@ -24254,7 +24992,7 @@
         },
         {
             "file": "src/vdom/partials/extend-element.js",
-            "line": 4956,
+            "line": 5054,
             "description": "Gets or sets the value of an input or select Element.\n\nNote it is highly preferable to use getValue() and setValue().",
             "itemtype": "property",
             "name": "value",
@@ -27794,6 +28532,38 @@
         {
             "message": "unknown tag: license",
             "line": " src/node-win/lib/XMLHttpRequest.js:3"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:174"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:174"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:200"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:200"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:220"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:220"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:220"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:220"
         },
         {
             "message": "Missing item type\nRequire the given path.",

@@ -71,7 +71,11 @@
             
                 <li><a href="../classes/Function.html">Function</a></li>
             
+                <li><a href="../classes/HTMLButtonElement.html">HTMLButtonElement</a></li>
+            
                 <li><a href="../classes/HTMLElement.html">HTMLElement</a></li>
+            
+                <li><a href="../classes/HTMLInputElement.html">HTMLInputElement</a></li>
             
                 <li><a href="../classes/Icons.html">Icons</a></li>
             
@@ -108,6 +112,8 @@
                 <li><a href="../classes/String.html">String</a></li>
             
                 <li><a href="../classes/SVGElement.html">SVGElement</a></li>
+            
+                <li><a href="../classes/Uploader.html">Uploader</a></li>
             
                 <li><a href="../classes/USERAGENT.html">USERAGENT</a></li>
             
@@ -173,6 +179,8 @@
             
                 <li><a href="../modules/io-cors.html">io-cors</a></li>
             
+                <li><a href="../modules/io-filetransfer.html">io-filetransfer</a></li>
+            
                 <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
             
                 <li><a href="../modules/io-transfer.html">io-transfer</a></li>
@@ -210,6 +218,8 @@
                 <li><a href="../modules/panel.html">panel</a></li>
             
                 <li><a href="../modules/scrollable.html">scrollable</a></li>
+            
+                <li><a href="../modules/uploader.html">uploader</a></li>
             
                 <li><a href="../modules/useragent.html">useragent</a></li>
             
@@ -978,6 +988,13 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item method">
                                 <a href="#method_show">show</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_toggleAttr">toggleAttr</a>
 
                                 
                                 
@@ -6805,7 +6822,7 @@ Hides immediately without <code>fade</code>, or will fade when fade is specified
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2179"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2179</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2151"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2151</code></a>
         
         </p>
 
@@ -6878,7 +6895,7 @@ Hides immediately without <code>fade</code>, or will fade when fade is specified
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2151"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2151</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2179"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2179</code></a>
         
         </p>
 
@@ -8449,8 +8466,6 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
     
 
     
-        <span class="flag chainable">chainable</span>
-    
 
     
 
@@ -8465,7 +8480,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2565"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2565</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2603"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2603</code></a>
         
         </p>
 
@@ -8479,7 +8494,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
 
     <div class="description">
         <p>Removes the attribute from the Element.</p>
-<p>Alias for removeAttribute() BUT is chainable instead (removeAttribute is not).</p>
+<p>Use removeAttr() to be able to chain.</p>
 
     </div>
 
@@ -8565,6 +8580,8 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -8579,7 +8596,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l2603"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2603</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l2565"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:2565</code></a>
         
         </p>
 
@@ -8593,7 +8610,7 @@ Alias for thisNode.parentNode.removeChild(thisNode);</p>
 
     <div class="description">
         <p>Removes the attribute from the Element.</p>
-<p>Use removeAttr() to be able to chain.</p>
+<p>Alias for removeAttribute() BUT is chainable instead (removeAttribute is not).</p>
 
     </div>
 
@@ -12065,6 +12082,131 @@ Goes through the vdom, so it&#39;s superfast.</p>
             
                 <li class="arg">
                     
+                        <code>transitionProperties</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[pseudo]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_extend-element.js.html#l3492"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3492</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Sets a transform-css-property (inline) for the Element.</p>
+<p>See more about transitions: <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transitions">https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transitions</a></p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">transitionProperties</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the css-transition-properties to be set, specified as an Array of Objects.
+       The objects should have the next properties:
+       <ul>
+           <li>property  {String}</li>
+           <li>duration  {Number}</li>
+           <li>timingFunction  {String} (optional)</li>
+           <li>delay  {Number} (optional)</li>
+           <li>pseudo  {String} (optional)</li>
+       </ul></p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[pseudo]</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>to look inside a pseudo-style</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_setStyle" class="method item">
+    <h3 class="name"><code>setStyle</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
                         <code>setInlineTransition</code>
                     
                 </li>
@@ -12207,131 +12349,6 @@ Goes through the vdom, so it&#39;s superfast.</p>
 
                     <div class="param-description">
                         <p>the delay in seconds (may be a broken number, like <code>0.5</code>)</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[pseudo]</code>
-                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>to look inside a pseudo-style</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_setStyle" class="method item">
-    <h3 class="name"><code>setStyle</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>transitionProperties</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code class="optional">[pseudo]</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag chainable">chainable</span>
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_vdom_partials_extend-element.js.html#l3492"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:3492</code></a>
-        
-        </p>
-
-
-        
-
-        
-            <p>Available since 0.0.1</p>
-        
-    </div>
-
-    <div class="description">
-        <p>Sets a transform-css-property (inline) for the Element.</p>
-<p>See more about transitions: <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transitions">https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transitions</a></p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">transitionProperties</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the css-transition-properties to be set, specified as an Array of Objects.
-       The objects should have the next properties:
-       <ul>
-           <li>property  {String}</li>
-           <li>duration  {Number}</li>
-           <li>timingFunction  {String} (optional)</li>
-           <li>delay  {Number} (optional)</li>
-           <li>pseudo  {String} (optional)</li>
-       </ul></p>
 
                     </div>
 
@@ -12904,6 +12921,165 @@ Shows immediately without <code>fade</code>, or will fade-in when fade is specif
 </div>
 
                 
+                    <div id="method_toggleAttr" class="method item">
+    <h3 class="name"><code>toggleAttr</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>attributeName</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>value</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>forceState</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[silent=false]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4070"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4070</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Toggles the attribute on the Element with the specified value (giving it the value, or removes the attribute)</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">attributeName</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">value</code>
+                        <span class="type">Any</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the value that belongs to <code>key</code></p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">forceState</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>to force toggling into this specific state</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[silent=false]</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>prevent node-mutation events by the Event-module to emit</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_toggleClass" class="method item">
     <h3 class="name"><code>toggleClass</code></h3>
 
@@ -13131,7 +13307,7 @@ Shows immediately without <code>fade</code>, or will fade-in when fade is specif
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4070"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4070</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4092"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4092</code></a>
         
         </p>
 
@@ -13303,7 +13479,7 @@ Shows immediately without <code>fade</code>, or will fade-in when fade is specif
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4116"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4116</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4138"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4138</code></a>
         
         </p>
 
@@ -13351,7 +13527,7 @@ DOCUMENT-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4132"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4132</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4154"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4154</code></a>
         
         </p>
 
@@ -13400,7 +13576,7 @@ DOCUMENT-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4158"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4158</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4180"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4180</code></a>
         
         </p>
 
@@ -13450,7 +13626,7 @@ Included are padding.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4185"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4185</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4207"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4207</code></a>
         
         </p>
 
@@ -13500,7 +13676,7 @@ Included are padding.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4212"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4212</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4234"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4234</code></a>
         
         </p>
 
@@ -13548,7 +13724,7 @@ DOCUMENT-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4228"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4228</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4250"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4250</code></a>
         
         </p>
 
@@ -13596,7 +13772,7 @@ DOCUMENT-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4244"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4244</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4266"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4266</code></a>
         
         </p>
 
@@ -13644,7 +13820,7 @@ DOCUMENT-related: regardless of the window&#39;s scroll-position.</p>
             
         
         
-        <a href="../files/src_vdom_partials_extend-element.js.html#l4260"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4260</code></a>
+        <a href="../files/src_vdom_partials_extend-element.js.html#l4282"><code>src&#x2F;vdom&#x2F;partials&#x2F;extend-element.js:4282</code></a>
         
         </p>
 
