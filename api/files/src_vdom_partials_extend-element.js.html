@@ -71,7 +71,11 @@
             
                 <li><a href="../classes/Function.html">Function</a></li>
             
+                <li><a href="../classes/HTMLButtonElement.html">HTMLButtonElement</a></li>
+            
                 <li><a href="../classes/HTMLElement.html">HTMLElement</a></li>
+            
+                <li><a href="../classes/HTMLInputElement.html">HTMLInputElement</a></li>
             
                 <li><a href="../classes/Icons.html">Icons</a></li>
             
@@ -108,6 +112,8 @@
                 <li><a href="../classes/String.html">String</a></li>
             
                 <li><a href="../classes/SVGElement.html">SVGElement</a></li>
+            
+                <li><a href="../classes/Uploader.html">Uploader</a></li>
             
                 <li><a href="../classes/USERAGENT.html">USERAGENT</a></li>
             
@@ -173,6 +179,8 @@
             
                 <li><a href="../modules/io-cors.html">io-cors</a></li>
             
+                <li><a href="../modules/io-filetransfer.html">io-filetransfer</a></li>
+            
                 <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
             
                 <li><a href="../modules/io-transfer.html">io-transfer</a></li>
@@ -210,6 +218,8 @@
                 <li><a href="../modules/panel.html">panel</a></li>
             
                 <li><a href="../modules/scrollable.html">scrollable</a></li>
+            
+                <li><a href="../modules/uploader.html">uploader</a></li>
             
                 <li><a href="../modules/useragent.html">useragent</a></li>
             
@@ -4332,6 +4342,28 @@ module.exports = function (window) {
         };
 
        /**
+         * Toggles the attribute on the Element with the specified value (giving it the value, or removes the attribute)
+         *
+         * @method toggleAttr
+         * @param attributeName {String}
+         * @param value {Any} the value that belongs to &#x60;key&#x60;
+         * @param forceState {Boolean} to force toggling into this specific state
+         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
+         * @chainable
+         * @since 0.0.1
+        */
+        ElementPrototype.toggleAttr = function(attributeName, value, forceState, silent) {
+            var instance = this,
+                condition = (typeof forceState===&#x27;boolean&#x27;) ? forceState : !instance.hasAttr(attributeName);
+            if (condition) {
+                return instance.setAttr(attributeName, value, silent);
+            }
+            else {
+                return instance.removeAttr(attributeName, silent);
+            }
+        };
+
+       /**
         * Toggles the className of the Element.
         *
         * @method toggleClass
@@ -4550,6 +4582,82 @@ module.exports = function (window) {
         });
 
     }(window.Element.prototype));
+
+
+    (function(HTMLButtonElementPrototype) {
+        /**
+         * Disables the button
+         *
+         * @for HTMLButtonElement
+         * @method disable
+         * @chainable
+        */
+        HTMLButtonElementPrototype.disable = function() {
+            var instance = this;
+            instance.setAttr(&#x27;disabled&#x27;, &#x27;true&#x27;);
+            return instance;
+        };
+
+        /**
+         * Enables the button
+         *
+         * @method enable
+         * @chainable
+        */
+        HTMLButtonElementPrototype.enable = function() {
+            var instance = this;
+            instance.removeAttr(&#x27;disabled&#x27;);
+            return instance;
+        };
+
+        /**
+         * Toggles the &#x60;disabled&#x60;-state of the button
+         *
+         * @method toggle
+         * @param [forcedState] {boolean} to force a specific state
+         * @chainable
+        */
+        HTMLButtonElementPrototype.toggle = function(forcedState) {
+            var instance = this;
+            instance.toggleAttr(&#x27;disabled&#x27;, &#x27;true&#x27;, forcedState);
+            return instance;
+        };
+    }(window.HTMLButtonElement.prototype));
+
+
+    (function(HTMLInputElementPrototype) {
+        /**
+         * Shows the pop-up of an &#x60;input&#x60; element of the type &#x60;file&#x60;.
+         *
+         * @for HTMLInputElement
+         * @method showFileSelect
+         * @chainable
+        */
+        HTMLInputElementPrototype.showFileSelect = function() {
+            var instance = this,
+                type = instance.getAttr(&#x27;type&#x27;);
+            type &amp;&amp; (type.toLowerCase()===&#x27;file&#x27;) &amp;&amp; instance.click();
+            return instance;
+        };
+
+        /**
+         * Hides the pop-up and empties the files-list of an &#x60;input&#x60; element of the type &#x60;file&#x60;.
+         *
+         * @method resetFileSelect
+         * @chainable
+        */
+        HTMLInputElementPrototype.resetFileSelect = function() {
+            var instance = this,
+                type = instance.getAttr(&#x27;type&#x27;);
+            if (type &amp;&amp; (type.toLowerCase()===&#x27;file&#x27;)) {
+                // force the fileselector-popup up to disappear and become empty:
+                instance.setAttr(&#x27;type&#x27;, &#x27;text&#x27;);
+                instance.value = &#x27;&#x27;;
+                instance.setAttr(&#x27;type&#x27;, &#x27;file&#x27;);
+            }
+            return instance;
+        };
+    }(window.HTMLInputElement.prototype));
 
 
     // Modify SVGElement:

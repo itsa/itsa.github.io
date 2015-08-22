@@ -15,7 +15,9 @@ YUI.add("yuidoc-meta", function(Y) {
         "Event.Listener",
         "FocusManager",
         "Function",
+        "HTMLButtonElement",
         "HTMLElement",
+        "HTMLInputElement",
         "IO",
         "ITSA",
         "Icons",
@@ -35,6 +37,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Storage",
         "String",
         "USERAGENT",
+        "Uploader",
         "Utils",
         "document",
         "vnode",
@@ -67,6 +70,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "io",
         "io-assets",
         "io-cors",
+        "io-filetransfer",
         "io-jsonp",
         "io-transfer",
         "io-xml",
@@ -86,6 +90,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "node-win",
         "panel",
         "scrollable",
+        "uploader",
         "useragent",
         "utils",
         "vdom",
@@ -212,32 +217,37 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "io",
             "name": "io",
-            "description": "Provides core IO-functionality.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+            "description": "Provides core IO-functionality."
         },
         {
             "displayName": "io-assets",
             "name": "io-assets",
-            "description": "Extends io by adding the method `readXML` to it.\nShould be called using  the provided `mergeInto`-method like this:"
+            "description": "Extends io by adding the method `getCSS` and `getJS` to it.\n(under construction)"
         },
         {
             "displayName": "io-cors",
             "name": "io-cors",
-            "description": "Extends io by adding the method `readXML` to it.\nShould be called using  the provided `mergeInto`-method like this:"
+            "description": "Extends io by enabling `CORS` through XDR on IE<10."
+        },
+        {
+            "displayName": "io-filetransfer",
+            "name": "io-filetransfer",
+            "description": "Extends io by adding the method `sendBlob` to it."
         },
         {
             "displayName": "io-jsonp",
             "name": "io-jsonp",
-            "description": "Extends io by adding the method `readXML` to it.\nShould be called using  the provided `mergeInto`-method like this:"
+            "description": "Extends io by adding the method `readObjectJSONP` to it.\n(under construction)"
         },
         {
             "displayName": "io-transfer",
             "name": "io-transfer",
-            "description": "Extends io by adding the method `readXML` to it.\nShould be called using  the provided `mergeInto`-method like this:"
+            "description": "Extends io by adding the methods `get`, `read`, `update`, `insert`, `send` and `delete` to it."
         },
         {
             "displayName": "io-xml",
             "name": "io-xml",
-            "description": "Extends io by adding the method `readXML` to it.\nShould be called using  the provided `mergeInto`-method like this:"
+            "description": "Extends io by adding the method `readXML` to it."
         },
         {
             "displayName": "itsa.build",
@@ -317,6 +327,11 @@ YUI.add("yuidoc-meta", function(Y) {
             "displayName": "scrollable",
             "name": "scrollable",
             "description": "Plugin to create scrollable divs\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+        },
+        {
+            "displayName": "uploader",
+            "name": "uploader",
+            "description": "Provides core Upload-functionality.\nAlso defines` HTMLInputElement.prototype.sendFiles`.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "useragent",

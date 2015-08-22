@@ -2636,7 +2636,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":106}],6:[function(require,module,exports){
+},{"_process":109}],6:[function(require,module,exports){
 (function (global){
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -3365,7 +3365,7 @@ module.exports = DB;
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/js-ext.js":66}],8:[function(require,module,exports){
+},{"js-ext/js-ext.js":67}],8:[function(require,module,exports){
 (function (global){
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -4092,7 +4092,7 @@ module.exports = DB;
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/js-ext.js":66}],9:[function(require,module,exports){
+},{"js-ext/js-ext.js":67}],9:[function(require,module,exports){
 (function (global){
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -4282,7 +4282,7 @@ module.exports = DB;
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"client-db":6,"js-ext/extra/classes.js":60,"js-ext/extra/hashmap.js":61}],10:[function(require,module,exports){
+},{"client-db":6,"js-ext/extra/classes.js":61,"js-ext/extra/hashmap.js":62}],10:[function(require,module,exports){
 /**
  * Plugin making moveable elements to constrain within
  *
@@ -4323,7 +4323,7 @@ module.exports = function (window) {
 
     return PluginConstrain;
 };
-},{"js-ext/extra/hashmap.js":61,"node-plugin":75}],11:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":62,"node-plugin":76}],11:[function(require,module,exports){
 var css = "*:focus {\n    outline: 0;\n}\n\na[target=\"_blank\"]:focus {\n    outline: 1px solid #129fea;\n}\n\n/* because we think the padding and margin should always be part of the size,\n   we define \"box-sizing: border-box\" for all elements */\n\n* {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],12:[function(require,module,exports){
 var css = ".pure-menu.pure-menu-open {\n    z-index: 3; /* prevent graph from crossing the menuarea */\n}\n\n.pure-button.pure-button-bordered,\n.pure-button.pure-button-bordered[disabled] {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;\n}\n\n.pure-button-active,\n.pure-button:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button.pure-button-bordered.pure-button-active[disabled],\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered[disabled]:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.4) inset, 0 0 6px rgba(0,0,0, 0.2) inset;\n}\n\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.6) inset;\n}\n\n/* restore pure-button:active */\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button:active:focus,\n.pure-button.pure-button-active:focus {\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6) inset, 0 0 10px rgba(0, 0, 0, 0.2) inset;\n}\n\n.pure-button.pure-button-rounded {\n    border-radius: 0.3em;\n}\n\n.pure-button.pure-button-heavyrounded {\n    border-radius: 0.5em;\n}\n\n.pure-button.pure-button-oval {\n    border-radius: 50%;\n}\n\n.pure-button.pure-button-halfoval {\n    border-radius: 25%;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -4599,7 +4599,7 @@ module.exports = function (window) {
 
     return Dialog;
 };
-},{"./css/dialog.css":15,"event":31,"js-ext":65,"js-ext/extra/classes.js":60,"js-ext/extra/hashmap.js":61,"panel":77,"polyfill":86,"utils":91}],17:[function(require,module,exports){
+},{"./css/dialog.css":15,"event":31,"js-ext":66,"js-ext/extra/classes.js":61,"js-ext/extra/hashmap.js":62,"panel":78,"polyfill":87,"utils":94}],17:[function(require,module,exports){
 var css = "[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],18:[function(require,module,exports){
 "use strict";
@@ -5719,7 +5719,7 @@ module.exports = function (window) {
     return DragModule;
 
 };
-},{"./css/drag-drop.css":17,"drag":20,"event-dom":21,"js-ext":65,"js-ext/extra/hashmap.js":61,"node-plugin":75,"polyfill/polyfill-base.js":86,"useragent":90,"vdom":103,"window-ext":104}],19:[function(require,module,exports){
+},{"./css/drag-drop.css":17,"drag":20,"event-dom":21,"js-ext":66,"js-ext/extra/hashmap.js":62,"node-plugin":76,"polyfill/polyfill-base.js":87,"useragent":93,"vdom":106,"window-ext":107}],19:[function(require,module,exports){
 var css = "[dd-draggable] {\n    -webkit-user-drag: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 3001 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],20:[function(require,module,exports){
 "use strict";
@@ -6429,7 +6429,7 @@ module.exports = function (window) {
 
     return DD;
 };
-},{"./css/drag.css":19,"event-dom":21,"js-ext":65,"js-ext/extra/hashmap.js":61,"node-plugin":75,"polyfill":86,"useragent":90,"vdom":103,"window-ext":104}],21:[function(require,module,exports){
+},{"./css/drag.css":19,"event-dom":21,"js-ext":66,"js-ext/extra/hashmap.js":62,"node-plugin":76,"polyfill":87,"useragent":93,"vdom":106,"window-ext":107}],21:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7259,7 +7259,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":31,"js-ext/extra/hashmap.js":61,"js-ext/lib/array.js":67,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"polyfill/polyfill-base.js":86,"useragent":90,"utils":91,"vdom":103}],22:[function(require,module,exports){
+},{"event":31,"js-ext/extra/hashmap.js":62,"js-ext/lib/array.js":68,"js-ext/lib/object.js":72,"js-ext/lib/string.js":74,"polyfill/polyfill-base.js":87,"useragent":93,"utils":94,"vdom":106}],22:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7357,7 +7357,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":21,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71}],23:[function(require,module,exports){
+},{"../event-dom.js":21,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72}],23:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7456,7 +7456,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":21,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71}],24:[function(require,module,exports){
+},{"../event-dom.js":21,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72}],24:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7558,7 +7558,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":21,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71}],25:[function(require,module,exports){
+},{"../event-dom.js":21,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72}],25:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7836,7 +7836,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":21,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"utils":91,"vdom":103}],26:[function(require,module,exports){
+},{"../event-dom.js":21,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"utils":94,"vdom":106}],26:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10331,7 +10331,7 @@ module.exports = function (window) {
 
 };
 
-},{"utils":91}],28:[function(require,module,exports){
+},{"utils":94}],28:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -11581,7 +11581,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"polyfill/polyfill-base.js":86}],29:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"polyfill/polyfill-base.js":87}],29:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11981,6 +11981,7 @@ Event._CE_listener = ClassListener = {
             };
             superDestroy(instance.constructor);
             instance.detachAll();
+            instance.undefAllEvents();
             Object.protectedProp(instance, '_destroyed', true);
         }
     }
@@ -11991,7 +11992,7 @@ Classes.BaseClass.mergePrototypes(Event.Listener, true)
                  .mergePrototypes(ClassListener, true, {}, {});
 
 module.exports = Event;
-},{"./event-base.js":28,"js-ext/extra/classes.js":60,"js-ext/lib/object.js":71}],31:[function(require,module,exports){
+},{"./event-base.js":28,"js-ext/extra/classes.js":61,"js-ext/lib/object.js":72}],31:[function(require,module,exports){
 module.exports = require('./event-base.js');
 require('./event-emitter.js');
 require('./event-listener.js');
@@ -12511,7 +12512,7 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"./css/focusmanager.css":32,"event-mobile":26,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"node-plugin":75,"polyfill":86,"utils":91,"window-ext":104}],34:[function(require,module,exports){
+},{"./css/focusmanager.css":32,"event-mobile":26,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"node-plugin":76,"polyfill":87,"utils":94,"window-ext":107}],34:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -12829,7 +12830,7 @@ module.exports = function (window) {
 
     window._ITSAmodules.Icons = true;
 };
-},{"./css/base.css":45,"event-dom":21,"js-ext/extra/hashmap.js":61,"js-ext/lib/string.js":73,"polyfill/polyfill-base.js":86,"vdom":103}],44:[function(require,module,exports){
+},{"./css/base.css":45,"event-dom":21,"js-ext/extra/hashmap.js":62,"js-ext/lib/string.js":74,"polyfill/polyfill-base.js":87,"vdom":106}],44:[function(require,module,exports){
 var css = "#itsa-alert-icon {\n    fill: #E3A900;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],45:[function(require,module,exports){
 var css = "#itsa-icons-container {\n    display: none; !important;\n}\n\ni[icon] {\n    display: inline-block;\n    vertical-align: baseline;\n    padding: 0;\n    margin: 0;\n}\n\ni[icon] >svg {\n    height: 1em;\n    width: 1em;\n    vertical-align: middle;\n}\n\nbutton.itsa-icon {\n    padding: 0.5em;\n}\n\nbutton.itsa-iconleft {\n    padding-left: 0.75em;\n}\n\nbutton.itsa-iconright {\n    padding-right: 0.75em;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -12968,13 +12969,10 @@ module.exports = function (window) {
 "use strict";
 
 /**
- * Extends io by adding the method `readXML` to it.
- * Should be called using  the provided `mergeInto`-method like this:
+ * Extends io by enabling `CORS` through XDR on IE<10.
  *
  * @example
- * var IO = require("io");
- * var IOcors = require("io-cors");
- * IOcors.mergeInto(IO);
+ * var IO = require("io/extra/io-cors.js")(window);
  *
  *
  * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
@@ -13091,8 +13089,363 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"../io.js":59,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"xmldom":2}],56:[function(require,module,exports){
+},{"../io.js":60,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"xmldom":2}],56:[function(require,module,exports){
 "use strict";
+
+/**
+ * Extends io by adding the method `sendBlob` to it.
+ *
+ * @example
+ * var IO = require("io/extra/io-filetransfer.js")(window);
+ *
+ *
+ * <i>Copyright (c) 2015 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module io
+ * @submodule io-filetransfer
+ * @class IO
+ * @since 0.0.1
+*/
+
+require('js-ext/lib/object.js');
+require('js-ext/lib/promise.js');
+
+var NAME = '[io-filetransfer]: ',
+    GENERATOR_ID = 'ITSA-FILETRANS',
+    MIME_BLOB = 'application/octet-stream',
+    CONTENT_TYPE = 'Content-Type',
+    createHashMap = require('js-ext/extra/hashmap.js').createMap,
+    idGenerator = require('utils').idGenerator,
+    SPINNER_ICON = 'spinnercircle-anim',
+    DEFAULT_TIMEOUT = 300000, // 5 minutes
+    MIN_SHOWUP = 500,
+    REVIVER = function(key, value) {
+        return ((typeof value==='string') && value.toDate()) || value;
+    },
+    messages = require('messages'),
+    MESSAGES = {
+        'read': 'reading...',
+        'update': 'saving...',
+        'insert': 'saving...',
+        'send': 'sending...',
+        'delete': 'saving...'
+    },
+    ABORTED = 'Request aborted',
+    KB_25 = 25 * 1024, // 25kb
+    KB_100 = 100 * 1024, // 100kb
+    KB_256 = 256 * 1024, // 256kb
+    MB_1 = 1025 * 1024, // 1Mb
+    MB_20 = 20 * MB_1; // 20Mb
+
+
+module.exports = function (window) {
+
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
+
+    if (window._ITSAmodules.IO_Filetransfer) {
+        return window._ITSAmodules.IO_Filetransfer; // IO_Filetransfer was already created
+    }
+
+    var IO = require('../io.js')(window),
+        clientIdPromiseOriginal, clientIdPromise, _entendXHR, _progressHandle;
+
+    window._ITSAmodules.IO_Filetransfer = IO;
+
+
+    /*
+     * Adds properties to the xhr-object: in case of streaming,
+     * xhr._isStream is set and xhr._isXDR might be set in case of IE<10
+     *
+     * @method _entendXHR
+     * @param xhr {Object} containing the xhr-instance
+     * @param props {Object} the propertie-object that is added too xhr and can be expanded
+     * @param options {Object} options of the request
+     * @private
+    */
+    _entendXHR = function(xhr, props, options /*, promise */) {
+        props._isUpload = (typeof options.progressfn === 'function');
+        return xhr;
+    },
+
+    /*
+     * Adds extra initialisation of the xhr-object: in case of streaming,
+     * an `onprogress`-handler is set up
+     *
+     * @method _progressHandle
+     * @param xhr {Object} containing the xhr-instance
+     * @param promise {Promise} reference to the Promise created by xhr
+     * @private
+    */
+    _progressHandle = function(xhr, promise /*, headers, method */) {
+        if (xhr._isUpload) {
+            console.log(NAME, 'progressHandle upload');
+            xhr.upload.onprogress = function(e) {
+                if (e.lengthComputable) {
+                    // promise.callback(data);
+                    console.log('file upload-progress: '+e.loaded+'/'+e.total);
+                    promise._loaded = e.loaded;
+                    promise._notify();
+                }
+            };
+        }
+    },
+
+    /**
+     * Is send to the server and expects an unique id which can be used for its file-transactions.
+     *
+     * @method _getClientId
+     * @private
+     * @param url {String} URL of the resource server
+     * @return {Promise}
+     * on success:
+        * Unique clientId
+     * on failure an Error object
+        * reason {Error}
+    */
+    IO._getClientId = function(url) {
+        var options;
+        // check for existance, but also if it was not rejected --> in that case we need to reactivate
+        // (the server might have been coming up again)
+        if (clientIdPromiseOriginal && !clientIdPromiseOriginal.isRejected()) {
+            return clientIdPromise;
+        }
+        options = {
+            url: url,
+            method: 'GET',
+            data: {
+                ts: Date.now() // prevent caching
+            }
+        };
+        clientIdPromiseOriginal = this.request(options);
+        clientIdPromise = clientIdPromiseOriginal.then(function(xhrResponse) {
+            return xhrResponse.responseText;
+        }).catch(function(err) {
+            console.warn(err);
+            throw new Error(err);
+        });
+        return clientIdPromise;
+    };
+
+    /**
+     * Sends a `blob` by using an AJAX PUT request.
+     * Additional parameters can be through the `params` argument.
+     *
+     * The Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).
+     * It will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.
+     *
+     * Note: `params` should be a plain object with only primitive types which are transformed into key/value pairs.
+     *
+     * @method sendBlob
+     * @param url {String} URL of the resource server
+     * @param blob {blob} blob (data) representing the file to be send. Typically `HTMLInputElement.files[0]`
+     * @param [params] {Object} additional parameters. NOTE: this object will be `stringified` set a HEADER: `x-data` on the request!
+     *        should be a plain object with only primitive types which are transformed into key/value pairs.
+     * @param [options] {Object}
+     *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
+     *    @param [options.headers] {Object} HTTP request headers.
+     *    @param [options.timeout=300000] {Number} to timeout the request, leading into a rejected Promise. Defaults to 5 minutes
+     *    @param [options.progressfn] {Function} callbackfunction in case you want to process upload-status.
+     *           Function has 3 parameters: total, loaded and target (io-promise)
+     *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
+     *    @param [options.parseJSONDate=false] {boolean} Whether the server returns JSON-stringified data which has Date-objects.
+     * @return {Promise}
+     * on success:
+        * Object any received data
+     * on failure an Error object
+        * reason {Error}
+    */
+    IO.sendBlob = function (url, blob, params, options) {
+        console.log(NAME, 'get --> '+url);
+        var instance = this,
+            start = 0,
+            promiseHash = [],
+            ioHash = [],
+            i = 0,
+            chunkSize, end, size, returnPromise, message, filename, headers, notify,
+            ioPromise, partialSize, notifyResolved, hashPromise, responseObject, setXHR;
+        if (!IO.supportXHR2) {
+            return Promise.reject('This browser does not support fileupload');
+        }
+        if (!blob instanceof window.Blob) {
+            return Promise.reject('No proper fileobject');
+        }
+        if (!url || !url.validateURL()) {
+            return Promise.reject('No valid url specified');
+        }
+
+        // send a notification to `progressfn` whenever a chunk gets intermediate update
+        // by `xhr.upload.onprogress`
+        notify = function() {
+            var len = promiseHash.length,
+                totalLoaded = 0,
+                i, promise;
+            for (i=0; i<len; i++){
+                promise = promiseHash[i];
+                totalLoaded += promise._loaded || 0;
+            }
+            returnPromise.callback({
+                total: size,
+                loaded: totalLoaded,
+                target: returnPromise
+            });
+        };
+
+        // send a notification to `progressfn` whenever a chunk finishes
+        notifyResolved = function(promise, loaded) {
+            promise.then(function() {
+                promise._loaded = loaded;
+                promise._notify();
+            });
+        };
+
+        // sets the `right` xhr in the returned promise. That is: the server-response that holds the final data
+        // and not the intermediate response.
+        setXHR = function(xhr) {
+            var responseText = xhr.responseText,
+                response;
+            try {
+                response = JSON.parse(responseText); // no reviver, we are only interested in the `status` property
+            }
+            catch(err) {
+                response = {};
+                console.warn(err);
+            }
+            response.status && (response.status=response.status.toLowerCase());
+            if (response.status!=='busy') {
+                if (options.parseJSONDate) {
+                    try {
+                        responseObject = JSON.parse(responseText, REVIVER);
+                    }
+                    catch(err) {
+                        console.warn(err);
+                        responseObject = {};
+                    }
+                }
+                else {
+                    responseObject = response;
+                }
+            }
+        };
+
+        options = Object.isObject(options) ? options.deepClone() : {};
+        options.timeout || (options.timeout=DEFAULT_TIMEOUT);
+        returnPromise = Promise.manage(options.progressfn);
+
+        filename = blob.name;
+        size = blob.size;
+        if (options.progressfn) {
+            // immediately start with processing 0%
+            returnPromise.callback({
+                total: size,
+                loaded: 0,
+                target: returnPromise
+            });
+        }
+
+        instance._getClientId(url).then(function(clientId) {
+            options.url = url;
+            options.method || (options.method='PUT');
+            options.url = url;
+            options.data = blob;
+            // delete hidden property `responseType`: don't want accedentially to be used
+            delete options.responseType;
+
+            // Important: headers need to be deepCloned, otherwise all chuncks share the same headers
+            // and we dwant the last chunk to have different headers!
+            headers = options.headers ? options.headers.deepClone() : {};
+            // options.headers[CONTENT_TYPE] = blob.type || MIME_BLOB;
+            headers['X-TransId'] = idGenerator(GENERATOR_ID);
+            headers['X-ClientId'] = clientId;
+            headers['X-Total-size'] = size;
+            headers[CONTENT_TYPE] = MIME_BLOB;
+
+            if (size<=MB_1) {
+                chunkSize = KB_25;
+            }
+            else if (size<=MB_20) {
+                chunkSize = KB_100;
+            }
+            else {
+                chunkSize = KB_256;
+            }
+            end = chunkSize;
+            partialSize = chunkSize;
+            while (start < size) {
+                //push the fragments to an array
+                options.data = blob.slice(start, end);
+
+                start = end;
+                end = start + chunkSize;
+                headers['X-Partial']= ++i;
+                options.headers = headers.deepClone();
+                if (start>=size) {
+                    // set the filename on the last request:
+                    options.headers['X-Filename'] = filename || 'blob';
+                    Object.isObject(params) && (options.headers['x-data']=JSON.stringify(params));
+                    partialSize = (size % chunkSize) || chunkSize;
+                }
+                //upload the fragment to the server:
+                ioPromise = instance.request(options);
+                if (options.progressfn) {
+                    ioPromise._notify = notify;
+                    notifyResolved(ioPromise, partialSize);
+                }
+                promiseHash.push(ioPromise); // needed to be able to call `abort`
+                // we need to inspect the response for status==='busy' to know which promise holds the final
+                // value and should be used as the returnvalue. Therefore, create `hashPromise`
+                hashPromise = ioPromise.then(setXHR);
+                ioHash.push(hashPromise);
+            }
+
+            Promise.all(ioHash).then(
+                function() {
+                    returnPromise.fulfill(responseObject);
+                },
+                function(e) {
+                    returnPromise.reject(e);
+                }
+            );
+        });
+
+        // set `abort` to the thennable-promise:
+        returnPromise.abort = function() {
+            promiseHash.forEach(function(partialIO) {
+                partialIO.abort();
+            });
+            returnPromise.reject(new Error(ABORTED));
+        };
+        // send a message to ITSA's the Message's system so that any statusbar can show a spinner - if it wants to:
+        message = messages.message(MESSAGES.send, {level: 4, icon: SPINNER_ICON, stayActive: MIN_SHOWUP});
+        returnPromise.finally(function() {
+            message.fulfill();
+        });
+        return returnPromise;
+    };
+
+    IO._xhrList.push(_entendXHR);
+    IO._xhrInitList.push(_progressHandle);
+
+    return IO;
+};
+},{"../io.js":60,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"js-ext/lib/promise.js":73,"messages":75,"utils":94}],57:[function(require,module,exports){
+"use strict";
+
+/**
+ * Extends io by adding a progressHandler to xhr, used through `options.streamback`.
+ *
+ * @example
+ * var IO = require("io/extra/io-stream.js")(window);
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module io
+ * @submodule io-jsonp
+ * @class IO
+ * @since 0.0.1
+*/
 
 require('js-ext/lib/object.js');
 
@@ -13114,7 +13467,7 @@ module.exports = function (window) {
      * Adds properties to the xhr-object: in case of streaming,
      * xhr._isStream is set and xhr._isXDR might be set in case of IE<10
      *
-     * @method _progressHandle
+     * @method _entendXHR
      * @param xhr {Object} containing the xhr-instance
      * @param props {Object} the propertie-object that is added too xhr and can be expanded
      * @param options {Object} options of the request
@@ -13196,7 +13549,7 @@ module.exports = function (window) {
     /**
      * Adds a `headers` X-Stream=true in case of a streaming request.
      *
-     * @method _setHeaders
+     * @method _setStreamHeader
      * @param xhr {Object} containing the xhr-instance
      * @param headers {Object} containing all headers
      * @param method {String} the request-method used
@@ -13218,17 +13571,14 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":59,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71}],57:[function(require,module,exports){
+},{"../io.js":60,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72}],58:[function(require,module,exports){
 "use strict";
 
 /**
- * Extends io by adding the method `readXML` to it.
- * Should be called using  the provided `mergeInto`-method like this:
+ * Extends io by adding the methods `get`, `read`, `update`, `insert`, `send` and `delete` to it.
  *
  * @example
- * var IO = require("io");
- * var IOtransfer = require("io-transfer");
- * IOtransfer.mergeInto(IO);
+ * var IO = require("io/extra/io-transfer.js")(window);
  *
  * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
@@ -13360,6 +13710,7 @@ module.exports = function (window) {
      *    @param [options.responseType] {String} Force the response type.
      *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
      *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
+     *    @param [options.preventCache=false] {boolean} whether to prevent caching --> a timestamp is added by parameter _ts
      * @return {Promise}
      * on success:
         * xhr {XMLHttpRequest|XDomainRequest} xhr-response
@@ -13374,6 +13725,9 @@ module.exports = function (window) {
         options.method = 'GET';
         // delete hidden property `data`: don't want accedentially to be used
         delete options.data;
+        if (options.preventCache) {
+            url += (url.contains('?') ? '&' : '?') + '_ts=' + Date.now();
+        }
         ioPromise = this.request(options);
         returnPromise = ioPromise.then(
             function(xhrResponse) {
@@ -13714,17 +14068,14 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":59,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"messages":74,"polyfill/polyfill-base.js":86}],58:[function(require,module,exports){
+},{"../io.js":60,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"js-ext/lib/string.js":74,"messages":75,"polyfill/polyfill-base.js":87}],59:[function(require,module,exports){
 "use strict";
 
 /**
  * Extends io by adding the method `readXML` to it.
- * Should be called using  the provided `mergeInto`-method like this:
  *
  * @example
- * var IO = require("io");
- * var IOxml = require("io-xml");
- * IOxml.mergeInto(IO);
+ * var IO = require("io/extra/io-xml.js")(window);
  *
  * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
@@ -13874,10 +14225,12 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":59,"js-ext":65,"js-ext/extra/hashmap.js":61,"messages":74}],59:[function(require,module,exports){
+},{"../io.js":60,"js-ext":66,"js-ext/extra/hashmap.js":62,"messages":75}],60:[function(require,module,exports){
 /**
  * Provides core IO-functionality.
  *
+ * @example
+ * var IO = require("io")(window);
  *
  * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
@@ -13901,10 +14254,11 @@ var NAME = '[io]: ',
     }),
     CONTENT_TYPE = 'Content-Type',
     MIME_JSON = 'application/json',
+    MIME_BLOB = 'application/octet-stream',
     DEF_CONTENT_TYPE_POST = 'application/x-www-form-urlencoded; charset=UTF-8',
     ERROR_NO_XHR = 'no valid xhr transport-mechanism available',
     REQUEST_TIMEOUT = 'Request-timeout',
-    UNKNOW_ERROR = 'Unknown response-error',
+    UNKNOW_ERROR = 'Network error',
     XHR_ERROR = 'XHR Error',
     ABORTED = 'Request aborted',
     NO_XHR = 'No valid xhr found on this browser';
@@ -13912,7 +14266,7 @@ var NAME = '[io]: ',
 module.exports = function (window) {
 
     var ENCODE_URI_COMPONENT = encodeURIComponent,
-        IO;
+        IO, xhrTest;
 
     // to prevent multiple IO instances
     // (which might happen: http://nodejs.org/docs/latest/api/modules.html#modules_module_caching_caveats)
@@ -13966,7 +14320,8 @@ module.exports = function (window) {
                 headers = options.headers || {}, // all request will get some headers
                 async = !options.sync,
                 data = options.data,
-                reject = promise.reject;
+                reject = promise.reject,
+                sendPayload;
             // xhr will be null in case of a CORS-request when no CORS is possible
             if (!xhr) {
                 console.error(NAME, '_initXHR fails: '+ERROR_NO_XHR);
@@ -13977,14 +14332,13 @@ module.exports = function (window) {
 
             // method-name should be in uppercase:
             method = method.toUpperCase();
-
             // in case of BODY-method: eliminate any data behind querystring:
             // else: append data-object behind querystring
             if (BODY_METHODS[method]) {
                 url = url.split('?'); // now url is an array
                 url = url[0]; // now url is a String again
             }
-            else if (data) {
+            else if (data && (headers[CONTENT_TYPE]!==MIME_BLOB)) {
                 url += ((url.indexOf('?') > 0) ? '&' : '?') + instance._toQueryString(data);
             }
 
@@ -14000,8 +14354,18 @@ module.exports = function (window) {
                 }
             );
 
+            if (BODY_METHODS[method] && data) {
+                if (headers[CONTENT_TYPE]===MIME_BLOB) {
+                    if (!xhr._isXDR) {
+                        sendPayload = data;
+                    }
+                }
+                else {
+                    sendPayload = ((headers[CONTENT_TYPE]===MIME_JSON) || xhr._isXDR) ? JSON.stringify(data) : instance._toQueryString(data);
+                }
+            }
             // send the request:
-            xhr.send((BODY_METHODS[method] && data) ? (((headers[CONTENT_TYPE]===MIME_JSON) || xhr._isXDR) ? JSON.stringify(data) : instance._toQueryString(data)) : null);
+            xhr.send(sendPayload);
 
             console.log(NAME, 'xhr send to '+url+' with method '+method);
 
@@ -14077,11 +14441,18 @@ module.exports = function (window) {
                         if (xhr._isStream && !xhr._gotstreamed) {
                             xhr.onprogress(xhr.responseText);
                         }
+                        if (xhr._fileProgress && !xhr._gotstreamed) {
+                            xhr.onprogress({
+                                lengthComputable: true,
+                                loaded: 1,
+                                total: 1
+                            });
+                        }
                         promise.fulfill(xhr);
                     }
                     else {
                         console.warn(NAME, 'xhr.onreadystatechange will reject xhr-instance: '+xhr.statusText);
-                        promise.reject(new Error(xhr.statusText || UNKNOW_ERROR+' '+xhr.status));
+                        promise.reject(new Error(xhr.statusText || (UNKNOW_ERROR)));
                     }
                 }
             };
@@ -14139,11 +14510,11 @@ module.exports = function (window) {
             var instance = this,
                 props = {},
                 xhr, promise;
-            options || (options={});
+            options = Object.isObject(options) ? options.deepClone() : {};
             promise = Promise.manage(options.streamback);
 
             xhr = new window.XMLHttpRequest();
-            props._isXHR2 = ('withCredentials' in xhr) || (window.navigator.userAgent==='fake');
+            props._isXHR2 = IO.xhr2support;
             // it could be other modules like io-cors or io-stream have subscribed
             // xhr might be changed, also private properties might be extended
             instance._xhrList.each(
@@ -14183,11 +14554,15 @@ module.exports = function (window) {
         IO._setHeaders
     ];
 
+    // search for XHR2 support:
+    xhrTest = new window.XMLHttpRequest();
+    IO.supportXHR2 = ('withCredentials' in xhrTest) || (window.navigator.userAgent==='fake');
+
     window._ITSAmodules.IO = IO;
 
     return IO;
 };
-},{"js-ext":65,"js-ext/extra/hashmap.js":61,"polyfill/polyfill-base.js":86}],60:[function(require,module,exports){
+},{"js-ext":66,"js-ext/extra/hashmap.js":62,"polyfill/polyfill-base.js":87}],61:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -14640,6 +15015,7 @@ require('../lib/object.js');
                     }
                 };
                 // instance.detachAll();  <-- is what Event will add
+                // instance.undefAllEvents();  <-- is what Event will add
                 superDestroy(instance.constructor);
                 Object.protectedProp(instance, '_destroyed', true);
             }
@@ -14807,7 +15183,7 @@ require('../lib/object.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/object.js":71,"js-ext/extra/hashmap.js":61,"polyfill/polyfill-base.js":86}],61:[function(require,module,exports){
+},{"../lib/object.js":72,"js-ext/extra/hashmap.js":62,"polyfill/polyfill-base.js":87}],62:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -14830,7 +15206,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],62:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -14942,7 +15318,7 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":67,"../lib/object.js":71,"./classes.js":60,"js-ext/extra/hashmap.js":61,"polyfill/lib/weakmap.js":84}],63:[function(require,module,exports){
+},{"../lib/array.js":68,"../lib/object.js":72,"./classes.js":61,"js-ext/extra/hashmap.js":62,"polyfill/lib/weakmap.js":85}],64:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -15260,7 +15636,7 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":67,"../lib/object.js":71,"polyfill/lib/weakmap.js":84,"polyfill/polyfill-base.js":86,"utils":91}],64:[function(require,module,exports){
+},{"../lib/array.js":68,"../lib/object.js":72,"polyfill/lib/weakmap.js":85,"polyfill/polyfill-base.js":87,"utils":94}],65:[function(require,module,exports){
 "use strict";
 
 var createHashMap = require('./hashmap.js').createMap;
@@ -15333,7 +15709,7 @@ module.exports = createHashMap({
     'with': true,
     'yield': true
 });
-},{"./hashmap.js":61}],65:[function(require,module,exports){
+},{"./hashmap.js":62}],66:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
@@ -15341,7 +15717,7 @@ require('./lib/array.js');
 require('./lib/json.js');
 require('./lib/promise.js');
 require('./lib/math.js');
-},{"./lib/array.js":67,"./lib/function.js":68,"./lib/json.js":69,"./lib/math.js":70,"./lib/object.js":71,"./lib/promise.js":72,"./lib/string.js":73}],66:[function(require,module,exports){
+},{"./lib/array.js":68,"./lib/function.js":69,"./lib/json.js":70,"./lib/math.js":71,"./lib/object.js":72,"./lib/promise.js":73,"./lib/string.js":74}],67:[function(require,module,exports){
 "use strict";
 
 require('./lib/function.js');
@@ -15359,7 +15735,7 @@ module.exports = {
     LightMap: require('./extra/lightmap.js'),
     reservedWords: require('./extra/reserved-words.js')
 };
-},{"./extra/classes.js":60,"./extra/hashmap.js":61,"./extra/lightmap.js":62,"./extra/observers.js":63,"./extra/reserved-words.js":64,"./lib/array.js":67,"./lib/function.js":68,"./lib/json.js":69,"./lib/math.js":70,"./lib/object.js":71,"./lib/promise.js":72,"./lib/string.js":73}],67:[function(require,module,exports){
+},{"./extra/classes.js":61,"./extra/hashmap.js":62,"./extra/lightmap.js":63,"./extra/observers.js":64,"./extra/reserved-words.js":65,"./lib/array.js":68,"./lib/function.js":69,"./lib/json.js":70,"./lib/math.js":71,"./lib/object.js":72,"./lib/promise.js":73,"./lib/string.js":74}],68:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -15462,11 +15838,11 @@ cloneObj = function(obj, descriptors, target) {
     }
 
     // Handle Object
-    else if (obj instanceof Object) {
-        copy = deepCloneObj(obj, descriptors);
+    if (Object.isObject(obj)) {
+        return obj.deepClone(descriptors);
     }
 
-    return copy;
+    return obj;
 };
 
 valuesAreTheSame = function(value1, value2) {
@@ -15691,7 +16067,7 @@ valuesAreTheSame = function(value1, value2) {
     };
 
 }(Array.prototype));
-},{"js-ext/extra/hashmap.js":61,"polyfill/polyfill-base.js":86}],68:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":62,"polyfill/polyfill-base.js":87}],69:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -15750,7 +16126,7 @@ var NAME = '[Function]: ';
 
 }(Function.prototype));
 
-},{"polyfill/polyfill-base.js":86}],69:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":87}],70:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -15839,7 +16215,7 @@ JSON.stringToDates = function (item, clone) {
     }
     return newItem;
 };
-},{"./object.js":71,"polyfill/polyfill-base.js":86}],70:[function(require,module,exports){
+},{"./object.js":72,"polyfill/polyfill-base.js":87}],71:[function(require,module,exports){
 /**
  *
  * Extension of Math
@@ -15897,7 +16273,7 @@ Math.floorToZero = function(value) {
 Math.ceilFromZero = function(value) {
     return (value>=0) ? Math.ceil(value) : Math.floor(value);
 };
-},{"polyfill/polyfill-base.js":86}],71:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":87}],72:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -15927,6 +16303,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap,
        '[object Array]' : true,
        '[object Date]' : true,
        '[object Error]' : true,
+       '[object Blob]' : true,
        '[object Promise]' : true // DOES NOT WORK in all browsers
     }),
     // Define configurable, writable and non-enumerable props
@@ -15976,11 +16353,11 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap,
         }
 
         // Handle Object
-        else if (obj instanceof Object) {
-            copy = obj.deepClone(descriptors);
+        if (Object.isObject(obj)) {
+            return obj.deepClone(descriptors);
         }
 
-        return copy;
+        return obj;
     },
 
     valuesAreTheSame = function(value1, value2) {
@@ -16455,7 +16832,7 @@ Object.protectedProp = function(obj, property, value) {
         value: value
     });
 };
-},{"js-ext/extra/hashmap.js":61,"polyfill/lib/promise.js":83,"polyfill/polyfill-base.js":86}],72:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":62,"polyfill/lib/promise.js":84,"polyfill/polyfill-base.js":87}],73:[function(require,module,exports){
 "use strict";
 
 /**
@@ -16745,7 +17122,8 @@ Promise.chainFns = function (funcs, finishAll) {
  */
 Promise.manage = function (callbackFn, stayActive) {
     console.log(NAME, 'manage');
-    var fulfillHandler, rejectHandler, promise, finished, stayActivePromise, resolved;
+    var fulfillHandler, rejectHandler, promise, finished, stayActivePromise,
+        resolved, isFulfilled, isRejected;
 
     promise = new Promise(function (fulfill, reject) {
         fulfillHandler = fulfill;
@@ -16790,6 +17168,14 @@ Promise.manage = function (callbackFn, stayActive) {
         return !finished;
     };
 
+    promise.isFulfilled = function () {
+        return !!isFulfilled;
+    };
+
+    promise.isRejected = function () {
+        return !!isRejected;
+    };
+
     promise.stayActive = function (time) {
         stayActivePromise = new Promise(function (fulfill) {
             later(fulfill, time);
@@ -16809,10 +17195,19 @@ Promise.manage = function (callbackFn, stayActive) {
 
     stayActive && promise.stayActive(stayActive);
 
+    promise.then(
+        function() {
+            isFulfilled = true;
+        },
+        function() {
+            isRejected = true;
+        }
+    );
+
     return promise;
 };
 
-},{"polyfill/lib/promise.js":83,"polyfill/polyfill-base.js":86,"utils":91}],73:[function(require,module,exports){
+},{"polyfill/lib/promise.js":84,"polyfill/polyfill-base.js":87,"utils":94}],74:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -17094,7 +17489,7 @@ Promise.manage = function (callbackFn, stayActive) {
 
 }(String.prototype));
 
-},{}],74:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 (function (global){
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -17309,7 +17704,7 @@ require('polyfill/lib/promise.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"event":31,"js-ext":65,"js-ext/extra/hashmap.js":61,"polyfill":86,"polyfill/lib/promise.js":83,"utils":91}],75:[function(require,module,exports){
+},{"event":31,"js-ext":66,"js-ext/extra/hashmap.js":62,"polyfill":87,"polyfill/lib/promise.js":84,"utils":94}],76:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17966,9 +18361,9 @@ module.exports = function (window) {
 
     window._ITSAmodules.ElementPlugin = true;
 };
-},{"event-dom":21,"js-ext/extra/classes.js":60,"js-ext/extra/hashmap.js":61,"js-ext/extra/observers.js":63,"js-ext/lib/object.js":71,"js-ext/lib/promise.js":72,"js-ext/lib/string.js":73,"polyfill":86,"utils/lib/timers.js":93,"vdom":103}],76:[function(require,module,exports){
+},{"event-dom":21,"js-ext/extra/classes.js":61,"js-ext/extra/hashmap.js":62,"js-ext/extra/observers.js":64,"js-ext/lib/object.js":72,"js-ext/lib/promise.js":73,"js-ext/lib/string.js":74,"polyfill":87,"utils/lib/timers.js":96,"vdom":106}],77:[function(require,module,exports){
 var css = "[plugin-panel=\"true\"] {\n    position: absolute !important;\n    background-color: #FFF;\n    max-width: 90%;\n    min-width: 200px;\n    min-height: 75px;\n    box-shadow: inset 0 0 5px rgba(50, 50, 50, 0.30), 5px 5px 6px rgba(50, 50, 50, 0.45);\n    border: solid 1px #000;\n}\n\n[plugin-panel=\"true\"],\n[plugin-panel=\"true\"] >div {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n[plugin-panel=\"true\"] >div[is=\"header\"] {\n    vertical-align: middle;\n    background-color: rgb(0, 100, 192);\n    color: #FFF;\n    padding: 0 1.5em 0 0.7em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    vertical-align: middle;\n    line-height: 1.75em;\n    /* don't set the width to 100% --> IE messes things up */\n    /*width: 100%;*/\n    min-height: 1.75em;\n}\n\n[plugin-panel=\"true\"] >div[is=\"content\"] {\n    padding: 1.6em 1.2em;\n    line-height: 115%;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] {\n    border-top: 1px solid #EAE6DB;\n    overflow: hidden;\n    vertical-align: middle;\n    text-align: right;\n    line-height: 1em;\n    padding: 0.5em 0.7em;\n    /* don't set the width to 100% --> IE messes things up */\n    /*width: 100%;*/\n    min-height: 24px;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0.5em;\n}\n\n[plugin-panel=\"true\"].itsa-full-draggable {\n    cursor: default;\n}\n\n[plugin-panel=\"true\"] >button {\n    padding: 0 0.4em 0.1em;\n    position: absolute;\n    right: 0.2em;\n    top: 0.2em;\n    z-index: 1;\n}\n\nbody >div[is=\"system-node\"].itsa-modal-layer {\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 100% !important;\n    height: 100% !important;\n    -webkit-box-sizing: border-box !important;\n    -moz-box-sizing: border-box !important;\n    box-sizing: border-box !important;\n    z-index: 1000 !important;\n    background-color: #000 !important;\n    opacity: 0.2 !important;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button {\n    display: block;\n    width: 100%;\n    margin: 0 0 0.5em;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button:last-child,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button:last-child {\n    margin-bottom: 0;\n}\n\n@media only screen and (max-width : 480px) {\n    [plugin-panel=\"true\"] {\n        width: 90%;\n        box-shadow: 0 0 6px 6px rgba(50, 50, 50, 0.45);\n    }\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],77:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],78:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -18414,7 +18809,7 @@ module.exports = function (window) {
 
     return Panel;
 };
-},{"./css/panel.css":76,"drag":20,"event-mobile":26,"focusmanager":33,"js-ext/extra/hashmap.js":61,"js-ext/extra/lightmap.js":62,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"node-plugin":75,"polyfill":86,"scrollable":89,"useragent":90,"vdom":103,"window-ext":104}],78:[function(require,module,exports){
+},{"./css/panel.css":77,"drag":20,"event-mobile":26,"focusmanager":33,"js-ext/extra/hashmap.js":62,"js-ext/extra/lightmap.js":63,"js-ext/lib/object.js":72,"js-ext/lib/string.js":74,"node-plugin":76,"polyfill":87,"scrollable":90,"useragent":93,"vdom":106,"window-ext":107}],79:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -18437,7 +18832,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],79:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 "use strict";
 
 /*
@@ -18490,7 +18885,7 @@ module.exports = function (window) {
 
     return transition;
 };
-},{"../bin/local-hashmap.js":78}],80:[function(require,module,exports){
+},{"../bin/local-hashmap.js":79}],81:[function(require,module,exports){
 "use strict";
 
 // CAUTIOUS: need a copy of hashmap --> we cannot use js-ext/extra/hashap.js for that would lead to circular references!
@@ -18535,7 +18930,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{"../bin/local-hashmap.js":78}],81:[function(require,module,exports){
+},{"../bin/local-hashmap.js":79}],82:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -18606,7 +19001,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../bin/local-hashmap.js":78}],82:[function(require,module,exports){
+},{"../bin/local-hashmap.js":79}],83:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -18630,9 +19025,9 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],83:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 require('ypromise');
-},{"ypromise":5}],84:[function(require,module,exports){
+},{"ypromise":5}],85:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/Gozala/1269991
 
@@ -18742,7 +19137,7 @@ require('ypromise');
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],85:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -18761,16 +19156,16 @@ require('ypromise');
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],86:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":82,"./lib/window.console.js":85}],87:[function(require,module,exports){
+},{"./lib/matchesselector.js":83,"./lib/window.console.js":86}],88:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/promise.js');
 require('./lib/weakmap.js');
-},{"./lib/promise.js":83,"./lib/weakmap.js":84,"./polyfill-base.js":86}],88:[function(require,module,exports){
+},{"./lib/promise.js":84,"./lib/weakmap.js":85,"./polyfill-base.js":87}],89:[function(require,module,exports){
 var css = "[plugin-scroll=\"true\"] {\n    overflow: hidden !important;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont,\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    position: absolute;\n    /*display: block;*/\n    left: -9999px;\n    top: -9999px;\n    opacity: 0;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-vscroll-cont.itsa-visible {\n    opacity: 1;\n    width: 0.8em;\n    height: 100%;\n    right: 0;\n    top: 0;\n    left: auto;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-hscroll-cont.itsa-visible {\n    opacity: 1;\n    height: 0.8em;\n    width: 100%;\n    left: 0;\n    bottom: 0;\n    top: auto;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont span {\n    position: relative;\n    /*display: block;*/\n    width: 100%;\n    min-height: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont span {\n    position: relative;\n    /*display: block;*/\n    height: 100%;\n    min-width: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-vscroll-cont span,\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-hscroll-cont span {\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n[plugin-scroll=\"true\"] >span span.dd-dragging {\n    cursor: default;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],89:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],90:[function(require,module,exports){
 /**
  * Plugin to create scrollable divs
  *
@@ -18992,7 +19387,460 @@ module.exports = function (window) {
 
     return Scrollable;
 };
-},{"./css/scrollable.css":88,"drag":20,"event-mobile":26,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"node-plugin":75,"polyfill":86,"useragent":90,"utils":91,"window-ext":104}],90:[function(require,module,exports){
+},{"./css/scrollable.css":89,"drag":20,"event-mobile":26,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"node-plugin":76,"polyfill":87,"useragent":93,"utils":94,"window-ext":107}],91:[function(require,module,exports){
+var css = "input.uploader-hidden-input {\n    display: none !important;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],92:[function(require,module,exports){
+
+/**
+ * Provides core Upload-functionality.
+ * Also defines` HTMLInputElement.prototype.sendFiles`.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module uploader
+ * @class Uploader
+*/
+
+"use strict";
+
+require('polyfill/polyfill-base.js');
+require('./css/uploader.css');
+
+var NAME = '[uploader]: ',
+    later = require('utils').later,
+    jsext = require('js-ext/js-ext.js'), // we need the full version
+    Classes = jsext.Classes,
+    createHashMap = jsext.createHashMap,
+    TEMPLATE = '<input class="uploader-hidden-input" type="file">';
+
+module.exports = function (window) {
+    var Event = require('event'),
+        IO = require("io/extra/io-filetransfer.js")(window),
+        Uploader;
+
+    // to prevent multiple Uploader instances
+    // (which might happen: http://nodejs.org/docs/latest/api/modules.html#modules_module_caching_caveats)
+    // we make sure Uploader is defined only once. Therefore we bind it to `window` and return it if created before
+    // We need a singleton Uploader, because submodules might merge in. You can't have them merging
+    // into some other Uploader-instance than which is used.
+
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
+/*jshint boss:true */
+    if (Uploader=window._ITSAmodules.Uploader) {
+/*jshint boss:false */
+        return Uploader; // Uploader was already created
+    }
+
+    Uploader = Classes.createClass(function(config) {
+        /**
+         * Hidden `input-node` of the type `file` that is being used to transfer the files.
+         *
+         * @property _inputNode
+         * @type DOMNode
+         * @private
+         * @since 0.0.1
+         */
+
+        /**
+         * Private Array with objects of this structure: {name: xxx, size: xxx}.
+         * Holds the file-info of all files that have been send by the last transfer.
+         * Can be used by the method: getLastSent()
+         *
+         * @property _lastfiles
+         * @type Array
+         * @default []
+         * @private
+         * @since 0.0.1
+         */
+
+        var instance = this,
+            inputNode;
+        config || (config={});
+        instance._inputNode = inputNode = window.document.body.addSystemElement(TEMPLATE);
+        instance.setDefaults(config.url, config.params, config.options);
+        instance._lastfiles = [];
+        instance.defineEvent('send').defaultFn(instance._defFnSend);
+        instance.defineEvent('selectfiles').defaultFn(instance._defFnSelectFiles);
+        instance.defineEvent('fileschanged').defaultFn(function(e) {
+            var self = e.target;
+            self._inputNode.getData('autoSend') && self.send(instance._selectedPayload);
+        });
+        instance.after('change', function() {
+            /**
+            * Fired internally whenever the selected files are changed.
+            * Its defaultFn will start sending the files (if the selection is triggered with `autoSend=true`)
+            *
+            * @event uploader:fileschanged
+            * @since 0.1
+            */
+            instance.emit('fileschanged', instance._selectedPayload);
+        }, function(e) {
+            return (e.target===inputNode);
+        });
+    },
+    {
+        /**
+         * Clears the default transition-values that are being used for the values of `url`, params` and `options`.
+         *
+         * @method clearDefaults
+         * @chainable
+         * @since 0.0.1
+        */
+        clearDefaults: function() {
+            var instance = this;
+            instance.defaultURL = null;
+            instance.defaultParams = {};
+            instance.defaultOptions = {};
+            return instance;
+        },
+
+        /**
+         * Returns the number of files that are currently selected.
+         *
+         * @method count
+         * @return {number} Number of files currently selected
+         * @since 0.0.1
+        */
+        count: function() {
+            return this._inputNode.files.length;
+        },
+
+        /**
+         * Destroys the fileselector: removes all eventlisteners and removes its protected `input`-domNode.
+         *
+         * @method destroy
+         * @since 0.0.1
+        */
+        destroy: function() {
+            this._inputNode.remove();
+        },
+
+        /**
+         * Returns the protected `input`-domNode whichis being used by this uploader-instance.
+         *
+         * @method getDomNode
+         * @return {DOMNode} protected `input`-domNode
+         * @since 0.0.1
+        */
+        getDomNode: function() {
+            return this._inputNode;
+        },
+
+        /**
+         * Returns the currently selected files. This is an `Array-like` object, not a true Array.
+         *
+         * @method getFiles
+         * @return {Array-like} protected `input`-domNode
+         * @since 0.0.1
+        */
+        getFiles: function() {
+            return this._inputNode.files;
+        },
+
+        /**
+         * Returns the last send-files.
+         * This is handy to know, because after transmission, getFiles() will return empty.
+         * This is an true Array with objects of this structure: {name: xxx, size: xxx}
+         *
+         * @method getLastSent
+         * @return {Array} The last sent files
+         * @since 0.0.1
+        */
+        getLastSent: function() {
+            return this._lastfiles;
+        },
+
+        /**
+         * Whether there are currently files selected.
+         *
+         * @method hasFiles
+         * @return {number} Number of selected files
+         * @since 0.0.1
+        */
+        hasFiles: function() {
+            return (this.count()>0);
+        },
+
+        /**
+         * Pops-up the browser's fileselect, by emitting the 'uploader:selectfiles'-event.
+         * The fileselector allows you to send only 1 file at a time.
+         * If `payload.autoSend` is set, the files will automaticly be send after selection.
+         * You also can set other properties at the payload --> these will be available at the listeners.
+         *
+         * @method selectFile
+         * @params [payload] {Object}
+         *     @params [payload.autoSend] {Boolean}
+         * @chainable
+         * @since 0.0.1
+        */
+        selectFile: function(payload) {
+            var instance = this;
+            instance._selectedPayload = payload ? payload.deepClone() : {};
+            /**
+            * Fired to start selecting the files.
+            * Its defaultFn will pop-up the file-selector.
+            *
+            * @event uploader:selectfiles
+            * @since 0.1
+            */
+            instance.emit('selectfiles', instance._selectedPayload);
+            return instance;
+        },
+
+        /**
+         * Pops-up the browser's fileselect, by emitting the 'uploader:selectfiles'-event.
+         * The fileselector allows you to send multiple files at a time.
+         * If `payload.autoSend` is set, the files will automaticly be send after selection.
+         * You also can set other properties at the payload --> these will be available at the listeners.
+         *
+         * @method pluginDOM
+         * @params [payload] {Object}
+         *     @params [payload.autoSend] {Boolean}
+         * @chainable
+         * @since 0.0.1
+        */
+        selectFiles: function(payload) {
+            var instance = this;
+            instance._selectedPayload = payload ? payload.deepClone() : {};
+            instance._selectedPayload.multiple = true;
+            instance.emit('selectfiles', instance._selectedPayload);
+            return instance;
+        },
+
+        /**
+         * Send the selected files, by emitting the 'uploader:send'-event.
+         * If `payload.url`, `payload.url` or `payload.url` is set, then these will overrule the default
+         * values (the way they were set at initiation, or by using `setDefaults`).
+         * You also can set other properties at the payload --> these will be available at the listeners.
+         *
+         * @method pluginDOM
+         * @params [payload] {Object}
+         *     @params [payload.url] {String}
+         *     @params [payload.params] {Object}
+         *     @params [payload.options] {Object}
+         * @chainable
+         * @since 0.0.1
+        */
+        send: function(payload) {
+            var instance = this;
+            /**
+            * Fired to start uploading through io.
+            * Its defaultFn will invoke `sendFiles` of the input-node.
+            *
+            * @event uploader:send
+            * @since 0.1
+            */
+            instance.emit('send', payload && payload.deepClone());
+            return instance;
+        },
+
+        /**
+         * Sets the default transition-values that are being used for the values of `url`, params` and `options`.
+         * These values might have been set during initialization, if so, any values passed will be overrule the previous.
+         *
+         * @method setDefaults
+         * @chainable
+         * @since 0.0.1
+        */
+        setDefaults: function(url, params, options) {
+            var instance = this;
+            (typeof url==='string') && (instance.defaultURL=url);
+            params && (instance.defaultParams=params.deepClone());
+            options && (instance.defaultOptions=options.deepClone());
+            return instance;
+        },
+
+        /**
+         * Default function for the `uploader:selectfiles`-event
+         *
+         * @method _defFnSelectFiles
+         * @param e {Object} eventobject
+         *     @param [e.multiple] {Boolean} whether to support multiple selected files
+         * @private
+         * @since 0.0.1
+        */
+        _defFnSelectFiles: function(e) {
+            var instance = e.target,
+                inputNode = instance._inputNode,
+                autoSend = e.autoSend,
+                eMultiple = e.multiple,
+                multiple = (typeof eMultiple === 'boolean') ? eMultiple : false;
+            inputNode.toggleAttr('multiple', 'true', multiple);
+            inputNode.setData('autoSend', autoSend);
+            inputNode.showFileSelect();
+        },
+
+        /**
+         * Default function for the `uploader:send`-event
+         *
+         * @method _defFnSend
+         * @param e {Object} eventobject
+         *     @param [e.url] {String} overrules the default `url`
+         *     @param [e.params] {Object} overrules the default `params`
+         *     @param [e.options] {Object} overrules the default `options`
+         * @private
+         * @since 0.0.1
+        */
+        _defFnSend: function(e) {
+            var instance = this,
+                inputNode = instance._inputNode,
+                url = e.url,
+                params = e.params,
+                options = e.options,
+                sendOptions, originalProgressFn;
+            if (!inputNode || inputNode.files.length===0) {
+                return Promise.reject('no file selected');
+            }
+            sendOptions = options ? options.deepClone() : instance.defaultOptions.deepClone();
+            sendOptions.emptyFiles = true;
+            // redefine the argument of the progress-callback:
+            if (sendOptions.progressfn) {
+                originalProgressFn = sendOptions.progressfn;
+                sendOptions.progressfn = function(data) {
+                    e.ioPromise = data.target;
+                    e.total = data.total;
+                    e.loaded = data.loaded;
+                    originalProgressFn(e);
+                };
+            }
+            instance._storeLastSent();
+            return inputNode.sendFiles(url || instance.defaultURL, params || instance.defaultParams, sendOptions);
+        },
+
+        /**
+         * Stores the files that are sent into an internal hash, which can be read by `getLastSent()`.
+         *
+         * @method _storeLastSent
+         * @private
+         * @chainable
+         * @since 0.0.1
+        */
+        _storeLastSent: function() {
+            var instance = this,
+                lastFiles = instance._lastfiles,
+                files = instance._inputNode.files,
+                len = files.length,
+                i, file;
+            lastFiles.length = 0;
+            for (i=0; i<len; i++) {
+                file = files[i];
+                lastFiles.push({
+                    name: file.name,
+                    size: file.size
+                });
+            }
+            return instance;
+        }
+    });
+
+    Uploader.mergePrototypes(Event.Listener);
+    Uploader.mergePrototypes(Event.Emitter('uploader'));
+
+    /**
+     * Sends the input's files by using an AJAX PUT request.
+     * Additional parameters can be through the `params` argument.
+     *
+     * The Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).
+     * It will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.
+     *
+     * Note: `params` should be a plain object with only primitive types which are transformed into key/value pairs.
+     *
+     * @for HTMLInputElement
+     * @method sendFiles
+     * @param url {String} URL of the resource server
+     * @param [params] {Object} additional parameters. NOTE: these will be set as HEADERS like `x-data-parameter` on the request!
+     *        should be a plain object with only primitive types which are transformed into key/value pairs.
+     * @param [options] {Object}
+     *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
+     *    @param [options.headers] {Object} HTTP request headers.
+     *    @param [options.timeout=300000] {Number} to timeout the request, leading into a rejected Promise. Defaults to 5 minutes
+     *    @param [options.progressfn] {Function} callbackfunction in case you want to process upload-status.
+     *           Function has 3 parameters: total, loaded and target (io-promise)
+     *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
+     *    @param [options.parseJSONDate=false] {boolean} Whether the server returns JSON-stringified data which has Date-objects.
+     *    @param [options.emptyFiles=true] {boolean} Whether the empty the inputElement after transmitting has completed
+     * @return {Promise}
+     * on success:
+        * Object any received data
+     * on failure an Error object
+        * reason {Error}
+     * The returned promise has an `abort`-method to cancel all transfers.
+    */
+    window.HTMLInputElement.prototype.sendFiles = function(url, params, options) {
+        var instance = this,
+            files = instance.files,
+            len = files.length,
+            hash = [],
+            promisesById = {},
+            promise, ioPromise, file, i, totalsize, originalProgressFn;
+        options || (options={});
+        (typeof options.emptyFiles==='boolean') || (options.emptyFiles=true);
+        if (len===1) {
+            file = files[0];
+            promise = IO.sendBlob(url, file, params, options);
+        }
+        else if (len>1) {
+            if (options.progressfn) {
+                totalsize = 0;
+                originalProgressFn = options.progressfn;
+                options.progressfn = function(data) {
+                    var promiseInstance = data.target,
+                        totalLoaded = 0;
+                    promisesById[promiseInstance._id] = data.loaded;
+                    promisesById.each(function(value) {
+                        totalLoaded += value;
+                    });
+                    originalProgressFn({
+                        total: totalsize,
+                        loaded: totalLoaded,
+                        target: promise
+                    });
+                };
+            }
+            // files is array-like, no true array
+            for (i=0; i<len; i++) {
+                file = files[i];
+                ioPromise = IO.sendBlob(url, file, params, options);
+                // we are interested in the total size of ALL files
+                if (options.progressfn) {
+                    totalsize += file.size;
+                    ioPromise._id = i;
+                }
+                hash.push(ioPromise);
+            }
+            promise = window.Promise.finishAll(hash).then(function(response) {
+                var rejected = response.rejected;
+                rejected.forEach(function(ioError) {
+                    if (ioError) {
+                        throw new Error(ioError);
+                    }
+                });
+            });
+            promise.abort = function() {
+                hash.forEach(function(ioPromise) {
+                    ioPromise.abort();
+                });
+            };
+        }
+        else {
+            promise = Promise.reject('No files selected');
+        }
+        if (options.emptyFiles && (len>0)) {
+            // empty ON THE NEXT stack (not microstack), to ensure all previous methods are processing
+            later(function () {
+                instance.resetFileSelect();
+            }, 0);
+        }
+        return promise;
+    };
+
+    window._ITSAmodules.Uploader = Uploader;
+
+    return Uploader;
+};
+},{"./css/uploader.css":91,"event":31,"io/extra/io-filetransfer.js":56,"js-ext/js-ext.js":67,"polyfill/polyfill-base.js":87,"utils":94}],93:[function(require,module,exports){
 "use strict";
 
 /**
@@ -19043,13 +19891,13 @@ module.exports = function (window) {
 
     return UserAgent;
 };
-},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"polyfill":86}],91:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"js-ext/lib/string.js":74,"polyfill":87}],94:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
     async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":92,"./lib/timers.js":93}],92:[function(require,module,exports){
+},{"./lib/idgenerator.js":95,"./lib/timers.js":96}],95:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
@@ -19107,7 +19955,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"js-ext/extra/hashmap.js":61,"polyfill/polyfill-base.js":86}],93:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":62,"polyfill/polyfill-base.js":87}],96:[function(require,module,exports){
 (function (process){
 /**
  * Collection of various utility functions.
@@ -19237,9 +20085,9 @@ module.exports.later = function (callbackFn, timeout, periodic) {
 	};
 };
 }).call(this,require('_process'))
-},{"_process":106,"polyfill/polyfill-base.js":86}],94:[function(require,module,exports){
+},{"_process":109,"polyfill/polyfill-base.js":87}],97:[function(require,module,exports){
 var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-nodisplay {\n    display: none !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],95:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],98:[function(require,module,exports){
 "use strict";
 
 /**
@@ -19537,7 +20385,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"polyfill":86,"polyfill/extra/transition.js":79,"polyfill/extra/vendorCSS.js":81}],96:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"js-ext/lib/string.js":74,"polyfill":87,"polyfill/extra/transition.js":80,"polyfill/extra/vendorCSS.js":82}],99:[function(require,module,exports){
 "use strict";
 
 /**
@@ -19965,7 +20813,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"polyfill":86}],97:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"polyfill":87}],100:[function(require,module,exports){
 "use strict";
 
 /**
@@ -20645,7 +21493,7 @@ module.exports = function (window) {
 
 
 
-},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"polyfill":86}],98:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"js-ext/lib/string.js":74,"polyfill":87}],101:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -24717,6 +25565,28 @@ module.exports = function (window) {
         };
 
        /**
+         * Toggles the attribute on the Element with the specified value (giving it the value, or removes the attribute)
+         *
+         * @method toggleAttr
+         * @param attributeName {String}
+         * @param value {Any} the value that belongs to `key`
+         * @param forceState {Boolean} to force toggling into this specific state
+         * @param [silent=false] {Boolean} prevent node-mutation events by the Event-module to emit
+         * @chainable
+         * @since 0.0.1
+        */
+        ElementPrototype.toggleAttr = function(attributeName, value, forceState, silent) {
+            var instance = this,
+                condition = (typeof forceState==='boolean') ? forceState : !instance.hasAttr(attributeName);
+            if (condition) {
+                return instance.setAttr(attributeName, value, silent);
+            }
+            else {
+                return instance.removeAttr(attributeName, silent);
+            }
+        };
+
+       /**
         * Toggles the className of the Element.
         *
         * @method toggleClass
@@ -24935,6 +25805,82 @@ module.exports = function (window) {
         });
 
     }(window.Element.prototype));
+
+
+    (function(HTMLButtonElementPrototype) {
+        /**
+         * Disables the button
+         *
+         * @for HTMLButtonElement
+         * @method disable
+         * @chainable
+        */
+        HTMLButtonElementPrototype.disable = function() {
+            var instance = this;
+            instance.setAttr('disabled', 'true');
+            return instance;
+        };
+
+        /**
+         * Enables the button
+         *
+         * @method enable
+         * @chainable
+        */
+        HTMLButtonElementPrototype.enable = function() {
+            var instance = this;
+            instance.removeAttr('disabled');
+            return instance;
+        };
+
+        /**
+         * Toggles the `disabled`-state of the button
+         *
+         * @method toggle
+         * @param [forcedState] {boolean} to force a specific state
+         * @chainable
+        */
+        HTMLButtonElementPrototype.toggle = function(forcedState) {
+            var instance = this;
+            instance.toggleAttr('disabled', 'true', forcedState);
+            return instance;
+        };
+    }(window.HTMLButtonElement.prototype));
+
+
+    (function(HTMLInputElementPrototype) {
+        /**
+         * Shows the pop-up of an `input` element of the type `file`.
+         *
+         * @for HTMLInputElement
+         * @method showFileSelect
+         * @chainable
+        */
+        HTMLInputElementPrototype.showFileSelect = function() {
+            var instance = this,
+                type = instance.getAttr('type');
+            type && (type.toLowerCase()==='file') && instance.click();
+            return instance;
+        };
+
+        /**
+         * Hides the pop-up and empties the files-list of an `input` element of the type `file`.
+         *
+         * @method resetFileSelect
+         * @chainable
+        */
+        HTMLInputElementPrototype.resetFileSelect = function() {
+            var instance = this,
+                type = instance.getAttr('type');
+            if (type && (type.toLowerCase()==='file')) {
+                // force the fileselector-popup up to disappear and become empty:
+                instance.setAttr('type', 'text');
+                instance.value = '';
+                instance.setAttr('type', 'file');
+            }
+            return instance;
+        };
+    }(window.HTMLInputElement.prototype));
 
 
     // Modify SVGElement:
@@ -25612,7 +26558,7 @@ module.exports = function (window) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":94,"./attribute-extractor.js":95,"./element-array.js":96,"./html-parser.js":99,"./node-parser.js":100,"./vnode.js":102,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"js-ext/lib/promise.js":72,"js-ext/lib/string.js":73,"polyfill":86,"polyfill/extra/transition.js":79,"polyfill/extra/transitionend.js":80,"polyfill/extra/vendorCSS.js":81,"utils":91,"window-ext":104}],99:[function(require,module,exports){
+},{"../css/element.css":97,"./attribute-extractor.js":98,"./element-array.js":99,"./html-parser.js":102,"./node-parser.js":103,"./vnode.js":105,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"js-ext/lib/promise.js":73,"js-ext/lib/string.js":74,"polyfill":87,"polyfill/extra/transition.js":80,"polyfill/extra/transitionend.js":81,"polyfill/extra/vendorCSS.js":82,"utils":94,"window-ext":107}],102:[function(require,module,exports){
 "use strict";
 
 /**
@@ -25988,7 +26934,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":95,"./vdom-ns.js":101,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"polyfill":86}],100:[function(require,module,exports){
+},{"./attribute-extractor.js":98,"./vdom-ns.js":104,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"polyfill":87}],103:[function(require,module,exports){
 "use strict";
 
 /**
@@ -26128,7 +27074,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":95,"./vdom-ns.js":101,"./vnode.js":102,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"polyfill":86}],101:[function(require,module,exports){
+},{"./attribute-extractor.js":98,"./vdom-ns.js":104,"./vnode.js":105,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"polyfill":87}],104:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -26353,7 +27299,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"polyfill":86}],102:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"polyfill":87}],105:[function(require,module,exports){
 "use strict";
 
 /**
@@ -29035,7 +29981,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":95,"./html-parser.js":99,"./vdom-ns.js":101,"js-ext/extra/hashmap.js":61,"js-ext/extra/lightmap.js":62,"js-ext/lib/array.js":67,"js-ext/lib/object.js":71,"js-ext/lib/string.js":73,"polyfill":86,"utils/lib/timers.js":93}],103:[function(require,module,exports){
+},{"./attribute-extractor.js":98,"./html-parser.js":102,"./vdom-ns.js":104,"js-ext/extra/hashmap.js":62,"js-ext/extra/lightmap.js":63,"js-ext/lib/array.js":68,"js-ext/lib/object.js":72,"js-ext/lib/string.js":74,"polyfill":87,"utils/lib/timers.js":96}],106:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -29077,13 +30023,13 @@ module.exports = function (window) {
 
     window._ITSAmodules.VDOM = true;
 };
-},{"./partials/extend-document.js":97,"./partials/extend-element.js":98,"./partials/node-parser.js":100,"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71,"utils/lib/timers.js":93}],104:[function(require,module,exports){
+},{"./partials/extend-document.js":100,"./partials/extend-element.js":101,"./partials/node-parser.js":103,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"utils/lib/timers.js":96}],107:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":105}],105:[function(require,module,exports){
+},{"./lib/sizes.js":108}],108:[function(require,module,exports){
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
  *
@@ -29200,7 +30146,7 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/extra/hashmap.js":61,"js-ext/lib/object.js":71}],106:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72}],109:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -29453,7 +30399,16 @@ process.chdir = function (dir) {
     ITSA.IO.config.merge(io_config);
     require('io/extra/io-cors-ie9.js')(window);
     require('io/extra/io-stream.js')(window);
+    require('io/extra/io-filetransfer.js')(window);
     require('io/extra/io-xml.js')(window);
+
+    /**
+     * Reference to the [Uploader](uploader.html) object
+     * @property Uploader
+     * @type Object
+     * @static
+    */
+    ITSA.Uploader = require('uploader')(window);
 
     /**
      * Reference to the [UserAgent](useragent.html) object
@@ -29478,5 +30433,5 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"client-db":6,"client-storage":9,"constrain":10,"css":14,"dialog":16,"drag-drop":18,"event":31,"event-dom/extra/blurnode.js":22,"event-dom/extra/focusnode.js":23,"event-dom/extra/hover.js":24,"event-dom/extra/valuechange.js":25,"event-mobile":26,"focusmanager":33,"icons":54,"io/extra/io-cors-ie9.js":55,"io/extra/io-stream.js":56,"io/extra/io-transfer.js":57,"io/extra/io-xml.js":58,"js-ext/extra/hashmap.js":61,"js-ext/extra/reserved-words.js":64,"js-ext/js-ext.js":66,"messages":74,"node-plugin":75,"node-win":undefined,"panel":77,"polyfill/polyfill.js":87,"scrollable":89,"useragent":90,"utils":91,"vdom":103,"window-ext":104}]},{},[]);
+},{"client-db":6,"client-storage":9,"constrain":10,"css":14,"dialog":16,"drag-drop":18,"event":31,"event-dom/extra/blurnode.js":22,"event-dom/extra/focusnode.js":23,"event-dom/extra/hover.js":24,"event-dom/extra/valuechange.js":25,"event-mobile":26,"focusmanager":33,"icons":54,"io/extra/io-cors-ie9.js":55,"io/extra/io-filetransfer.js":56,"io/extra/io-stream.js":57,"io/extra/io-transfer.js":58,"io/extra/io-xml.js":59,"js-ext/extra/hashmap.js":62,"js-ext/extra/reserved-words.js":65,"js-ext/js-ext.js":67,"messages":75,"node-plugin":76,"node-win":undefined,"panel":78,"polyfill/polyfill.js":88,"scrollable":90,"uploader":92,"useragent":93,"utils":94,"vdom":106,"window-ext":107}]},{},[]);
 ITSA = require('itsa');
