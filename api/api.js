@@ -331,7 +331,7 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "uploader",
             "name": "uploader",
-            "description": "Provides core Upload-functionality.\nAlso defines` HTMLInputElement.prototype.sendFiles`.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+            "description": "Provides core Upload-functionality.\nAlso defines` HTMLInputElement.prototype.sendFiles`.\n\nThe Uploader is a Class, which can be instantiated with a `config`-object:\n{url: {String}, the default url to send to\n params: {Object}, the default params that will be send with the request\n options: {Object}, the xhr-options (see http://itsa.io/api/classes/IO.html#method_sendBlob)\n maxFileSize: {Number}, the maximum filesize for every single file to be accepted. Note that the server needs to\n                                   controll this, however, when set, the uploader is enabled to show a proper warning while\n                                   rejecting the io-promise\n totalFileSize: {Number} the maximum filesize for all files (cummulated) to be accepted. Note that the server needs to\n                                     controll this, however, when set, the uploader is enabled to show a proper warning while\n                                     rejecting the io-promise\n}\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
         },
         {
             "displayName": "useragent",

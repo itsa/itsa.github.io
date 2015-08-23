@@ -56,7 +56,7 @@ Code-example:
     };
 
     errorResponse = function(e) {
-        container.setHTML(e.message);
+        container.setHTML(e.message || e);
     };
 
     progressfn = function(e) {
@@ -95,7 +95,7 @@ Code-example:
     };
 
     errorResponse = function(e) {
-        container.setHTML(e.message);
+        container.setHTML(e.message || e);
     };
 
     progressfn = function(e) {

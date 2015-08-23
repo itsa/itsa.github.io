@@ -24,7 +24,7 @@ intro: "Sending multiple files to the server using ITSA.Uploader.sendFiles()."
 
 Click on the button to select and automaticly send multiple selected files.
 
-**Note:** this example does not use SPDY. Max uploadsize = 10Mb.
+**Note:** this example does not use SPDY. Max uploadsize fer file = 10Mb, Total max uploadsize = 20Mb.
 
 <div id="container">
     <button id="button-send" class="pure-button pure-button-primary pure-button-bordered">Click me to upload multiple files</button>
@@ -48,7 +48,7 @@ Code-example:
     var url = 'http://somedomain.com.upload',
         container = document.getElement('#target-container'),
         MB10 = 10*1024*1024,
-        MB100 = 10MB10,
+        MB20 = 2*MB10,
         uploader, writeResponse, errorResponse, progressfn;
 
 
@@ -57,7 +57,7 @@ Code-example:
     };
 
     errorResponse = function(e) {
-        container.setHTML(e.message);
+        container.setHTML(e.message || e);
     };
 
     progressfn = function(e) {
@@ -65,7 +65,7 @@ Code-example:
         container.setHTML(percent+'% loaded');
     };
 
-    uploader = new ITSA.Uploader({url: url, options: {progressfn: progressfn}, maxFileSize: MB10, totalFileSize: MB100});
+    uploader = new ITSA.Uploader({url: url, options: {progressfn: progressfn}, maxFileSize: MB10, totalFileSize: MB20});
 
     ITSA.Event.after(
         'tap',
@@ -88,7 +88,7 @@ Code-example:
     var url = 'http://newsite.matrix-wijnen.nl/procesimage',
         container = document.getElement('#target-container'),
         MB10 = 10*1024*1024,
-        MB100 = 10MB10,
+        MB20 = 2*MB10,
         uploader, writeResponse, errorResponse, progressfn;
 
 
@@ -97,7 +97,7 @@ Code-example:
     };
 
     errorResponse = function(e) {
-        container.setHTML(e.message);
+        container.setHTML(e.message || e);
     };
 
     progressfn = function(e) {
@@ -105,7 +105,7 @@ Code-example:
         container.setHTML(percent+'% loaded');
     };
 
-    uploader = new ITSA.Uploader({url: url, options: {progressfn: progressfn}, maxFileSize: MB10, totalFileSize: MB100});
+    uploader = new ITSA.Uploader({url: url, options: {progressfn: progressfn}, maxFileSize: MB10, totalFileSize: MB20});
 
     ITSA.Event.after(
         'tap',

@@ -277,22 +277,23 @@
  * Provides core Upload-functionality.
  * Also defines&#x60; HTMLInputElement.prototype.sendFiles&#x60;.
  *
+ * The Uploader is a Class, which can be instantiated with a &#x60;config&#x60;-object:
+ * {url: {String}, the default url to send to
+ *  params: {Object}, the default params that will be send with the request
+ *  options: {Object}, the xhr-options (see http://itsa.io/api/classes/IO.html#method_sendBlob)
+ *  maxFileSize: {Number}, the maximum filesize for every single file to be accepted. Note that the server needs to
+ *                                    controll this, however, when set, the uploader is enabled to show a proper warning while
+ *                                    rejecting the io-promise
+ *  totalFileSize: {Number} the maximum filesize for all files (cummulated) to be accepted. Note that the server needs to
+ *                                      controll this, however, when set, the uploader is enabled to show a proper warning while
+ *                                      rejecting the io-promise
+ * }
  *
  * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
  * @module uploader
  * @class Uploader
- * @params [config] {Object}
- *     @params [config.url] {String} the default url to send to
- *     @params [config.params] {Object} the default params that will be send with the request
- *     @params [config.options] {Object} the xhr-options (see http://itsa.io/api/classes/IO.html#method_sendBlob)
- *     @params [config.maxFileSize] {Number} the maximum filesize for every single file to be accepted. Note that the server needs to
- *                                    controll this, however, when set, the uploader is enabled to show a proper warning while
- *                                    rejecting the io-promise
- *     @params [totalFileSize] {Number} the maximum filesize for all files (cummulated) to be accepted. Note that the server needs to
- *                                      controll this, however, when set, the uploader is enabled to show a proper warning while
- *                                      rejecting the io-promise
 */
 
 &quot;use strict&quot;;
@@ -642,12 +643,14 @@ module.exports = function (window) {
             if (!inputNode || inputNode.files.length===0) {
                 return Promise.reject(&#x27;no file selected&#x27;);
             }
+/*jshint boss:true */
             if (defaultMaxFileSize &amp;&amp; ((largest=instance.getLargestFileSize())&gt;defaultMaxFileSize)) {
                 return Promise.reject(&#x27;one of the files exceeds the maximum filesize of &#x27;+largest+&#x27; bytes&#x27;);
             }
             if (defaultTotalFileSize &amp;&amp; ((total=instance.getTotalFileSize())&gt;defaultTotalFileSize)) {
-                return Promise.reject(&#x27;the total filesize exceeds the maximum of &#x27;+total+&#x27; bytes&#x27;);
+                return Promise.reject(&#x27;the size of all files exceeds the maximum of &#x27;+total+&#x27; bytes&#x27;);
             }
+/*jshint boss:false */
             sendOptions = options ? options.deepClone() : instance.defaultOptions.deepClone();
             sendOptions.emptyFiles = true;
             // redefine the argument of the progress-callback:
