@@ -288,6 +288,17 @@
 <div class="box intro">
     <p>Provides core Upload-functionality.
 Also defines<code>HTMLInputElement.prototype.sendFiles</code>.</p>
+<p>The Uploader is a Class, which can be instantiated with a <code>config</code>-object:
+{url: {String}, the default url to send to
+ params: {Object}, the default params that will be send with the request
+ options: {Object}, the xhr-options (see <a href="http://itsa.io/api/classes/IO.html#method_sendBlob">http://itsa.io/api/classes/IO.html#method_sendBlob</a>)
+ maxFileSize: {Number}, the maximum filesize for every single file to be accepted. Note that the server needs to
+                                   controll this, however, when set, the uploader is enabled to show a proper warning while
+                                   rejecting the io-promise
+ totalFileSize: {Number} the maximum filesize for all files (cummulated) to be accepted. Note that the server needs to
+                                     controll this, however, when set, the uploader is enabled to show a proper warning while
+                                     rejecting the io-promise
+}</p>
 <p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
 New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 

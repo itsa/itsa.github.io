@@ -294,6 +294,17 @@
 <div class="box intro">
     <p>Provides core Upload-functionality.
 Also defines<code>HTMLInputElement.prototype.sendFiles</code>.</p>
+<p>The Uploader is a Class, which can be instantiated with a <code>config</code>-object:
+{url: {String}, the default url to send to
+ params: {Object}, the default params that will be send with the request
+ options: {Object}, the xhr-options (see <a href="http://itsa.io/api/classes/IO.html#method_sendBlob">http://itsa.io/api/classes/IO.html#method_sendBlob</a>)
+ maxFileSize: {Number}, the maximum filesize for every single file to be accepted. Note that the server needs to
+                                   controll this, however, when set, the uploader is enabled to show a proper warning while
+                                   rejecting the io-promise
+ totalFileSize: {Number} the maximum filesize for all files (cummulated) to be accepted. Note that the server needs to
+                                     controll this, however, when set, the uploader is enabled to show a proper warning while
+                                     rejecting the io-promise
+}</p>
 <p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
 New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
 
@@ -550,7 +561,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l328"><code>src&#x2F;uploader&#x2F;uploader.js:328</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l329"><code>src&#x2F;uploader&#x2F;uploader.js:329</code></a>
         
         </p>
 
@@ -662,7 +673,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l348"><code>src&#x2F;uploader&#x2F;uploader.js:348</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l349"><code>src&#x2F;uploader&#x2F;uploader.js:349</code></a>
         
         </p>
 
@@ -796,7 +807,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l393"><code>src&#x2F;uploader&#x2F;uploader.js:393</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l396"><code>src&#x2F;uploader&#x2F;uploader.js:396</code></a>
         
         </p>
 
@@ -855,7 +866,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l104"><code>src&#x2F;uploader&#x2F;uploader.js:104</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l105"><code>src&#x2F;uploader&#x2F;uploader.js:105</code></a>
         
         </p>
 
@@ -916,7 +927,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l121"><code>src&#x2F;uploader&#x2F;uploader.js:121</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l122"><code>src&#x2F;uploader&#x2F;uploader.js:122</code></a>
         
         </p>
 
@@ -987,7 +998,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l132"><code>src&#x2F;uploader&#x2F;uploader.js:132</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l133"><code>src&#x2F;uploader&#x2F;uploader.js:133</code></a>
         
         </p>
 
@@ -1048,7 +1059,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l142"><code>src&#x2F;uploader&#x2F;uploader.js:142</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l143"><code>src&#x2F;uploader&#x2F;uploader.js:143</code></a>
         
         </p>
 
@@ -1123,7 +1134,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l153"><code>src&#x2F;uploader&#x2F;uploader.js:153</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l154"><code>src&#x2F;uploader&#x2F;uploader.js:154</code></a>
         
         </p>
 
@@ -1198,7 +1209,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l164"><code>src&#x2F;uploader&#x2F;uploader.js:164</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l165"><code>src&#x2F;uploader&#x2F;uploader.js:165</code></a>
         
         </p>
 
@@ -1273,7 +1284,7 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l184"><code>src&#x2F;uploader&#x2F;uploader.js:184</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l185"><code>src&#x2F;uploader&#x2F;uploader.js:185</code></a>
         
         </p>
 
@@ -1350,7 +1361,7 @@ This is an true Array with objects of this structure: {name: xxx, size: xxx}</p>
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l197"><code>src&#x2F;uploader&#x2F;uploader.js:197</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l198"><code>src&#x2F;uploader&#x2F;uploader.js:198</code></a>
         
         </p>
 
@@ -1425,7 +1436,7 @@ This is an true Array with objects of this structure: {name: xxx, size: xxx}</p>
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l217"><code>src&#x2F;uploader&#x2F;uploader.js:217</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l218"><code>src&#x2F;uploader&#x2F;uploader.js:218</code></a>
         
         </p>
 
@@ -1508,7 +1519,7 @@ This is an true Array with objects of this structure: {name: xxx, size: xxx}</p>
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l274"><code>src&#x2F;uploader&#x2F;uploader.js:274</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l275"><code>src&#x2F;uploader&#x2F;uploader.js:275</code></a>
         
         </p>
 
@@ -1650,7 +1661,7 @@ You also can set other properties at the payload --&gt; these will be available 
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l254"><code>src&#x2F;uploader&#x2F;uploader.js:254</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l255"><code>src&#x2F;uploader&#x2F;uploader.js:255</code></a>
         
         </p>
 
@@ -1764,7 +1775,7 @@ You also can set other properties at the payload --&gt; these will be available 
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l228"><code>src&#x2F;uploader&#x2F;uploader.js:228</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l229"><code>src&#x2F;uploader&#x2F;uploader.js:229</code></a>
         
         </p>
 
@@ -1902,7 +1913,7 @@ You also can set other properties at the payload --&gt; these will be available 
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l301"><code>src&#x2F;uploader&#x2F;uploader.js:301</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l302"><code>src&#x2F;uploader&#x2F;uploader.js:302</code></a>
         
         </p>
 
@@ -2058,7 +2069,7 @@ These values might have been set during initialization, if so, any values passed
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l55"><code>src&#x2F;uploader&#x2F;uploader.js:55</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l56"><code>src&#x2F;uploader&#x2F;uploader.js:56</code></a>
         
         </p>
 
@@ -2107,7 +2118,7 @@ These values might have been set during initialization, if so, any values passed
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l64"><code>src&#x2F;uploader&#x2F;uploader.js:64</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l65"><code>src&#x2F;uploader&#x2F;uploader.js:65</code></a>
         
         </p>
 
@@ -2168,7 +2179,7 @@ Can be used by the method: getLastSent()</p>
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l91"><code>src&#x2F;uploader&#x2F;uploader.js:91</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l92"><code>src&#x2F;uploader&#x2F;uploader.js:92</code></a>
         
         </p>
 
@@ -2215,7 +2226,7 @@ Its defaultFn will start sending the files (if the selection is triggered with <
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l243"><code>src&#x2F;uploader&#x2F;uploader.js:243</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l244"><code>src&#x2F;uploader&#x2F;uploader.js:244</code></a>
         
         </p>
 
@@ -2262,7 +2273,7 @@ Its defaultFn will pop-up the file-selector.</p>
             
         
         
-        <a href="../files/src_uploader_uploader.js.html#l290"><code>src&#x2F;uploader&#x2F;uploader.js:290</code></a>
+        <a href="../files/src_uploader_uploader.js.html#l291"><code>src&#x2F;uploader&#x2F;uploader.js:291</code></a>
         
         </p>
 
