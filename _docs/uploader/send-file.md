@@ -24,7 +24,7 @@ intro: "Sending a file to the server using ITSA.Uploader.sendFile()."
 
 Click on the button to select and automaticly send the selected file.
 
-**Note:** this example does not use SPDY. Max uploadsize = 10Mb.
+**Note:** this example does not use SPDY. Max uploadsize = 10Mb. Uploaded files will be removed on the server immediately.
 
 <div id="container">
     <button id="button-send" class="pure-button pure-button-primary pure-button-bordered">Click me to upload a file</button>

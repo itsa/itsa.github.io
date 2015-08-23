@@ -23,7 +23,7 @@ intro: "Sending a several file to the server with all an unique id."
 
 This example will use three uploaders only once. Select three files and upload them to the server. They will all be marked with an unique id.
 
-**Note:** this example does not use SPDY. Max uploadsize = 10Mb.
+**Note:** this example does not use SPDY. Max uploadsize = 10Mb. Uploaded files will be removed on the server immediately.
 
 <div id="container">
     <button id="button1" class="pure-button pure-button-primary pure-button-bordered">Select file 1</button><span id="target1" class="target-container"></span><br>
