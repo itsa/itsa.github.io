@@ -452,7 +452,7 @@ module.exports = function (window) {
         if (!blob instanceof window.Blob) {
             return Promise.reject(&#x27;No proper fileobject&#x27;);
         }
-        if (!url || !url.validateURL()) {
+        if ((typeof url!==&#x27;string&#x27;) || (url.length===0)) {
             return Promise.reject(&#x27;No valid url specified&#x27;);
         }
 

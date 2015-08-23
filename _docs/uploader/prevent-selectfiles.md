@@ -24,7 +24,7 @@ intro: "Prevent selecting files."
 
 Click on the button to try to select and automaticly send the selected files. You will notice: nothing happens.
 
-**Note:** this example does not use SPDY.
+**Note:** this example does not use SPDY. Max uploadsize = 10Mb.
 
 <div id="container">
     <button id="button-send" class="pure-button pure-button-primary pure-button-bordered">Click me to select some files</button>

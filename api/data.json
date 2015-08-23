@@ -1475,7 +1475,47 @@
             "tag": "module",
             "file": "src/uploader/uploader.js",
             "line": 2,
-            "description": "Provides core Upload-functionality.\nAlso defines` HTMLInputElement.prototype.sendFiles`.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/"
+            "description": "Provides core Upload-functionality.\nAlso defines` HTMLInputElement.prototype.sendFiles`.\n\n\n<i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>\nNew BSD License - http://choosealicense.com/licenses/bsd-3-clause/",
+            "params": [
+                {
+                    "name": "config",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "url",
+                            "description": "the default url to send to",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "params",
+                            "description": "the default params that will be send with the request",
+                            "type": "Object",
+                            "optional": true
+                        },
+                        {
+                            "name": "options",
+                            "description": "the xhr-options (see http://itsa.io/api/classes/IO.html#method_sendBlob)",
+                            "type": "Object",
+                            "optional": true
+                        },
+                        {
+                            "name": "maxFileSize",
+                            "description": "the maximum filesize for every single file to be accepted. Note that the server needs to\n                                   controll this, however, when set, the uploader is enabled to show a proper warning while\n                                   rejecting the io-promise",
+                            "type": "Number",
+                            "optional": true
+                        }
+                    ]
+                },
+                {
+                    "name": "totalFileSize",
+                    "description": "the maximum filesize for all files (cummulated) to be accepted. Note that the server needs to\n                                     controll this, however, when set, the uploader is enabled to show a proper warning while\n                                     rejecting the io-promise",
+                    "type": "Number",
+                    "optional": true
+                }
+            ]
         },
         "useragent": {
             "name": "useragent",
@@ -19296,7 +19336,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 45,
+            "line": 55,
             "description": "Hidden `input-node` of the type `file` that is being used to transfer the files.",
             "itemtype": "property",
             "name": "_inputNode",
@@ -19309,7 +19349,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 54,
+            "line": 64,
             "description": "Private Array with objects of this structure: {name: xxx, size: xxx}.\nHolds the file-info of all files that have been send by the last transfer.\nCan be used by the method: getLastSent()",
             "itemtype": "property",
             "name": "_lastfiles",
@@ -19323,7 +19363,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 79,
+            "line": 91,
             "description": "Fired internally whenever the selected files are changed.\nIts defaultFn will start sending the files (if the selection is triggered with `autoSend=true`)",
             "itemtype": "event",
             "name": "uploader:fileschanged",
@@ -19333,7 +19373,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 92,
+            "line": 104,
             "description": "Clears the default transition-values that are being used for the values of `url`, params` and `options`.",
             "itemtype": "method",
             "name": "clearDefaults",
@@ -19344,7 +19384,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 107,
+            "line": 121,
             "description": "Returns the number of files that are currently selected.",
             "itemtype": "method",
             "name": "count",
@@ -19358,7 +19398,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 118,
+            "line": 132,
             "description": "Destroys the fileselector: removes all eventlisteners and removes its protected `input`-domNode.",
             "itemtype": "method",
             "name": "destroy",
@@ -19368,7 +19408,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 128,
+            "line": 142,
             "description": "Returns the protected `input`-domNode whichis being used by this uploader-instance.",
             "itemtype": "method",
             "name": "getDomNode",
@@ -19382,7 +19422,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 139,
+            "line": 153,
             "description": "Returns the currently selected files. This is an `Array-like` object, not a true Array.",
             "itemtype": "method",
             "name": "getFiles",
@@ -19396,7 +19436,21 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 150,
+            "line": 164,
+            "description": "Returns the size of the largest file that is currently selected.",
+            "itemtype": "method",
+            "name": "getLargestFileSize",
+            "return": {
+                "description": "The size of the largest file in bytes",
+                "type": "Number"
+            },
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 184,
             "description": "Returns the last send-files.\nThis is handy to know, because after transmission, getFiles() will return empty.\nThis is an true Array with objects of this structure: {name: xxx, size: xxx}",
             "itemtype": "method",
             "name": "getLastSent",
@@ -19410,7 +19464,21 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 163,
+            "line": 197,
+            "description": "Returns the total size of all files that are currently selected.",
+            "itemtype": "method",
+            "name": "getTotalFileSize",
+            "return": {
+                "description": "The size of all files in bytes",
+                "type": "Number"
+            },
+            "since": "0.0.1",
+            "class": "Uploader",
+            "module": "uploader"
+        },
+        {
+            "file": "src/uploader/uploader.js",
+            "line": 217,
             "description": "Whether there are currently files selected.",
             "itemtype": "method",
             "name": "hasFiles",
@@ -19424,7 +19492,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 174,
+            "line": 228,
             "description": "Pops-up the browser's fileselect, by emitting the 'uploader:selectfiles'-event.\nThe fileselector allows you to send only 1 file at a time.\nIf `payload.autoSend` is set, the files will automaticly be send after selection.\nYou also can set other properties at the payload --> these will be available at the listeners.",
             "itemtype": "method",
             "name": "selectFile",
@@ -19451,7 +19519,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 189,
+            "line": 243,
             "description": "Fired to start selecting the files.\nIts defaultFn will pop-up the file-selector.",
             "itemtype": "event",
             "name": "uploader:selectfiles",
@@ -19461,7 +19529,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 200,
+            "line": 254,
             "description": "Pops-up the browser's fileselect, by emitting the 'uploader:selectfiles'-event.\nThe fileselector allows you to send multiple files at a time.\nIf `payload.autoSend` is set, the files will automaticly be send after selection.\nYou also can set other properties at the payload --> these will be available at the listeners.",
             "itemtype": "method",
             "name": "pluginDOM",
@@ -19488,7 +19556,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 220,
+            "line": 274,
             "description": "Send the selected files, by emitting the 'uploader:send'-event.\nIf `payload.url`, `payload.url` or `payload.url` is set, then these will overrule the default\nvalues (the way they were set at initiation, or by using `setDefaults`).\nYou also can set other properties at the payload --> these will be available at the listeners.",
             "itemtype": "method",
             "name": "pluginDOM",
@@ -19527,7 +19595,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 236,
+            "line": 290,
             "description": "Fired to start uploading through io.\nIts defaultFn will invoke `sendFiles` of the input-node.",
             "itemtype": "event",
             "name": "uploader:send",
@@ -19537,10 +19605,42 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 247,
+            "line": 301,
             "description": "Sets the default transition-values that are being used for the values of `url`, params` and `options`.\nThese values might have been set during initialization, if so, any values passed will be overrule the previous.",
             "itemtype": "method",
             "name": "setDefaults",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "the default url to send to",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "params",
+                    "description": "the default params that will be send with the request",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "options",
+                    "description": "the xhr-options (see http://itsa.io/api/classes/IO.html#method_sendBlob)",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "maxFileSize",
+                    "description": "the maximum filesize for every single file to be accepted. Note that the server needs to\n                               controll this, however, when set, the uploader is enabled to show a proper warning while\n                               rejecting the io-promise",
+                    "type": "Number",
+                    "optional": true
+                },
+                {
+                    "name": "totalFileSize",
+                    "description": "the maximum filesize for all files (cummulated) to be accepted. Note that the server needs to\n                                 controll this, however, when set, the uploader is enabled to show a proper warning while\n                                 rejecting the io-promise",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
             "chainable": 1,
             "since": "0.0.1",
             "class": "Uploader",
@@ -19548,7 +19648,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 263,
+            "line": 328,
             "description": "Default function for the `uploader:selectfiles`-event",
             "itemtype": "method",
             "name": "_defFnSelectFiles",
@@ -19575,7 +19675,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 283,
+            "line": 348,
             "description": "Default function for the `uploader:send`-event",
             "itemtype": "method",
             "name": "_defFnSend",
@@ -19614,7 +19714,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 320,
+            "line": 393,
             "description": "Stores the files that are sent into an internal hash, which can be read by `getLastSent()`.",
             "itemtype": "method",
             "name": "_storeLastSent",
@@ -19627,7 +19727,7 @@
         },
         {
             "file": "src/uploader/uploader.js",
-            "line": 349,
+            "line": 422,
             "description": "Sends the input's files by using an AJAX PUT request.\nAdditional parameters can be through the `params` argument.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `params` should be a plain object with only primitive types which are transformed into key/value pairs.",
             "itemtype": "method",
             "name": "sendFiles",
@@ -28535,35 +28635,79 @@
         },
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " src/uploader/uploader.js:174"
+            "line": " src/uploader/uploader.js:2"
         },
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " src/uploader/uploader.js:174"
+            "line": " src/uploader/uploader.js:2"
         },
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " src/uploader/uploader.js:200"
+            "line": " src/uploader/uploader.js:2"
         },
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " src/uploader/uploader.js:200"
+            "line": " src/uploader/uploader.js:2"
         },
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " src/uploader/uploader.js:220"
+            "line": " src/uploader/uploader.js:2"
         },
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " src/uploader/uploader.js:220"
+            "line": " src/uploader/uploader.js:2"
         },
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " src/uploader/uploader.js:220"
+            "line": " src/uploader/uploader.js:228"
         },
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " src/uploader/uploader.js:220"
+            "line": " src/uploader/uploader.js:228"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:254"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:254"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:274"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:274"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:274"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:274"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:301"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:301"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:301"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:301"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/uploader/uploader.js:301"
         },
         {
             "message": "Missing item type\nRequire the given path.",

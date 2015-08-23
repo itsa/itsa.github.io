@@ -24,7 +24,7 @@ intro: "Sending a file to the server using ITSA.Uploader.sendFile()."
 
 Click on the button to select and automaticly send the selected file.
 
-**Note:** this example does not use SPDY.
+**Note:** this example does not use SPDY. Max uploadsize = 10Mb.
 
 <div id="container">
     <button id="button-send" class="pure-button pure-button-primary pure-button-bordered">Click me to upload a file</button>
@@ -47,6 +47,7 @@ Code-example:
 <script>
     var url = 'http://somedomain.com.upload',
         container = document.getElement('#target-container'),
+        MB10 = 10*1024*1024,
         uploader, writeResponse, errorResponse, progressfn;
 
 
@@ -63,7 +64,7 @@ Code-example:
         container.setHTML(percent+'% loaded');
     };
 
-    uploader = new ITSA.Uploader({url: url, options: {progressfn: progressfn}});
+    uploader = new ITSA.Uploader({url: url, options: {progressfn: progressfn}, maxFileSize: MB10});
 
     ITSA.Event.after(
         'tap',
@@ -85,6 +86,7 @@ Code-example:
 <script>
     var url = 'http://newsite.matrix-wijnen.nl/procesimage',
         container = document.getElement('#target-container'),
+        MB10 = 10*1024*1024,
         uploader, writeResponse, errorResponse, progressfn;
 
 
@@ -101,7 +103,7 @@ Code-example:
         container.setHTML(percent+'% loaded');
     };
 
-    uploader = new ITSA.Uploader({url: url, options: {progressfn: progressfn}});
+    uploader = new ITSA.Uploader({url: url, options: {progressfn: progressfn}, maxFileSize: MB10});
 
     ITSA.Event.after(
         'tap',

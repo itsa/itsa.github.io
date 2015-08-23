@@ -24,7 +24,7 @@ intro: "Sending a file to the server using ITSA.IO.sendBlob()."
 
 Click on the button to initiate the request.
 
-**Note:** this example does not use SPDY.
+**Note:** this example does not use SPDY. Max uploadsize = 10Mb.
 
 <div id="container">
     <input id="filetosend" multiple type="file">
