@@ -23,7 +23,7 @@ intro: "Sending a several file to the server with all an unique id."
 
 This example will use three uploaders only once. Select three files and upload them to the server. They will all be marked with an unique id.
 
-**Note:** this example does not use SPDY.
+**Note:** this example does not use SPDY. Max uploadsize = 10Mb.
 
 <div id="container">
     <button id="button1" class="pure-button pure-button-primary pure-button-bordered">Select file 1</button><span id="target1" class="target-container"></span><br>
@@ -54,6 +54,7 @@ Code-example:
         selectBtn2 = document.getElement('#button2'),
         selectBtn3 = document.getElement('#button3'),
         sendBtn = document.getElement('#button-send'),
+        MB10 = 10*1024*1024,
         uploader1, uploader2, uploader3, removeUploader, errorResponse, progressfn, displayFileNameAndSize;
 
 
@@ -79,9 +80,9 @@ Code-example:
         containerTarget.setHTML(selectedFile.name+' ('+selectedFile.size+' bytes)');
     };
 
-    uploader1 = new ITSA.Uploader({url: url, params: {id: 1}, options: {progressfn: progressfn}});
-    uploader2 = new ITSA.Uploader({url: url, params: {id: 2}, options: {progressfn: progressfn}});
-    uploader3 = new ITSA.Uploader({url: url, params: {id: 3}, options: {progressfn: progressfn}});
+    uploader1 = new ITSA.Uploader({url: url, params: {id: 1}, options: {progressfn: progressfn}, maxFileSize: MB10});
+    uploader2 = new ITSA.Uploader({url: url, params: {id: 2}, options: {progressfn: progressfn}, maxFileSize: MB10});
+    uploader3 = new ITSA.Uploader({url: url, params: {id: 3}, options: {progressfn: progressfn}, maxFileSize: MB10});
 
     ITSA.Event.after(
         'tap',
@@ -126,6 +127,7 @@ Code-example:
         selectBtn2 = document.getElement('#button2'),
         selectBtn3 = document.getElement('#button3'),
         sendBtn = document.getElement('#button-send'),
+        MB10 = 10*1024*1024,
         uploader1, uploader2, uploader3, removeUploader, errorResponse, progressfn, displayFileNameAndSize;
 
 
@@ -156,9 +158,9 @@ Code-example:
         containerTarget.setHTML(selectedFile.name+' ('+selectedFile.size+' bytes)');
     };
 
-    uploader1 = new ITSA.Uploader({url: url, params: {id: 1}, options: {progressfn: progressfn}});
-    uploader2 = new ITSA.Uploader({url: url, params: {id: 2}, options: {progressfn: progressfn}});
-    uploader3 = new ITSA.Uploader({url: url, params: {id: 3}, options: {progressfn: progressfn}});
+    uploader1 = new ITSA.Uploader({url: url, params: {id: 1}, options: {progressfn: progressfn}, maxFileSize: MB10});
+    uploader2 = new ITSA.Uploader({url: url, params: {id: 2}, options: {progressfn: progressfn}, maxFileSize: MB10});
+    uploader3 = new ITSA.Uploader({url: url, params: {id: 3}, options: {progressfn: progressfn}, maxFileSize: MB10});
 
     ITSA.Event.after(
         'tap',

@@ -29,7 +29,7 @@ intro: "Aborting transmission during IO."
 
 Click on the button to initiate the request. During the request, the transfer can be aborted, which leads into a rejected io-promise.
 
-**Note:** this example does not use SPDY.
+**Note:** this example does not use SPDY. Max uploadsize = 10Mb.
 
 <div id="container">
     <button id="button-send" class="pure-button pure-button-primary pure-button-bordered">Click me to upload multiple files</button>
@@ -55,6 +55,7 @@ Code-example:
     var url = 'http://somedomain.com/upload',
         container = document.getElement('#target-container'),
         abortBtn = element.getElement('#abortBtn'),
+        MB10 = 10*1024*1024,
         uploader, writeResponse, errorResponse, progressfn, ioPromise;
 
 
@@ -79,7 +80,7 @@ Code-example:
         abortBtn.removeAttr('disabled');
     };
 
-    uploader = new ITSA.Uploader({url: url, options: {progressfn: progressfn}});
+    uploader = new ITSA.Uploader({url: url, options: {progressfn: progressfn}, maxFileSize: MB10});
 
     ITSA.Event.after(
         'tap',
@@ -111,6 +112,7 @@ Code-example:
     var url = 'http://newsite.matrix-wijnen.nl/procesimage',
         container = document.getElement('#target-container'),
         abortBtn = document.getElement('#abortBtn'),
+        MB10 = 10*1024*1024,
         uploader, writeResponse, errorResponse, progressfn, ioPromise;
 
 
@@ -135,7 +137,7 @@ Code-example:
         abortBtn.enable();
     };
 
-    uploader = new ITSA.Uploader({url: url, options: {progressfn: progressfn}});
+    uploader = new ITSA.Uploader({url: url, options: {progressfn: progressfn}, maxFileSize: MB10});
 
     ITSA.Event.after(
         'tap',

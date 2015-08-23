@@ -13270,7 +13270,7 @@ module.exports = function (window) {
         if (!blob instanceof window.Blob) {
             return Promise.reject('No proper fileobject');
         }
-        if (!url || !url.validateURL()) {
+        if ((typeof url!=='string') || (url.length===0)) {
             return Promise.reject('No valid url specified');
         }
 
@@ -19401,6 +19401,16 @@ var css = "input.uploader-hidden-input {\n    display: none !important;\n}"; (re
  *
  * @module uploader
  * @class Uploader
+ * @params [config] {Object}
+ *     @params [config.url] {String} the default url to send to
+ *     @params [config.params] {Object} the default params that will be send with the request
+ *     @params [config.options] {Object} the xhr-options (see http://itsa.io/api/classes/IO.html#method_sendBlob)
+ *     @params [config.maxFileSize] {Number} the maximum filesize for every single file to be accepted. Note that the server needs to
+ *                                    controll this, however, when set, the uploader is enabled to show a proper warning while
+ *                                    rejecting the io-promise
+ *     @params [totalFileSize] {Number} the maximum filesize for all files (cummulated) to be accepted. Note that the server needs to
+ *                                      controll this, however, when set, the uploader is enabled to show a proper warning while
+ *                                      rejecting the io-promise
 */
 
 "use strict";
@@ -19459,7 +19469,9 @@ module.exports = function (window) {
             inputNode;
         config || (config={});
         instance._inputNode = inputNode = window.document.body.addSystemElement(TEMPLATE);
-        instance.setDefaults(config.url, config.params, config.options);
+        instance.defaultParams = {};
+        instance.defaultOptions = {};
+        instance.setDefaults(config.url, config.params, config.options, config.maxFileSize, config.totalFileSize);
         instance._lastfiles = [];
         instance.defineEvent('send').defaultFn(instance._defFnSend);
         instance.defineEvent('selectfiles').defaultFn(instance._defFnSelectFiles);
@@ -19493,6 +19505,8 @@ module.exports = function (window) {
             instance.defaultURL = null;
             instance.defaultParams = {};
             instance.defaultOptions = {};
+            instance.defaultMaxFileSize = null;
+            instance.defaultTotalFileSize = null;
             return instance;
         },
 
@@ -19540,6 +19554,26 @@ module.exports = function (window) {
         },
 
         /**
+         * Returns the size of the largest file that is currently selected.
+         *
+         * @method getLargestFileSize
+         * @return {Number} The size of the largest file in bytes
+         * @since 0.0.1
+        */
+        getLargestFileSize: function() {
+            var instance = this,
+                files = instance._inputNode.files,
+                len = files.length,
+                largest = 0,
+                i, file;
+            for (i=0; i<len; i++) {
+                file = files[i];
+                (file.size>largest) && (largest=file.size);
+            }
+            return largest;
+        },
+
+        /**
          * Returns the last send-files.
          * This is handy to know, because after transmission, getFiles() will return empty.
          * This is an true Array with objects of this structure: {name: xxx, size: xxx}
@@ -19550,6 +19584,26 @@ module.exports = function (window) {
         */
         getLastSent: function() {
             return this._lastfiles;
+        },
+
+        /**
+         * Returns the total size of all files that are currently selected.
+         *
+         * @method getTotalFileSize
+         * @return {Number} The size of all files in bytes
+         * @since 0.0.1
+        */
+        getTotalFileSize: function() {
+            var instance = this,
+                files = instance._inputNode.files,
+                len = files.length,
+                total = 0,
+                i, file;
+            for (i=0; i<len; i++) {
+                file = files[i];
+                total += file.size;
+            }
+            return total;
         },
 
         /**
@@ -19641,14 +19695,25 @@ module.exports = function (window) {
          * These values might have been set during initialization, if so, any values passed will be overrule the previous.
          *
          * @method setDefaults
+         * @params [url] {String} the default url to send to
+         * @params [params] {Object} the default params that will be send with the request
+         * @params [options] {Object} the xhr-options (see http://itsa.io/api/classes/IO.html#method_sendBlob)
+         * @params [maxFileSize] {Number} the maximum filesize for every single file to be accepted. Note that the server needs to
+         *                                controll this, however, when set, the uploader is enabled to show a proper warning while
+         *                                rejecting the io-promise
+         * @params [totalFileSize] {Number} the maximum filesize for all files (cummulated) to be accepted. Note that the server needs to
+         *                                  controll this, however, when set, the uploader is enabled to show a proper warning while
+         *                                  rejecting the io-promise
          * @chainable
          * @since 0.0.1
         */
-        setDefaults: function(url, params, options) {
+        setDefaults: function(url, params, options, maxFileSize, totalFileSize) {
             var instance = this;
             (typeof url==='string') && (instance.defaultURL=url);
             params && (instance.defaultParams=params.deepClone());
             options && (instance.defaultOptions=options.deepClone());
+            maxFileSize && (instance.defaultMaxFileSize=maxFileSize);
+            totalFileSize && (instance.defaultTotalFileSize=totalFileSize);
             return instance;
         },
 
@@ -19689,9 +19754,17 @@ module.exports = function (window) {
                 url = e.url,
                 params = e.params,
                 options = e.options,
-                sendOptions, originalProgressFn;
+                defaultTotalFileSize = instance.defaultTotalFileSize,
+                defaultMaxFileSize = instance.defaultMaxFileSize,
+                sendOptions, originalProgressFn, largest, total;
             if (!inputNode || inputNode.files.length===0) {
                 return Promise.reject('no file selected');
+            }
+            if (defaultMaxFileSize && ((largest=instance.getLargestFileSize())>defaultMaxFileSize)) {
+                return Promise.reject('one of the files exceeds the maximum filesize of '+largest+' bytes');
+            }
+            if (defaultTotalFileSize && ((total=instance.getTotalFileSize())>defaultTotalFileSize)) {
+                return Promise.reject('the total filesize exceeds the maximum of '+total+' bytes');
             }
             sendOptions = options ? options.deepClone() : instance.defaultOptions.deepClone();
             sendOptions.emptyFiles = true;
