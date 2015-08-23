@@ -29,7 +29,7 @@ intro: "Aborting transmission during IO."
 
 Click on the button to initiate the request. During the request, the transfer can be aborted, which leads into a rejected io-promise.
 
-**Note:** this example does not use SPDY. Max uploadsize = 10Mb.
+**Note:** this example does not use SPDY. Max uploadsize = 10Mb. Uploaded files will be removed on the server immediately.
 
 <div id="container">
     <button id="button-send" class="pure-button pure-button-primary pure-button-bordered">Click me to upload multiple files</button>

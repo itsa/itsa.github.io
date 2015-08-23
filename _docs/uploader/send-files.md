@@ -24,7 +24,7 @@ intro: "Sending multiple files to the server using ITSA.Uploader.sendFiles()."
 
 Click on the button to select and automaticly send multiple selected files.
 
-**Note:** this example does not use SPDY. Max uploadsize fer file = 10Mb, Total max uploadsize = 20Mb.
+**Note:** this example does not use SPDY. Max uploadsize fer file = 10Mb, Total max uploadsize = 20Mb. Uploaded files will be removed on the server immediately.
 
 <div id="container">
     <button id="button-send" class="pure-button pure-button-primary pure-button-bordered">Click me to upload multiple files</button>
