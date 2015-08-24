@@ -19492,7 +19492,7 @@
             "line": 255,
             "description": "Pops-up the browser's fileselect, by emitting the 'uploader:selectfiles'-event.\nThe fileselector allows you to send multiple files at a time.\nIf `payload.autoSend` is set, the files will automaticly be send after selection.\nYou also can set other properties at the payload --> these will be available at the listeners.",
             "itemtype": "method",
-            "name": "pluginDOM",
+            "name": "selectFiles",
             "params": [
                 {
                     "name": "payload",
@@ -19519,7 +19519,7 @@
             "line": 275,
             "description": "Send the selected files, by emitting the 'uploader:send'-event.\nIf `payload.url`, `payload.url` or `payload.url` is set, then these will overrule the default\nvalues (the way they were set at initiation, or by using `setDefaults`).\nYou also can set other properties at the payload --> these will be available at the listeners.",
             "itemtype": "method",
-            "name": "pluginDOM",
+            "name": "send",
             "params": [
                 {
                     "name": "payload",
