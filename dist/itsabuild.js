@@ -19650,7 +19650,7 @@ module.exports = function (window) {
          * If `payload.autoSend` is set, the files will automaticly be send after selection.
          * You also can set other properties at the payload --> these will be available at the listeners.
          *
-         * @method pluginDOM
+         * @method selectFiles
          * @params [payload] {Object}
          *     @params [payload.autoSend] {Boolean}
          * @chainable
@@ -19670,7 +19670,7 @@ module.exports = function (window) {
          * values (the way they were set at initiation, or by using `setDefaults`).
          * You also can set other properties at the payload --> these will be available at the listeners.
          *
-         * @method pluginDOM
+         * @method send
          * @params [payload] {Object}
          *     @params [payload.url] {String}
          *     @params [payload.params] {Object}
