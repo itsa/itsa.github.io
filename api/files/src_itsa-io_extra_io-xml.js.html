@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>event-listener - Itsa</title>
+    <title>src/itsa-io/extra/io-xml.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -268,65 +268,167 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>event-listener Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: src/itsa-io/extra/io-xml.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/src_itsa-event_event-listener.js.html#l3"><code>src&#x2F;itsa-event&#x2F;event-listener.js:3</code></a>
-        </div>
-    
+/**
+ * Extends io by adding the method &#x60;readXML&#x60; to it.
+ *
+ * @example
+ * var IO = require(&quot;io/extra/io-xml.js&quot;)(window);
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module io
+ * @submodule io-xml
+ * @class IO
+ * @since 0.0.1
+*/
 
-    
-        <p>Available since 0.0.1</p>
-    
-</div>
+require(&#x27;js-ext&#x27;);
 
+var NAME = &#x27;[io-xml]: &#x27;,
+    REGEXP_XML = /(?: )*(&lt;\?xml (?:.)*\?&gt;)(?: )*(&lt;(?:\w)+&gt;)/,
+    messages = require(&#x27;messages&#x27;),
+    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
+    MSG_READING = &#x27;reading...&#x27;,
+    SPINNER_ICON = &#x27;spinnercircle-anim&#x27;,
+    MIN_SHOWUP = 500;
 
+module.exports = function (window) {
 
-<div class="box intro">
-    <p>Extends the Event-instance by adding the object <code>Listener</code> to it.
-The returned object should be merged into any Class-instance or object you want to
-extend with the listener-methods, so the appropriate methods can be invoked on the instance.</p>
-<p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
-New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
-<p>Should be called using  the provided <code>extend</code>-method like this:</p>
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
-</div>
+    if (window._ITSAmodules.IO_XML) {
+        return window._ITSAmodules.IO_XML; // IO_XML was already created
+    }
 
+    var IO = require(&#x27;../io.js&#x27;)(window),
 
-    <div class="example">
-        <h4>Example:</h4>
-        <div class="example-content">
-            <pre class="code prettyprint"><code>var Event = require(&#39;event&#39;);&lt;br&gt;</code></pre>
+    /*
+     * Adds properties to the xhr-object: in case of streaming,
+     * xhr._parseStream=function is created to parse streamed data.
+     *
+     * @method _progressHandle
+     * @param xhr {Object} containing the xhr-instance
+     * @param props {Object} the propertie-object that is added too xhr and can be expanded
+     * @param options {Object} options of the request
+     * @private
+    */
+    _entendXHR = function(xhr, props, options, promise) {
+        var parser, followingstream, regegexp_endcont, regexpxml, xmlstart, container, endcontainer;
+        if ((typeof options.streamback === &#x27;function&#x27;) &amp;&amp; options.headers &amp;&amp; (options.headers.Accept===&#x27;text/xml&#x27;)) {
+            console.log(NAME, &#x27;entendXHR&#x27;);
+            parser = new window.DOMParser();
+            xhr._parseStream = function(streamData) {
+                var fragment, parialdata;
+                console.log(NAME, &#x27;entendXHR --&gt; _parseStream&#x27;);
+                try {
+                    if (!followingstream) {
+                        regexpxml = streamData.match(REGEXP_XML);
+                        if (regexpxml) {
+                            xmlstart = regexpxml[1];
+                            container = regexpxml[2];
+                            endcontainer = &#x27;&lt;/&#x27;+container.substr(1);
+                            regegexp_endcont = new RegExp(&#x27;(.*)&#x27;+endcontainer+&#x27;( )*$&#x27;);
+                        }
+                    }
+                    parialdata = (followingstream ? xmlstart+container : &#x27;&#x27;) + streamData;
+                    regegexp_endcont.test(streamData) || (parialdata+=endcontainer);
+                    fragment = parser.parseFromString(parialdata, &#x27;text/xml&#x27;);
+                    followingstream = true;
+                    return fragment;
+                }
+                catch(err) {
+                    promise.reject(err);
+                }
+            };
+        }
+        return xhr;
+    };
 
-        </div>
-    </div>
+    IO._xhrList.push(_entendXHR);
 
+    /**
+     * Performs an AJAX request with the GET HTTP method and expects a JSON-object.
+     * The resolved Promise-callback returns an object (JSON-parsed serverresponse).
+     *
+     * Additional request-parameters can be on the url (with questionmark), through &#x60;params&#x60;, or both.
+     *
+     * The Promise gets fulfilled if the server responses with &#x60;STATUS-CODE&#x60; in the 200-range (excluded 204).
+     * It will be rejected if a timeout occurs (see &#x60;options.timeout&#x60;), or if &#x60;xhr.abort()&#x60; gets invoked.
+     *
+     * Note1: If you expect the server to response with data that consist of Date-properties, you should set &#x60;options.parseJSONDate&#x60; true.
+     *        Parsing takes a bit longer, but it will generate trully Date-objects.
+     * Note2: CORS is supported, as long as the responseserver is set up to:
+     *       a) has a response header which allows the clientdomain:
+     *          header(&#x27;Access-Control-Allow-Origin: http://www.some-site.com&#x27;); or header(&#x27;Access-Control-Allow-Origin: *&#x27;);
+     *       b) in cae you have set a custom HEADER (through &#x27;options&#x27;), the responseserver MUST listen and respond
+     *          to requests with the OPTION-method
+     *       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/
+     *
+     * @method readXML
+     * @param url {String} URL of the resource server
+     * @param [params] {Object} additional parameters.
+     * @param [options] {Object} See also: [&#x60;I.io&#x60;](#method_xhr)
+     *    @param [options.url] {String} The url to which the request is sent.
+     *    can be ignored, even if streams are used --&gt; the returned Promise will always hold all data
+     *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
+     *    @param [options.params] {Object} Data to be sent to the server.
+     *    @param [options.body] {Object} The content for the request body for POST method.
+     *    @param [options.headers] {Object} HTTP request headers.
+     *    @param [options.responseType=&#x27;text&#x27;] {String} The response type.
+     *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
+     *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
+     *    @param [options.parseJSONDate=false] {boolean} Whether the server returns JSON-stringified data which has Date-objects.
+     * @return {Promise}
+     * on success:
+        * Object received data
+     * on failure an Error object
+        * reason {Error}
+    */
+    IO.readXML = function(url, params, options) {
+        var XMLOptions = {
+                headers: {&#x27;Accept&#x27;: &#x27;text/xml&#x27;},
+                method: &#x27;GET&#x27;,
+                url: url,
+                data: params
+            },
+            ioPromise, returnPromise, message;
+        options &amp;&amp; XMLOptions.merge(options);
+        ioPromise = this.request(XMLOptions);
+        returnPromise = ioPromise.then(
+            function(xhrResponse) {
+                // if the responsetype is no &quot;text/xml&quot;, then throw an error, else return xhrResponse.responseXML;
+                // note that nodejs has &quot;Content-Type&quot; in lowercase!
+                // Also: XDR DOES NOT support getResponseHeader() --&gt; so we must just assume the data is text/xml
+                var contenttype = !xhrResponse._isXDR &amp;&amp; (xhrResponse.getResponseHeader(&#x27;Content-Type&#x27;) || xhrResponse.getResponseHeader(&#x27;content-type&#x27;));
+                if (xhrResponse._isXDR || /^text\/xml/.test(contenttype)) {
+                    // cautious: when streaming, xhrResponse.responseXML will be undefined in case of using XDR
+                    return xhrResponse.responseXML || (new window.DOMParser()).parseFromString(xhrResponse.responseText, &#x27;text/xml&#x27;);
+                }
+                // when code comes here: no valid xml response:
+                throw new Error(&#x27;recieved Content-Type is no XML&#x27;);
+            }
+        );
+        // set &#x60;abort&#x60; to the thennable-promise:
+        returnPromise.abort = ioPromise.abort;
+        message = messages.message(MSG_READING, {level: 4, icon: SPINNER_ICON, stayActive: MIN_SHOWUP});
+        returnPromise.finally(function() {
+            message.fulfill();
+        });
+        return returnPromise;
+    };
 
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
+    window._ITSAmodules.IO_XML = IO;
 
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="../classes/Event.Listener.html">
-                        Event.Listener
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+    return IO;
+};
+    </pre>
 </div>
 
                     </div>

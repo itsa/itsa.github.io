@@ -309,8 +309,8 @@ var NAME = &#x27;[uploader]: &#x27;,
     TEMPLATE = &#x27;&lt;input class=&quot;uploader-hidden-input&quot; type=&quot;file&quot;&gt;&#x27;;
 
 module.exports = function (window) {
-    var Event = require(&#x27;event&#x27;),
-        IO = require(&quot;io/extra/io-filetransfer.js&quot;)(window),
+    var Event = require(&#x27;itsa-event&#x27;),
+        IO = require(&quot;itsa-io/extra/io-filetransfer.js&quot;)(window),
         Uploader;
 
     // to prevent multiple Uploader instances

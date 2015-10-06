@@ -401,7 +401,7 @@
     require(&#x27;window-ext&#x27;)(window);
 
     var fakedom = window.navigator.userAgent===&#x27;fake&#x27;,
-        Event = fakedom ? require(&#x27;event&#x27;) : require(&#x27;event-mobile&#x27;)(window),
+        Event = fakedom ? require(&#x27;itsa-event&#x27;) : require(&#x27;event-mobile&#x27;)(window),
         io_config = {
             // timeout: 3000,
             debug: true,
@@ -454,10 +454,10 @@
      * @type Object
      * @static
     */
-    ITSA.IO = require(&#x27;io&#x27;);
+    ITSA.IO = require(&#x27;itsa-io&#x27;);
     ITSA.IO.config.merge(io_config);
-    require(&#x27;io/extra/io-cors-ie9.js&#x27;)(window);
-    require(&#x27;io/extra/io-xml.js&#x27;)(window);
+    require(&#x27;itsa-io/extra/io-cors-ie9.js&#x27;)(window);
+    require(&#x27;itsa-io/extra/io-xml.js&#x27;)(window);
 
     /**
      * Reference to the [Uploader](uploader.html) object

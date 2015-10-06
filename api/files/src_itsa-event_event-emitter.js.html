@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>event-listener - Itsa</title>
+    <title>src/itsa-event/event-emitter.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -268,65 +268,128 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>event-listener Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: src/itsa-event/event-emitter.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/src_itsa-event_event-listener.js.html#l3"><code>src&#x2F;itsa-event&#x2F;event-listener.js:3</code></a>
-        </div>
-    
+/**
+ * Extends the Event-instance by adding the method &#x60;Emitter&#x60; to it.
+ * The &#x60;Emitter-method&#x60; returns an object that should be merged into any Class-instance or object you
+ * want to extend with the emit-methods, so the appropriate methods can be invoked on the instance.
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * Should be called using  the provided &#x60;extend&#x60;-method like this:
+ * @example
+ *     var Event = require(&#x27;event&#x27;);&lt;br&gt;
+ *
+ * @module event
+ * @submodule event-emitter
+ * @class Event.Emitter
+ * @since 0.0.1
+*/
 
-    
-        <p>Available since 0.0.1</p>
-    
-</div>
+var NAME = &#x27;[event-emitter]: &#x27;,
+    REGEXP_EMITTER = /^(\w|-|#)+$/,
+    Event = require(&#x27;./event-base.js&#x27;);
 
+Event.Emitter = function(emitterName) {
+    var composeCustomevent = function(eventName) {
+            return emitterName+&#x27;:&#x27;+eventName;
+        },
+        newEmitter;
+    if (!REGEXP_EMITTER.test(emitterName)) {
+        console.error(NAME, &#x27;Emitter invoked with invalid argument: you must specify a valid emitterName&#x27;);
+        return;
+    }
+    newEmitter = {
+        /**
+         * Defines a CustomEvent. If the eventtype already exists, it will not be overridden,
+         * unless you force to assign with &#x60;.forceAssign()&#x60;
+         *
+         * The returned object comes with 4 methods which can be invoked chainable:
+         *
+         * &lt;ul&gt;
+         *     &lt;li&gt;defaultFn() --&gt; the default-function of the event&lt;/li&gt;
+         *     &lt;li&gt;preventedFn() --&gt; the function that should be invoked when the event is defaultPrevented&lt;/li&gt;
+         *     &lt;li&gt;forceAssign() --&gt; overrides any previous definition&lt;/li&gt;
+         *     &lt;li&gt;unHaltable() --&gt; makes the customEvent cannot be halted&lt;/li&gt;
+         *     &lt;li&gt;unPreventable() --&gt; makes the customEvent&#x27;s defaultFn cannot be prevented&lt;/li&gt;
+         *     &lt;li&gt;unSilencable() --&gt; makes that emitters cannot make this event to perform silently (using e.silent)&lt;/li&gt;
+         * &lt;/ul&gt;
+         *
+         * @method defineEvent
+         * @param eventName {String} name of the customEvent, without &#x60;emitterName&#x60;.
+         *        The final event that will be created has the syntax: &#x60;emitterName:eventName&#x60;,
+         *        where &#x60;emitterName:&#x60; is automaticly prepended.
+         * @return {Object} with extra methods that can be chained:
+         * &lt;ul&gt;
+         *      &lt;li&gt;unPreventable() --&gt; makes the customEvent&#x27;s defaultFn cannot be prevented&lt;/li&gt;
+         *      &lt;li&gt;forceAssign() --&gt; overrides any previous definition&lt;/li&gt;
+         *      &lt;li&gt;defaultFn() --&gt; the default-function of the event&lt;/li&gt;
+         *      &lt;li&gt;preventedFn() --&gt; the function that should be invoked when the event is defaultPrevented&lt;/li&gt;
+         * &lt;/ul&gt;
+         * @since 0.0.1
+         */
+        defineEvent: function (eventName) {
+            return Event.defineEvent(composeCustomevent(eventName));
+        },
 
+        /**
+         * Emits the event &#x60;eventName&#x60; on behalf of the instance holding this method.
+         *
+         * @method emit
+         * @param eventName {String} name of the event to be sent (available as e.type)
+         *        you could pass a customEvent here &#x27;emitterName:eventName&#x27;, which would
+         *        overrule the &#x60;instance-emitterName&#x60;
+         * @param payload {Object} extra payload to be added to the event-object
+         * @return {Promise}
+         * &lt;ul&gt;
+         *     &lt;li&gt;on success: returnValue {Any} of the defaultFn&lt;/li&gt;
+         *     &lt;li&gt;on error: reason {Any} Either: description &#x27;event was halted&#x27;, &#x27;event was defaultPrevented&#x27; or the returnvalue of the preventedFn&lt;/li&gt;
+         * &lt;/ul&gt;
+         * @since 0.0.1
+         */
+        emit: function(eventName, payload) {
+            return Event.emit(this, eventName, payload);
+        },
 
-<div class="box intro">
-    <p>Extends the Event-instance by adding the object <code>Listener</code> to it.
-The returned object should be merged into any Class-instance or object you want to
-extend with the listener-methods, so the appropriate methods can be invoked on the instance.</p>
-<p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
-New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
-<p>Should be called using  the provided <code>extend</code>-method like this:</p>
+        /**
+         * Removes all event-definitions of the instance holding this method.
+         *
+         * @method undefAllEvents
+         * @since 0.0.1
+         */
+        undefAllEvents: function () {
+            Event.undefEvent(emitterName);
+        },
 
-</div>
+        /**
+         * Removes the event-definition of the specified customEvent.
+         *
+         * @method undefEvent
+         * @param eventName {String} name of the customEvent, without &#x60;emitterName&#x60;.
+         *        The calculated customEvent which will be undefined, will have the syntax: &#x60;emitterName:eventName&#x60;.
+         *        where &#x60;emitterName:&#x60; is automaticly prepended.
+         * @since 0.0.1
+         */
+        undefEvent: function (eventName) {
+            Event.undefEvent(composeCustomevent(eventName));
+        }
 
+    };
+    // register the emittername:
+    Event.defineEmitter(newEmitter, emitterName);
+    return newEmitter;
+};
 
-    <div class="example">
-        <h4>Example:</h4>
-        <div class="example-content">
-            <pre class="code prettyprint"><code>var Event = require(&#39;event&#39;);&lt;br&gt;</code></pre>
-
-        </div>
-    </div>
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
-
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="../classes/Event.Listener.html">
-                        Event.Listener
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+module.exports = Event;
+    </pre>
 </div>
 
                     </div>

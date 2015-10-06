@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>event-listener - Itsa</title>
+    <title>src/itsa-io/extra/io-jsonp.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -268,65 +268,73 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>event-listener Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: src/itsa-io/extra/io-jsonp.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/src_itsa-event_event-listener.js.html#l3"><code>src&#x2F;itsa-event&#x2F;event-listener.js:3</code></a>
-        </div>
-    
+/**
+ * Extends io by adding the method &#x60;readObjectJSONP&#x60; to it.
+ * (under construction)
+ *
+ * @example
+ * var IO = require(&quot;io/extra/io-jsonp.js&quot;)(window);
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module io
+ * @submodule io-jsonp
+ * @class IO
+ * @since 0.0.1
+*/
 
-    
-        <p>Available since 0.0.1</p>
-    
-</div>
+require(&#x27;js-ext/lib/object.js&#x27;);
 
+var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
 
+module.exports = function (window) {
 
-<div class="box intro">
-    <p>Extends the Event-instance by adding the object <code>Listener</code> to it.
-The returned object should be merged into any Class-instance or object you want to
-extend with the listener-methods, so the appropriate methods can be invoked on the instance.</p>
-<p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
-New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
-<p>Should be called using  the provided <code>extend</code>-method like this:</p>
+    var IO = require(&#x27;../io.js&#x27;)(window);
 
-</div>
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
+    if (window._ITSAmodules.IO_JSONP) {
+        return IO; // IO_JSONP was already created
+    }
 
-    <div class="example">
-        <h4>Example:</h4>
-        <div class="example-content">
-            <pre class="code prettyprint"><code>var Event = require(&#39;event&#39;);&lt;br&gt;</code></pre>
+    window._ITSAmodules.IO_JSONP = IO;
 
-        </div>
-    </div>
+    /**
+     * Creates a &#x60;&lt;style&gt;&#x60; tag to load the CSS file at the given url.
+     *
+     * @method readObjectJSONP
+     * @param url {String} URL of the style sheet  to load
+     * @param [options] {Object}
+     *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
+     *    @param [options.headers] {Object} HTTP request headers.
+     *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
+     * @return {Promise} Promise holding the request. Has an additional .abort() method to cancel the request.
+     * &lt;ul&gt;
+     *     &lt;li&gt;on success: xhr {XMLHttpRequest1|XMLHttpRequest2} xhr-response&lt;/li&gt;
+     *     &lt;li&gt;on failure: reason {Error}&lt;/li&gt;
+     * &lt;/ul&gt;
+    */
+    IO.readObjectJSONP = function(url, options) {
+        // var callback = idgenerator(&#x27;JSONP&#x27;);
+        return this.getJS(url, options).then(
+            function(response) {
+                // not &#x27;try&#x27; &#x27;catch&#x27;, because, if parsing fails, we actually WANT the promise to be rejected
+                return JSON.parse(response);
+            }
+        );
+    };
 
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
-
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="../classes/Event.Listener.html">
-                        Event.Listener
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+    return IO;
+};
+    </pre>
 </div>
 
                     </div>
