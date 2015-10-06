@@ -1118,7 +1118,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
             wildcard_wildcard_subs = allSubscribers[&#x27;*:*&#x27;];
 
             if (keepPayload) {
-                e = payload;
+                e = payload || {};
             }
             else {
                 e = Object.create(instance._defaultEventObj);
