@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>event-listener - Itsa</title>
+    <title>src/itsa-io/extra/io-cors-ie9.js - Itsa</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -268,65 +268,135 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>event-listener Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: src/itsa-io/extra/io-cors-ie9.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/src_itsa-event_event-listener.js.html#l3"><code>src&#x2F;itsa-event&#x2F;event-listener.js:3</code></a>
-        </div>
-    
+&quot;use strict&quot;;
 
-    
-        <p>Available since 0.0.1</p>
-    
-</div>
+/**
+ * Extends io by enabling &#x60;CORS&#x60; through XDR on IE&lt;10.
+ *
+ * @example
+ * var IO = require(&quot;io/extra/io-cors.js&quot;)(window);
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2014 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module io
+ * @submodule io-cors
+ * @class IO
+ * @since 0.0.1
+*/
+
+require(&#x27;js-ext/lib/object.js&#x27;);
+
+var NAME = &#x27;[io-cors-ie9]: &#x27;,
+    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
+    XmlDOMParser = require(&#x27;xmldom&#x27;).DOMParser,
+    UNKNOW_ERROR = &#x27;Unknown XDR-error&#x27;, // XDR doesn&#x27;t specify the error
+    REGEXP_EXTRACT_URL = new RegExp(&quot;^((([a-z][a-z0-9-.]*):\/\/)?(([^\/?#:]+)(:(\\d+))?)?)?(\/?[a-z0-9-._~%!$&amp;&#x27;()*+,;=@]+(\/[a-z0-9-._~%!$&amp;&#x27;()*+,;=:@]+)*\/?|\/)?([#?](.*)|$)&quot;, &quot;i&quot;),
+    currentDomain,
+    BODY_METHODS = createHashMap({
+        POST: 1,
+        PUT: 1
+    }),
+    VALID_XDR_METHODS = createHashMap({
+        GET: 1,
+        POST: 1
+    });
 
 
+module.exports = function (window) {
 
-<div class="box intro">
-    <p>Extends the Event-instance by adding the object <code>Listener</code> to it.
-The returned object should be merged into any Class-instance or object you want to
-extend with the listener-methods, so the appropriate methods can be invoked on the instance.</p>
-<p><i>Copyright (c) 2014 ITSA - <a href="https://github.com/itsa">https://github.com/itsa</a></i>
-New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">http://choosealicense.com/licenses/bsd-3-clause/</a></p>
-<p>Should be called using  the provided <code>extend</code>-method like this:</p>
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
 
-</div>
+    if (window._ITSAmodules.IO_Cors) {
+        return window._ITSAmodules.IO_Cors; // IO_Cors was already created
+    }
 
+    var IO = require(&#x27;../io.js&#x27;)(window),
 
-    <div class="example">
-        <h4>Example:</h4>
-        <div class="example-content">
-            <pre class="code prettyprint"><code>var Event = require(&#39;event&#39;);&lt;br&gt;</code></pre>
+    isCrossDomain = function (url) {
+        var domain;
+        if (window.navigator.userAgent===&#x27;fake&#x27;) {
+            return false;
+        }
+        domain = url.match(REGEXP_EXTRACT_URL)[1]; // will be undefined for relative url&#x27;s
+        // in case of absoulte url: make it lowercase:
+        domain &amp;&amp; (domain.toLowerCase());
+        // get the browserdomain:
+        currentDomain || (currentDomain=window.location.href.match(REGEXP_EXTRACT_URL)[1].toLowerCase());
+        // crossdomain will only be true with absolute url&#x27;s which differ from browser domain:
+        return domain &amp;&amp; (currentDomain !== domain);
+    },
 
-        </div>
-    </div>
+    entendXHR = function(xhr, props, options /*, promise */) {
+        var crossDomain;
+        if (!props._isXHR2) {
+            crossDomain = isCrossDomain(options.url);
+            if (crossDomain &amp;&amp; !props._isXDR) {
+                if (typeof window.XDomainRequest !== &#x27;undefined&#x27;) {
+                    xhr = new window.XDomainRequest();
+                    props._isXDR = true;
+                }
+            }
+            props._CORS_IE = crossDomain &amp;&amp; props._isXDR;
+        }
+        props._CORS_IE &amp;&amp; !VALID_XDR_METHODS[options.method] &amp;&amp; (options.method=(BODY_METHODS[options.method] ? &#x27;POST&#x27; : &#x27;GET&#x27;));
 
+    // TODO: check how to deal with opera-mini
 
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
+        return xhr;
+    },
 
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="../classes/Event.Listener.html">
-                        Event.Listener
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
+    readyHandleXDR = function(xhr, promise, headers /*, method */) {
+        if (xhr._isXDR) {
+            console.log(NAME, &#x27;readyHandleXDR&#x27;);
+            // for XDomainRequest, we need &#x27;onload&#x27; instead of &#x27;onreadystatechange&#x27;
+            xhr.onload || (xhr.onload=function() {
+                var responseText = xhr.responseText,
+                    xmlRequest = headers &amp;&amp; (headers.Accept===&#x27;text/xml&#x27;),
+                    responseobject;
+                clearTimeout(xhr._timer);
+                console.log(NAME, &#x27;xhr.onload invokes with responseText=&#x27;+responseText);
+                // to remain consisten with XHR, we define an object with the same structure
+                responseobject = {
+                    _contenttype: xhr.contentType,
+                    responseText: responseText,
+                    responseXML: xmlRequest ? new XmlDOMParser().parseFromString(responseText) : null,
+                    readyState: 4,
+                    status: 200, // XDomainRequest returns only OK or Error
+                    // XDomainRequest only returns the header Content-Type:
+                    getAllResponseHeaders: function () {
+                        return &#x27;Content-Type: &#x27;+this._contenttype;
+                    },
+                    getResponseHeader: function (name) {
+                        if (name===&#x27;Content-Type&#x27;) {
+                            return this._contenttype;
+                        }
+                    }
+                };
+                promise.fulfill(responseobject);
+            });
+            xhr.onerror || (xhr.onerror=function() {
+                clearTimeout(xhr._timer);
+                promise.reject(UNKNOW_ERROR);
+            });
+        }
+    };
 
-    <div class="yui3-u-1-2">
-        
-    </div>
+    IO._xhrList.push(entendXHR);
+    IO._xhrInitList.push(readyHandleXDR);
+
+    window._ITSAmodules.IO_Cors = IO;
+
+    return IO;
+};
+
+    </pre>
 </div>
 
                     </div>

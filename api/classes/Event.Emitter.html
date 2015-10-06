@@ -276,7 +276,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_event_event-emitter.js.html#l3"><code>src&#x2F;event&#x2F;event-emitter.js:3</code></a>
+            Defined in: <a href="../files/src_itsa-event_event-emitter.js.html#l3"><code>src&#x2F;itsa-event&#x2F;event-emitter.js:3</code></a>
         </div>
     
 
@@ -334,6 +334,34 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_defineEvent">defineEvent</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_defineEvent">defineEvent</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_emit">emit</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_emit">emit</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_emit">emit</a>
 
                                 
@@ -342,6 +370,34 @@ New BSD License - <a href="http://choosealicense.com/licenses/bsd-3-clause/">htt
                         
                             <li class="index-item method">
                                 <a href="#method_undefAllEvents">undefAllEvents</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_undefAllEvents">undefAllEvents</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_undefAllEvents">undefAllEvents</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_undefEvent">undefEvent</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_undefEvent">undefEvent</a>
 
                                 
                                 
@@ -495,6 +551,391 @@ unless you force to assign with <code>.forceAssign()</code></p>
 </div>
 
                 
+                    <div id="method_defineEvent" class="method item">
+    <h3 class="name"><code>defineEvent</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>eventName</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_event kopie_event-emitter.js.html#l37"><code>src&#x2F;event kopie&#x2F;event-emitter.js:37</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Defines a CustomEvent. If the eventtype already exists, it will not be overridden,
+unless you force to assign with <code>.forceAssign()</code></p>
+<p>The returned object comes with 4 methods which can be invoked chainable:</p>
+<ul>
+    <li>defaultFn() --&gt; the default-function of the event</li>
+    <li>preventedFn() --&gt; the function that should be invoked when the event is defaultPrevented</li>
+    <li>forceAssign() --&gt; overrides any previous definition</li>
+    <li>unHaltable() --&gt; makes the customEvent cannot be halted</li>
+    <li>unPreventable() --&gt; makes the customEvent&#39;s defaultFn cannot be prevented</li>
+    <li>unSilencable() --&gt; makes that emitters cannot make this event to perform silently (using e.silent)</li>
+</ul>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">eventName</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>name of the customEvent, without <code>emitterName</code>.
+       The final event that will be created has the syntax: <code>emitterName:eventName</code>,
+       where <code>emitterName:</code> is automaticly prepended.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                    
+                    <p>with extra methods that can be chained:</p>
+<ul>
+     <li>unPreventable() --&gt; makes the customEvent&#39;s defaultFn cannot be prevented</li>
+     <li>forceAssign() --&gt; overrides any previous definition</li>
+     <li>defaultFn() --&gt; the default-function of the event</li>
+     <li>preventedFn() --&gt; the function that should be invoked when the event is defaultPrevented</li>
+</ul>
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_defineEvent" class="method item">
+    <h3 class="name"><code>defineEvent</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>eventName</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_itsa-event_event-emitter.js.html#l37"><code>src&#x2F;itsa-event&#x2F;event-emitter.js:37</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Defines a CustomEvent. If the eventtype already exists, it will not be overridden,
+unless you force to assign with <code>.forceAssign()</code></p>
+<p>The returned object comes with 4 methods which can be invoked chainable:</p>
+<ul>
+    <li>defaultFn() --&gt; the default-function of the event</li>
+    <li>preventedFn() --&gt; the function that should be invoked when the event is defaultPrevented</li>
+    <li>forceAssign() --&gt; overrides any previous definition</li>
+    <li>unHaltable() --&gt; makes the customEvent cannot be halted</li>
+    <li>unPreventable() --&gt; makes the customEvent&#39;s defaultFn cannot be prevented</li>
+    <li>unSilencable() --&gt; makes that emitters cannot make this event to perform silently (using e.silent)</li>
+</ul>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">eventName</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>name of the customEvent, without <code>emitterName</code>.
+       The final event that will be created has the syntax: <code>emitterName:eventName</code>,
+       where <code>emitterName:</code> is automaticly prepended.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>:
+                    
+                    <p>with extra methods that can be chained:</p>
+<ul>
+     <li>unPreventable() --&gt; makes the customEvent&#39;s defaultFn cannot be prevented</li>
+     <li>forceAssign() --&gt; overrides any previous definition</li>
+     <li>defaultFn() --&gt; the default-function of the event</li>
+     <li>preventedFn() --&gt; the function that should be invoked when the event is defaultPrevented</li>
+</ul>
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_emit" class="method item">
+    <h3 class="name"><code>emit</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>eventName</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>payload</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Promise.html" class="crosslink">Promise</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_event kopie_event-emitter.js.html#l69"><code>src&#x2F;event kopie&#x2F;event-emitter.js:69</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Emits the event <code>eventName</code> on behalf of the instance holding this method.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">eventName</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>name of the event to be sent (available as e.type)
+       you could pass a customEvent here &#39;emitterName:eventName&#39;, which would
+       overrule the <code>instance-emitterName</code></p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">payload</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>extra payload to be added to the event-object</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Promise.html" class="crosslink">Promise</a></span>:
+                    
+                    <ul>
+    <li>on success: returnValue {Any} of the defaultFn</li>
+    <li>on error: reason {Any} Either: description &#39;event was halted&#39;, &#39;event was defaultPrevented&#39; or the returnvalue of the preventedFn</li>
+</ul>
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_emit" class="method item">
     <h3 class="name"><code>emit</code></h3>
 
@@ -630,6 +1071,255 @@ unless you force to assign with <code>.forceAssign()</code></p>
 </div>
 
                 
+                    <div id="method_emit" class="method item">
+    <h3 class="name"><code>emit</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>eventName</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>payload</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Promise.html" class="crosslink">Promise</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_itsa-event_event-emitter.js.html#l69"><code>src&#x2F;itsa-event&#x2F;event-emitter.js:69</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Emits the event <code>eventName</code> on behalf of the instance holding this method.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">eventName</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>name of the event to be sent (available as e.type)
+       you could pass a customEvent here &#39;emitterName:eventName&#39;, which would
+       overrule the <code>instance-emitterName</code></p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">payload</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>extra payload to be added to the event-object</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Promise.html" class="crosslink">Promise</a></span>:
+                    
+                    <ul>
+    <li>on success: returnValue {Any} of the defaultFn</li>
+    <li>on error: reason {Any} Either: description &#39;event was halted&#39;, &#39;event was defaultPrevented&#39; or the returnvalue of the preventedFn</li>
+</ul>
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_undefAllEvents" class="method item">
+    <h3 class="name"><code>undefAllEvents</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_itsa-event_event-emitter.js.html#l88"><code>src&#x2F;itsa-event&#x2F;event-emitter.js:88</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Removes all event-definitions of the instance holding this method.</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_undefAllEvents" class="method item">
+    <h3 class="name"><code>undefAllEvents</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_event kopie_event-emitter.js.html#l88"><code>src&#x2F;event kopie&#x2F;event-emitter.js:88</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Removes all event-definitions of the instance holding this method.</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_undefAllEvents" class="method item">
     <h3 class="name"><code>undefAllEvents</code></h3>
 
@@ -729,7 +1419,193 @@ unless you force to assign with <code>.forceAssign()</code></p>
             
         
         
+        <a href="../files/src_event kopie_event-emitter.js.html#l98"><code>src&#x2F;event kopie&#x2F;event-emitter.js:98</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Removes the event-definition of the specified customEvent.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">eventName</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>name of the customEvent, without <code>emitterName</code>.
+       The calculated customEvent which will be undefined, will have the syntax: <code>emitterName:eventName</code>.
+       where <code>emitterName:</code> is automaticly prepended.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_undefEvent" class="method item">
+    <h3 class="name"><code>undefEvent</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>eventName</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
         <a href="../files/src_event_event-emitter.js.html#l98"><code>src&#x2F;event&#x2F;event-emitter.js:98</code></a>
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 0.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Removes the event-definition of the specified customEvent.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">eventName</code>
+                        <span class="type"><a href="../classes/String.html" class="crosslink">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>name of the customEvent, without <code>emitterName</code>.
+       The calculated customEvent which will be undefined, will have the syntax: <code>emitterName:eventName</code>.
+       where <code>emitterName:</code> is automaticly prepended.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_undefEvent" class="method item">
+    <h3 class="name"><code>undefEvent</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>eventName</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_itsa-event_event-emitter.js.html#l98"><code>src&#x2F;itsa-event&#x2F;event-emitter.js:98</code></a>
         
         </p>
 

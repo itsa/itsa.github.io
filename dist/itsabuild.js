@@ -4393,7 +4393,7 @@ module.exports = function (window) {
     }
 
     require('panel')(window);
-    Event = require('event');
+    Event = require('itsa-event');
 
     /**
      * Model that is passed through to the Panel.
@@ -4599,7 +4599,7 @@ module.exports = function (window) {
 
     return Dialog;
 };
-},{"./css/dialog.css":15,"event":31,"js-ext":67,"js-ext/extra/classes.js":62,"js-ext/extra/hashmap.js":63,"panel":79,"polyfill":88,"utils":95}],17:[function(require,module,exports){
+},{"./css/dialog.css":15,"itsa-event":54,"js-ext":67,"js-ext/extra/classes.js":62,"js-ext/extra/hashmap.js":63,"panel":79,"polyfill":88,"utils":95}],17:[function(require,module,exports){
 var css = "[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],18:[function(require,module,exports){
 "use strict";
@@ -6451,7 +6451,7 @@ module.exports = function (window) {
 
 
 var NAME = '[event-dom]: ',
-    Event = require('event'),
+    Event = require('itsa-event'),
     later = require('utils').later,
     createHashMap = require('js-ext/extra/hashmap.js').createMap,
     OUTSIDE = 'outside',
@@ -7303,7 +7303,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":31,"js-ext/extra/hashmap.js":63,"js-ext/lib/array.js":69,"js-ext/lib/object.js":73,"js-ext/lib/string.js":75,"polyfill/polyfill-base.js":88,"useragent":94,"utils":95,"vdom":107}],22:[function(require,module,exports){
+},{"itsa-event":54,"js-ext/extra/hashmap.js":63,"js-ext/lib/array.js":69,"js-ext/lib/object.js":73,"js-ext/lib/string.js":75,"polyfill/polyfill-base.js":88,"useragent":94,"utils":95,"vdom":107}],22:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10376,6 +10376,975 @@ module.exports = function (window) {
 };
 
 },{"utils":95}],28:[function(require,module,exports){
+var css = "[plugin-fm=\"true\"] {\n    /* NEVER can we select the text: when the focusmanager is active it will refocus on the active item */\n    -moz-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    cursor: default;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],29:[function(require,module,exports){
+"use strict";
+
+require('js-ext/lib/object.js');
+require('polyfill');
+require('./css/focusmanager.css');
+
+/**
+ *
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module focusmanager
+ * @class FocusManager
+ * @since 0.0.1
+*/
+
+var NAME = '[focusmanager]: ',
+    async = require('utils').async,
+    createHashMap = require('js-ext/extra/hashmap.js').createMap,
+    DEFAULT_SELECTOR = 'input, button, select, textarea, [contenteditable="true"], .focusable, [plugin-fm="true"], [itag-formelement="true"]',
+    // SPECIAL_KEYS needs to be a native Object --> we need .some()
+    SPECIAL_KEYS = {
+        shift: 'shiftKey',
+        ctrl: 'ctrlKey',
+        cmd: 'metaKey',
+        alt: 'altKey'
+    },
+    DEFAULT_KEYUP = 'shift+9',
+    DEFAULT_KEYDOWN = '9',
+    DEFAULT_NOLOOP = false,
+    FM_SELECTION = 'fm-selection',
+    FM_SELECTION_START = FM_SELECTION+'start',
+    FM_SELECTION_END = FM_SELECTION+'end',
+    FOCUSSED = 'focussed';
+
+module.exports = function (window) {
+
+    var DOCUMENT = window.document,
+        FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed,
+        resetLastValue, getFocusManagerSelector, setupEvents, defineFocusEvent;
+
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
+
+/*jshint boss:true */
+    if (FocusManager=window._ITSAmodules.FocusManager) {
+/*jshint boss:false */
+        return FocusManager; // FocusManager was already created
+    }
+
+    require('window-ext')(window);
+    require('node-plugin')(window);
+
+    Event = require('event-mobile')(window);
+
+    getFocusManagerSelector = function(focusContainerNode) {
+        var selector = focusContainerNode._plugin.fm.model.manage;
+        (selector.toLowerCase()==='true') && (selector=DEFAULT_SELECTOR);
+        return selector;
+    };
+
+    nextFocusNode = function(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, downwards, initialSourceNode) {
+        console.log(NAME+'nextFocusNode');
+        var keys, lastIndex, i, specialKeysMatch, specialKey, len, enterPressedOnInput, primaryButtons,
+            inputType, foundNode, formNode, primaryonenter, noloop, nodeHit, foundContainer, type;
+        keys = actionkey.split('+');
+        len = keys.length;
+        lastIndex = len - 1;
+
+        if ((keyCode===13) && (sourceNode.getTagName()==='INPUT')) {
+            type = sourceNode.getAttr('type') || 'text';
+            inputType = type.toLowerCase();
+            enterPressedOnInput = (inputType==='text') || (inputType==='password');
+        }
+
+        if (enterPressedOnInput) {
+            // check if we need to press the primary button - if available
+/*jshint boss:true */
+            if ((primaryonenter=sourceNode.getAttr('fm-primaryonenter')) && (primaryonenter.toLowerCase()==='true')) {
+/*jshint boss:false */
+                primaryButtons = focusContainerNode.getAll('button.pure-button-primary');
+                primaryButtons.some(function(buttonNode) {
+                    buttonNode.matches(selector) && (foundNode=buttonNode);
+                    return foundNode;
+                });
+                if (foundNode) {
+                    async(function() {
+                        Event.emit(foundNode, 'UI:tap');
+                        // _buttonPressed make event-dom to simulate a pressed button for 200ms
+                        Event.emit(foundNode, 'UI:tap', {_buttonPressed: true});
+                        // if the button is of type `submit`, then try to submit the form
+                        formNode = foundNode.inside('form');
+                        formNode && formNode.submit();
+                    });
+                    return foundNode;
+                }
+            }
+        }
+        // double == --> keyCode is number, keys is a string
+        if (enterPressedOnInput || (keyCode==keys[lastIndex])) {
+            // posible keyup --> check if special characters match:
+            specialKeysMatch = true;
+            SPECIAL_KEYS.some(function(value) {
+                specialKeysMatch = !e[value];
+                return !specialKeysMatch;
+            });
+            for (i=lastIndex-1; (i>=0) && !specialKeysMatch; i--) {
+                specialKey = keys[i].toLowerCase();
+                specialKeysMatch = e[SPECIAL_KEYS[specialKey]];
+            }
+        }
+        if (specialKeysMatch) {
+            noloop = focusContainerNode._plugin.fm.model.noloop;
+            // in case sourceNode is an innernode of a selector, we need to start from the selector:
+            sourceNode.matches(selector) || (sourceNode=sourceNode.inside(selector));
+            if (downwards) {
+                nodeHit = sourceNode;
+/*jshint noempty:true */
+                while ((nodeHit=nodeHit.next(selector, focusContainerNode)) && (nodeHit.getStyle('display')==='none')) {}
+/*jshint noempty:false */
+                if (!nodeHit) {
+                    nodeHit = noloop ? sourceNode.last(selector, focusContainerNode) : sourceNode.first(selector, focusContainerNode);
+                    if (nodeHit.getStyle('display')==='none') {
+/*jshint noempty:true */
+                        while ((nodeHit=nodeHit[noloop ? 'previous' : 'next'](selector, focusContainerNode)) && (nodeHit.getStyle('display')==='none')) {}
+/*jshint noempty:false */
+                    }
+                }
+            }
+            else {
+                nodeHit = sourceNode;
+/*jshint noempty:true */
+                while ((nodeHit=nodeHit.previous(selector, focusContainerNode)) && (nodeHit.getStyle('display')==='none')) {}
+/*jshint noempty:false */
+                if (!nodeHit) {
+                    nodeHit = noloop ? sourceNode.first(selector, focusContainerNode) : sourceNode.last(selector, focusContainerNode);
+                    if (nodeHit.getStyle('display')==='none') {
+/*jshint noempty:true */
+                        while ((nodeHit=nodeHit[noloop ? 'next' : 'previous'](selector, focusContainerNode)) && (nodeHit.getStyle('display')==='none')) {}
+/*jshint noempty:false */
+                    }
+                }
+            }
+            if (nodeHit===sourceNode) {
+                // cannot found another, return itself, BUT return `initialSourceNode` if it is available
+                return initialSourceNode || sourceNode;
+            }
+            else {
+                foundContainer = nodeHit.inside('[plugin-fm="true"]');
+                // only if `nodeHit` is inside the runniong focusContainer, we may return it,
+                // otherwise look further
+                return (foundContainer===focusContainerNode) ? nodeHit : nextFocusNode(e, keyCode, actionkey, focusContainerNode, nodeHit, selector, downwards, sourceNode);
+            }
+        }
+        return false;
+    };
+
+    markAsFocussed = function(focusContainerNode, node) {
+        console.log(NAME+'markAsFocussed');
+        var selector = getFocusManagerSelector(focusContainerNode),
+            index = focusContainerNode.getAll(selector).indexOf(node) || 0;
+        // we also need to set the appropriate nodeData, so that when the itags re-render,
+        // they don't reset this particular information
+        resetLastValue(focusContainerNode);
+
+        // also store the lastitem's index --> in case the node gets removed,
+        // or re-rendering itags which don't have the attribute-data.
+        // otherwise, a refocus on the container will set the focus to the nearest item
+        focusContainerNode.setData('fm-lastitem-bkp', index);
+        node.setData('fm-tabindex', true);
+        node.setAttrs([
+            {name: 'tabindex', value: '0'},
+            {name: 'fm-lastitem', value: true}
+        ], true);
+    };
+
+    resetLastValue = function(focusContainerNode) {
+        var lastItemNodes = focusContainerNode.getAll('[fm-lastitem]');
+        lastItemNodes.removeAttrs(['fm-lastitem', 'tabindex'], true)
+                     .removeData('fm-tabindex');
+        focusContainerNode.removeData('fm-lastitem-bkp');
+    };
+
+    searchFocusNode = function(initialNode, deeper) {
+        console.log(NAME+'searchFocusNode');
+        var focusContainerNode = initialNode.hasAttr('fm-manage') ? initialNode : initialNode.inside('[plugin-fm="true"]'),
+            focusNode, alwaysDefault, selector, allFocusableNodes, index, parentContainerNode, parentSelector;
+
+        if (focusContainerNode) {
+            selector = getFocusManagerSelector(focusContainerNode);
+            focusNode = initialNode.matches(selector) ? initialNode : initialNode.inside(selector);
+            // focusNode can only be equal focusContainerNode when focusContainerNode lies with a focusnode itself with that particular selector:
+            if (focusNode===focusContainerNode) {
+                parentContainerNode = focusNode.inside('[plugin-fm="true"]');
+                if (parentContainerNode) {
+                    parentSelector = getFocusManagerSelector(parentContainerNode);
+                    if (!focusNode.matches(parentSelector) || deeper) {
+                        focusNode = null;
+                    }
+                }
+                else {
+                    focusNode = null;
+                }
+            }
+            if (focusNode && focusContainerNode.contains(focusNode, true)) {
+                markAsFocussed(parentContainerNode || focusContainerNode, focusNode);
+            }
+            else {
+                // find the right node that should get focus
+/*jshint boss:true */
+                alwaysDefault = focusContainerNode._plugin.fm.model.alwaysdefault;
+/*jshint boss:false */
+                alwaysDefault && (focusNode=focusContainerNode.getElement('[fm-defaultitem="true"], [defaultitem="true"]')); // itags use attribute without `fm-`
+                if (!focusNode) {
+                    // search for last item
+                    focusNode = focusContainerNode.getElement('[fm-lastitem="true"]');
+                    if (!focusNode) {
+                        // look at the lastitemindex of the focuscontainer
+                        index = focusContainerNode.getData('fm-lastitem-bkp');
+                        if (index!==undefined) {
+                            allFocusableNodes = focusContainerNode.getAll(selector);
+                            focusNode = allFocusableNodes[index];
+                        }
+                    }
+                }
+                // still not found and alwaysDefault was falsy: try the defualt node:
+                !focusNode && !alwaysDefault && (focusNode=focusContainerNode.getElement('[fm-defaultitem="true"], [defaultitem="true"]')); // itags use attribute without `fm-`
+                // still not found: try the first focussable node (which we might find inside `allFocusableNodes`:
+                !focusNode && (focusNode = allFocusableNodes ? allFocusableNodes[0] : focusContainerNode.getElement(selector));
+                if (focusNode) {
+                    markAsFocussed(parentContainerNode || focusContainerNode, focusNode);
+                }
+                else {
+                    focusNode = initialNode;
+                }
+            }
+        }
+        else {
+            focusNode = initialNode;
+        }
+        return focusNode;
+    };
+
+    setupEvents = function() {
+
+        Event.before('keydown', function(e) {
+            console.log(NAME+'before keydown-event');
+            var focusContainerNode,
+                sourceNode = e.target,
+                selector, keyCode, actionkey, focusNode, keys, len, lastIndex, specialKeysMatch, i, specialKey;
+
+            focusContainerNode = sourceNode.inside('[plugin-fm="true"]');
+            if (focusContainerNode) {
+                // key was pressed inside a focusmanagable container
+                selector = getFocusManagerSelector(focusContainerNode);
+                keyCode = e.keyCode;
+
+                // first check for keydown:
+                actionkey = focusContainerNode._plugin.fm.model.keydown;
+                focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, true);
+                if (!focusNode) {
+                    // check for keyup:
+                    actionkey = focusContainerNode._plugin.fm.model.keyup;
+                    focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector);
+                }
+                if (!focusNode) {
+                    // check for keyenter, but only when e.target equals a focusmanager:
+                    if (sourceNode.matches('[plugin-fm="true"]')) {
+                        actionkey = sourceNode._plugin.fm.model.keyenter;
+                        if (actionkey) {
+                            keys = actionkey.split('+');
+                            len = keys.length;
+                            lastIndex = len - 1;
+                            // double == --> keyCode is number, keys is a string
+                            if (keyCode==keys[lastIndex]) {
+                                // posible keyup --> check if special characters match:
+                                specialKeysMatch = true;
+                                SPECIAL_KEYS.some(function(value) {
+                                    specialKeysMatch = !e[value];
+                                    return !specialKeysMatch;
+                                });
+                                for (i=lastIndex-1; (i>=0) && !specialKeysMatch; i--) {
+                                    specialKey = keys[i].toLowerCase();
+                                    specialKeysMatch = e[SPECIAL_KEYS[specialKey]];
+                                }
+                            }
+                            if (specialKeysMatch) {
+                                resetLastValue(sourceNode);
+                                focusNode = searchFocusNode(sourceNode, true);
+                            }
+                        }
+                    }
+                }
+                if (!focusNode) {
+                    // check for keyleave:
+                    actionkey = focusContainerNode._plugin.fm.model.keyleave;
+                    if (actionkey) {
+                        keys = actionkey.split('+');
+                        len = keys.length;
+                        lastIndex = len - 1;
+                        // double == --> keyCode is number, keys is a string
+                        if (keyCode==keys[lastIndex]) {
+                            // posible keyup --> check if special characters match:
+                            specialKeysMatch = true;
+                            SPECIAL_KEYS.some(function(value) {
+                                specialKeysMatch = !e[value];
+                                return !specialKeysMatch;
+                            });
+                            for (i=lastIndex-1; (i>=0) && !specialKeysMatch; i--) {
+                                specialKey = keys[i].toLowerCase();
+                                specialKeysMatch = e[SPECIAL_KEYS[specialKey]];
+                            }
+                        }
+                        if (specialKeysMatch) {
+                            resetLastValue(focusContainerNode);
+                            focusNode = focusContainerNode;
+                        }
+                    }
+                }
+                if (focusNode) {
+                    e.preventDefaultContinue();
+                    // prevent default action --> we just want to re-focus, but we DO want afterlisteners
+                    // to be handled in the after-listener: someone else might want to halt the keydown event.
+                    e._focusNode = focusNode;
+                }
+            }
+        });
+
+        Event.after('keydown', function(e) {
+            console.log(NAME+'after keydown-event');
+            var focusNode = e._focusNode;
+            if (focusNode && focusNode.focus) {
+                focusNode.focus();
+            }
+        });
+
+        Event.after('focus', function(e) {
+            console.log(NAME+'after focus-event');
+            var node = e.target,
+                body = DOCUMENT.body,
+                cleanFocussedData = function(element, loop) {
+                    if (element.removeData) {
+                        do {
+                            // we also need to set the appropriate nodeData, so that when the itags re-render,
+                            // they don't reset this particular information
+                            element.removeData(FOCUSSED);
+                            element.removeClass(FOCUSSED, null, null, true);
+                            element = (element===body) ? null : element.getParent();
+                        } while (element && loop);
+                    }
+                };
+            // first, unfocus currently focussed items and up the tree
+            DOCUMENT.getAll('.'+FOCUSSED, true).forEach(cleanFocussedData);
+            if (node && node.setClass) {
+                do {
+                    // we also need to set the appropriate nodeData, so that when the itags re-render,
+                    // they don't reset this particular information
+                    node.setData(FOCUSSED, true);
+                    node.setClass(FOCUSSED, null, null, true);
+                    node = (node===body) ? null : node.getParent();
+                } while (node);
+            }
+        }, true); // set in front: we need to make use of the previous DOCUMENT._activeElement, before it gets updated by event-dom
+
+        // focus-fix for keeping focus when a mouse gets down for a longer time
+        Event.after('mousedown', function(e) {
+            console.log(NAME+'after focus-event');
+            var node = e.target;
+            if (!node.hasFocus()) {
+                node.focus();
+            }
+        }, 'button');
+
+        Event.after('tap', function(e) {
+            console.log(NAME+'after tap-event');
+            var focusNode = e.target,
+                focusContainerNode;
+            if (e._noFocus) {
+                return;
+            }
+            if (focusNode && focusNode.inside) {
+                focusContainerNode = focusNode.hasAttr('plugin-fm') ? focusNode : focusNode.inside('[plugin-fm="true"]');
+            }
+            if (focusContainerNode) {
+                if ((focusNode===focusContainerNode) || !focusNode.matches(getFocusManagerSelector(focusContainerNode))) {
+                    focusNode = searchFocusNode(focusNode, true);
+                }
+                if (focusNode.hasFocus()) {
+                    markAsFocussed(focusContainerNode, focusNode);
+                }
+                else {
+                    focusNode.focus();
+                }
+            }
+        }, null, null, true);
+
+        Event.after(['keypress', 'mouseup', 'panup', 'mousedown', 'pandown'], function(e) {
+            console.log(NAME+'after '+e.type+'-event');
+            var focusContainerNode,
+                sourceNode = e.target,
+                selector;
+
+            focusContainerNode = sourceNode.inside('[plugin-fm="true"]');
+            if (focusContainerNode) {
+                // key was pressed inside a focusmanagable container
+                selector = getFocusManagerSelector(focusContainerNode);
+                if (sourceNode.matches(selector)) {
+                    sourceNode.setAttr(FM_SELECTION_START, sourceNode.selectionStart || '0', true)
+                              .setAttr(FM_SELECTION_END, sourceNode.selectionEnd || '0', true);
+                }
+            }
+        }, 'input[type="text"], textarea');
+
+        Event.after('focus', function(e) {
+            console.log(NAME+'after focus-event');
+            var focusContainerNode,
+                sourceNode = e.target,
+                selector, selectionStart, selectionEnd;
+
+            focusContainerNode = sourceNode.inside('[plugin-fm="true"]');
+            if (focusContainerNode) {
+                // key was pressed inside a focusmanagable container
+                selector = getFocusManagerSelector(focusContainerNode);
+                if (sourceNode.matches(selector)) {
+                    // cautious: fm-selectionstart can be 0 --> which would lead into a falsy value
+                    selectionStart = sourceNode.getAttr(FM_SELECTION_START);
+                    (selectionStart===null) && (selectionStart=sourceNode.getValue().length);
+                    selectionEnd = Math.max(sourceNode.getAttr(FM_SELECTION_END) || selectionStart, selectionStart);
+                    sourceNode.selectionEnd = selectionEnd;
+                    sourceNode.selectionStart = selectionStart;
+                    markAsFocussed(focusContainerNode, sourceNode);
+                }
+            }
+        }, 'input[type="text"], textarea');
+
+    };
+
+    setupEvents();
+
+    window._ITSAmodules.FocusManager = FocusManager = DOCUMENT.definePlugin('fm', null, {
+                attrs: {
+                    manage: 'string',
+                    alwaysdefault: 'boolean',
+                    keyup: 'string',
+                    keydown: 'string',
+                    keyenter: 'string',
+                    keyleave: 'string',
+                    noloop: 'boolean'
+                },
+                defaults: {
+                    manage: 'true',
+                    alwaysdefault: false,
+                    keyup: DEFAULT_KEYUP,
+                    keydown: DEFAULT_KEYDOWN,
+                    noloop: DEFAULT_NOLOOP
+                }
+            });
+
+    defineFocusEvent = function(customevent) {
+        Event.defineEvent(customevent)
+             .defaultFn(function(e) {
+                 var node = e.target,
+                     leftScroll = window.getScrollLeft(),
+                     topScroll = window.getScrollTop();
+                 node._focus();
+                 // reset winscroll:
+                 window.scrollTo(leftScroll, topScroll);
+                 // make sure the node is inside the viewport:
+                 // node.forceIntoView();
+             });
+    };
+
+    (function(HTMLElementPrototype) {
+
+        HTMLElementPrototype._focus = HTMLElementPrototype.focus;
+        HTMLElementPrototype.focus = function(noRefocus) {
+            console.log(NAME+'focus');
+            /**
+             * In case of a manual focus (node.focus()) the node will fire an `manualfocus`-event
+             * which can be prevented.
+             * @event manualfocus
+            */
+            var focusElement = this,
+                doEmit, focusContainerNode;
+            doEmit = function(focusNode) {
+                var emitterName = focusNode._emitterName,
+                    customevent = emitterName+':manualfocus';
+                Event._ce[customevent] || defineFocusEvent(customevent);
+                focusNode.emit('manualfocus');
+            };
+            if (noRefocus) {
+                doEmit(focusElement);
+            }
+            else {
+                focusContainerNode = (this.getAttr('plugin-fm')==='true') ? focusElement : focusElement.inside('[plugin-fm="true"]');
+                if (focusContainerNode) {
+                    focusContainerNode.pluginReady('fm').then(
+                        function() {
+                            doEmit(searchFocusNode(focusElement));
+                        }
+                    );
+                }
+                else {
+                    doEmit(focusElement);
+                }
+            }
+        };
+
+    }(window.HTMLElement.prototype));
+
+
+    return FocusManager;
+};
+},{"./css/focusmanager.css":28,"event-mobile":26,"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"node-plugin":77,"polyfill":88,"utils":95,"window-ext":108}],30:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/alert.css');
+module.exports = function (window) {
+    window.document.defineIcon('alert', 1024, 1024, '<path class="path1" d="M1005.854 800.247l-438.286-767c-11.395-19.941-32.601-32.247-55.568-32.247s-44.173 12.306-55.567 32.247l-438.286 767c-11.319 19.809-11.238 44.144 0.213 63.876s32.539 31.877 55.354 31.877h876.572c22.814 0 43.903-12.145 55.354-31.877s11.533-44.067 0.214-63.876zM576 768h-128v-128h128v128zM576 576h-128v-256h128v256z"></path>');
+};
+},{"../css/alert.css":40}],31:[function(require,module,exports){
+
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/alert.css');
+module.exports = function (window) {
+    window.document.defineIcon('cart', 1024, 1024, '<path class="path1" d="M384 928c0 53.019-42.981 96-96 96s-96-42.981-96-96c0-53.019 42.981-96 96-96s96 42.981 96 96z"></path><path class="path2" d="M1024 928c0 53.019-42.981 96-96 96s-96-42.981-96-96c0-53.019 42.981-96 96-96s96 42.981 96 96z"></path><path class="path3" d="M1024 512v-384h-768c0-35.346-28.654-64-64-64h-192v64h128l48.074 412.054c-29.294 23.458-48.074 59.5-48.074 99.946 0 70.696 57.308 128 128 128h768v-64h-768c-35.346 0-64-28.654-64-64 0-0.218 0.014-0.436 0.016-0.656l831.984-127.344z"></path>');
+};
+
+},{"../css/alert.css":40}],32:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/error.css');
+module.exports = function (window) {
+    window.document.defineIcon('error', 1024, 1024, '<path class="path1" d="M512 0c-282.752 0-512 229.248-512 512s229.248 512 512 512 512-229.248 512-512-229.248-512-512-512zM765.248 674.752l-90.496 90.496-162.752-162.752-162.752 162.752-90.496-90.496 162.752-162.752-162.752-162.752 90.496-90.496 162.752 162.752 162.752-162.752 90.496 90.496-162.752 162.752 162.752 162.752z"></path>');
+};
+},{"../css/error.css":42}],33:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/alert.css');
+module.exports = function (window) {
+    window.document.defineIcon('exclamation', 1024, 1024, '<path class="path1" d="M438.857 73.143q119.429 0 220.286 58.857t159.714 159.714 58.857 220.286-58.857 220.286-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857zM512 785.714v-108.571q0-8-5.143-13.429t-12.571-5.429h-109.714q-7.429 0-13.143 5.714t-5.714 13.143v108.571q0 7.429 5.714 13.143t13.143 5.714h109.714q7.429 0 12.571-5.429t5.143-13.429zM510.857 589.143l10.286-354.857q0-6.857-5.714-10.286-5.714-4.571-13.714-4.571h-125.714q-8 0-13.714 4.571-5.714 3.429-5.714 10.286l9.714 354.857q0 5.714 5.714 10t13.714 4.286h105.714q8 0 13.429-4.286t6-10z"></path>');
+};
+},{"../css/alert.css":40}],34:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/alert.css');
+module.exports = function (window) {
+    window.document.defineIcon('info', 1024, 1024, '<path class="path1" d="M585.143 786.286v-91.429q0-8-5.143-13.143t-13.143-5.143h-54.857v-292.571q0-8-5.143-13.143t-13.143-5.143h-182.857q-8 0-13.143 5.143t-5.143 13.143v91.429q0 8 5.143 13.143t13.143 5.143h54.857v182.857h-54.857q-8 0-13.143 5.143t-5.143 13.143v91.429q0 8 5.143 13.143t13.143 5.143h256q8 0 13.143-5.143t5.143-13.143zM512 274.286v-91.429q0-8-5.143-13.143t-13.143-5.143h-109.714q-8 0-13.143 5.143t-5.143 13.143v91.429q0 8 5.143 13.143t13.143 5.143h109.714q8 0 13.143-5.143t5.143-13.143zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z"></path>');
+};
+},{"../css/alert.css":40}],35:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/alert.css');
+module.exports = function (window) {
+    window.document.defineIcon('minus', 1024, 1024, '<path class="path1" d="M694.857 548.571v-73.143q0-14.857-10.857-25.714t-25.714-10.857h-438.857q-14.857 0-25.714 10.857t-10.857 25.714v73.143q0 14.857 10.857 25.714t25.714 10.857h438.857q14.857 0 25.714-10.857t10.857-25.714zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z"></path>');
+};
+},{"../css/alert.css":40}],36:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/alert.css');
+module.exports = function (window) {
+    window.document.defineIcon('plus', 1024, 1024, '<path class="path1" d="M694.857 548.571v-73.143q0-14.857-10.857-25.714t-25.714-10.857h-146.286v-146.286q0-14.857-10.857-25.714t-25.714-10.857h-73.143q-14.857 0-25.714 10.857t-10.857 25.714v146.286h-146.286q-14.857 0-25.714 10.857t-10.857 25.714v73.143q0 14.857 10.857 25.714t25.714 10.857h146.286v146.286q0 14.857 10.857 25.714t25.714 10.857h73.143q14.857 0 25.714-10.857t10.857-25.714v-146.286h146.286q14.857 0 25.714-10.857t10.857-25.714zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z"></path>');
+};
+},{"../css/alert.css":40}],37:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    window.document.defineIcon('printer', 1024, 1024, '<path class="path1" d="M256 64h512v128h-512v-128z"></path><path class="path2" d="M960 256h-896c-35.2 0-64 28.8-64 64v320c0 35.2 28.794 64 64 64h192v256h512v-256h192c35.2 0 64-28.8 64-64v-320c0-35.2-28.8-64-64-64zM128 448c-35.346 0-64-28.654-64-64s28.654-64 64-64 64 28.654 64 64-28.652 64-64 64zM704 896h-384v-320h384v320z"></path>');
+};
+},{}],38:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * SVG icon by https://icomoon.io/app/#/select
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/alert.css');
+module.exports = function (window) {
+    window.document.defineIcon('question', 1024, 1024, '<path class="path1" d="M512 786.286v-109.714q0-8-5.143-13.143t-13.143-5.143h-109.714q-8 0-13.143 5.143t-5.143 13.143v109.714q0 8 5.143 13.143t13.143 5.143h109.714q8 0 13.143-5.143t5.143-13.143zM658.286 402.286q0-50.286-31.714-93.143t-79.143-66.286-97.143-23.429q-138.857 0-212 121.714-8.571 13.714 4.571 24l75.429 57.143q4 3.429 10.857 3.429 9.143 0 14.286-6.857 30.286-38.857 49.143-52.571 19.429-13.714 49.143-13.714 27.429 0 48.857 14.857t21.429 33.714q0 21.714-11.429 34.857t-38.857 25.714q-36 16-66 49.429t-30 71.714v20.571q0 8 5.143 13.143t13.143 5.143h109.714q8 0 13.143-5.143t5.143-13.143q0-10.857 12.286-28.286t31.143-28.286q18.286-10.286 28-16.286t26.286-20 25.429-27.429 16-34.571 7.143-46.286zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z"></path>');
+};
+},{"../css/alert.css":40}],39:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module icons
+ * @class Icons
+ * @since 0.0.1
+*/
+
+require('polyfill/polyfill-base.js');
+require('js-ext/lib/string.js');
+require('./css/base.css');
+
+var NAME = '[icons]: ',
+    createHashMap = require('js-ext/extra/hashmap.js').createMap;
+
+module.exports = function (window) {
+
+    var DOCUMENT = window.document,
+        Icons, Event, iconContainer, upgradeDOM, upgradeIconElement;
+
+    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
+
+/*jshint boss:true */
+    if (Icons=window._ITSAmodules.Icons) {
+/*jshint boss:false */
+        return Icons; // Dialog was already created
+    }
+
+    require('vdom')(window);
+    Event = require('event-dom')(window);
+
+    // Start with inserting the `svg-container` which holds all definitions
+    // will be inserted as a system-node:
+    iconContainer = DOCUMENT.body.getElement('>#itsa-icons-container', true) || DOCUMENT.body.addSystemElement('<svg id="itsa-icons-container"></svg>');
+
+    /**
+     * Upgrades the specified i-element into a svg-icon.
+     *
+     * @method upgradeIconElement
+     * @param element {HTMLElement}
+     * @protected
+     * @since 0.0.1
+     */
+    upgradeIconElement = function(element) {
+        // `element` is supposed to have the form: icon-`iconname`
+        var iconName = element.getAttr('icon');
+        element.empty(true, true);
+        element.addSystemElement('<svg><use xlink:href="#itsa-'+iconName+'-icon"></use></svg>'); // silent by default
+    };
+
+    /**
+     * Upgrades all i-elements that have an `icon`-attribute set.
+     * Will render them into svg-icons.
+     *
+     * @method upgradeDOM
+     * @protected
+     * @since 0.0.1
+     */
+    upgradeDOM = function() {
+        var upgrade = function(vnode) {
+            var vChildren = vnode.vChildren,
+                len = vChildren.length,
+                i, vChild;
+            for (i=0; i<len; i++) {
+                vChild = vChildren[i];
+                if ((vChild.tag==='I') && vChild.attrs && vChild.attrs.icon) {
+                    upgradeIconElement(vChild.domNode);
+                }
+                else {
+                    upgrade(vChild);
+                }
+            }
+        };
+        upgrade(DOCUMENT.body.vnode);
+    };
+
+    Event.after(
+        ['UI:nodeinsert', 'UI:attributechange', 'UI:attributeinsert'],
+        function(e) {
+            upgradeIconElement(e.target);
+        },
+        function(e) {
+            var vnode = e.target.vnode;
+            return (vnode.tag==='I') && vnode.attrs && vnode.attrs.icon;
+        }
+    );
+
+    Event.after(
+        'UI:attributeremove',
+        function(e) {
+            var node = e.target;
+            node.empty(true, true);
+        },
+        function(e) {
+            return (e.target.vnode.tag==='I') && e.changed.contains('icon');
+        }
+    );
+
+    /**
+     * Defines a new svg-icon. With this icon-definition, icons can be used by usinf i-elements
+     * with the attribute: icon="iconname".
+     *
+     * @method defineIcon
+     * @for document
+     * @param iconName {String} unique iconname, which will be used with the attribute: icon="iconname"
+     * @param viewBoxWidth {Number} pixels of the svg's viewBoxWidth
+     * @param viewBoxHeight {Number} pixels of the svg's viewBoxHeight
+     * @param svgContent {String} svg;s innercontent
+     * @chainable
+     * @since 0.0.1
+     */
+    DOCUMENT.defineIcon = function(iconName, viewBoxWidth, viewBoxHeight, svgContent) {
+        var viewBoxDimension = '0 0 ',
+            iconId, currentDefinition;
+        viewBoxDimension = '0 0 '+viewBoxWidth+' '+viewBoxHeight;
+        iconId = 'itsa-'+iconName.toLowerCase()+'-icon';
+        currentDefinition = iconContainer.getElement('#'+iconId);
+        if (currentDefinition) {
+            currentDefinition.setHTML(svgContent);
+        }
+        else {
+            iconContainer.append('<symbol id="'+iconId+'" viewBox="'+viewBoxDimension+'">'+svgContent+'</symbol>');
+        }
+        return this;
+    };
+
+    upgradeDOM();
+
+    window._ITSAmodules.Icons = true;
+};
+},{"./css/base.css":41,"event-dom":21,"js-ext/extra/hashmap.js":63,"js-ext/lib/string.js":75,"polyfill/polyfill-base.js":88,"vdom":107}],40:[function(require,module,exports){
+var css = "#itsa-alert-icon {\n    fill: #E3A900;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],41:[function(require,module,exports){
+var css = "#itsa-icons-container {\n    display: none; !important;\n}\n\ni[icon] {\n    display: inline-block;\n    vertical-align: baseline;\n    padding: 0;\n    margin: 0;\n}\n\ni[icon] >svg {\n    height: 1em;\n    width: 1em;\n    vertical-align: middle;\n}\n\nbutton.itsa-icon {\n    padding: 0.5em;\n}\n\nbutton.itsa-iconleft {\n    padding-left: 0.75em;\n}\n\nbutton.itsa-iconright {\n    padding-right: 0.75em;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],42:[function(require,module,exports){
+var css = "#itsa-error-icon {\n  fill: #960500;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],43:[function(require,module,exports){
+var css = "#itsa-radar-anim-icon g {\n  stroke: #000;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],44:[function(require,module,exports){
+var css = "#itsa-spinnercircle-anim-icon circle {\n  fill: #000;\n}\n\n#itsa-spinnercircle-anim-icon g {\n  stroke: #000;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],45:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    window.document.defineIcon('audio-anim', 55, 80, '<g transform="matrix(1 0 0 -1 0 80)"><rect width="10" height="20" rx="3"><animate attributeName="height" begin="0s" dur="4.3s" values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20" calcMode="linear" repeatCount="indefinite" /></rect><rect x="15" width="10" height="80" rx="3"><animate attributeName="height" begin="0s" dur="2s" values="80;55;33;5;75;23;73;33;12;14;60;80" calcMode="linear" repeatCount="indefinite" /></rect><rect x="30" width="10" height="50" rx="3"><animate attributeName="height" begin="0s" dur="1.4s" values="50;34;78;23;56;23;34;76;80;54;21;50" calcMode="linear" repeatCount="indefinite" /></rect><rect x="45" width="10" height="30" rx="3"><animate attributeName="height" begin="0s" dur="2s" values="30;45;13;80;56;72;45;76;34;23;67;30" calcMode="linear" repeatCount="indefinite" /></rect></g>');
+};
+},{}],46:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    window.document.defineIcon('grid-anim', 105, 105, '<circle cx="12.5" cy="12.5" r="12.5"><animate attributeName="fill-opacity" begin="0s" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="12.5" cy="52.5" r="12.5" fill-opacity=".5"><animate attributeName="fill-opacity" begin="100ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="52.5" cy="12.5" r="12.5"><animate attributeName="fill-opacity" begin="300ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="52.5" cy="52.5" r="12.5"><animate attributeName="fill-opacity" begin="600ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="92.5" cy="12.5" r="12.5"><animate attributeName="fill-opacity" begin="800ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="92.5" cy="52.5" r="12.5"><animate attributeName="fill-opacity" begin="400ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="12.5" cy="92.5" r="12.5"><animate attributeName="fill-opacity" begin="700ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="52.5" cy="92.5" r="12.5"><animate attributeName="fill-opacity" begin="500ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="92.5" cy="92.5" r="12.5"><animate attributeName="fill-opacity" begin="200ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle>');
+};
+},{}],47:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/radar-anim.css');
+module.exports = function (window) {
+    window.document.defineIcon('radar-anim', 45, 45, '<g fill="none" fill-rule="evenodd" transform="translate(1 1)" stroke-width="2"><circle cx="22" cy="22" r="6" stroke-opacity="0"><animate attributeName="r" begin="1.5s" dur="3s" values="6;22" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-opacity" begin="1.5s" dur="3s" values="1;0" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-width" begin="1.5s" dur="3s" values="2;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="22" cy="22" r="6" stroke-opacity="0"><animate attributeName="r" begin="3s" dur="3s" values="6;22" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-opacity" begin="3s" dur="3s" values="1;0" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-width" begin="3s" dur="3s" values="2;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="22" cy="22" r="8"><animate attributeName="r" begin="0s" dur="1.5s" values="6;1;2;3;4;5;6" calcMode="linear" repeatCount="indefinite" /></circle></g>');
+};
+},{"../css/radar-anim.css":43}],48:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    window.document.defineIcon('speaking-anim', 135, 140, '<rect y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.5s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.5s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="30" y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.25s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.25s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="60" width="15" height="140" rx="6"><animate attributeName="height" begin="0s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="90" y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.25s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.25s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="120" y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.5s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.5s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect>');
+};
+},{}],49:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+require('../css/spinnercircle-anim.css');
+module.exports = function (window) {
+    window.document.defineIcon('spinnercircle-anim', 58, 58, '<g fill="none" fill-rule="evenodd"><g transform="translate(2 1)" stroke="#FFF" stroke-width="1.5"><circle cx="42.601" cy="11.462" r="5" fill-opacity="1" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="1;0;0;0;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="49.063" cy="27.063" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;1;0;0;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="42.601" cy="42.663" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;1;0;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="27" cy="49.125" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;1;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="11.399" cy="42.663" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;1;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="4.938" cy="27.063" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;1;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="11.399" cy="11.462" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;0;1;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="27" cy="5" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;0;0;1" calcMode="linear" repeatCount="indefinite" /></circle></g></g>');
+};
+},{"../css/spinnercircle-anim.css":44}],50:[function(require,module,exports){
+"use strict";
+/**
+ * Creating floating Panel-nodes which can be shown and hidden.
+ *
+ *
+ * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ *
+ * @module panel
+ * @class Panel
+ * @since 0.0.1
+*/
+
+module.exports = function (window) {
+    require('./base.js')(window);
+    require('./base-icons/error.js')(window);
+    require('./base-icons/alert.js')(window);
+    require('./base-icons/exclamation.js')(window);
+    require('./base-icons/info.js')(window);
+    require('./base-icons/minus.js')(window);
+    require('./base-icons/plus.js')(window);
+    require('./base-icons/question.js')(window);
+    require('./base-icons/printer.js')(window);
+    require('./base-icons/cart.js')(window);
+    require('./extra-animated-icons/audio-anim.js')(window);
+    require('./extra-animated-icons/speaking-anim.js')(window);
+    require('./extra-animated-icons/grid-anim.js')(window);
+    require('./extra-animated-icons/radar-anim.js')(window);
+    require('./extra-animated-icons/spinnercircle-anim.js')(window);
+};
+},{"./base-icons/alert.js":30,"./base-icons/cart.js":31,"./base-icons/error.js":32,"./base-icons/exclamation.js":33,"./base-icons/info.js":34,"./base-icons/minus.js":35,"./base-icons/plus.js":36,"./base-icons/printer.js":37,"./base-icons/question.js":38,"./base.js":39,"./extra-animated-icons/audio-anim.js":45,"./extra-animated-icons/grid-anim.js":46,"./extra-animated-icons/radar-anim.js":47,"./extra-animated-icons/speaking-anim.js":48,"./extra-animated-icons/spinnercircle-anim.js":49}],51:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -11654,7 +12623,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73}],29:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73}],52:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11772,7 +12741,7 @@ Event.Emitter = function(emitterName) {
 };
 
 module.exports = Event;
-},{"./event-base.js":28}],30:[function(require,module,exports){
+},{"./event-base.js":51}],53:[function(require,module,exports){
 "use strict";
 
 /**
@@ -12065,983 +13034,14 @@ Classes.BaseClass.mergePrototypes(Event.Listener, true)
                  .mergePrototypes(ClassListener, true, {}, {});
 
 module.exports = Event;
-},{"./event-base.js":28,"js-ext/extra/classes.js":62,"js-ext/lib/object.js":73}],31:[function(require,module,exports){
+},{"./event-base.js":51,"js-ext/extra/classes.js":62,"js-ext/lib/object.js":73}],54:[function(require,module,exports){
 var Event = require('./event-base.js');
 require('./event-emitter.js'); // will extent Event
 require('./event-listener.js'); // will extent the exported object
 
 module.exports = Event;
 
-},{"./event-base.js":28,"./event-emitter.js":29,"./event-listener.js":30}],32:[function(require,module,exports){
-var css = "[plugin-fm=\"true\"] {\n    /* NEVER can we select the text: when the focusmanager is active it will refocus on the active item */\n    -moz-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    cursor: default;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],33:[function(require,module,exports){
-"use strict";
-
-require('js-ext/lib/object.js');
-require('polyfill');
-require('./css/focusmanager.css');
-
-/**
- *
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * @module focusmanager
- * @class FocusManager
- * @since 0.0.1
-*/
-
-var NAME = '[focusmanager]: ',
-    async = require('utils').async,
-    createHashMap = require('js-ext/extra/hashmap.js').createMap,
-    DEFAULT_SELECTOR = 'input, button, select, textarea, [contenteditable="true"], .focusable, [plugin-fm="true"], [itag-formelement="true"]',
-    // SPECIAL_KEYS needs to be a native Object --> we need .some()
-    SPECIAL_KEYS = {
-        shift: 'shiftKey',
-        ctrl: 'ctrlKey',
-        cmd: 'metaKey',
-        alt: 'altKey'
-    },
-    DEFAULT_KEYUP = 'shift+9',
-    DEFAULT_KEYDOWN = '9',
-    DEFAULT_NOLOOP = false,
-    FM_SELECTION = 'fm-selection',
-    FM_SELECTION_START = FM_SELECTION+'start',
-    FM_SELECTION_END = FM_SELECTION+'end',
-    FOCUSSED = 'focussed';
-
-module.exports = function (window) {
-
-    var DOCUMENT = window.document,
-        FocusManager, Event, nextFocusNode, searchFocusNode, markAsFocussed,
-        resetLastValue, getFocusManagerSelector, setupEvents, defineFocusEvent;
-
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
-
-/*jshint boss:true */
-    if (FocusManager=window._ITSAmodules.FocusManager) {
-/*jshint boss:false */
-        return FocusManager; // FocusManager was already created
-    }
-
-    require('window-ext')(window);
-    require('node-plugin')(window);
-
-    Event = require('event-mobile')(window);
-
-    getFocusManagerSelector = function(focusContainerNode) {
-        var selector = focusContainerNode._plugin.fm.model.manage;
-        (selector.toLowerCase()==='true') && (selector=DEFAULT_SELECTOR);
-        return selector;
-    };
-
-    nextFocusNode = function(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, downwards, initialSourceNode) {
-        console.log(NAME+'nextFocusNode');
-        var keys, lastIndex, i, specialKeysMatch, specialKey, len, enterPressedOnInput, primaryButtons,
-            inputType, foundNode, formNode, primaryonenter, noloop, nodeHit, foundContainer, type;
-        keys = actionkey.split('+');
-        len = keys.length;
-        lastIndex = len - 1;
-
-        if ((keyCode===13) && (sourceNode.getTagName()==='INPUT')) {
-            type = sourceNode.getAttr('type') || 'text';
-            inputType = type.toLowerCase();
-            enterPressedOnInput = (inputType==='text') || (inputType==='password');
-        }
-
-        if (enterPressedOnInput) {
-            // check if we need to press the primary button - if available
-/*jshint boss:true */
-            if ((primaryonenter=sourceNode.getAttr('fm-primaryonenter')) && (primaryonenter.toLowerCase()==='true')) {
-/*jshint boss:false */
-                primaryButtons = focusContainerNode.getAll('button.pure-button-primary');
-                primaryButtons.some(function(buttonNode) {
-                    buttonNode.matches(selector) && (foundNode=buttonNode);
-                    return foundNode;
-                });
-                if (foundNode) {
-                    async(function() {
-                        Event.emit(foundNode, 'UI:tap');
-                        // _buttonPressed make event-dom to simulate a pressed button for 200ms
-                        Event.emit(foundNode, 'UI:tap', {_buttonPressed: true});
-                        // if the button is of type `submit`, then try to submit the form
-                        formNode = foundNode.inside('form');
-                        formNode && formNode.submit();
-                    });
-                    return foundNode;
-                }
-            }
-        }
-        // double == --> keyCode is number, keys is a string
-        if (enterPressedOnInput || (keyCode==keys[lastIndex])) {
-            // posible keyup --> check if special characters match:
-            specialKeysMatch = true;
-            SPECIAL_KEYS.some(function(value) {
-                specialKeysMatch = !e[value];
-                return !specialKeysMatch;
-            });
-            for (i=lastIndex-1; (i>=0) && !specialKeysMatch; i--) {
-                specialKey = keys[i].toLowerCase();
-                specialKeysMatch = e[SPECIAL_KEYS[specialKey]];
-            }
-        }
-        if (specialKeysMatch) {
-            noloop = focusContainerNode._plugin.fm.model.noloop;
-            // in case sourceNode is an innernode of a selector, we need to start from the selector:
-            sourceNode.matches(selector) || (sourceNode=sourceNode.inside(selector));
-            if (downwards) {
-                nodeHit = sourceNode;
-/*jshint noempty:true */
-                while ((nodeHit=nodeHit.next(selector, focusContainerNode)) && (nodeHit.getStyle('display')==='none')) {}
-/*jshint noempty:false */
-                if (!nodeHit) {
-                    nodeHit = noloop ? sourceNode.last(selector, focusContainerNode) : sourceNode.first(selector, focusContainerNode);
-                    if (nodeHit.getStyle('display')==='none') {
-/*jshint noempty:true */
-                        while ((nodeHit=nodeHit[noloop ? 'previous' : 'next'](selector, focusContainerNode)) && (nodeHit.getStyle('display')==='none')) {}
-/*jshint noempty:false */
-                    }
-                }
-            }
-            else {
-                nodeHit = sourceNode;
-/*jshint noempty:true */
-                while ((nodeHit=nodeHit.previous(selector, focusContainerNode)) && (nodeHit.getStyle('display')==='none')) {}
-/*jshint noempty:false */
-                if (!nodeHit) {
-                    nodeHit = noloop ? sourceNode.first(selector, focusContainerNode) : sourceNode.last(selector, focusContainerNode);
-                    if (nodeHit.getStyle('display')==='none') {
-/*jshint noempty:true */
-                        while ((nodeHit=nodeHit[noloop ? 'next' : 'previous'](selector, focusContainerNode)) && (nodeHit.getStyle('display')==='none')) {}
-/*jshint noempty:false */
-                    }
-                }
-            }
-            if (nodeHit===sourceNode) {
-                // cannot found another, return itself, BUT return `initialSourceNode` if it is available
-                return initialSourceNode || sourceNode;
-            }
-            else {
-                foundContainer = nodeHit.inside('[plugin-fm="true"]');
-                // only if `nodeHit` is inside the runniong focusContainer, we may return it,
-                // otherwise look further
-                return (foundContainer===focusContainerNode) ? nodeHit : nextFocusNode(e, keyCode, actionkey, focusContainerNode, nodeHit, selector, downwards, sourceNode);
-            }
-        }
-        return false;
-    };
-
-    markAsFocussed = function(focusContainerNode, node) {
-        console.log(NAME+'markAsFocussed');
-        var selector = getFocusManagerSelector(focusContainerNode),
-            index = focusContainerNode.getAll(selector).indexOf(node) || 0;
-        // we also need to set the appropriate nodeData, so that when the itags re-render,
-        // they don't reset this particular information
-        resetLastValue(focusContainerNode);
-
-        // also store the lastitem's index --> in case the node gets removed,
-        // or re-rendering itags which don't have the attribute-data.
-        // otherwise, a refocus on the container will set the focus to the nearest item
-        focusContainerNode.setData('fm-lastitem-bkp', index);
-        node.setData('fm-tabindex', true);
-        node.setAttrs([
-            {name: 'tabindex', value: '0'},
-            {name: 'fm-lastitem', value: true}
-        ], true);
-    };
-
-    resetLastValue = function(focusContainerNode) {
-        var lastItemNodes = focusContainerNode.getAll('[fm-lastitem]');
-        lastItemNodes.removeAttrs(['fm-lastitem', 'tabindex'], true)
-                     .removeData('fm-tabindex');
-        focusContainerNode.removeData('fm-lastitem-bkp');
-    };
-
-    searchFocusNode = function(initialNode, deeper) {
-        console.log(NAME+'searchFocusNode');
-        var focusContainerNode = initialNode.hasAttr('fm-manage') ? initialNode : initialNode.inside('[plugin-fm="true"]'),
-            focusNode, alwaysDefault, selector, allFocusableNodes, index, parentContainerNode, parentSelector;
-
-        if (focusContainerNode) {
-            selector = getFocusManagerSelector(focusContainerNode);
-            focusNode = initialNode.matches(selector) ? initialNode : initialNode.inside(selector);
-            // focusNode can only be equal focusContainerNode when focusContainerNode lies with a focusnode itself with that particular selector:
-            if (focusNode===focusContainerNode) {
-                parentContainerNode = focusNode.inside('[plugin-fm="true"]');
-                if (parentContainerNode) {
-                    parentSelector = getFocusManagerSelector(parentContainerNode);
-                    if (!focusNode.matches(parentSelector) || deeper) {
-                        focusNode = null;
-                    }
-                }
-                else {
-                    focusNode = null;
-                }
-            }
-            if (focusNode && focusContainerNode.contains(focusNode, true)) {
-                markAsFocussed(parentContainerNode || focusContainerNode, focusNode);
-            }
-            else {
-                // find the right node that should get focus
-/*jshint boss:true */
-                alwaysDefault = focusContainerNode._plugin.fm.model.alwaysdefault;
-/*jshint boss:false */
-                alwaysDefault && (focusNode=focusContainerNode.getElement('[fm-defaultitem="true"], [defaultitem="true"]')); // itags use attribute without `fm-`
-                if (!focusNode) {
-                    // search for last item
-                    focusNode = focusContainerNode.getElement('[fm-lastitem="true"]');
-                    if (!focusNode) {
-                        // look at the lastitemindex of the focuscontainer
-                        index = focusContainerNode.getData('fm-lastitem-bkp');
-                        if (index!==undefined) {
-                            allFocusableNodes = focusContainerNode.getAll(selector);
-                            focusNode = allFocusableNodes[index];
-                        }
-                    }
-                }
-                // still not found and alwaysDefault was falsy: try the defualt node:
-                !focusNode && !alwaysDefault && (focusNode=focusContainerNode.getElement('[fm-defaultitem="true"], [defaultitem="true"]')); // itags use attribute without `fm-`
-                // still not found: try the first focussable node (which we might find inside `allFocusableNodes`:
-                !focusNode && (focusNode = allFocusableNodes ? allFocusableNodes[0] : focusContainerNode.getElement(selector));
-                if (focusNode) {
-                    markAsFocussed(parentContainerNode || focusContainerNode, focusNode);
-                }
-                else {
-                    focusNode = initialNode;
-                }
-            }
-        }
-        else {
-            focusNode = initialNode;
-        }
-        return focusNode;
-    };
-
-    setupEvents = function() {
-
-        Event.before('keydown', function(e) {
-            console.log(NAME+'before keydown-event');
-            var focusContainerNode,
-                sourceNode = e.target,
-                selector, keyCode, actionkey, focusNode, keys, len, lastIndex, specialKeysMatch, i, specialKey;
-
-            focusContainerNode = sourceNode.inside('[plugin-fm="true"]');
-            if (focusContainerNode) {
-                // key was pressed inside a focusmanagable container
-                selector = getFocusManagerSelector(focusContainerNode);
-                keyCode = e.keyCode;
-
-                // first check for keydown:
-                actionkey = focusContainerNode._plugin.fm.model.keydown;
-                focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, true);
-                if (!focusNode) {
-                    // check for keyup:
-                    actionkey = focusContainerNode._plugin.fm.model.keyup;
-                    focusNode = nextFocusNode(e, keyCode, actionkey, focusContainerNode, sourceNode, selector);
-                }
-                if (!focusNode) {
-                    // check for keyenter, but only when e.target equals a focusmanager:
-                    if (sourceNode.matches('[plugin-fm="true"]')) {
-                        actionkey = sourceNode._plugin.fm.model.keyenter;
-                        if (actionkey) {
-                            keys = actionkey.split('+');
-                            len = keys.length;
-                            lastIndex = len - 1;
-                            // double == --> keyCode is number, keys is a string
-                            if (keyCode==keys[lastIndex]) {
-                                // posible keyup --> check if special characters match:
-                                specialKeysMatch = true;
-                                SPECIAL_KEYS.some(function(value) {
-                                    specialKeysMatch = !e[value];
-                                    return !specialKeysMatch;
-                                });
-                                for (i=lastIndex-1; (i>=0) && !specialKeysMatch; i--) {
-                                    specialKey = keys[i].toLowerCase();
-                                    specialKeysMatch = e[SPECIAL_KEYS[specialKey]];
-                                }
-                            }
-                            if (specialKeysMatch) {
-                                resetLastValue(sourceNode);
-                                focusNode = searchFocusNode(sourceNode, true);
-                            }
-                        }
-                    }
-                }
-                if (!focusNode) {
-                    // check for keyleave:
-                    actionkey = focusContainerNode._plugin.fm.model.keyleave;
-                    if (actionkey) {
-                        keys = actionkey.split('+');
-                        len = keys.length;
-                        lastIndex = len - 1;
-                        // double == --> keyCode is number, keys is a string
-                        if (keyCode==keys[lastIndex]) {
-                            // posible keyup --> check if special characters match:
-                            specialKeysMatch = true;
-                            SPECIAL_KEYS.some(function(value) {
-                                specialKeysMatch = !e[value];
-                                return !specialKeysMatch;
-                            });
-                            for (i=lastIndex-1; (i>=0) && !specialKeysMatch; i--) {
-                                specialKey = keys[i].toLowerCase();
-                                specialKeysMatch = e[SPECIAL_KEYS[specialKey]];
-                            }
-                        }
-                        if (specialKeysMatch) {
-                            resetLastValue(focusContainerNode);
-                            focusNode = focusContainerNode;
-                        }
-                    }
-                }
-                if (focusNode) {
-                    e.preventDefaultContinue();
-                    // prevent default action --> we just want to re-focus, but we DO want afterlisteners
-                    // to be handled in the after-listener: someone else might want to halt the keydown event.
-                    e._focusNode = focusNode;
-                }
-            }
-        });
-
-        Event.after('keydown', function(e) {
-            console.log(NAME+'after keydown-event');
-            var focusNode = e._focusNode;
-            if (focusNode && focusNode.focus) {
-                focusNode.focus();
-            }
-        });
-
-        Event.after('focus', function(e) {
-            console.log(NAME+'after focus-event');
-            var node = e.target,
-                body = DOCUMENT.body,
-                cleanFocussedData = function(element, loop) {
-                    if (element.removeData) {
-                        do {
-                            // we also need to set the appropriate nodeData, so that when the itags re-render,
-                            // they don't reset this particular information
-                            element.removeData(FOCUSSED);
-                            element.removeClass(FOCUSSED, null, null, true);
-                            element = (element===body) ? null : element.getParent();
-                        } while (element && loop);
-                    }
-                };
-            // first, unfocus currently focussed items and up the tree
-            DOCUMENT.getAll('.'+FOCUSSED, true).forEach(cleanFocussedData);
-            if (node && node.setClass) {
-                do {
-                    // we also need to set the appropriate nodeData, so that when the itags re-render,
-                    // they don't reset this particular information
-                    node.setData(FOCUSSED, true);
-                    node.setClass(FOCUSSED, null, null, true);
-                    node = (node===body) ? null : node.getParent();
-                } while (node);
-            }
-        }, true); // set in front: we need to make use of the previous DOCUMENT._activeElement, before it gets updated by event-dom
-
-        // focus-fix for keeping focus when a mouse gets down for a longer time
-        Event.after('mousedown', function(e) {
-            console.log(NAME+'after focus-event');
-            var node = e.target;
-            if (!node.hasFocus()) {
-                node.focus();
-            }
-        }, 'button');
-
-        Event.after('tap', function(e) {
-            console.log(NAME+'after tap-event');
-            var focusNode = e.target,
-                focusContainerNode;
-            if (e._noFocus) {
-                return;
-            }
-            if (focusNode && focusNode.inside) {
-                focusContainerNode = focusNode.hasAttr('plugin-fm') ? focusNode : focusNode.inside('[plugin-fm="true"]');
-            }
-            if (focusContainerNode) {
-                if ((focusNode===focusContainerNode) || !focusNode.matches(getFocusManagerSelector(focusContainerNode))) {
-                    focusNode = searchFocusNode(focusNode, true);
-                }
-                if (focusNode.hasFocus()) {
-                    markAsFocussed(focusContainerNode, focusNode);
-                }
-                else {
-                    focusNode.focus();
-                }
-            }
-        }, null, null, true);
-
-        Event.after(['keypress', 'mouseup', 'panup', 'mousedown', 'pandown'], function(e) {
-            console.log(NAME+'after '+e.type+'-event');
-            var focusContainerNode,
-                sourceNode = e.target,
-                selector;
-
-            focusContainerNode = sourceNode.inside('[plugin-fm="true"]');
-            if (focusContainerNode) {
-                // key was pressed inside a focusmanagable container
-                selector = getFocusManagerSelector(focusContainerNode);
-                if (sourceNode.matches(selector)) {
-                    sourceNode.setAttr(FM_SELECTION_START, sourceNode.selectionStart || '0', true)
-                              .setAttr(FM_SELECTION_END, sourceNode.selectionEnd || '0', true);
-                }
-            }
-        }, 'input[type="text"], textarea');
-
-        Event.after('focus', function(e) {
-            console.log(NAME+'after focus-event');
-            var focusContainerNode,
-                sourceNode = e.target,
-                selector, selectionStart, selectionEnd;
-
-            focusContainerNode = sourceNode.inside('[plugin-fm="true"]');
-            if (focusContainerNode) {
-                // key was pressed inside a focusmanagable container
-                selector = getFocusManagerSelector(focusContainerNode);
-                if (sourceNode.matches(selector)) {
-                    // cautious: fm-selectionstart can be 0 --> which would lead into a falsy value
-                    selectionStart = sourceNode.getAttr(FM_SELECTION_START);
-                    (selectionStart===null) && (selectionStart=sourceNode.getValue().length);
-                    selectionEnd = Math.max(sourceNode.getAttr(FM_SELECTION_END) || selectionStart, selectionStart);
-                    sourceNode.selectionEnd = selectionEnd;
-                    sourceNode.selectionStart = selectionStart;
-                    markAsFocussed(focusContainerNode, sourceNode);
-                }
-            }
-        }, 'input[type="text"], textarea');
-
-    };
-
-    setupEvents();
-
-    window._ITSAmodules.FocusManager = FocusManager = DOCUMENT.definePlugin('fm', null, {
-                attrs: {
-                    manage: 'string',
-                    alwaysdefault: 'boolean',
-                    keyup: 'string',
-                    keydown: 'string',
-                    keyenter: 'string',
-                    keyleave: 'string',
-                    noloop: 'boolean'
-                },
-                defaults: {
-                    manage: 'true',
-                    alwaysdefault: false,
-                    keyup: DEFAULT_KEYUP,
-                    keydown: DEFAULT_KEYDOWN,
-                    noloop: DEFAULT_NOLOOP
-                }
-            });
-
-    defineFocusEvent = function(customevent) {
-        Event.defineEvent(customevent)
-             .defaultFn(function(e) {
-                 var node = e.target,
-                     leftScroll = window.getScrollLeft(),
-                     topScroll = window.getScrollTop();
-                 node._focus();
-                 // reset winscroll:
-                 window.scrollTo(leftScroll, topScroll);
-                 // make sure the node is inside the viewport:
-                 // node.forceIntoView();
-             });
-    };
-
-    (function(HTMLElementPrototype) {
-
-        HTMLElementPrototype._focus = HTMLElementPrototype.focus;
-        HTMLElementPrototype.focus = function(noRefocus) {
-            console.log(NAME+'focus');
-            /**
-             * In case of a manual focus (node.focus()) the node will fire an `manualfocus`-event
-             * which can be prevented.
-             * @event manualfocus
-            */
-            var focusElement = this,
-                doEmit, focusContainerNode;
-            doEmit = function(focusNode) {
-                var emitterName = focusNode._emitterName,
-                    customevent = emitterName+':manualfocus';
-                Event._ce[customevent] || defineFocusEvent(customevent);
-                focusNode.emit('manualfocus');
-            };
-            if (noRefocus) {
-                doEmit(focusElement);
-            }
-            else {
-                focusContainerNode = (this.getAttr('plugin-fm')==='true') ? focusElement : focusElement.inside('[plugin-fm="true"]');
-                if (focusContainerNode) {
-                    focusContainerNode.pluginReady('fm').then(
-                        function() {
-                            doEmit(searchFocusNode(focusElement));
-                        }
-                    );
-                }
-                else {
-                    doEmit(focusElement);
-                }
-            }
-        };
-
-    }(window.HTMLElement.prototype));
-
-
-    return FocusManager;
-};
-},{"./css/focusmanager.css":32,"event-mobile":26,"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"node-plugin":77,"polyfill":88,"utils":95,"window-ext":108}],34:[function(require,module,exports){
-"use strict";
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * SVG icon by https://icomoon.io/app/#/select
- *
- * @module panel
- * @class Panel
- * @since 0.0.1
-*/
-
-require('../css/alert.css');
-module.exports = function (window) {
-    window.document.defineIcon('alert', 1024, 1024, '<path class="path1" d="M1005.854 800.247l-438.286-767c-11.395-19.941-32.601-32.247-55.568-32.247s-44.173 12.306-55.567 32.247l-438.286 767c-11.319 19.809-11.238 44.144 0.213 63.876s32.539 31.877 55.354 31.877h876.572c22.814 0 43.903-12.145 55.354-31.877s11.533-44.067 0.214-63.876zM576 768h-128v-128h128v128zM576 576h-128v-256h128v256z"></path>');
-};
-},{"../css/alert.css":44}],35:[function(require,module,exports){
-
-"use strict";
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * SVG icon by https://icomoon.io/app/#/select
- *
- * @module panel
- * @class Panel
- * @since 0.0.1
-*/
-
-require('../css/alert.css');
-module.exports = function (window) {
-    window.document.defineIcon('cart', 1024, 1024, '<path class="path1" d="M384 928c0 53.019-42.981 96-96 96s-96-42.981-96-96c0-53.019 42.981-96 96-96s96 42.981 96 96z"></path><path class="path2" d="M1024 928c0 53.019-42.981 96-96 96s-96-42.981-96-96c0-53.019 42.981-96 96-96s96 42.981 96 96z"></path><path class="path3" d="M1024 512v-384h-768c0-35.346-28.654-64-64-64h-192v64h128l48.074 412.054c-29.294 23.458-48.074 59.5-48.074 99.946 0 70.696 57.308 128 128 128h768v-64h-768c-35.346 0-64-28.654-64-64 0-0.218 0.014-0.436 0.016-0.656l831.984-127.344z"></path>');
-};
-
-},{"../css/alert.css":44}],36:[function(require,module,exports){
-"use strict";
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * SVG icon by https://icomoon.io/app/#/select
- *
- * @module panel
- * @class Panel
- * @since 0.0.1
-*/
-
-require('../css/error.css');
-module.exports = function (window) {
-    window.document.defineIcon('error', 1024, 1024, '<path class="path1" d="M512 0c-282.752 0-512 229.248-512 512s229.248 512 512 512 512-229.248 512-512-229.248-512-512-512zM765.248 674.752l-90.496 90.496-162.752-162.752-162.752 162.752-90.496-90.496 162.752-162.752-162.752-162.752 90.496-90.496 162.752 162.752 162.752-162.752 90.496 90.496-162.752 162.752 162.752 162.752z"></path>');
-};
-},{"../css/error.css":46}],37:[function(require,module,exports){
-"use strict";
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * SVG icon by https://icomoon.io/app/#/select
- *
- * @module panel
- * @class Panel
- * @since 0.0.1
-*/
-
-require('../css/alert.css');
-module.exports = function (window) {
-    window.document.defineIcon('exclamation', 1024, 1024, '<path class="path1" d="M438.857 73.143q119.429 0 220.286 58.857t159.714 159.714 58.857 220.286-58.857 220.286-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857zM512 785.714v-108.571q0-8-5.143-13.429t-12.571-5.429h-109.714q-7.429 0-13.143 5.714t-5.714 13.143v108.571q0 7.429 5.714 13.143t13.143 5.714h109.714q7.429 0 12.571-5.429t5.143-13.429zM510.857 589.143l10.286-354.857q0-6.857-5.714-10.286-5.714-4.571-13.714-4.571h-125.714q-8 0-13.714 4.571-5.714 3.429-5.714 10.286l9.714 354.857q0 5.714 5.714 10t13.714 4.286h105.714q8 0 13.429-4.286t6-10z"></path>');
-};
-},{"../css/alert.css":44}],38:[function(require,module,exports){
-"use strict";
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * SVG icon by https://icomoon.io/app/#/select
- *
- * @module panel
- * @class Panel
- * @since 0.0.1
-*/
-
-require('../css/alert.css');
-module.exports = function (window) {
-    window.document.defineIcon('info', 1024, 1024, '<path class="path1" d="M585.143 786.286v-91.429q0-8-5.143-13.143t-13.143-5.143h-54.857v-292.571q0-8-5.143-13.143t-13.143-5.143h-182.857q-8 0-13.143 5.143t-5.143 13.143v91.429q0 8 5.143 13.143t13.143 5.143h54.857v182.857h-54.857q-8 0-13.143 5.143t-5.143 13.143v91.429q0 8 5.143 13.143t13.143 5.143h256q8 0 13.143-5.143t5.143-13.143zM512 274.286v-91.429q0-8-5.143-13.143t-13.143-5.143h-109.714q-8 0-13.143 5.143t-5.143 13.143v91.429q0 8 5.143 13.143t13.143 5.143h109.714q8 0 13.143-5.143t5.143-13.143zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z"></path>');
-};
-},{"../css/alert.css":44}],39:[function(require,module,exports){
-"use strict";
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * SVG icon by https://icomoon.io/app/#/select
- *
- * @module panel
- * @class Panel
- * @since 0.0.1
-*/
-
-require('../css/alert.css');
-module.exports = function (window) {
-    window.document.defineIcon('minus', 1024, 1024, '<path class="path1" d="M694.857 548.571v-73.143q0-14.857-10.857-25.714t-25.714-10.857h-438.857q-14.857 0-25.714 10.857t-10.857 25.714v73.143q0 14.857 10.857 25.714t25.714 10.857h438.857q14.857 0 25.714-10.857t10.857-25.714zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z"></path>');
-};
-},{"../css/alert.css":44}],40:[function(require,module,exports){
-"use strict";
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * SVG icon by https://icomoon.io/app/#/select
- *
- * @module panel
- * @class Panel
- * @since 0.0.1
-*/
-
-require('../css/alert.css');
-module.exports = function (window) {
-    window.document.defineIcon('plus', 1024, 1024, '<path class="path1" d="M694.857 548.571v-73.143q0-14.857-10.857-25.714t-25.714-10.857h-146.286v-146.286q0-14.857-10.857-25.714t-25.714-10.857h-73.143q-14.857 0-25.714 10.857t-10.857 25.714v146.286h-146.286q-14.857 0-25.714 10.857t-10.857 25.714v73.143q0 14.857 10.857 25.714t25.714 10.857h146.286v146.286q0 14.857 10.857 25.714t25.714 10.857h73.143q14.857 0 25.714-10.857t10.857-25.714v-146.286h146.286q14.857 0 25.714-10.857t10.857-25.714zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z"></path>');
-};
-},{"../css/alert.css":44}],41:[function(require,module,exports){
-"use strict";
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * SVG icon by https://icomoon.io/app/#/select
- *
- * @module panel
- * @class Panel
- * @since 0.0.1
-*/
-
-module.exports = function (window) {
-    window.document.defineIcon('printer', 1024, 1024, '<path class="path1" d="M256 64h512v128h-512v-128z"></path><path class="path2" d="M960 256h-896c-35.2 0-64 28.8-64 64v320c0 35.2 28.794 64 64 64h192v256h512v-256h192c35.2 0 64-28.8 64-64v-320c0-35.2-28.8-64-64-64zM128 448c-35.346 0-64-28.654-64-64s28.654-64 64-64 64 28.654 64 64-28.652 64-64 64zM704 896h-384v-320h384v320z"></path>');
-};
-},{}],42:[function(require,module,exports){
-"use strict";
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- * SVG icon by https://icomoon.io/app/#/select
- *
- * @module panel
- * @class Panel
- * @since 0.0.1
-*/
-
-require('../css/alert.css');
-module.exports = function (window) {
-    window.document.defineIcon('question', 1024, 1024, '<path class="path1" d="M512 786.286v-109.714q0-8-5.143-13.143t-13.143-5.143h-109.714q-8 0-13.143 5.143t-5.143 13.143v109.714q0 8 5.143 13.143t13.143 5.143h109.714q8 0 13.143-5.143t5.143-13.143zM658.286 402.286q0-50.286-31.714-93.143t-79.143-66.286-97.143-23.429q-138.857 0-212 121.714-8.571 13.714 4.571 24l75.429 57.143q4 3.429 10.857 3.429 9.143 0 14.286-6.857 30.286-38.857 49.143-52.571 19.429-13.714 49.143-13.714 27.429 0 48.857 14.857t21.429 33.714q0 21.714-11.429 34.857t-38.857 25.714q-36 16-66 49.429t-30 71.714v20.571q0 8 5.143 13.143t13.143 5.143h109.714q8 0 13.143-5.143t5.143-13.143q0-10.857 12.286-28.286t31.143-28.286q18.286-10.286 28-16.286t26.286-20 25.429-27.429 16-34.571 7.143-46.286zM877.714 512q0 119.429-58.857 220.286t-159.714 159.714-220.286 58.857-220.286-58.857-159.714-159.714-58.857-220.286 58.857-220.286 159.714-159.714 220.286-58.857 220.286 58.857 159.714 159.714 58.857 220.286z"></path>');
-};
-},{"../css/alert.css":44}],43:[function(require,module,exports){
-"use strict";
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- *
- * @module icons
- * @class Icons
- * @since 0.0.1
-*/
-
-require('polyfill/polyfill-base.js');
-require('js-ext/lib/string.js');
-require('./css/base.css');
-
-var NAME = '[icons]: ',
-    createHashMap = require('js-ext/extra/hashmap.js').createMap;
-
-module.exports = function (window) {
-
-    var DOCUMENT = window.document,
-        Icons, Event, iconContainer, upgradeDOM, upgradeIconElement;
-
-    window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
-
-/*jshint boss:true */
-    if (Icons=window._ITSAmodules.Icons) {
-/*jshint boss:false */
-        return Icons; // Dialog was already created
-    }
-
-    require('vdom')(window);
-    Event = require('event-dom')(window);
-
-    // Start with inserting the `svg-container` which holds all definitions
-    // will be inserted as a system-node:
-    iconContainer = DOCUMENT.body.getElement('>#itsa-icons-container', true) || DOCUMENT.body.addSystemElement('<svg id="itsa-icons-container"></svg>');
-
-    /**
-     * Upgrades the specified i-element into a svg-icon.
-     *
-     * @method upgradeIconElement
-     * @param element {HTMLElement}
-     * @protected
-     * @since 0.0.1
-     */
-    upgradeIconElement = function(element) {
-        // `element` is supposed to have the form: icon-`iconname`
-        var iconName = element.getAttr('icon');
-        element.empty(true, true);
-        element.addSystemElement('<svg><use xlink:href="#itsa-'+iconName+'-icon"></use></svg>'); // silent by default
-    };
-
-    /**
-     * Upgrades all i-elements that have an `icon`-attribute set.
-     * Will render them into svg-icons.
-     *
-     * @method upgradeDOM
-     * @protected
-     * @since 0.0.1
-     */
-    upgradeDOM = function() {
-        var upgrade = function(vnode) {
-            var vChildren = vnode.vChildren,
-                len = vChildren.length,
-                i, vChild;
-            for (i=0; i<len; i++) {
-                vChild = vChildren[i];
-                if ((vChild.tag==='I') && vChild.attrs && vChild.attrs.icon) {
-                    upgradeIconElement(vChild.domNode);
-                }
-                else {
-                    upgrade(vChild);
-                }
-            }
-        };
-        upgrade(DOCUMENT.body.vnode);
-    };
-
-    Event.after(
-        ['UI:nodeinsert', 'UI:attributechange', 'UI:attributeinsert'],
-        function(e) {
-            upgradeIconElement(e.target);
-        },
-        function(e) {
-            var vnode = e.target.vnode;
-            return (vnode.tag==='I') && vnode.attrs && vnode.attrs.icon;
-        }
-    );
-
-    Event.after(
-        'UI:attributeremove',
-        function(e) {
-            var node = e.target;
-            node.empty(true, true);
-        },
-        function(e) {
-            return (e.target.vnode.tag==='I') && e.changed.contains('icon');
-        }
-    );
-
-    /**
-     * Defines a new svg-icon. With this icon-definition, icons can be used by usinf i-elements
-     * with the attribute: icon="iconname".
-     *
-     * @method defineIcon
-     * @for document
-     * @param iconName {String} unique iconname, which will be used with the attribute: icon="iconname"
-     * @param viewBoxWidth {Number} pixels of the svg's viewBoxWidth
-     * @param viewBoxHeight {Number} pixels of the svg's viewBoxHeight
-     * @param svgContent {String} svg;s innercontent
-     * @chainable
-     * @since 0.0.1
-     */
-    DOCUMENT.defineIcon = function(iconName, viewBoxWidth, viewBoxHeight, svgContent) {
-        var viewBoxDimension = '0 0 ',
-            iconId, currentDefinition;
-        viewBoxDimension = '0 0 '+viewBoxWidth+' '+viewBoxHeight;
-        iconId = 'itsa-'+iconName.toLowerCase()+'-icon';
-        currentDefinition = iconContainer.getElement('#'+iconId);
-        if (currentDefinition) {
-            currentDefinition.setHTML(svgContent);
-        }
-        else {
-            iconContainer.append('<symbol id="'+iconId+'" viewBox="'+viewBoxDimension+'">'+svgContent+'</symbol>');
-        }
-        return this;
-    };
-
-    upgradeDOM();
-
-    window._ITSAmodules.Icons = true;
-};
-},{"./css/base.css":45,"event-dom":21,"js-ext/extra/hashmap.js":63,"js-ext/lib/string.js":75,"polyfill/polyfill-base.js":88,"vdom":107}],44:[function(require,module,exports){
-var css = "#itsa-alert-icon {\n    fill: #E3A900;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],45:[function(require,module,exports){
-var css = "#itsa-icons-container {\n    display: none; !important;\n}\n\ni[icon] {\n    display: inline-block;\n    vertical-align: baseline;\n    padding: 0;\n    margin: 0;\n}\n\ni[icon] >svg {\n    height: 1em;\n    width: 1em;\n    vertical-align: middle;\n}\n\nbutton.itsa-icon {\n    padding: 0.5em;\n}\n\nbutton.itsa-iconleft {\n    padding-left: 0.75em;\n}\n\nbutton.itsa-iconright {\n    padding-right: 0.75em;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],46:[function(require,module,exports){
-var css = "#itsa-error-icon {\n  fill: #960500;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],47:[function(require,module,exports){
-var css = "#itsa-radar-anim-icon g {\n  stroke: #000;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],48:[function(require,module,exports){
-var css = "#itsa-spinnercircle-anim-icon circle {\n  fill: #000;\n}\n\n#itsa-spinnercircle-anim-icon g {\n  stroke: #000;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],49:[function(require,module,exports){
-"use strict";
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- *
- * @module panel
- * @class Panel
- * @since 0.0.1
-*/
-
-module.exports = function (window) {
-    window.document.defineIcon('audio-anim', 55, 80, '<g transform="matrix(1 0 0 -1 0 80)"><rect width="10" height="20" rx="3"><animate attributeName="height" begin="0s" dur="4.3s" values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20" calcMode="linear" repeatCount="indefinite" /></rect><rect x="15" width="10" height="80" rx="3"><animate attributeName="height" begin="0s" dur="2s" values="80;55;33;5;75;23;73;33;12;14;60;80" calcMode="linear" repeatCount="indefinite" /></rect><rect x="30" width="10" height="50" rx="3"><animate attributeName="height" begin="0s" dur="1.4s" values="50;34;78;23;56;23;34;76;80;54;21;50" calcMode="linear" repeatCount="indefinite" /></rect><rect x="45" width="10" height="30" rx="3"><animate attributeName="height" begin="0s" dur="2s" values="30;45;13;80;56;72;45;76;34;23;67;30" calcMode="linear" repeatCount="indefinite" /></rect></g>');
-};
-},{}],50:[function(require,module,exports){
-"use strict";
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- *
- * @module panel
- * @class Panel
- * @since 0.0.1
-*/
-
-module.exports = function (window) {
-    window.document.defineIcon('grid-anim', 105, 105, '<circle cx="12.5" cy="12.5" r="12.5"><animate attributeName="fill-opacity" begin="0s" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="12.5" cy="52.5" r="12.5" fill-opacity=".5"><animate attributeName="fill-opacity" begin="100ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="52.5" cy="12.5" r="12.5"><animate attributeName="fill-opacity" begin="300ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="52.5" cy="52.5" r="12.5"><animate attributeName="fill-opacity" begin="600ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="92.5" cy="12.5" r="12.5"><animate attributeName="fill-opacity" begin="800ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="92.5" cy="52.5" r="12.5"><animate attributeName="fill-opacity" begin="400ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="12.5" cy="92.5" r="12.5"><animate attributeName="fill-opacity" begin="700ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="52.5" cy="92.5" r="12.5"><animate attributeName="fill-opacity" begin="500ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="92.5" cy="92.5" r="12.5"><animate attributeName="fill-opacity" begin="200ms" dur="1s" values="1;.2;1" calcMode="linear" repeatCount="indefinite" /></circle>');
-};
-},{}],51:[function(require,module,exports){
-"use strict";
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- *
- * @module panel
- * @class Panel
- * @since 0.0.1
-*/
-
-require('../css/radar-anim.css');
-module.exports = function (window) {
-    window.document.defineIcon('radar-anim', 45, 45, '<g fill="none" fill-rule="evenodd" transform="translate(1 1)" stroke-width="2"><circle cx="22" cy="22" r="6" stroke-opacity="0"><animate attributeName="r" begin="1.5s" dur="3s" values="6;22" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-opacity" begin="1.5s" dur="3s" values="1;0" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-width" begin="1.5s" dur="3s" values="2;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="22" cy="22" r="6" stroke-opacity="0"><animate attributeName="r" begin="3s" dur="3s" values="6;22" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-opacity" begin="3s" dur="3s" values="1;0" calcMode="linear" repeatCount="indefinite" /><animate attributeName="stroke-width" begin="3s" dur="3s" values="2;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="22" cy="22" r="8"><animate attributeName="r" begin="0s" dur="1.5s" values="6;1;2;3;4;5;6" calcMode="linear" repeatCount="indefinite" /></circle></g>');
-};
-},{"../css/radar-anim.css":47}],52:[function(require,module,exports){
-"use strict";
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- *
- * @module panel
- * @class Panel
- * @since 0.0.1
-*/
-
-module.exports = function (window) {
-    window.document.defineIcon('speaking-anim', 135, 140, '<rect y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.5s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.5s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="30" y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.25s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.25s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="60" width="15" height="140" rx="6"><animate attributeName="height" begin="0s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="90" y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.25s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.25s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect><rect x="120" y="10" width="15" height="120" rx="6"><animate attributeName="height" begin="0.5s" dur="1s" values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear" repeatCount="indefinite" /><animate attributeName="y" begin="0.5s" dur="1s" values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear" repeatCount="indefinite" /></rect>');
-};
-},{}],53:[function(require,module,exports){
-"use strict";
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- *
- * @module panel
- * @class Panel
- * @since 0.0.1
-*/
-
-require('../css/spinnercircle-anim.css');
-module.exports = function (window) {
-    window.document.defineIcon('spinnercircle-anim', 58, 58, '<g fill="none" fill-rule="evenodd"><g transform="translate(2 1)" stroke="#FFF" stroke-width="1.5"><circle cx="42.601" cy="11.462" r="5" fill-opacity="1" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="1;0;0;0;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="49.063" cy="27.063" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;1;0;0;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="42.601" cy="42.663" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;1;0;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="27" cy="49.125" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;1;0;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="11.399" cy="42.663" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;1;0;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="4.938" cy="27.063" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;1;0;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="11.399" cy="11.462" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;0;1;0" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="27" cy="5" r="5" fill-opacity="0" fill="#fff"><animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;0;0;1" calcMode="linear" repeatCount="indefinite" /></circle></g></g>');
-};
-},{"../css/spinnercircle-anim.css":48}],54:[function(require,module,exports){
-"use strict";
-/**
- * Creating floating Panel-nodes which can be shown and hidden.
- *
- *
- * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
- * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
- *
- *
- * @module panel
- * @class Panel
- * @since 0.0.1
-*/
-
-module.exports = function (window) {
-    require('./base.js')(window);
-    require('./base-icons/error.js')(window);
-    require('./base-icons/alert.js')(window);
-    require('./base-icons/exclamation.js')(window);
-    require('./base-icons/info.js')(window);
-    require('./base-icons/minus.js')(window);
-    require('./base-icons/plus.js')(window);
-    require('./base-icons/question.js')(window);
-    require('./base-icons/printer.js')(window);
-    require('./base-icons/cart.js')(window);
-    require('./extra-animated-icons/audio-anim.js')(window);
-    require('./extra-animated-icons/speaking-anim.js')(window);
-    require('./extra-animated-icons/grid-anim.js')(window);
-    require('./extra-animated-icons/radar-anim.js')(window);
-    require('./extra-animated-icons/spinnercircle-anim.js')(window);
-};
-},{"./base-icons/alert.js":34,"./base-icons/cart.js":35,"./base-icons/error.js":36,"./base-icons/exclamation.js":37,"./base-icons/info.js":38,"./base-icons/minus.js":39,"./base-icons/plus.js":40,"./base-icons/printer.js":41,"./base-icons/question.js":42,"./base.js":43,"./extra-animated-icons/audio-anim.js":49,"./extra-animated-icons/grid-anim.js":50,"./extra-animated-icons/radar-anim.js":51,"./extra-animated-icons/speaking-anim.js":52,"./extra-animated-icons/spinnercircle-anim.js":53}],55:[function(require,module,exports){
+},{"./event-base.js":51,"./event-emitter.js":52,"./event-listener.js":53}],55:[function(require,module,exports){
 
 "use strict";
 
@@ -17595,7 +17595,7 @@ require('polyfill/lib/promise.js');
         return;
     }
 
-    Event = require('event');
+    Event = require('itsa-event');
 
     messages = {
         /**
@@ -17767,7 +17767,7 @@ require('polyfill/lib/promise.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"event":31,"js-ext":67,"js-ext/extra/hashmap.js":63,"polyfill":88,"polyfill/lib/promise.js":85,"utils":95}],77:[function(require,module,exports){
+},{"itsa-event":54,"js-ext":67,"js-ext/extra/hashmap.js":63,"polyfill":88,"polyfill/lib/promise.js":85,"utils":95}],77:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18872,7 +18872,7 @@ module.exports = function (window) {
 
     return Panel;
 };
-},{"./css/panel.css":78,"drag":20,"event-mobile":26,"focusmanager":33,"js-ext/extra/hashmap.js":63,"js-ext/extra/lightmap.js":64,"js-ext/lib/object.js":73,"js-ext/lib/string.js":75,"node-plugin":77,"polyfill":88,"scrollable":91,"useragent":94,"vdom":107,"window-ext":108}],80:[function(require,module,exports){
+},{"./css/panel.css":78,"drag":20,"event-mobile":26,"focusmanager":29,"js-ext/extra/hashmap.js":63,"js-ext/extra/lightmap.js":64,"js-ext/lib/object.js":73,"js-ext/lib/string.js":75,"node-plugin":77,"polyfill":88,"scrollable":91,"useragent":94,"vdom":107,"window-ext":108}],80:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -19507,8 +19507,8 @@ var NAME = '[uploader]: ',
     TEMPLATE = '<input class="uploader-hidden-input" type="file">';
 
 module.exports = function (window) {
-    var Event = require('event'),
-        IO = require("io/extra/io-filetransfer.js")(window),
+    var Event = require('itsa-event'),
+        IO = require("itsa-io/extra/io-filetransfer.js")(window),
         Uploader;
 
     // to prevent multiple Uploader instances
@@ -19996,7 +19996,7 @@ module.exports = function (window) {
 
     return Uploader;
 };
-},{"./css/uploader.css":92,"event":31,"io/extra/io-filetransfer.js":56,"js-ext/js-ext.js":68,"polyfill/polyfill-base.js":88,"utils":95}],94:[function(require,module,exports){
+},{"./css/uploader.css":92,"itsa-event":54,"itsa-io/extra/io-filetransfer.js":56,"js-ext/js-ext.js":68,"polyfill/polyfill-base.js":88,"utils":95}],94:[function(require,module,exports){
 "use strict";
 
 /**
@@ -30552,7 +30552,7 @@ process.umask = function() { return 0; };
     require('window-ext')(window);
 
     var fakedom = window.navigator.userAgent==='fake',
-        Event = fakedom ? require('event') : require('event-mobile')(window),
+        Event = fakedom ? require('itsa-event') : require('event-mobile')(window),
         io_config = {
             // timeout: 3000,
             debug: true,
@@ -30605,10 +30605,10 @@ process.umask = function() { return 0; };
      * @type Object
      * @static
     */
-    ITSA.IO = require('io');
+    ITSA.IO = require('itsa-io');
     ITSA.IO.config.merge(io_config);
-    require('io/extra/io-cors-ie9.js')(window);
-    require('io/extra/io-xml.js')(window);
+    require('itsa-io/extra/io-cors-ie9.js')(window);
+    require('itsa-io/extra/io-xml.js')(window);
 
     /**
      * Reference to the [Uploader](uploader.html) object
@@ -30641,5 +30641,5 @@ process.umask = function() { return 0; };
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"client-db":6,"client-storage":9,"constrain":10,"css":14,"dialog":16,"drag-drop":18,"event":31,"event-dom/extra/blurnode.js":22,"event-dom/extra/focusnode.js":23,"event-dom/extra/hover.js":24,"event-dom/extra/valuechange.js":25,"event-mobile":26,"focusmanager":33,"icons":54,"io":60,"io/extra/io-cors-ie9.js":55,"io/extra/io-xml.js":59,"js-ext/extra/hashmap.js":63,"js-ext/extra/reserved-words.js":66,"js-ext/js-ext.js":68,"messages":76,"node-plugin":77,"node-win":undefined,"panel":79,"polyfill/polyfill.js":89,"scrollable":91,"uploader":93,"useragent":94,"utils":95,"vdom":107,"window-ext":108}]},{},[]);
+},{"client-db":6,"client-storage":9,"constrain":10,"css":14,"dialog":16,"drag-drop":18,"event-dom/extra/blurnode.js":22,"event-dom/extra/focusnode.js":23,"event-dom/extra/hover.js":24,"event-dom/extra/valuechange.js":25,"event-mobile":26,"focusmanager":29,"icons":50,"itsa-event":54,"itsa-io":60,"itsa-io/extra/io-cors-ie9.js":55,"itsa-io/extra/io-xml.js":59,"js-ext/extra/hashmap.js":63,"js-ext/extra/reserved-words.js":66,"js-ext/js-ext.js":68,"messages":76,"node-plugin":77,"node-win":undefined,"panel":79,"polyfill/polyfill.js":89,"scrollable":91,"uploader":93,"useragent":94,"utils":95,"vdom":107,"window-ext":108}]},{},[]);
 ITSA = require('itsa');

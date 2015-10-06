@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/itsa-io/extra/io-filetransfer.js - Itsa</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title="Itsa"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/Array.html">Array</a></li>
+            
+                <li><a href="../classes/BaseClass.html">BaseClass</a></li>
+            
+                <li><a href="../classes/Classes.html">Classes</a></li>
+            
+                <li><a href="../classes/Constrain.html">Constrain</a></li>
+            
+                <li><a href="../classes/DB.html">DB</a></li>
+            
+                <li><a href="../classes/DD.html">DD</a></li>
+            
+                <li><a href="../classes/Dialog.html">Dialog</a></li>
+            
+                <li><a href="../classes/document.html">document</a></li>
+            
+                <li><a href="../classes/Element.html">Element</a></li>
+            
+                <li><a href="../classes/ElementArray.html">ElementArray</a></li>
+            
+                <li><a href="../classes/Event.html">Event</a></li>
+            
+                <li><a href="../classes/Event.Emitter.html">Event.Emitter</a></li>
+            
+                <li><a href="../classes/Event.Listener.html">Event.Listener</a></li>
+            
+                <li><a href="../classes/FocusManager.html">FocusManager</a></li>
+            
+                <li><a href="../classes/Function.html">Function</a></li>
+            
+                <li><a href="../classes/HTMLButtonElement.html">HTMLButtonElement</a></li>
+            
+                <li><a href="../classes/HTMLElement.html">HTMLElement</a></li>
+            
+                <li><a href="../classes/HTMLInputElement.html">HTMLInputElement</a></li>
+            
+                <li><a href="../classes/Icons.html">Icons</a></li>
+            
+                <li><a href="../classes/IndexedDB.html">IndexedDB</a></li>
+            
+                <li><a href="../classes/IO.html">IO</a></li>
+            
+                <li><a href="../classes/ITSA.html">ITSA</a></li>
+            
+                <li><a href="../classes/JSON.html">JSON</a></li>
+            
+                <li><a href="../classes/LocalStorage.html">LocalStorage</a></li>
+            
+                <li><a href="../classes/Math.html">Math</a></li>
+            
+                <li><a href="../classes/Messages.html">Messages</a></li>
+            
+                <li><a href="../classes/Node.html">Node</a></li>
+            
+                <li><a href="../classes/NodePlugin.html">NodePlugin</a></li>
+            
+                <li><a href="../classes/NS-vdom.html">NS-vdom</a></li>
+            
+                <li><a href="../classes/Object.html">Object</a></li>
+            
+                <li><a href="../classes/Panel.html">Panel</a></li>
+            
+                <li><a href="../classes/Promise.html">Promise</a></li>
+            
+                <li><a href="../classes/Scrollable.html">Scrollable</a></li>
+            
+                <li><a href="../classes/Storage.html">Storage</a></li>
+            
+                <li><a href="../classes/String.html">String</a></li>
+            
+                <li><a href="../classes/SVGElement.html">SVGElement</a></li>
+            
+                <li><a href="../classes/Uploader.html">Uploader</a></li>
+            
+                <li><a href="../classes/USERAGENT.html">USERAGENT</a></li>
+            
+                <li><a href="../classes/Utils.html">Utils</a></li>
+            
+                <li><a href="../classes/vnode.html">vnode</a></li>
+            
+                <li><a href="../classes/window.html">window</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/attribute-extractor.html">attribute-extractor</a></li>
+            
+                <li><a href="../modules/client-db.html">client-db</a></li>
+            
+                <li><a href="../modules/client-storage.html">client-storage</a></li>
+            
+                <li><a href="../modules/constrain.html">constrain</a></li>
+            
+                <li><a href="../modules/dialog.html">dialog</a></li>
+            
+                <li><a href="../modules/drag.html">drag</a></li>
+            
+                <li><a href="../modules/drag-drop.html">drag-drop</a></li>
+            
+                <li><a href="../modules/element-array.html">element-array</a></li>
+            
+                <li><a href="../modules/event.html">event</a></li>
+            
+                <li><a href="../modules/event-blurnode.html">event-blurnode</a></li>
+            
+                <li><a href="../modules/event-dom.html">event-dom</a></li>
+            
+                <li><a href="../modules/event-emitter.html">event-emitter</a></li>
+            
+                <li><a href="../modules/event-focusnode.html">event-focusnode</a></li>
+            
+                <li><a href="../modules/event-hover.html">event-hover</a></li>
+            
+                <li><a href="../modules/event-listener.html">event-listener</a></li>
+            
+                <li><a href="../modules/event-mobile.html">event-mobile</a></li>
+            
+                <li><a href="../modules/extend-document.html">extend-document</a></li>
+            
+                <li><a href="../modules/extend-element.html">extend-element</a></li>
+            
+                <li><a href="../modules/extra_classes.js.html">extra/classes.js</a></li>
+            
+                <li><a href="../modules/focusmanager.html">focusmanager</a></li>
+            
+                <li><a href="../modules/html-parser.html">html-parser</a></li>
+            
+                <li><a href="../modules/icons.html">icons</a></li>
+            
+                <li><a href="../modules/indexeddb.html">indexeddb</a></li>
+            
+                <li><a href="../modules/io.html">io</a></li>
+            
+                <li><a href="../modules/io-assets.html">io-assets</a></li>
+            
+                <li><a href="../modules/io-cors.html">io-cors</a></li>
+            
+                <li><a href="../modules/io-filetransfer.html">io-filetransfer</a></li>
+            
+                <li><a href="../modules/io-jsonp.html">io-jsonp</a></li>
+            
+                <li><a href="../modules/io-transfer.html">io-transfer</a></li>
+            
+                <li><a href="../modules/io-xml.html">io-xml</a></li>
+            
+                <li><a href="../modules/itsa.build.html">itsa.build</a></li>
+            
+                <li><a href="../modules/js-ext.html">js-ext</a></li>
+            
+                <li><a href="../modules/lib_array.js.html">lib/array.js</a></li>
+            
+                <li><a href="../modules/lib_function.js.html">lib/function.js</a></li>
+            
+                <li><a href="../modules/lib_json.js.html">lib/json.js</a></li>
+            
+                <li><a href="../modules/lib_math.js.html">lib/math.js</a></li>
+            
+                <li><a href="../modules/lib_object.js.html">lib/object.js</a></li>
+            
+                <li><a href="../modules/lib_promise.s.html">lib/promise.s</a></li>
+            
+                <li><a href="../modules/lib_string.js.html">lib/string.js</a></li>
+            
+                <li><a href="../modules/localstorage.html">localstorage</a></li>
+            
+                <li><a href="../modules/messages.html">messages</a></li>
+            
+                <li><a href="../modules/node-parser.html">node-parser</a></li>
+            
+                <li><a href="../modules/node-plugin.html">node-plugin</a></li>
+            
+                <li><a href="../modules/node-win.html">node-win</a></li>
+            
+                <li><a href="../modules/panel.html">panel</a></li>
+            
+                <li><a href="../modules/scrollable.html">scrollable</a></li>
+            
+                <li><a href="../modules/uploader.html">uploader</a></li>
+            
+                <li><a href="../modules/useragent.html">useragent</a></li>
+            
+                <li><a href="../modules/utils.html">utils</a></li>
+            
+                <li><a href="../modules/vdom.html">vdom</a></li>
+            
+                <li><a href="../modules/vdom-ns.html">vdom-ns</a></li>
+            
+                <li><a href="../modules/vnode.html">vnode</a></li>
+            
+                <li><a href="../modules/window-ext.html">window-ext</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/itsa-io/extra/io-filetransfer.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+
+/**
+ * Extends io by adding the method &#x60;sendBlob&#x60; to it.
+ *
+ * @example
+ * var IO = require(&quot;io/extra/io-filetransfer.js&quot;)(window);
+ *
+ *
+ * &lt;i&gt;Copyright (c) 2015 ITSA - https://github.com/itsa&lt;/i&gt;
+ * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
+ *
+ * @module io
+ * @submodule io-filetransfer
+ * @class IO
+ * @since 0.0.1
+*/
+
+require(&#x27;js-ext/lib/object.js&#x27;);
+require(&#x27;js-ext/lib/promise.js&#x27;);
+
+var NAME = &#x27;[io-filetransfer]: &#x27;,
+    GENERATOR_ID = &#x27;ITSA-FILETRANS&#x27;,
+    MIME_BLOB = &#x27;application/octet-stream&#x27;,
+    CONTENT_TYPE = &#x27;Content-Type&#x27;,
+    createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap,
+    idGenerator = require(&#x27;utils&#x27;).idGenerator,
+    SPINNER_ICON = &#x27;spinnercircle-anim&#x27;,
+    DEFAULT_TIMEOUT = 300000, // 5 minutes
+    MIN_SHOWUP = 500,
+    REVIVER = function(key, value) {
+        return ((typeof value===&#x27;string&#x27;) &amp;&amp; value.toDate()) || value;
+    },
+    ABORTED = &#x27;Request aborted&#x27;,
+    KB_25 = 25 * 1024, // 25kb
+    KB_100 = 100 * 1024, // 100kb
+    KB_256 = 256 * 1024, // 256kb
+    MB_1 = 1025 * 1024, // 1Mb
+    MB_20 = 20 * MB_1; // 20Mb
+
+
+module.exports = function (window) {
+
+    window._ITSAmodules || Object.protectedProp(window, &#x27;_ITSAmodules&#x27;, createHashMap());
+
+    if (window._ITSAmodules.IO_Filetransfer) {
+        return window._ITSAmodules.IO_Filetransfer; // IO_Filetransfer was already created
+    }
+
+    var IO = require(&#x27;../io.js&#x27;)(window),
+        clientIdPromiseOriginal, clientIdPromise, _entendXHR, _progressHandle;
+
+    window._ITSAmodules.IO_Filetransfer = IO;
+
+
+    /*
+     * Adds properties to the xhr-object: in case of streaming,
+     * xhr._isStream is set and xhr._isXDR might be set in case of IE&lt;10
+     *
+     * @method _entendXHR
+     * @param xhr {Object} containing the xhr-instance
+     * @param props {Object} the propertie-object that is added too xhr and can be expanded
+     * @param options {Object} options of the request
+     * @private
+    */
+    _entendXHR = function(xhr, props, options /*, promise */) {
+        props._isUpload = (typeof options.progressfn === &#x27;function&#x27;);
+        return xhr;
+    },
+
+    /*
+     * Adds extra initialisation of the xhr-object: in case of streaming,
+     * an &#x60;onprogress&#x60;-handler is set up
+     *
+     * @method _progressHandle
+     * @param xhr {Object} containing the xhr-instance
+     * @param promise {Promise} reference to the Promise created by xhr
+     * @private
+    */
+    _progressHandle = function(xhr, promise /*, headers, method */) {
+        if (xhr._isUpload) {
+            console.log(NAME, &#x27;progressHandle upload&#x27;);
+            xhr.upload.onprogress = function(e) {
+                if (e.lengthComputable) {
+                    // promise.callback(data);
+                    console.log(&#x27;file upload-progress: &#x27;+e.loaded+&#x27;/&#x27;+e.total);
+                    promise._loaded = e.loaded;
+                    promise._notify();
+                }
+            };
+        }
+    },
+
+    /**
+     * Is send to the server and expects an unique id which can be used for its file-transactions.
+     *
+     * @method _getClientId
+     * @private
+     * @param url {String} URL of the resource server
+     * @return {Promise}
+     * on success:
+        * Unique clientId
+     * on failure an Error object
+        * reason {Error}
+    */
+    IO._getClientId = function(url) {
+        var options;
+        // check for existance, but also if it was not rejected --&gt; in that case we need to reactivate
+        // (the server might have been coming up again)
+        if (clientIdPromiseOriginal &amp;&amp; !clientIdPromiseOriginal.isRejected()) {
+            return clientIdPromise;
+        }
+        options = {
+            url: url,
+            method: &#x27;GET&#x27;,
+            data: {
+                ts: Date.now() // prevent caching
+            }
+        };
+        clientIdPromiseOriginal = this.request(options);
+        clientIdPromise = clientIdPromiseOriginal.then(function(xhrResponse) {
+            return xhrResponse.responseText;
+        }).catch(function(err) {
+            console.warn(err);
+            throw new Error(err);
+        });
+        return clientIdPromise;
+    };
+
+    /**
+     * Sends a &#x60;blob&#x60; by using an AJAX PUT request.
+     * Additional parameters can be through the &#x60;params&#x60; argument.
+     *
+     * The Promise gets fulfilled if the server responses with &#x60;STATUS-CODE&#x60; in the 200-range (excluded 204).
+     * It will be rejected if a timeout occurs (see &#x60;options.timeout&#x60;), or if &#x60;xhr.abort()&#x60; gets invoked.
+     *
+     * Note: &#x60;params&#x60; should be a plain object with only primitive types which are transformed into key/value pairs.
+     *
+     * @method sendBlob
+     * @param url {String} URL of the resource server
+     * @param blob {blob} blob (data) representing the file to be send. Typically &#x60;HTMLInputElement.files[0]&#x60;
+     * @param [params] {Object} additional parameters. NOTE: this object will be &#x60;stringified&#x60; set a HEADER: &#x60;x-data&#x60; on the request!
+     *        should be a plain object with only primitive types which are transformed into key/value pairs.
+     * @param [options] {Object}
+     *    @param [options.sync=false] {boolean} By default, all requests are sent asynchronously. To send synchronous requests, set to true.
+     *    @param [options.headers] {Object} HTTP request headers.
+     *    @param [options.timeout=300000] {Number} to timeout the request, leading into a rejected Promise. Defaults to 5 minutes
+     *    @param [options.progressfn] {Function} callbackfunction in case you want to process upload-status.
+     *           Function has 3 parameters: total, loaded and target (io-promise)
+     *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
+     *    @param [options.parseJSONDate=false] {boolean} Whether the server returns JSON-stringified data which has Date-objects.
+     *    @param [options.stayActive] {Number} minimal time the request should be pending, even if IO has finished
+     * @return {Promise}
+     * on success:
+        * Object any received data
+     * on failure an Error object
+        * reason {Error}
+    */
+    IO.sendBlob = function (url, blob, params, options) {
+        console.log(NAME, &#x27;get --&gt; &#x27;+url);
+        var instance = this,
+            start = 0,
+            promiseHash = [],
+            ioHash = [],
+            i = 0,
+            chunkSize, end, size, returnPromise, filename, headers, notify,
+            ioPromise, partialSize, notifyResolved, hashPromise, responseObject, setXHR;
+        if (!IO.supportXHR2) {
+            return Promise.reject(&#x27;This browser does not support fileupload&#x27;);
+        }
+        if (!blob instanceof window.Blob) {
+            return Promise.reject(&#x27;No proper fileobject&#x27;);
+        }
+        if ((typeof url!==&#x27;string&#x27;) || (url.length===0)) {
+            return Promise.reject(&#x27;No valid url specified&#x27;);
+        }
+
+        // send a notification to &#x60;progressfn&#x60; whenever a chunk gets intermediate update
+        // by &#x60;xhr.upload.onprogress&#x60;
+        notify = function() {
+            var len = promiseHash.length,
+                totalLoaded = 0,
+                i, promise;
+            for (i=0; i&lt;len; i++){
+                promise = promiseHash[i];
+                totalLoaded += promise._loaded || 0;
+            }
+            returnPromise.callback({
+                total: size,
+                loaded: totalLoaded,
+                target: returnPromise
+            });
+        };
+
+        // send a notification to &#x60;progressfn&#x60; whenever a chunk finishes
+        notifyResolved = function(promise, loaded) {
+            promise.then(function() {
+                promise._loaded = loaded;
+                promise._notify();
+            });
+        };
+
+        // sets the &#x60;right&#x60; xhr in the returned promise. That is: the server-response that holds the final data
+        // and not the intermediate response.
+        setXHR = function(xhr) {
+            var responseText = xhr.responseText,
+                response;
+            try {
+                response = JSON.parse(responseText); // no reviver, we are only interested in the &#x60;status&#x60; property
+            }
+            catch(err) {
+                response = {};
+                console.warn(err);
+            }
+            response.status &amp;&amp; (response.status=response.status.toLowerCase());
+            if (response.status!==&#x27;busy&#x27;) {
+                if (options.parseJSONDate) {
+                    try {
+                        responseObject = JSON.parse(responseText, REVIVER);
+                    }
+                    catch(err) {
+                        console.warn(err);
+                        responseObject = {};
+                    }
+                }
+                else {
+                    responseObject = response;
+                }
+            }
+        };
+
+        options = Object.isObject(options) ? options.deepClone() : {};
+        options.timeout || (options.timeout=DEFAULT_TIMEOUT);
+        returnPromise = Promise.manage(options.progressfn);
+
+        filename = blob.name;
+        size = blob.size;
+        if (options.progressfn) {
+            // immediately start with processing 0%
+            returnPromise.callback({
+                total: size,
+                loaded: 0,
+                target: returnPromise
+            });
+        }
+
+        instance._getClientId(url).then(function(clientId) {
+            options.url = url;
+            options.method || (options.method=&#x27;PUT&#x27;);
+            options.url = url;
+            options.data = blob;
+            // delete hidden property &#x60;responseType&#x60;: don&#x27;t want accedentially to be used
+            delete options.responseType;
+
+            // Important: headers need to be deepCloned, otherwise all chuncks share the same headers
+            // and we dwant the last chunk to have different headers!
+            headers = options.headers ? options.headers.deepClone() : {};
+            // options.headers[CONTENT_TYPE] = blob.type || MIME_BLOB;
+            headers[&#x27;X-TransId&#x27;] = idGenerator(GENERATOR_ID);
+            headers[&#x27;X-ClientId&#x27;] = clientId;
+            headers[&#x27;X-Total-size&#x27;] = size;
+            headers[CONTENT_TYPE] = MIME_BLOB;
+
+            if (size&lt;=MB_1) {
+                chunkSize = KB_25;
+            }
+            else if (size&lt;=MB_20) {
+                chunkSize = KB_100;
+            }
+            else {
+                chunkSize = KB_256;
+            }
+            end = chunkSize;
+            partialSize = chunkSize;
+            while (start &lt; size) {
+                //push the fragments to an array
+                options.data = blob.slice(start, end);
+
+                start = end;
+                end = start + chunkSize;
+                headers[&#x27;X-Partial&#x27;]= ++i;
+                options.headers = headers.deepClone();
+                if (start&gt;=size) {
+                    // set the filename on the last request:
+                    options.headers[&#x27;X-Filename&#x27;] = filename || &#x27;blob&#x27;;
+                    Object.isObject(params) &amp;&amp; (options.headers[&#x27;x-data&#x27;]=JSON.stringify(params));
+                    partialSize = (size % chunkSize) || chunkSize;
+                }
+                //upload the fragment to the server:
+                ioPromise = instance.request(options);
+                if (options.progressfn) {
+                    ioPromise._notify = notify;
+                    notifyResolved(ioPromise, partialSize);
+                }
+                promiseHash.push(ioPromise); // needed to be able to call &#x60;abort&#x60;
+                // we need to inspect the response for status===&#x27;busy&#x27; to know which promise holds the final
+                // value and should be used as the returnvalue. Therefore, create &#x60;hashPromise&#x60;
+                hashPromise = ioPromise.then(setXHR);
+                ioHash.push(hashPromise);
+            }
+
+            Promise.all(ioHash).then(
+                function() {
+                    returnPromise.fulfill(responseObject);
+                },
+                function(e) {
+                    returnPromise.reject(e);
+                }
+            );
+        });
+
+        // set &#x60;abort&#x60; to the thennable-promise:
+        returnPromise.abort = function() {
+            promiseHash.forEach(function(partialIO) {
+                partialIO.abort();
+            });
+            returnPromise.reject(new Error(ABORTED));
+        };
+        return returnPromise;
+    };
+
+    IO._xhrList.push(_entendXHR);
+    IO._xhrInitList.push(_progressHandle);
+
+    return IO;
+};
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
