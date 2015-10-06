@@ -1,8 +1,8 @@
 ---
-module: io
+module: itsa-io
 maintainer: Marco Asbreuk
-title: Streamed IO.read()
-intro: "Get streamed dataobject from the server using ITSA.IO.read() using streamback."
+title: Streamed IO.readXML()
+intro: "Get streamed XML-object from the server using ITSA.IO.readXML() using streamback."
 ---
 
 <style type="text/css">
@@ -19,6 +19,9 @@ intro: "Get streamed dataobject from the server using ITSA.IO.read() using strea
         padding: 1em;
         min-height: 3.6em;
         background-color: #ddd;
+    }
+    #target-container div {
+        display: block;
     }
 </style>
 
@@ -47,8 +50,8 @@ Code-example:
         container = document.getElementById('target-container'),
         writeResponse, writeResponse, streamFn;
 
-    readyResponse = function(data) {
-        // `data` has all the data, but we don't use it here.
+    readyResponse = function(xml) {
+        // `xml` has all the complete xml-object, but we don't use it here.
         container.append('<br>READY');
     };
 
@@ -56,20 +59,16 @@ Code-example:
         container.setText(e.message);
     };
 
-    streamFn = function(data) {
-        // data should be an array
-        if (Array.isArray(data)) {
-            data.forEach(function(item) {
-                container.append(JSON.stringify(item)+'<br>');
-            });
-        }
+    streamFn = function(xml) {
+        // xml should be an xml-object
+        container.append(xml.documentElement.children);
     };
 
     ITSA.Event.after(
         'tap',
         function() {
             container.innerHTML = '';
-            ITSA.IO.read(url, {example: 1}, {streamback: streamFn}).then(readyResponse, errorResponse);
+            ITSA.IO.readXML(url, {example: 2}, {streamback: streamFn}).then(readyResponse, errorResponse);
         },
         '#button-get'
     );
@@ -82,8 +81,8 @@ Code-example:
         container = document.getElementById('target-container'),
         writeResponse, writeResponse, streamFn;
 
-    readyResponse = function(data) {
-        // `data` has all the data, but we don't use it here.
+    readyResponse = function(xml) {
+        // `xml` has all the complete xml-object, but we don't use it here.
         container.append('<br>READY');
     };
 
@@ -91,20 +90,16 @@ Code-example:
         container.setText(e.message);
     };
 
-    streamFn = function(data) {
-        // data should be an array
-        if (Array.isArray(data)) {
-            data.forEach(function(item) {
-                container.append(JSON.stringify(item)+'<br>');
-            });
-        }
+    streamFn = function(xml) {
+        // xml should be an xml-object
+        container.append(xml.documentElement.children);
     };
 
     ITSA.Event.after(
         'tap',
         function() {
             container.innerHTML = '';
-            ITSA.IO.read(url, {example: 1}, {streamback: streamFn}).then(readyResponse, errorResponse);
+            ITSA.IO.readXML(url, {example: 2}, {streamback: streamFn}).then(readyResponse, errorResponse);
         },
         '#button-get'
     );

@@ -12199,7 +12199,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 65,
+            "line": 64,
             "description": "Subscribes to a customEvent. The callback will be executed `after` the defaultFn.",
             "static": 1,
             "itemtype": "method",
@@ -12245,7 +12245,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 92,
+            "line": 91,
             "description": "Subscribes to a customEvent. The callback will be executed `before` the defaultFn.",
             "static": 1,
             "itemtype": "method",
@@ -12291,7 +12291,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 119,
+            "line": 118,
             "description": "Defines an emitterName into the instance (emitter).\nThis will add a protected property `_emitterName` to the instance.",
             "static": 1,
             "itemtype": "method",
@@ -12314,7 +12314,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 140,
+            "line": 139,
             "description": "Defines a CustomEvent. If the eventtype already exists, it will not be overridden,\nunless you force to assign with `.forceAssign()`\n\nThe returned object comes with 8 methods which can be invoked chainable:\n\n<ul>\n    <li>defaultFn() --> the default-function of the event</li>\n    <li>preventedFn() --> the function that should be invoked when the event is defaultPrevented</li>\n    <li>forceAssign() --> overrides any previous definition</li>\n    <li>unHaltable() --> makes the customEvent cannot be halted</li>\n    <li>unPreventable() --> makes the customEvent's defaultFn cannot be prevented</li>\n    <li>unSilencable() --> makes that emitters cannot make this event to perform silently (using e.silent)</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -12336,7 +12336,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 225,
+            "line": 224,
             "description": "Detaches (unsubscribes) the listener from the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -12360,7 +12360,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 243,
+            "line": 242,
             "description": "Detaches (unsubscribes) the listener from all customevents.",
             "static": 1,
             "itemtype": "method",
@@ -12378,7 +12378,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 267,
+            "line": 266,
             "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()`, `a.preventDefault()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Finally, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n<ul>",
             "static": 1,
             "itemtype": "method",
@@ -12411,7 +12411,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 324,
+            "line": 323,
             "description": "Creates a notifier for the customEvent.\nYou can use this to create delayed `defineEvents`. When the customEvent is called, the callback gets invoked\n(even before the subsrcibers). Use this callback for delayed customEvent-definitions.\n\nYou may use wildcards for both emitterName and eventName.\n\nYou **must** specify the full `emitterName:eventName` syntax.\nThe module `core-event-dom` uses `notify` to auto-define DOM-events (UI:*).",
             "static": 1,
             "itemtype": "method",
@@ -12447,7 +12447,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 362,
+            "line": 361,
             "description": "Creates a detach-notifier for the customEvent.\nYou can use this to get informed whenever a subscriber detaches.\n\nUse **no** wildcards for the emitterName. You might use wildcards for the eventName. Without wildcards, the\nnotification will be unNotified (callback automaticly detached) on the first time the event occurs.\n\nYou **must** specify the full `emitterName:eventName` syntax.\nThe module `core-event-dom` uses `notify` to auto-define DOM-events (UI:*).",
             "static": 1,
             "itemtype": "method",
@@ -12483,7 +12483,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 400,
+            "line": 399,
             "description": "Subscribes to a customEvent. The callback will be executed `after` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
             "itemtype": "method",
@@ -12529,7 +12529,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 444,
+            "line": 443,
             "description": "Subscribes to a customEvent. The callback will be executed `before` the defaultFn.\nThe subscriber will be automaticly removed once the callback executed the first time.\nNo need to `detach()` (unless you want to undescribe before the first event)",
             "static": 1,
             "itemtype": "method",
@@ -12575,7 +12575,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 488,
+            "line": 487,
             "description": "Removes all event-definitions of an emitter, specified by its `emitterName`.\nWhen `emitterName` is not set, ALL event-definitions will be removed.",
             "static": 1,
             "itemtype": "method",
@@ -12594,7 +12594,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 518,
+            "line": 517,
             "description": "Removes the event-definition of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -12612,7 +12612,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 531,
+            "line": 530,
             "description": "unNotifies (unsubscribes) the notifier of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -12630,7 +12630,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 544,
+            "line": 543,
             "description": "unNotifies (unsubscribes) the detach-notifier of the specified customEvent.",
             "static": 1,
             "itemtype": "method",
@@ -12648,7 +12648,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 561,
+            "line": 560,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:tap'</li>\n    <li>'tap' --> alias for 'UI:tap'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -12700,7 +12700,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 633,
+            "line": 632,
             "description": "Creates a subscriber to the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:tap'</li>\n    <li>'tap' --> alias for 'UI:tap'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -12752,7 +12752,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 754,
+            "line": 753,
             "description": "Emits the event `eventName` on behalf of `emitter`, which becomes e.target in the eventobject.\nDuring this process, all subscribers and the defaultFn/preventedFn get an eventobject passed through.\nThe eventobject is created with at least these properties:\n\n<ul>\n    <li>e.target --> source that triggered the event (instance or DOM-node), specified by `emitter`</li>\n    <li>e.type --> eventName</li>\n    <li>e.emitter --> emitterName</li>\n    <li>e.status --> status-information:\n         <ul>\n              <li>e.status.ok --> `true|false` whether the event got executed (not halted or defaultPrevented)</li>\n              <li>e.status.defaultFn (optional) --> `true` if any defaultFn got invoked</li>\n              <li>e.status.preventedFn (optional) --> `true` if any preventedFn got invoked</li>\n              <li>e.status.halted (optional) --> `reason|true` if the event got halted and optional the why</li>\n              <li>e.status.defaultPrevented (optional) -->  `reason|true` if the event got defaultPrevented and optional the why</li>\n         </ul>\n    </li>\n</ul>\n\nThe optional `payload` is merged into the eventobject and could be used by the subscribers and the defaultFn/preventedFn.\nIf payload.silent is set true, the subscribers are not getting invoked: only the defaultFn.\n\nThe eventobject also has these methods:\n\n<ul>\n    <li>e.halt() --> stops immediate all actions: no mer subscribers are invoked, no defaultFn/preventedFn</li>\n    <li>e.preventDefault() --> instead of invoking defaultFn, preventedFn will be invoked. No aftersubscribers</li>\n</ul>\n\n<ul>\n    <li>First, before-subscribers are invoked: this is the place where you might call `e.halt()` or `a.preventDefault()`</li>\n    <li>Next, defaultFn or preventedFn gets invoked, depending on whether e.halt() or a.preventDefault() has been called</li>\n    <li>Finally, after-subscribers get invoked (unless e.halt() or a.preventDefault() has been called)</li>\n<ul>",
             "static": 1,
             "itemtype": "method",
@@ -12798,6 +12798,12 @@
                     "type": "Boolean",
                     "optional": true,
                     "optdefault": "false"
+                },
+                {
+                    "name": "payloadGetters",
+                    "description": "additional payload, where getters inside `payload` are defined as object-values\n                     this might be needed, in cae the `payload` has getters that you need to maintain (getters on `payload` are ignored)",
+                    "type": "Object",
+                    "optional": true
                 }
             ],
             "return": {
@@ -12810,7 +12816,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 902,
+            "line": 914,
             "description": "Does the actual invocation of a subscriber.",
             "itemtype": "method",
             "name": "_invokeSubs",
@@ -12852,7 +12858,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 952,
+            "line": 964,
             "description": "Removes a subscriber from the specified customEvent. The customEvent must conform the syntax:\n`emitterName:eventName`.",
             "static": 1,
             "itemtype": "method",
@@ -12888,7 +12894,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1017,
+            "line": 1029,
             "description": "Removes subscribers from the multiple customevents. The customEvent must conform the syntax:\n`emitterName:eventName`. Wildcard `*` may be used for both `emitterName` as well as `eventName`\nIf `emitterName` is not defined, `UI` is assumed.\n\nExamples of valid customevents:\n\n<ul>\n    <li>'redmodel:save'</li>\n    <li>'UI:tap'</li>\n    <li>'tap' --> alias for 'UI:tap'</li>\n    <li>'`*`:click' --> careful: will listen to both UIs and non-UI- click-events</li>\n    <li>'redmodel:`*`'</li>\n    <li>'`*`:`*`'</li>\n</ul>",
             "static": 1,
             "itemtype": "method",
@@ -12913,7 +12919,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1072,
+            "line": 1084,
             "description": "Adds a property to the default eventobject's prototype which passes through all eventcycles.\nGoes through Object.defineProperty with configurable, enumerable and writable\nall set to false.",
             "itemtype": "method",
             "name": "_setEventObjProperty",
@@ -12938,7 +12944,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1092,
+            "line": 1104,
             "description": "Objecthash containing all defined custom-events\nwhich has a structure like this:\n\n_ce = {\n    'UI:tap': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...}\n    },\n    'redmodel:save': {\n        preventable: true,\n        defaultFn: function(){...},\n        preventedFn: function(){...}\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -12952,7 +12958,21 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1122,
+            "line": 1134,
+            "description": "Objecthash containing all running Events.\nMeant for local registration inside _emit --> to prevent looping whenever a listener emits the same event.",
+            "itemtype": "property",
+            "name": "_runningEvents",
+            "default": "{}",
+            "type": "Object",
+            "access": "private",
+            "tagname": "",
+            "since": "0.0.1",
+            "class": "Event",
+            "module": "event"
+        },
+        {
+            "file": "src/event/event-base.js",
+            "line": 1151,
             "description": "Objecthash containing all defined before and after subscribers\nwhich has a structure like this (`b` represents `before` and `a` represents `after`)\nEvery item that gets in the array consist by itself of 3 properties:\n                                                         subscriberitem = {\n                                                             o: listener,\n                                                             cb: callbackFn(e),\n                                                             f: filter\n                                                         };\n\n_subs = {\n    'UI:tap': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    '*:click': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    },\n    'redmodel:save': {\n        b: [\n            item,\n            item\n        ],\n        a: [\n            item,\n            item\n        ]\n    }\n}",
             "itemtype": "property",
             "name": "_ce",
@@ -12966,7 +12986,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1173,
+            "line": 1202,
             "description": "Object that acts as the prototype of the eventobject.\nTo add more methods, you can use `_setEventObjProperty`",
             "itemtype": "property",
             "name": "_defaultEventObj",
@@ -12980,7 +13000,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1188,
+            "line": 1217,
             "description": "Objecthash containing all detach-notifiers, keyed by customEvent name.\nThis list is maintained by `notifyDetach` and `unNotifyDetach`\n\n_detachNotifiers = {\n    'UI:tap': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_detachNotifiers",
@@ -12994,7 +13014,7 @@
         },
         {
             "file": "src/event/event-base.js",
-            "line": 1215,
+            "line": 1244,
             "description": "Objecthash containing all notifiers, keyed by customEvent name.\nThis list is maintained by `notify` and `unNotify`\n\n_notifiers = {\n    'UI:tap': {\n        cb:function() {}\n        o: {} // context\n    },\n    'redmodel:*': {\n        cb:function() {}\n        o: {} // context\n    },\n    'bluemodel:save': {\n        cb:function() {}\n        o: {} // context\n    }\n}",
             "itemtype": "property",
             "name": "_notifiers",
@@ -13469,7 +13489,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 734,
+            "line": 778,
             "description": "Gets one Element, specified by the css-selector. Either when alreasy available, or when it gets inserted in the dom.\nTo retrieve a single element by id,\nyou need to prepend the id-name with a `#`. When multiple Element's match, the first is returned.\n\nReturns a Promise with the Element as variable.",
             "itemtype": "method",
             "name": "getElementOnAvailable",
@@ -13498,7 +13518,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 796,
+            "line": 840,
             "itemtype": "method",
             "name": "noDeepDomEvt",
             "params": [
@@ -13521,7 +13541,7 @@
         },
         {
             "file": "src/event-dom/event-dom.js",
-            "line": 811,
+            "line": 855,
             "description": "Does the actual transportation from DOM-events into the Eventsystem. It also looks at the response of\nthe Eventsystem: on e.halt() or e.preventDefault(), the original DOM-event will be preventDefaulted.",
             "itemtype": "method",
             "name": "_domCallback",
@@ -15448,7 +15468,7 @@
         },
         {
             "file": "src/focusmanager/focusmanager.js",
-            "line": 478,
+            "line": 479,
             "description": "In case of a manual focus (node.focus()) the node will fire an `manualfocus`-event\nwhich can be prevented.",
             "itemtype": "event",
             "name": "manualfocus",
@@ -15619,7 +15639,7 @@
         },
         {
             "file": "src/io/extra/io-filetransfer.js",
-            "line": 102,
+            "line": 94,
             "description": "Is send to the server and expects an unique id which can be used for its file-transactions.",
             "itemtype": "method",
             "name": "_getClientId",
@@ -15642,7 +15662,7 @@
         },
         {
             "file": "src/io/extra/io-filetransfer.js",
-            "line": 138,
+            "line": 130,
             "description": "Sends a `blob` by using an AJAX PUT request.\nAdditional parameters can be through the `params` argument.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `params` should be a plain object with only primitive types which are transformed into key/value pairs.",
             "itemtype": "method",
             "name": "sendBlob",
@@ -15708,6 +15728,12 @@
                             "type": "Boolean",
                             "optional": true,
                             "optdefault": "false"
+                        },
+                        {
+                            "name": "stayActive",
+                            "description": "minimal time the request should be pending, even if IO has finished",
+                            "type": "Number",
+                            "optional": true
                         }
                     ]
                 }
@@ -15824,7 +15850,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 120,
+            "line": 112,
             "description": "Performs an AJAX GET request.  Shortcut for a call to [`xhr`](#method_xhr) with `method` set to  `'GET'`.\nAdditional parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `params` should be a plain object with only primitive types which are transformed into key/value pairs.",
             "itemtype": "method",
             "name": "get",
@@ -15885,6 +15911,12 @@
                             "type": "Boolean",
                             "optional": true,
                             "optdefault": "false"
+                        },
+                        {
+                            "name": "stayActive",
+                            "description": "minimal time the request should be pending, even if IO has finished",
+                            "type": "Number",
+                            "optional": true
                         }
                     ]
                 }
@@ -15899,7 +15931,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 172,
+            "line": 161,
             "description": "Performs an AJAX request with the GET HTTP method and expects a JSON-object.\nThe resolved Promise-callback returns an object (JSON-parsed serverresponse).\n\nAdditional request-parameters can be on the url (with questionmark), through `params`, or both.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: If you expect the server to response with data that consist of Date-properties, you should set `options.parseJSONDate` true.\n       Parsing takes a bit longer, but it will generate trully Date-objects.\nNote2: CORS is supported, as long as the responseserver is set up to:\n      a) has a response header which allows the clientdomain:\n         header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n      b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n         to requests with the OPTION-method\n      More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/",
             "itemtype": "method",
             "name": "read",
@@ -15966,6 +15998,12 @@
                             "description": "to determine in what case the specified `parseProto` should be set as the prototype.\n           The function accepts the `object` as argument and should return a trully value in order to set the prototype.\n           When not specified, `parseProto` will always be applied (if `parseProto`is defined)",
                             "type": "Function",
                             "optional": true
+                        },
+                        {
+                            "name": "stayActive",
+                            "description": "minimal time the request should be pending, even if IO has finished",
+                            "type": "Number",
+                            "optional": true
                         }
                     ]
                 }
@@ -15980,7 +16018,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 245,
+            "line": 231,
             "description": "Sends data (object) which will be JSON-stringified before sending.\nPerforms an AJAX request with the PUT HTTP method by default.\nWhen options.allfields is `false`, it will use the POST-method: see Note2.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: The server needs to inspect the bodyparam: 'action', which always equals 'update'.\n       'body.action' is the way to distinquish 'I.IO.updateObject' from 'I.IO.insertObject'.\n       On purpose, we didn't make this distinction through a custom CONTENT-HEADER, because\n       that would lead into a more complicated CORS-setup (see Note3)\nNote2: By default this method uses the PUT-request: which is preferable is you send the WHOLE object.\n       if you send part of the fields, set `options.allfields`=false.\n       This will lead into using the POST-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote3: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote4: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "update",
@@ -16041,6 +16079,12 @@
                             "type": "Boolean",
                             "optional": true,
                             "optdefault": "false"
+                        },
+                        {
+                            "name": "stayActive",
+                            "description": "minimal time the request should be pending, even if IO has finished",
+                            "type": "Number",
+                            "optional": true
                         }
                     ]
                 }
@@ -16055,7 +16099,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 293,
+            "line": 280,
             "description": "Performs an AJAX request with the POST HTTP method by default.\nWhen options.allfields is `true`, it will use the PUT-method: see Note2.\nThe send data is an object which will be JSON-stringified before sending.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n'body.action' has the value 'insert'\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: The server needs to inspect the bodyparam: 'action', which always equals 'insert'.\n       'body.action' is the way to distinquish 'I.IO.insertObject' from 'I.IO.updateObject'.\n       On purpose, we didn't make this distinction through a custom CONTENT-HEADER, because\n       that would lead into a more complicated CORS-setup (see Note3)\nNote2: By default this method uses the POST-request: which is preferable if you don't know all the fields (like its unique id).\n       if you send ALL the fields, set `options.allfields`=true.\n       This will lead into using the PUT-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote3: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote4: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "insert",
@@ -16116,6 +16160,12 @@
                             "type": "Boolean",
                             "optional": true,
                             "optdefault": "false"
+                        },
+                        {
+                            "name": "stayActive",
+                            "description": "minimal time the request should be pending, even if IO has finished",
+                            "type": "Number",
+                            "optional": true
                         }
                     ]
                 }
@@ -16130,7 +16180,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 341,
+            "line": 329,
             "description": "Performs an AJAX request with the PUT HTTP method by default.\nWhen options.allfields is `false`, it will use the POST-method: see Note2.\nThe send data is an object which will be JSON-stringified before sending.\n\nThe 'content-type' of the header is set to 'application/json', overruling manually options.\n\n'data' is send as 'body.data' and should be JSON-parsed at the server.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote1: By default this method uses the PUT-request: which is preferable is you send the WHOLE object.\n       if you send part of the fields, set `options.allfields`=false.\n       This will lead into using the POST-method.\n       More about HTTP-methods: https://stormpath.com/blog/put-or-post/\nNote2: CORS is supported, as long as the responseserver is set up to:\n       a) has a response header which allows the clientdomain:\n          header('Access-Control-Allow-Origin: http://www.some-site.com'); or header('Access-Control-Allow-Origin: *');\n       b) in cae you have set a custom HEADER (through 'options'), the responseserver MUST listen and respond\n          to requests with the OPTION-method\n       More info:  allows to send to your domain: see http://remysharp.com/2011/04/21/getting-cors-working/\nNote3: If the server response JSON-stringified data, the Promise resolves with a JS-Object. If you expect this object\n       to consist of Date-properties, you should set `options.parseJSONDate` true. Parsing takes a bit longer, but it will\n       generate trully Date-objects.",
             "itemtype": "method",
             "name": "send",
@@ -16191,6 +16241,12 @@
                             "type": "Boolean",
                             "optional": true,
                             "optdefault": "false"
+                        },
+                        {
+                            "name": "stayActive",
+                            "description": "minimal time the request should be pending, even if IO has finished",
+                            "type": "Number",
+                            "optional": true
                         }
                     ]
                 }
@@ -16205,7 +16261,7 @@
         },
         {
             "file": "src/io/extra/io-transfer.js",
-            "line": 433,
+            "line": 418,
             "description": "Performs an AJAX DELETE request.  Shortcut for a call to [`xhr`](#method_xhr) with `method` set to  `'DELETE'`.\n\nThe Promise gets fulfilled if the server responses with `STATUS-CODE` in the 200-range (excluded 204).\nIt will be rejected if a timeout occurs (see `options.timeout`), or if `xhr.abort()` gets invoked.\n\nNote: `data` should be a plain object with only primitive types which are transformed into key/value pairs.",
             "itemtype": "method",
             "name": "delete",
@@ -16277,6 +16333,12 @@
                             "type": "Boolean",
                             "optional": true,
                             "optdefault": "false"
+                        },
+                        {
+                            "name": "stayActive",
+                            "description": "minimal time the request should be pending, even if IO has finished",
+                            "type": "Number",
+                            "optional": true
                         }
                     ]
                 }
@@ -16622,6 +16684,12 @@
                             "description": "callbackfunction in case you want to process streams (needs io-stream module).",
                             "type": "Function",
                             "optional": true
+                        },
+                        {
+                            "name": "stayActive",
+                            "description": "minimal time the request should be pending, even if IO has finished",
+                            "type": "Number",
+                            "optional": true
                         }
                     ]
                 }
@@ -16702,7 +16770,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 190,
+            "line": 188,
             "description": "Reference to the [Uploader](uploader.html) object",
             "itemtype": "property",
             "name": "Uploader",
@@ -16713,7 +16781,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 198,
+            "line": 196,
             "description": "Reference to the [UserAgent](useragent.html) object",
             "itemtype": "property",
             "name": "UA",
@@ -16724,7 +16792,7 @@
         },
         {
             "file": "src/itsa.build/itsa.build.js",
-            "line": 206,
+            "line": 204,
             "description": "[Event](Event.html)-instance",
             "itemtype": "property",
             "name": "Event",
@@ -19768,7 +19836,7 @@
         },
         {
             "file": "src/utils/lib/idgenerator.js",
-            "line": 22,
+            "line": 21,
             "description": "Generates an unique id with the signature: \"namespace-follownr\"",
             "example": [
                 "\n\n    var generator = require('core-utils-idgenerator');\n\n    console.log(generator()); // --> 1\n    console.log(generator()); // --> 2\n    console.log(generator(1000)); // --> 1000\n    console.log(generator()); // --> 1001\n    console.log(generator('Parcel, 500')); // -->\"Parcel-500\"\n    console.log(generator('Parcel')); // -->\"Parcel-501\""
@@ -26231,7 +26299,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1862,
+            "line": 1877,
             "description": "Redefines the attributes of both the vnode as well as its related dom-node. The new\ndefinition replaces any previous attributes (without touching unmodified attributes).\nthe `is` attribute cannot be changed for itags.\n\nSyncs the new vnode's attributes with the dom.",
             "itemtype": "method",
             "name": "_setAttrs",
@@ -26252,7 +26320,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 1930,
+            "line": 1945,
             "description": "Redefines the childNodes of both the vnode as well as its related dom-node. The new\ndefinition replaces any previous nodes. (without touching unmodified nodes).\n\nSyncs the new vnode's childNodes with the dom.",
             "itemtype": "method",
             "name": "_setChildNodes",
@@ -26273,7 +26341,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2222,
+            "line": 2237,
             "description": "A hash of all the `attributes` of the vnode's representing dom-node.",
             "itemtype": "property",
             "name": "attrs",
@@ -26285,7 +26353,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2230,
+            "line": 2245,
             "description": "Hash with all the classes of the vnode. Every class represents a key, all values are set `true`.",
             "itemtype": "property",
             "name": "classNames",
@@ -26297,7 +26365,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2238,
+            "line": 2253,
             "description": "The `id` of the vnode's representing dom-node (if any).",
             "itemtype": "property",
             "name": "id",
@@ -26309,7 +26377,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2246,
+            "line": 2261,
             "description": "Tells whether tag is a void Element. Examples are: `br`, `img` and `input`. Non-void Elements are f.e. `div` and `table`.\nFor TextNodes and CommentNodes, this property is `undefined`.",
             "itemtype": "property",
             "name": "isVoid",
@@ -26321,7 +26389,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2255,
+            "line": 2270,
             "description": "The `nodeType` of the vnode's representing dom-node (1===ElementNode, 3===TextNode, 8===CommentNode).",
             "itemtype": "property",
             "name": "nodeType",
@@ -26333,7 +26401,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2263,
+            "line": 2278,
             "description": "The `tag` of the vnode's representing dom-node (allways uppercase).",
             "itemtype": "property",
             "name": "tag",
@@ -26345,7 +26413,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2271,
+            "line": 2286,
             "description": "The `content` of the vnode's representing dom-node, in case it is a TextNode or CommentNode.\nEquals dom-node.nodeValue.\n\nIs `undefined` for ElementNodes.",
             "itemtype": "property",
             "name": "text",
@@ -26357,7 +26425,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2282,
+            "line": 2297,
             "description": "Hash with all the childNodes (vnodes). vChildNodes are any kind of vnodes (nodeType===1, 3 or 8)",
             "itemtype": "property",
             "name": "vChildNodes",
@@ -26369,7 +26437,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2290,
+            "line": 2305,
             "description": "The underlying `dom-node` that the vnode represents.",
             "itemtype": "property",
             "name": "domNode",
@@ -26381,7 +26449,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2298,
+            "line": 2313,
             "description": "vnode's parentNode (defined as a vnode itself).",
             "itemtype": "property",
             "name": "vParent",
@@ -26393,7 +26461,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2307,
+            "line": 2322,
             "description": "Gets or sets the innerHTML of both the vnode as well as the representing dom-node.\n\nThe setter syncs with the DOM.",
             "itemtype": "property",
             "name": "innerHTML",
@@ -26405,7 +26473,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2325,
+            "line": 2340,
             "description": "Gets or sets the innerHTML of both the vnode as well as the representing dom-node.\n\nThe setter syncs with the DOM.",
             "itemtype": "property",
             "name": "nodeValue",
@@ -26417,7 +26485,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2352,
+            "line": 2367,
             "description": "Gets or sets the outerHTML of both the vnode as well as the representing dom-node.\n\nThe setter syncs with the DOM.",
             "itemtype": "property",
             "name": "outerHTML",
@@ -26429,7 +26497,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2431,
+            "line": 2446,
             "description": "Gets or sets the innerContent of the Node as plain text.\n\nThe setter syncs with the DOM.",
             "itemtype": "property",
             "name": "textContent",
@@ -26441,7 +26509,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2470,
+            "line": 2485,
             "description": "Hash with all the children (vnodes). vChildren are vnodes that have a representing dom-node that is an HtmlElement (nodeType===1)",
             "itemtype": "property",
             "name": "vChildren",
@@ -26453,7 +26521,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2496,
+            "line": 2511,
             "description": "Reference to the first of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vFirst",
@@ -26465,7 +26533,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2513,
+            "line": 2528,
             "description": "Reference to the first vChildNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vFirstChild",
@@ -26477,7 +26545,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2526,
+            "line": 2541,
             "description": "Reference to the first of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "property",
             "name": "vFirstElement",
@@ -26489,7 +26557,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2543,
+            "line": 2558,
             "description": "Reference to the first vChild, where the related dom-node an Element (nodeType===1).",
             "itemtype": "property",
             "name": "vFirstElementChild",
@@ -26501,7 +26569,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2556,
+            "line": 2571,
             "description": "Reference to the last of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vLast",
@@ -26513,7 +26581,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2573,
+            "line": 2588,
             "description": "Reference to the last vChildNode, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vLastChild",
@@ -26525,7 +26593,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2587,
+            "line": 2602,
             "description": "Reference to the last of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "property",
             "name": "vLastElement",
@@ -26537,7 +26605,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2604,
+            "line": 2619,
             "description": "Reference to the last vChild, where the related dom-node an Element (nodeType===1).",
             "itemtype": "property",
             "name": "vLastElementChild",
@@ -26549,7 +26617,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2618,
+            "line": 2633,
             "description": "the Parent vnode",
             "itemtype": "property",
             "name": "vParent",
@@ -26561,7 +26629,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2626,
+            "line": 2641,
             "description": "Reference to the next of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vNext",
@@ -26573,7 +26641,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2639,
+            "line": 2654,
             "description": "Reference to the next of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "property",
             "name": "vNextElement",
@@ -26585,7 +26653,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2652,
+            "line": 2667,
             "description": "Reference to the previous of sibbling vNode's, where the related dom-node is either an Element, TextNode or CommentNode (nodeType===1, 3 or 8).",
             "itemtype": "property",
             "name": "vPrevious",
@@ -26597,7 +26665,7 @@
         },
         {
             "file": "src/vdom/partials/vnode.js",
-            "line": 2665,
+            "line": 2680,
             "description": "Reference to the previous of sibbling vNode's, where the related dom-node is an Element(nodeType===1).",
             "itemtype": "property",
             "name": "vPreviousElement",

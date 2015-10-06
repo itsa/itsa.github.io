@@ -454,11 +454,9 @@
      * @type Object
      * @static
     */
-    ITSA.IO = require(&#x27;io/extra/io-transfer.js&#x27;)(window);
+    ITSA.IO = require(&#x27;io&#x27;);
     ITSA.IO.config.merge(io_config);
     require(&#x27;io/extra/io-cors-ie9.js&#x27;)(window);
-    require(&#x27;io/extra/io-stream.js&#x27;)(window);
-    require(&#x27;io/extra/io-filetransfer.js&#x27;)(window);
     require(&#x27;io/extra/io-xml.js&#x27;)(window);
 
     /**

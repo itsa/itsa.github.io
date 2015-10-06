@@ -1,5 +1,5 @@
 ---
-module: event
+module: itsa-event
 layout: history
 ---
 

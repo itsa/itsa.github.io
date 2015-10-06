@@ -1,5 +1,5 @@
 ---
-module: event
+module: itsa-event
 maintainer: Marco Asbreuk
 title: Filtering subscription
 intro: "Using the optional filter-argument, you can define a very specific filter for the subscriber. Note that it is more common not to use a specific filter, but do filtering by specifying an emitterName. This example filters by a filterfunction. Note that we need to pass the filterfunction as 4th parameter, not the 3rd."

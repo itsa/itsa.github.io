@@ -1,5 +1,5 @@
 ---
-module: io
+module: itsa-io
 maintainer: Marco Asbreuk
 title: IO.get()
 intro: "Get response from the server using ITSA.IO.get()."

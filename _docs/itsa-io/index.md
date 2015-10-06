@@ -1,5 +1,5 @@
 ---
-module: io
+module: itsa-io
 itsaclassname: IO
 version: 0.0.2
 modulesize: 4.67

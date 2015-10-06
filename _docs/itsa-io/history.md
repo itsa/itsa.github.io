@@ -1,5 +1,5 @@
 ---
-module: io
+module: itsa-io
 layout: history
 ---
 

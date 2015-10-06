@@ -305,14 +305,6 @@ var NAME = &#x27;[io-filetransfer]: &#x27;,
     REVIVER = function(key, value) {
         return ((typeof value===&#x27;string&#x27;) &amp;&amp; value.toDate()) || value;
     },
-    messages = require(&#x27;messages&#x27;),
-    MESSAGES = {
-        &#x27;read&#x27;: &#x27;reading...&#x27;,
-        &#x27;update&#x27;: &#x27;saving...&#x27;,
-        &#x27;insert&#x27;: &#x27;saving...&#x27;,
-        &#x27;send&#x27;: &#x27;sending...&#x27;,
-        &#x27;delete&#x27;: &#x27;saving...&#x27;
-    },
     ABORTED = &#x27;Request aborted&#x27;,
     KB_25 = 25 * 1024, // 25kb
     KB_100 = 100 * 1024, // 100kb
@@ -431,6 +423,7 @@ module.exports = function (window) {
      *           Function has 3 parameters: total, loaded and target (io-promise)
      *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
      *    @param [options.parseJSONDate=false] {boolean} Whether the server returns JSON-stringified data which has Date-objects.
+     *    @param [options.stayActive] {Number} minimal time the request should be pending, even if IO has finished
      * @return {Promise}
      * on success:
         * Object any received data
@@ -444,7 +437,7 @@ module.exports = function (window) {
             promiseHash = [],
             ioHash = [],
             i = 0,
-            chunkSize, end, size, returnPromise, message, filename, headers, notify,
+            chunkSize, end, size, returnPromise, filename, headers, notify,
             ioPromise, partialSize, notifyResolved, hashPromise, responseObject, setXHR;
         if (!IO.supportXHR2) {
             return Promise.reject(&#x27;This browser does not support fileupload&#x27;);
@@ -597,11 +590,6 @@ module.exports = function (window) {
             });
             returnPromise.reject(new Error(ABORTED));
         };
-        // send a message to ITSA&#x27;s the Message&#x27;s system so that any statusbar can show a spinner - if it wants to:
-        message = messages.message(MESSAGES.send, {level: 4, icon: SPINNER_ICON, stayActive: MIN_SHOWUP});
-        returnPromise.finally(function() {
-            message.fulfill();
-        });
         return returnPromise;
     };
 

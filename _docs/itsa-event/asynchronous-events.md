@@ -1,5 +1,5 @@
 ---
-module: event
+module: itsa-event
 maintainer: Marco Asbreuk
 title: After save-event
 intro: "After-events will not wait for any asynchronous default-function to finish, to keep performant. However, you can inspect e.returnValue: whenever that is a Promise, this Promise can be used to get informed when the default-function is ready."

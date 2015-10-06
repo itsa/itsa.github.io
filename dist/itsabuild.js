@@ -2636,7 +2636,7 @@ http://yuilibrary.com/license/
 
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":109}],6:[function(require,module,exports){
+},{"_process":110}],6:[function(require,module,exports){
 (function (global){
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -3365,7 +3365,7 @@ module.exports = DB;
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/js-ext.js":67}],8:[function(require,module,exports){
+},{"js-ext/js-ext.js":68}],8:[function(require,module,exports){
 (function (global){
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -4092,7 +4092,7 @@ module.exports = DB;
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/js-ext.js":67}],9:[function(require,module,exports){
+},{"js-ext/js-ext.js":68}],9:[function(require,module,exports){
 (function (global){
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -4282,7 +4282,7 @@ module.exports = DB;
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"client-db":6,"js-ext/extra/classes.js":61,"js-ext/extra/hashmap.js":62}],10:[function(require,module,exports){
+},{"client-db":6,"js-ext/extra/classes.js":62,"js-ext/extra/hashmap.js":63}],10:[function(require,module,exports){
 /**
  * Plugin making moveable elements to constrain within
  *
@@ -4323,7 +4323,7 @@ module.exports = function (window) {
 
     return PluginConstrain;
 };
-},{"js-ext/extra/hashmap.js":62,"node-plugin":76}],11:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":63,"node-plugin":77}],11:[function(require,module,exports){
 var css = "*:focus {\n    outline: 0;\n}\n\na[target=\"_blank\"]:focus {\n    outline: 1px solid #129fea;\n}\n\n/* because we think the padding and margin should always be part of the size,\n   we define \"box-sizing: border-box\" for all elements */\n\n* {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],12:[function(require,module,exports){
 var css = ".pure-menu.pure-menu-open {\n    z-index: 3; /* prevent graph from crossing the menuarea */\n}\n\n.pure-button.pure-button-bordered,\n.pure-button.pure-button-bordered[disabled] {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.15) inset;\n}\n\n.pure-button-active,\n.pure-button:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button.pure-button-bordered.pure-button-active[disabled],\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered[disabled]:active {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.4) inset, 0 0 6px rgba(0,0,0, 0.2) inset;\n}\n\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered:focus,\n.pure-button.pure-button-bordered[disabled]:focus,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed,\n.pure-button.pure-button-bordered.focussed,\n.pure-button.pure-button-bordered[disabled].focussed {\n    box-shadow: 0 0 0 1px rgba(0,0,0, 0.6) inset;\n}\n\n/* restore pure-button:active */\n.pure-button.pure-button-bordered:active,\n.pure-button.pure-button-bordered.pure-button-active,\n.pure-button:active:focus,\n.pure-button.pure-button-active:focus {\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6) inset, 0 0 10px rgba(0, 0, 0, 0.2) inset;\n}\n\n.pure-button.pure-button-rounded {\n    border-radius: 0.3em;\n}\n\n.pure-button.pure-button-heavyrounded {\n    border-radius: 0.5em;\n}\n\n.pure-button.pure-button-oval {\n    border-radius: 50%;\n}\n\n.pure-button.pure-button-halfoval {\n    border-radius: 25%;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -4599,7 +4599,7 @@ module.exports = function (window) {
 
     return Dialog;
 };
-},{"./css/dialog.css":15,"event":31,"js-ext":66,"js-ext/extra/classes.js":61,"js-ext/extra/hashmap.js":62,"panel":78,"polyfill":87,"utils":94}],17:[function(require,module,exports){
+},{"./css/dialog.css":15,"event":31,"js-ext":67,"js-ext/extra/classes.js":62,"js-ext/extra/hashmap.js":63,"panel":79,"polyfill":88,"utils":95}],17:[function(require,module,exports){
 var css = "[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],18:[function(require,module,exports){
 "use strict";
@@ -5719,7 +5719,7 @@ module.exports = function (window) {
     return DragModule;
 
 };
-},{"./css/drag-drop.css":17,"drag":20,"event-dom":21,"js-ext":66,"js-ext/extra/hashmap.js":62,"node-plugin":76,"polyfill/polyfill-base.js":87,"useragent":93,"vdom":106,"window-ext":107}],19:[function(require,module,exports){
+},{"./css/drag-drop.css":17,"drag":20,"event-dom":21,"js-ext":67,"js-ext/extra/hashmap.js":63,"node-plugin":77,"polyfill/polyfill-base.js":88,"useragent":94,"vdom":107,"window-ext":108}],19:[function(require,module,exports){
 var css = "[dd-draggable] {\n    -webkit-user-drag: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    user-select: none;\n    float: left;\n    position: relative;\n}\n.dd-hidden-source {\n    visibility: hidden !important;\n}\n.dd-dragging {\n    cursor: move;\n}\n.dd-transition {\n    -webkit-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -moz-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -ms-transition: top 0.25s ease-out, left 0.25s ease-out;\n    -o-transition: top 0.25s ease-out, left 0.25s ease-out;\n    transition: top 0.25s ease-out, left 0.25s ease-out;\n}\n.dd-high-z {\n    z-index: 3001 !important;\n}\n.dd-opacity {\n    opacity: 0.6;\n    filter: alpha(opacity=60); /* For IE8 and earlier */\n}\n[dropzone] {\n    position: relative; /* otherwise we cannot place absolute positioned items */\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],20:[function(require,module,exports){
 "use strict";
@@ -5891,7 +5891,7 @@ module.exports = function (window) {
                 x, y;
             // is the drag is finished, there will be no ddProps.defined
             // return then, to prevent any events that stayed behind
-            if (!ddProps.defined) {
+            if (!ddProps.defined || !dragNode) {
                 return;
             }
 
@@ -6429,7 +6429,7 @@ module.exports = function (window) {
 
     return DD;
 };
-},{"./css/drag.css":19,"event-dom":21,"js-ext":66,"js-ext/extra/hashmap.js":62,"node-plugin":76,"polyfill":87,"useragent":93,"vdom":106,"window-ext":107}],21:[function(require,module,exports){
+},{"./css/drag.css":19,"event-dom":21,"js-ext":67,"js-ext/extra/hashmap.js":63,"node-plugin":77,"polyfill":88,"useragent":94,"vdom":107,"window-ext":108}],21:[function(require,module,exports){
 "use strict";
 
 /**
@@ -6482,6 +6482,9 @@ var NAME = '[event-dom]: ',
     mutationEventsDefined = false,
     NO_DEEP_SEARCH = {},
     ANCHOR_OFFSET = 2, // px
+    _shiftPressed = false, // protected registration: to be set on tap-events
+    _ctrlPressed = false, // protected registration: to be set on tap-events
+    _metaPressed = false, // protected registration: to be set on tap-events
     startX, startY,
 
     /*
@@ -6696,7 +6699,7 @@ module.exports = function (window) {
             supportHammer = !!Event.Hammer,
             mobileEvents = supportHammer && isMobile,
             eventobject, subs, wildcard_named_subs, named_wildcard_subs, wildcard_wildcard_subs, subsOutside,
-            subscribers, eventobjectOutside, wildcard_named_subsOutside, customEvent, eventName, which;
+            subscribers, eventobjectOutside, wildcard_named_subsOutside, customEvent, eventName, which, payloadGetters;
 
         eventName = eType;
         // first: a `click` event might be needed to transformed into `rightclick`:
@@ -6716,14 +6719,14 @@ module.exports = function (window) {
             return;
         }
 
-        if ((eventName===(mobileEvents ? PANSTART : MOUSEDOWN)) && ((eTarget.vnode && (eTarget.vnode.tag==='A')) || eTarget.inside('a'))) {
+        if ((eventName===(mobileEvents ? PANSTART : MOUSEDOWN)) && (eTarget.vnode && ((eTarget.vnode.tag==='A') || eTarget.inside('a')))) {
             // backup position in case of inside anchor
             startX = e.clientX || (e.center && e.center.x);
             startY = e.clientY || (e.center && e.center.y);
         }
 
         if (eventName===CLICK) {
-            if ((eTarget.vnode && (e.target.vnode.tag==='A')) || eTarget.inside('a')) {
+            if (eTarget.vnode && ((e.target.vnode.tag==='A') || eTarget.inside('a'))) {
                 eventName = ANCHOR_CLICK;
                 e.clientX || (e.clientX = e.center && e.center.x);
                 e.clientY || (e.clientY = e.center && e.center.y);
@@ -6741,9 +6744,41 @@ module.exports = function (window) {
                     y: e.clientY
                 };
                 e.eventType = 4;
-                e.pointerType = 'mouse';
+                // 'pointerType' is a getter:
+                Object.defineProperties(e, {
+                    pointerType: {
+                        get: function() {
+                            return 'mouse';
+                        }
+                    }
+                });
                 e.tapCount = 1;
             }
+        }
+
+        if (eventName===TAP) {
+            Object.defineProperties(e, {
+                shiftKey: {
+                    get: function() {
+                        return _shiftPressed;
+                    }
+                },
+                ctrlKey: {
+                    get: function() {
+                        return _ctrlPressed;
+                    }
+                },
+                metaKey: {
+                    get: function() {
+                        return _metaPressed;
+                    }
+                }
+            });
+            payloadGetters = {
+                shiftKey: _shiftPressed,
+                ctrlKey: _ctrlPressed,
+                metaKey: _metaPressed
+            };
         }
 
         customEvent = 'UI:'+eventName;
@@ -6762,13 +6797,13 @@ module.exports = function (window) {
 
         // now so the work:
         subscribers = _getSubscribers(e, true, subs, wildcard_named_subs, named_wildcard_subs, wildcard_wildcard_subs);
-        eventobject = Event._emit(e.target, customEvent, e, subscribers, [], _preProcessor, false, true);
+        eventobject = Event._emit(e.target, customEvent, e, subscribers, [], _preProcessor, false, payloadGetters);
 
         // now check outside subscribers
         subsOutside = allSubscribers[customEvent+OUTSIDE];
         wildcard_named_subsOutside = allSubscribers['*:'+eventName+OUTSIDE];
         subscribers = _getSubscribers(e, true, subsOutside, wildcard_named_subsOutside);
-        eventobjectOutside = Event._emit(e.target, customEvent+OUTSIDE, e, subscribers, [], _preProcessor, false, true);
+        eventobjectOutside = Event._emit(e.target, customEvent+OUTSIDE, e, subscribers, [], _preProcessor, false, payloadGetters);
 
         // if eventobject was preventdefaulted or halted: take appropriate action on
         // the original dom-event. Note: only the original event can caused this, not the outsideevent
@@ -6786,11 +6821,11 @@ module.exports = function (window) {
             // we need to do this asynchronous: this way we pass them AFTER the DOM-event's defaultFn
             // also make sure to paas-in the payload of the manipulated eventobject
             subscribers = _getSubscribers(eventobject, false, subs, wildcard_named_subs, named_wildcard_subs, wildcard_wildcard_subs);
-            (subscribers.length>0) && later(Event._emit.bind(Event, e.target, customEvent, eventobject, [], subscribers, _preProcessor, true), 10);
+            (subscribers.length>0) && later(Event._emit.bind(Event, e.target, customEvent, eventobject, [], subscribers, _preProcessor, true, payloadGetters), 10);
 
             // now check outside subscribers
             subscribers = _getSubscribers(eventobjectOutside, false, subsOutside, wildcard_named_subsOutside);
-            (subscribers.length>0) && later(Event._emit.bind(Event, e.target, customEvent+OUTSIDE, eventobjectOutside, [], subscribers, _preProcessor, true), 10);
+            (subscribers.length>0) && later(Event._emit.bind(Event, e.target, customEvent+OUTSIDE, eventobjectOutside, [], subscribers, _preProcessor, true, payloadGetters), 10);
         }
     };
 
@@ -6973,6 +7008,15 @@ module.exports = function (window) {
             function(e) {
                 var keyCode = e.keyCode;
                 return (e.target.getTagName()==='BUTTON') && ((keyCode===13) || (keyCode===32));
+            }
+        );
+
+        Event.after(
+            ['keydown', 'keyup'],
+            function(e) {
+                _shiftPressed = e.shiftKey; // protected registration: to be set on tap-events
+                _ctrlPressed = e.ctrlKey; // protected registration: to be set on tap-events
+                _metaPressed = e.metaKey; // protected registration: to be set on tap-events
             }
         );
 
@@ -7259,7 +7303,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"event":31,"js-ext/extra/hashmap.js":62,"js-ext/lib/array.js":68,"js-ext/lib/object.js":72,"js-ext/lib/string.js":74,"polyfill/polyfill-base.js":87,"useragent":93,"utils":94,"vdom":106}],22:[function(require,module,exports){
+},{"event":31,"js-ext/extra/hashmap.js":63,"js-ext/lib/array.js":69,"js-ext/lib/object.js":73,"js-ext/lib/string.js":75,"polyfill/polyfill-base.js":88,"useragent":94,"utils":95,"vdom":107}],22:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7357,7 +7401,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":21,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72}],23:[function(require,module,exports){
+},{"../event-dom.js":21,"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73}],23:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7456,7 +7500,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":21,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72}],24:[function(require,module,exports){
+},{"../event-dom.js":21,"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73}],24:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7558,7 +7602,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":21,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72}],25:[function(require,module,exports){
+},{"../event-dom.js":21,"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73}],25:[function(require,module,exports){
 "use strict";
 
 /**
@@ -7836,7 +7880,7 @@ module.exports = function (window) {
     return Event;
 };
 
-},{"../event-dom.js":21,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"utils":94,"vdom":106}],26:[function(require,module,exports){
+},{"../event-dom.js":21,"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"utils":95,"vdom":107}],26:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10331,7 +10375,7 @@ module.exports = function (window) {
 
 };
 
-},{"utils":94}],28:[function(require,module,exports){
+},{"utils":95}],28:[function(require,module,exports){
 (function (global){
 /**
  * Defines the Event-Class, which should be instantiated to get its functionality
@@ -10347,7 +10391,6 @@ module.exports = function (window) {
  * @since 0.0.1
 */
 
-require('polyfill/polyfill-base.js');
 require('js-ext/lib/object.js');
 
 var createHashMap = require('js-ext/extra/hashmap.js').createMap;
@@ -11140,10 +11183,12 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
          *                       <b>should not be used</b> other than by any submodule like `event-dom`.
          * @param [keepPayload=false] {Boolean} whether `payload` should be used as the ventobject instead of creating a new
          *                      eventobject and merge payload. <b>should not be used</b> other than by any submodule like `event-dom`.
+         * @param [payloadGetters] {Object} additional payload, where getters inside `payload` are defined as object-values
+         *                      this might be needed, in cae the `payload` has getters that you need to maintain (getters on `payload` are ignored)
          * @return {Object|undefined} eventobject or undefined when the event was halted or preventDefaulted.
          * @since 0.0.1
          */
-        _emit: function (emitter, customEvent, payload, beforeSubscribers, afterSubscribers, preProcessor, keepPayload) {
+        _emit: function (emitter, customEvent, payload, beforeSubscribers, afterSubscribers, preProcessor, keepPayload, payloadGetters) {
             // NOTE: emit() needs to be synchronous! otherwise we wouldn't be able
             // to preventDefault DOM-events in time.
             var instance = this,
@@ -11160,6 +11205,14 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                 console.error(NAME, 'defined emit-event '+customEvent+' does not match pattern');
                 return;
             }
+            // prevent running into loop when listeners are emitting the same event:
+            // we will register this event as being active and remove it at the end op the method:
+            if (instance._runningEvents[customEvent]) {
+                console.warn(NAME, 'defined emit-event '+customEvent+' got emitted by one of its own listeners, causing it to loop. Event will not be emitted again: exiting Event._emit');
+                return;
+            }
+            instance._runningEvents[customEvent] = true;
+
             emitterName = extract[1];
             eventName = extract[2];
             customEventDefinition = allCustomEvents[customEvent];
@@ -11198,6 +11251,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                         }
                     }
                 }
+                payloadGetters && e.merge(payloadGetters);
                 if (e.status.unSilencable && e.silent) {
                     console.warn(NAME, ' event '+e.emitter+':'+e.type+' cannot made silent: this customEvent is defined as unSilencable');
                     e.silent = false;
@@ -11231,6 +11285,8 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
                     [subs, named_wildcard_subs, wildcard_named_subs, wildcard_wildcard_subs].forEach(invokeSubs);
                 }
             }
+            // cleaning up registration running Events:
+            delete instance._runningEvents[customEvent];
             return e;
         },
 
@@ -11455,6 +11511,23 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
     });
 
     /**
+     * Objecthash containing all running Events.
+     * Meant for local registration inside _emit --> to prevent looping whenever a listener emits the same event.
+     *
+     * @property _runningEvents
+     * @default {}
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
+    Object.defineProperty(Event, '_runningEvents', {
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: {} // `writable` is false means we cannot chance the value-reference, but we can change {}'s properties itself
+    });
+
+    /**
      * Objecthash containing all defined before and after subscribers
      * which has a structure like this (`b` represents `before` and `a` represents `after`)
      * Every item that gets in the array consist by itself of 3 properties:
@@ -11581,7 +11654,7 @@ var createHashMap = require('js-ext/extra/hashmap.js').createMap;
     return Event;
 }));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"polyfill/polyfill-base.js":87}],29:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73}],29:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11981,7 +12054,7 @@ Event._CE_listener = ClassListener = {
             };
             superDestroy(instance.constructor);
             instance.detachAll();
-            instance.undefAllEvents();
+            instance.undefAllEvents && instance.undefAllEvents();
             Object.protectedProp(instance, '_destroyed', true);
         }
     }
@@ -11992,10 +12065,13 @@ Classes.BaseClass.mergePrototypes(Event.Listener, true)
                  .mergePrototypes(ClassListener, true, {}, {});
 
 module.exports = Event;
-},{"./event-base.js":28,"js-ext/extra/classes.js":61,"js-ext/lib/object.js":72}],31:[function(require,module,exports){
-module.exports = require('./event-base.js');
-require('./event-emitter.js');
-require('./event-listener.js');
+},{"./event-base.js":28,"js-ext/extra/classes.js":62,"js-ext/lib/object.js":73}],31:[function(require,module,exports){
+var Event = require('./event-base.js');
+require('./event-emitter.js'); // will extent Event
+require('./event-listener.js'); // will extent the exported object
+
+module.exports = Event;
+
 },{"./event-base.js":28,"./event-emitter.js":29,"./event-listener.js":30}],32:[function(require,module,exports){
 var css = "[plugin-fm=\"true\"] {\n    /* NEVER can we select the text: when the focusmanager is active it will refocus on the active item */\n    -moz-user-select: none;\n    -khtml-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    cursor: default;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],33:[function(require,module,exports){
@@ -12064,13 +12140,14 @@ module.exports = function (window) {
     nextFocusNode = function(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, downwards, initialSourceNode) {
         console.log(NAME+'nextFocusNode');
         var keys, lastIndex, i, specialKeysMatch, specialKey, len, enterPressedOnInput, primaryButtons,
-            inputType, foundNode, formNode, primaryonenter, noloop, nodeHit, foundContainer;
+            inputType, foundNode, formNode, primaryonenter, noloop, nodeHit, foundContainer, type;
         keys = actionkey.split('+');
         len = keys.length;
         lastIndex = len - 1;
 
         if ((keyCode===13) && (sourceNode.getTagName()==='INPUT')) {
-            inputType = sourceNode.getAttr('type').toLowerCase();
+            type = sourceNode.getAttr('type') || 'text';
+            inputType = type.toLowerCase();
             enterPressedOnInput = (inputType==='text') || (inputType==='password');
         }
 
@@ -12512,7 +12589,7 @@ module.exports = function (window) {
 
     return FocusManager;
 };
-},{"./css/focusmanager.css":32,"event-mobile":26,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"node-plugin":76,"polyfill":87,"utils":94,"window-ext":107}],34:[function(require,module,exports){
+},{"./css/focusmanager.css":32,"event-mobile":26,"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"node-plugin":77,"polyfill":88,"utils":95,"window-ext":108}],34:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -12830,7 +12907,7 @@ module.exports = function (window) {
 
     window._ITSAmodules.Icons = true;
 };
-},{"./css/base.css":45,"event-dom":21,"js-ext/extra/hashmap.js":62,"js-ext/lib/string.js":74,"polyfill/polyfill-base.js":87,"vdom":106}],44:[function(require,module,exports){
+},{"./css/base.css":45,"event-dom":21,"js-ext/extra/hashmap.js":63,"js-ext/lib/string.js":75,"polyfill/polyfill-base.js":88,"vdom":107}],44:[function(require,module,exports){
 var css = "#itsa-alert-icon {\n    fill: #E3A900;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
 },{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],45:[function(require,module,exports){
 var css = "#itsa-icons-container {\n    display: none; !important;\n}\n\ni[icon] {\n    display: inline-block;\n    vertical-align: baseline;\n    padding: 0;\n    margin: 0;\n}\n\ni[icon] >svg {\n    height: 1em;\n    width: 1em;\n    vertical-align: middle;\n}\n\nbutton.itsa-icon {\n    padding: 0.5em;\n}\n\nbutton.itsa-iconleft {\n    padding-left: 0.75em;\n}\n\nbutton.itsa-iconright {\n    padding-right: 0.75em;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
@@ -13089,7 +13166,7 @@ module.exports = function (window) {
     return IO;
 };
 
-},{"../io.js":60,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"xmldom":2}],56:[function(require,module,exports){
+},{"../io.js":61,"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"xmldom":2}],56:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13122,14 +13199,6 @@ var NAME = '[io-filetransfer]: ',
     MIN_SHOWUP = 500,
     REVIVER = function(key, value) {
         return ((typeof value==='string') && value.toDate()) || value;
-    },
-    messages = require('messages'),
-    MESSAGES = {
-        'read': 'reading...',
-        'update': 'saving...',
-        'insert': 'saving...',
-        'send': 'sending...',
-        'delete': 'saving...'
     },
     ABORTED = 'Request aborted',
     KB_25 = 25 * 1024, // 25kb
@@ -13249,6 +13318,7 @@ module.exports = function (window) {
      *           Function has 3 parameters: total, loaded and target (io-promise)
      *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
      *    @param [options.parseJSONDate=false] {boolean} Whether the server returns JSON-stringified data which has Date-objects.
+     *    @param [options.stayActive] {Number} minimal time the request should be pending, even if IO has finished
      * @return {Promise}
      * on success:
         * Object any received data
@@ -13262,7 +13332,7 @@ module.exports = function (window) {
             promiseHash = [],
             ioHash = [],
             i = 0,
-            chunkSize, end, size, returnPromise, message, filename, headers, notify,
+            chunkSize, end, size, returnPromise, filename, headers, notify,
             ioPromise, partialSize, notifyResolved, hashPromise, responseObject, setXHR;
         if (!IO.supportXHR2) {
             return Promise.reject('This browser does not support fileupload');
@@ -13415,11 +13485,6 @@ module.exports = function (window) {
             });
             returnPromise.reject(new Error(ABORTED));
         };
-        // send a message to ITSA's the Message's system so that any statusbar can show a spinner - if it wants to:
-        message = messages.message(MESSAGES.send, {level: 4, icon: SPINNER_ICON, stayActive: MIN_SHOWUP});
-        returnPromise.finally(function() {
-            message.fulfill();
-        });
         return returnPromise;
     };
 
@@ -13428,7 +13493,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":60,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"js-ext/lib/promise.js":73,"messages":75,"utils":94}],57:[function(require,module,exports){
+},{"../io.js":61,"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"js-ext/lib/promise.js":74,"utils":95}],57:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13571,7 +13636,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":60,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72}],58:[function(require,module,exports){
+},{"../io.js":61,"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73}],58:[function(require,module,exports){
 "use strict";
 
 /**
@@ -13596,7 +13661,6 @@ require('polyfill/polyfill-base.js');
 /*jshint proto:true */
 var NAME = '[io-transfer]: ',
     createHashMap = require('js-ext/extra/hashmap.js').createMap,
-    messages = require('messages'),
     PROTO_SUPPORTED = !!Object.__proto__,
     REVIVER = function(key, value) {
         return ((typeof value==='string') && value.toDate()) || value;
@@ -13625,14 +13689,7 @@ var NAME = '[io-transfer]: ',
     REGEXP_OBJECT = /^( )*{/,
     REGEXP_REMOVE_LAST_COMMA = /^(.*),( )*$/,
     SPINNER_ICON = 'spinnercircle-anim',
-    MIN_SHOWUP = 500,
-    MESSAGES = {
-        'read': 'reading...',
-        'update': 'saving...',
-        'insert': 'saving...',
-        'send': 'sending...',
-        'delete': 'saving...'
-    };
+    MIN_SHOWUP = 500;
 /*jshint proto:false */
 
 module.exports = function (window) {
@@ -13711,6 +13768,7 @@ module.exports = function (window) {
      *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
      *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
      *    @param [options.preventCache=false] {boolean} whether to prevent caching --> a timestamp is added by parameter _ts
+     *    @param [options.stayActive] {Number} minimal time the request should be pending, even if IO has finished
      * @return {Promise}
      * on success:
         * xhr {XMLHttpRequest|XDomainRequest} xhr-response
@@ -13719,7 +13777,7 @@ module.exports = function (window) {
     */
     IO.get = function (url, options) {
         console.log(NAME, 'get --> '+url);
-        var ioPromise, returnPromise, message;
+        var ioPromise, returnPromise;
         options || (options={});
         options.url = url;
         options.method = 'GET';
@@ -13736,10 +13794,6 @@ module.exports = function (window) {
         );
         // set `abort` to the thennable-promise:
         returnPromise.abort = ioPromise.abort;
-        message = messages.message(MESSAGES.read, {level: 4, icon: SPINNER_ICON, stayActive: MIN_SHOWUP});
-        returnPromise.finally(function() {
-            message.fulfill();
-        });
         return returnPromise;
     };
 
@@ -13775,6 +13829,7 @@ module.exports = function (window) {
      *    @param [options.parseProtoCheck] {Function} to determine in what case the specified `parseProto` should be set as the prototype.
      *            The function accepts the `object` as argument and should return a trully value in order to set the prototype.
      *            When not specified, `parseProto` will always be applied (if `parseProto`is defined)
+     *    @param [options.stayActive] {Number} minimal time the request should be pending, even if IO has finished
      * @return {Promise}
      * on success:
         * Object received data
@@ -13783,7 +13838,7 @@ module.exports = function (window) {
     */
     IO.read = function(url, params, options) {
         console.log(NAME, 'read  --> '+url+' params: '+JSON.stringify(params));
-        var ioPromise, returnPromise, message;
+        var ioPromise, returnPromise;
         options || (options={});
         options.headers || (options.headers={});
         options.url = url;
@@ -13808,10 +13863,6 @@ module.exports = function (window) {
         );
         // set `abort` to the thennable-promise:
         returnPromise.abort = ioPromise.abort;
-        message = messages.message(MESSAGES.read, {level: 4, icon: SPINNER_ICON, stayActive: MIN_SHOWUP});
-        returnPromise.finally(function() {
-            message.fulfill();
-        });
         return returnPromise;
     };
 
@@ -13857,6 +13908,7 @@ module.exports = function (window) {
      *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
      *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
      *    @param [options.parseJSONDate=false] {boolean} Whether the server returns JSON-stringified data which has Date-objects.
+     *    @param [options.stayActive] {Number} minimal time the request should be pending, even if IO has finished
      * @return {Promise}
      * on success:
         * response {Object} usually, the final object-data, possibly modified
@@ -13905,6 +13957,7 @@ module.exports = function (window) {
      *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
      *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
      *    @param [options.parseJSONDate=false] {boolean} Whether the server returns JSON-stringified data which has Date-objects.
+     *    @param [options.stayActive] {Number} minimal time the request should be pending, even if IO has finished
      * @return {Promise}
      * on success:
         * response {Object} usually, the final object-data, possibly modified, holding the key
@@ -13948,6 +14001,7 @@ module.exports = function (window) {
      *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
      *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
      *    @param [options.parseJSONDate=false] {boolean} Whether the server returns JSON-stringified data which has Date-objects.
+     *    @param [options.stayActive] {Number} minimal time the request should be pending, even if IO has finished
      * @return {Promise}
      * on success:
         * response {Object|String} any response you want the server to return.
@@ -13963,7 +14017,7 @@ module.exports = function (window) {
             IO[verb] = function (url, data, options) {
                 console.log(NAME, verb+' --> '+url+' data: '+JSON.stringify(data));
                 var instance = this,
-                    allfields, useallfields, parseJSONDate, ioPromise, returnPromise, message;
+                    allfields, useallfields, parseJSONDate, ioPromise, returnPromise;
                 options || (options={});
                 allfields = options.allfields,
                 useallfields = (typeof allfields==='boolean') ? allfields : (verb!=='insert');
@@ -13995,10 +14049,6 @@ module.exports = function (window) {
                 );
                 // set `abort` to the thennable-promise:
                 returnPromise.abort = ioPromise.abort;
-                message = messages.message(MESSAGES[verb], {level: 4, icon: SPINNER_ICON, stayActive: MIN_SHOWUP});
-                returnPromise.finally(function() {
-                    message.fulfill();
-                });
                 return returnPromise;
             };
         }
@@ -14025,6 +14075,7 @@ module.exports = function (window) {
      *    @param [options.timeout=3000] {Number} to timeout the request, leading into a rejected Promise.
      *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
      *    @param [options.parseJSONDate=false] {boolean} Whether the server returns JSON-stringified data which has Date-objects.
+     *    @param [options.stayActive] {Number} minimal time the request should be pending, even if IO has finished
      * @return {Promise}
      * on success:
         * response {Object|String} any response you want the server to return.
@@ -14037,7 +14088,7 @@ module.exports = function (window) {
 
     IO[DELETE] = function (url, deleteKey, options) {
         console.log(NAME, 'delete --> '+url+' deleteKey: '+JSON.stringify(deleteKey));
-        var ioPromise, returnPromise, message;
+        var ioPromise, returnPromise;
         options || (options={});
         options.url = url;
         // method will be uppercased by IO.xhr
@@ -14057,10 +14108,6 @@ module.exports = function (window) {
         );
         // set `abort` to the thennable-promise:
         returnPromise.abort = ioPromise.abort;
-        message = messages.message(MESSAGES['delete'], {level: 4, icon: SPINNER_ICON, stayActive: MIN_SHOWUP});
-        returnPromise.finally(function() {
-            message.fulfill();
-        });
         return returnPromise;
     };
 
@@ -14068,7 +14115,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":60,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"js-ext/lib/string.js":74,"messages":75,"polyfill/polyfill-base.js":87}],59:[function(require,module,exports){
+},{"../io.js":61,"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"js-ext/lib/string.js":75,"polyfill/polyfill-base.js":88}],59:[function(require,module,exports){
 "use strict";
 
 /**
@@ -14225,7 +14272,22 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"../io.js":60,"js-ext":66,"js-ext/extra/hashmap.js":62,"messages":75}],60:[function(require,module,exports){
+},{"../io.js":61,"js-ext":67,"js-ext/extra/hashmap.js":63,"messages":76}],60:[function(require,module,exports){
+(function (global){
+(function (global) {
+    "use strict";
+
+    var IO = require('./io.js')(global);
+    require('./extra/io-transfer.js')(global);
+    require('./extra/io-stream.js')(global);
+    require('./extra/io-filetransfer.js')(global);
+
+    module.exports = IO;
+
+}(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./extra/io-filetransfer.js":56,"./extra/io-stream.js":57,"./extra/io-transfer.js":58,"./io.js":61}],61:[function(require,module,exports){
 /**
  * Provides core IO-functionality.
  *
@@ -14499,6 +14561,7 @@ module.exports = function (window) {
          *    @param [options.timeout=3000] {number} to timeout the request, leading into a rejected Promise.
          *    @param [options.withCredentials=false] {boolean} Whether or not to send credentials on the request.
          *    @param [options.streamback] {Function} callbackfunction in case you want to process streams (needs io-stream module).
+         *    @param [options.stayActive] {Number} minimal time the request should be pending, even if IO has finished
          * @return {Promise} Promise holding the request. Has an additional .abort() method to cancel the request.
          * <ul>
          *     <li>on success: xhr {XMLHttpRequest1|XMLHttpRequest2} xhr-response</li>
@@ -14511,7 +14574,7 @@ module.exports = function (window) {
                 props = {},
                 xhr, promise;
             options = Object.isObject(options) ? options.deepClone() : {};
-            promise = Promise.manage(options.streamback);
+            promise = Promise.manage(options.streamback, options.stayActive);
 
             xhr = new window.XMLHttpRequest();
             props._isXHR2 = IO.xhr2support;
@@ -14562,7 +14625,7 @@ module.exports = function (window) {
 
     return IO;
 };
-},{"js-ext":66,"js-ext/extra/hashmap.js":62,"polyfill/polyfill-base.js":87}],61:[function(require,module,exports){
+},{"js-ext":67,"js-ext/extra/hashmap.js":63,"polyfill/polyfill-base.js":88}],62:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -15077,7 +15140,7 @@ require('../lib/object.js');
                     returnValue = superPrototype[firstArg].apply(instance, args);
                 }
                 instance.__classCarier__ = classCarierReturn;
-                return returnValue || superPrototype[firstArg];
+                return (returnValue!==undefined) ? returnValue : superPrototype[firstArg];
             }
         },
 
@@ -15136,7 +15199,7 @@ require('../lib/object.js');
 
                 item.position++;
 
-                return returnValue || orig;
+                return (returnValue!==undefined) ? returnValue : orig;
             }
         }
     };
@@ -15183,7 +15246,7 @@ require('../lib/object.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/object.js":72,"js-ext/extra/hashmap.js":62,"polyfill/polyfill-base.js":87}],62:[function(require,module,exports){
+},{"../lib/object.js":73,"js-ext/extra/hashmap.js":63,"polyfill/polyfill-base.js":88}],63:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -15206,7 +15269,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],63:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -15318,7 +15381,7 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":68,"../lib/object.js":72,"./classes.js":61,"js-ext/extra/hashmap.js":62,"polyfill/lib/weakmap.js":85}],64:[function(require,module,exports){
+},{"../lib/array.js":69,"../lib/object.js":73,"./classes.js":62,"js-ext/extra/hashmap.js":63,"polyfill/lib/weakmap.js":86}],65:[function(require,module,exports){
 (function (global){
 /**
  *
@@ -15636,7 +15699,7 @@ var LightMap, Classes,
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../lib/array.js":68,"../lib/object.js":72,"polyfill/lib/weakmap.js":85,"polyfill/polyfill-base.js":87,"utils":94}],65:[function(require,module,exports){
+},{"../lib/array.js":69,"../lib/object.js":73,"polyfill/lib/weakmap.js":86,"polyfill/polyfill-base.js":88,"utils":95}],66:[function(require,module,exports){
 "use strict";
 
 var createHashMap = require('./hashmap.js').createMap;
@@ -15709,7 +15772,7 @@ module.exports = createHashMap({
     'with': true,
     'yield': true
 });
-},{"./hashmap.js":62}],66:[function(require,module,exports){
+},{"./hashmap.js":63}],67:[function(require,module,exports){
 require('./lib/function.js');
 require('./lib/object.js');
 require('./lib/string.js');
@@ -15717,7 +15780,7 @@ require('./lib/array.js');
 require('./lib/json.js');
 require('./lib/promise.js');
 require('./lib/math.js');
-},{"./lib/array.js":68,"./lib/function.js":69,"./lib/json.js":70,"./lib/math.js":71,"./lib/object.js":72,"./lib/promise.js":73,"./lib/string.js":74}],67:[function(require,module,exports){
+},{"./lib/array.js":69,"./lib/function.js":70,"./lib/json.js":71,"./lib/math.js":72,"./lib/object.js":73,"./lib/promise.js":74,"./lib/string.js":75}],68:[function(require,module,exports){
 "use strict";
 
 require('./lib/function.js');
@@ -15735,7 +15798,7 @@ module.exports = {
     LightMap: require('./extra/lightmap.js'),
     reservedWords: require('./extra/reserved-words.js')
 };
-},{"./extra/classes.js":61,"./extra/hashmap.js":62,"./extra/lightmap.js":63,"./extra/observers.js":64,"./extra/reserved-words.js":65,"./lib/array.js":68,"./lib/function.js":69,"./lib/json.js":70,"./lib/math.js":71,"./lib/object.js":72,"./lib/promise.js":73,"./lib/string.js":74}],68:[function(require,module,exports){
+},{"./extra/classes.js":62,"./extra/hashmap.js":63,"./extra/lightmap.js":64,"./extra/observers.js":65,"./extra/reserved-words.js":66,"./lib/array.js":69,"./lib/function.js":70,"./lib/json.js":71,"./lib/math.js":72,"./lib/object.js":73,"./lib/promise.js":74,"./lib/string.js":75}],69:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -16067,7 +16130,7 @@ valuesAreTheSame = function(value1, value2) {
     };
 
 }(Array.prototype));
-},{"js-ext/extra/hashmap.js":62,"polyfill/polyfill-base.js":87}],69:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":63,"polyfill/polyfill-base.js":88}],70:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Functions
@@ -16126,7 +16189,7 @@ var NAME = '[Function]: ';
 
 }(Function.prototype));
 
-},{"polyfill/polyfill-base.js":87}],70:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":88}],71:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Arrays
@@ -16215,7 +16278,7 @@ JSON.stringToDates = function (item, clone) {
     }
     return newItem;
 };
-},{"./object.js":72,"polyfill/polyfill-base.js":87}],71:[function(require,module,exports){
+},{"./object.js":73,"polyfill/polyfill-base.js":88}],72:[function(require,module,exports){
 /**
  *
  * Extension of Math
@@ -16273,7 +16336,7 @@ Math.floorToZero = function(value) {
 Math.ceilFromZero = function(value) {
     return (value>=0) ? Math.ceil(value) : Math.floor(value);
 };
-},{"polyfill/polyfill-base.js":87}],72:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":88}],73:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Objects
@@ -16832,7 +16895,7 @@ Object.protectedProp = function(obj, property, value) {
         value: value
     });
 };
-},{"js-ext/extra/hashmap.js":62,"polyfill/lib/promise.js":84,"polyfill/polyfill-base.js":87}],73:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":63,"polyfill/lib/promise.js":85,"polyfill/polyfill-base.js":88}],74:[function(require,module,exports){
 "use strict";
 
 /**
@@ -17207,7 +17270,7 @@ Promise.manage = function (callbackFn, stayActive) {
     return promise;
 };
 
-},{"polyfill/lib/promise.js":84,"polyfill/polyfill-base.js":87,"utils":94}],74:[function(require,module,exports){
+},{"polyfill/lib/promise.js":85,"polyfill/polyfill-base.js":88,"utils":95}],75:[function(require,module,exports){
 /**
  *
  * Pollyfils for often used functionality for Strings
@@ -17489,7 +17552,7 @@ Promise.manage = function (callbackFn, stayActive) {
 
 }(String.prototype));
 
-},{}],75:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 (function (global){
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -17704,7 +17767,7 @@ require('polyfill/lib/promise.js');
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"event":31,"js-ext":66,"js-ext/extra/hashmap.js":62,"polyfill":87,"polyfill/lib/promise.js":84,"utils":94}],76:[function(require,module,exports){
+},{"event":31,"js-ext":67,"js-ext/extra/hashmap.js":63,"polyfill":88,"polyfill/lib/promise.js":85,"utils":95}],77:[function(require,module,exports){
 "use strict";
 
 /**
@@ -18361,9 +18424,9 @@ module.exports = function (window) {
 
     window._ITSAmodules.ElementPlugin = true;
 };
-},{"event-dom":21,"js-ext/extra/classes.js":61,"js-ext/extra/hashmap.js":62,"js-ext/extra/observers.js":64,"js-ext/lib/object.js":72,"js-ext/lib/promise.js":73,"js-ext/lib/string.js":74,"polyfill":87,"utils/lib/timers.js":96,"vdom":106}],77:[function(require,module,exports){
+},{"event-dom":21,"js-ext/extra/classes.js":62,"js-ext/extra/hashmap.js":63,"js-ext/extra/observers.js":65,"js-ext/lib/object.js":73,"js-ext/lib/promise.js":74,"js-ext/lib/string.js":75,"polyfill":88,"utils/lib/timers.js":97,"vdom":107}],78:[function(require,module,exports){
 var css = "[plugin-panel=\"true\"] {\n    position: absolute !important;\n    background-color: #FFF;\n    max-width: 90%;\n    min-width: 200px;\n    min-height: 75px;\n    box-shadow: inset 0 0 5px rgba(50, 50, 50, 0.30), 5px 5px 6px rgba(50, 50, 50, 0.45);\n    border: solid 1px #000;\n}\n\n[plugin-panel=\"true\"],\n[plugin-panel=\"true\"] >div {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}\n\n[plugin-panel=\"true\"] >div[is=\"header\"] {\n    vertical-align: middle;\n    background-color: rgb(0, 100, 192);\n    color: #FFF;\n    padding: 0 1.5em 0 0.7em;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    vertical-align: middle;\n    line-height: 1.75em;\n    /* don't set the width to 100% --> IE messes things up */\n    /*width: 100%;*/\n    min-height: 1.75em;\n}\n\n[plugin-panel=\"true\"] >div[is=\"content\"] {\n    padding: 1.6em 1.2em;\n    line-height: 115%;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] {\n    border-top: 1px solid #EAE6DB;\n    overflow: hidden;\n    vertical-align: middle;\n    text-align: right;\n    line-height: 1em;\n    padding: 0.5em 0.7em;\n    /* don't set the width to 100% --> IE messes things up */\n    /*width: 100%;*/\n    min-height: 24px;\n}\n\n[plugin-panel=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0.5em;\n}\n\n[plugin-panel=\"true\"].itsa-full-draggable {\n    cursor: default;\n}\n\n[plugin-panel=\"true\"] >button {\n    padding: 0 0.4em 0.1em;\n    position: absolute;\n    right: 0.2em;\n    top: 0.2em;\n    z-index: 1;\n}\n\nbody >div[is=\"system-node\"].itsa-modal-layer {\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 100% !important;\n    height: 100% !important;\n    -webkit-box-sizing: border-box !important;\n    -moz-box-sizing: border-box !important;\n    box-sizing: border-box !important;\n    z-index: 1000 !important;\n    background-color: #000 !important;\n    opacity: 0.2 !important;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] i-button + i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] button + button {\n    margin-left: 0;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button {\n    display: block;\n    width: 100%;\n    margin: 0 0 0.5em;\n}\n\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >i-button:last-child,\n[plugin-panel=\"true\"][expand-buttons=\"true\"] >div[is=\"footer\"] >button:last-child {\n    margin-bottom: 0;\n}\n\n@media only screen and (max-width : 480px) {\n    [plugin-panel=\"true\"] {\n        width: 90%;\n        box-shadow: 0 0 6px 6px rgba(50, 50, 50, 0.45);\n    }\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],78:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],79:[function(require,module,exports){
 "use strict";
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
@@ -18809,7 +18872,7 @@ module.exports = function (window) {
 
     return Panel;
 };
-},{"./css/panel.css":77,"drag":20,"event-mobile":26,"focusmanager":33,"js-ext/extra/hashmap.js":62,"js-ext/extra/lightmap.js":63,"js-ext/lib/object.js":72,"js-ext/lib/string.js":74,"node-plugin":76,"polyfill":87,"scrollable":90,"useragent":93,"vdom":106,"window-ext":107}],79:[function(require,module,exports){
+},{"./css/panel.css":78,"drag":20,"event-mobile":26,"focusmanager":33,"js-ext/extra/hashmap.js":63,"js-ext/extra/lightmap.js":64,"js-ext/lib/object.js":73,"js-ext/lib/string.js":75,"node-plugin":77,"polyfill":88,"scrollable":91,"useragent":94,"vdom":107,"window-ext":108}],80:[function(require,module,exports){
 "use strict";
 
 var merge = function (source, target) {
@@ -18832,7 +18895,7 @@ var merge = function (source, target) {
 module.exports = {
     createMap: hashMap
 };
-},{}],80:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 "use strict";
 
 /*
@@ -18885,7 +18948,7 @@ module.exports = function (window) {
 
     return transition;
 };
-},{"../bin/local-hashmap.js":79}],81:[function(require,module,exports){
+},{"../bin/local-hashmap.js":80}],82:[function(require,module,exports){
 "use strict";
 
 // CAUTIOUS: need a copy of hashmap --> we cannot use js-ext/extra/hashap.js for that would lead to circular references!
@@ -18930,7 +18993,7 @@ module.exports = function (window) {
 
     return transitionEnd;
 };
-},{"../bin/local-hashmap.js":79}],82:[function(require,module,exports){
+},{"../bin/local-hashmap.js":80}],83:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -19001,7 +19064,7 @@ module.exports = function (window) {
     return vendorCSS;
 };
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../bin/local-hashmap.js":79}],83:[function(require,module,exports){
+},{"../bin/local-hashmap.js":80}],84:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/jonathantneal/3062955
 (function (global) {
@@ -19025,9 +19088,9 @@ module.exports = function (window) {
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],84:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 require('ypromise');
-},{"ypromise":5}],85:[function(require,module,exports){
+},{"ypromise":5}],86:[function(require,module,exports){
 (function (global){
 // based upon https://gist.github.com/Gozala/1269991
 
@@ -19137,7 +19200,7 @@ require('ypromise');
 
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],86:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 (function (global){
 (function (global) {
     "use strict";
@@ -19156,16 +19219,16 @@ require('ypromise');
     module.exports = CONSOLE;
 }(typeof global !== 'undefined' ? global : /* istanbul ignore next */ this));
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],87:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 require('./lib/window.console.js');
 require('./lib/matchesselector.js');
-},{"./lib/matchesselector.js":83,"./lib/window.console.js":86}],88:[function(require,module,exports){
+},{"./lib/matchesselector.js":84,"./lib/window.console.js":87}],89:[function(require,module,exports){
 require('./polyfill-base.js');
 require('./lib/promise.js');
 require('./lib/weakmap.js');
-},{"./lib/promise.js":84,"./lib/weakmap.js":85,"./polyfill-base.js":87}],89:[function(require,module,exports){
-var css = "[plugin-scroll=\"true\"] {\n    overflow: hidden !important;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont,\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    position: absolute;\n    /*display: block;*/\n    left: -9999px;\n    top: -9999px;\n    opacity: 0;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-vscroll-cont.itsa-visible {\n    opacity: 1;\n    width: 0.8em;\n    height: 100%;\n    right: 0;\n    top: 0;\n    left: auto;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-hscroll-cont.itsa-visible {\n    opacity: 1;\n    height: 0.8em;\n    width: 100%;\n    left: 0;\n    bottom: 0;\n    top: auto;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont span {\n    position: relative;\n    /*display: block;*/\n    width: 100%;\n    min-height: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont span {\n    position: relative;\n    /*display: block;*/\n    height: 100%;\n    min-width: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-vscroll-cont span,\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-hscroll-cont span {\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n[plugin-scroll=\"true\"] >span span.dd-dragging {\n    cursor: default;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],90:[function(require,module,exports){
+},{"./lib/promise.js":85,"./lib/weakmap.js":86,"./polyfill-base.js":88}],90:[function(require,module,exports){
+var css = "[plugin-scroll=\"true\"] {\n    overflow: hidden !important;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont,\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    position: absolute;\n    /*display: block;*/\n    left: -9999px;\n    top: -9999px;\n    opacity: 0;\n    z-index: 899;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-vscroll-cont.itsa-visible {\n    opacity: 1;\n    width: 0.8em;\n    height: 100%;\n    right: 0;\n    top: 0;\n    left: auto;\n}\n\n[plugin-scroll=\"true\"]:not(.disabled) >span.itsa-hscroll-cont.itsa-visible {\n    opacity: 1;\n    height: 0.8em;\n    width: 100%;\n    left: 0;\n    bottom: 0;\n    top: auto;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-vscroll-cont span {\n    position: relative;\n    /*display: block;*/\n    width: 100%;\n    min-height: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"] >span.itsa-hscroll-cont span {\n    position: relative;\n    /*display: block;*/\n    height: 100%;\n    min-width: 0.5em;\n    background-color: rgba(0, 0, 0, 0.5);\n    border-radius: 0.3em;\n}\n\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-vscroll-cont span,\n[plugin-scroll=\"true\"][scroll-light=\"true\"] >span.itsa-hscroll-cont span {\n    background-color: rgba(255, 255, 255, 0.5);\n}\n\n[plugin-scroll=\"true\"] >span span.dd-dragging {\n    cursor: default;\n}\n"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],91:[function(require,module,exports){
 /**
  * Plugin to create scrollable divs
  *
@@ -19301,16 +19364,15 @@ module.exports = function (window) {
             var instance = this,
                 host = instance.host,
                 model = instance.model,
-                scrollHeight = host.scrollHeight,
-                scrollWidth = host.scrollWidth,
-                height = host.height,
-                width = host.width,
+                scrollHeight = instance.getVScrollArea(),
+                scrollWidth = instance.getHScrollArea(),
+                height = host.innerHeight,
+                width = host.innerWidth,
                 scrollLeft = model.left,
                 scrollTop = model.top,
                 vscroller = host.getElement('span.itsa-vscroll-cont', true),
                 hscroller = host.getElement('span.itsa-hscroll-cont', true),
-                sizeHandle, effectiveRegion, maxScrollAmount, scrollAmount, handleNode,
-                vScrollerVisible, hScrollerVisible;
+                handleNode, vScrollerVisible, hScrollerVisible;
 
             // safari showed it miscalculates scrollWidth (perhaps also scrollHeight)
             // in certain circumstances by returning 1px too much
@@ -19337,12 +19399,7 @@ module.exports = function (window) {
             if (vScrollerVisible) {
                 handleNode = vscroller.getElement('span');
                 if (!handleNode.hasClass('dd-dragging')) {
-                    sizeHandle = Math.round(height*(height/scrollHeight));
-                    effectiveRegion = height - sizeHandle;
-                    maxScrollAmount = scrollHeight - height;
-                    scrollAmount = effectiveRegion * Math.max(0, Math.min(1, (scrollTop/maxScrollAmount)));
-                    handleNode.setInlineStyle('top', scrollAmount+'px')
-                              .setInlineStyle('height', sizeHandle+'px');
+                    instance.setVerticalHandle(handleNode, height, scrollHeight);
                 }
                 vscroller.setInlineStyle('top', scrollTop+'px')
                          .setInlineStyle('right', -scrollLeft+'px');
@@ -19350,16 +19407,39 @@ module.exports = function (window) {
             if (hScrollerVisible) {
                 handleNode = hscroller.getElement('span');
                 if (!handleNode.hasClass('dd-dragging')) {
-                    sizeHandle = Math.round(width*(width/scrollWidth));
-                    effectiveRegion = width - sizeHandle;
-                    maxScrollAmount = scrollWidth - width;
-                    scrollAmount = effectiveRegion * Math.max(0, Math.min(1, (scrollLeft/maxScrollAmount)));
-                    handleNode.setInlineStyle('left', scrollAmount+'px')
-                              .setInlineStyle('width', sizeHandle+'px');
+                    instance.setHorizontalHandle(handleNode, width, scrollWidth);
                 }
                 hscroller.setInlineStyle('bottom', -scrollTop+'px')
                          .setInlineStyle('left', scrollLeft+'px');
             }
+        },
+        setVerticalHandle: function(handleNode, height, scrollHeight) {
+            var instance = this,
+                model = instance.model,
+                scrollTop = model.top,
+                sizeHandle = Math.round(height*(height/scrollHeight)),
+                effectiveRegion = height - sizeHandle,
+                maxScrollAmount = scrollHeight - height,
+                scrollAmount = effectiveRegion * Math.max(0, Math.min(1, (scrollTop/maxScrollAmount)));
+            handleNode.setInlineStyle('top', scrollAmount+'px')
+                      .setInlineStyle('height', sizeHandle+'px');
+        },
+        setHorizontalHandle: function(handleNode, width, scrollWidth) {
+            var instance = this,
+                model = instance.model,
+                scrollLeft = model.left,
+                sizeHandle = Math.round(width*(width/scrollWidth)),
+                effectiveRegion = width - sizeHandle,
+                maxScrollAmount = scrollWidth - width,
+                scrollAmount = effectiveRegion * Math.max(0, Math.min(1, (scrollLeft/maxScrollAmount)));
+            handleNode.setInlineStyle('left', scrollAmount+'px')
+                      .setInlineStyle('width', sizeHandle+'px');
+        },
+        getHScrollArea: function() {
+            return this.host.scrollWidth;
+        },
+        getVScrollArea: function() {
+            return this.host.scrollHeight;
         },
         destroy: function() {
             var instance = this,
@@ -19387,9 +19467,9 @@ module.exports = function (window) {
 
     return Scrollable;
 };
-},{"./css/scrollable.css":89,"drag":20,"event-mobile":26,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"node-plugin":76,"polyfill":87,"useragent":93,"utils":94,"window-ext":107}],91:[function(require,module,exports){
+},{"./css/scrollable.css":90,"drag":20,"event-mobile":26,"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"node-plugin":77,"polyfill":88,"useragent":94,"utils":95,"window-ext":108}],92:[function(require,module,exports){
 var css = "input.uploader-hidden-input {\n    display: none !important;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],92:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],93:[function(require,module,exports){
 
 /**
  * Provides core Upload-functionality.
@@ -19916,7 +19996,7 @@ module.exports = function (window) {
 
     return Uploader;
 };
-},{"./css/uploader.css":91,"event":31,"io/extra/io-filetransfer.js":56,"js-ext/js-ext.js":67,"polyfill/polyfill-base.js":87,"utils":94}],93:[function(require,module,exports){
+},{"./css/uploader.css":92,"event":31,"io/extra/io-filetransfer.js":56,"js-ext/js-ext.js":68,"polyfill/polyfill-base.js":88,"utils":95}],94:[function(require,module,exports){
 "use strict";
 
 /**
@@ -19943,7 +20023,9 @@ module.exports = function (window) {
         navigator = window.navigator,
         useragent = navigator.userAgent,
         ieTest = useragent.match(/MSIE (\d+)\./),
-        isMobile, isSafari, isIE, ieVersion;
+        ieTest10_11 = useragent.match(/Windows NT(?:.)*rv:(\d+)/),
+        ieTestEdge = useragent.match(/Windows NT(?:.)*Edge\/(\d+)/),
+        isMobile, isSafari, isIE_below10, isIE_10_11, isIE_Edge, ieVersion;
 
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
@@ -19955,32 +20037,41 @@ module.exports = function (window) {
 
     isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
     isSafari = useragent.contains('AppleWebKit');
-    isIE = !!ieTest;
-    ieVersion = isIE && parseFloat(ieTest[1]);
+    isIE_below10 = !!ieTest;
+    isIE_10_11 = !isIE_below10 && !!ieTest10_11;
+    isIE_Edge = !isIE_below10 && !isIE_10_11 && !!ieTestEdge;
+    if (isIE_below10) {
+        ieVersion = parseFloat(ieTest[1]);
+    }
+    else if (isIE_10_11) {
+        ieVersion = parseFloat(ieTest10_11[1]);
+    }
+    else if (isIE_Edge) {
+        ieVersion = parseFloat(ieTestEdge[1]);
+    }
 
     window._ITSAmodules.UserAgent = UserAgent = {
         isMobile: isMobile,
         isSafari: isSafari,
-        isIE: isIE,
+        isIE: isIE_below10 || isIE_10_11 || isIE_Edge,
         ieVersion: ieVersion
     };
 
     return UserAgent;
 };
-},{"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"js-ext/lib/string.js":74,"polyfill":87}],94:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"js-ext/lib/string.js":75,"polyfill":88}],95:[function(require,module,exports){
 module.exports = {
 	idGenerator: require('./lib/idgenerator.js').idGenerator,
     later: require('./lib/timers.js').later,
     async: require('./lib/timers.js').async
 };
-},{"./lib/idgenerator.js":95,"./lib/timers.js":96}],95:[function(require,module,exports){
+},{"./lib/idgenerator.js":96,"./lib/timers.js":97}],96:[function(require,module,exports){
 "use strict";
 
 require('polyfill/polyfill-base.js');
 
 var UNDEFINED_NS = '__undefined__',
-    createHashMap = require('js-ext/extra/hashmap.js').createMap,
-    namespaces = createHashMap();
+    namespaces = {};
 
 /**
  * Collection of various utility functions.
@@ -20031,7 +20122,7 @@ module.exports.idGenerator = function(namespace, start) {
 	return (namespace===UNDEFINED_NS) ? namespaces[namespace]++ : namespace+'-'+namespaces[namespace]++;
 };
 
-},{"js-ext/extra/hashmap.js":62,"polyfill/polyfill-base.js":87}],96:[function(require,module,exports){
+},{"polyfill/polyfill-base.js":88}],97:[function(require,module,exports){
 (function (process){
 /**
  * Collection of various utility functions.
@@ -20161,9 +20252,9 @@ module.exports.later = function (callbackFn, timeout, periodic) {
 	};
 };
 }).call(this,require('_process'))
-},{"_process":109,"polyfill/polyfill-base.js":87}],97:[function(require,module,exports){
+},{"_process":110,"polyfill/polyfill-base.js":88}],98:[function(require,module,exports){
 var css = ".itsa-notrans, .itsa-notrans2,\n.itsa-notrans:before, .itsa-notrans2:before,\n.itsa-notrans:after, .itsa-notrans2:after {\n    -webkit-transition: none !important;\n    -moz-transition: none !important;\n    -ms-transition: none !important;\n    -o-transition: all 0s !important; /* opera doesn't support none */\n    transition: none !important;\n}\n\n.itsa-no-overflow {\n    overflow: hidden !important;\n}\n\n.itsa-invisible {\n    position: absolute !important;\n}\n\n.itsa-invisible-relative {\n    position: relative !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible,\n.itsa-invisible *,\n.itsa-invisible-relative,\n.itsa-invisible-relative * {\n    opacity: 0 !important;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-invisible-unfocusable,\n.itsa-invisible-unfocusable * {\n    visibility: hidden !important;\n}\n\n.itsa-transparent {\n    opacity: 0;\n}\n\n/* don't set visibility to hidden --> you cannot set a focus on those items */\n.itsa-hidden {\n    opacity: 0 !important;\n    position: absolute !important;\n    left: -9999px !important;\n    top: -9999px !important;\n    z-index: -9;\n}\n\n.itsa-hidden * {\n    opacity: 0 !important;\n}\n\n.itsa-nodisplay {\n    display: none !important;\n}\n\n.itsa-block {\n    display: block !important;\n}\n\n.itsa-borderbox {\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n}"; (require("/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify"))(css); module.exports = css;
-},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],98:[function(require,module,exports){
+},{"/Volumes/Data/Marco/Documenten Marco/GitHub/itsa.contributor/node_modules/cssify":1}],99:[function(require,module,exports){
 "use strict";
 
 /**
@@ -20461,7 +20552,7 @@ module.exports = function (window) {
     return extractor;
 
 };
-},{"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"js-ext/lib/string.js":74,"polyfill":87,"polyfill/extra/transition.js":80,"polyfill/extra/vendorCSS.js":82}],99:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"js-ext/lib/string.js":75,"polyfill":88,"polyfill/extra/transition.js":81,"polyfill/extra/vendorCSS.js":83}],100:[function(require,module,exports){
 "use strict";
 
 /**
@@ -20889,7 +20980,7 @@ module.exports = function (window) {
 
     return ElementArray;
 };
-},{"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"polyfill":87}],100:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"polyfill":88}],101:[function(require,module,exports){
 "use strict";
 
 /**
@@ -21569,7 +21660,7 @@ module.exports = function (window) {
 
 
 
-},{"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"js-ext/lib/string.js":74,"polyfill":87}],101:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"js-ext/lib/string.js":75,"polyfill":88}],102:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -26634,7 +26725,7 @@ module.exports = function (window) {
 * @since 0.0.1
 */
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../css/element.css":97,"./attribute-extractor.js":98,"./element-array.js":99,"./html-parser.js":102,"./node-parser.js":103,"./vnode.js":105,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"js-ext/lib/promise.js":73,"js-ext/lib/string.js":74,"polyfill":87,"polyfill/extra/transition.js":80,"polyfill/extra/transitionend.js":81,"polyfill/extra/vendorCSS.js":82,"utils":94,"window-ext":107}],102:[function(require,module,exports){
+},{"../css/element.css":98,"./attribute-extractor.js":99,"./element-array.js":100,"./html-parser.js":103,"./node-parser.js":104,"./vnode.js":106,"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"js-ext/lib/promise.js":74,"js-ext/lib/string.js":75,"polyfill":88,"polyfill/extra/transition.js":81,"polyfill/extra/transitionend.js":82,"polyfill/extra/vendorCSS.js":83,"utils":95,"window-ext":108}],103:[function(require,module,exports){
 "use strict";
 
 /**
@@ -27010,7 +27101,7 @@ module.exports = function (window) {
     return htmlToVNodes;
 
 };
-},{"./attribute-extractor.js":98,"./vdom-ns.js":104,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"polyfill":87}],103:[function(require,module,exports){
+},{"./attribute-extractor.js":99,"./vdom-ns.js":105,"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"polyfill":88}],104:[function(require,module,exports){
 "use strict";
 
 /**
@@ -27150,7 +27241,7 @@ module.exports = function (window) {
     return domNodeToVNode;
 
 };
-},{"./attribute-extractor.js":98,"./vdom-ns.js":104,"./vnode.js":105,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"polyfill":87}],104:[function(require,module,exports){
+},{"./attribute-extractor.js":99,"./vdom-ns.js":105,"./vnode.js":106,"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"polyfill":88}],105:[function(require,module,exports){
 /**
  * Creates a Namespace that can be used accros multiple vdom-modules to share information.
  *
@@ -27375,7 +27466,7 @@ module.exports = function (window) {
 
     return NS;
 };
-},{"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"polyfill":87}],105:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"polyfill":88}],106:[function(require,module,exports){
 "use strict";
 
 /**
@@ -29228,10 +29319,25 @@ module.exports = function (window) {
                     attributeNameSplitted = attributeName.split(':');
                     ns = attributeNameSplitted[0];
                     attributeName = attributeNameSplitted[1];
-                    domNode._setAttributeNS(xmlNS[ns.toUpperCase()] || ns, attributeName, value);
+                    try {
+                        domNode._setAttributeNS(xmlNS[ns.toUpperCase()] || ns, attributeName, value);
+                    }
+                    catch(err) {
+                        console.warn(err);
+                        console.warn('namespace: '+(xmlNS[ns.toUpperCase()] || ns));
+                        console.warn('attribute: '+attributeName);
+                        console.warn('value: '+value);
+                    }
                 }
                 else {
-                    domNode._setAttribute(attributeName, value);
+                    try {
+                        domNode._setAttribute(attributeName, value);
+                    }
+                    catch(err) {
+                        console.warn(err);
+                        console.warn('attribute: '+attributeName);
+                        console.warn('value: '+value);
+                    }
                 }
             }
             return instance;
@@ -30057,7 +30163,7 @@ module.exports = function (window) {
     return vNodeProto;
 
 };
-},{"./attribute-extractor.js":98,"./html-parser.js":102,"./vdom-ns.js":104,"js-ext/extra/hashmap.js":62,"js-ext/extra/lightmap.js":63,"js-ext/lib/array.js":68,"js-ext/lib/object.js":72,"js-ext/lib/string.js":74,"polyfill":87,"utils/lib/timers.js":96}],106:[function(require,module,exports){
+},{"./attribute-extractor.js":99,"./html-parser.js":103,"./vdom-ns.js":105,"js-ext/extra/hashmap.js":63,"js-ext/extra/lightmap.js":64,"js-ext/lib/array.js":69,"js-ext/lib/object.js":73,"js-ext/lib/string.js":75,"polyfill":88,"utils/lib/timers.js":97}],107:[function(require,module,exports){
 "use strict";
 
 require('js-ext/lib/object.js');
@@ -30099,13 +30205,13 @@ module.exports = function (window) {
 
     window._ITSAmodules.VDOM = true;
 };
-},{"./partials/extend-document.js":100,"./partials/extend-element.js":101,"./partials/node-parser.js":103,"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72,"utils/lib/timers.js":96}],107:[function(require,module,exports){
+},{"./partials/extend-document.js":101,"./partials/extend-element.js":102,"./partials/node-parser.js":104,"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73,"utils/lib/timers.js":97}],108:[function(require,module,exports){
 "use strict";
 
 module.exports = function (window) {
     require('./lib/sizes.js')(window);
 };
-},{"./lib/sizes.js":108}],108:[function(require,module,exports){
+},{"./lib/sizes.js":109}],109:[function(require,module,exports){
 /**
  * Creating floating Panel-nodes which can be shown and hidden.
  *
@@ -30222,7 +30328,7 @@ module.exports = function (window) {
     };
 
 };
-},{"js-ext/extra/hashmap.js":62,"js-ext/lib/object.js":72}],109:[function(require,module,exports){
+},{"js-ext/extra/hashmap.js":63,"js-ext/lib/object.js":73}],110:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -30471,11 +30577,9 @@ process.chdir = function (dir) {
      * @type Object
      * @static
     */
-    ITSA.IO = require('io/extra/io-transfer.js')(window);
+    ITSA.IO = require('io');
     ITSA.IO.config.merge(io_config);
     require('io/extra/io-cors-ie9.js')(window);
-    require('io/extra/io-stream.js')(window);
-    require('io/extra/io-filetransfer.js')(window);
     require('io/extra/io-xml.js')(window);
 
     /**
@@ -30509,5 +30613,5 @@ process.chdir = function (dir) {
 })(global.window || require('node-win'));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"client-db":6,"client-storage":9,"constrain":10,"css":14,"dialog":16,"drag-drop":18,"event":31,"event-dom/extra/blurnode.js":22,"event-dom/extra/focusnode.js":23,"event-dom/extra/hover.js":24,"event-dom/extra/valuechange.js":25,"event-mobile":26,"focusmanager":33,"icons":54,"io/extra/io-cors-ie9.js":55,"io/extra/io-filetransfer.js":56,"io/extra/io-stream.js":57,"io/extra/io-transfer.js":58,"io/extra/io-xml.js":59,"js-ext/extra/hashmap.js":62,"js-ext/extra/reserved-words.js":65,"js-ext/js-ext.js":67,"messages":75,"node-plugin":76,"node-win":undefined,"panel":78,"polyfill/polyfill.js":88,"scrollable":90,"uploader":92,"useragent":93,"utils":94,"vdom":106,"window-ext":107}]},{},[]);
+},{"client-db":6,"client-storage":9,"constrain":10,"css":14,"dialog":16,"drag-drop":18,"event":31,"event-dom/extra/blurnode.js":22,"event-dom/extra/focusnode.js":23,"event-dom/extra/hover.js":24,"event-dom/extra/valuechange.js":25,"event-mobile":26,"focusmanager":33,"icons":54,"io":60,"io/extra/io-cors-ie9.js":55,"io/extra/io-xml.js":59,"js-ext/extra/hashmap.js":63,"js-ext/extra/reserved-words.js":66,"js-ext/js-ext.js":68,"messages":76,"node-plugin":77,"node-win":undefined,"panel":79,"polyfill/polyfill.js":89,"scrollable":91,"uploader":93,"useragent":94,"utils":95,"vdom":107,"window-ext":108}]},{},[]);
 ITSA = require('itsa');

@@ -1,5 +1,5 @@
 ---
-module: event
+module: itsa-event
 maintainer: Marco Asbreuk
 title: Class listening
 intro: "Listening for events can be done by Event.after, but also by .after on an object or Class-instance. This example demonstrates the latter. You can add this functionality on the instance, by merging Event.Listener."

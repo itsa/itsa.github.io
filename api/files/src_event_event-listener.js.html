@@ -553,7 +553,7 @@ Event._CE_listener = ClassListener = {
             };
             superDestroy(instance.constructor);
             instance.detachAll();
-            instance.undefAllEvents();
+            instance.undefAllEvents &amp;&amp; instance.undefAllEvents();
             Object.protectedProp(instance, &#x27;_destroyed&#x27;, true);
         }
     }

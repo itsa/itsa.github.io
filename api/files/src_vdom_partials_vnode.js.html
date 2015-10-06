@@ -2124,10 +2124,25 @@ module.exports = function (window) {
                     attributeNameSplitted = attributeName.split(&#x27;:&#x27;);
                     ns = attributeNameSplitted[0];
                     attributeName = attributeNameSplitted[1];
-                    domNode._setAttributeNS(xmlNS[ns.toUpperCase()] || ns, attributeName, value);
+                    try {
+                        domNode._setAttributeNS(xmlNS[ns.toUpperCase()] || ns, attributeName, value);
+                    }
+                    catch(err) {
+                        console.warn(err);
+                        console.warn(&#x27;namespace: &#x27;+(xmlNS[ns.toUpperCase()] || ns));
+                        console.warn(&#x27;attribute: &#x27;+attributeName);
+                        console.warn(&#x27;value: &#x27;+value);
+                    }
                 }
                 else {
-                    domNode._setAttribute(attributeName, value);
+                    try {
+                        domNode._setAttribute(attributeName, value);
+                    }
+                    catch(err) {
+                        console.warn(err);
+                        console.warn(&#x27;attribute: &#x27;+attributeName);
+                        console.warn(&#x27;value: &#x27;+value);
+                    }
                 }
             }
             return instance;

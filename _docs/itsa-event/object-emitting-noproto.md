@@ -1,5 +1,5 @@
 ---
-module: event
+module: itsa-event
 maintainer: Marco Asbreuk
 title: Object emission on Event
 intro: "Preferable, you emit events on an Class-instance or object, using the helpers on its prototype. However, sometimes objects are already created and you can't change the prototype. Instead of merging the listener-helpers to every single object, you should use Event.emit to emit events."

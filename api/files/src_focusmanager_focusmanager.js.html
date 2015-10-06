@@ -337,13 +337,14 @@ module.exports = function (window) {
     nextFocusNode = function(e, keyCode, actionkey, focusContainerNode, sourceNode, selector, downwards, initialSourceNode) {
         console.log(NAME+&#x27;nextFocusNode&#x27;);
         var keys, lastIndex, i, specialKeysMatch, specialKey, len, enterPressedOnInput, primaryButtons,
-            inputType, foundNode, formNode, primaryonenter, noloop, nodeHit, foundContainer;
+            inputType, foundNode, formNode, primaryonenter, noloop, nodeHit, foundContainer, type;
         keys = actionkey.split(&#x27;+&#x27;);
         len = keys.length;
         lastIndex = len - 1;
 
         if ((keyCode===13) &amp;&amp; (sourceNode.getTagName()===&#x27;INPUT&#x27;)) {
-            inputType = sourceNode.getAttr(&#x27;type&#x27;).toLowerCase();
+            type = sourceNode.getAttr(&#x27;type&#x27;) || &#x27;text&#x27;;
+            inputType = type.toLowerCase();
             enterPressedOnInput = (inputType===&#x27;text&#x27;) || (inputType===&#x27;password&#x27;);
         }
 

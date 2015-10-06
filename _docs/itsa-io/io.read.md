@@ -1,5 +1,5 @@
 ---
-module: io
+module: itsa-io
 maintainer: Marco Asbreuk
 title: IO.read()
 intro: "Get dataobject from the server using ITSA.IO.read()."

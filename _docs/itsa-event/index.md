@@ -1,5 +1,5 @@
 ---
-module: event
+module: itsa-event
 itsaclassname: Event
 version: 0.0.2
 modulesize: 3.90
