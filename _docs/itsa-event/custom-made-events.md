@@ -1,5 +1,5 @@
 ---
-module: event
+module: itsa-event
 maintainer: Marco Asbreuk
 title: Custom made events
 intro: "Custom Made Events are customevents that are defined by Event.defineEvent(). They differ from DOM-events in a way that they have to be defined manually by the programmer; DOM-events are customevents which are created automaticly."

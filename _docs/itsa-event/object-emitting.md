@@ -1,5 +1,5 @@
 ---
-module: event
+module: itsa-event
 maintainer: Marco Asbreuk
 title: Object emission
 intro: "Emitting events can be done by Event.emit, but <u>preferable by .emit on an Class-instance or object</u>. This example demonstrates the latter. You can add this functionality on the object (preferable the prototype), by merging Event.Emitter('emitterName').<br><br>Emitting this way is very high-performant and this is the preferred way to add emit-functionality to a large number of objects."

@@ -286,7 +286,6 @@
  * @since 0.0.1
 */
 
-require(&#x27;polyfill/polyfill-base.js&#x27;);
 require(&#x27;js-ext/lib/object.js&#x27;);
 
 var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
@@ -1079,10 +1078,12 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
          *                       &lt;b&gt;should not be used&lt;/b&gt; other than by any submodule like &#x60;event-dom&#x60;.
          * @param [keepPayload=false] {Boolean} whether &#x60;payload&#x60; should be used as the ventobject instead of creating a new
          *                      eventobject and merge payload. &lt;b&gt;should not be used&lt;/b&gt; other than by any submodule like &#x60;event-dom&#x60;.
+         * @param [payloadGetters] {Object} additional payload, where getters inside &#x60;payload&#x60; are defined as object-values
+         *                      this might be needed, in cae the &#x60;payload&#x60; has getters that you need to maintain (getters on &#x60;payload&#x60; are ignored)
          * @return {Object|undefined} eventobject or undefined when the event was halted or preventDefaulted.
          * @since 0.0.1
          */
-        _emit: function (emitter, customEvent, payload, beforeSubscribers, afterSubscribers, preProcessor, keepPayload) {
+        _emit: function (emitter, customEvent, payload, beforeSubscribers, afterSubscribers, preProcessor, keepPayload, payloadGetters) {
             // NOTE: emit() needs to be synchronous! otherwise we wouldn&#x27;t be able
             // to preventDefault DOM-events in time.
             var instance = this,
@@ -1099,6 +1100,14 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
                 console.error(NAME, &#x27;defined emit-event &#x27;+customEvent+&#x27; does not match pattern&#x27;);
                 return;
             }
+            // prevent running into loop when listeners are emitting the same event:
+            // we will register this event as being active and remove it at the end op the method:
+            if (instance._runningEvents[customEvent]) {
+                console.warn(NAME, &#x27;defined emit-event &#x27;+customEvent+&#x27; got emitted by one of its own listeners, causing it to loop. Event will not be emitted again: exiting Event._emit&#x27;);
+                return;
+            }
+            instance._runningEvents[customEvent] = true;
+
             emitterName = extract[1];
             eventName = extract[2];
             customEventDefinition = allCustomEvents[customEvent];
@@ -1137,6 +1146,7 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
                         }
                     }
                 }
+                payloadGetters &amp;&amp; e.merge(payloadGetters);
                 if (e.status.unSilencable &amp;&amp; e.silent) {
                     console.warn(NAME, &#x27; event &#x27;+e.emitter+&#x27;:&#x27;+e.type+&#x27; cannot made silent: this customEvent is defined as unSilencable&#x27;);
                     e.silent = false;
@@ -1170,6 +1180,8 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
                     [subs, named_wildcard_subs, wildcard_named_subs, wildcard_wildcard_subs].forEach(invokeSubs);
                 }
             }
+            // cleaning up registration running Events:
+            delete instance._runningEvents[customEvent];
             return e;
         },
 
@@ -1387,6 +1399,23 @@ var createHashMap = require(&#x27;js-ext/extra/hashmap.js&#x27;).createMap;
      * @since 0.0.1
     */
     Object.defineProperty(Event, &#x27;_ce&#x27;, {
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: {} // &#x60;writable&#x60; is false means we cannot chance the value-reference, but we can change {}&#x27;s properties itself
+    });
+
+    /**
+     * Objecthash containing all running Events.
+     * Meant for local registration inside _emit --&gt; to prevent looping whenever a listener emits the same event.
+     *
+     * @property _runningEvents
+     * @default {}
+     * @type Object
+     * @private
+     * @since 0.0.1
+    */
+    Object.defineProperty(Event, &#x27;_runningEvents&#x27;, {
         configurable: false,
         enumerable: false,
         writable: false,

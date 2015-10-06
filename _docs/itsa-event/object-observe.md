@@ -1,5 +1,5 @@
 ---
-module: event
+module: itsa-event
 maintainer: Marco Asbreuk
 title: datachanged event
 intro: "The datachange-event tries to make use of native Object.observe. On environments where this isn't present, it will use Event.finalize to compare any changes to the data after any event. This way, datachange-event works in all environments."

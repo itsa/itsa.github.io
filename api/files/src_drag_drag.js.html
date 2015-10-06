@@ -441,7 +441,7 @@ module.exports = function (window) {
                 x, y;
             // is the drag is finished, there will be no ddProps.defined
             // return then, to prevent any events that stayed behind
-            if (!ddProps.defined) {
+            if (!ddProps.defined || !dragNode) {
                 return;
             }
 

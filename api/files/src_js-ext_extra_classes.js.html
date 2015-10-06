@@ -785,7 +785,7 @@ require(&#x27;../lib/object.js&#x27;);
                     returnValue = superPrototype[firstArg].apply(instance, args);
                 }
                 instance.__classCarier__ = classCarierReturn;
-                return returnValue || superPrototype[firstArg];
+                return (returnValue!==undefined) ? returnValue : superPrototype[firstArg];
             }
         },
 
@@ -844,7 +844,7 @@ require(&#x27;../lib/object.js&#x27;);
 
                 item.position++;
 
-                return returnValue || orig;
+                return (returnValue!==undefined) ? returnValue : orig;
             }
         }
     };

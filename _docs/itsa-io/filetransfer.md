@@ -1,5 +1,5 @@
 ---
-module: io
+module: itsa-io
 maintainer: Marco Asbreuk
 title: IO.sendBlob()
 intro: "Sending a file to the server using ITSA.IO.sendBlob()."

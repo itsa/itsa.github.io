@@ -42,9 +42,9 @@ Code-example:
 <script src="../../dist/itsabuild-min.js"></script>
 <script>
     var showMsg = function(e) {
-        alert('Button was clicked');
+        alert('Button was clicked '+e.shiftKey);
         console.log(e);
     };
 
-    ITSA.Event.after('tap', showMsg, '#buttongo');
+    ITSA.Event.before('tap', showMsg, '#buttongo');
 </script>
